@@ -1,47 +1,47 @@
 <?php
+/**
+ * Шаблон страницы авторизации
+ * @var yii\web\View $this
+ * @var ActiveForm $form
+ * @var app\models\LoginForm $login
+ */
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
-
+use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Вход';
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
-
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
-
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
-
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
-        </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
+<div class="cls-content-sm panel">
+	<div class="panel-body">
+		<div class="mar-ver pad-btm">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<img src="/img/header_logo.png" class="img-responsive center-block">
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+			<h1 class="h3">Вход</h1>
+			<p>Пожалуйста, введите данные для идентификации в системе:</p>
+		</div>
+		<?php $form = ActiveForm::begin(); ?>
+		<div class="form-group">
+			<?= $form->field($login, 'username')
+				->textInput(['placeholder' => 'Пожалуйста, введите логин']); ?>
+		</div>
+		<div class="form-group">
+			<?= $form->field($login, 'password')
+				->passwordInput(['placeholder' => 'Пожалуйста, введите пароль']); ?>
+		</div>
+		<div class="checkbox pad-btm text-left">
+			<?= $form->field($login, 'rememberMe')
+				->checkbox(); ?>
+		</div>
+		<?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']); ?>
+		<?php ActiveForm::end(); ?>
+	</div>
+	<div class="pad-all">
+		<?= Html::a('Восстановление пароля', ['site/restore-password'], ['class' => 'btn-link mar-rgt']); ?>
+		<?= Html::a('Регистрация', ['site/register'], ['class' => 'btn-link mar-lft']); ?>
+	</div>
 </div>

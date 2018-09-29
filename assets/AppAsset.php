@@ -8,24 +8,26 @@
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\YiiAsset;
+use yii\bootstrap\BootstrapPluginAsset;
 
 /**
- * Main application asset bundle.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * Class AppAsset
+ * @package app\assets
  */
-class AppAsset extends AssetBundle
-{
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-    ];
-    public $js = [
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-    ];
+class AppAsset extends AssetBundle {
+	public $basePath = '@webroot';
+	public $baseUrl = '@web';
+	public $css = [
+		'templates/nifty/css/nifty.min.css',//Nifty
+
+	];
+	public $js = [
+		'templates/nifty/js/nifty.min.js',//Nifty
+	];
+
+	public $depends = [
+		YiiAsset::class,
+		BootstrapPluginAsset::class,
+	];
 }
