@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Основной шаблон страницы авторизации
  * @author Moiseenko-EA
@@ -10,10 +12,8 @@
  */
 
 use yii\helpers\Html;
-use app\assets\LoginAsset;
 use app\helpers\ArrayHelper;
 
-LoginAsset::register($this);
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage(); ?>

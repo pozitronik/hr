@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\controllers;
 
@@ -16,7 +17,7 @@ class SiteController extends Controller {
 	/**
 	 * @return string
 	 */
-	public function actionLogin(){
+	public function actionLogin(): string {
 		return $this->render('login',[
 			'login' => new LoginForm()
 		]);
@@ -25,7 +26,7 @@ class SiteController extends Controller {
 	/**
 	 * @return string
 	 */
-	public function actionIndex(){
+	public function actionIndex(): string {
 		return $this->render('index');
 	}
 

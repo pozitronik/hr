@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-/* @var $this yii\web\View */
+/* @var yii\web\View $this */
 
 $this->title = 'MEOW';
 ?>

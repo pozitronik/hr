@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -7,7 +8,6 @@ use yii\base\Model;
 /**
  * LoginForm is the model behind the login form.
  *
- * @property \app\models\User|null $user
  */
 class LoginForm extends Model {
 	public $username;
@@ -16,7 +16,6 @@ class LoginForm extends Model {
 	public $email;
 	public $restore = false;
 
-	private $_user = false;
 
 	/**
 	 * @return array the validation rules.
@@ -54,18 +53,18 @@ class LoginForm extends Model {
 	 *
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
+	 * @return bool
 	 */
-	public function validatePassword($attribute) {
-	//todo
+	public function validatePassword($attribute): bool {
+		return true;
 	}
 
 	/**
 	 * Finds user by [[username]]
 	 *
-	 * @return User|null
 	 */
-	public function getUser() {
-		//todo
+	public function getUser(): void {
+		return null;
 	}
 
 	/**
@@ -74,16 +73,17 @@ class LoginForm extends Model {
 	 *
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
+	 * @return bool
 	 */
-	public function validateUsername($attribute) {
-		//todo
+	public function validateUsername($attribute): bool {
+		return true;
 	}
 
 	/**
 	 * Logs in a user using the provided username and password.
 	 * @return boolean whether the user is logged in successfully
 	 */
-	public function login() {
-//		todo
+	public function login(): bool {
+		return true;
 	}
 }

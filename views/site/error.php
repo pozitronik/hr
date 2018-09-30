@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Шаблон страницы ошибки
  * @var yii\web\View $this
