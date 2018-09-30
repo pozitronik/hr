@@ -40,3 +40,5 @@ composer.lock
 /config/params.php
 /config/web.php
 /config/console.php
+/config
+config
