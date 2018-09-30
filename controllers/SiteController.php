@@ -13,9 +13,6 @@ use yii\web\ErrorAction;
  */
 class SiteController extends Controller {
 
-	public $defaultAction = 'index';
-
-
 	/**
 	 * @inheritdoc
 	 */

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\core\traits;
 
@@ -18,10 +19,10 @@ use Throwable;
 trait ARExtended {
 
 	/**
-	 * @return string
+	 * @return string|null
 	 * @throws Throwable
 	 */
-	public function getClassNameShort() {
+	public function getClassNameShort(): ?string {
 		try {
 			return (new ReflectionClass($this))->getShortName();
 		} catch (Throwable $t) {
@@ -41,10 +42,10 @@ trait ARExtended {
 	 * @return bool|self
 	 * @throws Throwable
 	 */
-	public static function findModel($id, $throw = false) {
+	public static function findModel($id, $throw = null) {
 		/** @noinspection PhpIncompatibleReturnTypeInspection *///Давим некорректно отрабатывающую инспекцию (не учитывает два возможных типа возвращаемых значений)
 		if (null !== ($model = self::findOne($id))) return $model;
-		if (false !== $throw) SysExceptions::log($throw, $throw, true);
+		if (null !== $throw) SysExceptions::log($throw, $throw, true);
 		return false;
 	}
 
@@ -54,7 +55,7 @@ trait ARExtended {
 	 * @return self[]
 	 * @throws Throwable
 	 */
-	public static function findModels($keys) {
+	public static function findModels($keys): array {
 		$result = [];
 		foreach ($keys as $key) {
 			$model = self::findModel($key);
@@ -79,27 +80,27 @@ trait ARExtended {
 	 * @param array $changedAttributes Массив старых изменённых аттрибутов
 	 * @return array
 	 */
-	public function newAttributes($changedAttributes) {
+	public function newAttributes($changedAttributes): array {
 		/** @var ActiveRecord $this */
 		$newAttributes = [];
 		$currentAttributes = $this->attributes;
 		foreach ($changedAttributes as $item => $value) {
-			if ($currentAttributes[$item] != $value) $newAttributes[$item] = $currentAttributes[$item];
+			if ($currentAttributes[$item] !== $value) $newAttributes[$item] = $currentAttributes[$item];
 		}
 		return $newAttributes;
 	}
 
 	/**
 	 * Фикс для changedAttributes, который неправильно отдаёт список изменённых аттрибутов (туда включаются аттрибуты, по факту не менявшиеся).
-	 * @param $changedAttributes
+	 * @param array $changedAttributes
 	 * @return array
 	 */
-	public function changedAttributes($changedAttributes) {
+	public function changedAttributes($changedAttributes): array {
 		/** @var ActiveRecord $this */
 		$updatedAttributes = [];
 		$currentAttributes = $this->attributes;
 		foreach ($changedAttributes as $item => $value) {
-			if ($currentAttributes[$item] != $value) $updatedAttributes[$item] = $value;
+			if ($currentAttributes[$item] !== $value) $updatedAttributes[$item] = $value;
 		}
 		return $updatedAttributes;
 	}
@@ -108,9 +109,11 @@ trait ARExtended {
 	 * Вычисляет разницу между старыми и новыми аттрибутами
 	 * @return array
 	 */
-	public function identifyChangedAttributes() {
+	public function identifyChangedAttributes(): array {
 		$changedAttributes = [];
+		/** @noinspection ForeachSourceInspection */
 		foreach ($this->attributes as $name => $value) {
+			/** @noinspection TypeUnsafeComparisonInspection */
 			if ($this->oldAttributes[$name] != $value) $changedAttributes[$name] = $value;//Нельзя использовать строгое сравнение из-за преобразований БД
 		}
 		return $changedAttributes;
@@ -122,7 +125,7 @@ trait ARExtended {
 	 * @param string $name
 	 * @param mixed $value
 	 */
-	public function setAndSaveAttribute($name, $value) {
+	public function setAndSaveAttribute($name, $value): void {
 		$this->setAttribute($name, $value);
 		$this->save();
 	}
@@ -132,7 +135,7 @@ trait ARExtended {
 	 * Отличается от updateAttributes тем, что триггерит onAfterSave
 	 * @param array $values
 	 */
-	public function setAndSaveAttributes($values) {
+	public function setAndSaveAttributes($values): void {
 		$this->setAttributes($values, false);
 		$this->save();
 	}
@@ -140,7 +143,7 @@ trait ARExtended {
 	/**
 	 * Универсальная функция удаления любой лайткабовской модели
 	 */
-	public function safeDelete() {
+	public function safeDelete(): void {
 		if ($this->hasAttribute('deleted')) {
 			$this->setAndSaveAttribute('deleted', !$this->deleted);
 		} else {
@@ -152,7 +155,7 @@ trait ARExtended {
 	 * @param $property
 	 * @return string
 	 */
-	public function asJSON($property) {
+	public function asJSON($property): string {
 		if (!$this->hasAttribute($property)) throw new RuntimeException("Field $property not exists in the table ".$this::tableName());
 		return json_encode($this->$property, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
 	}

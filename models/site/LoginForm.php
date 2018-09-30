@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\site;
 
@@ -10,6 +11,8 @@ use yii\base\Model;
 /**
  * LoginForm is the model behind the login form.
  *
+ *
+ * @property User|null $user
  */
 class LoginForm extends Model {
 	public $login;
@@ -23,7 +26,7 @@ class LoginForm extends Model {
 	/**
 	 * @return array the validation rules.
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['login', 'password'], 'required'],
 			['rememberMe', 'boolean'],
@@ -36,7 +39,7 @@ class LoginForm extends Model {
 	/**
 	 * @return array
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'login' => 'Логин',
 			'password' => 'Пароль',
@@ -51,7 +54,7 @@ class LoginForm extends Model {
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
 	 */
-	public function validatePassword($attribute) {
+	public function validatePassword($attribute): void {
 		if (!$this->hasErrors()) {
 			$user = $this->getUser();
 			if (!$user || !$user->validatePassword($this->password)) {
@@ -63,7 +66,7 @@ class LoginForm extends Model {
 	/**
 	 * @return User|null
 	 */
-	public function getUser() {
+	public function getUser(): ?User {
 		if (false === $this->_user) {
 			$this->_user = User::findByLogin($this->login);
 		}
@@ -77,7 +80,7 @@ class LoginForm extends Model {
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
 	 */
-	public function validateLogin($attribute) {
+	public function validateLogin($attribute): void {
 		if (!$this->hasErrors()) {
 			$user = $this->getUser();
 			if (null !== $user && $user->CurrentUser->deleted) {
@@ -90,7 +93,7 @@ class LoginForm extends Model {
 	 * Logs in a user using the provided username and password.
 	 * @return boolean whether the user is logged in successfully
 	 */
-	public function login() {
+	public function doLogin(): bool {
 		return ($this->validate() && Yii::$app->user->login($this->getUser(), $this->rememberMe?Date::SECONDS_IN_MONTH:0));
 	}
 }

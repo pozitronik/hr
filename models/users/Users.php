@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\users;
 
@@ -22,24 +23,25 @@ use yii\db\ActiveRecord;
  */
 class Users extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName(): string {
 		return 'sys_users';
 	}
 
 	/**
 	 * @return LCQuery
 	 */
-	public static function find() {
+	public static function find(): LCQuery {
 		return new LCQuery(static::class);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules(): array {
 		return [
 			[['username', 'login', 'password', 'salt', 'email', 'create_date'], 'required'],
 			[['comment'], 'string'],
@@ -48,14 +50,14 @@ class Users extends ActiveRecord {
 			[['username', 'password', 'salt', 'email'], 'string', 'max' => 255],
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
-			[['email'], 'unique'],
+			[['email'], 'unique']
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'id' => 'ID',
 			'username' => 'Отображаемое имя пользователя',
@@ -66,7 +68,7 @@ class Users extends ActiveRecord {
 			'comment' => 'Служебный комментарий пользователя',
 			'create_date' => 'Дата регистрации',
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
-			'deleted' => 'Флаг удаления',
+			'deleted' => 'Флаг удаления'
 		];
 	}
 
@@ -74,7 +76,7 @@ class Users extends ActiveRecord {
 	 * @param string $login
 	 * @return Users|null
 	 */
-	public static function findByLogin(string $login) {
+	public static function findByLogin(string $login): ?Users {
 		return self::findOne(['login' => $login]);
 	}
 }

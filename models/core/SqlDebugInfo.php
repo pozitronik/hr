@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\core;
 
@@ -28,7 +29,7 @@ class SqlDebugInfo extends Model {
 	 * @param string $sql
 	 * @return boolean
 	 */
-	public function getFromSql($sql) {
+	public function getFromSql($sql): bool {
 		$this->userid = null;
 		$this->operation = null;
 		$matches = [];
@@ -44,7 +45,7 @@ class SqlDebugInfo extends Model {
 	 * adds debug information to any AQ
 	 * @param ActiveQuery $query
 	 */
-	public function addDebugInfo(&$query) {
+	public function addDebugInfo(&$query): void {
 		$query->andWhere("1 = 1{$this}");
 	}
 }

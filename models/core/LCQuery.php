@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\LCQuery;
 
 use app\helpers\Date;
-use app\models\groups\Groups;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
@@ -24,10 +24,9 @@ class LCQuery extends ActiveQuery {
 	 * Глобальная замена findWorkOnly
 	 * Возвращает записи, не помеченные, как удалённые
 	 * @param bool $deleted
-	 * @param bool $moderation игнорирование премодерируемой группы (только для групп)
 	 * @return $this
 	 */
-	public function active($deleted = false) {
+	public function active($deleted = false): self {
 		/** @var ActiveRecord $class */
 		$class = new $this->modelClass;//Хак для определения вызывающего трейт класса (для определения имени связанной таблицы)
 		/** @noinspection PhpUndefinedMethodInspection */ //придётся давить, корректной проверки тут быть не может
@@ -43,7 +42,7 @@ class LCQuery extends ActiveQuery {
 	 * @return ActiveQuery
 	 * @throws Throwable
 	 */
-	public function andFilterDateBetween($field, $value, $formatted_already = false) {
+	public function andFilterDateBetween($field, $value, $formatted_already = false): ActiveQuery {
 		if (!empty($value)) {
 			$date = explode(' ', $value);
 			$start = ArrayHelper::getValue($date, 0);
@@ -52,14 +51,14 @@ class LCQuery extends ActiveQuery {
 			if (Date::isValidDate($start, $formatted_already?'Y-m-d':'d.m.Y') && Date::isValidDate($stop, $formatted_already?'Y-m-d':'d.m.Y')) {/*Проверяем даты на валидность*/
 				if (is_array($field)) {
 					return $this->andFilterWhere([
-						$field[0] => self::extract_date($start, $formatted_already),
-						$field[1] => self::extract_date($stop, $formatted_already)
+						$field[0] => self::extractDate($start, $formatted_already),
+						$field[1] => self::extractDate($stop, $formatted_already)
 					]);
 				}
 
 				return $this->andFilterWhere([
-					'between', $field, self::extract_date($start, $formatted_already).' 00:00:00',
-					self::extract_date($stop, $formatted_already).' 23:59:00'
+					'between', $field, self::extractDate($start, $formatted_already).' 00:00:00',
+					self::extractDate($stop, $formatted_already).' 23:59:00'
 				]);
 			}
 
@@ -73,7 +72,7 @@ class LCQuery extends ActiveQuery {
 	 * @param $formatted_already
 	 * @return string
 	 */
-	private static function extract_date($date_string, $formatted_already) {
+	private static function extractDate($date_string, $formatted_already): string {
 		return $formatted_already?$date_string:date('Y-m-d', strtotime($date_string));
 	}
 
@@ -82,7 +81,7 @@ class LCQuery extends ActiveQuery {
 	 * @param int $duration
 	 * @return integer
 	 */
-	public function countFromCache($duration = Date::SECONDS_IN_HOUR) {
+	public function countFromCache($duration = Date::SECONDS_IN_HOUR): int {
 		$countQuery = clone $this;
 		$countQuery->distinct()
 			->limit(false)
@@ -96,7 +95,7 @@ class LCQuery extends ActiveQuery {
 	 * Применяется для SysExceptions - там флагом known помечаются известные (малокритичные) ошибки
 	 * @return $this
 	 */
-	public function unknown() {
+	public function unknown(): self {
 		return $this->andOnCondition(['known' => false]);
 	}
 }

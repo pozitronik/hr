@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\core;
 
 use app\helpers\Utils;
 use app\models\LCQuery\LCQuery;
-use app\models\traits\ARExtended;
+use app\models\core\traits\ARExtended;
 use Yii;
 use Throwable;
 use yii\db\ActiveRecord;
@@ -31,22 +32,21 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * @return LCQuery
 	 */
-	public static function find() {
+	public static function find(): LCQuery {
 		return new LCQuery(static::class);
 	}
-
 
 	/**
 	 * @inheritdoc
 	 */
-	public static function tableName() {
+	public static function tableName(): string {
 		return 'sys_exceptions';
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function rules() {
+	public function rules(): array {
 		return [
 			[['timestamp', 'get', 'post'], 'safe'],
 			[['user_id', 'code', 'line'], 'integer'],
@@ -59,7 +59,7 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * @inheritdoc
 	 */
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'id' => 'ID',
 			'timestamp' => 'Время',
@@ -82,7 +82,7 @@ class SysExceptions extends ActiveRecord {
 	 * @param bool $known_error - Пометить исключение, как известное. Сделано для пометки исключений, с которыми мы ничего сделать не можем (ошибка сторонних сервисов, например).
 	 * @throws Throwable
 	 */
-	public static function log($t, $throw = false, $known_error = false) {
+	public static function log($t, $throw = false, $known_error = false): void {
 		$logger = new self;
 		try {
 			$logger->setAttributes([
@@ -97,7 +97,7 @@ class SysExceptions extends ActiveRecord {
 				'known' => $known_error
 			]);
 			if (!$logger->save()) Utils::fileLog($logger->attributes, 'exception catch', 'exception.log');
-		} catch (Throwable $t){
+		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
 			Utils::fileLog($logger->attributes, '!!!exception catch', 'exception.log');
 		} finally {
 			if (false !== $throw) throw $throw;
@@ -110,22 +110,21 @@ class SysExceptions extends ActiveRecord {
 	 * @param integer $id
 	 * @throws Throwable
 	 */
-	public static function Acknowledge($id) {
+	public static function acknowledgeOne($id): void {
 		self::findModel($id, new NotFoundHttpException())->updateAttributes(['known' => true]);
 	}
-
 
 	/**
 	 * Помечаем все записи, как известные
 	 */
-	public static function AcknowledgeAll() {
+	public static function acknowledgeAll(): void {
 		self::updateAll(['known' => true], ['known' => false]);
 	}
 
 	/**
 	 * @return int
 	 */
-	public static function UnknownCount(){
+	public static function unknownCount(): int {
 		return self::find()->unknown()->count();
 	}
 }

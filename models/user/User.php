@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -41,7 +42,6 @@ class User extends BaseObject implements IdentityInterface {
 			self::$users = [
 				'CurrentUser' => $data,
 				'id' => $data->id,
-				'authKey' => $data->authKey,
 				'login' => $data->login,
 				'password' => $data->password,
 				'salt' => $data->salt
@@ -59,8 +59,9 @@ class User extends BaseObject implements IdentityInterface {
 
 	/**
 	 * @param string $login
+	 * @return User
 	 */
-	public static function findByLogin(string $login) {
+	public static function findByLogin(string $login): User {
 		self::fillUserData(Users::findByLogin($login));
 		return new static(self::$users);
 	}
@@ -75,14 +76,14 @@ class User extends BaseObject implements IdentityInterface {
 	/**
 	 * @inheritdoc
 	 */
-	public function getAuthKey() {
+	public function getAuthKey():string {
 		return $this->authKey;
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function validateAuthKey($authKey) {
+	public function validateAuthKey($authKey):bool {
 		return $this->authKey === $authKey;
 	}
 
@@ -92,7 +93,7 @@ class User extends BaseObject implements IdentityInterface {
 	 * @param string $password password to validate
 	 * @return boolean if password provided is valid for current user
 	 */
-	public function validatePassword($password) {
+	public function validatePassword($password): bool {
 		return (null === $this->salt)?$this->password === $password:sha1($password.$this->salt) === $this->password;
 	}
 }
