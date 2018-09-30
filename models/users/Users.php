@@ -2,7 +2,9 @@
 
 namespace app\models\users;
 
-use Yii;
+use app\models\core\traits\ARExtended;
+use app\models\LCQuery\LCQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "sys_users".
@@ -18,12 +20,20 @@ use Yii;
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property int $deleted Флаг удаления
  */
-class Users extends \yii\db\ActiveRecord {
+class Users extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName() {
 		return 'sys_users';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find() {
+		return new LCQuery(static::class);
 	}
 
 	/**
@@ -58,5 +68,13 @@ class Users extends \yii\db\ActiveRecord {
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
 			'deleted' => 'Флаг удаления',
 		];
+	}
+
+	/**
+	 * @param string $login
+	 * @return Users|null
+	 */
+	public static function findByLogin(string $login) {
+		return self::findOne(['login' => $login]);
 	}
 }

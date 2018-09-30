@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
+use app\models\site\LoginForm;
 use yii\web\Controller;
-use app\models\LoginForm;
+use yii\web\ErrorAction;
 
 /**
  * Class SiteController
@@ -12,7 +13,19 @@ use app\models\LoginForm;
  */
 class SiteController extends Controller {
 
-	public $defaultAction = 'login';
+	public $defaultAction = 'index';
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function actions() {
+		return [
+			'error' => [
+				'class' => ErrorAction::class
+			]
+		];
+	}
 
 	/**
 	 * @return string

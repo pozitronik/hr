@@ -1,8 +1,10 @@
 <?php
-declare(strict_types=1);
 
-namespace app\models;
+namespace app\models\site;
 
+use app\helpers\Date;
+use app\models\User;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -10,29 +12,24 @@ use yii\base\Model;
  *
  */
 class LoginForm extends Model {
-	public $username;
+	public $login;
 	public $password;
 	public $rememberMe = true;
 	public $email;
 	public $restore = false;
 
+	private $_user = false;
 
 	/**
 	 * @return array the validation rules.
 	 */
 	public function rules() {
 		return [
-			// username and password are both required
-			[['username', 'password'], 'required'],
-			// rememberMe must be a boolean value
+			[['login', 'password'], 'required'],
 			['rememberMe', 'boolean'],
 			['email', 'email'],
-			[['email'], 'required', 'when' => function($model){
-				return $model->restore;
-			}],
-			// password is validated by validatePassword()
 			['password', 'validatePassword'],
-			['username', 'validateUsername']
+			['Login', 'validateLogin']
 		];
 	}
 
@@ -41,7 +38,7 @@ class LoginForm extends Model {
 	 */
 	public function attributeLabels() {
 		return [
-			'username' => 'Логин',
+			'login' => 'Логин',
 			'password' => 'Пароль',
 			'rememberMe' => 'Запомнить'
 		];
@@ -53,18 +50,24 @@ class LoginForm extends Model {
 	 *
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
-	 * @return bool
 	 */
-	public function validatePassword($attribute): bool {
-		return true;
+	public function validatePassword($attribute) {
+		if (!$this->hasErrors()) {
+			$user = $this->getUser();
+			if (!$user || !$user->validatePassword($this->password)) {
+				$this->addError($attribute, 'Неправильные логин или пароль.');
+			}
+		}
 	}
 
 	/**
-	 * Finds user by [[username]]
-	 *
+	 * @return User|null
 	 */
-	public function getUser(): void {
-		return null;
+	public function getUser() {
+		if (false === $this->_user) {
+			$this->_user = User::findByLogin($this->login);
+		}
+		return $this->_user;
 	}
 
 	/**
@@ -73,17 +76,21 @@ class LoginForm extends Model {
 	 *
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
-	 * @return bool
 	 */
-	public function validateUsername($attribute): bool {
-		return true;
+	public function validateLogin($attribute) {
+		if (!$this->hasErrors()) {
+			$user = $this->getUser();
+			if (null !== $user && $user->CurrentUser->deleted) {
+				$this->addError($attribute, 'Пользователь заблокирован');
+			}
+		}
 	}
 
 	/**
 	 * Logs in a user using the provided username and password.
 	 * @return boolean whether the user is logged in successfully
 	 */
-	public function login(): bool {
-		return true;
+	public function login() {
+		return ($this->validate() && Yii::$app->user->login($this->getUser(), $this->rememberMe?Date::SECONDS_IN_MONTH:0));
 	}
 }

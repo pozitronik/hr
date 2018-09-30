@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Users;
+use app\models\users\Users;
 use yii\base\BaseObject;
 use yii\web\IdentityInterface;
 
@@ -19,9 +19,7 @@ class User extends BaseObject implements IdentityInterface {
 	public $salt;
 	public $authKey;
 	public $accessToken;
-	/**
-	 * @var Users CurrentUser
-	 */
+	/** @var Users $CurrentUser */
 	public $CurrentUser;
 
 	/**
@@ -44,7 +42,7 @@ class User extends BaseObject implements IdentityInterface {
 				'CurrentUser' => $data,
 				'id' => $data->id,
 				'authKey' => $data->authKey,
-				'username' => $data->username,
+				'login' => $data->login,
 				'password' => $data->password,
 				'salt' => $data->salt
 			];
@@ -56,6 +54,14 @@ class User extends BaseObject implements IdentityInterface {
 	 */
 	public static function findIdentityByAccessToken($token, $type = null) {
 		self::fillUserData(Users::findOne(['accessToken' => $token]));
+		return new static(self::$users);
+	}
+
+	/**
+	 * @param string $login
+	 */
+	public static function findByLogin(string $login) {
+		self::fillUserData(Users::findByLogin($login));
 		return new static(self::$users);
 	}
 

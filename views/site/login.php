@@ -5,9 +5,10 @@ declare(strict_types=1);
  * Шаблон страницы авторизации
  * @var yii\web\View $this
  * @var ActiveForm $form
- * @var app\models\LoginForm $login
+ * @var LoginForm $login
  */
 
+use app\models\site\LoginForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
@@ -18,17 +19,13 @@ $this->title = 'Вход';
 		<div class="mar-ver pad-btm">
 			<div class="row">
 				<div class="col-md-4"></div>
-				<div class="col-md-4">
-					<img src="/img/header_logo.png" class="img-responsive center-block">
-				</div>
-				<div class="col-md-4"></div>
 			</div>
 			<h1 class="h3">Вход</h1>
 			<p>Пожалуйста, введите данные для идентификации в системе:</p>
 		</div>
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="form-group">
-			<?= $form->field($login, 'username')
+			<?= $form->field($login, 'login')
 				->textInput(['placeholder' => 'Пожалуйста, введите логин']); ?>
 		</div>
 		<div class="form-group">
