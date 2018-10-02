@@ -10,6 +10,7 @@ use app\models\users\Users;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * Class UsersController
@@ -28,7 +29,7 @@ class UsersController extends Controller {
 	}
 
 	/**
-	 * @return string
+	 * @return string|Response
 	 * @throws Throwable
 	 */
 	public function actionCreate() {
@@ -44,8 +45,10 @@ class UsersController extends Controller {
 
 	/**
 	 * @param integer $id
+	 * @return string
+	 * @throws Throwable
 	 */
-	public function actionUpdate(int $id) {
+	public function actionUpdate(int $id): string {
 		$user = Users::findModel($id, new NotFoundHttpException());
 
 		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $user->classNameShort))) {

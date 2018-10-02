@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace app\models\core;
 
 use app\helpers\Utils;
-use app\models\LCQuery\LCQuery;
 use app\models\core\traits\ARExtended;
 use Yii;
 use Throwable;

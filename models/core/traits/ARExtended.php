@@ -154,8 +154,9 @@ trait ARExtended {
 	/**
 	 * Грузим объект из массива без учёта формы
 	 * @param array $arrayData
+	 * @return boolean
 	 */
-	public function loadArray($arrayData) {
+	public function loadArray($arrayData): bool {
 		return $this->load($arrayData, '');
 	}
 

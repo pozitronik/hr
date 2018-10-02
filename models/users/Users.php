@@ -8,6 +8,7 @@ use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\user\CurrentUser;
 use yii\db\ActiveRecord;
+use Throwable;
 
 /**
  * This is the model class for table "sys_users".
@@ -85,7 +86,7 @@ class Users extends ActiveRecord {
 	/**
 	 * Солим пароль
 	 */
-	public function applySalt() {
+	public function applySalt(): void {
 		$this->salt = sha1(uniqid((string)mt_rand(), true));
 		$this->password = sha1($this->password.$this->salt);
 	}
@@ -95,13 +96,13 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function createUser($paramsArray) {
+	public function createUser($paramsArray): bool {
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
 
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate(),
+				'create_date' => Date::lcDate()
 			]);
 			return $this->save();
 		}
@@ -112,7 +113,7 @@ class Users extends ActiveRecord {
 	 * @param $paramsArray
 	 * @return bool
 	 */
-	public function updateUser($paramsArray) {
+	public function updateUser($paramsArray): bool {
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
 			return $this->save();

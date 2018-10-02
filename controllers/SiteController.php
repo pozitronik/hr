@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\models\CurrentUser;
+use app\models\user\CurrentUser;
 use app\models\site\LoginForm;
 use Yii;
 use yii\web\Controller;

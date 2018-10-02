@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models\user;
 
-use app\models\user\User;
 use Yii;
 
 /**
