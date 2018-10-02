@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\models;
+namespace app\models\user;
 
 use app\models\users\Users;
 use yii\base\BaseObject;

@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
+use app\models\CurrentUser;
 use app\models\site\LoginForm;
+use Yii;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 
@@ -28,8 +30,14 @@ class SiteController extends Controller {
 	 * @return string
 	 */
 	public function actionLogin(): string {
+
+		$model = new LoginForm();
+		if ($model->load(Yii::$app->request->post()) && $model->doLogin()) {
+			return CurrentUser::goHome();
+
+		}
 		return $this->render('login',[
-			'login' => new LoginForm()
+			'login' => $model
 		]);
 	}
 

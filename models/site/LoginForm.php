@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace app\models\site;
 
 use app\helpers\Date;
-use app\models\User;
+use app\models\user\User;
 use Yii;
 use yii\base\Model;
 
@@ -32,7 +32,7 @@ class LoginForm extends Model {
 			['rememberMe', 'boolean'],
 			['email', 'email'],
 			['password', 'validatePassword'],
-			['Login', 'validateLogin']
+			['login', 'validateLogin']
 		];
 	}
 

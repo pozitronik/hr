@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace app\models\users;
 
+use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
-use app\models\LCQuery\LCQuery;
 use yii\db\ActiveRecord;
 
 /**
