@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace app\models\users;
 
+use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\CurrentUser;
 use yii\db\ActiveRecord;
 
 /**
@@ -79,4 +81,23 @@ class Users extends ActiveRecord {
 	public static function findByLogin(string $login): ?Users {
 		return self::findOne(['login' => $login]);
 	}
+
+	/**
+	 * @param $paramsArray
+	 * @return bool
+	 * @throws Throwable
+	 */
+	public static function createUser($paramsArray) {
+		$newUser = new self();
+		if ($newUser->load($paramsArray) && $newUser->validate() && $newUser->save()) {
+			$newUser->updateAttributes([
+				'daddy' => CurrentUser::Id(),
+				'create_date' => Date::lcDate(),
+				'authKey' => md5($newUser->id.md5($newUser->username))
+			]);
+			return true;
+		}
+		return false;
+	}
+
 }
