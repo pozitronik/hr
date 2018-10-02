@@ -6,7 +6,7 @@ namespace app\models\users;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
-use app\models\CurrentUser;
+use app\models\user\CurrentUser;
 use yii\db\ActiveRecord;
 
 /**
@@ -64,7 +64,7 @@ class Users extends ActiveRecord {
 			'id' => 'ID',
 			'username' => 'Отображаемое имя пользователя',
 			'login' => 'Логин',
-			'password' => 'Хеш пароля',
+			'password' => 'Пароль',
 			'salt' => 'Unique random salt hash',
 			'email' => 'email',
 			'comment' => 'Служебный комментарий пользователя',
@@ -82,6 +82,11 @@ class Users extends ActiveRecord {
 		return self::findOne(['login' => $login]);
 	}
 
+	public function applySalt() {
+		$this->salt = sha1(uniqid((string)mt_rand(), true));
+		$this->password = sha1($this->password.$this->salt);
+	}
+
 	/**
 	 * @param $paramsArray
 	 * @return bool
@@ -89,13 +94,14 @@ class Users extends ActiveRecord {
 	 */
 	public static function createUser($paramsArray) {
 		$newUser = new self();
-		if ($newUser->load($paramsArray) && $newUser->validate() && $newUser->save()) {
+		if ($newUser->loadArray($paramsArray)) {
+			if (null === $newUser->salt) $newUser->applySalt();
+
 			$newUser->updateAttributes([
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate(),
-				'authKey' => md5($newUser->id.md5($newUser->username))
 			]);
-			return true;
+			return $newUser->save();
 		}
 		return false;
 	}

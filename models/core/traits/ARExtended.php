@@ -152,6 +152,14 @@ trait ARExtended {
 	}
 
 	/**
+	 * Грузим объект из массива без учёта формы
+	 * @param array $arrayData
+	 */
+	public function loadArray($arrayData) {
+		return $this->load($arrayData, '');
+	}
+
+	/**
 	 * @param $property
 	 * @return string
 	 */
