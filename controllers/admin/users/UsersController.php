@@ -9,6 +9,7 @@ use app\helpers\ArrayHelper;
 use app\models\users\Users;
 use yii\web\Controller;
 use yii\web\ErrorAction;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class UsersController
@@ -32,11 +33,26 @@ class UsersController extends Controller {
 	 */
 	public function actionCreate() {
 		$newUser = new Users();
+		if ($newUser->createUser(ArrayHelper::getValue(Yii::$app->request->post(), $newUser->classNameShort))) {
+			return $this->redirect(['update', 'id' => $newUser->id]);
+		}
 
 		return $this->render('create', [
-			'success' => $newUser::createUser(ArrayHelper::getValue(Yii::$app->request->post(), $newUser->classNameShort)),
 			'model' => $newUser
 		]);
+	}
 
+	/**
+	 * @param integer $id
+	 */
+	public function actionUpdate(int $id) {
+		$user = Users::findModel($id, new NotFoundHttpException());
+
+		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $user->classNameShort))) {
+			$user->updateUser($updateArray);
+		}
+		return $this->render('update', [
+			'model' => $user
+		]);
 	}
 }

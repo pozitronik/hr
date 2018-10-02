@@ -82,6 +82,9 @@ class Users extends ActiveRecord {
 		return self::findOne(['login' => $login]);
 	}
 
+	/**
+	 * Солим пароль
+	 */
 	public function applySalt() {
 		$this->salt = sha1(uniqid((string)mt_rand(), true));
 		$this->password = sha1($this->password.$this->salt);
@@ -92,16 +95,27 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function createUser($paramsArray) {
-		$newUser = new self();
-		if ($newUser->loadArray($paramsArray)) {
-			if (null === $newUser->salt) $newUser->applySalt();
+	public function createUser($paramsArray) {
+		if ($this->loadArray($paramsArray)) {
+			if (null === $this->salt) $this->applySalt();
 
-			$newUser->updateAttributes([
+			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate(),
 			]);
-			return $newUser->save();
+			return $this->save();
+		}
+		return false;
+	}
+
+	/**
+	 * @param $paramsArray
+	 * @return bool
+	 */
+	public function updateUser($paramsArray) {
+		if ($this->loadArray($paramsArray)) {
+			if (null === $this->salt) $this->applySalt();
+			return $this->save();
 		}
 		return false;
 	}

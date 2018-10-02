@@ -6,7 +6,7 @@
 
 use app\models\users\Users;
 
-$this->title = 'Добавление пользователя';
+$this->title = 'Редактирование пользователя';
 
 ?>
 

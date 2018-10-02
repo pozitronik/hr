@@ -4,7 +4,6 @@
  *
  * @var View $this
  * @var Users $model
- * @var boolean $success
  */
 
 use app\models\users\Users;
