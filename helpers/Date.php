@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * Хелпер для работ с датами
  * @author Moiseenko-EA
@@ -31,7 +31,7 @@ class Date {
 	 * Мы постоянно используем такую дату, меня задалбывает вспоминать или копипастить, пусть будет алиас
 	 * @return string
 	 */
-	public static function lcDate(): string {
+	public static function lcDate():string {
 		return date('Y-m-d H:i:s');
 	}
 
@@ -40,7 +40,7 @@ class Date {
 	 * @param mixed $d Микротайм mktime(0,0,0,4,1,2016)
 	 * @return array
 	 */
-	public static function intervalQuarter($d): array {
+	public static function intervalQuarter($d):array {
 		$kv = (int)((date('n', $d) - 1) / 3 + 1);
 		$year = date('y', $d);
 
@@ -54,7 +54,7 @@ class Date {
 	 * Получить номер текущего квартала
 	 * @return int
 	 */
-	public static function currentQuarter(): int {
+	public static function currentQuarter():int {
 		return (int)((date('n') + 2) / 3);
 	}
 
@@ -62,7 +62,7 @@ class Date {
 	 * Получить номер следующего квартала от текущего
 	 * @return int
 	 */
-	public static function nextQuarter(): int {
+	public static function nextQuarter():int {
 		if (self::currentQuarter() + 1 > 4) {
 			return 1;
 		}
@@ -113,7 +113,7 @@ class Date {
 	 * @param int $month
 	 * @return string
 	 */
-	public static function zeroAddMoth($month): string {
+	public static function zeroAddMoth($month):string {
 		return 1 === strlen($month)?'0'.$month:(string)$month;
 	}
 
@@ -123,7 +123,7 @@ class Date {
 	 * @param array $interval Массив интервала дат ['start' => 'Y-m-d', 'end' => 'Y-m-d']
 	 * @return bool
 	 */
-	public static function isBetweenDate(string $date, array $interval): bool {
+	public static function isBetweenDate(string $date, array $interval):bool {
 		$d = new DateTime($date);
 		$d1 = new DateTime($interval['start']);
 		$d2 = new DateTime($interval['end']);
@@ -137,7 +137,7 @@ class Date {
 	 * @return DateTime
 	 * @throws Throwable
 	 */
-	public static function getWeekEnd($currentDate): ?DateTime {
+	public static function getWeekEnd($currentDate):?DateTime {
 		$currentWeekDay = $currentDate->format('w');
 		$t = 7 - $currentWeekDay;
 		$td = clone $currentDate;
@@ -156,7 +156,7 @@ class Date {
 	 * @param string $format
 	 * @return string
 	 */
-	public static function diff($dateStart, $dateEnd, $format): string {
+	public static function diff($dateStart, $dateEnd, $format):string {
 		$date1 = new DateTime($dateStart);
 		$date2 = new DateTime($dateEnd);
 		$diff = $date1->diff($date2);
@@ -170,7 +170,7 @@ class Date {
 	 * @param string $format
 	 * @return bool
 	 */
-	public static function isValidDate($date, $format = 'Y-m-d H:i:s'): bool {
+	public static function isValidDate($date, $format = 'Y-m-d H:i:s'):bool {
 		$d = DateTime::createFromFormat($format, $date);
 		return $d && $d->format($format) === $date;
 	}

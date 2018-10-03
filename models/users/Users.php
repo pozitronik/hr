@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\users;
 
@@ -30,21 +30,21 @@ class Users extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName(): string {
+	public static function tableName():string {
 		return 'sys_users';
 	}
 
 	/**
 	 * @return LCQuery
 	 */
-	public static function find(): LCQuery {
+	public static function find():LCQuery {
 		return new LCQuery(static::class);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules(): array {
+	public function rules():array {
 		return [
 			[['username', 'login', 'password', 'salt', 'email', 'create_date'], 'required'],
 			[['comment'], 'string'],
@@ -60,7 +60,7 @@ class Users extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels(): array {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'username' => 'Отображаемое имя пользователя',
@@ -79,14 +79,14 @@ class Users extends ActiveRecord {
 	 * @param string $login
 	 * @return Users|null
 	 */
-	public static function findByLogin(string $login): ?Users {
+	public static function findByLogin(string $login):?Users {
 		return self::findOne(['login' => $login]);
 	}
 
 	/**
 	 * Солим пароль
 	 */
-	public function applySalt(): void {
+	public function applySalt():void {
 		$this->salt = sha1(uniqid((string)mt_rand(), true));
 		$this->password = sha1($this->password.$this->salt);
 	}
@@ -96,7 +96,7 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function createUser($paramsArray): bool {
+	public function createUser($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
 
@@ -113,7 +113,7 @@ class Users extends ActiveRecord {
 	 * @param $paramsArray
 	 * @return bool
 	 */
-	public function updateUser($paramsArray): bool {
+	public function updateUser($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
 			return $this->save();

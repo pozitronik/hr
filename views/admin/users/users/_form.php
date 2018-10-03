@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 /**
  * Шаблон формы страницы изменения информации пользователя
@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-					<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
+						<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
 					</div>
 				</div>
 			</div>

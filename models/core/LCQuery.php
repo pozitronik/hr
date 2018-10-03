@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\core;
 
@@ -26,7 +26,7 @@ class LCQuery extends ActiveQuery {
 	 * @param bool $deleted
 	 * @return $this
 	 */
-	public function active($deleted = false): self {
+	public function active($deleted = false):self {
 		/** @var ActiveRecord $class */
 		$class = new $this->modelClass;//Хак для определения вызывающего трейт класса (для определения имени связанной таблицы)
 		/** @noinspection PhpUndefinedMethodInspection */ //придётся давить, корректной проверки тут быть не может
@@ -42,7 +42,7 @@ class LCQuery extends ActiveQuery {
 	 * @return ActiveQuery
 	 * @throws Throwable
 	 */
-	public function andFilterDateBetween($field, $value, $formatted_already = false): ActiveQuery {
+	public function andFilterDateBetween($field, $value, $formatted_already = false):ActiveQuery {
 		if (!empty($value)) {
 			$date = explode(' ', $value);
 			$start = ArrayHelper::getValue($date, 0);
@@ -72,7 +72,7 @@ class LCQuery extends ActiveQuery {
 	 * @param $formatted_already
 	 * @return string
 	 */
-	private static function extractDate($date_string, $formatted_already): string {
+	private static function extractDate($date_string, $formatted_already):string {
 		return $formatted_already?$date_string:date('Y-m-d', strtotime($date_string));
 	}
 
@@ -81,7 +81,7 @@ class LCQuery extends ActiveQuery {
 	 * @param int $duration
 	 * @return integer
 	 */
-	public function countFromCache($duration = Date::SECONDS_IN_HOUR): int {
+	public function countFromCache($duration = Date::SECONDS_IN_HOUR):int {
 		$countQuery = clone $this;
 		$countQuery->distinct()
 			->limit(false)
@@ -95,7 +95,7 @@ class LCQuery extends ActiveQuery {
 	 * Применяется для SysExceptions - там флагом known помечаются известные (малокритичные) ошибки
 	 * @return $this
 	 */
-	public function unknown(): self {
+	public function unknown():self {
 		return $this->andOnCondition(['known' => false]);
 	}
 }

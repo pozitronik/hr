@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\user;
 
@@ -17,14 +17,14 @@ class CurrentUser extends User {
 	 * Отправляет на домашнюю страницу
 	 * @return string
 	 */
-	public static function goHome(): string {
+	public static function goHome():string {
 		return "home";
 	}
 
 	/**
 	 * @return int|null
 	 */
-	public static function Id(): ?int {
+	public static function Id():?int {
 		return Yii::$app->user->id;
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\user;
 
@@ -61,7 +61,7 @@ class User extends BaseObject implements IdentityInterface {
 	 * @param string $login
 	 * @return User
 	 */
-	public static function findByLogin(string $login): User {
+	public static function findByLogin(string $login):User {
 		self::fillUserData(Users::findByLogin($login));
 		return new static(self::$users);
 	}
@@ -93,7 +93,7 @@ class User extends BaseObject implements IdentityInterface {
 	 * @param string $password password to validate
 	 * @return boolean if password provided is valid for current user
 	 */
-	public function validatePassword($password): bool {
+	public function validatePassword($password):bool {
 		return (null === $this->salt)?$this->password === $password:sha1($password.$this->salt) === $this->password;
 	}
 }

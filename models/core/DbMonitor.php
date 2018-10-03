@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\core;
 
@@ -20,7 +20,7 @@ class DbMonitor {
 	 * @return ProcessListItem[]
 	 * @throws Exception
 	 */
-	public function getProcessList(): array {
+	public function getProcessList():array {
 		$result = [];
 		$p_list = Yii::$app->db->createCommand('SHOW FULL PROCESSLIST')
 			->queryAll();
@@ -47,7 +47,7 @@ class DbMonitor {
 	 * @param $id
 	 * @return string;
 	 */
-	public function kill($id): string {
+	public function kill($id):string {
 		try {
 			$affected = Yii::$app->db->createCommand("kill {$id}")
 				->execute();

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\helpers;
 
@@ -40,7 +40,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper {
 	 * @param array $array2
 	 * @return array
 	 */
-	public static function loopArrayMerge($array1, $array2): array {
+	public static function loopArrayMerge($array1, $array2):array {
 		return array_merge($array1, array_merge(...$array2));
 	}
 }

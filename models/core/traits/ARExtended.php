@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
@@ -22,7 +22,7 @@ trait ARExtended {
 	 * @return string|null
 	 * @throws Throwable
 	 */
-	public function getClassNameShort(): ?string {
+	public function getClassNameShort():?string {
 		try {
 			return (new ReflectionClass($this))->getShortName();
 		} catch (Throwable $t) {
@@ -55,7 +55,7 @@ trait ARExtended {
 	 * @return self[]
 	 * @throws Throwable
 	 */
-	public static function findModels($keys): array {
+	public static function findModels($keys):array {
 		$result = [];
 		foreach ($keys as $key) {
 			$model = self::findModel($key);
@@ -80,7 +80,7 @@ trait ARExtended {
 	 * @param array $changedAttributes Массив старых изменённых аттрибутов
 	 * @return array
 	 */
-	public function newAttributes($changedAttributes): array {
+	public function newAttributes($changedAttributes):array {
 		/** @var ActiveRecord $this */
 		$newAttributes = [];
 		$currentAttributes = $this->attributes;
@@ -95,7 +95,7 @@ trait ARExtended {
 	 * @param array $changedAttributes
 	 * @return array
 	 */
-	public function changedAttributes($changedAttributes): array {
+	public function changedAttributes($changedAttributes):array {
 		/** @var ActiveRecord $this */
 		$updatedAttributes = [];
 		$currentAttributes = $this->attributes;
@@ -109,7 +109,7 @@ trait ARExtended {
 	 * Вычисляет разницу между старыми и новыми аттрибутами
 	 * @return array
 	 */
-	public function identifyChangedAttributes(): array {
+	public function identifyChangedAttributes():array {
 		$changedAttributes = [];
 		/** @noinspection ForeachSourceInspection */
 		foreach ($this->attributes as $name => $value) {
@@ -125,7 +125,7 @@ trait ARExtended {
 	 * @param string $name
 	 * @param mixed $value
 	 */
-	public function setAndSaveAttribute($name, $value): void {
+	public function setAndSaveAttribute($name, $value):void {
 		$this->setAttribute($name, $value);
 		$this->save();
 	}
@@ -135,7 +135,7 @@ trait ARExtended {
 	 * Отличается от updateAttributes тем, что триггерит onAfterSave
 	 * @param array $values
 	 */
-	public function setAndSaveAttributes($values): void {
+	public function setAndSaveAttributes($values):void {
 		$this->setAttributes($values, false);
 		$this->save();
 	}
@@ -143,7 +143,7 @@ trait ARExtended {
 	/**
 	 * Универсальная функция удаления любой лайткабовской модели
 	 */
-	public function safeDelete(): void {
+	public function safeDelete():void {
 		if ($this->hasAttribute('deleted')) {
 			$this->setAndSaveAttribute('deleted', !$this->deleted);
 		} else {
@@ -156,7 +156,7 @@ trait ARExtended {
 	 * @param array $arrayData
 	 * @return boolean
 	 */
-	public function loadArray($arrayData): bool {
+	public function loadArray($arrayData):bool {
 		return $this->load($arrayData, '');
 	}
 
@@ -164,7 +164,7 @@ trait ARExtended {
 	 * @param $property
 	 * @return string
 	 */
-	public function asJSON($property): string {
+	public function asJSON($property):string {
 		if (!$this->hasAttribute($property)) throw new RuntimeException("Field $property not exists in the table ".$this::tableName());
 		return json_encode($this->$property, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
 	}

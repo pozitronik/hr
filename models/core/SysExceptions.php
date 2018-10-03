@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\core;
 
@@ -31,21 +31,21 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * @return LCQuery
 	 */
-	public static function find(): LCQuery {
+	public static function find():LCQuery {
 		return new LCQuery(static::class);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public static function tableName(): string {
+	public static function tableName():string {
 		return 'sys_exceptions';
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function rules(): array {
+	public function rules():array {
 		return [
 			[['timestamp', 'get', 'post'], 'safe'],
 			[['user_id', 'code', 'line'], 'integer'],
@@ -58,7 +58,7 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * @inheritdoc
 	 */
-	public function attributeLabels(): array {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'timestamp' => 'Время',
@@ -81,7 +81,7 @@ class SysExceptions extends ActiveRecord {
 	 * @param bool $known_error - Пометить исключение, как известное. Сделано для пометки исключений, с которыми мы ничего сделать не можем (ошибка сторонних сервисов, например).
 	 * @throws Throwable
 	 */
-	public static function log($t, $throw = false, $known_error = false): void {
+	public static function log($t, $throw = false, $known_error = false):void {
 		$logger = new self;
 		try {
 			$logger->setAttributes([
@@ -109,21 +109,21 @@ class SysExceptions extends ActiveRecord {
 	 * @param integer $id
 	 * @throws Throwable
 	 */
-	public static function acknowledgeOne($id): void {
+	public static function acknowledgeOne($id):void {
 		self::findModel($id, new NotFoundHttpException())->updateAttributes(['known' => true]);
 	}
 
 	/**
 	 * Помечаем все записи, как известные
 	 */
-	public static function acknowledgeAll(): void {
+	public static function acknowledgeAll():void {
 		self::updateAll(['known' => true], ['known' => false]);
 	}
 
 	/**
 	 * @return int
 	 */
-	public static function unknownCount(): int {
+	public static function unknownCount():int {
 		return self::find()->unknown()->count();
 	}
 }

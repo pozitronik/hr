@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\controllers\admin\users;
 
@@ -48,7 +48,7 @@ class UsersController extends Controller {
 	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionUpdate(int $id): string {
+	public function actionUpdate(int $id):string {
 		$user = Users::findModel($id, new NotFoundHttpException());
 
 		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $user->classNameShort))) {

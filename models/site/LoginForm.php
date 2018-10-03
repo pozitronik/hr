@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\models\site;
 
@@ -54,7 +54,7 @@ class LoginForm extends Model {
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
 	 */
-	public function validatePassword($attribute): void {
+	public function validatePassword($attribute):void {
 		if (!$this->hasErrors()) {
 			$user = $this->getUser();
 			if (!$user || !$user->validatePassword($this->password)) {
@@ -66,7 +66,7 @@ class LoginForm extends Model {
 	/**
 	 * @return User|null
 	 */
-	public function getUser(): ?User {
+	public function getUser():?User {
 		if (false === $this->_user) {
 			$this->_user = User::findByLogin($this->login);
 		}
@@ -80,7 +80,7 @@ class LoginForm extends Model {
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
 	 */
-	public function validateLogin($attribute): void {
+	public function validateLogin($attribute):void {
 		if (!$this->hasErrors()) {
 			$user = $this->getUser();
 			if (null !== $user && $user->CurrentUser->deleted) {
@@ -93,7 +93,7 @@ class LoginForm extends Model {
 	 * Logs in a user using the provided username and password.
 	 * @return boolean whether the user is logged in successfully
 	 */
-	public function doLogin(): bool {
+	public function doLogin():bool {
 		return ($this->validate() && Yii::$app->user->login($this->getUser(), $this->rememberMe?Date::SECONDS_IN_MONTH:0));
 	}
 }

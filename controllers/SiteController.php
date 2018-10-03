@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace app\controllers;
 
@@ -29,14 +29,14 @@ class SiteController extends Controller {
 	/**
 	 * @return string
 	 */
-	public function actionLogin(): string {
+	public function actionLogin():string {
 
 		$model = new LoginForm();
 		if ($model->load(Yii::$app->request->post()) && $model->doLogin()) {
 			return CurrentUser::goHome();
 
 		}
-		return $this->render('login',[
+		return $this->render('login', [
 			'login' => $model
 		]);
 	}
@@ -44,7 +44,7 @@ class SiteController extends Controller {
 	/**
 	 * @return string
 	 */
-	public function actionIndex(): string {
+	public function actionIndex():string {
 		return $this->render('index');
 	}
 
