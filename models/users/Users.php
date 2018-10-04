@@ -23,6 +23,8 @@ use Throwable;
  * @property string $create_date Дата регистрации
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property int $deleted Флаг удаления
+ *
+ * @property-read string $authKey
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -119,6 +121,13 @@ class Users extends ActiveRecord {
 			return $this->save();
 		}
 		return false;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAuthKey():string {
+		return md5($this->id.md5($this->login));
 	}
 
 }

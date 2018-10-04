@@ -15,7 +15,7 @@ use yii\web\IdentityInterface;
 class User extends BaseObject implements IdentityInterface {
 	private static $users = [];
 	public $id;
-	public $username;
+	public $login;
 	public $password;
 	public $salt;
 	public $authKey;
@@ -44,7 +44,8 @@ class User extends BaseObject implements IdentityInterface {
 				'id' => $data->id,
 				'login' => $data->login,
 				'password' => $data->password,
-				'salt' => $data->salt
+				'salt' => $data->salt,
+				'authKey' => $data->authKey
 			];
 		}
 	}

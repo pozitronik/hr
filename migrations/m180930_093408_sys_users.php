@@ -10,7 +10,7 @@ class m180930_093408_sys_users extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->createTable('sys_users',[
+		$this->createTable('sys_users', [
 			'id' => $this->primaryKey(),
 			'username' => $this->string(255)->notNull()->comment('Отображаемое имя пользователя'),
 			'login' => $this->string(64)->notNull()->comment('Логин'),
