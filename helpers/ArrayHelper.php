@@ -43,4 +43,27 @@ class ArrayHelper extends \yii\helpers\ArrayHelper {
 	public static function loopArrayMerge($array1, $array2):array {
 		return array_merge($array1, array_merge(...$array2));
 	}
+
+	/**
+	 * Ищет значение в многомерном массиве, если находит его, то возвращает массив со всеми ключами до этого элемента
+	 * @param array $array
+	 * @param $search
+	 * @param array $keys
+	 * @return array
+	 */
+	public static function array_find_deep($array, $search, $keys = []):array {
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$sub = self::array_find_deep($value, $search, array_merge($keys, [$key]));
+				if (count($sub)) {
+					return $sub;
+				}
+			} elseif ($value === $search) {
+				return array_merge($keys, [$key]);
+			}
+		}
+
+		return [];
+	}
+
 }
