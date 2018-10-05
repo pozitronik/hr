@@ -244,7 +244,7 @@ class Date {
 				} else {
 					$holidays_started = false;
 				}
-				$period_start = (0 === $stats['days'])?self::getDayEnd($period_start):$period_start + Date::SECONDS_IN_DAY;// разве getDayEnd не всегда будет работать?
+				$period_start = (0 === $stats['days'])?self::getDayEnd($period_start):$period_start + self::SECONDS_IN_DAY;// разве getDayEnd не всегда будет работать?
 				$stats['days']++;
 			}
 			$full_diff = $date_end - $date_start;
@@ -252,7 +252,7 @@ class Date {
 
 		} else {
 			$result = $date_start - $date_end;
-			$stats['days'] = floor($result / Date::SECONDS_IN_DAY) + 1;
+			$stats['days'] = floor($result / self::SECONDS_IN_DAY) + 1;
 		}
 		$stats['result_seconds'] = $result;
 
@@ -288,9 +288,9 @@ class Date {
 		$dtT = new DateTime("@$str_delay");
 		$diff = $dtF->diff($dtT);
 		$periods = [
-			Date::SECONDS_IN_YEAR,
-			Date::SECONDS_IN_DAY,
-			Date::SECONDS_IN_HOUR,
+			self::SECONDS_IN_YEAR,
+			self::SECONDS_IN_DAY,
+			self::SECONDS_IN_HOUR,
 			self::SECONDS_IN_MINUTE,
 			1
 		];// секунд в году|дне|часе|минуте|секунде
