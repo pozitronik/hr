@@ -183,87 +183,10 @@ class Date {
 	}
 
 	/**
-	 * Функция возвращает количество секунд между двумя датами
-	 * @param string $dateStart - строковое представление даты начала
-	 * @param bool|false|string|null $dateEnd - строковое представление даты конца. Если не задано - используется текущее время.
-	 * @param bool|true $ignore_holidays - исключать из подсчёта промежутки, выпадающие на выходные
-	 * @param array $stats = [
-	 *    'result_seconds' => integer подсчитанное количество секунд между двумя датами,
-	 *    'days' => integer количество дней, затронутых итерированных подсчётом,
-	 *    'ignore_holidays' => bool|true флаг, были ли исключены выходные и праздники из подсчёта,
-	 *    'holidays' => [
-	 *        'timestamp' => unix_timestamp вычисленного выходного,
-	 *        'date' => string дата вычисленного выходного,
-	 *        'diff_seconds' => integer дельта времени для этого выходного,
-	 *        'diff_time' => string строковая дельта
-	 *    ] данные по каждому выходному,
-	 *    'holiday_start_diff_seconds' => integer|false если заявка началась в выходной день, то дельта времени до первого рабочего дня, иначе false
-	 * ]
-	 * @return int
-	 */
-	public static function SummaryTime($dateStart, $dateEnd = false, $ignore_holidays = true, &$stats = []):int {
-		if (false === $dateEnd) $dateEnd = null;
-
-		$date_start = date_timestamp_get(date_create($dateStart));
-		$date_end = date_timestamp_get(date_create($dateEnd));
-
-		if (0 === $dateStart) /** @noinspection PhpParamsInspection */
-			return date_timestamp_get($date_end);//todo: это не будет работать, date_timestamp_get ждёт DateTime, а тут будет int. Возможно, условие будет работать только при date_end == null
-
-		/*Алгоритм аналогичен lightcab.SUMMARY_TIME*/
-
-		$stats = [
-			'ignore_holidays' => $ignore_holidays,
-			'holidays' => [],
-			'holiday_start_diff_seconds' => false
-		];
-
-		if ($ignore_holidays) {
-
-			$period_start = $date_start;
-			$period_end = self::getDayEnd($date_end);
-			$holiday_diff = 0;
-
-			$holidays_started = false;//флаг, что заявка стартанула в выходной, и следующий день надо тоже считать
-			$stats['days'] = 0;
-			while ($period_start < $period_end) {
-				if (self::isHoliday($period_start)) {
-					$diff = self::getDayEnd($period_start) - $period_start;
-					$holiday_diff += $diff;
-					if ($holidays_started || 0 === $stats['days']) {//заявка стартует в первый день
-						$stats['holiday_start_diff_seconds'] += $diff;
-						$holidays_started = true;//поставим флаг, если следующий день выходной, то и его дифф включим
-					}
-					$stats['holidays'][] = [
-						'timestamp' => $period_start,
-						'date' => date('d-m-Y', $period_start),
-						'diff_seconds' => $diff,
-						'diff_time' => self::seconds2times($diff)
-					];
-
-				} else {
-					$holidays_started = false;
-				}
-				$period_start = (0 === $stats['days'])?self::getDayEnd($period_start):$period_start + self::SECONDS_IN_DAY;// разве getDayEnd не всегда будет работать?
-				$stats['days']++;
-			}
-			$full_diff = $date_end - $date_start;
-			$result = $full_diff - $holiday_diff;
-
-		} else {
-			$result = $date_start - $date_end;
-			$stats['days'] = floor($result / self::SECONDS_IN_DAY) + 1;
-		}
-		$stats['result_seconds'] = $result;
-
-		return $result;
-	}
-
-	/**
 	 * @param integer $date - timestamp
 	 * @return int
 	 */
-	private static function getDayEnd($date):int {
+	public static function getDayEnd($date):int {
 		return mktime(0, 0, 0, date("m", $date), date("d", $date) + 1, date("y", $date));
 	}
 
@@ -322,7 +245,6 @@ class Date {
 	public static function from_unix_timestamp($timestamp) {
 		return date("Y-m-d H:i:s", $timestamp);
 	}
-
 
 	/**
 	 * @param array $interval
