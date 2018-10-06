@@ -21,16 +21,19 @@ use Throwable;
  * @property string $email email
  * @property string $comment Служебный комментарий пользователя
  * @property string $create_date Дата регистрации
+ * @property string $profile_image Название файла фотографии профиля
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property int $deleted Флаг удаления
  *
  * @property-read string $authKey
- * @property-read string $avatar;
+ * @property-read string $avatar
  * @property-read string $personal_number
  * @property-read string $phone
  */
 class Users extends ActiveRecord {
 	use ARExtended;
+
+	const PROFILE_IMAGE_DIRECTORY = '@web/profile_photos/';
 
 	/**
 	 * {@inheritdoc}
@@ -55,7 +58,7 @@ class Users extends ActiveRecord {
 			[['comment'], 'string'],
 			[['create_date'], 'safe'],
 			[['daddy', 'deleted'], 'integer'],
-			[['username', 'password', 'salt', 'email'], 'string', 'max' => 255],
+			[['username', 'password', 'salt', 'email', 'profile_image'], 'string', 'max' => 255],
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique']
@@ -139,7 +142,7 @@ class Users extends ActiveRecord {
 	 * @return string
 	 */
 	public function getAvatar():string {
-		return "/img/avatar.jpg";
+		return file_exists(self::PROFILE_IMAGE_DIRECTORY.$this->profile_image)?self::PROFILE_IMAGE_DIRECTORY.$this->profile_image:"/img/avatar.jpg";
 	}
 
 	/**
