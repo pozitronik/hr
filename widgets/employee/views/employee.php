@@ -1,17 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-/**
- * Главная страница пользователя при входе
- * @var View $this
- * @var Users $model
- */
+/* @var View $this */
+
+/* @var Users $model */
 
 use app\models\users\Users;
-use yii\helpers\Html;
 use yii\web\View;
+use yii\helpers\Html;
 
-$this->title = 'Панель управления';
 ?>
 <div class="fixed-fluid">
 	<div class="fixed-sm-200 fixed-lg-250 pull-sm-left">
@@ -54,7 +51,7 @@ $this->title = 'Панель управления';
 								'contenteditable' => empty($model->email),
 								'id' => 'user_email_edit',
 								'data-id' => $model->id,
-								'title' => empty($model->email)?'Нажмите для редактирования':'Редактирование не возможно',
+								'title' => empty($model->email)?'Нажмите для редактирования':'Редактирование невозможно',
 								'class' => 'editable'
 							]
 						); ?>
@@ -64,22 +61,6 @@ $this->title = 'Панель управления';
 						<?= Html::a('Изменить пароль', ['users/change-password']); ?>
 					</li>
 				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="fluid">
-		<div class="fixed-fluid">
-			<div class="fluid">
-				<div class="panel">
-					<div class="panel-heading">
-						<h3 class="panel-title">Команда "Пятничные алкаши"</h3>
-					</div>
-					<div class="panel-body">
-						<?= \app\widgets\employee\EmployeeWidget::widget([
-							'user' => Users::findModel(1)
-						]) ?>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
