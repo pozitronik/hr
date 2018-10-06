@@ -21,7 +21,7 @@ $this->title = 'Вход';
 				<div class="col-md-4"></div>
 			</div>
 			<h1 class="h3">Вход</h1>
-			<p>Пожалуйста, введите данные для идентификации в системе:</p>
+			<p>Приготовьтесь войти в неизведанное</p>
 		</div>
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="form-group">

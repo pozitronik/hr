@@ -2,18 +2,17 @@
 declare(strict_types = 1);
 
 /**
- * Основной шаблон страницы авторизации
- * @author Moiseenko-EA
- * @date 10.08.2017
- * @time 16:46
  *
- * @var \yii\web\View $this
+ * @var View $this
  * @var string $content
  */
 
 use yii\helpers\Html;
 use app\helpers\ArrayHelper;
+use yii\web\View;
+use app\assets\LoginAsset;
 
+LoginAsset::register($this);
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage(); ?>

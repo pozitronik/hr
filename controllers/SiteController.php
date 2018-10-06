@@ -30,7 +30,7 @@ class SiteController extends Controller {
 	 * @return string
 	 */
 	public function actionLogin():string {
-
+		$this->layout = 'login';
 		$model = new LoginForm();
 		if ($model->load(Yii::$app->request->post()) && $model->doLogin()) {
 			return CurrentUser::goHome();
