@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\template
  */
 class TemplateWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/components/template/assets';
+	public $sourcePath = '@app/widgets/template/assets';
 	public $css = [
 		'css/template.css'
 	];
