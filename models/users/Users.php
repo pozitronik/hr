@@ -26,6 +26,10 @@ use Throwable;
  * @property int $deleted Флаг удаления
  *
  * @property-read string $authKey
+ *
+ * ***************************
+ *
+ * ***************************
  * @property-read string $avatar
  * @property-read string $personal_number
  * @property-read string $phone
