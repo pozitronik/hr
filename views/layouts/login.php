@@ -13,6 +13,9 @@ use yii\web\View;
 use app\assets\LoginAsset;
 
 LoginAsset::register($this);
+$this->registerJs("particlesJS.load('bg-overlay', '/js/particles.js/particles.json', function() {
+  console.log('callback - particles.js config loaded');
+});")
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage(); ?>

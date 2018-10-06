@@ -14,13 +14,15 @@ class LoginAsset extends AssetBundle {
 	public $basePath = '@webroot';
 	public $baseUrl = '@web';
 	public $css = [
-		'template/nifty/css/nifty.min.css',
+		'templates/nifty/css/nifty.min.css',
 		'css/login.css'
 	];
+
 
 	public $depends = [
 		AppAsset::class,
 		YiiAsset::class,
 		BootstrapAsset::class,
+		Particles::class
 	];
 }
