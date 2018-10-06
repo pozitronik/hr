@@ -6,7 +6,7 @@ namespace app\controllers;
 use app\models\user\CurrentUser;
 use app\models\site\LoginForm;
 use Yii;
-use yii\base\Response;
+use yii\web\Response;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 
@@ -28,9 +28,9 @@ class SiteController extends Controller {
 	}
 
 	/**
-	 * @return string
+	 * @return string|Response
 	 */
-	public function actionLogin():string {
+	public function actionLogin() {
 		$this->layout = 'login';
 		$model = new LoginForm();
 		if ($model->load(Yii::$app->request->post()) && $model->doLogin()) {

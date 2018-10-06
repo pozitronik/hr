@@ -25,6 +25,9 @@ use Throwable;
  * @property int $deleted Флаг удаления
  *
  * @property-read string $authKey
+ * @property-read string $avatar;
+ * @property-read string $personal_number
+ * @property-read string $phone
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -128,6 +131,29 @@ class Users extends ActiveRecord {
 	 */
 	public function getAuthKey():string {
 		return md5($this->id.md5($this->login));
+	}
+
+	/*Прототипирование*/
+
+	/**
+	 * @return string
+	 */
+	public function getAvatar():string {
+		return "/img/avatar.jpg";
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getPersonal_number():?string {
+		return null;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getPhone():?string {
+		return null;
 	}
 
 }

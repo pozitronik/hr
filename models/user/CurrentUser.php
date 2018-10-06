@@ -17,7 +17,6 @@ class CurrentUser extends User {
 
 	/**
 	 * Отправляет на домашнюю страницу
-	 * @return Response
 	 */
 	public static function goHome():Response {
 		return Yii::$app->response->redirect("home/index");
@@ -39,6 +38,7 @@ class CurrentUser extends User {
 
 	/**
 	 * @return Users
+	 * @throws \Throwable
 	 */
 	public static function User():Users {
 		return Users::findModel(self::Id());
