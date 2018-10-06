@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\models\user\CurrentUser;
 use app\models\site\LoginForm;
 use Yii;
+use yii\base\Response;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 
@@ -42,10 +43,10 @@ class SiteController extends Controller {
 	}
 
 	/**
-	 * @return string
+	 * @return string|Response
 	 */
-	public function actionIndex():string {
-		return $this->render('index');
+	public function actionIndex() {
+		return CurrentUser::isGuest()?$this->redirect('site/login'):CurrentUser::goHome();
 	}
 
 }

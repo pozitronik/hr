@@ -27,4 +27,11 @@ class CurrentUser extends User {
 	public static function Id():?int {
 		return Yii::$app->user->id;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public static function isGuest():bool {
+		return Yii::$app->user->isGuest;
+	}
 }
