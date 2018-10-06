@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\employees;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "employees".
@@ -11,32 +12,32 @@ use Yii;
  * @property string $name ФИО
  * @property int $deleted
  */
-class Employees extends \yii\db\ActiveRecord {
+class Employees extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'employees';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['deleted'], 'integer'],
-			[['name'], 'string', 'max' => 512],
+			[['name'], 'string', 'max' => 512]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'name' => 'ФИО',
-			'deleted' => 'Deleted',
+			'deleted' => 'Deleted'
 		];
 	}
 }

@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\workgroups;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "workgroups".
@@ -12,34 +13,34 @@ use Yii;
  * @property string $comment Описание
  * @property int $deleted
  */
-class Workgroups extends \yii\db\ActiveRecord {
+class Workgroups extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'workgroups';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['comment'], 'string'],
 			[['deleted'], 'integer'],
-			[['name'], 'string', 'max' => 512],
+			[['name'], 'string', 'max' => 512]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
 			'comment' => 'Описание',
-			'deleted' => 'Deleted',
+			'deleted' => 'Deleted'
 		];
 	}
 }

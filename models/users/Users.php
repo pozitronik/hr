@@ -37,7 +37,7 @@ use Throwable;
 class Users extends ActiveRecord {
 	use ARExtended;
 
-	const PROFILE_IMAGE_DIRECTORY = '@web/profile_photos/';
+	public const PROFILE_IMAGE_DIRECTORY = '@web/profile_photos/';
 
 	/**
 	 * {@inheritdoc}
