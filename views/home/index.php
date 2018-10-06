@@ -72,7 +72,7 @@ $this->title = 'Панель управления';
 			<div class="fluid">
 				<div class="panel">
 					<div class="panel-heading">
-						<h3 class="panel-title">Уведомления в Telegram</h3>
+						<h3 class="panel-title">Команда "Пятничные алкаши"</h3>
 					</div>
 					<div class="panel-body">
 					</div>
