@@ -1,10 +1,13 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\core;
 
 use ReflectionClass;
+use ReflectionException;
 use Yii;
 use app\helpers\Path;
+use yii\base\UnknownClassException;
 use yii\web\Controller;
 
 /**
@@ -45,13 +48,15 @@ class Magic {
 	 * Загружает динамически класс веб-контроллера Yii2 по его пути
 	 * @param string $fileName
 	 * @return Controller|false
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public static function GetController($fileName) {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 
 		Yii::autoload($className);
-		$class = (new ReflectionClass($className));
-		if ($class->isSubclassOf('yii\web\Controller')) {
+		$class = new ReflectionClass($className);
+		if ($class->isSubclassOf(Controller::class)) {
 			return new $className(self::ExtractControllerId($className), Yii::$app);
 		}
 		return false;

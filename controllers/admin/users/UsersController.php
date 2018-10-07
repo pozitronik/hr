@@ -28,7 +28,7 @@ class UsersController extends Controller {
 		];
 	}
 
-	public function actionIndex(){
+	public function actionIndex():void {
 		echo $this->id;
 		echo "this is index";
 	}

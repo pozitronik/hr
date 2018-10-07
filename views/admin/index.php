@@ -8,6 +8,7 @@ declare(strict_types = 1);
 
 use yii\helpers\Html;
 use yii\web\Controller;
+use yii\web\View;
 
 foreach ($controllers as $controller) {
 	echo Html::a("Открыть","{$controller->route}/{$controller->defaultAction}");
