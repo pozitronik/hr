@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\user;
 
 use app\models\users\Users;
+use Throwable;
 use Yii;
 use yii\web\Response;
 
@@ -37,10 +38,10 @@ class CurrentUser extends User {
 	}
 
 	/**
-	 * @return Users
-	 * @throws \Throwable
+	 * @return Users|false
+	 * @throws Throwable
 	 */
-	public static function User():Users {
+	public static function User() {
 		return Users::findModel(self::Id());
 	}
 }

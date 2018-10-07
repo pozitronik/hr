@@ -42,11 +42,16 @@ class SiteController extends Controller {
 		]);
 	}
 
+	public function actionLogout(){
+		Yii::$app->user->logout();
+		$this->redirect('index');
+	}
+
 	/**
 	 * @return string|Response
 	 */
 	public function actionIndex() {
-		return CurrentUser::isGuest()?$this->redirect('site/login'):CurrentUser::goHome();
+		return CurrentUser::isGuest()?$this->redirect(['site/login']):CurrentUser::goHome();
 	}
 
 }
