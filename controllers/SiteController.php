@@ -42,7 +42,7 @@ class SiteController extends Controller {
 		]);
 	}
 
-	public function actionLogout(){
+	public function actionLogout():void {
 		Yii::$app->user->logout();
 		$this->redirect('index');
 	}
