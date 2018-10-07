@@ -6,10 +6,12 @@ declare(strict_types = 1);
  * @var Controller[] $controllers
  **/
 
-use yii\helpers\Html;
+use app\widgets\admin_control\Admin_controlWidget;
 use yii\web\Controller;
 use yii\web\View;
 
 foreach ($controllers as $controller) {
-	echo Html::a("Открыть",["{$controller->route}/{$controller->defaultAction}"]);
+	echo Admin_controlWidget::widget([
+		'model' => $controller
+	]);
 }

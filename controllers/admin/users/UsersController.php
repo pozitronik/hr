@@ -16,6 +16,8 @@ use yii\web\Response;
  * Class UsersController
  */
 class UsersController extends Controller {
+	public $menuCaption = "Пользователи";
+	public $menuIcon = "\img\admin\users.png";
 
 	/**
 	 * @inheritdoc
