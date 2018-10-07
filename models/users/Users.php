@@ -7,8 +7,10 @@ use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\user\CurrentUser;
+use app\models\workgroups\Workgroups;
 use yii\db\ActiveRecord;
 use Throwable;
+use Yii;
 
 /**
  * This is the model class for table "sys_users".
@@ -33,11 +35,12 @@ use Throwable;
  * @property-read string $avatar
  * @property-read string $personal_number
  * @property-read string $phone
+ * @property-read Workgroups[] $workgroups
  */
 class Users extends ActiveRecord {
 	use ARExtended;
 
-	public const PROFILE_IMAGE_DIRECTORY = '@web/profile_photos/';
+	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
 	/**
 	 * {@inheritdoc}
@@ -146,7 +149,8 @@ class Users extends ActiveRecord {
 	 * @return string
 	 */
 	public function getAvatar():string {
-		return file_exists(self::PROFILE_IMAGE_DIRECTORY.$this->profile_image)?self::PROFILE_IMAGE_DIRECTORY.$this->profile_image:"/img/avatar.jpg";
+		if (null === $this->profile_image) $this->profile_image = $this->id.".png";
+		return file_exists(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY.$this->profile_image))?"/profile_photos/{$this->profile_image}":"/img/avatar.jpg";
 	}
 
 	/**
@@ -161,6 +165,30 @@ class Users extends ActiveRecord {
 	 */
 	public function getPhone():?string {
 		return null;
+	}
+
+	/**
+	 * @return Workgroups[]
+	 */
+	public function getWorkgroups():array {
+		return [
+			new Workgroups([
+				'id' => 1,
+				'name' => 'Пятничные алкаши',
+				'comment' => 'Каждый день - праздник',
+			]),
+			new Workgroups([
+				'id' => 2,
+				'name' => 'Братство ножа и топора',
+				'comment' => 'Несите ваши денежки',
+			]),
+			new Workgroups([
+				'id' => 3,
+				'name' => 'Разработчики',
+				'comment' => 'Кто пишет софт? Мы пишем софт.',
+			]),
+
+		];
 	}
 
 }
