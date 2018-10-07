@@ -1,8 +1,8 @@
 .crown {
 	background-image: url('../img/crown.png');
 	width: 218px;
-	position: fixed;
-	top: 38px;
+	position: relative;
+	top: 35px;
 	height: 80px;
 	background-size: contain;
 	background-position: center;

@@ -10,7 +10,7 @@ use yii\web\View;
 use yii\helpers\Html;
 
 ?>
-<div class="fixed-fluid">
+<div class="fixed-fluid pull-left">
 	<div class="fixed-sm-200 fixed-lg-200 pull-sm-left">
 		<div class="panel">
 			<div class="text-center pad-all bord-btm">
