@@ -1,0 +1,10 @@
+.crown {
+	background-image: url('../img/crown.png');
+	width: 218px;
+	position: fixed;
+	top: 38px;
+	height: 80px;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}

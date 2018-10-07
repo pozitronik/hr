@@ -11,6 +11,7 @@ use yii\base\Widget;
  */
 class EmployeeWidget extends Widget {
 	public $user;
+	public $mode = 'employee';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -25,8 +26,14 @@ class EmployeeWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('employee', [
+		if ('employee' === $this->mode) {
+			return $this->render('employee', [
+				'model' => $this->user
+			]);
+		}
+		return $this->render('boss', [
 			'model' => $this->user
 		]);
+
 	}
 }
