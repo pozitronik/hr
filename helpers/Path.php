@@ -28,4 +28,13 @@ class Path {
 		}
 		return true;
 	}
+
+	/**
+	 * @param $filename
+	 * @param string $new_extension
+	 * @return string
+	 */
+	public static function ChangeFileExtension($filename, $new_extension = ''):string {
+		return pathinfo($filename, PATHINFO_FILENAME).$new_extension;
+	}
 }
