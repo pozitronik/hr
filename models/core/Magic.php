@@ -59,4 +59,15 @@ class Magic {
 		}
 		return false;
 	}
+
+	/**
+	 * @param $controller
+	 * @param $property
+	 * @return bool
+	 * @throws ReflectionException
+	 */
+	public static function hasProperty($controller, $property):bool {
+		return (new ReflectionClass($controller))->hasProperty($property);
+	}
+
 }
