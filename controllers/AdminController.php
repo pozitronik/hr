@@ -23,7 +23,7 @@ class AdminController extends Controller {
 	 */
 	public function actionIndex() {
 		return $this->render('index', [
-			'controllers' => $this->getAdminControllersList()
+			'controllers' => $this->GetAdminControllersList()
 		]);
 	}
 
@@ -31,7 +31,7 @@ class AdminController extends Controller {
 	 * Выгружает список контроллеров в указанном неймспейсе
 	 * @return Controller[]
 	 */
-	private function getAdminControllersList() {
+	private function GetAdminControllersList() {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias(self::CONTROLLERS_DIRECTORY)), RecursiveIteratorIterator::SELF_FIRST);
