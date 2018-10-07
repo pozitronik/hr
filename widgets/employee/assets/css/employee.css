@@ -3,6 +3,7 @@
 	width: 218px;
 	position: relative;
 	top: 35px;
+	margin-top: -35px;
 	height: 80px;
 	background-size: contain;
 	background-position: center;
