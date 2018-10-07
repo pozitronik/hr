@@ -11,5 +11,5 @@ use yii\web\Controller;
 use yii\web\View;
 
 foreach ($controllers as $controller) {
-	echo Html::a("Открыть","{$controller->route}/{$controller->defaultAction}");
+	echo Html::a("Открыть",["{$controller->route}/{$controller->defaultAction}"]);
 }

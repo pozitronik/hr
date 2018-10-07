@@ -38,10 +38,8 @@ class Magic {
 	 * @return false|string
 	 */
 	private static function ExtractControllerId($className) {
-//todo
-		//		Yii::$app->controllerPath;
-		return preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className);
-//		return 'users/users';
+		$id =  mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
+		return "admin/{$id}/{$id}";//todo make more smarty
 	}
 
 	/**
