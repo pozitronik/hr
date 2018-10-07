@@ -28,6 +28,11 @@ class UsersController extends Controller {
 		];
 	}
 
+	public function actionIndex(){
+		echo $this->id;
+		echo "this is index";
+	}
+
 	/**
 	 * @return string|Response
 	 * @throws Throwable
