@@ -20,7 +20,7 @@ class CurrentUser extends User {
 	 * Отправляет на домашнюю страницу
 	 */
 	public static function goHome():Response {
-		return Yii::$app->response->redirect(["site/index"]);
+		return Yii::$app->response->redirect(["home/index"]);
 	}
 
 	/**
