@@ -73,15 +73,16 @@ class Workgroups extends ActiveRecord {
 				return [
 					new Users([
 						'id' => 5,
-						'username' => 'Артемий Лебедев'
+						'username' => 'Пабло Эскобар'
 					]),
 					new Users([
 						'id' => 6,
-						'username' => 'Юрий Дудь'
+						'username' => 'Свинка Пеппа'
 					]),
 					new Users([
 						'id' => 7,
-						'username' => 'Гомер Симпсон'
+						'profile_image' => '7.gif',
+						'username' => 'Малосольный Пончик'
 					]),
 				];
 			break;
@@ -89,15 +90,15 @@ class Workgroups extends ActiveRecord {
 				return [
 					new Users([
 						'id' => 8,
-						'username' => 'Артемий Лебедев'
+						'username' => 'Медведь Шатун'
 					]),
 					new Users([
 						'id' => 9,
-						'username' => 'Юрий Дудь'
+						'username' => 'Генадий Викторович'
 					]),
 					new Users([
 						'id' => 10,
-						'username' => 'Гомер Симпсон'
+						'username' => 'Соседка по комнате'
 					]),
 				];
 			break;

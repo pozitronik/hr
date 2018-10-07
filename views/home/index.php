@@ -10,20 +10,18 @@ declare(strict_types = 1);
 use app\models\users\Users;
 use yii\web\View;
 use app\widgets\employee\EmployeeWidget;
+use app\widgets\workgroup\WorkgroupWidget;
 
 $this->title = 'Панель управления';
 ?>
 <?= EmployeeWidget::widget([
-	'user' => Users::findModel(1),
+	'user' => $model,
 	'mode' => 'boss'
 ]) ?>
-<div class="panel">
-	<div class="panel-heading">
-		<h3 class="panel-title">Команда "Пятничные алкаши"</h3>
-	</div>
-	<div class="panel-body">
-		<?= EmployeeWidget::widget([
-			'user' => Users::findModel(1)
-		]) ?>
-	</div>
-</div>
+
+<?php foreach ($model->workgroups as $workgroup): ?>
+	<?= WorkgroupWidget::widget([
+		'workgroup' => $workgroup,
+		'user' => $model
+	]) ?>
+<?php endforeach;?>

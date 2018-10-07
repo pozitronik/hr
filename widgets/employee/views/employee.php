@@ -17,7 +17,7 @@ use yii\helpers\Html;
 				<div class="pad-ver">
 					<img src="<?= $model->avatar; ?>" class="img-lg img-border img-circle" alt="<?= $model->username; ?>">
 				</div>
-				<h4 class="text-lg mar-no"><?= $model->username; ?></h4>
+				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= $model->username; ?></h4>
 			</div>
 			<div class="mar-btm">
 				<p class="text-semibold text-main pad-all mar-no">Личная информация</p>
