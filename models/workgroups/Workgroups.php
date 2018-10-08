@@ -66,7 +66,7 @@ class Workgroups extends ActiveRecord {
 					new Users([
 						'id' => 4,
 						'username' => 'Гомер Симпсон'
-					]),
+					])
 				];
 			break;
 			case 2:
@@ -83,7 +83,7 @@ class Workgroups extends ActiveRecord {
 						'id' => 7,
 						'profile_image' => '7.gif',
 						'username' => 'Малосольный Пончик'
-					]),
+					])
 				];
 			break;
 			default:
@@ -99,7 +99,7 @@ class Workgroups extends ActiveRecord {
 					new Users([
 						'id' => 10,
 						'username' => 'Соседка по комнате'
-					]),
+					])
 				];
 			break;
 		}

@@ -175,18 +175,18 @@ class Users extends ActiveRecord {
 			new Workgroups([
 				'id' => 1,
 				'name' => 'Пятничные алкаши',
-				'comment' => 'Каждый день - праздник',
+				'comment' => 'Каждый день - праздник'
 			]),
 			new Workgroups([
 				'id' => 2,
 				'name' => 'Братство ножа и топора',
-				'comment' => 'Несите ваши денежки',
+				'comment' => 'Несите ваши денежки'
 			]),
 			new Workgroups([
 				'id' => 3,
 				'name' => 'Разработчики',
-				'comment' => 'Кто пишет софт? Мы пишем софт.',
-			]),
+				'comment' => 'Кто пишет софт? Мы пишем софт.'
+			])
 
 		];
 	}

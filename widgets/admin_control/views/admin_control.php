@@ -10,9 +10,9 @@ use yii\web\Controller;
 use yii\web\View;
 use yii\helpers\Html;
 
-$icon_url = (Magic::hasProperty($model,'menuIcon'))?$model->menuIcon:"/img/admin/widget.png";
+$icon_url = Magic::hasProperty($model,'menuIcon')?$model->menuIcon:"/img/admin/widget.png";
 $action = ["{$model->route}/{$model->defaultAction}"];
-$caption = (Magic::hasProperty($model,'menuCaption'))?$model->menuCaption:$model->id;
+$caption = Magic::hasProperty($model,'menuCaption')?$model->menuCaption:$model->id;
 ?>
 <?= Html::a('<div class="fixed-fluid">
 	<div class="fixed-sm-200 fixed-lg-200 pull-sm-left">

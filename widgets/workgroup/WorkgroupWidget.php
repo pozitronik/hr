@@ -28,8 +28,8 @@ class WorkgroupWidget extends Widget {
 	 */
 	public function run():string {
 		return $this->render('workgroup', [
-			'workgroup' => $this->workgroup,
-			'user' => $this->user
+			'workgroup' => $this->workgroup
+//			'user' => $this->user
 		]);
 	}
 }
