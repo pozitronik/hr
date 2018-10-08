@@ -30,3 +30,13 @@
 .navbar-header:before {
 	content: none;
 }
+
+.mega-dropdown-menu {
+	min-width: 800px;
+}
+
+.open.mega-dropdown>.mega-dropdown-toggle:before, .open.mega-dropdown>.mega-dropdown-toggle:after {
+	content: none;
+	border: none;
+	display: none;
+}

@@ -191,4 +191,13 @@ class Users extends ActiveRecord {
 		];
 	}
 
+	/**
+	 * prototype
+	 * @param $access
+	 * @return bool
+	 */
+	public function is($access): bool{
+		return true;
+	}
+
 }

@@ -28,18 +28,16 @@ use yii\helpers\Html;
 							</div>
 						</div>
 					</a>
-					<div class="dropdown-menu mega-dropdown-menu" style="min-width: 800px;">
+					<div class="dropdown-menu mega-dropdown-menu">
 						<div class="row">
 							<div class="col-sm-4 col-md-3">
 
 								<!--Mega menu list-->
 								<ul class="list-unstyled">
-									<li class="dropdown-header"><i class="demo-pli-file icon-fw"></i> Pages</li>
-									<li><a href="#">Profile</a></li>
-									<li><a href="#">Search Result</a></li>
-									<li><a href="#">FAQ</a></li>
-									<li><a href="#">Sreen Lock</a></li>
-									<li><a href="#" class="disabled">Disabled</a></li>
+									<li class="dropdown-header">Навигация</li>
+									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Команды</p><small class="text-muted">Рабочие группы в сфере моей ответственности</small></div>', ["home/index"]); ?></li>
+									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Компетенции</p><small class="text-muted">Мои полномочия, обязанности и задачи</small></div>', ["home/index"]); ?></li>
+									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Матрица ресурсов</p><small class="text-muted">Матрица связей рабочих групп</small></div>', ["home/index"]); ?></li>
 								</ul>
 
 							</div>
@@ -47,64 +45,16 @@ use yii\helpers\Html;
 
 								<!--Mega menu list-->
 								<ul class="list-unstyled">
-									<li class="dropdown-header"><i class="demo-pli-mail icon-fw"></i> Mailbox</li>
-									<li><a href="#"><span class="pull-right label label-danger">Hot</span>Indox</a>
+									<li class="dropdown-header">Избранное</li>
+									<li><a href="#"><span class="pull-right label label-danger">Важно</span>Задачи</a>
 									</li>
-									<li><a href="#">Read Message</a></li>
-									<li><a href="#">Compose</a></li>
+									<li><a href="#">Календарь</a></li>
 								</ul>
-								<p class="pad-top mar-top bord-top text-sm">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+								<p class="pad-top mar-top bord-top text-sm">Чтобы добавить текущую страницу в избранное нажмите <?= Html::a('здесь', ['#'], ['class' => 'btn btn-default btn-xs']); ?></p>
 							</div>
-							<div class="col-sm-4 col-md-3">
-								<!--Mega menu list-->
-								<ul class="list-unstyled">
-									<li>
-										<a href="#" class="media mar-btm">
-											<span class="badge badge-success pull-right">90%</span>
-											<div class="media-left">
-												<i class="demo-pli-data-settings icon-2x"></i>
-											</div>
-											<div class="media-body">
-												<p class="text-semibold text-dark mar-no">Data Backup</p>
-												<small class="text-muted">This is the item description</small>
-											</div>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="media mar-btm">
-											<div class="media-left">
-												<i class="demo-pli-support icon-2x"></i>
-											</div>
-											<div class="media-body">
-												<p class="text-semibold text-dark mar-no">Support</p>
-												<small class="text-muted">This is the item description</small>
-											</div>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="media mar-btm">
-											<div class="media-left">
-												<i class="demo-pli-computer-secure icon-2x"></i>
-											</div>
-											<div class="media-body">
-												<p class="text-semibold text-dark mar-no">Security</p>
-												<small class="text-muted">This is the item description</small>
-											</div>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="media mar-btm">
-											<div class="media-left">
-												<i class="demo-pli-map-2 icon-2x"></i>
-											</div>
-											<div class="media-body">
-												<p class="text-semibold text-dark mar-no">Location</p>
-												<small class="text-muted">This is the item description</small>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
+							<?php if($user->is('admin')): ?>
+
+							<?php endif; ?>
 							<div class="col-sm-12 col-md-3">
 								<p class="dropdown-header"><i class="demo-pli-file-jpg icon-fw"></i> Gallery</p>
 								<ul class="list-unstyled list-inline text-justify">
