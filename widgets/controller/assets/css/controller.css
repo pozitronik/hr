@@ -1,0 +1,13 @@
+.panel-icon {
+	width: 64px;
+	height: 64px;
+}
+
+.panel-icon img {
+	width: 64px;
+	height: 64px;
+}
+
+.dropdown-menu.mega-dropdown-menu .list-unstyled li a.icon:hover {
+	background-color: transparent;
+}

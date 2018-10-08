@@ -3,14 +3,11 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
+use app\models\core\WigetableController;
 use ReflectionException;
-use Yii;
 use yii\base\Response;
 use yii\base\UnknownClassException;
 use yii\web\Controller;
-use app\models\core\Magic;
 
 /**
  * Class AdminController
@@ -27,27 +24,9 @@ class AdminController extends Controller {
 	 */
 	public function actionIndex() {
 		return $this->render('index', [
-			'controllers' => $this->GetAdminControllersList()
+			'controllers' =>  WigetableController::GetControllersList(self::CONTROLLERS_DIRECTORY)
 		]);
 	}
 
-	/**
-	 * Выгружает список контроллеров в указанном неймспейсе
-	 * @return Controller[]
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
-	 */
-	private function GetAdminControllersList():array {
-		$result = [];
-
-		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias(self::CONTROLLERS_DIRECTORY)), RecursiveIteratorIterator::SELF_FIRST);
-		/** @var RecursiveDirectoryIterator $file */
-		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && false !== $controller = Magic::GetController($file->getRealPath())) {
-				$result[] = $controller;
-			}
-		}
-		return $result;
-	}
 
 }

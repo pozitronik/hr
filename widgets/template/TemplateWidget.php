@@ -17,7 +17,7 @@ class TemplateWidget extends Widget {
 	 */
 	public function init() {
 		parent::init();
-		TemplateWidgetAssets::register($this->getView());
+		AdminPanelWidgetAssets::register($this->getView());
 	}
 
 	/**

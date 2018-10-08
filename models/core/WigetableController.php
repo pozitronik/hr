@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use Yii;
 use yii\web\Controller;
 
 /**
@@ -28,5 +31,24 @@ class WigetableController extends Controller {
 	 */
 	public function getMenuCaption() {
 		return false;
+	}
+
+	/**
+	 * Выгружает список контроллеров в указанном неймспейсе
+	 * @return Controller[]
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
+	 */
+	public static function GetControllersList($path):array {
+		$result = [];
+
+		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
+		/** @var RecursiveDirectoryIterator $file */
+		foreach ($files as $file) {
+			if ($file->isFile() && 'php' === $file->getExtension() && false !== $controller = Magic::GetController($file->getRealPath())) {
+				$result[] = $controller;
+			}
+		}
+		return $result;
 	}
 }

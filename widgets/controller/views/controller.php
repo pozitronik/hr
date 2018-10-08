@@ -8,23 +8,27 @@ declare(strict_types = 1);
 use app\models\core\Magic;
 use app\models\core\WigetableController;
 use yii\web\View;
-use yii\helpers\Html;
+use yii\helpers\Url;
 
-$icon_url = Magic::hasProperty($model,'menuIcon')?$model->menuIcon:"/img/admin/widget.png";
+$icon_url = Magic::hasProperty($model, 'menuIcon')?$model->menuIcon:"/img/admin/widget.png";//todo
 $action = ["{$model->route}/{$model->defaultAction}"];
-$caption = Magic::hasProperty($model,'menuCaption')?$model->menuCaption:$model->id;
+$caption = Magic::hasProperty($model, 'menuCaption')?$model->menuCaption:$model->id;
 ?>
-<?= Html::a('<div class="fixed-fluid">
-	<div class="fixed-sm-200 fixed-lg-200 pull-sm-left">
-		<div class="panel">
-			<div class="text-center pad-all bord-btm">
-				<div class="pad-ver">
-					<img src="'.$icon_url.'" class="img-lg img-border img-circle">
+
+<a href="<?= Url::toRoute($action); ?>" class="icon">
+	<div class="fixed-fluid">
+		<div class="pull-sm-left">
+			<div class="panel panel-icon">
+				<div class="panel-body">
+					<div class="text-center bord-btm">
+						<img src="<?= $icon_url ?>">
+					</div>
 				</div>
+				<div class="text-sm-center"><?= $caption ?></div>
 			</div>
-			<div class="text-sm-center">'.$caption.'</div>
+
 		</div>
 	</div>
-</div>', $action);
+</a>
 
-?>
+
