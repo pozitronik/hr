@@ -8,6 +8,7 @@ declare(strict_types = 1);
 
 use app\assets\AppAsset;
 use yii\helpers\Html;
+use app\widgets\navbar\NavbarWidget;
 
 AppAsset::register($this);
 ?>
@@ -25,6 +26,9 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody(); ?>
 <div id="container" class="mainnav-fixed print-content">
+	<?= NavbarWidget::widget([]); ?>
+
+
 	<div class="boxed">
 		<div id="content-container">
 			<div id="page-content">

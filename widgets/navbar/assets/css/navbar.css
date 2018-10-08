@@ -1,0 +1,32 @@
+.start {
+	background-image: url('../img/start.jpg');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 97px;
+	height: 40px;
+
+}
+
+.navbar-top-links>li>a {
+	display: table-cell;
+	padding: 0;
+	vertical-align: middle;
+	height: 40px;
+	color: #758697;
+	transition: all .4s;
+}
+.navbar-brand {
+	background-color: transparent;
+	color: #fff;
+	padding: 0;
+	height: 40px;
+	position: relative;
+	z-index: 2;
+	overflow: hidden;
+	width: auto;;
+}
+
+.navbar-header:before {
+	content: none;
+}
