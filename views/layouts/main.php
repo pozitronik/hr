@@ -9,6 +9,7 @@ declare(strict_types = 1);
 use app\assets\AppAsset;
 use yii\helpers\Html;
 use app\widgets\navbar\NavbarWidget;
+use app\models\user\CurrentUser;
 
 AppAsset::register($this);
 ?>
@@ -25,8 +26,10 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody(); ?>
-<div id="container" class="mainnav-fixed print-content">
-	<?= NavbarWidget::widget([]); ?>
+<div id="container" class="mainnav-fixed print-content navbar-fixed">
+	<?= NavbarWidget::widget([
+		'user' => CurrentUser::User()
+	]); ?>
 
 
 	<div class="boxed">

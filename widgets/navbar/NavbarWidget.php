@@ -11,6 +11,7 @@ use yii\base\Widget;
  * @package app\components\navbar
  */
 class NavbarWidget extends Widget {
+	public $user;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -25,6 +26,8 @@ class NavbarWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('navbar');
+		return $this->render('navbar',[
+			'user' => $this->user
+		]);
 	}
 }

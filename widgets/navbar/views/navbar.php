@@ -3,9 +3,12 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
+ * @var Users $user
  */
 
+use app\models\users\Users;
 use yii\web\View;
+use yii\helpers\Html;
 
 ?>
 
@@ -150,11 +153,11 @@ use yii\web\View;
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<li id="dropdown-user" class="dropdown">
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
-                                <span class="pull-right">
-                                    <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
-                                    <i class="demo-pli-male ic-user"></i>
-                                </span>
-						<div class="username hidden-xs">Aaron Chavez</div>
+						<div class="username hidden-xs"><?= $user->username; ?></div>
+						<span class="pull-right">
+							<img class="img-circle img-user media-object" src="<?= $user->avatar; ?>" alt="Profile Picture">
+							<i class="demo-pli-male ic-user"></i>
+						</span>
 					</a>
 
 
@@ -162,51 +165,30 @@ use yii\web\View;
 
 						<!-- Dropdown heading  -->
 						<div class="pad-all bord-btm">
-							<p class="text-main mar-btm"><span class="text-bold">750GB</span> of 1,000GB Used</p>
-							<div class="progress progress-sm">
-								<div class="progress-bar" style="width: 70%;">
-									<span class="sr-only">70%</span>
-								</div>
-							</div>
+							<?= $user->comment; ?>
 						</div>
 
 
 						<!-- User dropdown menu -->
 						<ul class="head-list">
 							<li>
-								<a href="#">
-									<i class="demo-pli-male icon-lg icon-fw"></i> Profile
-								</a>
+								<?= Html::a("Профиль", ["home/profile"]); ?>
 							</li>
 							<li>
-								<a href="#">
-									<span class="badge badge-danger pull-right">9</span>
-									<i class="demo-pli-mail icon-lg icon-fw"></i> Messages
-								</a>
+								<?= Html::a('<span class="badge badge-danger pull-right">9</span>Сообщения', ["home/messenger"]); ?>
+
 							</li>
 							<li>
-								<a href="#">
-									<span class="label label-success pull-right">New</span>
-									<i class="demo-pli-gear icon-lg icon-fw"></i> Settings
-								</a>
+								<?= Html::a("Настройки", ["home/settings"]); ?>
 							</li>
 							<li>
-								<a href="#">
-									<i class="demo-pli-information icon-lg icon-fw"></i> Help
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="demo-pli-computer-secure icon-lg icon-fw"></i> Lock screen
-								</a>
+								<?= Html::a("Помощь", ["home/help"]); ?>
 							</li>
 						</ul>
 
 						<!-- Dropdown footer -->
 						<div class="pad-all text-right">
-							<a href="pages-login.html" class="btn btn-primary">
-								<i class="demo-pli-unlock"></i> Logout
-							</a>
+							<?= Html::a("Выйти", ['site/logout'], ['class' => 'btn btn-primary']) ?>
 						</div>
 					</div>
 				</li>
