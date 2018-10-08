@@ -6,12 +6,12 @@ declare(strict_types = 1);
  * @var Controller[] $controllers
  **/
 
-use app\widgets\admin_control\Admin_controlWidget;
+use app\widgets\admin_control\ControlerWidget;
 use yii\web\Controller;
 use yii\web\View;
 
 foreach ($controllers as $controller) {
-	echo Admin_controlWidget::widget([
+	echo ControlerWidget::widget([
 		'model' => $controller
 	]);
 }
