@@ -1,6 +1,8 @@
 <?php
 declare(strict_types = 1);
 
+namespace app\models\core;
+
 use yii\web\Controller;
 
 /**

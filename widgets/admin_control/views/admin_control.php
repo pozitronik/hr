@@ -2,11 +2,11 @@
 declare(strict_types = 1);
 
 /* @var View $this
- * @var Controller $model
+ * @var WigetableController $model
  */
 
 use app\models\core\Magic;
-use yii\web\Controller;
+use app\models\core\WigetableController;
 use yii\web\View;
 use yii\helpers\Html;
 

@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin\users;
 
+use app\models\core\WigetableController;
 use Throwable;
 use Yii;
 use app\helpers\ArrayHelper;
 use app\models\users\Users;
-use yii\web\Controller;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -15,7 +15,7 @@ use yii\web\Response;
 /**
  * Class UsersController
  */
-class UsersController extends Controller {
+class UsersController extends WigetableController {
 	public $menuCaption = "Пользователи";
 	public $menuIcon = "\img\admin\users.png";
 
