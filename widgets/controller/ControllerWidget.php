@@ -3,11 +3,15 @@ declare(strict_types = 1);
 
 namespace app\widgets\controller;
 
+use app\models\core\WigetableController;
 use yii\base\Widget;
 
 /**
  * Class ControllerWidget
+ * Отображение WigetableController в виде виджетов/меню
  * @package app\components\controller
+ *
+ * @property WigetableController $model
  */
 class ControllerWidget extends Widget {
 	public $model;
