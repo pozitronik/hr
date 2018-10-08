@@ -9,7 +9,7 @@ declare(strict_types = 1);
 use app\models\users\Users;
 use yii\web\View;
 use yii\helpers\Html;
-
+use app\widgets\admin_panel\AdminPanelWidget;
 ?>
 
 <header id="navbar">
@@ -53,33 +53,10 @@ use yii\helpers\Html;
 								<p class="pad-top mar-top bord-top text-sm">Чтобы добавить текущую страницу в избранное нажмите <?= Html::a('здесь', ['#'], ['class' => 'btn btn-default btn-xs']); ?></p>
 							</div>
 							<?php if($user->is('admin')): ?>
-
+								<?= AdminPanelWidget::widget([
+									'mode' => AdminPanelWidget::MODE_PANEL
+								]) ?>
 							<?php endif; ?>
-							<div class="col-sm-12 col-md-3">
-								<p class="dropdown-header"><i class="demo-pli-file-jpg icon-fw"></i> Gallery</p>
-								<ul class="list-unstyled list-inline text-justify">
-
-									<li class="pad-btm">
-										<img src="img//thumbs/mega-menu-2.jpg" alt="thumbs">
-									</li>
-									<li class="pad-btm">
-										<img src="img//thumbs/mega-menu-3.jpg" alt="thumbs">
-									</li>
-									<li class="pad-btm">
-										<img src="img//thumbs/mega-menu-1.jpg" alt="thumbs">
-									</li>
-									<li class="pad-btm">
-										<img src="img//thumbs/mega-menu-4.jpg" alt="thumbs">
-									</li>
-									<li class="pad-btm">
-										<img src="img//thumbs/mega-menu-5.jpg" alt="thumbs">
-									</li>
-									<li class="pad-btm">
-										<img src="img//thumbs/mega-menu-6.jpg" alt="thumbs">
-									</li>
-								</ul>
-								<a href="#" class="btn btn-sm btn-block btn-default">Browse Gallery</a>
-							</div>
 						</div>
 					</div>
 				</li>
@@ -90,7 +67,6 @@ use yii\helpers\Html;
 		</div>
 		<!--================================-->
 		<!--End brand logo & name-->
-
 
 		<!--Navbar Dropdown-->
 		<!--================================-->
