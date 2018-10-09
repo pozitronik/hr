@@ -52,7 +52,7 @@ class Magic {
 	public static function GetController($fileName) {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 
-		Yii::autoload($className);
+		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ($class->isSubclassOf(Controller::class)) {
 			return new $className(self::ExtractControllerId($className), Yii::$app);
