@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin\workgroups;
+namespace app\controllers\admin\groups;
 
 use app\models\core\WigetableController;
 use yii\web\ErrorAction;
@@ -9,9 +9,9 @@ use yii\web\ErrorAction;
 /**
  * Class WorkgroupsController
  */
-class WorkgroupsController extends WigetableController {
+class GroupsController extends WigetableController {
 	public $menuCaption = "Команды";
-	public $menuIcon = "/img/admin/workgroups.png";
+	public $menuIcon = "/img/admin/groups.png";
 
 	/**
 	 * @inheritdoc

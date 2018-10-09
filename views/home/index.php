@@ -19,9 +19,9 @@ $this->title = 'Панель управления';
 	'mode' => 'boss'
 ]) ?>
 
-<?php foreach ($model->workgroups as $workgroup): ?>
+<?php foreach ($model->groups as $group): ?>
 	<?= GroupWidget::widget([
-		'group' => $workgroup,
+		'group' => $group,
 		'user' => $model
 	]) ?>
 <?php endforeach;?>

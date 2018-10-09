@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\workgroups;
+namespace app\models\groups;
 
 use app\models\relations\RelUsersGroups;
 use app\models\users\Users;
@@ -9,7 +9,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "workgroups".
+ * This is the model class for table "groups".
  *
  * @property int $id
  * @property string $name Название

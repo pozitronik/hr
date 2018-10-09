@@ -10,7 +10,7 @@ class m181006_141340_workgroups extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->createTable('workgroups', [
+		$this->createTable('groups', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string('512')->comment('Название'),
 			'comment' => $this->text()->comment('Описание'),
@@ -22,7 +22,7 @@ class m181006_141340_workgroups extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropTable('workgroups');
+		$this->dropTable('groups');
 	}
 
 	/*

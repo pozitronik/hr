@@ -7,8 +7,8 @@ declare(strict_types = 1);
  * @var Groups $group
  */
 
+use app\models\groups\Groups;
 use app\models\users\Users;
-use app\models\workgroups\Groups;
 use yii\web\View;
 use app\widgets\user\UserWidget;
 ?>

@@ -11,7 +11,7 @@ class m181009_100149_okkam extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->renameTable('workgroups', 'sys_groups');
+		$this->renameTable('groups', 'sys_groups');
 		$this->dropTable('rel_employees_workgroups');
 
 		$this->createTable('rel_users_groups', [

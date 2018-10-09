@@ -8,7 +8,7 @@ use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
-use app\models\workgroups\Groups;
+use app\models\groups\Groups;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
@@ -39,7 +39,6 @@ use Yii;
  * @property-read string $phone
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property ActiveQuery|Groups[] $groups
- * @property-read Groups[] $workgroups
  */
 class Users extends ActiveRecord {
 	use ARExtended;
