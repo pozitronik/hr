@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers\admin\users;
 
 use app\models\core\WigetableController;
+use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\helpers\ArrayHelper;
@@ -30,9 +31,19 @@ class UsersController extends WigetableController {
 		];
 	}
 
-	public function actionIndex():void {
-		echo $this->id;
-		echo "this is index";
+	/**
+	 * @return string
+	 */
+	public function actionIndex():string {
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new UsersSearch();
+		$allowedGroups = [];
+		//Проверяем доступы к списку юзеров
+
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params, $allowedGroups)
+		]);
 	}
 
 	/**

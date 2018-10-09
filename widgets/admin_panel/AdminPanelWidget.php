@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\widgets\admin_panel;
 
 use app\models\core\WigetableController;
+use ReflectionException;
+use yii\base\UnknownClassException;
 use yii\base\Widget;
 
 /**
@@ -33,6 +35,8 @@ class AdminPanelWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public function run():string {
 		return $this->render('admin_panel',[

@@ -5,7 +5,9 @@ namespace app\models\core;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionException;
 use Yii;
+use yii\base\UnknownClassException;
 use yii\web\Controller;
 
 /**
@@ -35,6 +37,7 @@ class WigetableController extends Controller {
 
 	/**
 	 * Выгружает список контроллеров в указанном неймспейсе
+	 * @param string $path
 	 * @return Controller[]
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
