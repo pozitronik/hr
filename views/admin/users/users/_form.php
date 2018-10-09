@@ -19,9 +19,14 @@ use yii\widgets\ActiveForm;
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="panel">
 			<div class="panel-heading">
+				<div class="panel-control">
+					<?php if (!$model->isNewRecord): ?>
+						<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']); ?>
+					<?php endif; ?>
+				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
-				<div class="panel-control"></div>
 			</div>
+
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-6">

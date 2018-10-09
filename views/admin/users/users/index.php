@@ -28,7 +28,7 @@ use kartik\grid\ActionColumn;
 			],
 			'toolbar' => [
 				[
-					'content' => Html::a('Добавить', 'create', ['class' => 'btn btn-success'])
+					'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
 				]
 			],
 			'export' => false,
