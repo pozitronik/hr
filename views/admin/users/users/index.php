@@ -56,7 +56,7 @@ use yii\grid\ActionColumn;
 				'email:email',
 				[
 					'class' => ActionColumn::class,
-					'template' =>'{view} {update} {delete}'
+					'template' =>'{update} {delete}'
 				]
 			]
 		]); ?>
