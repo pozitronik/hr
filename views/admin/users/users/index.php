@@ -26,6 +26,11 @@ use kartik\grid\ActionColumn;
 			'panel' => [
 				'heading' => $this->title
 			],
+			'toolbar' => [
+				[
+					'content' => Html::a('Добавить', 'create', ['class' => 'btn btn-success'])
+				]
+			],
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
@@ -56,7 +61,7 @@ use kartik\grid\ActionColumn;
 				'email:email',
 				[
 					'class' => ActionColumn::class,
-					'template' =>'{update} {delete}'
+					'template' => '{update} {delete}'
 				]
 			]
 		]); ?>
