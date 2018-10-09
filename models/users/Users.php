@@ -184,24 +184,6 @@ class Users extends ActiveRecord {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 //		echo $x->createCommand()->rawSql;
 //		die;
-		/*return [
-			new Workgroups([
-				'id' => 1,
-				'name' => 'Пятничные алкаши',
-				'comment' => 'Каждый день - праздник'
-			]),
-			new Workgroups([
-				'id' => 2,
-				'name' => 'Братство ножа и топора',
-				'comment' => 'Несите ваши денежки'
-			]),
-			new Workgroups([
-				'id' => 3,
-				'name' => 'Разработчики',
-				'comment' => 'Кто пишет софт? Мы пишем софт.'
-			])
-
-		];*/
 	}
 
 	/**
