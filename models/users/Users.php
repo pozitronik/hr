@@ -180,9 +180,9 @@ class Users extends ActiveRecord {
 	 * @return Workgroups[]|ActiveQuery
 	 */
 	public function getWorkgroups() {
-		$x =  $this->hasMany(Workgroups::class,['id' => 'workgroup_id'])->via('employees_workgroups');
-		echo $x->createCommand()->rawSql;
-		die;
+		return $this->hasMany(Workgroups::class, ['id' => 'workgroup_id'])->via('employees_workgroups');
+//		echo $x->createCommand()->rawSql;
+//		die;
 		/*return [
 			new Workgroups([
 				'id' => 1,
@@ -208,7 +208,7 @@ class Users extends ActiveRecord {
 	 * @param $access
 	 * @return bool
 	 */
-	public function is($access): bool{
+	public function is($access):bool {
 		return true;
 	}
 

@@ -57,14 +57,13 @@ class Workgroups extends ActiveRecord {
 		return $this->hasMany(EmployeesWorkgroups::class, ['workgroup_id' => 'id']);
 	}
 
-
 	/**
 	 * @return Employees[]|ActiveQuery
 	 */
 	public function getEmployees() {
-		$x =  $this->hasMany(Users::class,['id' => 'employee_id'])->via('employees_workgroups');
-		echo $x->createCommand()->rawSql;
-		die;
+		return $this->hasMany(Users::class, ['id' => 'employee_id'])->via('employees_workgroups');
+//		echo $x->createCommand()->rawSql;
+//		die;
 		/*switch ($this->id) {
 			case 1:
 				return [
