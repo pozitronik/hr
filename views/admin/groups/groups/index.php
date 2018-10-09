@@ -2,14 +2,13 @@
 declare(strict_types = 1);
 
 /**
- * Шаблон главной страницы списка всех пользователей
+ * Шаблон главной страницы списка групп
  * @var View $this
- * @var UsersSearch $searchModel
+ * @var GroupsSearch $searchModel
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\models\users\Users;
-use app\models\users\UsersSearch;
+use app\models\groups\GroupsSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -36,29 +35,8 @@ use kartik\grid\ActionColumn;
 			'responsive' => true,
 			'columns' => [
 				'id',
-				[
-					'value' => function($column) {
-						/** @var Users $column */
-						return Html::img($column->avatar, ['class' => 'img-circle img-xs']);
-					},
-					'label' => 'Аватар',
-					'format' => 'raw'
-				],
-				[
-					'attribute' => 'username',
-					'value' => function($model) {
-						/** @var Users $model */
-						return $model->username;
-//						return UserWidget::widget([
-//							'user' => $model,
-//							'chat' => false,
-//							'update' => false
-//						]);
-					},
-					'format' => 'raw'
-				],
-				'login',
-				'email:email',
+				'name',
+				'comment',
 				[
 					'class' => ActionColumn::class,
 					'template' => '{update} {delete}'

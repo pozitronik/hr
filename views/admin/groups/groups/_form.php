@@ -29,28 +29,13 @@ use yii\widgets\ActiveForm;
 
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-6">
-						<?= $form->field($model, 'username')->textInput(['maxlength' => 50]); ?>
-					</div>
-					<div class="col-md-6">
-						<?= $form->field($model, 'login')->textInput(['maxlength' => 50]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5">
-						<?php if (null === $model->salt): ?>
-							<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.'); ?>
-						<?php else: ?>
-							<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен, при входе пользователю будет предложено сменить пароль.'); ?>
-						<?php endif; ?>
-					</div>
-					<div class="col-md-5">
-						<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
+					<div class="col-md-12">
+						<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
+						<?= $form->field($model, 'comment')->textarea(); ?>
 					</div>
 				</div>
 			</div>

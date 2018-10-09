@@ -2,14 +2,13 @@
 declare(strict_types = 1);
 
 /**
- * @var Users $model
+ * @var Groups $model
  * @var View $this
  */
 
-use app\models\users\Users;
+use app\models\groups\Groups;
 use yii\web\View;
 
-$this->title = 'Добавление пользователя';
 
 ?>
 
