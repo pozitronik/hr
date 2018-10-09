@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\groups;
 
@@ -28,8 +29,8 @@ class GroupsSearch extends Groups {
 	 * @return ActiveDataProvider
 	 * @throws yii\base\InvalidArgumentException
 	 */
-	public function search($params) {
-		$query = Groups::find()->active(false);
+	public function search($params):ActiveDataProvider {
+		$query = Groups::find()->active();
 
 		$this->load($params);
 

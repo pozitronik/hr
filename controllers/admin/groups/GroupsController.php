@@ -6,10 +6,12 @@ namespace app\controllers\admin\groups;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
+use Throwable;
 use Yii;
 use app\models\core\WigetableController;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * Class WorkgroupsController

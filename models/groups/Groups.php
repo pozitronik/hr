@@ -87,7 +87,7 @@ class Groups extends ActiveRecord {
 	 * @param array $paramsArray
 	 * @return bool
 	 */
-	public function createGroup($paramsArray) {
+	public function createGroup($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 
 			$this->updateAttributes([
@@ -103,7 +103,7 @@ class Groups extends ActiveRecord {
 	 * @param array $paramsArray
 	 * @return bool
 	 */
-	public function updateGroup($paramsArray) {
+	public function updateGroup($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			return $this->save();
 		}
