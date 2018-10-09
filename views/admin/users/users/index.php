@@ -12,9 +12,9 @@ use app\models\users\Users;
 use app\models\users\UsersSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\bootstrap\Html;
-use yii\grid\ActionColumn;
+use kartik\grid\ActionColumn;
 
 ?>
 
@@ -23,12 +23,12 @@ use yii\grid\ActionColumn;
 		<?= GridView::widget([
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
-//			'panel' => [
-//				'heading' => $this->title
-//			],
-//			'export' => false,
-//			'resizableColumns' => false,
-//			'responsive' => true,
+			'panel' => [
+				'heading' => $this->title
+			],
+			'export' => false,
+			'resizableColumns' => true,
+			'responsive' => true,
 			'columns' => [
 				'id',
 				[
