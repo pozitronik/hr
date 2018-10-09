@@ -3,15 +3,15 @@
 use yii\db\Migration;
 
 /**
- * Class m181009_115345_sys_group_author
+ * Class m181009_115345_sys_group_daddy
  */
 class m181009_115345_sys_group_author extends Migration {
 	/**
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->addColumn('sys_groups', 'author', $this->integer()->null()->comment('id создателя')->after('comment'));
-		$this->createIndex('author', 'sys_groups', 'author');
+		$this->addColumn('sys_groups', 'daddy', $this->integer()->null()->comment('id создателя')->after('comment'));
+		$this->createIndex('daddy', 'sys_groups', 'daddy');
 
 	}
 
@@ -19,8 +19,8 @@ class m181009_115345_sys_group_author extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropColumn('sys_groups','author');
-		$this->dropIndex('author','sys_groups');
+		$this->dropColumn('sys_groups','daddy');
+		$this->dropIndex('daddy','sys_groups');
 	}
 
 	/*
@@ -32,7 +32,7 @@ class m181009_115345_sys_group_author extends Migration {
 
 	public function down()
 	{
-		echo "m181009_115345_sys_group_author cannot be reverted.\n";
+		echo "m181009_115345_sys_group_daddy cannot be reverted.\n";
 
 		return false;
 	}
