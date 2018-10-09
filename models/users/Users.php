@@ -6,9 +6,9 @@ namespace app\models\users;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
-use app\models\relations\EmployeesWorkgroups;
+use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
-use app\models\workgroups\Workgroups;
+use app\models\workgroups\Groups;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
@@ -37,7 +37,9 @@ use Yii;
  * @property-read string $avatar
  * @property-read string $personal_number
  * @property-read string $phone
- * @property-read Workgroups[] $workgroups
+ * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
+ * @property ActiveQuery|Groups[] $groups
+ * @property-read Groups[] $workgroups
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -170,17 +172,17 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return EmployeesWorkgroups[]|ActiveQuery
+	 * @return ActiveQuery|RelUsersGroups[]
 	 */
-	public function getEmployees_workgroups() {
-		return $this->hasMany(EmployeesWorkgroups::class, ['employee_id' => 'id']);
+	public function getRelUsersGroups() {
+		return $this->hasMany(RelUsersGroups::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return Workgroups[]|ActiveQuery
+	 * @return Groups[]|ActiveQuery
 	 */
-	public function getWorkgroups() {
-		return $this->hasMany(Workgroups::class, ['id' => 'workgroup_id'])->via('employees_workgroups');
+	public function getGroups() {
+		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 //		echo $x->createCommand()->rawSql;
 //		die;
 		/*return [

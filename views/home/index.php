@@ -9,19 +9,19 @@ declare(strict_types = 1);
 
 use app\models\users\Users;
 use yii\web\View;
-use app\widgets\employee\EmployeeWidget;
-use app\widgets\workgroup\WorkgroupWidget;
+use app\widgets\user\UserWidget;
+use app\widgets\group\GroupWidget;
 
 $this->title = 'Панель управления';
 ?>
-<?= EmployeeWidget::widget([
+<?= UserWidget::widget([
 	'user' => $model,
 	'mode' => 'boss'
 ]) ?>
 
 <?php foreach ($model->workgroups as $workgroup): ?>
-	<?= WorkgroupWidget::widget([
-		'workgroup' => $workgroup,
+	<?= GroupWidget::widget([
+		'group' => $workgroup,
 		'user' => $model
 	]) ?>
 <?php endforeach;?>

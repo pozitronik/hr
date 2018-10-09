@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\workgroups;
 
-use app\models\employees\Employees;
-use app\models\relations\EmployeesWorkgroups;
+use app\models\relations\RelUsersGroups;
 use app\models\users\Users;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -15,16 +14,17 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name Название
  * @property string $comment Описание
+ * @property ActiveQuery|Users[] $users
+ * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property int $deleted
  *
- * @property-read Employees[] $employees
  */
-class Workgroups extends ActiveRecord {
+class Groups extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'workgroups';
+		return 'sys_groups';
 	}
 
 	/**
@@ -51,17 +51,17 @@ class Workgroups extends ActiveRecord {
 	}
 
 	/**
-	 * @return EmployeesWorkgroups[]|ActiveQuery
+	 * @return ActiveQuery|RelUsersGroups[]
 	 */
-	public function getEmployees_workgroups() {
-		return $this->hasMany(EmployeesWorkgroups::class, ['workgroup_id' => 'id']);
+	public function getRelUsersGroups() {
+		return $this->hasMany(RelUsersGroups::class, ['group_id' => 'id']);
 	}
 
 	/**
-	 * @return Employees[]|ActiveQuery
+	 * @return ActiveQuery|Users[]
 	 */
-	public function getEmployees() {
-		return $this->hasMany(Users::class, ['id' => 'employee_id'])->via('employees_workgroups');
+	public function getUsers() {
+		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 //		echo $x->createCommand()->rawSql;
 //		die;
 		/*switch ($this->id) {

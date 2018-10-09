@@ -1,0 +1,40 @@
+<?php
+declare(strict_types = 1);
+
+namespace app\widgets\user;
+
+use app\models\users\Users;
+use yii\base\Widget;
+
+/**
+ * Class UserWidget
+ * @property Users $user
+ */
+class UserWidget extends Widget {
+	public $user;
+	public $mode = 'user';
+
+	/**
+	 * Функция инициализации и нормализации свойств виджета
+	 */
+	public function init() {
+		parent::init();
+		UserWidgetAssets::register($this->getView());
+	}
+
+	/**
+	 * Функция возврата результата рендеринга виджета
+	 * @return string
+	 */
+	public function run():string {
+		if ('user' === $this->mode) {
+			return $this->render('user', [
+				'model' => $this->user
+			]);
+		}
+		return $this->render('boss', [
+			'model' => $this->user
+		]);
+
+	}
+}

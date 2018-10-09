@@ -1,24 +1,26 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\employee;
+namespace app\widgets\group;
 
+use app\models\workgroups\Groups;
 use yii\base\Widget;
 
 /**
- * Class EmployeeWidget
- * @package app\components\employee
+ * Class GroupWidget
+ *
+ * @property Groups $group
  */
-class EmployeeWidget extends Widget {
+class GroupWidget extends Widget {
+	public $group;
 	public $user;
-	public $mode = 'employee';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
 	 */
 	public function init() {
 		parent::init();
-		EmployeeWidgetAssets::register($this->getView());
+		GroupWidgetAssets::register($this->getView());
 	}
 
 	/**
@@ -26,14 +28,9 @@ class EmployeeWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		if ('employee' === $this->mode) {
-			return $this->render('employee', [
-				'model' => $this->user
-			]);
-		}
-		return $this->render('boss', [
-			'model' => $this->user
+		return $this->render('group', [
+			'group' => $this->group
+//			'user' => $this->user
 		]);
-
 	}
 }
