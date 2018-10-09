@@ -4,7 +4,9 @@ declare(strict_types = 1);
 namespace app\models\workgroups;
 
 use app\models\employees\Employees;
+use app\models\relations\EmployeesWorkgroups;
 use app\models\users\Users;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -49,10 +51,21 @@ class Workgroups extends ActiveRecord {
 	}
 
 	/**
-	 * @return Employees[]
+	 * @return EmployeesWorkgroups[]|ActiveQuery
 	 */
-	public function getEmployees():array {
-		switch ($this->id) {
+	public function getEmployees_workgroups() {
+		return $this->hasMany(EmployeesWorkgroups::class, ['workgroup_id' => 'id']);
+	}
+
+
+	/**
+	 * @return Employees[]|ActiveQuery
+	 */
+	public function getEmployees() {
+		$x =  $this->hasMany(Users::class,['id' => 'employee_id'])->via('employees_workgroups');
+		echo $x->createCommand()->rawSql;
+		die;
+		/*switch ($this->id) {
 			case 1:
 				return [
 					new Users([
@@ -102,7 +115,7 @@ class Workgroups extends ActiveRecord {
 					])
 				];
 			break;
-		}
+		}*/
 
 	}
 }

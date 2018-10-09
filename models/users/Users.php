@@ -6,8 +6,10 @@ namespace app\models\users;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\relations\EmployeesWorkgroups;
 use app\models\user\CurrentUser;
 use app\models\workgroups\Workgroups;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
 use Yii;
@@ -168,10 +170,20 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return Workgroups[]
+	 * @return EmployeesWorkgroups[]|ActiveQuery
 	 */
-	public function getWorkgroups():array {
-		return [
+	public function getEmployees_workgroups() {
+		return $this->hasMany(EmployeesWorkgroups::class, ['employee_id' => 'id']);
+	}
+
+	/**
+	 * @return Workgroups[]|ActiveQuery
+	 */
+	public function getWorkgroups() {
+		$x =  $this->hasMany(Workgroups::class,['id' => 'workgroup_id'])->via('employees_workgroups');
+		echo $x->createCommand()->rawSql;
+		die;
+		/*return [
 			new Workgroups([
 				'id' => 1,
 				'name' => 'Пятничные алкаши',
@@ -188,7 +200,7 @@ class Users extends ActiveRecord {
 				'comment' => 'Кто пишет софт? Мы пишем софт.'
 			])
 
-		];
+		];*/
 	}
 
 	/**
