@@ -1,11 +1,19 @@
 .start {
-	background-image: url('../img/start.jpg');
-	background-size: contain;
-	background-position: center;
+	background-image: url('../img/start.png');
+	background-size: cover;
+	background-position: center center;
 	background-repeat: no-repeat;
-	width: 97px;
+	width: 98px;
 	height: 40px;
 
+}
+
+.navbar-top-links:last-child>li {
+	border: none;
+}
+
+.navbar-top-links>.open>a, .navbar-top-links>.open>a:focus, .navbar-top-links>li>a:hover {
+	background-color: transparent;
 }
 
 .navbar-top-links>li>a {
