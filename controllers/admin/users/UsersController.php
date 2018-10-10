@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin\users;
 
-use app\helpers\Utils;
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;

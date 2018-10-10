@@ -84,8 +84,8 @@ class RelUsersGroups extends ActiveRecord {
 	 * @param $user_id
 	 * @param $group_id
 	 */
-	public static function unlinkUsersGroups($user_id, $group_id) {
-		self::deleteAll(['group_id' => $group_id, 'user_id' => $user_id]);
+	public static function unlinkUsersGroups($user_id, $group_id):void {
+		self::deleteAll(compact('group_id', 'user_id'));
 	}
 
 }
