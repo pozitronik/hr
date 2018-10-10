@@ -56,7 +56,7 @@ class GroupsSearch extends Groups {
 
 
 		$query->andFilterWhere(['id' => $this->id])
-			->andFilterWhere(['like', 'sys_groups.name', trim($this->name)])
+			->andFilterWhere(['like', 'sys_groups.name', $this->name])
 			->andFilterWhere(['=', 'sys_groups.daddy', $this->daddy]);
 
 		return $dataProvider;
