@@ -16,6 +16,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\grid\ActionColumn;
+use yii\helpers\Html;
 
 ?>
 <div class="row">
@@ -30,10 +31,13 @@ use yii\grid\ActionColumn;
 			'toolbar' => [
 				[
 					'content' => GroupSelectWidget::widget([
-						'data' => $model->relGroups,
+						'model' => $model,
+						'attribute' => 'relGroups',
+						'notData' => $model->relGroups,
 						'multiple' => true
-					])
-				]
+					]),
+				],
+
 			],
 			'export' => false,
 			'resizableColumns' => true,

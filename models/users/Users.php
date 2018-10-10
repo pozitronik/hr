@@ -71,7 +71,8 @@ class Users extends ActiveRecord {
 			[['username', 'password', 'salt', 'email', 'profile_image'], 'string', 'max' => 255],
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
-			[['email'], 'unique']
+			[['email'], 'unique'],
+			[['relGroups'], 'safe']
 		];
 	}
 
@@ -184,6 +185,13 @@ class Users extends ActiveRecord {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 	}
 
+	/**
+	 * @param RelGroups[]|ActiveQuery $relGroups
+	 */
+	public function setRelGroups($relUsersGroups):void {
+		RelUsersGroups::linkUsersGroups($this->id, $relUsersGroups);
+	}
+
 
 	/**
 	 * prototype
@@ -193,5 +201,6 @@ class Users extends ActiveRecord {
 	public function is($access):bool {
 		return true;
 	}
+
 
 }
