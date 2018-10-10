@@ -17,7 +17,7 @@ class TemplateWidget extends Widget {
 	 */
 	public function init() {
 		parent::init();
-		GroupSelectWidgetAssets::register($this->getView());
+		TemplateWidgetAssets::register($this->getView());
 	}
 
 	/**

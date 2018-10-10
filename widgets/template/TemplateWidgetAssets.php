@@ -7,26 +7,18 @@ use yii\web\AssetBundle;
 use app\assets\AppAsset;
 
 /**
- * Class GroupSelectWidgetAssets
+ * Class TemplateWidgetAssets
  * @package app\components\template
  */
 class TemplateWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/template/assets';
+	public $sourcePath = '@app/components/template/assets';
 	public $css = [
-		'css/group_select.css'
+		'css/template.css'
 	];
 	public $js = [
-		'js/group_select.js'
+		'js/template.js'
 	];
 	public $depends = [
 		AppAsset::class
 	];
 }
-
-
-
-
-
-
-
-
