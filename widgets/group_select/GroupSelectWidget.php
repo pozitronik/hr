@@ -8,8 +8,14 @@ use yii\base\Widget;
 /**
  * Class GroupSelectWidget
  * @package app\components\group_select
+ *
+ * @property array $data
+ * @property boolean $multiple
  */
 class GroupSelectWidget extends Widget {
+	public $data;
+	public $multiple = false;
+
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

@@ -6,7 +6,7 @@ namespace app\widgets\template;
 use yii\base\Widget;
 
 /**
- * Class TemplateWidget
+ * Class GroupSelectWidget
  * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *Template* на нужное нам имя, и работаем
  * @package app\components\template
  */
@@ -17,7 +17,7 @@ class TemplateWidget extends Widget {
 	 */
 	public function init() {
 		parent::init();
-		TemplateWidgetAssets::register($this->getView());
+		GroupSelectWidgetAssets::register($this->getView());
 	}
 
 	/**
