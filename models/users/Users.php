@@ -38,7 +38,7 @@ use Yii;
  * @property-read string $personal_number
  * @property-read string $phone
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
- * @property ActiveQuery|Groups[] $groups
+ * @property ActiveQuery|Groups[] $relGroups
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -180,11 +180,10 @@ class Users extends ActiveRecord {
 	/**
 	 * @return Groups[]|ActiveQuery
 	 */
-	public function getGroups() {
+	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
-//		echo $x->createCommand()->rawSql;
-//		die;
 	}
+
 
 	/**
 	 * prototype

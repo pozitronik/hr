@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  * @property string $name Название
  * @property string $comment Описание
  * @property integer|null $daddy
- * @property ActiveQuery|Users[] $users
+ * @property ActiveQuery|Users[] $relUsers
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property int $deleted
  *
@@ -77,7 +77,7 @@ class Groups extends ActiveRecord {
 	/**
 	 * @return ActiveQuery|Users[]
 	 */
-	public function getUsers() {
+	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 //		echo $x->createCommand()->rawSql;
 //		die;
