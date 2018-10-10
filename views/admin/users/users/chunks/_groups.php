@@ -15,13 +15,14 @@ use app\models\users\Users;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
+use kartik\grid\CheckboxColumn;
 
 ?>
 <div class="row">
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelGroups()
+				'query' => $model->getRelGroups()->orderBy('name')
 			]),
 			'panel' => [
 				'heading' => "Группы пользователя"
@@ -41,11 +42,13 @@ use kartik\grid\GridView;
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-//				[
-//					'class' => CheckboxColumn::class,
-//					'width' => '36px',
-//					'headerOptions' => ['class' => 'kartik-sheet-style'],
-//				],
+				[
+					'class' => CheckboxColumn::class,
+					'width' => '36px',
+					'headerOptions' => ['class' => 'kartik-sheet-style'],
+					'header' => 'Удалить',
+					'name' => $model->classNameShort.'[dropGroups]'
+				],
 				'name'
 
 			]

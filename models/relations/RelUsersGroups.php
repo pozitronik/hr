@@ -77,4 +77,15 @@ class RelUsersGroups extends ActiveRecord {
 			}
 		} else self::linkUserGroup($user, $group);
 	}
+
+
+	/**
+	 * Удаляет связь между группой и юзером
+	 * @param $user_id
+	 * @param $group_id
+	 */
+	public static function unlinkUsersGroups($user_id, $group_id) {
+		self::deleteAll(['group_id' => $group_id, 'user_id' => $user_id]);
+	}
+
 }

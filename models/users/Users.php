@@ -39,6 +39,7 @@ use Yii;
  * @property-read string $phone
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property ActiveQuery|Groups[] $relGroups
+ * @property-write integer[] $dropGroups
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -72,7 +73,7 @@ class Users extends ActiveRecord {
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique'],
-			[['relGroups'], 'safe']
+			[['relGroups', 'dropGroups'], 'safe']
 		];
 	}
 
@@ -201,5 +202,11 @@ class Users extends ActiveRecord {
 		return true;
 	}
 
+	/**
+	 * @param integer[] $dropGroups
+	 */
+	public function setDropGroups(array $dropGroups):void {
+		RelUsersGroups::unlinkUsersGroups($this->id, $dropGroups);
+	}
 
 }
