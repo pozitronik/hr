@@ -19,7 +19,7 @@ $this->title = 'Панель управления';
 	'mode' => 'boss'
 ]) ?>
 
-<?php foreach ($model->groups as $group): ?>
+<?php foreach ($model->relGroups as $group): ?>
 	<?= GroupWidget::widget([
 		'group' => $group,
 		'user' => $model

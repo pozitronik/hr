@@ -47,8 +47,8 @@ class RelUsersGroups extends ActiveRecord {
 	 * @param integer|array $user_id
 	 * @param integer|array $group_id
 	 */
-	private static function linkUserGroup($user_id, $group_id) {
-		if (self::find()->where(['user_id' => $user_id, 'group_id' => $group_id])->one()) return;//duplicate entry
+	private static function linkUserGroup($user_id, $group_id):void {
+		if (self::find()->where(compact('user_id', 'group_id'))->one()) return;//duplicate entry
 		$link = new self();
 		$link->user_id = $user_id;
 		$link->group_id = $group_id;
@@ -61,7 +61,7 @@ class RelUsersGroups extends ActiveRecord {
 	 * @param integer|array $user
 	 * @param integer|array $group
 	 */
-	public static function linkUsersGroups($user, $group) {
+	public static function linkUsersGroups($user, $group):void {
 		if (is_array($user)) {
 			foreach ($user as $user_id) {
 				if (is_array($group)) {
@@ -71,12 +71,10 @@ class RelUsersGroups extends ActiveRecord {
 				} else self::linkUserGroup($user_id, $group);
 
 			}
-		} else {
-			if (is_array($group)) {
-				foreach ($group as $group_id) {
-					self::linkUserGroup($user, $group_id);
-				}
-			} else self::linkUserGroup($user, $group);
-		}
+		} else if (is_array($group)) {
+			foreach ($group as $group_id) {
+				self::linkUserGroup($user, $group_id);
+			}
+		} else self::linkUserGroup($user, $group);
 	}
 }

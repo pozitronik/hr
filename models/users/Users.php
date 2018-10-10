@@ -186,12 +186,11 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param RelGroups[]|ActiveQuery $relGroups
+	 * @param array $relUsersGroups
 	 */
 	public function setRelGroups($relUsersGroups):void {
 		RelUsersGroups::linkUsersGroups($this->id, $relUsersGroups);
 	}
-
 
 	/**
 	 * prototype

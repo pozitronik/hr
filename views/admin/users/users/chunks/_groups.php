@@ -15,8 +15,6 @@ use app\models\users\Users;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
-use yii\grid\ActionColumn;
-use yii\helpers\Html;
 
 ?>
 <div class="row">
@@ -35,8 +33,8 @@ use yii\helpers\Html;
 						'attribute' => 'relGroups',
 						'notData' => $model->relGroups,
 						'multiple' => true
-					]),
-				],
+					])
+				]
 
 			],
 			'export' => false,

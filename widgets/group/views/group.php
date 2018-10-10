@@ -18,7 +18,7 @@ use app\widgets\user\UserWidget;
 		<h3 class="panel-title"><?= $group->name; ?></h3>
 	</div>
 	<div class="panel-body">
-		<?php foreach ($group->users as $user): ?>
+		<?php foreach ($group->relUsers as $user): ?>
 			<?= UserWidget::widget([
 				'user' => $user
 			]) ?>
