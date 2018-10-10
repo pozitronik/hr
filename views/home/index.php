@@ -11,7 +11,6 @@ use app\models\users\Users;
 use yii\web\View;
 use app\widgets\user\UserWidget;
 use app\widgets\group\GroupWidget;
-
 $this->title = 'Панель управления';
 ?>
 <?= UserWidget::widget([

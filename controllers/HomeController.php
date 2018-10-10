@@ -24,4 +24,16 @@ class HomeController extends Controller {
 		]);
 	}
 
+	/**
+	 * Пытаемся загенерить матрицу ресурсов.
+	 * Пока, конечно, тупо рисуем
+	 * @return string
+	 * @throws Throwable
+	 */
+	public function actionMatrix(){
+		return $this->render('matrix',[
+			'model' => CurrentUser::User()
+		]);
+	}
+
 }
