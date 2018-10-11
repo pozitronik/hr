@@ -39,6 +39,9 @@ use yii\widgets\ActiveForm;
 					</div>
 				</div>
 			</div>
+			<?= $this->render('chunks/_parent_groups.php', [
+				'model' => $model
+			]); ?>
 			<?= $this->render('chunks/_child_groups.php', [
 				'model' => $model
 			]); ?>
