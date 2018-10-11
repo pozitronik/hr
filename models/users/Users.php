@@ -195,6 +195,14 @@ class Users extends ActiveRecord {
 	}
 
 	/**
+	 * @param integer[] $dropGroups
+	 * @throws Throwable
+	 */
+	public function setDropGroups(array $dropGroups):void {
+		RelUsersGroups::unlinkModels($this, $dropGroups);
+	}
+
+	/**
 	 * prototype
 	 * @param $access
 	 * @return bool
@@ -203,12 +211,5 @@ class Users extends ActiveRecord {
 		return null!==$access;
 	}
 
-	/**
-	 * @param integer[] $dropGroups
-	 * @throws Throwable
-	 */
-	public function setDropGroups(array $dropGroups):void {
-		RelUsersGroups::unlinkModels($this, $dropGroups);
-	}
 
 }

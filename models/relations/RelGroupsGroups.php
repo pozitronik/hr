@@ -14,6 +14,8 @@ use yii\db\ActiveRecord;
  * @property int $relation Тип связи
  */
 class RelGroupsGroups extends ActiveRecord {
+	use Relations;
+
 	/**
 	 * {@inheritdoc}
 	 */

@@ -39,6 +39,9 @@ use yii\widgets\ActiveForm;
 					</div>
 				</div>
 			</div>
+			<?= $this->render('chunks/_child_groups.php', [
+				'model' => $model
+			]); ?>
 			<div class="panel-footer">
 				<div class="btn-group">
 					<?= Html::submitButton($model->isNewRecord?'Добавить':'Изменить информацию', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>

@@ -6,9 +6,11 @@ namespace app\models\groups;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
+use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -18,9 +20,12 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name Название
  * @property string $comment Описание
- * @property integer|null $daddy
- * @property ActiveQuery|Users[] $relUsers
- * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
+ * @property integer|null $daddy Пользователь, создавший группу
+ * @property ActiveQuery|Users[] $relUsers Пользователи в группе
+ * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Связь с релейшеном пользователей
+ * @property ActiveQuery|Groups[] $relChildGroups Группы, дочерние по отношению к текущей
+ * @property-write array $dropChildGroups Свойство для передачи массива отлинкуемых дочерних групп
+ * @property ActiveQuery|RelGroupsGroups[] $relGroupsGroupsParent Релейшен групп для получения дочерних групп
  * @property int $deleted
  *
  */
@@ -49,7 +54,8 @@ class Groups extends ActiveRecord {
 			[['comment'], 'string'],
 			[['deleted', 'daddy'], 'integer'],
 			[['create_date'], 'safe'],
-			[['name'], 'string', 'max' => 512]
+			[['name'], 'string', 'max' => 512],
+			[['relChildGroups', 'dropChildGroups'], 'safe']
 		];
 	}
 
@@ -108,5 +114,38 @@ class Groups extends ActiveRecord {
 			return $this->save();
 		}
 		return false;
+	}
+
+	/**
+	 * @return ActiveQuery|RelGroupsGroups[]
+	 */
+	public function getRelGroupsGroupsChild() {
+		return $this->hasMany(RelGroupsGroups::class, ['parent_id' => 'id']);
+	}
+
+	/**
+	 * Вернет все группы, дочерние по отношению к текущей
+	 * @return Groups[]|ActiveQuery
+	 */
+	public function getRelChildGroups() {
+		return $this->hasMany(Groups::class, ['id' => 'child_id'])->via('relGroupsGroupsChild');
+	}
+
+	/**
+	 * Внесёт группу в релейшен дочерних к текущей
+	 * @param $childGroups
+	 * @throws Throwable
+	 */
+	public function setRelChildGroups($childGroups):void {
+		RelGroupsGroups::linkModels($this, $childGroups);
+	}
+
+	/**
+	 * Дропнет дочерние группы
+	 * @param array $dropChildGroups
+	 * @throws Throwable
+	 */
+	public function setDropChildGroups(array $dropChildGroups):void {
+		RelGroupsGroups::unlinkModels($this, $dropChildGroups);
 	}
 }

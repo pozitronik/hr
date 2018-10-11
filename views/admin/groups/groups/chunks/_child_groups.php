@@ -1,14 +1,15 @@
 <?php
 declare(strict_types = 1);
 
+use app\models\groups\Groups;
 use app\widgets\group_select\GroupSelectWidget;
 
 /**
+ *
  * @var View $this
- * @var Users $model
+ * @var Groups $model
  */
 
-use app\models\users\Users;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -19,17 +20,17 @@ use kartik\grid\CheckboxColumn;
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelGroups()->orderBy('name')
+				'query' => $model->getRelChildGroups()->orderBy('name')
 			]),
 			'panel' => [
-				'heading' => "Группы пользователя"
+				'heading' => "Дочерние группы"
 			],
 			'toolbar' => [
 				[
 					'content' => GroupSelectWidget::widget([
 						'model' => $model,
-						'attribute' => 'relGroups',
-						'notData' => $model->relGroups,
+						'attribute' => 'relChildGroups',
+						'notData' => array_merge($model->relChildGroups, [$model]),
 						'multiple' => true
 					])
 				]
@@ -44,7 +45,7 @@ use kartik\grid\CheckboxColumn;
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $model->classNameShort.'[dropGroups]'
+					'name' => $model->classNameShort.'[dropChildGroups]'
 				],
 				'name'
 
