@@ -30,7 +30,7 @@ use kartik\grid\CheckboxColumn;
 					'content' => GroupSelectWidget::widget([
 						'model' => $model,
 						'attribute' => 'relChildGroups',
-						'notData' => array_merge($model->relChildGroups, [$model]),
+						'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
 						'multiple' => true
 					])
 				]
