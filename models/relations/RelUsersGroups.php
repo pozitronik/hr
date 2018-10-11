@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $user_role_id Роль сотрудника в группе
  */
 class RelUsersGroups extends ActiveRecord {
+	use Relations;
 	/**
 	 * {@inheritdoc}
 	 */
@@ -40,52 +41,6 @@ class RelUsersGroups extends ActiveRecord {
 			'group_id' => 'Рабочая группа',
 			'user_role_id' => 'Роль сотрудника в группе'
 		];
-	}
-
-	/**
-	 * Добавляет группу к пользователю. Или пользователя в группу. Как посмотреть.
-	 * @param integer|array $user_id
-	 * @param integer|array $group_id
-	 */
-	private static function linkUserGroup($user_id, $group_id):void {
-		if (self::find()->where(compact('user_id', 'group_id'))->one()) return;//duplicate entry
-		$link = new self();
-		$link->user_id = $user_id;
-		$link->group_id = $group_id;
-		$link->save();
-	}
-
-	/**
-	 * Добавляет группы к пользователям. Или пользователей в группы. Как посмотреть.
-	 * Жрёт массивы и отдельные идентификаторы
-	 * @param integer|array $user
-	 * @param integer|array $group
-	 */
-	public static function linkUsersGroups($user, $group):void {
-		if (is_array($user)) {
-			foreach ($user as $user_id) {
-				if (is_array($group)) {
-					foreach ($group as $group_id) {
-						self::linkUserGroup($user_id, $group_id);
-					}
-				} else self::linkUserGroup($user_id, $group);
-
-			}
-		} else if (is_array($group)) {
-			foreach ($group as $group_id) {
-				self::linkUserGroup($user, $group_id);
-			}
-		} else self::linkUserGroup($user, $group);
-	}
-
-
-	/**
-	 * Удаляет связь между группой и юзером
-	 * @param $user_id
-	 * @param $group_id
-	 */
-	public static function unlinkUsersGroups($user_id, $group_id):void {
-		self::deleteAll(compact('group_id', 'user_id'));
 	}
 
 }

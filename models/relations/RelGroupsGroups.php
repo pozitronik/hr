@@ -43,4 +43,6 @@ class RelGroupsGroups extends ActiveRecord {
 			'relation' => 'Тип связи',
 		];
 	}
+
+
 }

@@ -190,7 +190,7 @@ class Users extends ActiveRecord {
 	 * @param array $relUsersGroups
 	 */
 	public function setRelGroups($relUsersGroups):void {
-		RelUsersGroups::linkUsersGroups($this->id, $relUsersGroups);
+		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
 	/**
@@ -206,7 +206,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropGroups
 	 */
 	public function setDropGroups(array $dropGroups):void {
-		RelUsersGroups::unlinkUsersGroups($this->id, $dropGroups);
+		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
 
 }
