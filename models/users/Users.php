@@ -124,7 +124,11 @@ class Users extends ActiveRecord {
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate()
 			]);
-			return $this->save();
+			if ($this->save()) {//При создании пересохраним, чтобы подтянуть прилинкованные свойства
+				$this->loadArray($paramsArray);
+				$this->save();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -208,8 +212,7 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 */
 	public function is($access):bool {
-		return null!==$access;
+		return null !== $access;
 	}
-
 
 }
