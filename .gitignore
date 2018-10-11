@@ -33,13 +33,12 @@ tests/_support/_generated
 /.vagrant
 
 
-/config
-/config/*
+
 composer.lock
-/config/db.php
-/config/params.php
-/config/web.php
-/config/console.php
-/config
-config
+#/config/db.php
+#/config/params.php
+#/config/web.php
+#/config/console.php
+#/config
+#config
 /web/adminer.php
