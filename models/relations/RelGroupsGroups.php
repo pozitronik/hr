@@ -1,8 +1,8 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -17,30 +17,30 @@ class RelGroupsGroups extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'rel_groups_groups';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['parent_id', 'child_id'], 'required'],
 			[['parent_id', 'child_id', 'relation'], 'integer'],
-			[['parent_id', 'child_id', 'relation'], 'unique', 'targetAttribute' => ['parent_id', 'child_id', 'relation']],
+			[['parent_id', 'child_id', 'relation'], 'unique', 'targetAttribute' => ['parent_id', 'child_id', 'relation']]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'parent_id' => 'Вышестоящая группа',
 			'child_id' => 'Нижестоящая группа',
-			'relation' => 'Тип связи',
+			'relation' => 'Тип связи'
 		];
 	}
 

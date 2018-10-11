@@ -9,8 +9,3 @@ declare(strict_types = 1);
 
 use app\models\users\Users;
 use yii\web\View;
-use app\widgets\user\UserWidget;
-use app\widgets\group\GroupWidget;
-
-?>
-

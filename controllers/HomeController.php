@@ -30,10 +30,8 @@ class HomeController extends Controller {
 	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionMatrix(){
-		return $this->render('matrix',[
-			'model' => CurrentUser::User()
-		]);
+	public function actionMatrix():string {
+		return $this->render('matrix');
 	}
 
 }

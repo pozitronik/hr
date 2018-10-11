@@ -1,8 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\relations;
 
 use app\helpers\ArrayHelper;
+use Throwable;
 use yii\base\Exception;
 use yii\db\ActiveRecord;
 
@@ -17,8 +19,9 @@ trait Relations {
 	 * Линкует в этом релейшене две модели. Модели могут быть заданы как через айдишники
 	 * @param ActiveRecord|integer $master
 	 * @param ActiveRecord|integer $slave
+	 * @throws Throwable
 	 */
-	public static function linkModel($master, $slave) {
+	public static function linkModel($master, $slave):void {
 		if (empty($master) || empty($slave)) return;
 
 		$link = new self();
@@ -35,6 +38,7 @@ trait Relations {
 	 * Линкует в этом релейшене две модели. Модели могут быть заданы как через айдишники, так и напрямую, в виде массивов или так.
 	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $master
 	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $slave
+	 * @throws Throwable
 	 */
 	public static function linkModels($master, $slave):void {
 		if (empty($master) || empty($slave)) return;
@@ -57,6 +61,7 @@ trait Relations {
 	 * Удаляет связь между моделями в этом релейшене
 	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $master
 	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $slave
+	 * @throws Throwable
 	 */
 	public static function unlinkModels($master, $slave):void {
 		if (empty($master) || empty($slave)) return;
