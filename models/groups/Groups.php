@@ -6,6 +6,7 @@ namespace app\models\groups;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\groups\traits\Graph;
 use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
@@ -34,7 +35,7 @@ use yii\db\ActiveRecord;
  */
 class Groups extends ActiveRecord {
 	use ARExtended;
-
+	use Graph;
 	/**
 	 * {@inheritdoc}
 	 */
@@ -188,4 +189,5 @@ class Groups extends ActiveRecord {
 	public function setDropParentGroups(array $dropParentGroups):void {
 		RelGroupsGroups::unlinkModels($dropParentGroups, $this);
 	}
+
 }

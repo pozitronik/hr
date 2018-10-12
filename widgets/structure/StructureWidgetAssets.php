@@ -17,7 +17,8 @@ class StructureWidgetAssets extends AssetBundle {
 	];
 	public $js = [
 		'js/sigma.js/sigma.min.js',
-		'js/structure.js'
+		'js/sigma.js/plugins/sigma.parsers.json.min.js'
+
 	];
 	public $depends = [
 		AppAsset::class

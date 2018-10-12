@@ -11,6 +11,7 @@ use yii\base\Widget;
  * @package app\components\structure
  */
 class StructureWidget extends Widget {
+	public $id;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -25,6 +26,8 @@ class StructureWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('structure');
+		return $this->render('structure',[
+			'id' => $this->id
+		]);
 	}
 }

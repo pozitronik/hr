@@ -9,6 +9,7 @@ use app\models\groups\GroupsSearch;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
+use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -19,6 +20,22 @@ use yii\web\Response;
 class GroupsController extends WigetableController {
 	public $menuCaption = "Команды";
 	public $menuIcon = "/img/admin/groups.png";
+
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors() {
+		return [
+			[
+				'class' => ContentNegotiator::class,
+				'formats' => [
+					'application/json' => Response::FORMAT_JSON,
+					'application/xml' => Response::FORMAT_XML,
+					'text/html' => Response::FORMAT_HTML
+				]
+			]
+		];
+	}
 
 	/**
 	 * @inheritdoc
@@ -73,5 +90,25 @@ class GroupsController extends WigetableController {
 		return $this->render('update', [
 			'model' => $group
 		]);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function actionTree(int $id){
+		return $this->render('tree', [
+			'id' => $id
+		]);
+	}
+
+	/**
+	 * @param int $id
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionGraph(int $id) {
+
+		$group = Groups::findModel($id, new NotFoundHttpException());
+		return $group->getGraph(true);
 	}
 }
