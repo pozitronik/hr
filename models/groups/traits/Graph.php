@@ -2,6 +2,7 @@
 
 namespace app\models\groups\traits;
 
+use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use Exception;
 
@@ -31,17 +32,20 @@ trait Graph {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getGraph($isRoot = false) {
+	public function getGraph($isRoot = false, &$childStack = []) {
 		$graph = [];
 
 		if ($isRoot) {/*Добавляем текущуюю группу корневым узлом*/
-			$graph[] = $this->asNode(0,0);
+			$graph[] = $this->asNode(0, 0);
 		} else {
 			$graph[] = $this->asNode();
 		}
 		/** @var Groups $childGroup */
 		foreach ($this->relChildGroups as $childGroup) {
-			$graph[] = $childGroup->getGraph();
+			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
+				$childStack[$childGroup->id] = true;
+				$graph[] = $childGroup->getGraph(false, $childStack);
+			}
 		}
 
 		return $graph;
