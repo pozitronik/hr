@@ -17,7 +17,8 @@ $this->registerJs("sigma.parsers.json('graph?id=$id', {
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10'
 		}
-	});")
+	});");
+//$this->registerJs("s = sigma.instances()[0]; sigma.plugins.dragNodes(s, s.renderers[0]);", View::POS_LOAD);
 ?>
 <div id="sigma-container"></div>
 
