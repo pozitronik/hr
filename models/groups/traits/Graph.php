@@ -19,12 +19,16 @@ trait Graph {
 	 */
 	public function asNode($x = null, $y = null):array {
 		/** @var Groups $this */
+		$red = random_int(10, 255);
+		$green = random_int(10, 255);
+		$blue = random_int(10, 255);
 		return [
 			'id' => (string)$this->id,
 			'label' => $this->name,
 			'x' => $x?$x:random_int(0, 100),
 			'y' => $y?$y:random_int(0, 100),
-			'size' => (string)3//todo: придумать характеристику веса группы
+			'size' => (string)1,//todo: придумать характеристику веса группы,
+			'color' => "rgb({$red},{$green},{$blue})"
 		];
 	}
 
