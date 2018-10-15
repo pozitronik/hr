@@ -12,22 +12,22 @@ use Exception;
 trait Graph {
 
 	/**
-	 * @param null|integer $x
-	 * @param null|integer $y
+	 * @param null|integer $position
+	 * @param null|integer $level
 	 * @return array
 	 * @throws Exception
 	 */
-	public function asNode($x = null, $y = null):array {
+	public function asNode($position = 0, $level = 0):array {
 		/** @var Groups $this */
 		$red = random_int(10, 255);
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
 		return [
 			'id' => (string)$this->id,
-			'label' => $this->name,
-			'x' => $x?$x:random_int(0, 100),
-			'y' => $y?$y:random_int(0, 100),
-			'size' => (string)1,//todo: придумать характеристику веса группы,
+			'label' => $this->name."({$position},{$level})",
+			'x' => $position,
+			'y' => $level,
+			'size' => (string)30,//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})"
 		];
 	}
@@ -35,20 +35,31 @@ trait Graph {
 	/**
 	 * @throws Exception
 	 */
-	public function getGraph($isRoot = false, &$graphStack = [], &$childStack = []) {
+	public function getGraph($isRoot = false, &$graphStack = [], &$edgesStack = [], &$childStack = [], &$level = 0, $position = 0) {
 
 		if ($isRoot) {/*Добавляем текущуюю группу корневым узлом*/
-			$graphStack[] = $this->asNode(0, 0);
+			$graphStack[] = $this->asNode($position, $level);
 			/** @var Groups $this */
 			$childStack[$this->id] = true;
 		} else {
-			$graphStack[] = $this->asNode();
+			$graphStack[] = $this->asNode($position, $level);
 		}
 		/** @var Groups $childGroup */
 		foreach ($this->relChildGroups as $childGroup) {
+			$edgesStack[] = [
+				'id' => "{$this->id}x{$childGroup->id}",
+				'source' => (string)$this->id,
+				'target' => (string)$childGroup->id,
+				'type' => 'curvedArrow',
+				'label' => "{$this->id}x{$childGroup->id}",
+				'size' => "30"
+			];
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
-				$childGroup->getGraph(false, $graphStack, $childStack);
+				$level++;
+				$childGroup->getGraph(false, $graphStack, $edgesStack, $childStack, $level, $position);
+				$level--;
+				$position ++;
 			}
 		}
 

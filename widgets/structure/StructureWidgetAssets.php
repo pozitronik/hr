@@ -5,6 +5,7 @@ namespace app\widgets\structure;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
+use yii\web\View;
 
 /**
  * Class StructureWidgetAssets
@@ -17,27 +18,22 @@ class StructureWidgetAssets extends AssetBundle {
 	];
 	public $js = [
 		'js/sigma.js/sigma.min.js',
-		'js/sigma.js/plugins/sigma.parsers.json.min.js',
-//		'js/sigma.js/plugins/sigma.exporters.svg.min.js',
-		'js/sigma.js/plugins/sigma.layout.forceAtlas2.min.js',
-		'js/sigma.js/plugins/sigma.layout.noverlap.min.js',
-		'js/sigma.js/plugins/sigma.neo4j.cypher.min.js',
-//		'js/sigma.js/plugins/sigma.parsers.gexf.min.js',
-		'js/sigma.js/plugins/sigma.pathfinding.astar.min.js',
-		'js/sigma.js/plugins/sigma.plugins.animate.min.js',
-		'js/sigma.js/plugins/sigma.plugins.dragNodes.min.js',
-		'js/sigma.js/plugins/sigma.plugins.filter.min.js',
-		'js/sigma.js/plugins/sigma.plugins.neighborhoods.min.js',
-		'js/sigma.js/plugins/sigma.plugins.relativeSize.min.js',
-		'js/sigma.js/plugins/sigma.renderers.customEdgeShapes.min.js',
-		'js/sigma.js/plugins/sigma.renderers.customShapes.min.js',
-		'js/sigma.js/plugins/sigma.renderers.edgeDots.min.js',
-		'js/sigma.js/plugins/sigma.renderers.edgeLabels.min.js',
-		'js/sigma.js/plugins/sigma.renderers.parallelEdges.min.js',
-		'js/sigma.js/plugins/sigma.renderers.snapshot.min.js',
-		'js/sigma.js/plugins/sigma.statistics.HITS.min.js',
+		'js/sigma.js/plugins/sigma.renderers.parallelEdges/utils.js',
+		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curve.js',
+		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js',
+		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js',
+		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js',
+		'js/sigma.js/plugins/sigma.renderers.edgeLabels/settings.js',
+		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js',
+		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js',
+		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js',
+		'js/sigma.js/plugins/sigma.parsers.json/sigma.parsers.json.js',
 	];
 	public $depends = [
 		AppAsset::class
+	];
+
+	public $jsOptions = [
+		'position' => View::POS_HEAD
 	];
 }
