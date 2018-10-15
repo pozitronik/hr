@@ -20,22 +20,23 @@ trait Graph {
 	public function asNode($x = null, $y = null):array {
 		/** @var Groups $this */
 		return [
-			'id' => $this->id,
+			'id' => (string)$this->id,
 			'label' => $this->name,
 			'x' => $x?$x:random_int(0, 100),
 			'y' => $y?$y:random_int(0, 100),
-			'size' => 3//todo: придумать характеристику веса группы
+			'size' => (string)3//todo: придумать характеристику веса группы
 		];
 	}
 
 	/**
-	 * @return array
 	 * @throws Exception
 	 */
 	public function getGraph($isRoot = false, &$graphStack = [], &$childStack = []) {
 
 		if ($isRoot) {/*Добавляем текущуюю группу корневым узлом*/
 			$graphStack[] = $this->asNode(0, 0);
+			/** @var Groups $this */
+			$childStack[$this->id] = true;
 		} else {
 			$graphStack[] = $this->asNode();
 		}
