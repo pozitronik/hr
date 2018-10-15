@@ -2,13 +2,11 @@
 declare(strict_types = 1);
 
 /**
- *
  * @var View $this
  * @var string $content
  */
 
 use yii\helpers\Html;
-use app\helpers\ArrayHelper;
 use yii\web\View;
 use app\assets\LoginAsset;
 
@@ -24,7 +22,7 @@ $this->registerJs("particlesJS.load('bg-overlay', '/js/particles.js/particles.js
 	<meta charset="<?= Yii::$app->charset; ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<?= Html::csrfMetaTags(); ?>
-	<title><?= ArrayHelper::getValue(Yii::$app->params, 'ServerNode') ?>&#160;LightCab &mdash; <?= Html::encode($this->title); ?></title>
+	<title> <?= Html::encode($this->title); ?></title>
 	<?php $this->head(); ?>
 </head>
 <body>
