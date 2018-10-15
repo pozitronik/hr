@@ -32,22 +32,20 @@ trait Graph {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getGraph($isRoot = false, &$childStack = []) {
-		$graph = [];
+	public function getGraph($isRoot = false, &$graphStack = [], &$childStack = []) {
 
 		if ($isRoot) {/*Добавляем текущуюю группу корневым узлом*/
-			$graph[] = $this->asNode(0, 0);
+			$graphStack[] = $this->asNode(0, 0);
 		} else {
-			$graph[] = $this->asNode();
+			$graphStack[] = $this->asNode();
 		}
 		/** @var Groups $childGroup */
 		foreach ($this->relChildGroups as $childGroup) {
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
-				$graph[] = $childGroup->getGraph(false, $childStack);
+				$childGroup->getGraph(false, $graphStack, $childStack);
 			}
 		}
 
-		return $graph;
 	}
 }

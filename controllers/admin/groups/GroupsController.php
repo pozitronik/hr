@@ -107,8 +107,10 @@ class GroupsController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionGraph(int $id) {
-
+		Yii::$app->response->format = Response::FORMAT_JSON;
 		$group = Groups::findModel($id, new NotFoundHttpException());
-		return $group->getGraph(true);
+		$graph = [];
+		$group->getGraph(true, $graph);
+		return $graph;
 	}
 }
