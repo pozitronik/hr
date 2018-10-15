@@ -111,7 +111,7 @@ class GroupsController extends WigetableController {
 		$group = Groups::findModel($id, new NotFoundHttpException());
 		$nodes = [];
 		$edges = [];
-		$group->getGraph(true, $nodes, $edges);
+		$group->getGraph($nodes, $edges);
 		return [
 			'nodes' => $nodes,
 			'edges' => $edges

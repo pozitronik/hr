@@ -35,29 +35,27 @@ trait Graph {
 	/**
 	 * @throws Exception
 	 */
-	public function getGraph($isRoot = false, &$graphStack = [], &$edgesStack = [], &$childStack = [], &$level = 0, $position = 0) {
+	public function getGraph(&$graphStack = [], &$edgesStack = [], &$childStack = [], &$level = 0, $position = 0) {
+		/** @var Groups $this */
+		$childStack[$this->id] = true;
+		$graphStack[] = $this->asNode($position, $level);
 
-		if ($isRoot) {/*Добавляем текущуюю группу корневым узлом*/
-			$graphStack[] = $this->asNode($position, $level);
-			/** @var Groups $this */
-			$childStack[$this->id] = true;
-		} else {
-			$graphStack[] = $this->asNode($position, $level);
-		}
+
+
 		/** @var Groups $childGroup */
 		foreach ($this->relChildGroups as $childGroup) {
 			$edgesStack[] = [
 				'id' => "{$this->id}x{$childGroup->id}",
 				'source' => (string)$this->id,
 				'target' => (string)$childGroup->id,
-				'type' => 'curvedArrow',
+				'type' => 'arrow',//'curvedArrow'
 				'label' => "{$this->id}x{$childGroup->id}",
 				'size' => "30"
 			];
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
 				$level++;
-				$childGroup->getGraph(false, $graphStack, $edgesStack, $childStack, $level, $position);
+				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $level, $position);
 				$level--;
 				$position ++;
 			}
