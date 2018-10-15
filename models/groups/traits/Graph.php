@@ -48,7 +48,7 @@ trait Graph {
 				'id' => "{$this->id}x{$childGroup->id}",
 				'source' => (string)$this->id,
 				'target' => (string)$childGroup->id,
-				'type' => 'arrow',//'curvedArrow'
+				'type' => 'curvedArrow',
 				'label' => "{$this->id}x{$childGroup->id}",
 				'size' => "30"
 			];

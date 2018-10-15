@@ -39,7 +39,13 @@ use kartik\grid\ActionColumn;
 				'comment',
 				[
 					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
+					'template' => '{tree} {update} {delete}',
+					'buttons' => [
+						'tree' => function($url, $model) {
+							return Html::a('<span class="glyphicon glyphicon-dashboard"></span>', $url);
+						},
+					]
+
 				]
 			]
 		]); ?>

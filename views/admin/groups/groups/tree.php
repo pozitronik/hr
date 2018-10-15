@@ -4,9 +4,12 @@
  * @var View $this
  * @var integer $id
  */
+
+use app\widgets\structure\StructureWidget;
+
 ?>
 
-<?= \app\widgets\structure\StructureWidget::widget([
+<?= StructureWidget::widget([
 	'id' => $id
 ]); ?>
 
