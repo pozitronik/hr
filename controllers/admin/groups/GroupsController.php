@@ -24,7 +24,7 @@ class GroupsController extends WigetableController {
 	/**
 	 * @inheritdoc
 	 */
-	public function behaviors() {
+	public function behaviors():array {
 		return [
 			[
 				'class' => ContentNegotiator::class,
@@ -40,7 +40,7 @@ class GroupsController extends WigetableController {
 	/**
 	 * @inheritdoc
 	 */
-	public function actions() {
+	public function actions():array {
 		return [
 			'error' => [
 				'class' => ErrorAction::class
@@ -93,9 +93,10 @@ class GroupsController extends WigetableController {
 	}
 
 	/**
+	 * @param int $id
 	 * @return string
 	 */
-	public function actionTree(int $id){
+	public function actionTree(int $id):string {
 		return $this->render('tree', [
 			'id' => $id
 		]);
@@ -106,15 +107,12 @@ class GroupsController extends WigetableController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionGraph(int $id) {
+	public function actionGraph(int $id):array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$group = Groups::findModel($id, new NotFoundHttpException());
 		$nodes = [];
 		$edges = [];
 		$group->getGraph($nodes, $edges);
-		return [
-			'nodes' => $nodes,
-			'edges' => $edges
-		];
+		return compact('nodes', 'edges');
 	}
 }

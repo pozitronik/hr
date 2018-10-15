@@ -43,7 +43,7 @@ use kartik\grid\ActionColumn;
 					'buttons' => [
 						'tree' => function($url, $model) {
 							return Html::a('<span class="glyphicon glyphicon-dashboard"></span>', $url);
-						},
+						}
 					]
 
 				]

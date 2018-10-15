@@ -1,10 +1,12 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\groups\traits;
 
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use Exception;
+use Throwable;
 
 /**
  * Экспериментальный трейт для групп, все функции построения графа структуры
@@ -33,16 +35,19 @@ trait Graph {
 	}
 
 	/**
-	 * @throws Exception
+	 * @param array $graphStack
+	 * @param array $edgesStack
+	 * @param array $childStack
+	 * @param int $level
+	 * @param int $position
+	 * @throws Throwable
 	 */
-	public function getGraph(&$graphStack = [], &$edgesStack = [], &$childStack = [], &$level = 0, $position = 0) {
+	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$level = 0, $position = 0):void {
 		/** @var Groups $this */
 		$childStack[$this->id] = true;
 		$graphStack[] = $this->asNode($position, $level);
-
-
-
 		/** @var Groups $childGroup */
+		/** @noinspection ForeachSourceInspection */
 		foreach ($this->relChildGroups as $childGroup) {
 			$edgesStack[] = [
 				'id' => "{$this->id}x{$childGroup->id}",
@@ -50,7 +55,7 @@ trait Graph {
 				'target' => (string)$childGroup->id,
 				'type' => 'curvedArrow',
 				'label' => "{$this->id}x{$childGroup->id}",
-				'size' => "30"
+				'size' => '30'
 			];
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;

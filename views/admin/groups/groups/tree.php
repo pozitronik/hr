@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 /**
  * @var View $this
@@ -6,6 +7,7 @@
  */
 
 use app\widgets\structure\StructureWidget;
+use yii\web\View;
 
 ?>
 
