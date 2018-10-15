@@ -14,7 +14,8 @@ $this->registerJs("sigma.parsers.json('graph?id=$id', {
 			type: 'canvas'
 		},
 		settings: {
-			edgeLabelSize: 'proportional'
+			edgeLabelSize: 'proportional',
+			minArrowSize: '10'
 		}
 	});")
 ?>
