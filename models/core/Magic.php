@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
+use app\models\references\Reference;
 use ReflectionClass;
 use ReflectionException;
 use Yii;
@@ -56,6 +57,25 @@ class Magic {
 		$class = new ReflectionClass($className);
 		if ($class->isSubclassOf(Controller::class)) {
 			return new $className(self::ExtractControllerId($className), Yii::$app);
+		}
+		return false;
+	}
+
+
+	/**
+	 * Загружает динамически класс справочника Yii2 по его пути
+	 * @param string $fileName
+	 * @return Reference|false
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
+	 */
+	public static function GetReferenceModel($fileName) {
+		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+
+		if (!class_exists($className)) Yii::autoload($className);
+		$class = new ReflectionClass($className);
+		if ($class->isSubclassOf(Reference::class)) {
+			return new $className(/*['className'=>$className]*/);
 		}
 		return false;
 	}
