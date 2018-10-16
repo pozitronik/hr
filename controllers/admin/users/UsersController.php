@@ -76,4 +76,13 @@ class UsersController extends WigetableController {
 			'model' => $user
 		]);
 	}
+
+	/**
+	 * @param int $id
+	 * @throws Throwable
+	 */
+	public function actionDelete(int $id) {
+		Users::findModel($id, new NotFoundHttpException())->safeDelete();
+		$this->redirect('index');
+	}
 }
