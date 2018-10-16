@@ -14,6 +14,9 @@ use app\models\references\Reference;
  * @property int $deleted
  */
 class RefGroupTypes extends Reference {
+	public $menuCaption = 'Типы групп';
+	public $menuIcon = false;
+
 	/**
 	 * {@inheritdoc}
 	 */
