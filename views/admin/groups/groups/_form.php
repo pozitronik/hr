@@ -38,7 +38,11 @@ use app\models\references\refs\RefGroupTypes;
 				<div class="row">
 					<div class="col-md-12">
 						<?= $form->field($model, 'type')->widget(Select2::class, [
-							'data' => RefGroupTypes::mapData()
+							'data' => RefGroupTypes::mapData(),
+							'options' => ['placeholder' => 'Выберите тип'],
+							'pluginOptions' => [
+								'allowClear' => true
+							]
 						]); ?>
 					</div>
 				</div>
