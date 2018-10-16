@@ -29,7 +29,7 @@ trait Graph {
 			'label' => $this->name."({$position},{$level})",
 			'x' => $position,
 			'y' => $level,
-			'size' => (string)30,//todo: придумать характеристику веса группы,
+			'size' => (string)count($this->relUsers),//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})"
 		];
 	}
@@ -62,7 +62,7 @@ trait Graph {
 				$level++;
 				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $level, $position);
 				$level--;
-				$position ++;
+				$position++;
 			}
 		}
 
