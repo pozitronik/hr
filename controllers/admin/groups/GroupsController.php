@@ -68,6 +68,7 @@ class GroupsController extends WigetableController {
 	public function actionCreate() {
 		$newGroup = new Groups();
 		if ($newGroup->createGroup(ArrayHelper::getValue(Yii::$app->request->post(), $newGroup->classNameShort))) {
+			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newGroup->id]);
 		}
 

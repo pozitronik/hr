@@ -53,6 +53,7 @@ class UsersController extends WigetableController {
 	public function actionCreate() {
 		$newUser = new Users();
 		if ($newUser->createUser(ArrayHelper::getValue(Yii::$app->request->post(), $newUser->classNameShort))) {
+			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newUser->id]);
 		}
 
