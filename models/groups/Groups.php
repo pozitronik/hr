@@ -20,6 +20,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name Название
+ * @property integer $type Тип группы
  * @property string $comment Описание
  * @property integer|null $daddy Пользователь, создавший группу
  * @property ActiveQuery|Users[] $relUsers Пользователи в группе
@@ -56,7 +57,7 @@ class Groups extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['comment'], 'string'],
-			[['deleted', 'daddy'], 'integer'],
+			[['deleted', 'daddy', 'type'], 'integer'],
 			[['create_date'], 'safe'],
 			[['name'], 'string', 'max' => 512],
 			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups'], 'safe']
@@ -70,6 +71,7 @@ class Groups extends ActiveRecord {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
+			'type' => 'Тип группы',
 			'comment' => 'Описание',
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
