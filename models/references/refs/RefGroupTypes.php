@@ -11,7 +11,7 @@ use app\models\references\Reference;
  *
  * @property int $id
  * @property string $name Название
- * @property string $value Описание
+ * @property string $value Значение
  * @property int $deleted
  */
 class RefGroupTypes extends Reference {
@@ -41,7 +41,7 @@ class RefGroupTypes extends Reference {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
-			'value' => 'Описание',
+			'value' => 'Значение',
 			'deleted' => 'Deleted'
 		];
 	}

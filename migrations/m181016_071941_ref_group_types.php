@@ -13,7 +13,7 @@ class m181016_071941_ref_group_types extends Migration {
 		$this->createTable('ref_group_types', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(256)->notNull()->comment('Название'),
-			'value' => $this->string(512)->notNull()->comment('Описание'),
+			'value' => $this->string(512)->notNull()->comment('Значение'),
 			'deleted' => $this->boolean()->notNull()->defaultValue(false)
 		]);
 
