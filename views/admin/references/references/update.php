@@ -1,15 +1,12 @@
 <?php
 declare(strict_types = 1);
 /**
- * @var yii\web\View $this
- * @var app\models\references\Reference $model
+ * @var View $this
+ * @var Reference $model
  */
 
-$this->title = 'Изменить запись: '.' '.$model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['admin/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['admin/references']];
-$this->params['breadcrumbs'][] = ['label' => $model->ref_name, 'url' => ['view', 'id' => $model->id, 'class' => $model->classNameShort]];
-$this->params['breadcrumbs'][] = 'Изменить';
+use app\models\references\Reference;
+use yii\web\View;
 
 echo $this->render($model->form, [
 	'model' => $model

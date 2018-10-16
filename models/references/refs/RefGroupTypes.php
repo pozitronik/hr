@@ -11,7 +11,6 @@ use app\models\references\Reference;
  *
  * @property int $id
  * @property string $name Название
- * @property string $value Значение
  * @property int $deleted
  */
 class RefGroupTypes extends Reference {
@@ -27,10 +26,9 @@ class RefGroupTypes extends Reference {
 	 */
 	public function rules():array {
 		return [
-			[['name', 'value'], 'required'],
+			[['name'], 'required'],
 			[['deleted'], 'integer'],
-			[['name'], 'string', 'max' => 256],
-			[['value'], 'string', 'max' => 512]
+			[['name'], 'string', 'max' => 256]
 		];
 	}
 
@@ -41,7 +39,6 @@ class RefGroupTypes extends Reference {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
-			'value' => 'Значение',
 			'deleted' => 'Deleted'
 		];
 	}

@@ -3,13 +3,16 @@ declare(strict_types = 1);
 
 namespace app\models\references;
 
+use app\helpers\Utils;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\models\core\traits\ARExtended;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use ReflectionException;
 use Throwable;
 use Yii;
+use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use app\helpers\ArrayHelper;
@@ -53,17 +56,17 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
-			[['name'], 'unique'],
-			[['name'], 'string', 'max' => 255],
-			[['deleted'], 'integer']
+			[['deleted'], 'integer'],
+			[['name'], 'string', 'max' => 256],
+			[['value'], 'string', 'max' => 512]
 		];
 	}
 
 	/**
 	 * @param $path
 	 * @return array
-	 * @throws \ReflectionException
-	 * @throws \yii\base\UnknownClassException
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public static function GetReferencesList($path):array {
 		$result = [];
@@ -171,5 +174,30 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * @param array $paramsArray
+	 * @return boolean
+	 */
+	public function createRecord($paramsArray):bool {
+		if ($this->loadArray($paramsArray)) {
+			if (!$this->save()) {
+				Utils::log($this->errors);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param array $paramsArray
+	 * @return bool
+	 */
+	public function updateRecord($paramsArray):bool {
+		if ($this->loadArray($paramsArray)) {
+			return $this->save();
+		}
+		return false;
 	}
 }

@@ -14,11 +14,6 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\references\Reference;
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['admin/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['admin/references']];
-$this->params['breadcrumbs'][] = ['label' => $model->ref_name, 'url' => ['index', 'class' => $model->classNameShort]];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
 	<div class="col-xs-12">

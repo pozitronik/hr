@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin\references;
 
+use app\helpers\ArrayHelper;
 use app\models\core\WigetableController;
 use app\models\references\Reference;
 use Yii;
@@ -97,7 +98,7 @@ class ReferencesController extends WigetableController {
 	public function actionCreate($class) {
 		/** @var Reference $model */
 		$model = Reference::getReferenceClass($class);
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		if ($model->createRecord(ArrayHelper::getValue(Yii::$app->request->post(), $model->classNameShort))) {
 			return $this->redirect(['index', 'class' => $class]);
 		}
 
@@ -117,7 +118,7 @@ class ReferencesController extends WigetableController {
 		/** @var Reference $model */
 		$model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException());
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		if ($model->updateRecord(ArrayHelper::getValue(Yii::$app->request->post(), $model->classNameShort))) {
 			return $this->redirect(['view', 'id' => $model->id, 'class' => $class]);
 		}
 
