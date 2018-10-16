@@ -12,7 +12,7 @@ use yii\web\ErrorAction;
 class TargetsController extends WigetableController {
 	public $menuCaption = "Цели";
 	public $menuIcon = "/img/admin/targets.png";
-
+	public $disabled = true;
 	/**
 	 * @inheritdoc
 	 */

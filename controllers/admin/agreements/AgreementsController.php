@@ -12,6 +12,7 @@ use yii\web\ErrorAction;
 class AgreementsController extends WigetableController {
 	public $menuCaption = "Договорённости";
 	public $menuIcon = "/img/admin/agreements.png";
+	public $disabled = true;
 
 	/**
 	 * @inheritdoc

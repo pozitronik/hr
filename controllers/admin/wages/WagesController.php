@@ -12,7 +12,7 @@ use yii\web\ErrorAction;
 class WagesController extends WigetableController {
 	public $menuCaption = "Зарплаты";
 	public $menuIcon = "/img/admin/wages.png";
-
+	public $disabled = true;
 	/**
 	 * @inheritdoc
 	 */

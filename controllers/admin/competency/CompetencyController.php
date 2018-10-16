@@ -12,7 +12,7 @@ use yii\web\ErrorAction;
 class CompetencyController extends WigetableController {
 	public $menuCaption = "Компетенции";
 	public $menuIcon = "/img/admin/competency.png";
-
+	public $disabled = true;
 	/**
 	 * @inheritdoc
 	 */

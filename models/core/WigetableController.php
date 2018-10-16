@@ -18,6 +18,7 @@ use yii\web\Controller;
  * @property-read false|string $menuCaption
  */
 class WigetableController extends Controller {
+	public $disabled = false;
 
 	/**
 	 * Возвращает путь к иконке контроллера
