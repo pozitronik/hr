@@ -12,6 +12,8 @@ use app\models\users\Users;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use app\models\references\refs\RefGroupTypes;
 
 ?>
 <div class="row">
@@ -31,6 +33,13 @@ use yii\widgets\ActiveForm;
 				<div class="row">
 					<div class="col-md-12">
 						<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<?= $form->field($model, 'type')->widget(Select2::class, [
+							'data' => RefGroupTypes::mapData()
+						]); ?>
 					</div>
 				</div>
 				<div class="row">
