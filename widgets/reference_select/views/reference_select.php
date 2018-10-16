@@ -7,5 +7,6 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
-echo 'widget reference_select view';
+?>
+
 

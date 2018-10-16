@@ -7,10 +7,11 @@ use yii\base\Widget;
 
 /**
  * Class GroupSelectWidget
- * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *ReferenceSelect* на нужное нам имя, и работаем
+ * TODO на реализацию: виджет (либо самостоятельный, либо расширяющий select2) с контролами быстрого едитинга связанного справочника
  * @package app\components\reference_select
  */
 class ReferenceSelectWidget extends Widget {
+
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
