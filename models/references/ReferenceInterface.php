@@ -24,42 +24,30 @@ interface ReferenceInterface {
 	 * @param boolean $sort Сортировка выдачи
 	 * @return array
 	 */
-	public static function mapData($sort = false);
-
-	/**
-	 * Строковое название справочника
-	 * @return string
-	 */
-	public function getRef_name();
+	public static function mapData($sort = false):array;
 
 	/**
 	 * Набор колонок для отображения на главной
 	 * @return array
 	 */
-	public function getColumns();
+	public function getColumns():array;
 	
 	/**
 	 * Набор колонок для отображения на странице просмотра
 	 * @return array
 	 */
-	public function getView_columns();
+	public function getView_columns():array;
 
 	/**
 	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
 	 * @return string|false
 	 */
-	public function getForm();
-	
-	/**
-	 * Заголовок формы. По умолчанию принимает значение поля "name"
-	 * @return string
-	 */
-	public function getTitle();
+	public function getForm():string;
 
 	/**
 	 * Поиск по справочнику
 	 * @param array $params
 	 * @return ActiveQuery
 	 */
-	public function search($params);
+	public function search($params):ActiveQuery;
 }

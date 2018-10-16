@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\references;
 
@@ -9,7 +10,6 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use app\helpers\ArrayHelper;
@@ -43,14 +43,14 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @return string
 	 * @throws RuntimeException
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		throw new RuntimeException('Забыли определить имя таблицы, вот олухи');
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['name'], 'required'],
 			[['name'], 'unique'],
@@ -62,6 +62,8 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * @param $path
 	 * @return array
+	 * @throws \ReflectionException
+	 * @throws \yii\base\UnknownClassException
 	 */
 	public static function GetReferencesList($path):array {
 		$result = [];
@@ -79,7 +81,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * @inheritdoc
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
@@ -90,7 +92,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * @return LCQuery
 	 */
-	public static function find() {
+	public static function find():LCQuery {
 		return new LCQuery(static::class);
 	}
 
@@ -100,7 +102,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @throws ServerErrorHttpException
 	 * @throws Throwable
 	 */
-	public static function getReferenceClass($class_name) {
+	public static function getReferenceClass($class_name):Reference {
 		$class = 'app\models\references\refs\\'.$class_name;
 
 		if (!class_exists($class)) {
@@ -111,17 +113,10 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	}
 
 	/**
-	 * @inheritdoc
-	 */
-	public function getRef_name() {
-		return 'Справочник';
-	}
-
-	/**
 	 * Набор колонок для отображения на главной
 	 * @return array
 	 */
-	public function getColumns() {
+	public function getColumns():array {
 		return [
 			'id',
 			[
@@ -139,7 +134,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * Набор колонок для отображения на странице просмотра
 	 * @return array
 	 */
-	public function getView_columns() {
+	public function getView_columns():array {
 		return $this->columns;
 	}
 
@@ -147,16 +142,9 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
 	 * @return string
 	 */
-	public function getForm() {
+	public function getForm():string {
 		$file_path = mb_strtolower($this->classNameShort).'/_form.php';
 		return file_exists(Yii::getAlias("@app/views/{$file_path}"))?$file_path:'_form';
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getTitle() {
-		return $this->name;
 	}
 
 	/**
@@ -164,7 +152,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param array $params
 	 * @return ActiveQuery
 	 */
-	public function search($params) {
+	public function search($params):ActiveQuery {
 		/** @var ActiveQuery $query */
 		$query = self::find();
 		$this->load($params);
@@ -176,7 +164,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * @inheritdoc
 	 */
-	public static function mapData($sort = false) {
+	public static function mapData($sort = false):array {
 		$data = ArrayHelper::map(self::find()->active()->all(), 'id', 'name');
 		if ($sort) {
 			asort($data);

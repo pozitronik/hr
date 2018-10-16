@@ -10,7 +10,7 @@ use app\models\core\WigetableController;
 use yii\web\View;
 use yii\helpers\Url;
 
-$style = (Magic::hasProperty($model, 'menuIcon'))?"style = 'background-image: url({$model->menuIcon});'":'';
+$style = Magic::hasProperty($model, 'menuIcon')?"style = 'background-image: url({$model->menuIcon});'":'';
 $action = ["{$model->route}/{$model->defaultAction}"];
 $caption = Magic::hasProperty($model, 'menuCaption')?$model->menuCaption:$model->id;
 ?>

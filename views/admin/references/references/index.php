@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -13,11 +14,6 @@ use app\models\references\Reference;
  * @var Reference|false $class
  * @var stdClass $searchModel
  */
-
-$this->title = $class->ref_name;
-$this->params['breadcrumbs'][] = ['label' => 'Админка', 'url' => ['admin/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['admin/references']];
-$this->params['breadcrumbs'][] = $this->title;
 
 $columns = $class->columns;
 $columns[] = [

@@ -12,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use Throwable;
+use yii\web\ServerErrorHttpException;
 
 /**
  * Управление всеми справочниками
@@ -25,7 +26,7 @@ class ReferencesController extends WigetableController {
 	/**
 	 * @inheritdoc
 	 */
-	public function behaviors() {
+	public function behaviors():array {
 		return [
 			'access' => [
 				'class' => AccessControl::class,
@@ -49,7 +50,8 @@ class ReferencesController extends WigetableController {
 	/**
 	 * @param string|false $class
 	 * @return mixed
-	 * @throws \yii\web\ServerErrorHttpException
+	 * @throws Throwable
+	 * @throws ServerErrorHttpException
 	 */
 	public function actionIndex($class = false) {
 		if (!$class) {//list all reference models
@@ -78,7 +80,7 @@ class ReferencesController extends WigetableController {
 	 * @param integer $id
 	 * @return mixed
 	 * @throws Throwable
-	 * @throws \yii\web\ServerErrorHttpException
+	 * @throws ServerErrorHttpException
 	 */
 	public function actionView($class, $id) {
 		return $this->render('view', [
@@ -89,7 +91,8 @@ class ReferencesController extends WigetableController {
 	/**
 	 * @param string $class
 	 * @return mixed
-	 * @throws \yii\web\ServerErrorHttpException
+	 * @throws ServerErrorHttpException
+	 * @throws Throwable
 	 */
 	public function actionCreate($class) {
 		/** @var Reference $model */
@@ -108,7 +111,7 @@ class ReferencesController extends WigetableController {
 	 * @param integer $id
 	 * @return mixed
 	 * @throws Throwable
-	 * @throws \yii\web\ServerErrorHttpException
+	 * @throws ServerErrorHttpException
 	 */
 	public function actionUpdate($class, $id) {
 		/** @var Reference $model */
@@ -128,7 +131,7 @@ class ReferencesController extends WigetableController {
 	 * @param integer $id
 	 * @return mixed
 	 * @throws Throwable
-	 * @throws \yii\web\ServerErrorHttpException
+	 * @throws ServerErrorHttpException
 	 */
 	public function actionDelete($class, $id) {
 		/** @var Reference $model */

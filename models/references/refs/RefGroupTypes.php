@@ -18,31 +18,31 @@ class RefGroupTypes extends Reference {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'ref_group_types';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['name', 'value'], 'required'],
 			[['deleted'], 'integer'],
 			[['name'], 'string', 'max' => 256],
-			[['value'], 'string', 'max' => 512],
+			[['value'], 'string', 'max' => 512]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
 			'value' => 'Описание',
-			'deleted' => 'Deleted',
+			'deleted' => 'Deleted'
 		];
 	}
 }
