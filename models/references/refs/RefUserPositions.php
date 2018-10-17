@@ -14,7 +14,7 @@ use app\models\references\Reference;
  * @property int $deleted
  */
 class RefUserPositions extends Reference {
-	public $menuCaption = 'Роли пользователей';
+	public $menuCaption = 'Должности';
 	public $menuIcon = false;
 
 	/**
