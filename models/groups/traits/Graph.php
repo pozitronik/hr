@@ -35,6 +35,21 @@ trait Graph {
 	}
 
 	/**
+	 * @param self $to
+	 * @return array
+	 */
+	private function Edge($to):array {
+		return [
+			'id' => "{$this->id}x{$to->id}",
+			'source' => (string)$this->id,
+			'target' => (string)$to->id,
+			'type' => 'curvedArrow',
+			'label' => $to->relGroupTypes->name,
+			'size' => '30'
+		];
+	}
+
+	/**
 	 * @param array $graphStack
 	 * @param array $edgesStack
 	 * @param array $childStack
@@ -49,14 +64,7 @@ trait Graph {
 		/** @var Groups $childGroup */
 		/** @noinspection ForeachSourceInspection */
 		foreach ($this->relChildGroups as $childGroup) {
-			$edgesStack[] = [
-				'id' => "{$this->id}x{$childGroup->id}",
-				'source' => (string)$this->id,
-				'target' => (string)$childGroup->id,
-				'type' => 'curvedArrow',
-				'label' => $childGroup->relGroupTypes->name,
-				'size' => '30'
-			];
+			$edgesStack[] = $this->Edge($childGroup);
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
 				$level++;
