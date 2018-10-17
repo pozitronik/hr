@@ -182,10 +182,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 */
 	public function createRecord($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-			if (!$this->save()) {
-				Utils::log($this->errors);
-			}
-			return true;
+			return $this->save();
 		}
 		return false;
 	}
