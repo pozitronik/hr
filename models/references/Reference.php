@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\references;
 
-use app\helpers\Utils;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\models\core\traits\ARExtended;

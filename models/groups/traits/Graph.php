@@ -81,6 +81,8 @@ trait Graph {
 
 	/**
 	 * Строим матрицу распределения узлов графа структуры
+	 * @param array $graphMap
+	 * @param int $level
 	 */
 	public function getGraphMap(array &$graphMap = [0 => 0], &$level = 0):void {
 //		Utils::fileLog("$x,$y");

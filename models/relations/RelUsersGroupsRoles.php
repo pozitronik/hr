@@ -1,8 +1,8 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use Yii;
 
 /**
  * This is the model class for table "rel_users_groups_roles".
