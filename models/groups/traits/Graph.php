@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\groups\traits;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\groups\Groups;
 use Exception;
 use Throwable;
@@ -26,7 +27,7 @@ trait Graph {
 		$blue = random_int(10, 255);
 		return [
 			'id' => (string)$this->id,
-			'label' => $this->name,
+			'label' => "$x,$y",//$this->name,
 			'x' => $x,
 			'y' => $y,
 			'size' => (string)3,//count($this->relUsers),//todo: придумать характеристику веса группы,
@@ -57,24 +58,25 @@ trait Graph {
 	 * @param int $x
 	 * @throws Throwable
 	 */
-	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$x= 0, &$y = 0):void {
+	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$x = 0, &$y = 0):void {
+//		Utils::fileLog("$x,$y");
 		/** @var Groups $this */
 		$childStack[$this->id] = true;
 		$graphStack[] = $this->asNode($x, $y);
+
 		/** @var Groups $childGroup */
 		/** @noinspection ForeachSourceInspection */
+		$y++;
 		foreach ($this->relChildGroups as $childGroup) {
 			$edgesStack[] = $this->Edge($childGroup);
-			$y++;
+
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
-
 				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $x, $y);
 
-				$x++;
 			}
-			$y--;
+			$x++;
 		}
-
+		$y--;
 	}
 }
