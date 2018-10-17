@@ -2,13 +2,11 @@
 declare(strict_types = 1);
 
 /**
- * Шаблон формы страницы изменения информации пользователя
- *
  * @var View $this
- * @var Users $model
+ * @var Groups $model
  */
 
-use app\models\users\Users;
+use app\models\groups\Groups;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
