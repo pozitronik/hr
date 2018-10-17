@@ -8,9 +8,11 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "rel_users_groups".
  *
+ * @property int id
  * @property int $user_id Сотрудник
  * @property int $group_id Рабочая группа
- * @property int $user_role_id Роль сотрудника в группе
+ *
+ * @property
  */
 class RelUsersGroups extends ActiveRecord {
 	use Relations;
@@ -37,10 +39,13 @@ class RelUsersGroups extends ActiveRecord {
 	 */
 	public function attributeLabels():array {
 		return [
+			'id' => 'ID',
 			'user_id' => 'Сотрудник',
 			'group_id' => 'Рабочая группа',
 			'user_role_id' => 'Роль сотрудника в группе'
 		];
 	}
+
+
 
 }
