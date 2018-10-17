@@ -7,6 +7,7 @@ use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\groups\traits\Graph;
+use app\models\references\refs\RefGroupTypes;
 use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
@@ -31,6 +32,7 @@ use yii\db\ActiveRecord;
  * @property array $dropParentGroups Свойство для передачи массива отлинкуемых родительских групп
  * @property ActiveQuery|RelGroupsGroups[] $relGroupsGroupsChild Релейшен групп для получения родительских групп
  * @property ActiveQuery|Groups[] $relParentGroups Группы, родительские по отношению к текущей
+ * @property ActiveQuery|RefGroupTypes $relGroupTypes Тип группы через релейшен
  * @property int $deleted
  *
  */
@@ -91,8 +93,6 @@ class Groups extends ActiveRecord {
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
-//		echo $x->createCommand()->rawSql;
-//		die;
 	}
 
 	/**
@@ -190,6 +190,13 @@ class Groups extends ActiveRecord {
 	 */
 	public function setDropParentGroups(array $dropParentGroups):void {
 		RelGroupsGroups::unlinkModels($dropParentGroups, $this);
+	}
+
+	/**
+	 * @return RefGroupTypes|ActiveQuery
+	 */
+	public function getRelGroupTypes() {
+		return $this->hasOne(RefGroupTypes::class, ['id' => 'type']);
 	}
 
 }

@@ -26,10 +26,10 @@ trait Graph {
 		$blue = random_int(10, 255);
 		return [
 			'id' => (string)$this->id,
-			'label' => $this->name."({$position},{$level})",
+			'label' => $this->name,
 			'x' => $position,
 			'y' => $level,
-			'size' => (string)count($this->relUsers),//todo: придумать характеристику веса группы,
+			'size' => (string)3,//count($this->relUsers),//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})"
 		];
 	}
@@ -54,7 +54,7 @@ trait Graph {
 				'source' => (string)$this->id,
 				'target' => (string)$childGroup->id,
 				'type' => 'curvedArrow',
-				'label' => "{$this->id}x{$childGroup->id}",
+				'label' => $childGroup->relGroupTypes->name,
 				'size' => '30'
 			];
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
