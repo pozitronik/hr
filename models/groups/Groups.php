@@ -33,6 +33,8 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|RelGroupsGroups[] $relGroupsGroupsChild Релейшен групп для получения родительских групп
  * @property ActiveQuery|Groups[] $relParentGroups Группы, родительские по отношению к текущей
  * @property ActiveQuery|RefGroupTypes $relGroupTypes Тип группы через релейшен
+ *
+ * @property Users $leader Пользюк, прописанный в группе с релейшеном лидера (владелец/руководитель)
  * @property int $deleted
  *
  */
@@ -197,6 +199,16 @@ class Groups extends ActiveRecord {
 	 */
 	public function getRelGroupTypes() {
 		return $this->hasOne(RefGroupTypes::class, ['id' => 'type']);
+	}
+
+	/**
+	 * Не очень чёткая логика выбора главнюка
+	 * @return Users
+	 */
+	public function getLeader():Users {
+		$users = $this->relUsers;
+		if (1 === count($users)) return array_pop($users);//Если один чувак, он автоматом считается главным
+
 	}
 
 }
