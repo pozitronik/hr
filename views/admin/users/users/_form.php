@@ -12,6 +12,8 @@ use app\models\users\Users;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use app\models\references\refs\RefUserRoles;
 
 ?>
 <div class="row">
@@ -29,23 +31,32 @@ use yii\widgets\ActiveForm;
 
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<?= $form->field($model, 'username')->textInput(['maxlength' => 50]); ?>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<?= $form->field($model, 'login')->textInput(['maxlength' => 50]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-3">
 						<?php if (null === $model->salt): ?>
 							<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.'); ?>
 						<?php else: ?>
 							<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен, при входе пользователю будет предложено сменить пароль.'); ?>
 						<?php endif; ?>
 					</div>
-					<div class="col-md-5">
+					<div class="col-md-3">
 						<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<?= $form->field($model, 'role')->widget(Select2::class, [
+							'data' => RefUserRoles::mapData(),
+							'options' => ['placeholder' => 'Выберите роль'],
+							'pluginOptions' => [
+								'allowClear' => true
+							]
+						]); ?>
 					</div>
 				</div>
 				<div class="row">
