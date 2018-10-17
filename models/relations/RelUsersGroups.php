@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\models\references\refs\RefUserRoles;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -12,10 +14,12 @@ use yii\db\ActiveRecord;
  * @property int $user_id Сотрудник
  * @property int $group_id Рабочая группа
  *
- * @property
+ * @property ActiveQuery|RelUsersGroupsRoles[] $relUsersGroupsRoles Связь с релейшеном к ролям в группе
+ * @property ActiveQuery|RefUserRoles[] $refUserRoles Роли пользователя в группе, полученные через релейшен
  */
 class RelUsersGroups extends ActiveRecord {
 	use Relations;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -46,6 +50,18 @@ class RelUsersGroups extends ActiveRecord {
 		];
 	}
 
+	/**
+	 * @return RelUsersGroupsRoles[]|ActiveQuery
+	 */
+	public function getRelUsersGroupsRoles() {
+		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id']);
+	}
 
+	/**
+	 * @return RefUserRoles[]|ActiveQuery
+	 */
+	public function getRefUserRoles() {
+		return $this->hasMany(RefUserRoles::class,['id' => 'role'])->via('relUsersGroupsRoles');
+	}
 
 }
