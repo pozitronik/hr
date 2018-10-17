@@ -10,11 +10,13 @@ class m181017_121419_ref_users_roles extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->createTable('ref_user_roles', [
+		$this->createTable('ref_user_positions', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(256)->notNull()->comment('Название'),
 			'deleted' => $this->boolean()->notNull()->defaultValue(false)
 		]);
+
+		$this->createIndex('name', 'ref_user_positions', 'name', true);
 	}
 
 	/**

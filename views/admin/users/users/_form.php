@@ -13,7 +13,7 @@ use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
-use app\models\references\refs\RefUserRoles;
+use app\models\references\refs\RefUserPositions;
 
 ?>
 <div class="row">
@@ -50,8 +50,8 @@ use app\models\references\refs\RefUserRoles;
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<?= $form->field($model, 'role')->widget(Select2::class, [
-							'data' => RefUserRoles::mapData(),
+						<?= $form->field($model, 'position')->widget(Select2::class, [
+							'data' => RefUserPositions::mapData(),
 							'options' => ['placeholder' => 'Выберите роль'],
 							'pluginOptions' => [
 								'allowClear' => true

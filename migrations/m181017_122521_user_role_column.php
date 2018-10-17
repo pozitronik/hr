@@ -10,15 +10,15 @@ class m181017_122521_user_role_column extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->addColumn('sys_users', 'role', $this->integer()->null()->comment('Роль/должность/позиция')->after('deleted'));//Пишем прямо в конец, потом всё это утащим в отдельную таблицу
-		$this->createIndex('role', 'sys_users', 'role');
+		$this->addColumn('sys_users', 'position', $this->integer()->null()->comment('Должность/позиция')->after('deleted'));//Пишем прямо в конец, потом всё это утащим в отдельную таблицу
+		$this->createIndex('position', 'sys_users', 'position');
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropColumn('sys_users', 'role');
+		$this->dropColumn('sys_users', 'position');
 	}
 
 	/*

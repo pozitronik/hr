@@ -7,13 +7,13 @@ namespace app\models\references\refs;
 use app\models\references\Reference;
 
 /**
- * This is the model class for table "ref_user_roles".
+ * This is the model class for table "ref_user_positions".
  *
  * @property int $id
  * @property string $name Название
  * @property int $deleted
  */
-class RefUserRoles extends Reference {
+class RefUserPositions extends Reference {
 	public $menuCaption = 'Роли пользователей';
 	public $menuIcon = false;
 
@@ -21,7 +21,7 @@ class RefUserRoles extends Reference {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_user_roles';
+		return 'ref_user_positions';
 	}
 
 	/**

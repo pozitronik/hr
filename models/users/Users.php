@@ -6,7 +6,7 @@ namespace app\models\users;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
-use app\models\references\refs\RefUserRoles;
+use app\models\references\refs\RefUserPositions;
 use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
 use app\models\groups\Groups;
@@ -30,7 +30,7 @@ use Yii;
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property int $deleted Флаг удаления
  *
- * @property integer|null $role Роль/должность/позиция
+ * @property integer|null $position Должность/позиция
  *
  * @property-read string $authKey
  *
@@ -41,7 +41,7 @@ use Yii;
  * @property-read string $personal_number
  * @property-read string $phone
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
- * @property ActiveQuery|RefUserRoles $relUserRoles Релейшен к ролям пользователей
+ * @property ActiveQuery|RefUserPositions $relUserPositions Релейшен к ролям пользователей
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write integer[] $dropGroups
@@ -73,7 +73,7 @@ class Users extends ActiveRecord {
 			[['username', 'login', 'password', 'salt', 'email', 'create_date'], 'required'],
 			[['comment'], 'string'],
 			[['create_date'], 'safe'],
-			[['daddy', 'deleted', 'role'], 'integer'],
+			[['daddy', 'deleted', 'position'], 'integer'],
 			[['username', 'password', 'salt', 'email', 'profile_image'], 'string', 'max' => 255],
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
@@ -97,7 +97,7 @@ class Users extends ActiveRecord {
 			'create_date' => 'Дата регистрации',
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
 			'deleted' => 'Флаг удаления',
-			'role' => 'Роль'
+			'position' => 'Должность'
 		];
 	}
 
@@ -222,10 +222,10 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefUserRoles|ActiveQuery
+	 * @return RefUserPositions|ActiveQuery
 	 */
-	public function getRelUserRoles() {
-		return $this->hasOne(RefUserRoles::class, ['id' => 'role']);
+	public function getRelUserPositions() {
+		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
 }
