@@ -208,7 +208,7 @@ class Groups extends ActiveRecord {
 	public function getLeader():Users {
 		$users = $this->relUsers;
 		if (1 === count($users)) return array_pop($users);//Если один чувак, он автоматом считается главным
-
+		return new Users(['username' => 'Не назначен']);
 	}
 
 }
