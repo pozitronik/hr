@@ -11,7 +11,7 @@ use app\widgets\controller\ControllerWidget;
 use yii\web\View;
 
 foreach ($controllers as $controller) {
-	if ($controller->disabled) {
+	if (!$controller->disabled) {
 		echo ControllerWidget::widget([
 			'model' => $controller
 		]);
