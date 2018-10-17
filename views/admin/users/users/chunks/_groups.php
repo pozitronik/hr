@@ -1,6 +1,9 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\ArrayHelper;
+use app\models\groups\Groups;
+use app\models\relations\RelUsersGroups;
 use app\widgets\group_select\GroupSelectWidget;
 
 /**
@@ -49,7 +52,14 @@ use kartik\grid\CheckboxColumn;
 					'header' => 'Удалить',
 					'name' => $model->classNameShort.'[dropGroups]'
 				],
-				'name'
+				'name',
+				[
+					'value' => function($group) use ($model) {
+						/** @var Groups $model */
+						$relUsersGroups = RelUsersGroups::find()->where(['user_id' => $model->id, 'group_id' => $group->id])->one();
+						return implode(ArrayHelper::getColumn($relUsersGroups->refUserRoles, 'name'),',');
+					}
+				]
 
 			]
 
