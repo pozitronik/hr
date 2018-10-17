@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers\admin\groups;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
 use Throwable;
@@ -124,5 +125,12 @@ class GroupsController extends WigetableController {
 		$edges = [];
 		$group->getGraph($nodes, $edges);
 		return compact('nodes', 'edges');
+	}
+
+	public function actionGraphMap(int $id){
+		$group = Groups::findModel($id, new NotFoundHttpException());
+		$map = [0 => 1];
+		$group->getGraphMap($map);
+		Utils::log($map);
 	}
 }

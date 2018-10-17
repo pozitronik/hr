@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\groups\traits;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Utils;
 use app\models\groups\Groups;
 use Exception;
 use Throwable;
@@ -65,7 +64,6 @@ trait Graph {
 		$graphStack[] = $this->asNode($x, $y);
 
 		/** @var Groups $childGroup */
-		/** @noinspection ForeachSourceInspection */
 		$y++;
 		foreach ($this->relChildGroups as $childGroup) {
 			$edgesStack[] = $this->Edge($childGroup);
@@ -75,8 +73,28 @@ trait Graph {
 				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $x, $y);
 
 			}
-			$x++;
+
 		}
+		$x++;
 		$y--;
+	}
+
+	/**
+	 * Строим матрицу распределения узлов графа структуры
+	 */
+	public function getGraphMap(array &$graphMap = [0 => 0], &$level = 0):void {
+//		Utils::fileLog("$x,$y");
+		/** @var Groups $this */
+		if (!isset($graphMap[$level + 1])) $graphMap[$level + 1] = 0;
+		$graphMap[$level + 1] = $graphMap[$level + 1] + count($this->relChildGroups);
+
+		/** @var Groups $childGroup */
+
+		foreach ($this->relChildGroups as $childGroup) {
+			$level++;
+			$childGroup->getGraphMap($graphMap, $level);
+			$level--;
+		}
+
 	}
 }
