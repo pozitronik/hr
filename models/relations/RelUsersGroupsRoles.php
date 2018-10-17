@@ -4,24 +4,26 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "rel_users_groups_roles".
  *
  * @property int $user_group_id ID связки пользователь/группа
  * @property int $role Роль
  */
-class RelUsersGroupsRoles extends \yii\db\ActiveRecord {
+class RelUsersGroupsRoles extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'rel_users_groups_roles';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['user_group_id', 'role'], 'required'],
 			[['user_group_id', 'role'], 'integer'],
@@ -32,7 +34,7 @@ class RelUsersGroupsRoles extends \yii\db\ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'user_group_id' => 'ID связки пользователь/группа',
 			'role' => 'Роль',

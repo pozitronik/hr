@@ -98,7 +98,7 @@ class GroupsController extends WigetableController {
 	 * @param int $id
 	 * @throws Throwable
 	 */
-	public function actionDelete(int $id) {
+	public function actionDelete(int $id):void {
 		Groups::findModel($id, new NotFoundHttpException())->safeDelete();
 		$this->redirect('index');
 	}
