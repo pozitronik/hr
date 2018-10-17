@@ -26,6 +26,9 @@ use kartik\grid\CheckboxColumn;
 			],
 			'toolbar' => [
 				[
+					'options' => [
+						'style' => 'min-width:500px'
+					],
 					'content' => GroupSelectWidget::widget([
 						'model' => $model,
 						'attribute' => 'relGroups',
