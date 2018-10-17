@@ -23,7 +23,7 @@ class m181017_121419_ref_users_roles extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropTable('ref_user_roles');
+		$this->dropTable('ref_user_positions');
 	}
 
 	/*
