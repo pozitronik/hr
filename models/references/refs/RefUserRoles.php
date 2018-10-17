@@ -30,6 +30,7 @@ class RefUserRoles extends Reference {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
+			[['name'], 'unique'],
 			[['deleted'], 'integer'],
 			[['name'], 'string', 'max' => 256]
 		];
