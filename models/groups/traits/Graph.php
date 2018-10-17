@@ -14,12 +14,12 @@ use Throwable;
 trait Graph {
 
 	/**
-	 * @param null|integer $position
-	 * @param null|integer $level
+	 * @param null|integer $x
+	 * @param null|integer $y
 	 * @return array
 	 * @throws Exception
 	 */
-	public function asNode($position = 0, $level = 0):array {
+	public function asNode($x = 0, $y = 0):array {
 		/** @var Groups $this */
 		$red = random_int(10, 255);
 		$green = random_int(10, 255);
@@ -27,8 +27,8 @@ trait Graph {
 		return [
 			'id' => (string)$this->id,
 			'label' => $this->name,
-			'x' => $position,
-			'y' => $level,
+			'x' => $x,
+			'y' => $y,
 			'size' => (string)3,//count($this->relUsers),//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})"
 		];
@@ -53,25 +53,27 @@ trait Graph {
 	 * @param array $graphStack
 	 * @param array $edgesStack
 	 * @param array $childStack
-	 * @param int $level
-	 * @param int $position
+	 * @param int $y
+	 * @param int $x
 	 * @throws Throwable
 	 */
-	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$level = 0, $position = 0):void {
+	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$x= 0, &$y = 0):void {
 		/** @var Groups $this */
 		$childStack[$this->id] = true;
-		$graphStack[] = $this->asNode($position, $level);
+		$graphStack[] = $this->asNode($x, $y);
 		/** @var Groups $childGroup */
 		/** @noinspection ForeachSourceInspection */
 		foreach ($this->relChildGroups as $childGroup) {
 			$edgesStack[] = $this->Edge($childGroup);
+			$y++;
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
-				$level++;
-				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $level, $position);
-				$level--;
-				$position++;
+
+				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $x, $y);
+
+				$x++;
 			}
+			$y--;
 		}
 
 	}
