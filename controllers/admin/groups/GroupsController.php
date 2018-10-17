@@ -131,7 +131,7 @@ class GroupsController extends WigetableController {
 	 * @param int $id
 	 * @throws Throwable
 	 */
-	public function actionGraphMap(int $id){
+	public function actionGraphMap(int $id):void {
 		$group = Groups::findModel($id, new NotFoundHttpException());
 		$map = [0 => 1];
 		$group->getGraphMap($map);
