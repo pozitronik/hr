@@ -65,6 +65,7 @@ trait Graph {
 
 		/** @var Groups $childGroup */
 		$y++;
+		/** @noinspection ForeachSourceInspection */
 		foreach ($this->relChildGroups as $childGroup) {
 			$edgesStack[] = $this->Edge($childGroup);
 
@@ -88,10 +89,11 @@ trait Graph {
 //		Utils::fileLog("$x,$y");
 		/** @var Groups $this */
 		if (!isset($graphMap[$level + 1])) $graphMap[$level + 1] = 0;
-		$graphMap[$level + 1] = $graphMap[$level + 1] + count($this->relChildGroups);
+		$graphMap[$level + 1] += count($this->relChildGroups);
 
 		/** @var Groups $childGroup */
 
+		/** @noinspection ForeachSourceInspection */
 		foreach ($this->relChildGroups as $childGroup) {
 			$level++;
 			$childGroup->getGraphMap($graphMap, $level);

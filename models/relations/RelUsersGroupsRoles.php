@@ -27,7 +27,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 		return [
 			[['user_group_id', 'role'], 'required'],
 			[['user_group_id', 'role'], 'integer'],
-			[['user_group_id', 'role'], 'unique', 'targetAttribute' => ['user_group_id', 'role']],
+			[['user_group_id', 'role'], 'unique', 'targetAttribute' => ['user_group_id', 'role']]
 		];
 	}
 
@@ -37,7 +37,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	public function attributeLabels():array {
 		return [
 			'user_group_id' => 'ID связки пользователь/группа',
-			'role' => 'Роль',
+			'role' => 'Роль'
 		];
 	}
 }
