@@ -3,8 +3,12 @@ declare(strict_types = 1);
 
 namespace app\models\references\refs;
 
-
+use app\models\groups\Groups;
 use app\models\references\Reference;
+use app\models\relations\RelUsersGroups;
+use app\models\relations\RelUsersGroupsRoles;
+use app\models\users\Users;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "ref_user_roles".
@@ -12,6 +16,11 @@ use app\models\references\Reference;
  * @property int $id
  * @property string $name Название
  * @property int $deleted
+ *
+ * @property ActiveQuery|RelUsersGroupsRoles[] $relUsersGroupsRoles Связующий релейшен к привязкам пользователей в группы (just via)
+ * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Релейшен к привязке пользователей в группах
+ * @property ActiveQuery|Groups[] $groups
+ * @property ActiveQuery|Users[] $users
  */
 class RefUserRoles extends Reference {
 	public $menuCaption = 'Роли пользователей внутри групп';
@@ -45,5 +54,43 @@ class RefUserRoles extends Reference {
 			'name' => 'Название',
 			'deleted' => 'Deleted'
 		];
+	}
+
+	/**
+	 * @return RelUsersGroupsRoles[]|ActiveQuery
+	 */
+	public function getRelUsersGroupsRoles() {
+		return $this->hasMany(RelUsersGroupsRoles::class, ['role' => 'id']);
+	}
+
+	/**
+	 * @return RelUsersGroups[]|ActiveQuery
+	 */
+	public function getRelUsersGroups() {
+		return $this->hasMany(RelUsersGroups::class, ['id' => 'user_group_id'])->via('relUsersGroupsRoles');
+	}
+
+	/**
+	 * @return Groups[]|ActiveQuery
+	 */
+	public function getGroups() {
+		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
+	}
+
+	/**
+	 * @return Users[]|ActiveQuery
+	 */
+	public function getUsers() {
+		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
+	}
+
+	/**
+	 * Возвращает набор ролей для пользователя $user в группе $group
+	 * @param Users $user
+	 * @param Groups $group
+	 * @return self[] array
+	 */
+	public static function getUserRolesInGroup(Users $user, Groups $group):array {
+		return self::find()->joinWith('relUsersGroups')->where(['user_id' => $user->id, 'group_id' => $group->id])->all();
 	}
 }
