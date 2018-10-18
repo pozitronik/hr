@@ -4,7 +4,6 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\references\refs\RefUserRoles;
-use app\models\relations\RelUsersGroups;
 use app\widgets\group_select\GroupSelectWidget;
 
 /**

@@ -37,6 +37,8 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|RefGroupTypes $relGroupTypes Тип группы через релейшен
  *
  * @property Users $leader Пользюк, прописанный в группе с релейшеном лидера (владелец/руководитель)
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
+ * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property int $deleted
  *
  */
