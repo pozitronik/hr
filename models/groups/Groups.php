@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
@@ -225,11 +226,13 @@ class Groups extends ActiveRecord {
 	/**
 	 * Не очень чёткая логика выбора главнюка
 	 * @return Users
+	 * @throws Throwable
 	 */
 	public function getLeader():Users {
 		$users = $this->relUsers;
 		if (1 === count($users)) return array_pop($users);//Если один чувак, он автоматом считается главным
-		return new Users(['username' => 'Не назначен']);
+		$x = ArrayHelper::getValue($this->relRefUserRoles, "0.users.0");
+		return $x??new Users(['username' => 'Не назначен']);
 	}
 
 }
