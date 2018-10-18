@@ -8,8 +8,10 @@ use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\groups\traits\Graph;
 use app\models\references\refs\RefGroupTypes;
+use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroups;
+use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
 use Throwable;
@@ -41,6 +43,7 @@ use yii\db\ActiveRecord;
 class Groups extends ActiveRecord {
 	use ARExtended;
 	use Graph;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -95,6 +98,22 @@ class Groups extends ActiveRecord {
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
+	}
+
+	/**
+	 * Релейшен к назначению ролей в этой группе
+	 * @return ActiveQuery|RelUsersGroupsRoles[]
+	 */
+	public function getRelUsersGroupsRoles() {
+		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
+	}
+
+	/**
+	 * Все назначенные роли в этой группе
+	 * @return ActiveQuery|RefUserRoles[]
+	 */
+	public function getRelRefUserRoles() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
 	/**
