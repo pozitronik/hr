@@ -33,7 +33,7 @@ class RelUsersGroups extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['user_id', 'group_id'], 'required'],
-			[['user_id', 'group_id', 'user_role_id'], 'integer'],
+			[['id', 'user_id', 'group_id'], 'integer'],
 			[['user_id', 'group_id'], 'unique', 'targetAttribute' => ['user_id', 'group_id']]
 		];
 	}
@@ -61,7 +61,7 @@ class RelUsersGroups extends ActiveRecord {
 	 * @return RefUserRoles[]|ActiveQuery
 	 */
 	public function getRefUserRoles() {
-		return $this->hasMany(RefUserRoles::class,['id' => 'role'])->via('relUsersGroupsRoles');
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
 }
