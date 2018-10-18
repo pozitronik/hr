@@ -228,7 +228,7 @@ class Groups extends ActiveRecord {
 	 * @return Users
 	 * @throws Throwable
 	 */
-	public function getLeader():Users {
+	public function getLeader():Users {//todo: лидер определяется вообще косо
 		$users = $this->relUsers;
 		if (1 === count($users)) return array_pop($users);//Если один чувак, он автоматом считается главным
 		$x = ArrayHelper::getValue($this->relRefUserRoles, "0.users.0");
