@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use yii\db\ActiveRecord;
-use RuntimeException;
+
 /**
  * This is the model class for table "rel_users_groups_roles".
  *
@@ -44,15 +44,17 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	 * Добавляет пользователю роль в группу
 	 * @param int $role
 	 * @param int $group
+	 * @param int $user
 	 * @return bool
 	 */
-	public static function setRoleInGroup($role, $group):bool {
+	public static function setRoleInGroup($role, $group, $user):bool {
 		/*Связь пользователя в группе уже есть*/
-		$rel = RelUsersGroups::find()->where(['group_id' => $group])->one();
+		$rel = RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $user])->one();
 		if ($rel) {
 			$relUsersGroupsRoles = new self(['user_group_id' => $rel->id, 'role' => $role]);
 			return $relUsersGroupsRoles->save();
 		}
-		throw new RuntimeException("Нельзя добавить роль пользователя для группы, в которой его нет");
+		/*Попытка добавления пользователя в группу, в которой он не присутствует. Такое невозможно по логике связей таблиц, но может быть инициировано при сохранении с одновременным удалением */
+		return false;
 	}
 }

@@ -74,7 +74,7 @@ class UsersController extends WigetableController {
 			$user->updateUser($updateArray);
 		}
 
-		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
+		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {//todo: удаление связи ролей при удалении группы
 			$user->rolesInGroup = $updateArray;
 		}
 
