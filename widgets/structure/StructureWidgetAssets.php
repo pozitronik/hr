@@ -27,9 +27,14 @@ class StructureWidgetAssets extends AssetBundle {
 		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js',
 		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js',
 		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js',
+//		'js/sigma.js/plugins/sigma.renderers.snapshot/sigma.renderers.snapshot.js',
 		'js/sigma.js/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js',
+		'js/sigma.js/plugins/sigma.plugins.animate/sigma.plugins.animate.js',
+		'js/sigma.js/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js',
 
-		'js/sigma.js/plugins/sigma.parsers.json/sigma.parsers.json.js'
+		'js/sigma.js/plugins/sigma.parsers.json/sigma.parsers.json.js',
+
+		'js/structure.js'
 	];
 	public $depends = [
 		AppAsset::class

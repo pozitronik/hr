@@ -24,13 +24,18 @@ trait Graph {
 		$red = random_int(10, 255);
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
+//		$size = (count($this->relUsers) + count($this->relChildGroups));
+		$size =  10 / ($y + 1);
+
 		return [
 			'id' => (string)$this->id,
-			'label' => "$x,$y",//$this->name,
+			'label' => $this->name,
 			'x' => $x,
 			'y' => $y,
-			'size' => (string)3,//count($this->relUsers),//todo: придумать характеристику веса группы,
-			'color' => "rgb({$red},{$green},{$blue})"
+			'size' => (string)$size,//todo: придумать характеристику веса группы,
+			'color' => "rgb({$red},{$green},{$blue})",
+			'type' => 'image',
+			'url' => $this->leader->avatar
 		];
 	}
 
