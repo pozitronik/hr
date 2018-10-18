@@ -70,9 +70,14 @@ class UsersController extends WigetableController {
 	public function actionUpdate(int $id):string {
 		$user = Users::findModel($id, new NotFoundHttpException());
 
-		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $user->classNameShort))) {
+		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $user->classNameShort))) {//todo не нужен ArrayHelper
 			$user->updateUser($updateArray);
 		}
+
+		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
+			$user->rolesInGroup = $updateArray;
+		}
+
 		return $this->render('update', [
 			'model' => $user
 		]);

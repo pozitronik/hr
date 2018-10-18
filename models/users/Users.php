@@ -8,6 +8,7 @@ use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserPositions;
 use app\models\relations\RelUsersGroups;
+use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\models\groups\Groups;
 use yii\db\ActiveQuery;
@@ -44,6 +45,7 @@ use Yii;
  * @property ActiveQuery|RefUserPositions $relUserPositions Релейшен к ролям пользователей
  *
  * @property ActiveQuery|Groups[] $relGroups
+ * @property-write array $rolesInGroup
  * @property-write integer[] $dropGroups
  */
 class Users extends ActiveRecord {
@@ -228,4 +230,17 @@ class Users extends ActiveRecord {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
+	/**
+	 * Добавляет массив ролей пользователя к группе
+	 * @param array $groupRoles //todo: array<int, int[]> in 2018.3
+	 */
+	public function setRolesInGroup(array $groupRoles):void {
+		foreach ($groupRoles as $group => $roles) {
+			$rel = RelUsersGroups::find()->where(['group_id' => $group])->one();
+			RelUsersGroupsRoles::deleteAll(['user_group_id' => $rel->id]);
+			foreach ($roles as $role) {
+				RelUsersGroupsRoles::setRoleInGroup($role, $group);
+			}
+		}
+	}
 }

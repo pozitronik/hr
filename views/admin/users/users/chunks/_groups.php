@@ -5,18 +5,19 @@ use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\references\refs\RefUserRoles;
 use app\widgets\group_select\GroupSelectWidget;
-
-/**
- * @var View $this
- * @var Users $model
- */
-
 use app\models\users\Users;
 use kartik\select2\Select2;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
+
+/**
+ * @var View $this
+ * @var Users $model
+ */
+
+
 
 ?>
 <div class="row">
@@ -60,10 +61,10 @@ use kartik\grid\CheckboxColumn;
 						/** @var Groups $group */
 						return Select2::widget([
 							'data' => RefUserRoles::mapData(),
-							'name' => 'name',
+							'name' => "UserRoles[$group->id]",
 							/** @var Users $model */
 							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($model, $group), 'id'),
-							'options' => ['placeholder' => 'Укажите позицию в группе'],
+							'options' => ['placeholder' => 'Укажите роль в группе'],
 							'pluginOptions' => [
 								'allowClear' => true,
 								'multiple' => true

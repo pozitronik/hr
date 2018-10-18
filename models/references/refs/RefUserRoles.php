@@ -93,4 +93,5 @@ class RefUserRoles extends Reference {
 	public static function getUserRolesInGroup(Users $user, Groups $group):array {
 		return self::find()->joinWith('relUsersGroups')->where(['user_id' => $user->id, 'group_id' => $group->id])->all();
 	}
+
 }
