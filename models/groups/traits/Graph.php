@@ -25,7 +25,7 @@ trait Graph {
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
 //		$size = (count($this->relUsers) + count($this->relChildGroups));
-		$size =  10 / ($y + 1);
+		$size =  100 / ($y + 1);
 
 		return [
 			'id' => (string)$this->id,
@@ -50,7 +50,7 @@ trait Graph {
 			'target' => (string)$to->id,
 			'type' => 'curvedArrow',
 			'label' => $to->relGroupTypes->name,
-			'size' => '30'
+			'size' => '5'
 		];
 	}
 
