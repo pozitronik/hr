@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
+use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersGroups;
 use app\widgets\group_select\GroupSelectWidget;
 
@@ -12,6 +13,7 @@ use app\widgets\group_select\GroupSelectWidget;
  */
 
 use app\models\users\Users;
+use kartik\select2\Select2;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -54,11 +56,22 @@ use kartik\grid\CheckboxColumn;
 				],
 				'name',
 				[
+					'label' => 'Роли в группе',
 					'value' => function($group) use ($model) {
-						/** @var Groups $model */
-						$relUsersGroups = RelUsersGroups::find()->where(['user_id' => $model->id, 'group_id' => $group->id])->one();
-						return implode(ArrayHelper::getColumn($relUsersGroups->refUserRoles, 'name'),',');
-					}
+						/** @var Groups $group */
+						return Select2::widget([
+							'data' => RefUserRoles::mapData(),
+							'name' => 'name',
+							/** @var Users $model */
+							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($model, $group), 'id'),
+							'options' => ['placeholder' => 'Укажите позицию в группе'],
+							'pluginOptions' => [
+								'allowClear' => true,
+								'multiple' => true
+							]
+						]);
+					},
+					'format' => 'raw'
 				]
 
 			]
