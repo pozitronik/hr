@@ -7,7 +7,6 @@ use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
-use app\helpers\ArrayHelper;
 use app\models\users\Users;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -52,7 +51,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newUser = new Users();
-		if ($newUser->createUser(ArrayHelper::getValue(Yii::$app->request->post(), $newUser->classNameShort))) {
+		if ($newUser->createUser(Yii::$app->request->post($newUser->classNameShort))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newUser->id]);
 		}
@@ -70,11 +69,11 @@ class UsersController extends WigetableController {
 	public function actionUpdate(int $id):string {
 		$user = Users::findModel($id, new NotFoundHttpException());
 
-		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $user->classNameShort))) {//todo не нужен ArrayHelper
+		if (null !== ($updateArray = Yii::$app->request->post($user->classNameShort))) {
 			$user->updateUser($updateArray);
 		}
 
-		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {//todo: удаление связи ролей при удалении группы
+		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
 			$user->rolesInGroup = $updateArray;
 		}
 

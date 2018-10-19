@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin\groups;
 
-use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
@@ -68,7 +67,7 @@ class GroupsController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newGroup = new Groups();
-		if ($newGroup->createGroup(ArrayHelper::getValue(Yii::$app->request->post(), $newGroup->classNameShort))) {
+		if ($newGroup->createGroup(Yii::$app->request->post($newGroup->classNameShort))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newGroup->id]);
 		}
@@ -86,7 +85,7 @@ class GroupsController extends WigetableController {
 	public function actionUpdate(int $id):string {
 		$group = Groups::findModel($id, new NotFoundHttpException());
 
-		if (null !== ($updateArray = ArrayHelper::getValue(Yii::$app->request->post(), $group->classNameShort))) {
+		if (null !== ($updateArray = Yii::$app->request->post($group->classNameShort))) {
 			$group->updateGroup($updateArray);
 		}
 		return $this->render('update', [
