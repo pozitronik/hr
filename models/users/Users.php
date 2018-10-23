@@ -233,11 +233,12 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Добавляет массив ролей пользователя к группе
-	 * @param array $groupRoles //todo: array<int, int[]> in 2018.3
+	 * @param array<int, int[]> $groupRoles
 	 */
 	public function setRolesInGroup(array $groupRoles):void {
 		foreach ($groupRoles as $group => $roles) {
 			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $this->id])->select('id')]);
+			/** @var integer[] $roles */
 			foreach ($roles as $role) {
 				RelUsersGroupsRoles::setRoleInGroup($role, $group, $this->id);
 			}
