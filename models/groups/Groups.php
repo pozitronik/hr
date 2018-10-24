@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
-use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
@@ -37,7 +36,7 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|Groups[] $relParentGroups Группы, родительские по отношению к текущей
  * @property ActiveQuery|RefGroupTypes $relGroupTypes Тип группы через релейшен
  *
- * @property Users $leader Пользюк, прописанный в группе с релейшеном лидера (владелец/руководитель)
+ * @property Users[] $leaders Пользюки, прописанне в группе с релейшеном лидера (владелец/руководитель)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property int $deleted
@@ -225,14 +224,11 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Не очень чёткая логика выбора главнюка
-	 * @return Users
+	 * @return Users[]
 	 * @throws Throwable
 	 */
-	public function getLeader():Users {//todo: лидер определяется вообще косо
-		$users = $this->relUsers;
-		if (1 === count($users)) return array_pop($users);//Если один чувак, он автоматом считается главным
-		$x = ArrayHelper::getValue($this->relRefUserRoles, "0.users.0");
-		return $x??new Users(['username' => 'Не назначен']);
+	public function getLeaders():array {//todo: лидер определяется вообще косо
+		$x = Users::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => 2, 'rel_users_groups.group_id' => $this->id]);
+		return $x->all();
 	}
-
 }

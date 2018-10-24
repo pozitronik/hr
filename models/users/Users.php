@@ -199,6 +199,14 @@ class Users extends ActiveRecord {
 	}
 
 	/**
+	 * Релейшен к назначению ролей в этой группе
+	 * @return ActiveQuery|RelUsersGroupsRoles[]
+	 */
+	public function getRelUsersGroupsRoles() {
+		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
+	}
+
+	/**
 	 * @param array $relUsersGroups
 	 * @throws Throwable
 	 */

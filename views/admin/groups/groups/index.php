@@ -37,7 +37,7 @@ use kartik\grid\ActionColumn;
 				'id',
 				'name',
 				'relGroupTypes.name',
-				'leader.username',
+				'leaders.0.username',//todo
 				'comment',
 				[
 					'class' => ActionColumn::class,
