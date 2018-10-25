@@ -47,6 +47,7 @@ use Yii;
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
+ * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles Релейшен к ролям пользователей в группах
  * @property-write integer[] $dropGroups
  */
 class Users extends ActiveRecord {
@@ -257,7 +258,7 @@ class Users extends ActiveRecord {
 	/**
 	 * @return string|null
 	 */
-	public function getPositionName() {
+	public function getPositionName():?string {
 		return $this->relUserPositions?$this->relUserPositions->name:'<Не назначен на должность>';
 	}
 }

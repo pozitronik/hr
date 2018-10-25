@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\helpers\ArrayHelper;
 use app\models\groups\GroupsSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -41,7 +42,7 @@ use kartik\grid\ActionColumn;
 					'attribute' => 'leaders',
 					'value' => function($model) {
 						/** @var GroupsSearch $model */
-						return implode(", ",\app\helpers\ArrayHelper::getColumn($model->leaders,'username'));
+						return implode(", ", ArrayHelper::getColumn($model->leaders,'username'));
 					}
 				],
 				'comment',
