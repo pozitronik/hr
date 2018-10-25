@@ -18,22 +18,24 @@ class StructureWidgetAssets extends AssetBundle {
 	];
 	public $js = [
 		'js/sigma.js/sigma.min.js',
-		'js/sigma.js/plugins/sigma.renderers.parallelEdges/utils.js',
-		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curve.js',
-		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js',
-		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js',
-		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js',
-		'js/sigma.js/plugins/sigma.renderers.edgeLabels/settings.js',
-		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js',
-		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js',
-		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js',
-//		'js/sigma.js/plugins/sigma.renderers.snapshot/sigma.renderers.snapshot.js',
+//		'js/sigma.js/plugins/sigma.renderers.parallelEdges/utils.js',
+//		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curve.js',
+//		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edges.curvedArrow.js',
+//		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curve.js',
+//		'js/sigma.js/plugins/sigma.renderers.parallelEdges/sigma.canvas.edgehovers.curvedArrow.js',
+//		'js/sigma.js/plugins/sigma.renderers.edgeLabels/settings.js',
+//		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.def.js',
+//		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curve.js',
+//		'js/sigma.js/plugins/sigma.renderers.edgeLabels/sigma.canvas.edges.labels.curvedArrow.js',
 		'js/sigma.js/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js',
-		'js/sigma.js/plugins/sigma.plugins.animate/sigma.plugins.animate.js',
-		'js/sigma.js/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js',
+//		'js/sigma.js/plugins/sigma.plugins.animate/sigma.plugins.animate.js',
+//		'js/sigma.js/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js',
 
 		'js/sigma.js/plugins/sigma.parsers.json/sigma.parsers.json.js',
-		'js/sigma.js/plugins/sigma.renderers.groupNodes/sigma.renderers.groupNodes.js',
+		'js/sigma.js/plugins/sigma.renderers.customShapes/shape-library.js',
+		'js/sigma.js/plugins/sigma.renderers.customShapes/sigma.renderers.customShapes.js',
+//		'js/sigma.js/plugins/sigma.renderers.groupNodes/sigma.renderers.groupNodes.js',
+//		'js/sigma.js/plugins/sigma.renderers.test/sigma.renderers.test.js',
 
 		'js/structure.js'
 	];
