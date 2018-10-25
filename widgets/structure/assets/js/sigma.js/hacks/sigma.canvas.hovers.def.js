@@ -25,9 +25,7 @@
 			fontStyle = settings('hoverFontStyle') || settings('fontStyle'),
 			prefix = settings('prefix') || '',
 			size = node[prefix + 'size'] * sizeMultiplier,
-			fontSize = (settings('labelSize') === 'fixed') ?
-				settings('defaultLabelSize') :
-				settings('labelSizeRatio') * size;
+			fontSize = (settings('labelSize') === 'fixed') ? settings('defaultLabelSize') : settings('labelSizeRatio') * size;
 
 		// Label background:
 		context.font = (fontStyle ? fontStyle + ' ' : '') + fontSize + 'px ' + (settings('hoverFont') || settings('font'));

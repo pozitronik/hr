@@ -5,6 +5,9 @@ function init_sigma(id) {
 			type: 'canvas'
 		},
 		settings: {
+			zoomingRatio: 1.3,
+			enableEdgeHovering: true,
+			edgeHoverPrecision: 5,
 			sizeMultiplier: 5,
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10',
