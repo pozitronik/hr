@@ -107,8 +107,9 @@
 	var register = function (name, drawShape, drawBorder) {
 		sigma.canvas.nodes[name] = function (node, context, settings) {
 			var args = arguments,
+				sizeMultiplier = settings('sizeMultiplier') || 1,
 				prefix = settings('prefix') || '',
-				size = node[prefix + 'size'],
+				size = node[prefix + 'size']*sizeMultiplier,
 				color = node.color || settings('defaultNodeColor'),
 				borderColor = node.borderColor || color,
 				x = node[prefix + 'x'],

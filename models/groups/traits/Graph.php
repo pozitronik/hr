@@ -37,8 +37,8 @@ trait Graph {
 			'type' => 'circle',
 			'image' => [
 				'url' => $this->leader->avatar,
-				'clip' => '0.8',
-				'scale' => '1.1'
+				'clip' => '0.95',
+				'scale' => '1.4'
 			]
 		];
 	}
