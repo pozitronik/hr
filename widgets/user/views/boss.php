@@ -9,8 +9,8 @@ use app\models\users\Users;
 use yii\web\View;
 
 ?>
-<div class="fixed-fluid">
-	<div class="fixed-sm-250 fixed-lg-250" style="margin-left: auto; margin-right: auto">
+<div class="fixed-fluid pull-left">
+	<div class="pull-sm-left">
 		<div class="panel">
 			<div class="text-center pad-all bord-btm">
 				<div class="pad-ver">
