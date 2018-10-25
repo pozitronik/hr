@@ -16,7 +16,6 @@
 	 * @param  {configurable}             settings The settings function.
 	 */
 	sigma.canvas.labels.def = function (node, context, settings) {
-		console.log(node);
 		var fontSize,
 			sizeMultiplier = settings('sizeMultiplier') || 1,
 			prefix = settings('prefix') || '',

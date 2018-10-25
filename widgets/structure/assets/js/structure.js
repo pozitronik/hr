@@ -11,7 +11,7 @@ function init_sigma(id) {
 			sizeMultiplier: 5,
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10',
-
+			labelThreshold:30
 			// defaultLabelSize: '20'
 		}
 	});

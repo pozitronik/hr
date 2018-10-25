@@ -38,6 +38,7 @@ class StructureWidgetAssets extends AssetBundle {
 //		'js/sigma.js/plugins/sigma.renderers.test/sigma.renderers.test.js',
 		'js/sigma.js/hacks/sigma.canvas.labels.def.js',
 		'js/sigma.js/hacks/sigma.canvas.hovers.def.js',
+		'js/sigma.js/hacks/sigma.captors.mouse.js',
 
 		'js/structure.js'
 	];
