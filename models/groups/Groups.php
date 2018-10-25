@@ -85,6 +85,7 @@ class Groups extends ActiveRecord {
 			'comment' => 'Описание',
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
+			'leaders' => 'Руководители',
 			'deleted' => 'Deleted'
 		];
 	}

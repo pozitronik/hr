@@ -37,7 +37,13 @@ use kartik\grid\ActionColumn;
 				'id',
 				'name',
 				'relGroupTypes.name',
-				'leaders.0.username',//todo
+				[
+					'attribute' => 'leaders',
+					'value' => function($model) {
+						/** @var GroupsSearch $model */
+						return implode(", ",\app\helpers\ArrayHelper::getColumn($model->leaders,'username'));
+					}
+				],
 				'comment',
 				[
 					'class' => ActionColumn::class,
