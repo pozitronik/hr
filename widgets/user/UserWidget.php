@@ -9,6 +9,8 @@ use yii\base\Widget;
 /**
  * Class UserWidget
  * @property Users $user
+ * @property string $mode boss|user|etc - prototype
+ *
  */
 class UserWidget extends Widget {
 	public $user;
@@ -27,13 +29,9 @@ class UserWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		if ('user' === $this->mode) {
-			return $this->render('user', [
-				'model' => $this->user
-			]);
-		}
-		return $this->render('boss', [
-			'model' => $this->user
+		return $this->render('user', [
+			'model' => $this->user,
+			'boss' => 'boss' === $this->mode
 		]);
 
 	}
