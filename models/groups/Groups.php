@@ -36,7 +36,8 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|Groups[] $relParentGroups Группы, родительские по отношению к текущей
  * @property ActiveQuery|RefGroupTypes $relGroupTypes Тип группы через релейшен
  *
- * @property Users[] $leaders Пользюки, прописанне в группе с релейшеном лидера (владелец/руководитель)
+ * @property-read Users[] $leaders Пользюки, прописанне в группе с релейшеном лидера (владелец/руководитель)
+ * @property-read Users|null $leader Один пользователь из лидеров (для презентации)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property int $deleted
@@ -229,16 +230,27 @@ class Groups extends ActiveRecord {
 	 * @return Users[]
 	 * @throws Throwable
 	 */
-	public function getLeaders():array {//todo: лидер определяется вообще косо
+	public function getLeaders():array {
 		return Users::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.group_id' => $this->id])->all();
+	}
+
+	/**
+	 * Если у группы есть лидеры - покажет одного. Презентационная штука.
+	 * @return Users
+	 */
+	public function getLeader():Users {
+		return $this->leaders?$this->leaders[0]:new Users();
 	}
 
 	/**
 	 * Простая функция проверки, является ли пользователь лидером в этой группе
 	 * @param Users $user
 	 * @return bool
+	 * temporary
 	 */
 	public function isLeader(Users $user): bool {
 		return self::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.user_id' => $user->id, 'rel_users_groups.group_id' => $this->id])->count()>0;
 	}
+
+
 }

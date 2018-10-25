@@ -35,7 +35,7 @@ trait Graph {
 			'size' => (string)$size,//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})",
 			'type' => 'image',
-			'url' => $this->leaders[0]->avatar//todo
+			'url' => $this->leader->avatar
 		];
 	}
 
