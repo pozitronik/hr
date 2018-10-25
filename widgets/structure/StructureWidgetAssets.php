@@ -33,6 +33,7 @@ class StructureWidgetAssets extends AssetBundle {
 		'js/sigma.js/plugins/sigma.layout.noverlap/sigma.layout.noverlap.js',
 
 		'js/sigma.js/plugins/sigma.parsers.json/sigma.parsers.json.js',
+		'js/sigma.js/plugins/sigma.renderers.groupNodes/sigma.renderers.groupNodes.js',
 
 		'js/structure.js'
 	];
