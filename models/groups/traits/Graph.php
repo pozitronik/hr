@@ -25,7 +25,7 @@ trait Graph {
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
 //		$size = (count($this->relUsers) + count($this->relChildGroups));
-		$size =  100 / ($y + 1);
+		$size = 100 / ($y + 1);
 
 		return [
 			'id' => (string)$this->id,
@@ -34,8 +34,12 @@ trait Graph {
 			'y' => $y,
 			'size' => (string)$size,//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})",
-			'type' => 'image',
-			'url' => $this->leader->avatar
+			'type' => 'circle',
+			'image' => [
+				'url' => $this->leader->avatar,
+				'clip' => '0.8',
+				'scale' => '1.1'
+			]
 		];
 	}
 

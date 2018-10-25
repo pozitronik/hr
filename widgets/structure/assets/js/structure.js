@@ -9,6 +9,8 @@ function init_sigma(id) {
 			minArrowSize: '10'
 		}
 	});
+	CustomShapes.init(s);
+	s.refresh();
 	sigma.parsers.json('graph?id=' + id, s, function () {
 		dragging(s);
 		CustomShapes.init(s);
