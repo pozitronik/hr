@@ -20,7 +20,8 @@ use app\widgets\user\UserWidget;
 	<div class="panel-body">
 		<?php foreach ($group->relUsers as $user): ?>
 			<?= UserWidget::widget([
-				'user' => $user
+				'user' => $user,
+				'mode' => $group->isLeader($user)?'boss':'user'
 			]) ?>
 		<?php endforeach; ?>
 	</div>

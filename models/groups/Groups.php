@@ -45,6 +45,7 @@ use yii\db\ActiveRecord;
 class Groups extends ActiveRecord {
 	use ARExtended;
 	use Graph;
+	const LEADER = 2;
 
 	/**
 	 * {@inheritdoc}
@@ -228,7 +229,15 @@ class Groups extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public function getLeaders():array {//todo: лидер определяется вообще косо
-		$x = Users::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => 2, 'rel_users_groups.group_id' => $this->id]);
-		return $x->all();
+		return Users::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => Groups::LEADER, 'rel_users_groups.group_id' => $this->id])->all();
+	}
+
+	/**
+	 * Простая функция проверки, является ли пользователь лидером в этой группе
+	 * @param Users $user
+	 * @return bool
+	 */
+	public function isLeader(Users $user): bool {
+		return Groups::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => Groups::LEADER, 'rel_users_groups.user_id' => $user->id, 'rel_users_groups.group_id' => $this->id])->count()>0;
 	}
 }
