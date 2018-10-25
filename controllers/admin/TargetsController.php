@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin\agreements;
+namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
 use yii\web\ErrorAction;
@@ -9,11 +9,10 @@ use yii\web\ErrorAction;
 /**
  * Class WorkgroupsController
  */
-class AgreementsController extends WigetableController {
-	public $menuCaption = "Договорённости";
-	public $menuIcon = "/img/admin/agreements.png";
+class TargetsController extends WigetableController {
+	public $menuCaption = "Цели";
+	public $menuIcon = "/img/admin/targets.png";
 	public $disabled = true;
-
 	/**
 	 * @inheritdoc
 	 */

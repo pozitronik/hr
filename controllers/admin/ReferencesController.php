@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin\references;
+namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
 use app\models\references\Reference;

@@ -40,7 +40,7 @@ class Magic {
 	 */
 	private static function ExtractControllerId($className) {
 		$id =  mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
-		return "admin/{$id}/{$id}";//todo make more smarty
+		return "admin/{$id}";//todo make more smarty
 	}
 
 	/**

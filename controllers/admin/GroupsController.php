@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin\groups;
+namespace app\controllers\admin;
 
 use app\helpers\Utils;
 use app\models\groups\Groups;

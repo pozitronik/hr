@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin\wages;
+namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
 use yii\web\ErrorAction;
@@ -9,9 +9,9 @@ use yii\web\ErrorAction;
 /**
  * Class WorkgroupsController
  */
-class WagesController extends WigetableController {
-	public $menuCaption = "Зарплаты";
-	public $menuIcon = "/img/admin/wages.png";
+class CompetencyController extends WigetableController {
+	public $menuCaption = "Компетенции";
+	public $menuIcon = "/img/admin/competency.png";
 	public $disabled = true;
 	/**
 	 * @inheritdoc
