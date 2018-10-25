@@ -41,8 +41,9 @@ use Yii;
  * @property-read string $avatar
  * @property-read string $personal_number
  * @property-read string $phone
+ * @property-read string $positionName
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
- * @property ActiveQuery|RefUserPositions $relUserPositions Релейшен к ролям пользователей
+ * @property ActiveQuery|RefUserPositions $relUserPositions Релейшен к должностям пользователей
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
@@ -251,5 +252,12 @@ class Users extends ActiveRecord {
 				RelUsersGroupsRoles::setRoleInGroup($role, $group, $this->id);
 			}
 		}
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getPositionName() {
+		return $this->relUserPositions?$this->relUserPositions->name:'<Не назначен на должность>';
 	}
 }

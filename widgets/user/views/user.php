@@ -23,7 +23,7 @@ use yii\web\View;
 				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= $model->username; ?></h4>
 			</div>
 			<div class="mar-btm">
-				<p class="text-semibold text-main pad-all mar-no"><?= $model->comment; ?></p>
+				<p class="text-semibold text-main pad-all mar-no"><?= $model->positionName; ?></p>
 			</div>
 		</div>
 	</div>
