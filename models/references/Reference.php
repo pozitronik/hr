@@ -196,4 +196,13 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		}
 		return false;
 	}
+
+	/**
+	 * Объединяет две записи (например, в случае, если они дублируют друг друга).
+	 * Вторая запись удаляется, а все ссылки на неё теперь ссылаются на первую.
+	 * @param self $model
+	 */
+	public function merge(self $model):void {
+
+	}
 }
