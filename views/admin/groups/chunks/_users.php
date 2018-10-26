@@ -1,18 +1,20 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\ArrayHelper;
+use app\models\references\refs\RefUserRoles;
 use app\models\users\Users;
 use app\models\groups\Groups;
+use yii\data\ActiveDataProvider;
+use yii\web\View;
+use kartik\grid\GridView;
+use kartik\grid\CheckboxColumn;
+use kartik\select2\Select2;
 
 /**
  * @var View $this
  * @var Groups $model
  */
-
-use yii\data\ActiveDataProvider;
-use yii\web\View;
-use kartik\grid\GridView;
-use kartik\grid\CheckboxColumn;
 
 ?>
 <div class="row">
@@ -47,9 +49,27 @@ use kartik\grid\CheckboxColumn;
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $model->classNameShort.'[dropUser]'
+					'name' => $model->classNameShort.'[dropUsers]'
 				],
-				'username'
+				'username',
+				[
+					'label' => 'Роли в группе',
+					'value' => function($user) use ($model) {
+						/** @var Groups $model */
+						return Select2::widget([
+							'data' => RefUserRoles::mapData(),
+							'name' => "UserRoles[$model->id]",
+							/** @var Users $model */
+							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user, $model), 'id'),
+							'options' => ['placeholder' => 'Укажите роль в группе'],
+							'pluginOptions' => [
+								'allowClear' => true,
+								'multiple' => true
+							]
+						]);
+					},
+					'format' => 'raw'
+				]
 
 			]
 
