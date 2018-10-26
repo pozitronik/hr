@@ -14,7 +14,7 @@ class Csv {
 	 * @param string $delimiter Разделитель строк
 	 * @return array
 	 */
-	public static function csvToArray($file, $delimiter = ';') {
+	public static function csvToArray($file, $delimiter = ';'):array {
 		$csvArray = [];
 
 		if (false !== ($handle = fopen($file, 'rb'))) {
@@ -33,7 +33,7 @@ class Csv {
 	 * @param string $delimiter разделитель строк
 	 * @return string CSV contents
 	 */
-	public static function arrayToCsv($array, $delimiter = ';') {
+	public static function arrayToCsv($array, $delimiter = ';'):string {
 		$file = fopen('php://temp/maxmemory:'.(5 * 1024 * 1024), 'wb');
 		foreach ($array as $value) fputcsv($file, $value, $delimiter);
 

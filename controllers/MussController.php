@@ -5,7 +5,7 @@ namespace app\controllers;
 
 use app\models\imports\MussRecord;
 use Yii;
-use yii\base\Response;
+use yii\db\Exception;
 use yii\web\Controller;
 
 /**
@@ -15,9 +15,10 @@ use yii\web\Controller;
 class MussController extends Controller {
 
 	/**
-	 * @return string|Response
+	 * @param string $filename
+	 * @throws Exception
 	 */
-	public function actionIndex($filename) {
+	public function actionIndex($filename):void {
 		$muss = new MussRecord();
 
 		$muss->importRecords(Yii::getAlias('@app/').$filename);

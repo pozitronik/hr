@@ -1,14 +1,19 @@
 <?php
 declare(strict_types = 1);
 
+namespace app\models\imports;
+
 use app\helpers\Csv;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
 use app\models\users\Users;
+use Throwable;
+use Yii;
 use yii\base\DynamicModel;
 use yii\base\Model;
+use yii\db\Exception;
 
 /**
  * Class MussRecord
@@ -21,6 +26,8 @@ use yii\base\Model;
  *
  */
 class MussRecord extends Model {
+
+	private $models = [];
 
 	/**
 	 * @param string $name
@@ -52,6 +59,7 @@ class MussRecord extends Model {
 	 * @param string $name
 	 * @param string $position
 	 * @return int
+	 * @throws Throwable
 	 */
 	public function addUser(string $name, string $position):int {
 		$name = trim($name);
@@ -79,21 +87,56 @@ class MussRecord extends Model {
 	}
 
 	/**
+	 * @param string $userName
+	 * @param string $groupName
+	 */
+	public function linkUsersGroups(string $userName, string $groupName):void {
+		$user = Users::find()->where(['username' => $userName])->one();
+		$group = Groups::find()->where(['name' => $groupName])->one();
+		$user->relGroups = $group;
+	}
+
+	/**
 	 * @param string $filename
+	 * @throws Exception
 	 */
 	public function importRecords(string $filename):void {
 		$array = Csv::csvToArray($filename);
 
-		$rowModel = new DynamicModel(['leader', 'chapter', 'group', 'groupType', 'position', 'username', 'owner']);
 		foreach ($array as $row) {
-			if ($rowModel->load($row)) {
-				//todo
-			}
+			$rowModel = new DynamicModel([
+				'leader' => $row[0],
+				'chapter' => $row[1],
+				'group' => $row[2],
+				'groupType' => $row[3],
+				'position' => $row[4],
+				'username' => $row[5],
+				'owner' => $row[6]
+			]);
+
+			$this->models[] = $rowModel;
 		}
 
+		$transaction = Yii::$app->db->beginTransaction();
 
+		try {
+			foreach ($this->models as $model) {
+				$this->addGroup($model->group, $model->groupType);
+			}
+			foreach ($this->models as $model) {
+				$this->addUser($model->username, $model->position);
+			}
+			foreach ($this->models as $model) {
+				$this->linkUsersGroups($model->username, $model->group);
+			}
+
+		} catch (Throwable $t) {
+			$transaction->rollBack();
+			return;
+		}
+
+		$transaction->commit();
 	}
 
 }
 
-?>
