@@ -58,7 +58,7 @@ use kartik\select2\Select2;
 						/** @var Groups $model */
 						return Select2::widget([
 							'data' => RefUserRoles::mapData(),
-							'name' => "UserRoles[$model->id]",
+							'name' => "UserRoles[$user->id]",
 							/** @var Users $model */
 							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user, $model), 'id'),
 							'options' => ['placeholder' => 'Укажите роль в группе'],

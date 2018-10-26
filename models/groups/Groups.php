@@ -40,6 +40,8 @@ use yii\db\ActiveRecord;
  * @property-read Users|null $leader Один пользователь из лидеров (для презентации)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
+ * @property array $rolesInGroup
+ * @property array $dropUsers
  * @property int $deleted
  *
  */
@@ -261,5 +263,18 @@ class Groups extends ActiveRecord {
 		return self::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.user_id' => $user->id, 'rel_users_groups.group_id' => $this->id])->count()>0;
 	}
 
+	/**
+	 * Добавляет массив ролей пользователя к группе
+	 * @param array<int, int[]> $userRoles
+	 */
+	public function setRolesInGroup(array $userRoles):void {
+		foreach ($userRoles as $user => $roles) {
+			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $this->id, 'user_id' => $user])->select('id')]);
+			/** @var integer[] $roles */
+			foreach ($roles as $role) {
+				RelUsersGroupsRoles::setRoleInGroup($role, $this->id, $user);
+			}
+		}
+	}
 
 }

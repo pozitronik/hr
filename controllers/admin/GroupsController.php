@@ -89,9 +89,9 @@ class GroupsController extends WigetableController {
 			$group->updateGroup($updateArray);
 		}
 
-//		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
-//			$user->rolesInGroup = $updateArray;
-//		}
+		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
+			$group->rolesInGroup = $updateArray;
+		}
 
 		return $this->render('update', [
 			'model' => $group
