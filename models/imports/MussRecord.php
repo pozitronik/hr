@@ -35,8 +35,6 @@ class MussRecord extends Model {
 	 * @return int
 	 */
 	public function addGroup(string $name, string $type):int {
-		$name = trim($name);
-		$type = trim($type);
 		$group = Groups::find()->where(['name' => $name])->one();
 		if ($group) return $group->id;
 		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
@@ -62,8 +60,6 @@ class MussRecord extends Model {
 	 * @throws Throwable
 	 */
 	public function addUser(string $name, string $position):int {
-		$name = trim($name);
-		$position = trim($position);
 		$user = Users::find()->where(['username' => $name])->one();
 		if ($user) return $user->id;
 		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
@@ -105,13 +101,13 @@ class MussRecord extends Model {
 
 		foreach ($array as $row) {
 			$rowModel = new DynamicModel([
-				'leader' => $row[0],
-				'chapter' => $row[1],
-				'group' => $row[2],
-				'groupType' => $row[3],
-				'position' => $row[4],
-				'username' => $row[5],
-				'owner' => $row[6]
+				'leader' => trim($row[0]),
+				'chapter' => trim($row[1]),
+				'group' => trim($row[2]),
+				'groupType' => trim($row[3]),
+				'position' => trim($row[4]),
+				'username' => trim($row[5]),
+				'owner' => trim($row[6])
 			]);
 
 			$this->models[] = $rowModel;

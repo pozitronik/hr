@@ -184,5 +184,13 @@ class Utils {
 		return ArrayHelper::getValue(Yii::$app->params, 'LikeContainMode', false)?"%$param%":"$param%";
 	}
 
+	/**
+	 * @param string $username
+	 * @return string
+	 * @throws Exception
+	 */
+	public static function generateLogin(string $username):string {
+		return self::random_str(5);//ololo
+	}
 
 }
