@@ -56,6 +56,9 @@ use app\models\references\refs\RefGroupTypes;
 			<?= $this->render('chunks/_child_groups.php', [
 				'model' => $model
 			]); ?>
+			<?= $this->render('chunks/_users.php', [
+				'model' => $model
+			]); ?>
 			<div class="panel-footer">
 				<div class="btn-group">
 					<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
