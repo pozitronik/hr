@@ -11,13 +11,18 @@ function init_sigma(id) {
 			sizeMultiplier: 5,
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10',
-			labelThreshold:30
+			labelThreshold: 30
 			// defaultLabelSize: '20'
 		}
 	});
 	CustomShapes.init(s);
 	s.refresh();
 	sigma.parsers.json('graph?id=' + id, s, function () {
+		s.bind("doubleClickNode", function (object) {
+			var url = 'update?id=' + object.data.node.id;
+			window.open(url);
+			console.log(object);
+		});
 		dragging(s);
 		CustomShapes.init(s);
 		s.refresh();
