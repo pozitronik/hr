@@ -31,7 +31,7 @@ trait Graph {
 			'id' => (string)$this->id,
 			'label' => $this->name,
 			'x' => $x,
-			'y' => $y,
+			'y' => $y*30,
 			'size' => (string)$size,//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})",
 			'type' => 'circle',
@@ -53,7 +53,7 @@ trait Graph {
 			'source' => (string)$this->id,
 			'target' => (string)$to->id,
 			'type' => 'curvedArrow',
-			'label' => $to->relGroupTypes->name,
+			'label' => $to->leader->username,
 			'size' => '5'
 		];
 	}
