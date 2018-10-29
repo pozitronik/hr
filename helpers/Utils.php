@@ -185,11 +185,10 @@ class Utils {
 	}
 
 	/**
-	 * @param string $username
 	 * @return string
 	 * @throws Exception
 	 */
-	public static function generateLogin(string $username):string {
+	public static function generateLogin(/*string $username*/):string {
 		return self::random_str(5);//ololo
 	}
 

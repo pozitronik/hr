@@ -202,7 +202,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * Вторая запись удаляется, а все ссылки на неё теперь ссылаются на первую.
 	 * @param self $model
 	 */
-	public function merge(self $model):void {
-
-	}
+//	public function merge(self $model):void {
+//
+//	}
 }

@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection BadExceptionsProcessingInspection */
+/** @noinspection ForeachSourceInspection */
 declare(strict_types = 1);
 
 namespace app\models\imports;
@@ -76,10 +77,10 @@ class MussRecord extends Model {
 		$user = new Users();
 		$user->createUser([
 			'username' => $name,
-			'login' => Utils::generateLogin($name),
+			'login' => Utils::generateLogin(),
 			'password' => Utils::gen_uuid(5),
 			'salt' => null,
-			'email' => Utils::generateLogin($name)."@localhost"
+			'email' => Utils::generateLogin()."@localhost"
 		]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
 		return $user->id;
@@ -98,6 +99,7 @@ class MussRecord extends Model {
 	/**
 	 * @param string $groupName
 	 * @param string $userName
+	 * @param int $role
 	 */
 	public function linkRole(string $groupName, string $userName, int $role = Groups::OWNER):void {
 		if ('' === $userName || '' === $groupName) return;
