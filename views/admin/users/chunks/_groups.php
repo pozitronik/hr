@@ -8,6 +8,8 @@ use app\widgets\group_select\GroupSelectWidget;
 use app\models\users\Users;
 use kartik\select2\Select2;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
@@ -16,8 +18,6 @@ use kartik\grid\CheckboxColumn;
  * @var View $this
  * @var Users $model
  */
-
-
 
 ?>
 <div class="row">
@@ -54,7 +54,14 @@ use kartik\grid\CheckboxColumn;
 					'header' => 'Удалить',
 					'name' => $model->classNameShort.'[dropGroups]'
 				],
-				'name',
+				[
+					'format' => 'raw',
+					'attribute' => 'name',
+					'value' => function($group) {
+						/** @var Groups $group */
+						return Html::a($group->name, Url::to(['admin/groups/update', 'id' => $group->id]));
+					}
+				],
 				[
 					'label' => 'Роли в группе',
 					'value' => function($group) use ($model) {

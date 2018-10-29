@@ -14,6 +14,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 <div class="row">
@@ -50,8 +52,14 @@ use kartik\grid\CheckboxColumn;
 					'header' => 'Удалить',
 					'name' => $model->classNameShort.'[dropParentGroups]'
 				],
-				'name'
-
+				[
+					'format' => 'raw',
+					'attribute' => 'name',
+					'value' => function($group) {
+						/** @var Groups $group */
+						return Html::a($group->name, Url::to(['admin/groups/update', 'id' => $group->id]));
+					}
+				]
 			]
 
 		]); ?>
