@@ -50,6 +50,8 @@ class Groups extends ActiveRecord {
 	use Graph;
 	public const OWNER = 1;
 	public const LEADER = 2;
+	public const TRIBE = 6;
+	public const CHAPTER = 5;
 
 	/**
 	 * {@inheritdoc}

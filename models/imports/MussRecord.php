@@ -191,5 +191,23 @@ class MussRecord extends Model {
 		$transaction->commit();
 	}
 
+	/**
+	 * Быстрофункция для линковки всех чаптеров в трайб
+	 */
+	public function linkChapters():void {
+		$tribe = Groups::find()->where(['type' => Groups::TRIBE])->one();//Взяли трайб
+		$chapters = Groups::find()->where(['type' => Groups::CHAPTER])->all();
+		$transaction = Yii::$app->db->beginTransaction();
+
+		try {
+			RelGroupsGroups::linkModels($tribe, $chapters);
+		} catch (Throwable $t) {
+			$transaction->rollBack();
+			return;
+		}
+
+		$transaction->commit();
+	}
+
 }
 

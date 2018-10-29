@@ -20,8 +20,12 @@ class MussController extends Controller {
 	 */
 	public function actionIndex($filename):void {
 		$muss = new MussRecord();
-
 		$muss->importRecords(Yii::getAlias('@app/').$filename);
+	}
+
+	public function actionLinkChapters(){
+		$muss = new MussRecord();
+		$muss->linkChapters();
 	}
 
 }
