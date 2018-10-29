@@ -9,6 +9,7 @@ use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
+use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use Throwable;
@@ -98,7 +99,7 @@ class MussRecord extends Model {
 	 * @param string $groupName
 	 * @param string $userName
 	 */
-	public function linkOwners(string $groupName, string $userName):void {
+	public function linkRole(string $groupName, string $userName, int $role = Groups::OWNER):void {
 		if ('' === $userName || '' === $groupName) return;
 		$user = Users::find()->where(['username' => $userName])->one();//Предполагаем, что пользователь добавлен в бд
 		if (!$user) return;
@@ -106,7 +107,24 @@ class MussRecord extends Model {
 		if (!in_array($group->id, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
 			$user->relGroups = $group;
 		}
-		RelUsersGroupsRoles::setRoleInGroup(Groups::OWNER, $group->id, $user->id);
+		RelUsersGroupsRoles::setRoleInGroup($role, $group->id, $user->id);
+	}
+
+	/**
+	 * @param array $chapters
+	 * @throws Throwable
+	 */
+	public function addChapters(array $chapters):void {
+		/*1. Добавляем чаптер. 2. Добавляем лидера. 3. Всем группам добавляем чаптер, как родителя*/
+		foreach ($chapters as $chapter => $data) {
+			$chapterId = $this->addGroup($chapter, 'Chapter');
+			$this->linkRole($chapter, $data['leader'], Groups::LEADER);
+			foreach ($data['groups'] as $groupName) {
+				$group = Groups::find()->where(['name' => $groupName])->one();
+				RelGroupsGroups::linkModels($chapterId, $group);
+			}
+		}
+
 	}
 
 	/**
@@ -133,23 +151,38 @@ class MussRecord extends Model {
 		$transaction = Yii::$app->db->beginTransaction();
 
 		try {
+//			foreach ($this->models as $model) {
+//				$this->addGroup($model->group, $model->groupType);
+//			}
+//			foreach ($this->models as $model) {
+//				$this->addUser($model->username, $model->position);
+//			}
+//			foreach ($this->models as $model) {
+//				$this->linkUsersGroups($model->username, $model->group);
+//			}
+//			$owners = [];
+//			foreach ($this->models as $model) {
+//				$owners[$model->group][] = $model->owner;
+//			}
+//			$owners = ArrayHelper::array_unique($owners);
+//			foreach ($owners as $group => $owner) {
+//				$this->linkRole($group, $owner[0]);
+//			}
+			$chapters = [];
 			foreach ($this->models as $model) {
-				$this->addGroup($model->group, $model->groupType);
+				$chapters[$model->chapter]['leader'] = $model->leader;
+				$chapters[$model->chapter]['groups'][] = $model->group;
 			}
-			foreach ($this->models as $model) {
-				$this->addUser($model->username, $model->position);
+
+			foreach ($chapters as &$chapter) {
+				$chapter['groups'] = ArrayHelper::array_unique($chapter['groups']);
+				if (in_array('ЧАПТЕР', $chapter['groups']))
+					unset($chapter['groups']['ЧАПТЕР']);
 			}
-			foreach ($this->models as $model) {
-				$this->linkUsersGroups($model->username, $model->group);
-			}
-			$owners = [];
-			foreach ($this->models as $model) {
-				$owners[$model->group][] = $model->owner;
-			}
-			$owners = ArrayHelper::array_unique($owners);
-			foreach ($owners as $group => $owner) {
-				$this->linkOwners($group, $owner[0]);
-			}
+
+			unset($chapter);
+
+			$this->addChapters($chapters);
 
 		} catch (Throwable $t) {
 			$transaction->rollBack();
