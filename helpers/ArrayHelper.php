@@ -66,4 +66,21 @@ class ArrayHelper extends \yii\helpers\ArrayHelper {
 		return [];
 	}
 
+	/**
+	 * Removes duplicate values from an array with multidimensional support
+	 * @param array $array
+	 * @param int $sort_flags
+	 * @return array
+	 */
+	public static function array_unique(array $array, int $sort_flags = SORT_STRING):array {
+		foreach ($array as &$val) {
+			if (is_array($val)) {
+				$val = self::array_unique($val, $sort_flags);
+			} else {
+				return array_unique($array);
+			}
+		}
+		return $array;
+	}
+
 }
