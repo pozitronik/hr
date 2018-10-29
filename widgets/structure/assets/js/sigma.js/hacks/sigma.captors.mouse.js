@@ -85,7 +85,6 @@
 		 * @param {event} e A mouse event.
 		 */
 		function _moveHandler(e) {
-			console.log(e);
 			var x,
 				y,
 				pos;
