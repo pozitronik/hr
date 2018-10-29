@@ -10,6 +10,8 @@ use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use kartik\select2\Select2;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * @var View $this
@@ -51,7 +53,14 @@ use kartik\select2\Select2;
 					'header' => 'Удалить',
 					'name' => $model->classNameShort.'[dropUsers]'
 				],
-				'username',
+				[
+					'format' => 'raw',
+					'attribute' => 'name',
+					'value' => function($user) {
+						/** @var Users $user */
+						return Html::a($user->username, Url::to(['admin/users/update', 'id' => $user->id]));
+					}
+				],
 				[
 					'label' => 'Роли в группе',
 					'value' => function($user) use ($model) {
