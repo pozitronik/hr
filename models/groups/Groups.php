@@ -48,6 +48,7 @@ use yii\db\ActiveRecord;
 class Groups extends ActiveRecord {
 	use ARExtended;
 	use Graph;
+	public const OWNER = 1;
 	public const LEADER = 2;
 
 	/**
