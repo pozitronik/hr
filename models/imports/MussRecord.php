@@ -151,33 +151,32 @@ class MussRecord extends Model {
 		$transaction = Yii::$app->db->beginTransaction();
 
 		try {
-//			foreach ($this->models as $model) {
-//				$this->addGroup($model->group, $model->groupType);
-//			}
-//			foreach ($this->models as $model) {
-//				$this->addUser($model->username, $model->position);
-//			}
-//			foreach ($this->models as $model) {
-//				$this->linkUsersGroups($model->username, $model->group);
-//			}
-//			$owners = [];
-//			foreach ($this->models as $model) {
-//				$owners[$model->group][] = $model->owner;
-//			}
-//			$owners = ArrayHelper::array_unique($owners);
-//			foreach ($owners as $group => $owner) {
-//				$this->linkRole($group, $owner[0]);
-//			}
+			foreach ($this->models as $model) {
+				$this->addGroup($model->group, $model->groupType);
+			}
+			foreach ($this->models as $model) {
+				$this->addUser($model->username, $model->position);
+			}
+			foreach ($this->models as $model) {
+				$this->linkUsersGroups($model->username, $model->group);
+			}
+			$owners = [];
+			foreach ($this->models as $model) {
+				$owners[$model->group][] = $model->owner;
+			}
+			$owners = ArrayHelper::array_unique($owners);
+			foreach ($owners as $group => $owner) {
+				$this->linkRole($group, $owner[0]);
+			}
 			$chapters = [];
 			foreach ($this->models as $model) {
 				$chapters[$model->chapter]['leader'] = $model->leader;
-				$chapters[$model->chapter]['groups'][] = $model->group;
+				if (!in_array($model->group, ['', 'ЧАПТЕР', '#Н/Д'])) $chapters[$model->chapter]['groups'][] = $model->group;
 			}
 
 			foreach ($chapters as &$chapter) {
+				if (!ArrayHelper::getValue($chapter, 'groups')) $chapter['groups'] = [];
 				$chapter['groups'] = ArrayHelper::array_unique($chapter['groups']);
-				if (in_array('ЧАПТЕР', $chapter['groups']))
-					unset($chapter['groups']['ЧАПТЕР']);
 			}
 
 			unset($chapter);
