@@ -79,9 +79,7 @@ use yii\helpers\Url;
 					},
 					'format' => 'raw'
 				]
-
 			]
-
 		]); ?>
 	</div>
 </div>
