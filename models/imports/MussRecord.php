@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 namespace app\models\imports;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Csv;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
+use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use Throwable;
 use Yii;
@@ -93,6 +95,21 @@ class MussRecord extends Model {
 	}
 
 	/**
+	 * @param string $groupName
+	 * @param string $userName
+	 */
+	public function linkOwners(string $groupName, string $userName):void {
+		if ('' === $userName || '' === $groupName) return;
+		$user = Users::find()->where(['username' => $userName])->one();//Предполагаем, что пользователь добавлен в бд
+		if (!$user) return;
+		$group = Groups::find()->where(['name' => $groupName])->one();
+		if (!in_array($group->id, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
+			$user->relGroups = $group;
+		}
+		RelUsersGroupsRoles::setRoleInGroup(Groups::OWNER, $group->id, $user->id);
+	}
+
+	/**
 	 * @param string $filename
 	 * @throws Exception
 	 */
@@ -124,6 +141,14 @@ class MussRecord extends Model {
 			}
 			foreach ($this->models as $model) {
 				$this->linkUsersGroups($model->username, $model->group);
+			}
+			$owners = [];
+			foreach ($this->models as $model) {
+				$owners[$model->group][] = $model->owner;
+			}
+			$owners = ArrayHelper::array_unique($owners);
+			foreach ($owners as $group => $owner) {
+				$this->linkOwners($group, $owner[0]);
 			}
 
 		} catch (Throwable $t) {
