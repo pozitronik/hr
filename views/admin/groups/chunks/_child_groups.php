@@ -16,6 +16,7 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use kartik\grid\ActionColumn;
 
 ?>
 <div class="row">
@@ -59,6 +60,15 @@ use yii\helpers\Url;
 						/** @var Groups $group */
 						return Html::a($group->name, Url::to(['admin/groups/update', 'id' => $group->id]));
 					}
+				],
+				[
+					'class' => ActionColumn::class,
+					'template' => '{tree}',
+					'buttons' => [
+						'tree' => function($url, $model) {
+							return Html::a('<span class="glyphicon glyphicon-dashboard"></span>', $url);
+						}
+					]
 				]
 
 			]

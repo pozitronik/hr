@@ -23,6 +23,9 @@ use app\models\references\refs\RefGroupTypes;
 					<?php if (!$model->isNewRecord): ?>
 						<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']); ?>
 					<?php endif; ?>
+					<?php if (!$model->isNewRecord): ?>
+						<?= Html::a('Граф', ['tree', 'id' => $model->id], ['class' => 'btn btn-info']); ?>
+					<?php endif; ?>
 				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
 			</div>
