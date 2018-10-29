@@ -78,7 +78,7 @@ class MussRecord extends Model {
 			'salt' => null,
 			'email' => Utils::generateLogin($name)."@localhost"
 		]);
-		$user->position = $userPosition->id;
+		$user->setAndSaveAttribute('position', $userPosition->id);
 		return $user->id;
 	}
 
