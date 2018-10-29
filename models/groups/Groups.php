@@ -144,8 +144,9 @@ class Groups extends ActiveRecord {
 				'create_date' => Date::lcDate()
 			]);
 			if ($this->save()) {//При создании пересохраним, чтобы подтянуть прилинкованные свойства
-				$this->loadArray($paramsArray);
-				$this->save();
+				//todo: так делать нельзя, перетираются данные. Придумать метод подтягивания прилинкованных атрибутов
+//				$this->loadArray($paramsArray);
+//				$this->save();
 				return true;
 			}
 		}
