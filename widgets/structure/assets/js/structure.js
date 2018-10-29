@@ -18,11 +18,7 @@ function init_sigma(id) {
 	CustomShapes.init(s);
 	s.refresh();
 	sigma.parsers.json('graph?id=' + id, s, function () {
-		s.bind("doubleClickNode", function (object) {
-			var url = 'update?id=' + object.data.node.id;
-			window.open(url);
-			console.log(object);
-		});
+		bindOpener(s);
 		dragging(s);
 		CustomShapes.init(s);
 		s.refresh();
@@ -30,18 +26,24 @@ function init_sigma(id) {
 	return s;
 }
 
+function bindOpener(s) {
+	s.bind("doubleClickNode", function (object) {
+		window.open('update?id=' + object.data.node.id);
+	});
+}
+
 function dragging(s) {
 	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-	dragListener.bind('startdrag', function (event) {
-		console.log(event);
-	});
-	dragListener.bind('drag', function (event) {
-		console.log(event);
-	});
-	dragListener.bind('drop', function (event) {
-		console.log(event);
-	});
-	dragListener.bind('dragend', function (event) {
-		console.log(event);
-	});
+	// dragListener.bind('startdrag', function (event) {
+	// 	console.log(event);
+	// });
+	// dragListener.bind('drag', function (event) {
+	// 	console.log(event);
+	// });
+	// dragListener.bind('drop', function (event) {
+	// 	console.log(event);
+	// });
+	// dragListener.bind('dragend', function (event) {
+	// 	console.log(event);
+	// });
 }
