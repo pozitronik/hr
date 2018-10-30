@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\users;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
@@ -127,6 +128,7 @@ class Users extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public function createUser($paramsArray):bool {
+		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
 
@@ -134,13 +136,16 @@ class Users extends ActiveRecord {
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate()
 			]);
-			if ($this->save()) {//При создании пересохраним, чтобы подтянуть прилинкованные свойства
-				//todo: так делать нельзя, перетираются данные. Придумать метод подтягивания прилинкованных атрибутов
-//				$this->loadArray($paramsArray);
-//				$this->save();
-				return true;
+			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
+				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
+				/** @noinspection NotOptimalIfConditionsInspection */
+				if ($this->save()) {
+					$transaction->commit();
+					return true;
+				}
 			}
 		}
+		$transaction->rollBack();
 		return false;
 	}
 
