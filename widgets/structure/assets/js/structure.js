@@ -13,8 +13,8 @@ function init_sigma(id) {
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10',
 			labelThreshold: 30,
-			nodesPowRatio: 1,
-			edgesPowRatio: 1,
+			// nodesPowRatio: 1,
+			// edgesPowRatio: 1,
 			maxNodeSize: 40
 			// defaultLabelSize: '20'
 		}
@@ -31,9 +31,15 @@ function init_sigma(id) {
 }
 
 function bindOpener(s) {
-	// s.bind("doubleClickNode", function (object) {
-	// 	window.open('update?id=' + object.data.node.id);
-	// });
+	s.bind("doubleClickNode", function (object) {
+		window.open('update?id=' + object.data.node.id);
+	});
+	s.bind("overNode", function (object) {
+		document.getElementsByTagName("body")[0].style.cursor = 'pointer'
+	});
+	s.bind("outNode", function (object) {
+		document.getElementsByTagName("body")[0].style.cursor = 'default'
+	});
 }
 
 function dragging(s) {
