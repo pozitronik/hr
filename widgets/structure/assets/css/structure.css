@@ -9,27 +9,29 @@
 #control-pane {
 	/*top: 10px;*/
 	bottom: 10px;
-	right: 10px;
+	left: 10px;
 	position: fixed;
 	width: 230px;
 	background-color: rgb(249, 247, 237);
 	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
-
-#control-pane > div {
-	margin: 10px;
-	overflow-x: auto;
+#control-pane.min {
+	height: 40px;
+	width: 60px;
 }
 
-.line {
-	clear: both;
-	display: block;
-	width: 100%;
-	margin: 0;
-	padding: 12px 0 0 0;
-	border-bottom: 1px solid #aac789;
-	background: transparent;
+#control-pane.min .panel-body {
+	padding: 15px 5px 0px 5px;
 }
+
+#control-pane.min label, #control-pane.min .panel-footer {
+	display: none;
+}
+
+/*#control-pane > div {*/
+	/*margin: 10px;*/
+	/*overflow-x: auto;*/
+/*}*/
 
 
 .hidden {
@@ -41,3 +43,10 @@
 	width:100%;
 	margin-bottom: 5px;
 }
+
+#toggle-size {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+

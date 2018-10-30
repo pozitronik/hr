@@ -8,10 +8,11 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
-$this->registerJs("init_sigma($id)");
+$this->registerJs("init_sigma($id); init_toggle()");
 ?>
 <div id="sigma-container"></div>
 <div class="panel" id="control-pane">
+	<div id="toggle-size"><span class="glyphicon glyphicon-minus"></span></div>
 	<div class="panel-body">
 		<label for="node-labels">Группа</label>
 		<select id="node-labels">

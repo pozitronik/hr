@@ -83,6 +83,12 @@ function updatePane(graph, filter) {
 
 }
 
+function init_toggle() {
+	_.$('toggle-size').onclick = function click() {
+		_.toggle('#control-pane','min')
+	};
+}
+
 function init_sigma(id) {
 	s = new sigma({
 		renderer: {
