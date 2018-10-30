@@ -18,6 +18,7 @@ use app\models\users\Users;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "groups".
@@ -139,8 +140,10 @@ class Groups extends ActiveRecord {
 	/**
 	 * @param array $paramsArray
 	 * @return bool
+	 * @throws Exception
 	 */
 	public function createGroup($paramsArray):bool {
+		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
@@ -148,11 +151,14 @@ class Groups extends ActiveRecord {
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-				$this->save();
-				return true;
-
+				/** @noinspection NotOptimalIfConditionsInspection */
+				if ($this->save()) {
+					$transaction->commit();
+					return true;
+				}
 			}
 		}
+		$transaction->rollBack();
 		return false;
 	}
 
