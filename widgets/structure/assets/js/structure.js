@@ -59,19 +59,22 @@ var _ = {
 
 
 function updatePane(graph, filter) {
-	var categories = {};
+	var categories = {},
+		ids = {};
 
 	// read nodes
 	graph.nodes().forEach(function (n) {
 		categories[n.label] = true;
+		ids[n.id] = true;
 	})
 
 	// node category
 	var nodecategoryElt = _.$('node-category');
-	Object.keys(categories).forEach(function (c) {
+	var nodelabelElt = _.$('node-label');
+	Object.keys(ids).forEach(function (c) {
 		var optionElt = document.createElement("option");
 		optionElt.text = c;
-		nodecategoryElt.add(optionElt);
+		nodelabelElt.add(optionElt);
 	});
 
 	// reset button
@@ -120,16 +123,27 @@ function bindFilter(s) {
 
 	updatePane(s.graph, filter);
 
+	function selectNeighborhood(e) {
+		var c = e.target[e.target.selectedIndex].value;
+		filter
+			.undo('node-label')
+			.nodesBy(function (n) {
+				return !c.length || n.id === c;
+			}, 'node-label')
+			.apply();
+	}
+
 	function applyCategoryFilter(e) {
 		var c = e.target[e.target.selectedIndex].value;
 		filter
 			.undo('node-category')
 			.nodesBy(function (n) {
-				return !c.length || n.attributes.acategory === c;
+				return !c.length || n.label === c;
 			}, 'node-category')
 			.apply();
 	}
 
+	_.$('node-label').addEventListener("change", selectNeighborhood);
 	_.$('node-category').addEventListener("change", applyCategoryFilter);
 }
 
