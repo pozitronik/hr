@@ -27,9 +27,9 @@ function init_sigma(id) {
 }
 
 function bindOpener(s) {
-	s.bind("doubleClickNode", function (object) {
-		window.open('update?id=' + object.data.node.id);
-	});
+	// s.bind("doubleClickNode", function (object) {
+	// 	window.open('update?id=' + object.data.node.id);
+	// });
 }
 
 function dragging(s) {
