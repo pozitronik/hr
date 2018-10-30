@@ -8,7 +8,7 @@ function init_sigma(id) {
 			zoomingRatio: 1.3,
 			enableEdgeHovering: true,
 			edgeHoverPrecision: 5,
-			sizeMultiplier: 5,
+			sizeMultiplier: 4,
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10',
 			labelThreshold: 30

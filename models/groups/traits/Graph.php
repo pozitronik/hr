@@ -13,16 +13,6 @@ use Throwable;
  */
 trait Graph {
 
-	private static function circle(&$x, &$y, int $r = 1) {
-		$alpha = 10;
-		$x = round($x + $r * cos($alpha * pi() / 360));
-		$y = round($y * $r * sin($alpha * pi() / 360));
-
-//		for ($alpha = 1; $alpha <= 360; $alpha++) {
-//
-//		}
-	}
-
 	/**
 	 * @param null|integer $x
 	 * @param null|integer $y
@@ -36,14 +26,10 @@ trait Graph {
 		$blue = random_int(10, 255);
 //		$size = (count($this->relUsers) + count($this->relChildGroups));
 		$size = 100 / ($y + 1);
-		/*Экспериментируем: в нашем случае Y - уровень отстояния от точки 0,0*/
-//		if (1 === $y) {
-//			self::circle($x, $y, 10);
-//		}
-
+//		$size = $y;
 		return [
 			'id' => (string)$this->id,
-			'label' => "$x,$y",
+			'label' => $this->name,
 			'x' => $x,
 			'y' => $y,
 			'size' => (string)$size,//todo: придумать характеристику веса группы,
@@ -134,13 +120,15 @@ trait Graph {
 			$levelMap[$node['y']][] = $node;
 		}
 		foreach ($levelMap as $level => $items) {
-			$c_items = count($items)/2;
-			$radius = $c_items*($level+1);
-			$i = 0;
+			$c_items = count($items) / 2;//Я не знаю, зачем делить на два, я не академик
+			$degree = 360 / $c_items;//Угловое смещение точки
+
+			$radius = (0 === $level)?$level:($level + 1);
+			$angle = 0;//Стартовый угол, 0 - 360
 			foreach ($items as $item) {
-				$item['x'] = ($radius * cos($i * pi() / 360));
-				$item['y'] = ($radius * sin($i * pi() / 360));
-				$i += 360/$c_items;
+				$item['x'] = ($radius * cos($angle * pi() / 360));
+				$item['y'] = ($radius * sin($angle * pi() / 360));
+				$angle += $degree;
 				$newNodes[] = $item;
 			}
 		}
