@@ -15,7 +15,7 @@ $this->registerJs("init_sigma($id)");
 	<div class="panel-body">
 		<label for="node-labels">Группа</label>
 		<select id="node-labels">
-			<option value="" selected>Все</option>
+			<option value="-1" selected>Все</option>
 		</select>
 	</div>
 	<div class="panel-footer">

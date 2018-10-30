@@ -71,7 +71,7 @@ function updatePane(graph, filter) {
 	Object.keys(labels).forEach(function (c) {
 		var optionElt = document.createElement("option");
 		optionElt.text = c;
-		optionElt.id = labels[c];
+		optionElt.value = labels[c];
 		labelList.add(optionElt);
 	});
 
@@ -126,8 +126,15 @@ function bindFilter(s) {
 		filter.undo().neighborsOf(id).apply()
 	}
 
-	s.applyLabelFilter= function applyLabelFilter(e) {
-		s.selectNeighborhood(e.target[e.target.selectedIndex].id);
+	s.applyLabelFilter = function applyLabelFilter(e) {
+		var nodeId = e.target[e.target.selectedIndex].value;
+		if (-1 == nodeId) {
+			filter.undo().apply();
+		} else {
+			s.selectNeighborhood(nodeId);
+		}
+
+
 		// filter.undo('node-labels')
 		// 	.nodesBy(function (n) {
 		// 		return !c.length || n.label === c;
@@ -141,7 +148,7 @@ function bindFilter(s) {
 function bindEvents(s) {
 	s.bind("clickNode", function (object) {
 		if (object.data.captor.ctrlKey) {
-			s.selectNeighborhood (object.data.node.id);
+			s.selectNeighborhood(object.data.node.id);
 		}
 	});
 
