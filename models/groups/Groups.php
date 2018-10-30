@@ -147,11 +147,7 @@ class Groups extends ActiveRecord {
 				'create_date' => Date::lcDate()
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-				$current_attributes = $this->attributes;
-
-				$linked_attributes = ArrayHelper::diff_keys($current_attributes, $paramsArray);
-
-				$this->loadArray($linked_attributes);
+				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
 				$this->save();
 				return true;
 
