@@ -109,9 +109,10 @@ function init_sigma(id) {
 	CustomShapes.init(s);
 	s.refresh();
 	sigma.parsers.json('graph?id=' + id, s, function () {
+		bindFilter(s);//must be before bind events
 		bindEvents(s);
 		bindDragging(s);
-		bindFilter(s);
+
 		CustomShapes.init(s);
 		s.refresh();
 	});
@@ -123,33 +124,33 @@ function bindFilter(s) {
 
 	updatePane(s.graph, filter);
 
-	function selectNeighborhood(e) {
-		var c = e.target[e.target.selectedIndex].value;
-		filter
-			.undo('node-label')
-			.nodesBy(function (n) {
-				return !c.length || n.id === c;
-			}, 'node-label')
-			.apply();
+	s.selectNeighborhood = function selectNeighborhood(id) {
+		filter.undo().neighborsOf(id).apply()
 	}
 
 	function applyCategoryFilter(e) {
 		var c = e.target[e.target.selectedIndex].value;
-		filter
-			.undo('node-category')
+		filter.undo('node-category')
 			.nodesBy(function (n) {
 				return !c.length || n.label === c;
 			}, 'node-category')
 			.apply();
 	}
 
-	_.$('node-label').addEventListener("change", selectNeighborhood);
+	// _.$('node-label').addEventListener("change", selectNeighborhood);
 	_.$('node-category').addEventListener("change", applyCategoryFilter);
 }
 
 function bindEvents(s) {
+	s.bind("clickNode", function (object) {
+		if (object.data.captor.ctrlKey) {
+			s.selectNeighborhood (object.data.node.id);
+		}
+	});
+
 	s.bind("doubleClickNode", function (object) {
 		window.open('update?id=' + object.data.node.id);
+
 	});
 	s.bind("overNode", function (object) {
 		document.getElementsByTagName("body")[0].style.cursor = 'pointer'
@@ -161,16 +162,4 @@ function bindEvents(s) {
 
 function bindDragging(s) {
 	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-	// dragListener.bind('startdrag', function (event) {
-	// 	console.log(event);
-	// });
-	// dragListener.bind('drag', function (event) {
-	// 	console.log(event);
-	// });
-	// dragListener.bind('drop', function (event) {
-	// 	console.log(event);
-	// });
-	// dragListener.bind('dragend', function (event) {
-	// 	console.log(event);
-	// });
 }
