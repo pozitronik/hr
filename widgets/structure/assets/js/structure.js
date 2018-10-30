@@ -134,12 +134,6 @@ function bindFilter(s) {
 			s.selectNeighborhood(nodeId);
 		}
 
-
-		// filter.undo('node-labels')
-		// 	.nodesBy(function (n) {
-		// 		return !c.length || n.label === c;
-		// 	}, 'node-labels')
-		// 	.apply();
 	}
 
 	_.$('node-labels').addEventListener("change", s.applyLabelFilter);
@@ -148,7 +142,10 @@ function bindFilter(s) {
 function bindEvents(s) {
 	s.bind("clickNode", function (object) {
 		if (object.data.captor.ctrlKey) {
-			s.selectNeighborhood(object.data.node.id);
+			nodeId = object.data.node.id;
+			s.selectNeighborhood(nodeId);
+			_.$('node-labels').value = nodeId;
+
 		}
 	});
 
