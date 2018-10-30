@@ -59,27 +59,25 @@ var _ = {
 
 
 function updatePane(graph, filter) {
-	var categories = {},
-		ids = {};
+	var labels = {};
 
 	// read nodes
 	graph.nodes().forEach(function (n) {
-		categories[n.label] = true;
-		ids[n.id] = true;
+		labels[n.label] = n.id;
 	})
 
 	// node category
-	var nodecategoryElt = _.$('node-category');
-	var nodelabelElt = _.$('node-label');
-	Object.keys(ids).forEach(function (c) {
+	var labelList = _.$('node-labels');
+	Object.keys(labels).forEach(function (c) {
 		var optionElt = document.createElement("option");
 		optionElt.text = c;
-		nodelabelElt.add(optionElt);
+		optionElt.id = labels[c];
+		labelList.add(optionElt);
 	});
 
 	// reset button
 	_.$('reset-btn').addEventListener("click", function (e) {
-		_.$('node-category').selectedIndex = 0;
+		_.$('node-labels').selectedIndex = 0;
 		filter.undo().apply();
 	});
 
@@ -128,17 +126,16 @@ function bindFilter(s) {
 		filter.undo().neighborsOf(id).apply()
 	}
 
-	function applyCategoryFilter(e) {
-		var c = e.target[e.target.selectedIndex].value;
-		filter.undo('node-category')
-			.nodesBy(function (n) {
-				return !c.length || n.label === c;
-			}, 'node-category')
-			.apply();
+	s.applyLabelFilter= function applyLabelFilter(e) {
+		s.selectNeighborhood(e.target[e.target.selectedIndex].id);
+		// filter.undo('node-labels')
+		// 	.nodesBy(function (n) {
+		// 		return !c.length || n.label === c;
+		// 	}, 'node-labels')
+		// 	.apply();
 	}
 
-	// _.$('node-label').addEventListener("change", selectNeighborhood);
-	_.$('node-category').addEventListener("change", applyCategoryFilter);
+	_.$('node-labels').addEventListener("change", s.applyLabelFilter);
 }
 
 function bindEvents(s) {

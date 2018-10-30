@@ -13,13 +13,8 @@ $this->registerJs("init_sigma($id)");
 <div id="sigma-container"></div>
 <div class="panel" id="control-pane">
 	<div class="panel-body">
-		<label for="node-label">Группа</label>
-		<select id="node-label">
-			<option value="" selected>Все</option>
-		</select>
-
-		<label for="node-category">Тип группы</label>
-		<select id="node-category">
+		<label for="node-labels">Группа</label>
+		<select id="node-labels">
 			<option value="" selected>Все</option>
 		</select>
 	</div>
