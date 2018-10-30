@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
@@ -141,16 +142,19 @@ class Groups extends ActiveRecord {
 	 */
 	public function createGroup($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate()
 			]);
-			if ($this->save()) {//При создании пересохраним, чтобы подтянуть прилинкованные свойства
-				//todo: так делать нельзя, перетираются данные. Придумать метод подтягивания прилинкованных атрибутов
-//				$this->loadArray($paramsArray);
-//				$this->save();
+			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
+				$current_attributes = $this->attributes;
+
+				$linked_attributes = ArrayHelper::diff_keys($current_attributes, $paramsArray);
+
+				$this->loadArray($linked_attributes);
+				$this->save();
 				return true;
+
 			}
 		}
 		return false;
@@ -263,8 +267,8 @@ class Groups extends ActiveRecord {
 	 * @return bool
 	 * temporary
 	 */
-	public function isLeader(Users $user): bool {
-		return self::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.user_id' => $user->id, 'rel_users_groups.group_id' => $this->id])->count()>0;
+	public function isLeader(Users $user):bool {
+		return self::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.user_id' => $user->id, 'rel_users_groups.group_id' => $this->id])->count() > 0;
 	}
 
 	/**
