@@ -13,6 +13,16 @@ use Throwable;
  */
 trait Graph {
 
+	private static function circle(&$x, &$y, int $r = 1) {
+		$alpha = 10;
+		$x = round($x + $r * cos($alpha * pi() / 360));
+		$y = round($y * $r * sin($alpha * pi() / 360));
+
+//		for ($alpha = 1; $alpha <= 360; $alpha++) {
+//
+//		}
+	}
+
 	/**
 	 * @param null|integer $x
 	 * @param null|integer $y
@@ -26,12 +36,16 @@ trait Graph {
 		$blue = random_int(10, 255);
 //		$size = (count($this->relUsers) + count($this->relChildGroups));
 		$size = 100 / ($y + 1);
+		/*Экспериментируем: в нашем случае Y - уровень отстояния от точки 0,0*/
+//		if (1 === $y) {
+//			self::circle($x, $y, 10);
+//		}
 
 		return [
 			'id' => (string)$this->id,
-			'label' => $this->name,
+			'label' => "$x,$y",
 			'x' => $x,
-			'y' => $y*30,
+			'y' => $y,
 			'size' => (string)$size,//todo: придумать характеристику веса группы,
 			'color' => "rgb({$red},{$green},{$blue})",
 			'type' => 'circle',
@@ -67,7 +81,6 @@ trait Graph {
 	 * @throws Throwable
 	 */
 	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$x = 0, &$y = 0):void {
-//		Utils::fileLog("$x,$y");
 		/** @var Groups $this */
 		$childStack[$this->id] = true;
 		$graphStack[] = $this->asNode($x, $y);
@@ -95,7 +108,6 @@ trait Graph {
 	 * @param int $level
 	 */
 	public function getGraphMap(array &$graphMap = [0 => 0], &$level = 0):void {
-//		Utils::fileLog("$x,$y");
 		/** @var Groups $this */
 		if (!isset($graphMap[$level + 1])) $graphMap[$level + 1] = 0;
 		$graphMap[$level + 1] += count($this->relChildGroups);
@@ -108,6 +120,30 @@ trait Graph {
 			$childGroup->getGraphMap($graphMap, $level);
 			$level--;
 		}
+	}
 
+	/**
+	 * Пересчитываем координаты графа в круговые
+	 * @param array $nodes
+	 * @return array
+	 */
+	public function roundGraph(array $nodes):array {
+		$levelMap = [];
+		$newNodes = [];
+		foreach ($nodes as $node) {
+			$levelMap[$node['y']][] = $node;
+		}
+		foreach ($levelMap as $level => $items) {
+			$c_items = count($items)/2;
+			$radius = $c_items*($level+1);
+			$i = 0;
+			foreach ($items as $item) {
+				$item['x'] = ($radius * cos($i * pi() / 360));
+				$item['y'] = ($radius * sin($i * pi() / 360));
+				$i += 360/$c_items;
+				$newNodes[] = $item;
+			}
+		}
+		return $newNodes;
 	}
 }

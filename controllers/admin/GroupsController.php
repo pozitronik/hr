@@ -128,6 +128,7 @@ class GroupsController extends WigetableController {
 		$nodes = [];
 		$edges = [];
 		$group->getGraph($nodes, $edges);
+		$nodes = $group->roundGraph($nodes);
 		return compact('nodes', 'edges');
 	}
 
