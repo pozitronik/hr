@@ -11,24 +11,20 @@ use yii\web\View;
 $this->registerJs("init_sigma($id)");
 ?>
 <div id="sigma-container"></div>
-<div id="control-pane">
-	<h2 class="underline">filters</h2>
+<div class="panel" id="control-pane">
+	<div class="panel-body">
+		<label for="node-label">Группа</label>
+		<select id="node-label">
+			<option value="" selected>Все</option>
+		</select>
 
-	<div>
-		<h3>min degree <span id="min-degree-val">0</span></h3>
-		0 <input id="min-degree" type="range" min="0" max="0" value="0"> <span id="max-degree-value">0</span><br>
-	</div>
-	<div>
-		<h3>node category</h3>
+		<label for="node-category">Тип группы</label>
 		<select id="node-category">
-			<option value="" selected>All categories</option>
+			<option value="" selected>Все</option>
 		</select>
 	</div>
 	<span class="line"></span>
 	<div>
-		<button id="reset-btn">Reset filters</button>
-		<button id="export-btn">Export</button>
+		<button id="reset-btn">Сбросить</button>
 	</div>
-	<div id="dump" class="hidden"></div>
 </div>
-
