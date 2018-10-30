@@ -59,19 +59,12 @@ var _ = {
 
 
 function updatePane(graph, filter) {
-	// get max degree
-	var maxDegree = 0,
-		categories = {};
+	var categories = {};
 
 	// read nodes
 	graph.nodes().forEach(function (n) {
-		maxDegree = Math.max(maxDegree, graph.degree(n.id));
 		categories[n.label] = true;
 	})
-
-	// min degree
-	_.$('min-degree').max = maxDegree;
-	_.$('max-degree-value').textContent = maxDegree;
 
 	// node category
 	var nodecategoryElt = _.$('node-category');
@@ -83,21 +76,10 @@ function updatePane(graph, filter) {
 
 	// reset button
 	_.$('reset-btn').addEventListener("click", function (e) {
-		_.$('min-degree').value = 0;
-		_.$('min-degree-val').textContent = '0';
 		_.$('node-category').selectedIndex = 0;
 		filter.undo().apply();
-		_.$('dump').textContent = '';
-		_.hide('#dump');
 	});
 
-	// export button
-	_.$('export-btn').addEventListener("click", function (e) {
-		var chain = filter.export();
-		console.log(chain);
-		_.$('dump').textContent = JSON.stringify(chain);
-		_.show('#dump');
-	});
 }
 
 function init_sigma(id) {
@@ -138,18 +120,6 @@ function bindFilter(s) {
 
 	updatePane(s.graph, filter);
 
-	function applyMinDegreeFilter(e) {
-		var v = e.target.value;
-		_.$('min-degree-val').textContent = v;
-
-		filter
-			.undo('min-degree')
-			.nodesBy(function (n) {
-				return this.degree(n.id) >= v;
-			}, 'min-degree')
-			.apply();
-	}
-
 	function applyCategoryFilter(e) {
 		var c = e.target[e.target.selectedIndex].value;
 		filter
@@ -160,8 +130,6 @@ function bindFilter(s) {
 			.apply();
 	}
 
-	_.$('min-degree').addEventListener("input", applyMinDegreeFilter);  // for Chrome and FF
-	_.$('min-degree').addEventListener("change", applyMinDegreeFilter); // for IE10+, that sucks
 	_.$('node-category').addEventListener("change", applyCategoryFilter);
 }
 
