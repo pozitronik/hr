@@ -83,4 +83,21 @@ class ArrayHelper extends \yii\helpers\ArrayHelper {
 		return $array;
 	}
 
+	/**
+	 * Возвращает разницу между двумя ассоциативными массивами по их ключам.
+	 * В отличие от array_diff_key вложенные массивы считает данными
+	 * @param array $array1
+	 * @param array $array2
+	 * @return array
+	 */
+	public static function diff_keys(array $array1, array $array2):array {
+		$result = [];
+		foreach ($array1 as $key => $value) {
+			if (!array_key_exists($key, $array2)) $result[$key] = $value;
+		}
+		foreach ($array2 as $key => $value) {
+			if (!array_key_exists($key, $array1)) $result[$key] = $value;
+		}
+		return $result;
+	}
 }
