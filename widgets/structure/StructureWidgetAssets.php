@@ -34,6 +34,7 @@ class StructureWidgetAssets extends AssetBundle {
 		'js/sigma.js/plugins/sigma.parsers.json/sigma.parsers.json.js',
 		'js/sigma.js/plugins/sigma.renderers.customShapes/shape-library.js',
 		'js/sigma.js/plugins/sigma.renderers.customShapes/sigma.renderers.customShapes.js',
+		'js/sigma.js/plugins/sigma.plugins.filter/sigma.plugins.filter.js',
 //		'js/sigma.js/plugins/sigma.renderers.groupNodes/sigma.renderers.groupNodes.js',
 //		'js/sigma.js/plugins/sigma.renderers.test/sigma.renderers.test.js',
 		'js/sigma.js/hacks/sigma.canvas.labels.def.js',
