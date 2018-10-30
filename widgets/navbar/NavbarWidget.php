@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\navbar;
 
+use app\models\users\Users;
 use yii\base\Widget;
 
 /**
@@ -27,7 +28,7 @@ class NavbarWidget extends Widget {
 	 */
 	public function run():string {
 		return $this->render('navbar',[
-			'user' => $this->user
+			'user' => $this->user?$this->user:new Users()
 		]);
 	}
 }
