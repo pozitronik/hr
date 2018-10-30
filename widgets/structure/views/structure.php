@@ -10,7 +10,6 @@ use yii\web\View;
 
 $this->registerJs("init_sigma($id)");
 ?>
-<div id="sigma-container"></div>
 <div class="panel" id="control-pane">
 	<div class="panel-body">
 		<label for="node-label">Группа</label>
@@ -23,8 +22,8 @@ $this->registerJs("init_sigma($id)");
 			<option value="" selected>Все</option>
 		</select>
 	</div>
-	<span class="line"></span>
-	<div>
-		<button id="reset-btn">Сбросить</button>
+	<div class="panel-footer">
+		<button class="btn btn-sm btn-warning" id="reset-btn">Сбросить</button>
 	</div>
 </div>
+<div id="sigma-container"></div>
