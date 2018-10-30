@@ -7,11 +7,15 @@ function init_sigma(id) {
 		settings: {
 			zoomingRatio: 1.3,
 			enableEdgeHovering: true,
-			edgeHoverPrecision: 5,
-			sizeMultiplier: 4,
+			edgeHoverPrecision: 1,//Точность определения курсора над мышью, слишком большое значение тормозит
+			edgeHoverSizeRatio: 3,//увеличение графа при наведении
+			// sizeMultiplier: 4,
 			edgeLabelSize: 'proportional',
 			minArrowSize: '10',
-			labelThreshold: 30
+			labelThreshold: 30,
+			nodesPowRatio: 1,
+			edgesPowRatio: 1,
+			maxNodeSize: 40
 			// defaultLabelSize: '20'
 		}
 	});

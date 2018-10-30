@@ -25,7 +25,7 @@ trait Graph {
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
 //		$size = (count($this->relUsers) + count($this->relChildGroups));
-		$size = 100 / ($y + 1);
+		$size = 360 / ($y + 1);
 //		$size = $y;
 		return [
 			'id' => (string)$this->id,
@@ -124,10 +124,13 @@ trait Graph {
 			$degree = 360 / $c_items;//Угловое смещение точки
 
 			$radius = (0 === $level)?$level:($level + 1);
+			$radius = $radius*360;
 			$angle = 0;//Стартовый угол, 0 - 360
 			foreach ($items as $item) {
 				$item['x'] = ($radius * cos($angle * pi() / 360));
 				$item['y'] = ($radius * sin($angle * pi() / 360));
+
+
 				$angle += $degree;
 				$newNodes[] = $item;
 			}
