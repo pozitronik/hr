@@ -54,6 +54,11 @@ var _ = {
 				el.className += ' ' + cssClass;
 			}
 		}
+	},
+
+	get: function (name) {
+		var url = new URL(window.location);
+		return url.searchParams.get(name)
 	}
 };
 
@@ -76,20 +81,24 @@ function updatePane(graph, filter) {
 	});
 
 	// reset button
-	_.$('reset-btn').addEventListener("click", function (e) {
+	_.$('reset-filter').addEventListener("click", function (e) {
 		_.$('node-labels').selectedIndex = 0;
 		filter.undo().apply();
 	});
 
-}
+	_.$('reset-graph').addEventListener("click", function (e) {
+		s.kill();
+		init_sigma(_.get('id'), 1);
+	});
 
-function init_toggle() {
 	_.$('toggle-size').onclick = function click() {
 		_.toggle('#control-pane', 'min')
 	};
 }
 
-function init_sigma(id) {
+
+function init_sigma(id, mode) {
+	if ('undefined' === typeof (mode)) mode = 0;
 	s = new sigma({
 		renderer: {
 			container: document.getElementById('sigma-container'),
@@ -112,7 +121,8 @@ function init_sigma(id) {
 	});
 	CustomShapes.init(s);
 	s.refresh();
-	sigma.parsers.json('graph?id=' + id, s, function () {
+
+	sigma.parsers.json('graph?id=' + id + '&restorePositions=' + mode, s, function () {
 		bindFilter(s);//must be before bind events
 		bindEvents(s);
 		bindDragging(s);
@@ -178,9 +188,8 @@ function save_node_position(node_id, x, y) {
 	var xhr = sigma.utils.xhr();
 
 	if (!xhr) throw 'XMLHttpRequest not supported.';
-	var url = new URL(window.location);
-	var group_id = url.searchParams.get("id")
-	var request_body = 'groupId=' + encodeURIComponent(group_id) +
+
+	var request_body = 'groupId=' + encodeURIComponent(_.get('group_id')) +
 		'&nodeId=' + encodeURIComponent(node_id)
 		+ '&x=' + encodeURIComponent(x)
 		+ '&y=' + encodeURIComponent(y);

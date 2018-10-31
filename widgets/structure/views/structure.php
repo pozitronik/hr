@@ -8,7 +8,7 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
-$this->registerJs("init_sigma($id); init_toggle()");
+$this->registerJs("init_sigma($id);");
 ?>
 <div id="sigma-container"></div>
 <div class="panel" id="control-pane">
@@ -20,7 +20,10 @@ $this->registerJs("init_sigma($id); init_toggle()");
 		</select>
 	</div>
 	<div class="panel-footer">
-		<button class="btn btn-sm btn-warning" id="reset-btn">Сбросить</button>
+		<div class="btn-group">
+			<button class="btn btn-xs btn-warning pull-left" id="reset-filter">Сбросить фильтр</button>
+			<button class="btn btn-xs btn-warning pull-right" id="reset-graph">Сбросить граф</button>
+		</div>
 	</div>
 </div>
 
