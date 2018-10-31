@@ -129,11 +129,26 @@ trait Graph {
 				$item['x'] = ($radius * cos($angle * M_PI / 360));
 				$item['y'] = ($radius * sin($angle * M_PI / 360));
 
-
 				$angle += $degree;
 				$newNodes[] = $item;
 			}
 		}
 		$nodes = $newNodes;
+	}
+
+	/**
+	 * Заменяет высчитанные позиции нод заданными
+	 * @param array $nodes
+	 * @param array $positions
+	 */
+	public function applyNodesPositions(array &$nodes, array $positions = []):void {
+		foreach ($positions as $nodeId => $position) {
+			if (false !== ($key = array_search($nodeId, array_column($nodes, 'id')))) {
+				/** @var integer $key */
+				$nodes[$key]['x'] = $position['x'];
+				$nodes[$key]['y'] = $position['y'];
+			}
+
+		}
 	}
 }

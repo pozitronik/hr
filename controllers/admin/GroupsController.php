@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
+use app\models\user\CurrentUser;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
@@ -128,7 +130,10 @@ class GroupsController extends WigetableController {
 		$nodes = [];
 		$edges = [];
 		$group->getGraph($nodes, $edges);
-		$nodes = $group->roundGraph($nodes);
+		$group->roundGraph($nodes);
+		$nodesPositions = ArrayHelper::getValue(CurrentUser::User()->options->nodePositions, $id, []);
+		$group->applyNodesPositions($nodes, $nodesPositions);
+
 		return compact('nodes', 'edges');
 	}
 
