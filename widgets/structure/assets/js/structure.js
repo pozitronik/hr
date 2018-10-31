@@ -178,12 +178,12 @@ function save_node_position(node_id, x, y) {
 	var xhr = sigma.utils.xhr();
 
 	if (!xhr) throw 'XMLHttpRequest not supported.';
-	var url = new URL(window.location.search.substring(1));
+	var url = new URL(window.location);
 	var group_id = url.searchParams.get("id")
 	var request_body = 'nodeId=' + encodeURIComponent(node_id)
 		+ '&x=' + encodeURIComponent(x)
 		+ '&y=' + encodeURIComponent(y);
-	xhr.open('POST', 'ajax/groups-tree-save-node-position?group_id=' + id, true);
+	xhr.open('POST', '/ajax/groups-tree-save-node-position?group_id=' + group_id, true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 
