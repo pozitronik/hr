@@ -125,6 +125,7 @@ trait Graph {
 			$radius = (0 === $level)?$level:($level + 1);
 			$radius *= 360;
 			$angle = 0;//Стартовый угол, 0 - 360
+			/** @var array $items */
 			foreach ($items as $item) {
 				$item['x'] = ($radius * cos($angle * M_PI / 360));
 				$item['y'] = ($radius * sin($angle * M_PI / 360));
