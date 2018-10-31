@@ -5,6 +5,7 @@ namespace app\models\users;
 
 use yii\base\Model;
 
+/** @noinspection MissingPropertyAnnotationsInspection */
 
 /**
  * Class Options
