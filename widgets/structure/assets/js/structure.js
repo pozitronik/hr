@@ -169,21 +169,32 @@ function bindEvents(s) {
 
 function bindDragging(s) {
 	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-	// dragListener.bind('startdrag', function (event) {
-	// 	console.log(event);
-	// });
-	// dragListener.bind('drag', function (event) {
-	// 	console.log(event);
-	// });
-	// dragListener.bind('drop', function (event) {
-	// 	console.log(event);
-	// });
 	dragListener.bind('dragend', function (event) {
-		save_node_position(event.data.node.id,event.data.node.x,event.data.node.y);
+		save_node_position(event.data.node.id, event.data.node.x, event.data.node.y);
 	});
 }
 
 function save_node_position(node_id, x, y) {
-	console.log(node_id,x,y);
+	var xhr = sigma.utils.xhr();
+
+	if (!xhr) throw 'XMLHttpRequest not supported.';
+	var url = new URL(window.location.search.substring(1));
+	var group_id = url.searchParams.get("id")
+	var request_body = 'nodeId=' + encodeURIComponent(node_id)
+		+ '&x=' + encodeURIComponent(x)
+		+ '&y=' + encodeURIComponent(y);
+	xhr.open('POST', 'ajax/groups-tree-save-node-position?group_id=' + id, true);
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			var response = JSON.parse(xhr.responseText);
+			console.log(response);
+		}
+	};
+	xhr.send(request_body);
+
+	console.log(node_id, x, y);
 
 }
