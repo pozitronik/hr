@@ -111,9 +111,8 @@ trait Graph {
 	/**
 	 * Пересчитываем координаты графа в круговые
 	 * @param array $nodes
-	 * @return array
 	 */
-	public function roundGraph(array $nodes):array {
+	public function roundGraph(array &$nodes):void {
 		$levelMap = [];
 		$newNodes = [];
 		foreach ($nodes as $node) {
@@ -135,6 +134,6 @@ trait Graph {
 				$newNodes[] = $item;
 			}
 		}
-		return $newNodes;
+		$nodes = $newNodes;
 	}
 }
