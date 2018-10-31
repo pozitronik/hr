@@ -189,7 +189,7 @@ function save_node_position(node_id, x, y) {
 
 	if (!xhr) throw 'XMLHttpRequest not supported.';
 
-	var request_body = 'groupId=' + encodeURIComponent(_.get('group_id')) +
+	var request_body = 'groupId=' + encodeURIComponent(_.get('id')) +
 		'&nodeId=' + encodeURIComponent(node_id)
 		+ '&x=' + encodeURIComponent(x)
 		+ '&y=' + encodeURIComponent(y);
