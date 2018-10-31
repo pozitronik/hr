@@ -9,7 +9,6 @@ use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
 use yii\web\Controller;
-use yii\web\ErrorAction;
 
 /**
  * Class AjaxController
