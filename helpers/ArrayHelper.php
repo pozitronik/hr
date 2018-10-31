@@ -100,4 +100,32 @@ class ArrayHelper extends \yii\helpers\ArrayHelper {
 		}
 		return $result;
 	}
+
+	/**
+	 * Рекурсивно объединяет массивы так, что существующие ключи обновляются, новые ключи - добавляются.
+	 * Пример:
+	 * ArrayHelper::merge_recursive(['10' => ['5' => [3, 2]]], ['10' => ['6' => [4, 7]]]);
+	 * вернёт:
+	 * ['10' => ['5' => [3, 2], '6' => [4, 7]]
+	 *
+	 * @param array $array1
+	 * @param array $array2
+	 * @return array
+	 */
+	public static function merge_recursive(array $array1, array $array2, array $_ = null):array {
+		$arrays = func_get_args();
+		$merged = [];
+		while ($arrays) {
+			$array = array_shift($arrays);
+			if (!$array) continue;
+			foreach ($array as $key => $value)
+				if (is_array($value) && array_key_exists($key, $merged) && is_array($merged[$key])) {
+					$merged[$key] = self::merge_recursive($merged[$key], $value);
+				} else {
+					$merged[$key] = $value;
+				}
+		}
+		return $merged;
+	}
+
 }
