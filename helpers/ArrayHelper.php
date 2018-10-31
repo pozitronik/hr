@@ -5,12 +5,13 @@ namespace app\helpers;
 
 use Closure;
 use Throwable;
+use yii\helpers\ArrayHelper as YiiArrayHelper;
 
 /**
  * Class ArrayHelper
  * @package app\helpers
  */
-class ArrayHelper extends \yii\helpers\ArrayHelper {
+class ArrayHelper extends YiiArrayHelper {
 
 	/**
 	 * Расширенная функция, может кидать исключение или выполнять замыканьице
@@ -40,18 +41,18 @@ class ArrayHelper extends \yii\helpers\ArrayHelper {
 	 * @param array $array2
 	 * @return array
 	 */
-	public static function loopArrayMerge($array1, $array2):array {
+	public static function loopArrayMerge(array $array1, array $array2):array {
 		return array_merge($array1, array_merge(...$array2));
 	}
 
 	/**
 	 * Ищет значение в многомерном массиве, если находит его, то возвращает массив со всеми ключами до этого элемента
 	 * @param array $array
-	 * @param $search
+	 * @param mixed $search
 	 * @param array $keys
 	 * @return array
 	 */
-	public static function array_find_deep($array, $search, $keys = []):array {
+	public static function array_find_deep(array $array, $search, array $keys = []):array {
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {
 				$sub = self::array_find_deep($value, $search, array_merge($keys, [$key]));
