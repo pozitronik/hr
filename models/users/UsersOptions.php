@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $option Option name
  * @property array $value Option value in JSON
  */
-class SysUsersOptions extends ActiveRecord {
+class UsersOptions extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
