@@ -45,11 +45,11 @@ class AjaxController extends Controller {
 				},
 				'rules' => [
 					[
-						'allow' => Yii::$app->request->isAjax && Yii::$app->user->identity,
+						'allow' => true, //Yii::$app->request->isAjax, /*&& Yii::$app->user->identity,*/
 						'actions' => [
 							'groups-tree-save-node-position'
 						],
-						'roles' => ['@']
+						'roles' => ['@','?']
 					],
 				]
 			]
@@ -57,17 +57,24 @@ class AjaxController extends Controller {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	public function beforeAction($action) {
+		$this->enableCsrfValidation = false;//todo
+		return parent::beforeAction($action);
+	}
+
+	/**
 	 * Сохраняет позицию ноды в координатной сетке
 	 * Сохранение производится для текущего пользователя, если он залогинен. Если нет - для браузерного юзер-фингерпринта.
-	 * @param int $group_id
 	 * @return array
 	 */
-	public function actionGroupsTreeSaveNodePosition(int $group_id):array {
+	public function actionGroupsTreeSaveNodePosition():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
 		$nodeData = new DynamicModel(['groupId', 'nodeId', 'x', 'y', 'userId']);
 		$nodeData->addRule(['groupId', 'nodeId', 'userId'], 'integer');
-		$nodeData->addRule(['x', 'y'], 'float');
+		$nodeData->addRule(['x', 'y'], 'number');
 		$nodeData->addRule(['groupId', 'nodeId', 'x', 'y'], 'required');
-		$nodeData->groupId = $group_id;
 		if ($nodeData->load(Yii::$app->request->post())) {
 			return ['result' => self::RESULT_OK];
 		} else {
