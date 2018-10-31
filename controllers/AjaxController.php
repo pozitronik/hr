@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\ArrayHelper;
+use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use Throwable;
 use Yii;
-use yii\base\DynamicModel;
 use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
@@ -70,27 +70,22 @@ class AjaxController extends Controller {
 	 * Сохраняет позицию ноды в координатной сетке
 	 * Сохранение производится для текущего пользователя, если он залогинен. Если нет - для браузерного юзер-фингерпринта.
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionGroupsTreeSaveNodePosition():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$nodeData = new DynamicModel(['groupId', 'nodeId', 'x', 'y']);
-		$nodeData->addRule(['groupId', 'nodeId', 'userId'], 'integer');
-		$nodeData->addRule(['x', 'y'], 'number');
-		$nodeData->addRule(['groupId', 'nodeId', 'x', 'y'], 'required');
+		$nodeData = new PrototypeNodeData();
 		if ($nodeData->load(Yii::$app->request->post(), '')) {
 			$user = CurrentUser::User();
 
-			$currentNodePositions = $user->options->nodePositions;
-			$newNodePosition = [
+			$user->options->nodePositions = ArrayHelper::merge_recursive($user->options->nodePositions, [
 				$nodeData->groupId => [
 					$nodeData->nodeId => [
 						'x' => $nodeData->x,
 						'y' => $nodeData->y
 					]
 				]
-			];
-			$currentNodePositions = ArrayHelper::merge_recursive($currentNodePositions, $newNodePosition);
-			$user->options->nodePositions = $currentNodePositions;
+			]);
 			return ['result' => self::RESULT_OK];
 		}
 
