@@ -27,7 +27,7 @@ class AjaxController extends Controller {
 	/**
 	 * @inheritdoc
 	 */
-	public function behaviors() {
+	public function behaviors():array {
 		return [
 			[
 				'class' => ContentNegotiator::class,
@@ -49,7 +49,7 @@ class AjaxController extends Controller {
 							'groups-tree-save-node-position'
 						],
 						'roles' => ['@','?']
-					],
+					]
 				]
 			]
 		];
@@ -58,7 +58,7 @@ class AjaxController extends Controller {
 	/**
 	 * @inheritdoc
 	 */
-	public function beforeAction($action) {
+	public function beforeAction($action):bool {
 		$this->enableCsrfValidation = false;//todo
 		return parent::beforeAction($action);
 	}
@@ -76,13 +76,13 @@ class AjaxController extends Controller {
 		$nodeData->addRule(['groupId', 'nodeId', 'x', 'y'], 'required');
 		if ($nodeData->load(Yii::$app->request->post(),'')) {
 			return ['result' => self::RESULT_OK];
-		} else {
-			return [
-				'result' => self::RESULT_ERROR,
-				'errors' => $nodeData->errors
-
-			];
 		}
+
+		return [
+			'result' => self::RESULT_ERROR,
+			'errors' => $nodeData->errors
+
+		];
 
 	}
 

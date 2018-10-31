@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\users;
 
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,6 +14,8 @@ use yii\db\ActiveRecord;
  * @property array $value Option value in JSON
  */
 class UsersOptions extends ActiveRecord {
+	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -25,7 +28,7 @@ class UsersOptions extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['user_id'], 'integer'],
+			[['id', 'user_id'], 'integer'],
 			[['option'], 'required'],
 			[['value'], 'safe'],
 			[['option'], 'string', 'max' => 32],

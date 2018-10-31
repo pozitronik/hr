@@ -50,6 +50,11 @@ use Yii;
  * @property-write array $rolesInGroup
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles Релейшен к ролям пользователей в группах
  * @property-write integer[] $dropGroups
+ *
+ * ***************************
+ * Опции
+ * ***************************
+ * @property Options $options
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -267,4 +272,12 @@ class Users extends ActiveRecord {
 	public function getPositionName():?string {
 		return $this->relUserPositions?$this->relUserPositions->name:'<Не назначен на должность>';
 	}
+
+	/**
+	 * @return Options
+	 */
+	public function getOptions():Options {
+		return new Options(['userId' => $this->id]);
+	}
+
 }
