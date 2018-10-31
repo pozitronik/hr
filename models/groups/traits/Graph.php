@@ -124,11 +124,11 @@ trait Graph {
 			$degree = 360 / $c_items;//Угловое смещение точки
 
 			$radius = (0 === $level)?$level:($level + 1);
-			$radius = $radius*360;
+			$radius *= 360;
 			$angle = 0;//Стартовый угол, 0 - 360
 			foreach ($items as $item) {
-				$item['x'] = ($radius * cos($angle * pi() / 360));
-				$item['y'] = ($radius * sin($angle * pi() / 360));
+				$item['x'] = ($radius * cos($angle * M_PI / 360));
+				$item['y'] = ($radius * sin($angle * M_PI / 360));
 
 
 				$angle += $degree;

@@ -37,6 +37,7 @@ class MussRecord extends Model {
 	 * @param string $name
 	 * @param string $type
 	 * @return int
+	 * @throws Exception
 	 */
 	public function addGroup(string $name, string $type):int {
 		$group = Groups::find()->where(['name' => $name])->one();
