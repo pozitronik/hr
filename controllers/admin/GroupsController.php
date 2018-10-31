@@ -121,18 +121,30 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param int $id
+	 * @param int $restorePositions 0: use saved nodes positions, 1 - use original positions, 2 - use originals and reset saved
 	 * @return array
 	 * @throws Throwable
+	 * @todo: move to ajax controller
 	 */
-	public function actionGraph(int $id):array {
+	public function actionGraph(int $id, int $restorePositions = 0):array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$group = Groups::findModel($id, new NotFoundHttpException());
 		$nodes = [];
 		$edges = [];
 		$group->getGraph($nodes, $edges);
 		$group->roundGraph($nodes);
-		$nodesPositions = ArrayHelper::getValue(CurrentUser::User()->options->nodePositions, $id, []);
-		$group->applyNodesPositions($nodes, $nodesPositions);
+		switch ($restorePositions) {
+			default:
+			case 0:
+				$group->applyNodesPositions($nodes, ArrayHelper::getValue(CurrentUser::User()->options->nodePositions, $id, []));
+			break;
+			case 1:
+				//do nothing
+			break;
+			case 2:
+				CurrentUser::User()->options->nodePositions[$id] = [];//todo check this
+			break;
+		}
 
 		return compact('nodes', 'edges');
 	}
