@@ -47,7 +47,8 @@ class AjaxController extends Controller {
 				},
 				'rules' => [
 					[
-						'allow' => true, //Yii::$app->request->isAjax, /*&& Yii::$app->user->identity,*/
+						'allow' => /*Yii::$app->request->isAjax, */
+							Yii::$app->user->identity,
 						'actions' => [
 							'groups-tree-save-node-position'
 						],
