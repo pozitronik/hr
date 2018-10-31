@@ -180,8 +180,8 @@ function save_node_position(node_id, x, y) {
 	if (!xhr) throw 'XMLHttpRequest not supported.';
 	var url = new URL(window.location);
 	var group_id = url.searchParams.get("id")
-	var request_body = 'groupId' + encodeURIComponent(group_id) +
-		'nodeId=' + encodeURIComponent(node_id)
+	var request_body = 'groupId=' + encodeURIComponent(group_id) +
+		'&nodeId=' + encodeURIComponent(node_id)
 		+ '&x=' + encodeURIComponent(x)
 		+ '&y=' + encodeURIComponent(y);
 	xhr.open('POST', '/ajax/groups-tree-save-node-position', true);
