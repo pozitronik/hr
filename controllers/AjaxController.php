@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\ArrayHelper;
+use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
 use Throwable;
@@ -50,6 +51,7 @@ class AjaxController extends Controller {
 						'allow' => /*Yii::$app->request->isAjax, */
 							Yii::$app->user->identity,
 						'actions' => [
+							'groups-tree',
 							'groups-tree-save-node-position'
 						],
 						'roles' => ['@', '?']
@@ -65,6 +67,45 @@ class AjaxController extends Controller {
 	public function beforeAction($action):bool {
 		$this->enableCsrfValidation = false;//todo
 		return parent::beforeAction($action);
+	}
+
+	/**
+	 * Отдаёт JSON с деревом графа для группы $is
+	 * @param int $id
+	 * @param int $restorePositions 0: use saved nodes positions, 1 - use original positions and reset saved positions, 2 - just use original
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionGroupsTree(int $id, int $restorePositions = 0):array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		if (false === $group = Groups::findModel($id)) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'group' => 'Not found'
+				]
+			];
+		}
+		$nodes = [];
+		$edges = [];
+		$group->getGraph($nodes, $edges);
+		$group->roundGraph($nodes);
+		switch ($restorePositions) {
+			default:
+			case 0:
+				$group->applyNodesPositions($nodes, ArrayHelper::getValue(CurrentUser::User()->options->nodePositions, $id, []));
+			break;
+			case 1:
+				$newPositions = CurrentUser::User()->options->nodePositions;
+				unset($newPositions[$id]);
+				CurrentUser::User()->options->nodePositions = $newPositions;
+			break;
+			case 2:
+				//do nothing
+			break;
+		}
+		//todo: стандартизировать ответ
+		return compact('nodes', 'edges');
 	}
 
 	/**
@@ -93,7 +134,6 @@ class AjaxController extends Controller {
 		return [
 			'result' => self::RESULT_ERROR,
 			'errors' => $nodeData->errors
-
 		];
 
 	}

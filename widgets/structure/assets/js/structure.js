@@ -122,7 +122,7 @@ function init_sigma(id, mode) {
 	CustomShapes.init(s);
 	s.refresh();
 
-	sigma.parsers.json('graph?id=' + id + '&restorePositions=' + mode, s, function () {
+	sigma.parsers.json('/ajax/groups-tree?id=' + id + '&restorePositions=' + mode, s, function () {
 		bindFilter(s);//must be before bind events
 		bindEvents(s);
 		bindDragging(s);
