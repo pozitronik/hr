@@ -85,7 +85,7 @@ function updatePane(graph, filter) {
 
 function init_toggle() {
 	_.$('toggle-size').onclick = function click() {
-		_.toggle('#control-pane','min')
+		_.toggle('#control-pane', 'min')
 	};
 }
 
@@ -169,4 +169,21 @@ function bindEvents(s) {
 
 function bindDragging(s) {
 	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+	// dragListener.bind('startdrag', function (event) {
+	// 	console.log(event);
+	// });
+	// dragListener.bind('drag', function (event) {
+	// 	console.log(event);
+	// });
+	// dragListener.bind('drop', function (event) {
+	// 	console.log(event);
+	// });
+	dragListener.bind('dragend', function (event) {
+		save_node_position(event.data.node.id,event.data.node.x,event.data.node.y);
+	});
+}
+
+function save_node_position(node_id, x, y) {
+	console.log(node_id,x,y);
+
 }
