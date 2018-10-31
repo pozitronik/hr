@@ -111,6 +111,7 @@ class ArrayHelper extends YiiArrayHelper {
 	 *
 	 * @param array $array1
 	 * @param array $array2
+	 * @param array|null $_
 	 * @return array
 	 */
 	public static function merge_recursive(array $array1, array $array2, array $_ = null):array {
@@ -119,6 +120,7 @@ class ArrayHelper extends YiiArrayHelper {
 		while ($arrays) {
 			$array = array_shift($arrays);
 			if (!$array) continue;
+			/** @var array $array */
 			foreach ($array as $key => $value)
 				if (is_array($value) && array_key_exists($key, $merged) && is_array($merged[$key])) {
 					$merged[$key] = self::merge_recursive($merged[$key], $value);
