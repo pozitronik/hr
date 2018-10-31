@@ -12,6 +12,7 @@ use Throwable;
 use Yii;
 use app\models\core\WigetableController;
 use yii\filters\ContentNegotiator;
+use yii\helpers\UnsetArrayValue;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -121,7 +122,7 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param int $id
-	 * @param int $restorePositions 0: use saved nodes positions, 1 - use original positions, 2 - use originals and reset saved
+	 * @param int $restorePositions 0: use saved nodes positions, 1 - use original positions and reset saved positions, 2 - just use original
 	 * @return array
 	 * @throws Throwable
 	 * @todo: move to ajax controller
@@ -139,10 +140,12 @@ class GroupsController extends WigetableController {
 				$group->applyNodesPositions($nodes, ArrayHelper::getValue(CurrentUser::User()->options->nodePositions, $id, []));
 			break;
 			case 1:
-				//do nothing
+				$newPositions = CurrentUser::User()->options->nodePositions;
+				unset($newPositions[$id]);
+				CurrentUser::User()->options->nodePositions = $newPositions;
 			break;
 			case 2:
-				CurrentUser::User()->options->nodePositions[$id] = [];//todo check this
+//do nothing
 			break;
 		}
 
