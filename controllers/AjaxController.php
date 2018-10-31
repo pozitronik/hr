@@ -75,7 +75,7 @@ class AjaxController extends Controller {
 		$nodeData->addRule(['groupId', 'nodeId', 'userId'], 'integer');
 		$nodeData->addRule(['x', 'y'], 'number');
 		$nodeData->addRule(['groupId', 'nodeId', 'x', 'y'], 'required');
-		if ($nodeData->load(Yii::$app->request->post())) {
+		if ($nodeData->load(Yii::$app->request->post(),'')) {
 			return ['result' => self::RESULT_OK];
 		} else {
 			return [
