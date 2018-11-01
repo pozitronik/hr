@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * Class WorkgroupsController
+ * Class GroupsController
  */
 class GroupsController extends WigetableController {
 	public $menuCaption = "Команды";
