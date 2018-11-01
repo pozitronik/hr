@@ -91,7 +91,7 @@ function updatePane(graph, filter) {
 		init_sigma(_.get('id'), 1);
 	});
 
-	_.$('toggle-size').onclick = function click() {
+	_.$('toggle-control-size').onclick = function click() {
 		_.toggle('#control-pane', 'min')
 	};
 }

@@ -12,7 +12,7 @@ $this->registerJs("init_sigma($id);");
 ?>
 <div id="sigma-container"></div>
 <div class="panel" id="control-pane">
-	<div id="toggle-size"><span class="glyphicon glyphicon-minus"></span></div>
+	<div id="toggle-control-size"><span class="glyphicon glyphicon-minus"></span></div>
 	<div class="panel-body">
 		<label for="node-labels">Группа</label>
 		<select id="node-labels">
@@ -24,6 +24,10 @@ $this->registerJs("init_sigma($id);");
 			<button class="btn btn-xs btn-warning pull-left" id="reset-filter">Сбросить фильтр</button>
 			<button class="btn btn-xs btn-warning pull-right" id="reset-graph">Сбросить граф</button>
 		</div>
+	</div>
+</div>
+<div class="panel" id="info-pane">
+	<div class="panel-body">
 	</div>
 </div>
 
