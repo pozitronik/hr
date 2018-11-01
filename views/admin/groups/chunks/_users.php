@@ -5,6 +5,7 @@ use app\helpers\ArrayHelper;
 use app\models\references\refs\RefUserRoles;
 use app\models\users\Users;
 use app\models\groups\Groups;
+use kartik\spinner\Spinner;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -12,7 +13,6 @@ use kartik\grid\CheckboxColumn;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\switchinput\SwitchInput;
 
 /**
  * @var View $this
@@ -62,7 +62,7 @@ use kartik\switchinput\SwitchInput;
 						return Html::a($user->username, Url::to(['admin/users/update', 'id' => $user->id]));
 					}
 				],
-				[//TODO: эти контролы должны быть аяксовыми, чтобы изменение отрабатывалось атомарно. Иначе при постинге отрабатывается весь массив, а это куча лишних операций
+				[
 					'label' => 'Роли в группе',
 					'value' => function($user) use ($model) {
 						/** @var Groups $model */
@@ -80,6 +80,7 @@ use kartik\switchinput\SwitchInput;
 							],
 							'pluginEvents' => [
 								"change.select2" => "function(e) {
+									jQuery('#{$user->id}-roles-progress').show();
 									jQuery.ajax({
   										url: '\/ajax\/set-user-roles-in-group',
   										data: {
@@ -89,22 +90,15 @@ use kartik\switchinput\SwitchInput;
 										},
   										method: 'POST'
 									}).done(function(data) {
-									  console.log(data.data)
+									  jQuery('#{$user->id}-roles-progress').hide();
 									});
 								
 								 }",
 							],
 							'addon' => [
 								'append' => [
-									'content' => SwitchInput::widget([
-										'name' => "ClearUserRoles[$user->id]",
-										'value' => false,
-										'pluginOptions' => [
-											'onText' => "<span class='glyphicon glyphicon-trash'></span>",
-											'offText' => "<span class='glyphicon glyphicon-ok'></span>",
-										]
-									]),
-									'asButton' => true
+									'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$user->id}-roles-progress"]),
+									'asButton' => false
 								],
 							]
 
