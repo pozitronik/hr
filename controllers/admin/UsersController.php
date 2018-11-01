@@ -73,10 +73,6 @@ class UsersController extends WigetableController {
 			$user->updateUser($updateArray);
 		}
 
-		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
-			$user->rolesInGroup = $updateArray;
-		}
-
 		return $this->render('update', [
 			'model' => $user
 		]);

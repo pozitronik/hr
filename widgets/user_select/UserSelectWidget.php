@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\widgets\user_select;
 
 use app\helpers\ArrayHelper;
-use app\models\groups\Groups;
 use app\models\users\Users;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
