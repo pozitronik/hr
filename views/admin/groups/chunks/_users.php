@@ -70,7 +70,7 @@ use yii\helpers\Url;
 							'data' => RefUserRoles::mapData(),
 							'name' => "UserRoles[$user->id]",
 							/** @var Users $model */
-							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user, $model), 'id'),
+							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user->id, $model->id), 'id'),
 							'options' => [
 								'placeholder' => 'Укажите роль в группе'
 							],

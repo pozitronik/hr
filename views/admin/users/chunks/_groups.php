@@ -70,7 +70,7 @@ use kartik\grid\CheckboxColumn;
 							'data' => RefUserRoles::mapData(),
 							'name' => "UserRoles[$group->id]",
 							/** @var Users $model */
-							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($model, $group), 'id'),
+							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($model->id, $group->id), 'id'),
 							'options' => ['placeholder' => 'Укажите роль в группе'],
 							'pluginOptions' => [
 								'allowClear' => true,

@@ -86,12 +86,13 @@ class RefUserRoles extends Reference {
 
 	/**
 	 * Возвращает набор ролей для пользователя $user в группе $group
-	 * @param Users $user
-	 * @param Groups $group
+	 * @param int $userId
+	 * @param int $groupId
 	 * @return self[] array
 	 */
-	public static function getUserRolesInGroup(Users $user, Groups $group):array {
-		return self::find()->joinWith('relUsersGroups')->where(['user_id' => $user->id, 'group_id' => $group->id])->all();
+
+	public static function getUserRolesInGroup(int $userId, int $groupId):array {
+		return self::find()->joinWith('relUsersGroups')->where(['user_id' => $userId, 'group_id' => $groupId])->all();
 	}
 
 }
