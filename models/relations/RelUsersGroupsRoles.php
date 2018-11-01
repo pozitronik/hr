@@ -42,7 +42,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 
 	/**
 	 * Добавляет пользователю роль в группу
-	 * @param int|null $role
+	 * @param int $role
 	 * @param int $group
 	 * @param int $user
 	 * @return bool
@@ -51,15 +51,8 @@ class RelUsersGroupsRoles extends ActiveRecord {
 		/*Связь пользователя в группе уже есть*/
 		$rel = RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $user])->one();
 		if ($rel) {
-			if (null === $role) {//удаление всех ролей, пока так
-				self::deleteAll(['user_group_id' => $rel->id]);
-				return true;
-			} else {
-				$relUsersGroupsRoles = new self(['user_group_id' => $rel->id, 'role' => $role]);
-				return $relUsersGroupsRoles->save();
-			}
-
-
+			$relUsersGroupsRoles = new self(['user_group_id' => $rel->id, 'role' => $role]);
+			return $relUsersGroupsRoles->save();
 
 		}
 		/*Попытка добавления пользователя в группу, в которой он не присутствует. Такое невозможно по логике связей таблиц, но может быть инициировано при сохранении с одновременным удалением */

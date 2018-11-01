@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
+use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use Throwable;
 use Yii;
@@ -52,7 +53,8 @@ class AjaxController extends Controller {
 							Yii::$app->user->identity,
 						'actions' => [
 							'groups-tree',
-							'groups-tree-save-node-position'
+							'groups-tree-save-node-position',
+							'set-user-roles-in-group'
 						],
 						'roles' => ['@', '?']
 					]
@@ -134,6 +136,37 @@ class AjaxController extends Controller {
 		return [
 			'result' => self::RESULT_ERROR,
 			'errors' => $nodeData->errors
+		];
+
+	}
+
+	/**
+	 * Принимает массив ролей пользователя, применяя их
+	 * @return array
+	 */
+	public function actionSetUserRolesInGroup():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		if (false === (($groupId = Yii::$app->request->post('groupid', false)) && ($userId = Yii::$app->request->post('userid', false)))) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'parameters' => 'Not enough parameters'
+				]
+			];
+		}
+		/** @var Groups $group */
+		if (false === ($group = Groups::findModel($groupId))) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'group' => 'Not found'
+				]
+			];
+		}
+
+		$group->setRolesInGroup([$userId => Yii::$app->request->post('roles', [])]);
+		return [
+			'result' => self::RESULT_OK
 		];
 
 	}

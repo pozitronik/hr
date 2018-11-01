@@ -78,6 +78,22 @@ use kartik\switchinput\SwitchInput;
 								'allowClear' => true,
 								'multiple' => true,
 							],
+							'pluginEvents' => [
+								"change.select2" => "function(e) {
+									jQuery.ajax({
+  										url: '\/ajax\/set-user-roles-in-group',
+  										data: {
+  											userid: $user->id,
+  											groupid: $model->id,
+  											roles: jQuery(e.target).val()
+										},
+  										method: 'POST'
+									}).done(function(data) {
+									  console.log(data.data)
+									});
+								
+								 }",
+							],
 							'addon' => [
 								'append' => [
 									'content' => SwitchInput::widget([
