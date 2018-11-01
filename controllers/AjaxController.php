@@ -6,7 +6,6 @@ namespace app\controllers;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
-use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use Throwable;
 use Yii;
@@ -143,10 +142,13 @@ class AjaxController extends Controller {
 	/**
 	 * Принимает массив ролей пользователя, применяя их
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionSetUserRolesInGroup():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false === (($groupId = Yii::$app->request->post('groupid', false)) && ($userId = Yii::$app->request->post('userid', false)))) {
+		$groupId = Yii::$app->request->post('groupid', false);
+		$userId = Yii::$app->request->post('userid', false);
+		if (!($groupId || $userId)) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [

@@ -72,11 +72,11 @@ use yii\helpers\Url;
 							/** @var Users $model */
 							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user, $model), 'id'),
 							'options' => [
-								'placeholder' => 'Укажите роль в группе',
+								'placeholder' => 'Укажите роль в группе'
 							],
 							'pluginOptions' => [
 								'allowClear' => true,
-								'multiple' => true,
+								'multiple' => true
 							],
 							'pluginEvents' => [
 								"change.select2" => "function(e) {
@@ -93,13 +93,13 @@ use yii\helpers\Url;
 									  jQuery('#{$user->id}-roles-progress').hide();
 									});
 								
-								 }",
+								 }"
 							],
 							'addon' => [
 								'append' => [
 									'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$user->id}-roles-progress"]),
 									'asButton' => false
-								],
+								]
 							]
 
 						]);
