@@ -5,6 +5,7 @@ use app\helpers\ArrayHelper;
 use app\models\references\refs\RefUserRoles;
 use app\models\users\Users;
 use app\models\groups\Groups;
+use app\widgets\roles_select\RolesSelectWidget;
 use kartik\spinner\Spinner;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -66,42 +67,9 @@ use yii\helpers\Url;
 					'label' => 'Роли в группе',
 					'value' => function($user) use ($model) {
 						/** @var Groups $model */
-						return Select2::widget([
-							'data' => RefUserRoles::mapData(),
-							'name' => "UserRoles[$user->id]",
-							/** @var Users $model */
-							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user->id, $model->id), 'id'),
-							'options' => [
-								'placeholder' => 'Укажите роль в группе'
-							],
-							'pluginOptions' => [
-								'allowClear' => true,
-								'multiple' => true
-							],
-							'pluginEvents' => [
-								"change.select2" => "function(e) {
-									jQuery('#{$user->id}-roles-progress').show();
-									jQuery.ajax({
-  										url: '\/ajax\/set-user-roles-in-group',
-  										data: {
-  											userid: $user->id,
-  											groupid: $model->id,
-  											roles: jQuery(e.target).val()
-										},
-  										method: 'POST'
-									}).done(function(data) {
-									  jQuery('#{$user->id}-roles-progress').hide();
-									});
-								
-								 }"
-							],
-							'addon' => [
-								'append' => [
-									'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$user->id}-roles-progress"]),
-									'asButton' => false
-								]
-							]
-
+						return RolesSelectWidget::widget([
+							'groupId' => $model->id,
+							'userId' => $user->id
 						]);
 					},
 					'format' => 'raw'
