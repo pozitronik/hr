@@ -10,6 +10,7 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\widgets\user_select\UserSelectWidget;
 
 /**
  * @var View $this
@@ -27,17 +28,17 @@ use yii\helpers\Url;
 				'heading' => "Пользователи"
 			],
 			'toolbar' => [
-//				[
-//					'options' => [
-//						'style' => 'min-width:500px'
-//					],
-//					'content' => UsersSelectWidget::widget([
-//						'model' => $model,
-//						'attribute' => 'relChildGroups',
-//						'notData' => $model->isNewRecord?[]:array_merge($model->relChildGroups, [$model]),
-//						'multiple' => true
-//					])
-//				]
+				[
+					'options' => [
+						'style' => 'min-width:500px'
+					],
+					'content' => UserSelectWidget::widget([
+						'model' => $model,
+						'attribute' => 'relUsers',
+						'notData' => $model->isNewRecord?[]:array_merge($model->relUsers, [$model]),
+						'multiple' => true
+					])
+				]
 
 			],
 			'export' => false,
