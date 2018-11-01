@@ -16,7 +16,6 @@ use app\widgets\user_select\UserSelectWidget;
  * @var View $this
  * @var Groups $model
  */
-
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -35,7 +34,7 @@ use app\widgets\user_select\UserSelectWidget;
 					'content' => UserSelectWidget::widget([
 						'model' => $model,
 						'attribute' => 'relUsers',
-						'notData' => $model->isNewRecord?[]:array_merge($model->relUsers, [$model]),
+						'notData' => $model->relUsers,
 						'multiple' => true
 					])
 				]
