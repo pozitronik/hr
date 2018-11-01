@@ -26,8 +26,6 @@ $this->registerJs("init_sigma($id);");
 		</div>
 	</div>
 </div>
-<div class="panel" id="info-pane">
-	<div class="panel-body">
-	</div>
+<div id="info-pane">
 </div>
 

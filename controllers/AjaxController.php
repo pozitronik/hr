@@ -154,7 +154,7 @@ class AjaxController extends Controller {
 		}
 		return [
 			'result' => self::RESULT_OK,
-			'content' => $this->render('get-group-info', [
+			'content' => $this->renderPartial('get-group-info', [
 				'group' => $group
 			])
 		];

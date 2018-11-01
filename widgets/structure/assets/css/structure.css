@@ -53,4 +53,5 @@
 #info-pane {
 	min-width: 230px;
 	float: right;
+	background: transparent;
 }

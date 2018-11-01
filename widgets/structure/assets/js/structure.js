@@ -220,8 +220,10 @@ function show_group_info(group_id) {
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
 			var response = JSON.parse(xhr.responseText);
-			if (0 == response.result) {
-				jQuery('#info-pane .panel-body').html(response.content)
+			if (0 === response.result) {
+				jQuery('#info-pane').html(response.content)
+			} else if (1 === response.result) {
+				jQuery('#info-pane').html('')
 			}
 			console.log(response);
 		}

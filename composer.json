@@ -27,7 +27,8 @@
 		"kartik-v/yii2-grid": "dev-master",
 		"kartik-v/yii2-widget-select2": "dev-master",
 		"kartik-v/yii2-widget-switchinput": "dev-master",
-		"kartik-v/yii2-widget-spinner": "dev-master"
+		"kartik-v/yii2-widget-spinner": "dev-master",
+		"kartik-v/yii2-detail-view": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
