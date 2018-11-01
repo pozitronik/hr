@@ -157,7 +157,7 @@ function bindFilter(s) {
 
 function bindEvents(s) {
 	s.bind("clickNode", function (object) {
-		if (object.data.captor.ctrlKey) {
+		if (object.data.captor.shiftKey) {
 			nodeId = object.data.node.id;
 			s.selectNeighborhood(nodeId);
 			_.$('node-labels').value = nodeId;
