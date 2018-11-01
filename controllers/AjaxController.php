@@ -53,6 +53,7 @@ class AjaxController extends Controller {
 						'actions' => [
 							'groups-tree',
 							'groups-tree-save-node-position',
+							'get-group-info',
 							'set-user-roles-in-group'
 						],
 						'roles' => ['@', '?']
@@ -136,7 +137,27 @@ class AjaxController extends Controller {
 			'result' => self::RESULT_ERROR,
 			'errors' => $nodeData->errors
 		];
+	}
 
+	/**
+	 * Генерит и отдаёт вьюшеньку с инфой о группе
+	 */
+	public function actionGetGroupInfo():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		if (false === ($group = Groups::findModel(Yii::$app->request->post('groupid')))) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'group' => 'Not found'
+				]
+			];
+		}
+		return [
+			'result' => self::RESULT_OK,
+			'content' => $this->render('get-group-info', [
+				'group' => $group
+			])
+		];
 	}
 
 	/**
