@@ -78,7 +78,7 @@ class Groups extends ActiveRecord {
 			[['deleted', 'daddy', 'type'], 'integer'],
 			[['create_date'], 'safe'],
 			[['name'], 'string', 'max' => 512],
-			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'dropUsers'], 'safe']
+			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'relUsers', 'dropUsers'], 'safe']
 		];
 	}
 
@@ -110,6 +110,14 @@ class Groups extends ActiveRecord {
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
+	}
+
+	/**
+	 * @param array $relGroupsUsers
+	 * @throws Throwable
+	 */
+	public function setRelUsers($relGroupsUsers):void {
+		RelUsersGroups::linkModels($relGroupsUsers, $this);
 	}
 
 	/**
