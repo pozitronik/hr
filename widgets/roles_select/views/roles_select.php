@@ -26,21 +26,7 @@ use kartik\spinner\Spinner;
 		'multiple' => true
 	],
 	'pluginEvents' => [
-		"change.select2" => "function(e) {
-									jQuery('#{$userId}-roles-progress').show();
-									jQuery.ajax({
-  										url: '\/ajax\/set-user-roles-in-group',
-  										data: {
-  											userid: $userId,
-  											groupid: $groupId,
-  											roles: jQuery(e.target).val()
-										},
-  										method: 'POST'
-									}).done(function(data) {
-									  jQuery('#{$userId}-roles-progress').hide();
-									});
-								
-								 }"
+		"change.select2" => "function(e) {set_roles($userId, $groupId, jQuery(e.target).val())}"
 	],
 	'addon' => [
 		'append' => [
