@@ -157,11 +157,13 @@ function bindFilter(s) {
 
 function bindEvents(s) {
 	s.bind("clickNode", function (object) {
+		nodeId = object.data.node.id;
 		if (object.data.captor.shiftKey) {
-			nodeId = object.data.node.id;
+
 			s.selectNeighborhood(nodeId);
 			_.$('node-labels').value = nodeId;
-
+		} else {
+			show_group_info(nodeId);
 		}
 	});
 
@@ -204,7 +206,25 @@ function save_node_position(node_id, x, y) {
 		}
 	};
 	xhr.send(request_body);
+}
 
-	console.log(node_id, x, y);
+function show_group_info(group_id) {
+	var xhr = sigma.utils.xhr();
 
+	if (!xhr) throw 'XMLHttpRequest not supported.';
+
+	var request_body = 'groupid=' + encodeURIComponent(group_id);
+	xhr.open('POST', '/ajax/get-group-info', true);
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			var response = JSON.parse(xhr.responseText);
+			if (0 == response.result) {
+				jQuery('#info-pane .panel-body').html(response.content)
+			}
+			console.log(response);
+		}
+	};
+	xhr.send(request_body);
 }
