@@ -1,17 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\ArrayHelper;
-use app\models\references\refs\RefUserRoles;
 use app\models\users\Users;
 use app\models\groups\Groups;
 use app\widgets\roles_select\RolesSelectWidget;
-use kartik\spinner\Spinner;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
-use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
