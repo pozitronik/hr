@@ -12,6 +12,7 @@ use kartik\grid\CheckboxColumn;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use kartik\switchinput\SwitchInput;
 
 /**
  * @var View $this
@@ -61,7 +62,7 @@ use yii\helpers\Url;
 						return Html::a($user->username, Url::to(['admin/users/update', 'id' => $user->id]));
 					}
 				],
-				[
+				[//TODO: эти контролы должны быть аяксовыми, чтобы изменение отрабатывалось атомарно. Иначе при постинге отрабатывается весь массив, а это куча лишних операций
 					'label' => 'Роли в группе',
 					'value' => function($user) use ($model) {
 						/** @var Groups $model */
@@ -70,11 +71,27 @@ use yii\helpers\Url;
 							'name' => "UserRoles[$user->id]",
 							/** @var Users $model */
 							'value' => ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($user, $model), 'id'),
-							'options' => ['placeholder' => 'Укажите роль в группе'],
+							'options' => [
+								'placeholder' => 'Укажите роль в группе',
+							],
 							'pluginOptions' => [
 								'allowClear' => true,
-								'multiple' => true
+								'multiple' => true,
+							],
+							'addon' => [
+								'append' => [
+									'content' => SwitchInput::widget([
+										'name' => "ClearUserRoles[$user->id]",
+										'value' => false,
+										'pluginOptions' => [
+											'onText' => "<span class='glyphicon glyphicon-trash'></span>",
+											'offText' => "<span class='glyphicon glyphicon-ok'></span>",
+										]
+									]),
+									'asButton' => true
+								],
 							]
+
 						]);
 					},
 					'format' => 'raw'

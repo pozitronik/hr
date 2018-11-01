@@ -6,6 +6,7 @@ namespace app\controllers\admin;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
+use app\models\relations\RelUsersGroupsRoles;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
@@ -91,6 +92,11 @@ class GroupsController extends WigetableController {
 
 		if (null !== ($updateArray = Yii::$app->request->post('UserRoles'))) {
 			$group->rolesInGroup = $updateArray;
+		}
+		if (null !== ($updateArray = Yii::$app->request->post('ClearUserRoles'))) {
+			foreach ($updateArray as $userId => $key) {
+				RelUsersGroupsRoles::setRoleInGroup(null, $group->id, $userId);
+			}
 		}
 
 		return $this->render('update', [
