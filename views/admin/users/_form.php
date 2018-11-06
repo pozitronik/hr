@@ -14,7 +14,7 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use app\models\references\refs\RefUserPositions;
-
+use kartik\file\FileInput;
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -66,7 +66,18 @@ use app\models\references\refs\RefUserPositions;
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<?= $form->field($model, 'profile_image')->fileInput() ?>
+						<?= $form->field($model, 'profile_image')->widget(FileInput::class, [
+							'options' => [
+								'accept' => 'image/*',
+								'multiple' => false
+							],
+							'pluginOptions' => [
+								'initialPreview' => !empty($model->profile_image)?[
+									$model->avatar
+								]:false,
+								'initialPreviewAsData' => true
+							]
+						]) ?>
 					</div>
 				</div>
 			</div>
