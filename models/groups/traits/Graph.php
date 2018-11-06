@@ -33,7 +33,7 @@ trait Graph {
 			'x' => $x,
 			'y' => $y,
 			'size' => (string)$size,//todo: придумать характеристику веса группы,
-			'color' => "rgb({$red},{$green},{$blue})",
+			'color' => ArrayHelper::getValue($this->relGroupTypes, 'color', "rgb({$red},{$green},{$blue})"),
 			'type' => 'circle',
 			'image' => [
 				'url' => $this->leader->avatar,

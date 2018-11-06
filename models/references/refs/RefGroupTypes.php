@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\references\refs;
 
-
+use app\helpers\ArrayHelper;
 use app\models\references\Reference;
 
 /**
@@ -12,10 +12,19 @@ use app\models\references\Reference;
  * @property int $id
  * @property string $name Название
  * @property int $deleted
+ * @property-read string $color
  */
 class RefGroupTypes extends Reference {
 	public $menuCaption = 'Типы групп';
 	public $menuIcon = false;
+	public const COLORS = [
+		1 => 'rgb(100,250,100)',
+		2 => 'rgb(255,10,10)',
+		3 => 'rgb(70,90,200)',
+		4 => 'rgb(10,10,10)',
+		5 => 'rgb(100,150,250)',
+		6 => 'rgb(50,250,10)'
+	];
 
 	/**
 	 * {@inheritdoc}
@@ -31,7 +40,7 @@ class RefGroupTypes extends Reference {
 		return [
 			[['name'], 'required'],
 			[['deleted'], 'integer'],
-			[['name'], 'string', 'max' => 256]
+			[['name', 'color'], 'string', 'max' => 256]
 		];
 	}
 
@@ -44,5 +53,12 @@ class RefGroupTypes extends Reference {
 			'name' => 'Название',
 			'deleted' => 'Deleted'
 		];
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getColor():string {
+		return ArrayHelper::getValue(self::COLORS, $this->id, 'rgb(255,10,255)');
 	}
 }
