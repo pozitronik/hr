@@ -16,6 +16,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "sys_users".
@@ -88,6 +89,7 @@ class Users extends ActiveRecord {
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique'],
+			[['profile_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
 			[['relGroups', 'dropGroups'], 'safe']
 		];
 	}
@@ -107,7 +109,8 @@ class Users extends ActiveRecord {
 			'create_date' => 'Дата регистрации',
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
 			'deleted' => 'Флаг удаления',
-			'position' => 'Должность'
+			'position' => 'Должность',
+			'profile_image' => 'Изображение профиля'
 		];
 	}
 
@@ -280,4 +283,16 @@ class Users extends ActiveRecord {
 		return new Options(['userId' => $this->id]);
 	}
 
+	/**
+	 * Пытается подгрузить файл картинки, если он есть
+	 * @return bool
+	 */
+	public function uploadAvatar():bool {
+		$uploadedFile = UploadedFile::getInstance($this, 'profile_image');
+		if ($uploadedFile && $this->validate('profile_image') && $uploadedFile->saveAs(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
+			$this->setAndSaveAttribute('profile_image', "{$this->id}.{$uploadedFile->extension}");
+			return true;
+		}
+		return false;
+	}
 }

@@ -64,6 +64,11 @@ use app\models\references\refs\RefUserPositions;
 						<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<?= $form->field($model, 'profile_image')->fileInput() ?>
+					</div>
+				</div>
 			</div>
 			<?= $this->render('chunks/_groups.php', [
 				'model' => $model
