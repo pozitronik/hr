@@ -1,0 +1,11 @@
+.crown-mark {
+	background-image: url('../img/crown.png');
+	width: 30px;
+	height: 30px;
+	position: relative;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	float:left;
+	margin: 6px 0px 0 -15px;
+}
