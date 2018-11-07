@@ -62,6 +62,21 @@ var _ = {
 	}
 };
 
+/*Добавляем метод к массивам*/
+Object.defineProperty(Array.prototype, 'pushOrReplace', {
+	value: function (item) {
+		var indexOfItem
+		if (-1 === (indexOfItem = this.indexOf(item))) {
+			this.push(item);
+		} else {
+			this[indexOfItem] = item;
+		}
+	},
+	enumerable: false,
+	configurable: false,
+	writable: false
+});
+
 
 function updatePane(graph, filter) {
 	var labels = {};
@@ -87,6 +102,7 @@ function updatePane(graph, filter) {
 	});
 
 	_.$('reset-graph').addEventListener("click", function (e) {
+		// s.unbind(["clickNode","doubleClickNode", "overNode", "outNode"])
 		s.kill();
 		init_sigma(_.get('id'), 1);
 	});
@@ -182,6 +198,7 @@ function bindDragging(s) {
 	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0], {});
 	dragListener.bind('dragend', function (event) {
 		save_node_position(event.data.node.id, event.data.node.x, event.data.node.y);
+		console.log(event.data.movedNeighbors);
 	});
 }
 

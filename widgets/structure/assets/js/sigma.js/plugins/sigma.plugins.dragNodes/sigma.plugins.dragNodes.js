@@ -56,6 +56,7 @@
 			_mouse = renderer.container.lastChild,
 			_camera = renderer.camera,
 			_node = null,
+			_movedNeighbors = [],//Ноды, которые были подвиганы через модификаторы
 			_prefix = '',
 			_hoverStack = [],
 			_hoverIndex = {},
@@ -218,10 +219,12 @@
 			_self.dispatchEvent('dragend', {
 				node: _node,
 				captor: event,
-				renderer: _renderer
+				renderer: _renderer,
+				movedNeighbors: _movedNeighbors
 			});
 
 			_drag = false;
+			_movedNeighbors = [];
 			_node = null;
 		};
 
@@ -298,9 +301,12 @@
 
 					items = items.filter(element => element !== false);
 
+
 					for (var i in items) {
 						s.graph.nodes()[items[i]].x = s.graph.nodes()[items[i]].x - dX;
 						s.graph.nodes()[items[i]].y = s.graph.nodes()[items[i]].y - dY;
+						_movedNeighbors.pushOrReplace(s.graph.nodes()[items[i]]);
+
 					}
 
 				}
@@ -317,6 +323,7 @@
 					for (var i in items) {
 						s.graph.nodes()[items[i]].x = s.graph.nodes()[items[i]].x - dX;
 						s.graph.nodes()[items[i]].y = s.graph.nodes()[items[i]].y - dY;
+						_movedNeighbors.pushOrReplace(s.graph.nodes()[items[i]]);
 					}
 
 				}
