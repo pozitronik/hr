@@ -163,7 +163,11 @@ class Users extends ActiveRecord {
 	 */
 	public function updateUser($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-			if (null === $this->salt) $this->applySalt();
+			if (false!==($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
+				$this->password = $newPassword;
+				$this->applySalt();
+			}
+
 			return $this->save();
 		}
 		return false;
