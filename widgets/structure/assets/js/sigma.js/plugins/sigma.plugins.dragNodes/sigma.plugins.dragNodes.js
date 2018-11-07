@@ -57,6 +57,7 @@
 			_prefix = '',
 			_hoverStack = [],
 			_hoverIndex = {},
+			_outNeighbors = {},
 			_isMouseDown = false,
 			_isMouseOverCanvas = false,
 			_drag = false;
@@ -151,7 +152,6 @@
 		function nodeMouseDown(event) {
 			_isMouseDown = true;
 			var size = _s.graph.nodes().length;
-
 			// when there is only node in the graph, the plugin cannot apply
 			// linear interpolation. So treat it as if a user is dragging
 			// the graph
@@ -228,6 +228,7 @@
 			}
 
 			function executeNodeMouseMove() {
+				_outNeighbors = s.graph.outNeighbors(_node);//return to
 				var offset = calculateOffset(_renderer.container),
 					x = event.clientX - offset.left,
 					y = event.clientY - offset.top,
@@ -272,9 +273,36 @@
 					y = (y - ref[0].renY) / yRatio + ref[0].y;
 				}
 
+				//Считаем дельты смещения для применения к исходящим нодам
+				var mX = x * cos - y * sin,
+					mY = y * cos + x * sin,
+					dX = _node.x - mX,
+					dY = _node.y - mY;
+
+				var oKeys = Object.keys(_outNeighbors);
+
+				var items = s.graph.nodes().map(function(currentValue, index, array){
+					if (-1!==oKeys.indexOf(currentValue.id)) {
+						return index;
+					} else {
+						return false;
+					}
+				});
+
+				items = items.filter(element => element!==false);
+
+
+				// s.graph.nodes()[0].x = s.graph.nodes()[0].x - dX;
+				// s.graph.nodes()[0].y = s.graph.nodes()[0].y - dY;
+
+				for (var i in items) {
+					s.graph.nodes()[items[i]].x = s.graph.nodes()[items[i]].x - dX;
+					s.graph.nodes()[items[i]].y = s.graph.nodes()[items[i]].y - dY;
+				}
+
 				// Rotating the coordinates.
-				_node.x = x * cos - y * sin;
-				_node.y = y * cos + x * sin;
+				_node.x = mX;
+				_node.y = mY;
 
 				_s.refresh();
 
@@ -324,5 +352,10 @@
 			delete _instance[s.id];
 		}
 	};
+
+	sigma.classes.graph.addMethod('outNeighbors', function (node) {
+		return this.outNeighborsIndex[node.id];
+	});
+
 
 }).call(window);
