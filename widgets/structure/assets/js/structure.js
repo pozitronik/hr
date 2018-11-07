@@ -156,16 +156,15 @@ function bindFilter(s) {
 }
 
 function bindEvents(s) {
-	s.bind("clickNode", function (object) {
-		nodeId = object.data.node.id;
-		if (object.data.captor.shiftKey) {
-//todo: после сброса графа все бинды теряются
-			s.selectNeighborhood(nodeId);
-			_.$('node-labels').value = nodeId;
-		} else {
-			show_group_info(nodeId);
-		}
-	});
+	// s.bind("clickNode", function (object) {
+	// 	nodeId = object.data.node.id;
+	// 	if (object.data.captor.shiftKey) {//todo: после сброса графа все бинды теряются
+	// 		s.selectNeighborhood(nodeId);
+	// 		_.$('node-labels').value = nodeId;
+	// 	} else {
+	// 		show_group_info(nodeId);
+	// 	}
+	// });
 
 	s.bind("doubleClickNode", function (object) {
 		window.open('update?id=' + object.data.node.id);

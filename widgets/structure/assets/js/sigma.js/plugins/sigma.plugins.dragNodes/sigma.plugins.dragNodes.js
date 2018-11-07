@@ -65,7 +65,8 @@
 			_drag = false,
 			/*настройки модификаторов действий*/
 			/*shiftKey, altKey, ctrlKey, metaKey (комбинации с && допускаются)*/
-			_outNeighboursMoveModifier = settings['outNeighboursMoveModifier'] || 'shiftKey';
+			_outNeighboursMoveModifier = settings['outNeighboursMoveModifier'] || 'shiftKey',
+			_inNeighboursMoveModifier = settings['inNeighboursMoveModifier'] || 'altKey';
 
 		if (renderer instanceof sigma.renderers.svg) {
 			_mouse = renderer.container.firstChild;
@@ -283,16 +284,16 @@
 					dX = _node.x - mX,
 					dY = _node.y - mY;
 
+				// Rotating the coordinates.
+				_node.x = mX;
+				_node.y = mY;
+
+				//Смещение дочерних нод
 				if (sigma.utils.mouseCoords(event, 0, 0)[_outNeighboursMoveModifier]) {
-					_outNeighbors = s.graph.outNeighbors(_node);
-					var oKeys = Object.keys(_outNeighbors);
+					var oKeys = Object.keys(s.graph.outNeighbors(_node));
 
 					var items = s.graph.nodes().map(function (currentValue, index, array) {
-						if (-1 !== oKeys.indexOf(currentValue.id)) {
-							return index;
-						} else {
-							return false;
-						}
+						return (-1 !== oKeys.indexOf(currentValue.id)) ? index : false;
 					});
 
 					items = items.filter(element => element !== false);
@@ -303,9 +304,23 @@
 					}
 
 				}
-				// Rotating the coordinates.
-				_node.x = mX;
-				_node.y = mY;
+				//Смещение родительских нод
+				if (sigma.utils.mouseCoords(event, 0, 0)[_inNeighboursMoveModifier]) {
+					var oKeys = Object.keys(s.graph.inNeighbors(_node));
+
+					var items = s.graph.nodes().map(function (currentValue, index, array) {
+						return (-1 !== oKeys.indexOf(currentValue.id)) ? index : false;
+					});
+
+					items = items.filter(element => element !== false);
+
+					for (var i in items) {
+						s.graph.nodes()[items[i]].x = s.graph.nodes()[items[i]].x - dX;
+						s.graph.nodes()[items[i]].y = s.graph.nodes()[items[i]].y - dY;
+					}
+
+				}
+
 
 				_s.refresh();
 
@@ -358,6 +373,9 @@
 
 	sigma.classes.graph.addMethod('outNeighbors', function (node) {
 		return this.outNeighborsIndex[node.id];
+	});
+	sigma.classes.graph.addMethod('inNeighbors', function (node) {
+		return this.inNeighborsIndex[node.id];
 	});
 
 
