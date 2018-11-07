@@ -53,6 +53,7 @@ class AjaxController extends Controller {
 						'actions' => [
 							'groups-tree',
 							'groups-tree-save-node-position',
+							'groups-tree-save-nodes-positions',
 							'get-group-info',
 							'set-user-roles-in-group'
 						],
@@ -136,6 +137,52 @@ class AjaxController extends Controller {
 		return [
 			'result' => self::RESULT_ERROR,
 			'errors' => $nodeData->errors
+		];
+	}
+
+	/**
+	 * Сохраянет позиции нод переданных массивом
+	 * @return array
+	 */
+	public function actionGroupsTreeSaveNodesPositions():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+
+		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false)))) {
+			$nodes = json_decode($nodes, true);
+			$user = CurrentUser::User();
+			$currentNodesPositions = $user->options->nodePositions;
+
+			foreach ($nodes as $node) {
+				$nodeData = new PrototypeNodeData([
+					'groupId' => $groupId
+				]);
+				if ($nodeData->load($node, '')) {
+
+
+					$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, [
+						$nodeData->groupId => [
+							$nodeData->nodeId => [
+								'x' => $nodeData->x,
+								'y' => $nodeData->y
+							]
+						]
+					]);
+
+				} else {
+					return [
+						'result' => self::RESULT_ERROR,
+						'errors' => $nodeData->errors
+					];
+				}
+			}
+			$user->options->nodePositions = $currentNodesPositions;
+			return ['result' => self::RESULT_OK];
+		}
+		return [
+			'result' => self::RESULT_ERROR,
+			'errors' => [
+				'nodes' => 'Cant load data'
+			]
 		];
 	}
 
