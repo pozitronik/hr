@@ -64,7 +64,7 @@
 			_isMouseOverCanvas = false,
 			_drag = false,
 			/*настройки модификаторов действий*/
-			/*shiftKey, altKey, ctrlKey, metaKey (комбинации с && допускаются)*/
+			/*shiftKey, altKey, ctrlKey, metaKey (комбинации не допускаются)*/
 			_outNeighboursMoveModifier = settings['outNeighboursMoveModifier'] || 'shiftKey',
 			_inNeighboursMoveModifier = settings['inNeighboursMoveModifier'] || 'altKey';
 
