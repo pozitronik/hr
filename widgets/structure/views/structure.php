@@ -11,6 +11,16 @@ use yii\web\View;
 $this->registerJs("init_sigma($id);");
 ?>
 <div id="sigma-container"></div>
+
+<div class="panel" id="help-pane">
+	<div class="panel-body">
+		Подсказоньки:<br />
+		Ctrl+click/Meta+click => Отфильтровать ближние группы<br />
+		Shift+move => Перетащить с нижним уровнем<br />
+		Alt+move => Перетащить с верхним уровнем<br />
+		Alt+Shift+Move => Перетащить ближние группы
+	</div>
+</div>
 <div class="panel" id="control-pane">
 	<div id="toggle-control-size"><span class="glyphicon glyphicon-minus"></span></div>
 	<div class="panel-body">
