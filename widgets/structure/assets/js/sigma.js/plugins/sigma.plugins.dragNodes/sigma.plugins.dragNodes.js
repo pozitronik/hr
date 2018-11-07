@@ -33,7 +33,7 @@
 	 * @param  {sigma}    s        The related sigma instance.
 	 * @param  {renderer} renderer The related renderer instance.
 	 */
-	function DragNodes(s, renderer) {
+	function DragNodes(s, renderer, settings) {
 		sigma.classes.dispatcher.extend(this);
 
 		// A quick hardcoded rule to prevent people from using this plugin with the
@@ -47,7 +47,9 @@
 		//   );
 
 		// Init variables:
+
 		var _self = this,
+			_settings = settings,
 			_s = s,
 			_body = document.body,
 			_renderer = renderer,
@@ -60,7 +62,10 @@
 			_outNeighbors = {},
 			_isMouseDown = false,
 			_isMouseOverCanvas = false,
-			_drag = false;
+			_drag = false,
+			/*настройки модификаторов действий*/
+			/*shiftKey, altKey, ctrlKey, metaKey (комбинации с && допускаются)*/
+			_outNeighboursMoveModifier = settings['outNeighboursMoveModifier'] || 'shiftKey';
 
 		if (renderer instanceof sigma.renderers.svg) {
 			_mouse = renderer.container.firstChild;
@@ -228,7 +233,6 @@
 			}
 
 			function executeNodeMouseMove() {
-				_outNeighbors = s.graph.outNeighbors(_node);//return to
 				var offset = calculateOffset(_renderer.container),
 					x = event.clientX - offset.left,
 					y = event.clientY - offset.top,
@@ -279,27 +283,26 @@
 					dX = _node.x - mX,
 					dY = _node.y - mY;
 
-				var oKeys = Object.keys(_outNeighbors);
+				if (sigma.utils.mouseCoords(event, 0, 0)[_outNeighboursMoveModifier]) {
+					_outNeighbors = s.graph.outNeighbors(_node);
+					var oKeys = Object.keys(_outNeighbors);
 
-				var items = s.graph.nodes().map(function(currentValue, index, array){
-					if (-1!==oKeys.indexOf(currentValue.id)) {
-						return index;
-					} else {
-						return false;
+					var items = s.graph.nodes().map(function (currentValue, index, array) {
+						if (-1 !== oKeys.indexOf(currentValue.id)) {
+							return index;
+						} else {
+							return false;
+						}
+					});
+
+					items = items.filter(element => element !== false);
+
+					for (var i in items) {
+						s.graph.nodes()[items[i]].x = s.graph.nodes()[items[i]].x - dX;
+						s.graph.nodes()[items[i]].y = s.graph.nodes()[items[i]].y - dY;
 					}
-				});
 
-				items = items.filter(element => element!==false);
-
-
-				// s.graph.nodes()[0].x = s.graph.nodes()[0].x - dX;
-				// s.graph.nodes()[0].y = s.graph.nodes()[0].y - dY;
-
-				for (var i in items) {
-					s.graph.nodes()[items[i]].x = s.graph.nodes()[items[i]].x - dX;
-					s.graph.nodes()[items[i]].y = s.graph.nodes()[items[i]].y - dY;
 				}
-
 				// Rotating the coordinates.
 				_node.x = mX;
 				_node.y = mY;
@@ -328,10 +331,10 @@
 	 * @param  {sigma} s The related sigma instance.
 	 * @param  {renderer} renderer The related renderer instance.
 	 */
-	sigma.plugins.dragNodes = function (s, renderer) {
+	sigma.plugins.dragNodes = function (s, renderer, options) {
 		// Create object if undefined
 		if (!_instance[s.id]) {
-			_instance[s.id] = new DragNodes(s, renderer);
+			_instance[s.id] = new DragNodes(s, renderer, options);
 		}
 
 		s.bind('kill', function () {

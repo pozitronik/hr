@@ -159,7 +159,7 @@ function bindEvents(s) {
 	s.bind("clickNode", function (object) {
 		nodeId = object.data.node.id;
 		if (object.data.captor.shiftKey) {
-
+//todo: после сброса графа все бинды теряются
 			s.selectNeighborhood(nodeId);
 			_.$('node-labels').value = nodeId;
 		} else {
@@ -180,7 +180,7 @@ function bindEvents(s) {
 }
 
 function bindDragging(s) {
-	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+	var dragListener = sigma.plugins.dragNodes(s, s.renderers[0], {});
 	dragListener.bind('dragend', function (event) {
 		save_node_position(event.data.node.id, event.data.node.x, event.data.node.y);
 	});
