@@ -225,7 +225,6 @@ function show_group_info(group_id) {
 			} else if (1 === response.result) {
 				jQuery('#info-pane').html('')
 			}
-			console.log(response);
 		}
 	};
 	xhr.send(request_body);
