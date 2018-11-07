@@ -14,7 +14,6 @@ $this->registerJs("init_sigma($id);");
 
 <div class="panel" id="help-pane">
 	<div class="panel-body">
-		Подсказоньки:<br />
 		Ctrl+click/Meta+click => Отфильтровать ближние группы<br />
 		Shift+move => Перетащить с нижним уровнем<br />
 		Alt+move => Перетащить с верхним уровнем<br />
