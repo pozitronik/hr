@@ -55,7 +55,7 @@ $dataProvider = new ArrayDataProvider(['allModels' => [
 				[
 					'attribute' => 'who',
 					'label' => 'Текущий согласующий'
-				],
+				]
 			]
 		]); ?>
 	</div>

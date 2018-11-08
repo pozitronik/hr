@@ -18,6 +18,7 @@ trait Graph {
 	 * @param null|integer $y
 	 * @return array
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function asNode($x = 0, $y = 0):array {
 		/** @var Groups $this */

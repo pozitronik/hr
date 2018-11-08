@@ -160,6 +160,7 @@ class Users extends ActiveRecord {
 	/**
 	 * @param $paramsArray
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public function updateUser($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {

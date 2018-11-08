@@ -143,6 +143,7 @@ class AjaxController extends Controller {
 	/**
 	 * Сохраянет позиции нод переданных массивом
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionGroupsTreeSaveNodesPositions():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
@@ -152,6 +153,7 @@ class AjaxController extends Controller {
 			$user = CurrentUser::User();
 			$currentNodesPositions = $user->options->nodePositions;
 
+			/** @var array $nodes */
 			foreach ($nodes as $node) {
 				$nodeData = new PrototypeNodeData([
 					'groupId' => $groupId

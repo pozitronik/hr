@@ -57,6 +57,7 @@ class RefGroupTypes extends Reference {
 
 	/**
 	 * @return string
+	 * @throws \Throwable
 	 */
 	public function getColor():string {
 		return ArrayHelper::getValue(self::COLORS, $this->id, 'rgb(255,10,255)');
