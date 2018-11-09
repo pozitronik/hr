@@ -259,7 +259,7 @@ class AjaxController extends Controller {
 		$searchArray = [//Быстрый костыль для демо
 			'UsersSearch' => Yii::$app->request->post()
 		];
-		$dataProvider = $searchModel->search($searchArray, $allowedGroups);
+		$dataProvider = $searchModel->search($searchArray, $allowedGroups, false);
 		$result = [];
 		/** @var Users $model */
 		foreach ($dataProvider->models as $model) {

@@ -118,7 +118,7 @@ function updatePane(graph, filter) {
 
 	/*Бытрый поиск*/
 	_.$('user-search').addEventListener("keyup", function (e) {
-		search_users(_.$('user-search').value);
+		if (e.keyCode === 13) search_users(_.$('user-search').value);
 	});
 }
 
@@ -291,6 +291,10 @@ function show_group_info(group_id) {
 }
 
 function search_users(name) {
+	if ('' === name) {
+		filter.undo('keys').apply();
+		return;
+	}
 	var xhr = sigma.utils.xhr();
 
 	if (!xhr) throw 'XMLHttpRequest not supported.';
@@ -303,17 +307,22 @@ function search_users(name) {
 		if (xhr.readyState === 4) {
 			var response = JSON.parse(xhr.responseText);
 			if (0 === response.result) {
-				var foundCount = response.count;
-				var ids = [];
-				for (var key in response.items) {
-					for (var groupKey in response.items[key].groups) {
-						ids.pushOrReplace(response.items[key].groups[groupKey].toString());
+				if (response.count === 0) {
+					filter.undo('keys').apply();
+				} else {
+					var ids = [];
+					for (var key in response.items) {
+						for (var groupKey in response.items[key].groups) {
+							ids.pushOrReplace(response.items[key].groups[groupKey].toString());
+						}
 					}
+
+					filter.undo('keys').nodesBy(function (n) {
+						return ids.indexOf(n.id) !== - 1;
+					}, 'keys').apply();
 				}
 
-				filter.undo('keys').nodesBy(function (n) {
-					return ids.indexOf(n.id) !== - 1;
-				}, 'keys').apply();
+
 			}
 
 		}
