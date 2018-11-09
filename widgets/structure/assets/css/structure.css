@@ -62,3 +62,21 @@
 	box-shadow: none;
 	float:left;
 }
+
+#search-pane {
+	/*top: 10px;*/
+	bottom: 10px;
+	left: 250px;
+	position: fixed;
+	background-color: rgb(249, 247, 237);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+#search-pane.min {
+	height: 40px;
+	width: 40px;
+}
+
+#search-pane.min  input {
+	display: none;
+}

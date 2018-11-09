@@ -110,8 +110,17 @@ function updatePane(graph, filter) {
 	_.$('toggle-control-size').onclick = function click() {
 		_.toggle('#control-pane', 'min')
 	};
-}
 
+	_.$('toggle-control-size-search').onclick = function click() {
+		_.toggle('#search-pane', 'min')
+	};
+	//todo: вынести код управления контролами в отдельный скрипт
+
+	/*Бытрый поиск*/
+	_.$('user-search').addEventListener("change", function (e) {
+		search_users(_.$('user-search').value);
+	});
+}
 
 function init_sigma(id, mode) {
 	if ('undefined' === typeof (mode)) mode = 0;
@@ -272,6 +281,24 @@ function show_group_info(group_id) {
 			} else if (1 === response.result) {
 				jQuery('#info-pane').html('')
 			}
+		}
+	};
+	xhr.send(request_body);
+}
+
+function search_users(name) {
+	var xhr = sigma.utils.xhr();
+
+	if (!xhr) throw 'XMLHttpRequest not supported.';
+
+	var request_body = 'name=' + encodeURIComponent(name);
+	xhr.open('POST', '/ajax/user-search', true);
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4) {
+			var response = JSON.parse(xhr.responseText);
+			console.log(response);
 		}
 	};
 	xhr.send(request_body);
