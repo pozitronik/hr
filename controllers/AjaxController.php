@@ -11,7 +11,6 @@ use app\models\users\Users;
 use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
