@@ -263,7 +263,10 @@ class AjaxController extends Controller {
 		$result = [];
 		/** @var Users $model */
 		foreach ($dataProvider->models as $model) {
-			$result[] = $model->toArray();
+			$result[] = [
+				'username' => $model->username,
+				'groups' => ArrayHelper::getColumn($model->relGroups, 'id')
+			];
 		}
 		return [
 			'result' => self::RESULT_OK,
