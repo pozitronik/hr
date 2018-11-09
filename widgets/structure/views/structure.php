@@ -21,7 +21,7 @@ $this->registerJs("init_sigma($id);");
 	</div>
 </div>
 <div class="panel" id="control-pane">
-	<div id="toggle-control-size"><span class="glyphicon glyphicon-minus"></span></div>
+	<div id="toggle-control-size" class="min-btn"><span class="glyphicon glyphicon-minus"></span></div>
 	<div class="panel-body">
 		<label for="node-labels">Группа</label>
 		<select id="node-labels">
@@ -36,7 +36,7 @@ $this->registerJs("init_sigma($id);");
 	</div>
 </div>
 <div class="panel" id="search-pane">
-	<div id="toggle-control-size-search"><span class="glyphicon glyphicon-minus"></span></div>
+	<div id="toggle-control-size-search" class="min-btn"><span class="glyphicon glyphicon-minus"></span></div>
 	<div class="panel-body">
 		<input type="text" id="user-search" placeholder="Иван Иванов">
 	</div>
