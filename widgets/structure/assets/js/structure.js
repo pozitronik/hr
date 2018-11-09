@@ -174,10 +174,14 @@ function bindFilter(s) {
 		} else {
 			s.selectNeighborhood(nodeId);
 		}
-
 	}
 
 	_.$('node-labels').addEventListener("change", s.applyLabelFilter);
+
+	// filter.nodesBy(function (fn, key) {
+	// 	return keys.indexOf(this.id) !== -1;
+	// }, 'keys');
+
 }
 
 function bindEvents(s) {
@@ -298,7 +302,20 @@ function search_users(name) {
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
 			var response = JSON.parse(xhr.responseText);
-			console.log(response);
+			if (0 === response.result) {
+				var foundCount = response.count;
+				var ids = [];
+				for (var key in response.items) {
+					for (var groupKey in response.items[key].groups) {
+						ids.pushOrReplace(response.items[key].groups[groupKey].toString());
+					}
+				}
+
+				filter.undo('keys').nodesBy(function (n) {
+					return ids.indexOf(n.id) !== - 1;
+				}, 'keys').apply();
+			}
+
 		}
 	};
 	xhr.send(request_body);
