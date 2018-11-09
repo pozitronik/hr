@@ -7,9 +7,11 @@ use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
+use app\models\users\Users;
 use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
@@ -57,7 +59,7 @@ class AjaxController extends Controller {
 							'groups-tree-save-nodes-positions',
 							'get-group-info',
 							'set-user-roles-in-group',
-							'user-search'
+							'users-search'
 						],
 						'roles' => ['@', '?']
 					]
@@ -251,20 +253,23 @@ class AjaxController extends Controller {
 	 */
 	public function actionUsersSearch():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false !== ($searchCondition = Yii::$app->request->post('search', false))) {
-			$searchModel = new UsersSearch();
-			$allowedGroups = [];
-			//Проверяем доступы к списку юзеров
-			$dataProvider = $searchModel->search($searchCondition, $allowedGroups);
-//			$dataProvider->models
-		} else {
-			return [
-				'result' => self::RESULT_ERROR,
-				'errors' => [
-					'search' => 'Not set'
-				]
-			];
+		$searchModel = new UsersSearch();
+		$allowedGroups = [];
+		//Проверяем доступы к списку юзеров
+		$searchArray = [//Быстрый костыль для демо
+			'UsersSearch' => Yii::$app->request->post()
+		];
+		$dataProvider = $searchModel->search($searchArray, $allowedGroups);
+		$result = [];
+		/** @var Users $model */
+		foreach ($dataProvider->models as $model) {
+			$result[] = $model->toArray();
 		}
+		return [
+			'result' => self::RESULT_OK,
+			'count' => $dataProvider->totalCount,
+			'items' => $result
+		];
 
 	}
 

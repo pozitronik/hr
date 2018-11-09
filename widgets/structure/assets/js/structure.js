@@ -117,7 +117,7 @@ function updatePane(graph, filter) {
 	//todo: вынести код управления контролами в отдельный скрипт
 
 	/*Бытрый поиск*/
-	_.$('user-search').addEventListener("change", function (e) {
+	_.$('user-search').addEventListener("keyup", function (e) {
 		search_users(_.$('user-search').value);
 	});
 }
@@ -291,8 +291,8 @@ function search_users(name) {
 
 	if (!xhr) throw 'XMLHttpRequest not supported.';
 
-	var request_body = 'name=' + encodeURIComponent(name);
-	xhr.open('POST', '/ajax/user-search', true);
+	var request_body = 'username=' + encodeURIComponent(name);
+	xhr.open('POST', '/ajax/users-search', true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 	xhr.onreadystatechange = function () {
