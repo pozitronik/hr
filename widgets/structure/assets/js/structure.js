@@ -118,7 +118,8 @@ function updatePane(graph, filter) {
 
 	/*Бытрый поиск*/
 	_.$('user-search').addEventListener("keyup", function (e) {
-		if (e.keyCode === 13) search_users(_.$('user-search').value);
+		if (e.keyCode === 13)
+			search_users(_.$('user-search').value);
 	});
 }
 
