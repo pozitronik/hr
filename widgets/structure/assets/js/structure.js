@@ -294,6 +294,7 @@ function show_group_info(group_id) {
 function search_users(name) {
 	if ('' === name) {
 		filter.undo('keys').apply();
+		_.$('users-search-counter').innerText = '';
 		return;
 	}
 	var xhr = sigma.utils.xhr();
@@ -310,6 +311,7 @@ function search_users(name) {
 			if (0 === response.result) {
 				if (response.count === 0) {
 					filter.undo('keys').apply();
+					_.$('users-search-counter').innerText = '';
 				} else {
 					var ids = [];
 					for (var key in response.items) {
@@ -317,9 +319,9 @@ function search_users(name) {
 							ids.pushOrReplace(response.items[key].groups[groupKey].toString());
 						}
 					}
-
+					_.$('users-search-counter').innerText = response.count + '/' + ids.length;
 					filter.undo('keys').nodesBy(function (n) {
-						return ids.indexOf(n.id) !== - 1;
+						return ids.indexOf(n.id) !== -1;
 					}, 'keys').apply();
 				}
 

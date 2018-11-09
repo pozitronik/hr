@@ -39,6 +39,7 @@ $this->registerJs("init_sigma($id);");
 	<div id="toggle-control-size-search" class="min-btn"><span class="glyphicon glyphicon-minus"></span></div>
 	<div class="panel-body">
 		<input type="text" id="user-search" placeholder="Иван Иванов">
+		<span id="users-search-counter"></span>
 	</div>
 </div>
 <div id="info-pane">
