@@ -47,7 +47,7 @@ class UsersSearch extends Users {
 		]);
 
 		$this->load($params);
-		$dataProvider->pagination = $pagination;
+		if (false === $pagination) $dataProvider->pagination = $pagination;
 
 		if (!$this->validate()) {
 			return $dataProvider;
