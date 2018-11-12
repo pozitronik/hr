@@ -15,6 +15,7 @@ use yii\base\Model;
  *
  * @property integer $userId
  * @property array $nodePositions
+ * @property Bookmarks[] $bookmarks
  *
  */
 class Options extends Model {
@@ -79,6 +80,28 @@ class Options extends Model {
 			$userOptions->value = $value;
 		}
 		return $userOptions->save();
+	}
+
+	/**
+	 * @return Bookmarks[]
+	 */
+	public function getBookmarks():array {
+		$bookmarks = $this->get('bookmarks');
+		foreach ($bookmarks as &$bookmark) {
+			$bookmark = new Bookmarks($bookmark);
+		}
+		return $bookmarks;
+	}
+
+	/**
+	 * @param Bookmarks[] $bookmarks
+	 */
+	public function setBookmarks(array $bookmarks):void {
+		$a_bookmarks = [];
+		foreach ($bookmarks as $bookmark) {
+			$a_bookmarks[] = $bookmark->attributes;
+		}
+		$this->set('bookmarks', $a_bookmarks);
 	}
 
 }

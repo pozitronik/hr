@@ -10,6 +10,8 @@ use app\models\users\Users;
 use yii\web\View;
 use yii\helpers\Html;
 use app\widgets\admin_panel\AdminPanelWidget;
+use app\widgets\bookmarks\BookmarksWidget;
+
 ?>
 
 <header id="navbar">
@@ -42,17 +44,9 @@ use app\widgets\admin_panel\AdminPanelWidget;
 
 							</div>
 							<div class="col-sm-4 col-md-3">
-
-								<!--Mega menu list-->
-								<ul class="list-unstyled">
-									<li class="dropdown-header">Избранное</li>
-									<li><a href="#"><span class="pull-right label label-danger">Важно</span>Задачи</a>
-									</li>
-									<li><a href="#">Календарь</a></li>
-								</ul>
-								<p class="pad-top mar-top bord-top text-sm">Чтобы добавить текущую страницу в избранное нажмите <?= Html::a('здесь', ['#'], ['class' => 'btn btn-default btn-xs']); ?></p>
+								<?= BookmarksWidget::widget(); ?>
 							</div>
-							<?php if($user->is('admin')): ?>
+							<?php if ($user->is('admin')): ?>
 								<?= AdminPanelWidget::widget([
 									'mode' => AdminPanelWidget::MODE_PANEL
 								]) ?>

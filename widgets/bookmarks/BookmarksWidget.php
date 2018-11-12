@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\bookmarks;
 
+use app\models\user\CurrentUser;
 use yii\base\Widget;
 
 /**
@@ -25,6 +26,8 @@ class BookmarksWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('bookmarks');
+		return $this->render('bookmarks',[
+			'user' => CurrentUser::User()
+		]);
 	}
 }

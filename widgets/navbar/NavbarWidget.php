@@ -27,6 +27,7 @@ class NavbarWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
+
 		return $this->render('navbar',[
 			'user' => $this->user?:new Users()
 		]);
