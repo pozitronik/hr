@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
+use app\models\users\Bookmarks;
 use app\models\users\Users;
 use app\models\users\UsersSearch;
 use Throwable;
@@ -58,7 +59,8 @@ class AjaxController extends Controller {
 							'groups-tree-save-nodes-positions',
 							'get-group-info',
 							'set-user-roles-in-group',
-							'users-search'
+							'users-search',
+							'user-add-bookmark'
 						],
 						'roles' => ['@', '?']
 					]
@@ -273,6 +275,26 @@ class AjaxController extends Controller {
 			'items' => $result
 		];
 
+	}
+
+	/**
+	 * Добавляет закладку текущему пользователю
+	 * @return array
+	 */
+	public function actionUserAddBookmark():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		$bookmark = new Bookmarks();
+		if ($bookmark->load(Yii::$app->request->post(), '')) {
+			$user = CurrentUser::User();
+			$bookmarks = $user->options->bookmarks;
+			$bookmarks[] = $bookmark;
+			$user->options->bookmarks = $bookmarks;
+			return ['result' => self::RESULT_OK];
+		}
+		return [
+			'result' => self::RESULT_ERROR,
+			'errors' => $bookmark->errors
+		];
 	}
 
 }

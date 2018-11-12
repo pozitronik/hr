@@ -33,6 +33,17 @@ class Bookmarks extends Model {
 	];
 
 	/**
+	 * @inheritdoc
+	 */
+	public function rules():array {
+		return [
+			[['route', 'name'], 'string'],
+			[['type'], 'integer'],
+			[['order'], 'default']
+		];
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getTypeSpan():string {
