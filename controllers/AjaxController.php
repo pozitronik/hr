@@ -60,7 +60,8 @@ class AjaxController extends Controller {
 							'get-group-info',
 							'set-user-roles-in-group',
 							'users-search',
-							'user-add-bookmark'
+							'user-add-bookmark',
+							'user-remove-bookmark'
 						],
 						'roles' => ['@', '?']
 					]
@@ -297,4 +298,28 @@ class AjaxController extends Controller {
 		];
 	}
 
+	/**
+	 * Удаляет закладку
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionUserRemoveBookmark():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		if (false !== $route = Yii::$app->request->post('route', false)) {
+			$user = CurrentUser::User();
+			$bookmarks = $user->options->bookmarks;
+			foreach ($bookmarks as $key => $value) {
+				if ($route === $value->route) unset($bookmarks[$key]);
+			}
+			$user->options->bookmarks = $bookmarks;
+			return ['result' => self::RESULT_OK];
+		}
+		return [
+			'result' => self::RESULT_ERROR,
+			'errors' => [
+				'route' => 'not found'
+			]
+		];
+
+	}
 }

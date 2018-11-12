@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\users;
 
+use app\helpers\ArrayHelper;
 use yii\base\Model;
 
 /** @noinspection MissingPropertyAnnotationsInspection */
@@ -90,6 +91,8 @@ class Options extends Model {
 		foreach ($bookmarks as &$bookmark) {
 			$bookmark = new Bookmarks($bookmark);
 		}
+		unset($bookmark);
+		ArrayHelper::multisort($bookmarks,'order');
 		return $bookmarks;
 	}
 
