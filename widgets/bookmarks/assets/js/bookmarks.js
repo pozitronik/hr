@@ -8,6 +8,11 @@ function add_bookmark(route, name, type) {
 		},
 		method: 'POST'
 	}).done(function (data) {
+		if (0 === data.result) {
+			$('[name=add-bookmark]').hide('slow');
+			$("<li hidden='hidden'><a href='/" + route + "'>" + name + "</a></li>").appendTo('#nav-bookmarks').show('slow');;
+		}
+
 	});
 }
 
@@ -19,5 +24,12 @@ function remove_bookmark(route) {
 		},
 		method: 'POST'
 	}).done(function (data) {
+		if (0 === data.result) {
+			$('[name=remove-bookmark]').hide();
+			$('li[data-href="' + route + '"]').hide('slow', function(){
+				$('li[data-href="' + route + '"]').remove();
+			})
+		}
+
 	});
 }
