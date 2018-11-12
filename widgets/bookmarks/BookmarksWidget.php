@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\bookmarks;
 
 use app\models\user\CurrentUser;
+use Throwable;
 use yii\base\Widget;
 
 /**
@@ -24,6 +25,7 @@ class BookmarksWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		return $this->render('bookmarks',[

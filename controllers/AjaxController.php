@@ -13,7 +13,6 @@ use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
 use yii\web\Response;
 use yii\filters\ContentNegotiator;
 use yii\web\Controller;
@@ -282,6 +281,7 @@ class AjaxController extends Controller {
 	/**
 	 * Добавляет закладку текущему пользователю
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionUserAddBookmark():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
