@@ -40,7 +40,7 @@
 }
 
 .mega-dropdown-menu {
-	min-width: 800px;
+	min-width: 768px;
 }
 
 .open.mega-dropdown>.mega-dropdown-toggle:before, .open.mega-dropdown>.mega-dropdown-toggle:after {
