@@ -19,7 +19,7 @@ use yii\base\Widget;
 class AdminPanelWidget extends Widget {
 	public const MODE_PANEL = 0;//Представление в виде панельки с иконками
 	public const MODE_MENU = 1;//Представление в виде дропдаун-меню
-	public const MODE_LIST = 1;//Представление в виде списка без иконок
+	public const MODE_LIST = 2;//Представление в виде списка без иконок
 
 	public $mode;
 	public $controllers_directory = '@app/controllers/admin/';
@@ -40,7 +40,8 @@ class AdminPanelWidget extends Widget {
 	 */
 	public function run():string {
 		return $this->render('admin_panel',[
-			'controllers' => WigetableController::GetControllersList($this->controllers_directory)
+			'controllers' => WigetableController::GetControllersList($this->controllers_directory),
+			'mode' => $this->mode
 		]);
 	}
 }

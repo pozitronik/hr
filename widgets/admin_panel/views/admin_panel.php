@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var WigetableController[] $controllers
+ * @var integer $mode
  */
 
 use app\models\core\WigetableController;
@@ -19,11 +20,11 @@ use app\widgets\controller\ControllerWidget;
 			<?php if (!$controller->disabled): ?>
 				<li class="pad-btm">
 					<?= ControllerWidget::widget([
-						'model' => $controller
+						'model' => $controller,
+						'mode' => $mode
 					]); ?>
 				</li>
 			<?php endif; ?>
 		<?php endforeach; ?>
-
 	</ul>
 </div>

@@ -48,7 +48,7 @@ use app\widgets\bookmarks\BookmarksWidget;
 							</div>
 							<?php if ($user->is('admin')): ?>
 								<?= AdminPanelWidget::widget([
-									'mode' => AdminPanelWidget::MODE_PANEL
+									'mode' => AdminPanelWidget::MODE_LIST
 								]) ?>
 							<?php endif; ?>
 						</div>
