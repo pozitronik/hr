@@ -11,6 +11,7 @@ use app\models\users\Users;
 use yii\web\View;
 use app\widgets\group\GroupWidget;
 $this->title = 'Панель управления';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php foreach ($model->relGroups as $group): ?>

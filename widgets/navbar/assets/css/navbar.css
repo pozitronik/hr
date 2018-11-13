@@ -1,22 +1,26 @@
 .start {
-	background-image: url('../img/start.png');
+	background-image: url('../img/hamburger.png');
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-	width: 98px;
+	width: 40px;
 	height: 40px;
-
 }
 
-.navbar-top-links:last-child>li {
-	border: none;
-}
-
-.navbar-top-links>.open>a, .navbar-top-links>.open>a:focus, .navbar-top-links>li>a:hover {
+.navbar-content {
+	margin-left: 40px;
 	background-color: transparent;
 }
 
-.navbar-top-links>li>a {
+.navbar-top-links:last-child > li {
+	border: none;
+}
+
+.navbar-top-links > .open > a, .navbar-top-links > .open > a:focus, .navbar-top-links > li > a:hover {
+	background-color: transparent;
+}
+
+.navbar-top-links > li > a {
 	display: table-cell;
 	padding: 0;
 	vertical-align: middle;
@@ -24,6 +28,7 @@
 	color: #758697;
 	transition: all .4s;
 }
+
 .navbar-brand {
 	background-color: transparent;
 	color: #fff;
@@ -43,8 +48,17 @@
 	min-width: 768px;
 }
 
-.open.mega-dropdown>.mega-dropdown-toggle:before, .open.mega-dropdown>.mega-dropdown-toggle:after {
+.open.mega-dropdown > .mega-dropdown-toggle:before, .open.mega-dropdown > .mega-dropdown-toggle:after {
 	content: none;
 	border: none;
 	display: none;
+}
+
+.breadcrumb {
+	border-radius: 0;
+	background-color: transparent;
+	margin-bottom: 0px;
+	padding: 0 15px;
+	float: left;
+	line-height: 40px;
 }

@@ -11,6 +11,8 @@ use yii\web\View;
 use yii\helpers\Html;
 use app\widgets\admin_panel\AdminPanelWidget;
 use app\widgets\bookmarks\BookmarksWidget;
+use yii\widgets\Breadcrumbs;
+use app\helpers\ArrayHelper;
 
 ?>
 
@@ -65,7 +67,9 @@ use app\widgets\bookmarks\BookmarksWidget;
 		<!--Navbar Dropdown-->
 		<!--================================-->
 		<div class="navbar-content clearfix">
-
+			<?= Breadcrumbs::widget([
+				'links' => ArrayHelper::getValue($this->params, 'breadcrumbs', [])
+			]); ?>
 			<ul class="nav navbar-top-links pull-right">
 
 
