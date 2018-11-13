@@ -12,7 +12,9 @@ use app\models\references\Reference;
  * @var ArrayDataProvider $dataProvider
  */
 
-$this->title = 'Список всех справочников';
+$this->title = 'Справочники';
+$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
 	<div class="col-xs-12">

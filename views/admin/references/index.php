@@ -15,6 +15,11 @@ use app\models\references\Reference;
  * @var stdClass $searchModel
  */
 
+$this->title = $class->menuCaption;
+$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['/admin/references']];
+$this->params['breadcrumbs'][] = $this->title;
+
 $columns = $class->columns;
 $columns[] = [
 	'class' => ActionColumn::class,

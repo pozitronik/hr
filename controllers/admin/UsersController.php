@@ -16,7 +16,7 @@ use yii\web\Response;
  * Class UsersController
  */
 class UsersController extends WigetableController {
-	public $menuCaption = "Пользователи";
+	public $menuCaption = "Люди";
 	public $menuIcon = "/img/admin/users.png";
 
 	/**

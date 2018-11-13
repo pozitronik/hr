@@ -10,6 +10,9 @@ use app\models\core\WigetableController;
 use app\widgets\controller\ControllerWidget;
 use yii\web\View;
 
+$this->title = 'Управление';
+$this->params['breadcrumbs'][] = $this->title;
+
 foreach ($controllers as $controller) {
 	if (!$controller->disabled) {
 		echo ControllerWidget::widget([

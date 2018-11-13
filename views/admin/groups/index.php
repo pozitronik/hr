@@ -16,6 +16,9 @@ use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use kartik\grid\ActionColumn;
 
+$this->title = 'Команды';
+$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
