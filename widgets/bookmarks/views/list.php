@@ -21,6 +21,8 @@ $bookmark_exists = ArrayHelper::array_find_deep(ArrayHelper::getColumn($bookmark
 	</li>
 
 	<?php foreach ($bookmarks as $bookmark): ?>
-		<li data-href="<?= $bookmark->route ?>"><?= Html::a($bookmark->typeSpan.$bookmark->name, [$bookmark->route]) ?></li>
+
+
+		<li <?=($model->route === $bookmark->route)?'class="selected"':'class="not-selected"'; ?> data-href="<?= $bookmark->route ?>"><?= Html::a($bookmark->typeSpan.$bookmark->name, [$bookmark->route]) ?></li>
 	<?php endforeach; ?>
 </ul>

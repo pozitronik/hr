@@ -8,9 +8,8 @@ use Throwable;
 use yii\base\Widget;
 
 /**
- * Class GroupSelectWidget
- * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *Bookmarks* на нужное нам имя, и работаем
- * @package app\components\bookmarks
+ * Class BookmarksWidget
+ * @package app\widgets\bookmarks
  */
 class BookmarksWidget extends Widget {
 
