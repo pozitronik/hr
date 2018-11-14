@@ -96,7 +96,7 @@ use app\helpers\ArrayHelper;
 						<!-- User dropdown menu -->
 						<ul class="head-list">
 							<li>
-								<?= Html::a("Профиль", ["home/profile"]); ?>
+								<?= Html::a("Профиль", ["admin/users/update", "id" => $user->id]); ?>
 							</li>
 							<li>
 								<?= Html::a('<span class="badge badge-danger pull-right">9</span>Сообщения', ["home/messenger"]); ?>
