@@ -100,7 +100,7 @@ class Users extends ActiveRecord {
 	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
-			'username' => 'Отображаемое имя пользователя',
+			'username' => 'Имя пользователя',
 			'login' => 'Логин',
 			'password' => 'Пароль',
 			'salt' => 'Unique random salt hash',

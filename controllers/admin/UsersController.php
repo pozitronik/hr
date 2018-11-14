@@ -8,6 +8,7 @@ use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
+use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -18,6 +19,23 @@ use yii\web\Response;
 class UsersController extends WigetableController {
 	public $menuCaption = "Люди";
 	public $menuIcon = "/img/admin/users.png";
+
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors():array {
+		return [
+			[
+				'class' => ContentNegotiator::class,
+				'formats' => [
+					'application/json' => Response::FORMAT_JSON,
+					'application/xml' => Response::FORMAT_XML,
+					'text/html' => Response::FORMAT_HTML
+				]
+			]
+		];
+	}
+
 
 	/**
 	 * @inheritdoc
