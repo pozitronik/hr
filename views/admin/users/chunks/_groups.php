@@ -24,9 +24,10 @@ use kartik\grid\CheckboxColumn;
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $model->getRelGroups()->orderBy('name')
 			]),
-			'panel' => [
-				'heading' => "Группы пользователя"
-			],
+			'showFooter' => false,
+			'showPageSummary' => false,
+			'summary' => '',
+			'panel' => false,
 			'toolbar' => [
 				[
 					'options' => [

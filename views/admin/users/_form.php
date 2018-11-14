@@ -19,7 +19,7 @@ use kartik\file\FileInput;
 <div class="row">
 	<div class="col-xs-12">
 		<?php $form = ActiveForm::begin(); ?>
-		<div class="panel">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<div class="panel-control">
 					<?php if (!$model->isNewRecord): ?>
