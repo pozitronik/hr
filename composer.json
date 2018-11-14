@@ -29,7 +29,9 @@
 		"kartik-v/yii2-widget-switchinput": "dev-master",
 		"kartik-v/yii2-widget-spinner": "dev-master",
 		"kartik-v/yii2-detail-view": "dev-master",
-		"kartik-v/yii2-widget-fileinput": "dev-master"
+		"kartik-v/yii2-widget-fileinput": "dev-master",
+		"components/font-awesome": "dev-master",
+		"bower-asset/font-awesome": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",

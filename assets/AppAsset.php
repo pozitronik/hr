@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -29,5 +30,6 @@ class AppAsset extends AssetBundle {
 	public $depends = [
 		YiiAsset::class,
 		BootstrapPluginAsset::class,
+		FontAwesomeAsset::class
 	];
 }
