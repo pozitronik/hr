@@ -104,13 +104,14 @@ class Users extends ActiveRecord {
 			'login' => 'Логин',
 			'password' => 'Пароль',
 			'salt' => 'Unique random salt hash',
-			'email' => 'email',
+			'email' => 'Почтовый адрес',
 			'comment' => 'Служебный комментарий пользователя',
 			'create_date' => 'Дата регистрации',
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
 			'deleted' => 'Флаг удаления',
 			'position' => 'Должность',
-			'profile_image' => 'Изображение профиля'
+			'profile_image' => 'Изображение профиля',
+			'update_password' => 'Смена пароля'
 		];
 	}
 

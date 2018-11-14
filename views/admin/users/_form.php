@@ -32,40 +32,6 @@ use kartik\file\FileInput;
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-3">
-						<?= $form->field($model, 'username')->textInput(['maxlength' => 50]); ?>
-					</div>
-					<div class="col-md-3">
-						<?= $form->field($model, 'login')->textInput(['maxlength' => 50]); ?>
-					</div>
-					<div class="col-md-3">
-						<?php if (null === $model->salt): ?>
-							<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.'); ?>
-						<?php else: ?>
-							<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен, при входе пользователю будет предложено сменить пароль.'); ?>
-						<?php endif; ?>
-					</div>
-					<div class="col-md-3">
-						<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<?= $form->field($model, 'position')->widget(Select2::class, [
-							'data' => RefUserPositions::mapData(),
-							'options' => ['placeholder' => 'Выберите роль'],
-							'pluginOptions' => [
-								'allowClear' => true
-							]
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
 						<?= $form->field($model, 'profile_image')->widget(FileInput::class, [
 							'options' => [
 								'accept' => 'image/*',
@@ -79,7 +45,43 @@ use kartik\file\FileInput;
 							]
 						]) ?>
 					</div>
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-12">
+								<?= $form->field($model, 'username')->textInput(['maxlength' => 50]); ?>
+							</div>
+							<div class="col-md-6">
+								<?= $form->field($model, 'login')->textInput(['maxlength' => 50]); ?>
+							</div>
+							<div class="col-md-6">
+								<?php if (null === $model->salt): ?>
+									<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.'); ?>
+								<?php else: ?>
+									<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен на введённый.'); ?>
+								<?php endif; ?>
+							</div>
+							<div class="col-md-12">
+								<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
+							</div>
+
+							<div class="col-md-12">
+								<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
+							</div>
+
+							<div class="col-md-12">
+								<?= $form->field($model, 'position')->widget(Select2::class, [
+									'data' => RefUserPositions::mapData(),
+									'options' => ['placeholder' => 'Выберите роль'],
+									'pluginOptions' => [
+										'allowClear' => true
+									]
+								]); ?>
+							</div>
+						</div>
+					</div>
 				</div>
+
+
 			</div>
 			<?= $this->render('chunks/_groups.php', [
 				'model' => $model
