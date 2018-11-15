@@ -27,21 +27,19 @@ use kartik\grid\CheckboxColumn;
 			'showFooter' => false,
 			'showPageSummary' => false,
 			'summary' => '',
-			'panel' => false,
-			'toolbar' => [
-				[
-					'options' => [
-						'style' => 'min-width:500px'
-					],
-					'content' => GroupSelectWidget::widget([
-						'model' => $model,
-						'attribute' => 'relGroups',
-						'notData' => $model->relGroups,
-						'multiple' => true
-					])
-				]
-
+			'panel' => [
+				'type' => GridView::TYPE_DEFAULT,
+				'after' => false,
+				'before' => GroupSelectWidget::widget([
+					'model' => $model,
+					'attribute' => 'relGroups',
+					'notData' => $model->relGroups,
+					'multiple' => true
+				]),
+				'heading' => false,
+				'footer' => false
 			],
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,

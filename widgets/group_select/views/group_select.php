@@ -20,7 +20,8 @@ use kartik\select2\Select2;
 	'name' => 'group_id',
 	'data' => $data,
 	'options' => [
-		'multiple' => $multiple
+		'multiple' => $multiple,
+		'placeholder' => 'Добавить группу'
 	]
 ]); ?>
 
