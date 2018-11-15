@@ -30,7 +30,7 @@ use kartik\spinner\Spinner;
 	],
 	'addon' => [
 		'append' => [
-			'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$userId}-roles-progress"]),
+			'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$userId}-{$groupId}-roles-progress"]),
 			'asButton' => false
 		]
 	]
