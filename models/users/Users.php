@@ -298,11 +298,9 @@ class Users extends ActiveRecord {
 	 */
 	public function uploadAvatar():bool {
 		$uploadedFile = UploadedFile::getInstance($this, 'upload_image');
-		if ($uploadedFile && $this->validate('upload_image')) {
-			if ($uploadedFile->saveAs(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
-				$this->setAndSaveAttribute('profile_image', "{$this->id}.{$uploadedFile->extension}");
-				return true;
-			}
+		if ($uploadedFile && $this->validate('upload_image') && $uploadedFile->saveAs(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
+			$this->setAndSaveAttribute('profile_image', "{$this->id}.{$uploadedFile->extension}");
+			return true;
 		}
 		return false;
 	}
