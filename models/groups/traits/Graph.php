@@ -37,7 +37,7 @@ trait Graph {
 			'color' => ArrayHelper::getValue($this->relGroupTypes, 'color', "rgb({$red},{$green},{$blue})"),
 			'type' => 'circle',
 			'image' => [
-				'url' => $this->leader->avatar,
+				'url' => $this->logo,
 				'clip' => '0.95',
 				'scale' => '1.4'
 			]
