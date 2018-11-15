@@ -10,7 +10,7 @@ function add_bookmark(route, name, type) {
 	}).done(function (data) {
 		if (0 === data.result) {
 			$('[name=add-bookmark]').hide('slow');
-			$("<li hidden='hidden'><a href='" + route + "'>" + name + "</a></li>").appendTo('#nav-bookmarks').show('slow');;
+			$("<li hidden='hidden' class='selected'><a href='" + route + "'>" + name + "</a></li>").appendTo('#nav-bookmarks').show('slow');;
 		}
 
 	});
