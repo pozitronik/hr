@@ -59,6 +59,8 @@ use yii\web\UploadedFile;
  */
 class Users extends ActiveRecord {
 	use ARExtended;
+	/*Переменная для инстанса заливки аватарок*/
+	public $upload_image;
 
 	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
@@ -89,7 +91,7 @@ class Users extends ActiveRecord {
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique'],
-			[['profile_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
+			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
 			[['relGroups', 'dropGroups'], 'safe']
 		];
 	}
@@ -111,6 +113,7 @@ class Users extends ActiveRecord {
 			'deleted' => 'Флаг удаления',
 			'position' => 'Должность',
 			'profile_image' => 'Изображение профиля',
+			'upload_image' => 'Изображение профиля',
 			'update_password' => 'Смена пароля'
 		];
 	}
@@ -165,7 +168,7 @@ class Users extends ActiveRecord {
 	 */
 	public function updateUser($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-			if (false!==($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
+			if (!empty($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
 				$this->password = $newPassword;
 				$this->applySalt();
 			}
@@ -294,10 +297,12 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 */
 	public function uploadAvatar():bool {
-		$uploadedFile = UploadedFile::getInstance($this, 'profile_image');
-		if ($uploadedFile && $this->validate('profile_image') && $uploadedFile->saveAs(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
-			$this->setAndSaveAttribute('profile_image', "{$this->id}.{$uploadedFile->extension}");
-			return true;
+		$uploadedFile = UploadedFile::getInstance($this, 'upload_image');
+		if ($uploadedFile && $this->validate('upload_image')) {
+			if ($uploadedFile->saveAs(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
+				$this->setAndSaveAttribute('profile_image', "{$this->id}.{$uploadedFile->extension}");
+				return true;
+			}
 		}
 		return false;
 	}

@@ -32,7 +32,7 @@ use kartik\file\FileInput;
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-3">
-						<?= $form->field($model, 'profile_image')->widget(FileInput::class, [
+						<?= $form->field($model, 'upload_image')->widget(FileInput::class, [
 							'options' => [
 								'accept' => 'image/*',
 								'multiple' => false
@@ -41,7 +41,11 @@ use kartik\file\FileInput;
 								'initialPreview' => !empty($model->profile_image)?[
 									$model->avatar
 								]:false,
-								'initialPreviewAsData' => true
+								'initialPreviewAsData' => true,
+								'browseClass' => 'btn btn-primary pull-right',
+								'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+								'browseLabel' =>  'Выберите изображение',
+								'showCaption' => false
 							]
 						]) ?>
 					</div>
