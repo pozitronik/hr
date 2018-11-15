@@ -54,7 +54,7 @@ use kartik\file\FileInput;
 								<?= $form->field($model, 'login')->textInput(['maxlength' => 50]); ?>
 							</div>
 							<div class="col-md-6">
-								<?php if (null === $model->salt): ?>
+								<?php if ($model->isNewRecord): ?>
 									<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.'); ?>
 								<?php else: ?>
 									<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен на введённый.'); ?>
