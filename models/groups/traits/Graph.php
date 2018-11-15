@@ -81,9 +81,7 @@ trait Graph {
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
 				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $x, $y);
-
 			}
-
 		}
 		$x++;
 		$y--;
