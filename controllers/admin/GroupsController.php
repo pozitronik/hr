@@ -68,6 +68,7 @@ class GroupsController extends WigetableController {
 	public function actionCreate() {
 		$newGroup = new Groups();
 		if ($newGroup->createGroup(Yii::$app->request->post($newGroup->classNameShort))) {
+			$newGroup->uploadLogotype();
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newGroup->id]);
 		}
@@ -85,9 +86,7 @@ class GroupsController extends WigetableController {
 	public function actionUpdate(int $id):string {
 		$group = Groups::findModel($id, new NotFoundHttpException());
 
-		if (null !== ($updateArray = Yii::$app->request->post($group->classNameShort))) {
-			$group->updateGroup($updateArray);
-		}
+		if ((null !== ($updateArray = Yii::$app->request->post($group->classNameShort))) && $group->updateGroup($updateArray)) $group->uploadLogotype();
 
 		return $this->render('update', [
 			'model' => $group

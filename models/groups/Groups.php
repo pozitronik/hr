@@ -16,9 +16,11 @@ use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
 use Throwable;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "groups".
@@ -28,6 +30,7 @@ use yii\db\Exception;
  * @property integer $type Тип группы
  * @property string $comment Описание
  * @property integer|null $daddy Пользователь, создавший группу
+ * @property string $logotype Название файла-логотипа
  * @property ActiveQuery|Users[] $relUsers Пользователи в группе
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Связь с релейшеном пользователей
  * @property ActiveQuery|Groups[] $relChildGroups Группы, дочерние по отношению к текущей
@@ -45,6 +48,7 @@ use yii\db\Exception;
  * @property array $rolesInGroup
  * @property array $dropUsers
  * @property int $deleted
+ * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
  */
 class Groups extends ActiveRecord {
@@ -54,6 +58,11 @@ class Groups extends ActiveRecord {
 	public const LEADER = 2;
 	public const TRIBE = 6;
 	public const CHAPTER = 5;
+
+	public const LOGO_IMAGE_DIRECTORY = '@app/web/group_logotypes/';
+
+	/*Переменная для инстанса заливки логотипа*/
+	public $upload_image;
 
 	/**
 	 * {@inheritdoc}
@@ -78,7 +87,9 @@ class Groups extends ActiveRecord {
 			[['deleted', 'daddy', 'type'], 'integer'],
 			[['create_date'], 'safe'],
 			[['name'], 'string', 'max' => 512],
-			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'relUsers', 'dropUsers'], 'safe']
+			[['logotype'], 'string', 'max' => 255],
+			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'relUsers', 'dropUsers'], 'safe'],
+			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576]
 		];
 	}
 
@@ -94,6 +105,8 @@ class Groups extends ActiveRecord {
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'leaders' => 'Руководители',
+			'logotype' => 'Логотип',
+			'upload_image' => 'Логотип',
 			'deleted' => 'Deleted'
 		];
 	}
@@ -293,6 +306,28 @@ class Groups extends ActiveRecord {
 				RelUsersGroupsRoles::setRoleInGroup($role, $this->id, $user);
 			}
 		}
+	}
+
+	/**
+	 * Пытается подгрузить файл картинки, если он есть
+	 * @return bool
+	 */
+	public function uploadLogotype():bool {
+		$uploadedFile = UploadedFile::getInstance($this, 'upload_image');
+		if ($uploadedFile && $this->validate('upload_image')) {
+			if ($uploadedFile->saveAs(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
+				$this->setAndSaveAttribute('logotype', "{$this->id}.{$uploadedFile->extension}");
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLogo():string {
+		return is_file(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY.$this->logotype))?"/group_logotypes/{$this->logotype}":"/img/group_logo.jpg";
 	}
 
 }

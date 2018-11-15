@@ -26,22 +26,18 @@ use kartik\grid\ActionColumn;
 				'query' => $model->getRelParentGroups()->orderBy('name')
 			]),
 			'panel' => [
-				'heading' => "Родительские группы"
+				'type' => GridView::TYPE_DEFAULT,
+				'after' => false,
+				'heading' => false,
+				'footer' => false,
+				'before' => GroupSelectWidget::widget([
+					'model' => $model,
+					'attribute' => 'relParentGroups',
+					'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
+					'multiple' => true
+				])
 			],
-			'toolbar' => [
-				[
-					'options' => [
-						'style' => 'min-width:500px'
-					],
-					'content' => GroupSelectWidget::widget([
-						'model' => $model,
-						'attribute' => 'relParentGroups',
-						'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
-						'multiple' => true
-					])
-				]
-
-			],
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,

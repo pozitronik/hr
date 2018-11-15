@@ -12,6 +12,7 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use app\models\references\refs\RefGroupTypes;
+use kartik\file\FileInput;
 
 ?>
 <div class="row">
@@ -32,36 +33,76 @@ use app\models\references\refs\RefGroupTypes;
 
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-12">
-						<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
+					<div class="col-md-3">
+						<?= $form->field($model, 'upload_image')->widget(FileInput::class, [
+							'options' => [
+								'accept' => 'image/*',
+								'multiple' => false
+							],
+							'pluginOptions' => [
+								'initialPreview' => !empty($model->logotype)?[
+									$model->logo
+								]:false,
+								'initialPreviewAsData' => true,
+								'browseClass' => 'btn btn-primary pull-right',
+								'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+								'browseLabel' => 'Выберите изображение',
+								'showCaption' => false
+							]
+						]) ?>
+					</div>
+
+
+					<div class="col-md-9">
+						<div class="row">
+
+							<div class="col-md-12">
+								<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
+							</div>
+
+							<div class="col-md-12">
+								<?= $form->field($model, 'type')->widget(Select2::class, [
+									'data' => RefGroupTypes::mapData(),
+									'options' => ['placeholder' => 'Выберите тип'],
+									'pluginOptions' => [
+										'allowClear' => true
+									]
+								]); ?>
+							</div>
+
+							<div class="col-md-12">
+								<?= $form->field($model, 'comment')->textarea(); ?>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12">
-						<?= $form->field($model, 'type')->widget(Select2::class, [
-							'data' => RefGroupTypes::mapData(),
-							'options' => ['placeholder' => 'Выберите тип'],
-							'pluginOptions' => [
-								'allowClear' => true
-							]
+					<div class="col-md-6">
+						<label class="control-label">Родительские группы</label>
+						<?= $this->render('chunks/_parent_groups.php', [
+							'model' => $model
+						]); ?>
+					</div>
+					<div class="col-md-6">
+						<label class="control-label">Дочерние группы</label>
+						<?= $this->render('chunks/_child_groups.php', [
+							'model' => $model
 						]); ?>
 					</div>
 				</div>
+
+
 				<div class="row">
 					<div class="col-md-12">
-						<?= $form->field($model, 'comment')->textarea(); ?>
+						<label class="control-label">Пользователи в группе</label>
+						<?= $this->render('chunks/_users.php', [
+							'model' => $model
+						]); ?>
 					</div>
 				</div>
+
 			</div>
-			<?= $this->render('chunks/_parent_groups.php', [
-				'model' => $model
-			]); ?>
-			<?= $this->render('chunks/_child_groups.php', [
-				'model' => $model
-			]); ?>
-			<?= $this->render('chunks/_users.php', [
-				'model' => $model
-			]); ?>
+
 			<div class="panel-footer">
 				<div class="btn-group">
 					<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
@@ -70,7 +111,7 @@ use app\models\references\refs\RefGroupTypes;
 					<?php endif ?>
 				</div>
 			</div>
+
 		</div>
+		<?php ActiveForm::end(); ?>
 	</div>
-	<?php ActiveForm::end(); ?>
-</div>

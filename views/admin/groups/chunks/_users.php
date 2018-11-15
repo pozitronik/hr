@@ -24,22 +24,18 @@ use app\widgets\user_select\UserSelectWidget;
 				'query' => $model->getRelUsers()
 			]),
 			'panel' => [
-				'heading' => "Пользователи"
+				'type' => GridView::TYPE_DEFAULT,
+				'after' => false,
+				'heading' => false,
+				'footer' => false,
+				'before' => UserSelectWidget::widget([
+					'model' => $model,
+					'attribute' => 'relUsers',
+					'notData' => $model->relUsers,
+					'multiple' => true
+				])
 			],
-			'toolbar' => [
-				[
-					'options' => [
-						'style' => 'min-width:500px'
-					],
-					'content' => UserSelectWidget::widget([
-						'model' => $model,
-						'attribute' => 'relUsers',
-						'notData' => $model->relUsers,
-						'multiple' => true
-					])
-				]
-
-			],
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
@@ -53,7 +49,7 @@ use app\widgets\user_select\UserSelectWidget;
 				],
 				[
 					'format' => 'raw',
-					'attribute' => 'name',
+					'attribute' => 'username',
 					'value' => function($user) {
 						/** @var Users $user */
 						return Html::a($user->username, Url::to(['admin/users/update', 'id' => $user->id]));
