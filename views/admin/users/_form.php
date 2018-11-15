@@ -84,12 +84,16 @@ use kartik\file\FileInput;
 						</div>
 					</div>
 				</div>
-
+				<div class="row">
+					<div class="col-md-12">
+						<?= $this->render('chunks/_groups.php', [
+							'model' => $model
+						]); ?>
+					</div>
+				</div>
 
 			</div>
-			<?= $this->render('chunks/_groups.php', [
-				'model' => $model
-			]); ?>
+
 			<div class="panel-footer">
 				<div class="btn-group">
 					<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
