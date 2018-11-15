@@ -6,6 +6,6 @@
 	padding: 1px 5px;
 }
 
-li.selected::before {
+li.selected {
 	background: rgba(153,204,255,0.33);
 }
