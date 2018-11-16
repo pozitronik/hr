@@ -84,4 +84,15 @@ class CompetenciesController extends WigetableController {
 		Competencies::findModel($id, new NotFoundHttpException())->safeDelete();
 		$this->redirect('index');
 	}
+
+	/**
+	 * @param int $competency
+	 * @param null|int $field
+	 * @return string
+	 */
+	public function actionField(int $competency, $field = null):string {
+		return $this->render('field/create', [
+			'competency' => Competencies::findModel($competency, new NotFoundHttpException())
+		]);
+	}
 }

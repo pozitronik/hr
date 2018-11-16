@@ -1,18 +1,19 @@
 <?php
 declare(strict_types = 1);
-
 /**
  * @var View $this
- * @var Competencies $model
  */
 
-use app\models\competencies\Competencies;
-use yii\helpers\Html;
+use app\models\competencies\CompetencyField;
 use yii\web\View;
+use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
+use kartik\switchinput\SwitchInput;
 
+$model = new CompetencyField();
 ?>
+
 <div class="row">
 	<div class="col-xs-12">
 		<?php $form = ActiveForm::begin(); ?>
@@ -28,19 +29,17 @@ use kartik\select2\Select2;
 
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<?= $form->field($model, 'name'); ?>
 					</div>
-					<div class="col-md-6">
-						<?= $form->field($model, 'category')->widget(Select2::class, [
-							'data' => Competencies::CATEGORIES
+					<div class="col-md-4">
+						<?= $form->field($model, 'type')->widget(Select2::class,[
+							'data' => CompetencyField::FIELD_TYPES
 						]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<?= $this->render('field/index.php',[
-						'competency' => $model
-					]); ?>
+					<div class="col-md-4">
+						<?= $form->field($model, 'required')->widget(SwitchInput::class) ?>
+					</div>
 				</div>
 			</div>
 
