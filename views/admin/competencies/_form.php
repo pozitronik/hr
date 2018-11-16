@@ -10,6 +10,7 @@ use app\models\competencies\Competencies;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 ?>
 <div class="row">
@@ -27,7 +28,14 @@ use yii\widgets\ActiveForm;
 
 			<div class="panel-body">
 				<div class="row">
-
+					<div class="col-md-6">
+						<?= $form->field($model, 'name'); ?>
+					</div>
+					<div class="col-md-6">
+						<?= $form->field($model, 'category')->widget(Select2::class, [
+							'data' => Competencies::CATEGORIES
+						]); ?>
+					</div>
 				</div>
 
 			</div>

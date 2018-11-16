@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 
 namespace app\models\competencies;
+
 use yii\data\ActiveDataProvider;
 
 /**
@@ -9,6 +10,14 @@ use yii\data\ActiveDataProvider;
  * @package app\models\competencies
  */
 class CompetenciesSearch extends Competencies {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function rules():array {
+		return [
+			[['id', 'name'], 'safe']
+		];
+	}
 
 	/**
 	 * @param $params
@@ -24,6 +33,7 @@ class CompetenciesSearch extends Competencies {
 		$dataProvider->setSort([
 			'defaultOrder' => ['id' => SORT_ASC],
 			'attributes' => [
+				'id',
 				'name'
 			]
 		]);

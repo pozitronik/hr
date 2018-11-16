@@ -3,11 +3,14 @@ declare(strict_types = 1);
 
 namespace app\models\competencies;
 
+use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\user\CurrentUser;
 use app\models\users\Users;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "sys_competencies".
@@ -24,6 +27,12 @@ use yii\db\ActiveRecord;
  */
 class Competencies extends ActiveRecord {
 	use ARExtended;
+
+	public const CATEGORIES = [/*Ну хер знает*/
+		0 => 'Общая категория',
+		1 => 'Обучение',
+		2 => 'Навык'
+	];
 
 	/**
 	 * {@inheritdoc}
@@ -64,5 +73,36 @@ class Competencies extends ActiveRecord {
 			'structure' => 'Структура',
 			'deleted' => 'Флаг удаления'
 		];
+	}
+
+	/**
+	 * @param $paramsArray
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function createCompetency($paramsArray):bool {
+		$transaction = self::getDb()->beginTransaction();
+		if ($this->loadArray($paramsArray)) {
+			$this->create_date = Date::lcDate();
+			$this->daddy = CurrentUser::Id();
+			$this->structure = ['test' => 'test'];
+			if ($this->save()) {
+				$transaction->commit();
+				return true;
+			}
+		}
+		$transaction->rollBack();
+		return false;
+	}
+
+	/**
+	 * @param $paramsArray
+	 * @return bool
+	 */
+	public function updateCompetency($paramsArray):bool {
+		if ($this->loadArray($paramsArray)) {
+			return $this->save();
+		}
+		return false;
 	}
 }

@@ -13,6 +13,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
+use yii\grid\ActionColumn;
+use app\models\competencies\Competencies;
 
 $this->title = 'Компетенции';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -34,7 +36,22 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'export' => false,
 			'resizableColumns' => true,
-			'responsive' => true
+			'responsive' => true,
+			'columns' => [
+				'id',
+				'name',
+				[
+					'attribute' => 'category',
+					'value' => function($model) {
+						/** @var Competencies $model */
+						return Competencies::CATEGORIES[$model->category];
+					}
+				],
+				[
+					'class' => ActionColumn::class,
+					'template' => '{update} {delete}'
+				]
+			]
 
 		]); ?>
 	</div>
