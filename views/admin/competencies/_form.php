@@ -37,7 +37,10 @@ use kartik\select2\Select2;
 						]); ?>
 					</div>
 				</div>
-
+				<div class="row">
+					<?= $this->render('chunks/_editor.php', [
+					]); ?>
+				</div>
 			</div>
 
 			<div class="panel-footer">

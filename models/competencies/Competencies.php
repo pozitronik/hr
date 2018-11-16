@@ -21,6 +21,7 @@ use yii\db\Exception;
  * @property int $daddy Создатель
  * @property string $create_date Дата создания
  * @property array $structure Структура
+ * @property integer $access
  * @property int $deleted Флаг удаления
  *
  * @property-read Users|ActiveQuery $affected_users Пользователи с этой компетенцией
@@ -54,7 +55,7 @@ class Competencies extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name', 'structure'], 'required'],
-			[['category', 'daddy', 'deleted'], 'integer'],
+			[['category', 'daddy', 'deleted', 'access'], 'integer'],
 			[['create_date', 'structure'], 'safe'],
 			[['name'], 'string', 'max' => 255]
 		];
@@ -71,6 +72,7 @@ class Competencies extends ActiveRecord {
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'structure' => 'Структура',
+			'access' => 'Доступ',
 			'deleted' => 'Флаг удаления'
 		];
 	}
