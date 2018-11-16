@@ -98,7 +98,7 @@ class CompetenciesController extends WigetableController {
 		if ($field->load(Yii::$app->request->post())) {
 			$competency->setField($field, $field_id);
 
-			return $this->render('update', [
+			return $this->render('update', [//redirect must be here
 				'model' => $competency
 			]);
 		}
