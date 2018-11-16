@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace app\models\competencies;
 
+use app\models\core\LCQuery;
+use app\models\core\traits\ARExtended;
+use app\models\users\Users;
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,13 +20,24 @@ use yii\db\ActiveRecord;
  * @property string $create_date Дата создания
  * @property array $structure Структура
  * @property int $deleted Флаг удаления
+ *
+ * @property-read Users|ActiveQuery $affected_users Пользователи с этой компетенцией
  */
 class Competencies extends ActiveRecord {
+	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
 		return 'sys_competencies';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**
