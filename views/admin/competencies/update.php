@@ -9,7 +9,7 @@ declare(strict_types = 1);
 use app\models\competencies\Competencies;
 use yii\web\View;
 
-$this->title = 'Редактирование компетеции '.$model->name;
+$this->title = 'Редактирование компетенции '.$model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Компетенции', 'url' => ['/admin/competencies']];
 $this->params['breadcrumbs'][] = $this->title;
