@@ -6,7 +6,6 @@ namespace app\models\competencies;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\users\Users;
-use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 

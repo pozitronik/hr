@@ -13,7 +13,6 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
-use kartik\grid\ActionColumn;
 
 $this->title = 'Компетенции';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -35,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'export' => false,
 			'resizableColumns' => true,
-			'responsive' => true,
+			'responsive' => true
 
 		]); ?>
 	</div>
