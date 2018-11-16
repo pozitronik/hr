@@ -103,6 +103,6 @@ use kartik\file\FileInput;
 				</div>
 			</div>
 		</div>
+		<?php ActiveForm::end(); ?>
 	</div>
-	<?php ActiveForm::end(); ?>
 </div>
