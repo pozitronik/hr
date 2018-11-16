@@ -17,10 +17,12 @@ class m181116_082318_sys_competency extends Migration {
 			'daddy' => $this->integer()->null()->comment('Создатель'),
 			'create_date' => $this->dateTime()->comment('Дата создания'),
 			'structure' => $this->json()->notNull()->comment('Структура'),
+			'access' => $this->integer()->notNull()->defaultValue(0)->comment('Доступ'),
 			'deleted' => $this->boolean()->defaultValue(false)->notNull()->comment('Флаг удаления')
 		]);
 		$this->createIndex('name', 'sys_competencies', 'name');
 		$this->createIndex('category', 'sys_competencies', 'category');
+		$this->createIndex('access', 'sys_competencies', 'access');
 
 	}
 
