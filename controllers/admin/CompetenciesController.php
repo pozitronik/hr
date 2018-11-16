@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetenciesSearch;
+use app\models\competencies\CompetencyField;
 use app\models\core\WigetableController;
 use Throwable;
 use yii\db\Exception;
@@ -86,13 +87,24 @@ class CompetenciesController extends WigetableController {
 	}
 
 	/**
-	 * @param int $competency
-	 * @param null|int $field
+	 * @param int $competency_id
+	 * @param null|int $field_id
 	 * @return string
+	 * @throws Throwable
 	 */
-	public function actionField(int $competency, $field = null):string {
+	public function actionField(int $competency_id, $field_id = null):string {
+		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
+		$field = new CompetencyField();
+		if ($field->load(Yii::$app->request->post())) {
+			$competency->setField($field, $field_id);
+
+			return $this->render('update', [
+				'model' => $competency
+			]);
+		}
+
 		return $this->render('field/create', [
-			'competency' => Competencies::findModel($competency, new NotFoundHttpException())
+			'competency' => $competency
 		]);
 	}
 }

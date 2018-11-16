@@ -17,27 +17,36 @@ use yii\helpers\Html;
 
 <?= GridView::widget([
 	'dataProvider' => new ArrayDataProvider([
-		'allModels' => [
-		]
+		'allModels' => $competency->structure
 	]),
 	'panel' => [
 		'type' => GridView::TYPE_DEFAULT,
 		'after' => false,
 		'heading' => false,
-		'footer' => false,
+		'footer' => false
 	],
 	'toolbar' => [
 		[
-			'content' => Html::a('Добавить поле', ['field', 'competency' => $competency->id], ['class' => 'btn btn-success'])
+			'content' => Html::a('Добавить поле', ['field', 'competency_id' => $competency->id], ['class' => 'btn btn-success'])
 		]
 	],
 	'export' => false,
 	'resizableColumns' => true,
 	'responsive' => true,
 	'columns' => [
-		'name',
-		'type',
-		'required'
+		[
+			'attribute' => 'name',
+			'label' => 'Название'
+		],
+		[
+			'attribute' => 'type',
+			'label' => 'Тип'
+		],
+		[
+			'attribute' => 'required',
+			'label' => 'Обязательное поле',
+			'format' => 'boolean'
+		]
 	]
 
 ]); ?>

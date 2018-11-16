@@ -11,13 +11,13 @@ use yii\base\Model;
  * @package app\models\competencies
  *
  * @property string $name
- * @property int $type
+ * @property string $type
  * @property boolean $required
  * @property boolean isNewRecord
  */
 class CompetencyField extends Model {
 	private $name = '';
-	private $type = 0;
+	private $type = 'integer';
 	private $required = false;
 	private $isNewRecord = true;
 
@@ -36,8 +36,8 @@ class CompetencyField extends Model {
 	 */
 	public function rules():array {
 		return [
-			[['name'], 'string'],
-			[['type'], 'integer'],
+			[['name', 'type'], 'string'],
+			[['type'], 'in' , 'range' => array_keys(self::FIELD_TYPES)],//todo check this
 			[['required'], 'boolean'],
 			[['name', 'type', 'required'], 'required']
 		];
@@ -69,16 +69,16 @@ class CompetencyField extends Model {
 	}
 
 	/**
-	 * @return int
+	 * @return string
 	 */
-	public function getType():int {
+	public function getType():string {
 		return $this->type;
 	}
 
 	/**
-	 * @param int $type
+	 * @param string $type
 	 */
-	public function setType(int $type):void {
+	public function setType(string $type):void {
 		$this->type = $type;
 	}
 

@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 /**
  * @var View $this
+ * @var CompetencyField $model
  */
 
 use app\models\competencies\CompetencyField;

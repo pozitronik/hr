@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Компетенции', 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', [
-	'model' => $model
-]);
+<?= $this->render('_form' /*[
+//	'model' => $model todo
+]*/);
 ?>

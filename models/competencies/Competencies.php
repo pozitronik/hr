@@ -14,7 +14,8 @@ use yii\db\Exception;
 
 /**
  * This is the model class for table "sys_competencies".
- *
+ * Компетенция - сугубо динамическая штука, состоящая из произвольного набора атрибутов.
+ * Хранить структуру будем в JSON-поле таблицы. Редактор компетенций редактирует эту структуру: набор, порядок и тип полей, а также их валидацию.
  * @property int $id
  * @property string $name Название компетенции
  * @property int $category Категория
@@ -87,7 +88,7 @@ class Competencies extends ActiveRecord {
 		if ($this->loadArray($paramsArray)) {
 			$this->create_date = Date::lcDate();
 			$this->daddy = CurrentUser::Id();
-			$this->structure = ['test' => 'test'];
+			$this->structure = [];
 			if ($this->save()) {
 				$transaction->commit();
 				return true;
@@ -106,5 +107,28 @@ class Competencies extends ActiveRecord {
 			return $this->save();
 		}
 		return false;
+	}
+
+	/**
+	 * @param CompetencyField $field
+	 * @param int|null $field_id
+	 */
+	public function setField(CompetencyField $field, $field_id):void {
+		$t = $this->structure;
+		if (null === $field_id) {
+			$t[] = [
+				'name' => $field->name,
+				'type' => $field->type,
+				'required' => $field->required
+			];
+		} else {
+			$t[$field_id] = [
+				'name' => $field->name,
+				'type' => $field->type,
+				'required' => $field->required
+			];
+		}
+
+		$this->structure = $t;
 	}
 }
