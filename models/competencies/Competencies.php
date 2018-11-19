@@ -117,18 +117,19 @@ class Competencies extends ActiveRecord {
 		$t = $this->structure;
 		if (null === $field_id) {
 			$t[] = [
+				'id' => $field->id,
 				'name' => $field->name,
 				'type' => $field->type,
 				'required' => $field->required
 			];
 		} else {
 			$t[$field_id] = [
+				'id' => $field->id,
 				'name' => $field->name,
 				'type' => $field->type,
 				'required' => $field->required
 			];
 		}
-
-		$this->structure = $t;
+		$this->setAndSaveAttribute('structure',$t);
 	}
 }
