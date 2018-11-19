@@ -10,6 +10,7 @@ use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
+use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
@@ -138,9 +139,11 @@ class Competencies extends ActiveRecord {
 	/**
 	 * Ищет поле по индексу
 	 * @param int $id
+	 * @param null $throw
 	 * @return CompetencyField|false
+	 * @throws Throwable
 	 */
-	public function getField(int $id, $throw = null):?CompetencyField {
+	public function getFieldById(int $id, $throw = null):?CompetencyField {
 		if (null !== $data = ArrayHelper::getValue($this->structure, $id)) return new CompetencyField(array_merge($data, ['competencyId' => $this->id]));
 		if (null !== $throw) SysExceptions::log($throw, $throw, true);
 		return false;

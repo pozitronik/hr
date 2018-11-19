@@ -111,7 +111,7 @@ class CompetenciesController extends WigetableController {
 			]);
 		}
 
-		$field = $competency->getField((int)$field_id, new NotFoundHttpException());
+		$field = $competency->getFieldById((int)$field_id, new NotFoundHttpException());
 		return $this->render('field/update', [
 			'competency' => $competency,
 			'model' => $field
