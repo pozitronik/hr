@@ -10,12 +10,14 @@ use yii\base\Model;
  * Описание структуры поля компетенции
  * @package app\models\competencies
  *
+ * @property integer $id
  * @property string $name
  * @property string $type
  * @property boolean $required
  * @property boolean isNewRecord
  */
 class CompetencyField extends Model {
+	private $id;
 	private $name = '';
 	private $type = 'integer';
 	private $required = false;
@@ -36,6 +38,8 @@ class CompetencyField extends Model {
 	 */
 	public function rules():array {
 		return [
+			[['id'], 'integer'],
+			[['id'], 'unique'],
 			[['name', 'type'], 'string'],
 			[['type'], 'in' , 'range' => array_keys(self::FIELD_TYPES)],//todo check this
 			[['required'], 'boolean'],
@@ -48,6 +52,7 @@ class CompetencyField extends Model {
 	 */
 	public function attributeLabels():array {
 		return [
+			'id' => 'Ключ/порядок',
 			'name' => 'Название',
 			'type' => 'Тип',
 			'required' => 'Обязательное поле'
@@ -100,7 +105,21 @@ class CompetencyField extends Model {
 	 * @return bool
 	 */
 	public function getIsNewRecord():bool {
-		return $this->isNewRecord;
+		return $this->isNewRecord;//todo: use id
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @param integer $id
+	 */
+	public function setId(int $id):void {
+		$this->id = $id;
 	}
 
 }

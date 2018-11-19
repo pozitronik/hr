@@ -2,10 +2,12 @@
 declare(strict_types = 1);
 
 use app\models\competencies\Competencies;
+use app\models\competencies\CompetencyField;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
+use kartik\grid\ActionColumn;
 
 /**
  * @var View $this
@@ -46,6 +48,16 @@ use yii\helpers\Html;
 			'attribute' => 'required',
 			'label' => 'Обязательное поле',
 			'format' => 'boolean'
+		],
+		[
+			'class' => ActionColumn::class,
+			'template' => '{update} {delete}',
+			'buttons' => [
+				'update' => function($url, $model) {
+					/** @var CompetencyField $model */
+					return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['competencies/field', 'id' => $model->id]);
+				}
+			]
 		]
 	]
 
