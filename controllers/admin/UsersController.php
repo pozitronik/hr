@@ -8,6 +8,7 @@ use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
+use yii\data\ArrayDataProvider;
 use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -35,7 +36,6 @@ class UsersController extends WigetableController {
 			]
 		];
 	}
-
 
 	/**
 	 * @inheritdoc
@@ -102,5 +102,22 @@ class UsersController extends WigetableController {
 	public function actionDelete(int $id):void {
 		Users::findModel($id, new NotFoundHttpException())->safeDelete();
 		$this->redirect('index');
+	}
+
+	/**
+	 * Список компетенций пользователя
+	 * @param int $id
+	 * @return string
+	 */
+	public function actionCompetencies(int $id) {
+		$user = Users::findModel($id, new NotFoundHttpException());
+		$competencies = $user->competencies;
+
+		return $this->render('competencies/index', [
+			'user' => $user,
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $competencies
+			])
+		]);
 	}
 }

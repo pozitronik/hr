@@ -63,7 +63,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'email:email',
 				[
 					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
+					'template' => '{competencies} {update} {delete}',
+					'buttons' => [
+						'competencies' => function($url, $model) {
+							return Html::a('Компетенции', $url, ['class' => 'btn btn-xs btn-info']);
+						}
+					]
 				]
 			]
 		]); ?>

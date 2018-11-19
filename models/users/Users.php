@@ -5,6 +5,7 @@ namespace app\models\users;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\competencies\Competencies;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserPositions;
@@ -56,6 +57,10 @@ use yii\web\UploadedFile;
  * Опции
  * ***************************
  * @property Options $options
+ * **************************
+ * Компетенции
+ * **************************
+ * @property-read Competencies[] $competencies
  */
 class Users extends ActiveRecord {
 	use ARExtended;
