@@ -18,7 +18,7 @@ class m181119_092536_rel_users_competencies extends Migration {
 
 		$this->createIndex('user_id', 'rel_users_competencies', 'user_id');
 		$this->createIndex('competency_id', 'rel_users_competencies', 'competency_id');
-		$this->createIndex('user_id_competency_id', 'rel_users_competencies', ['user_id', 'competency_id']);
+		$this->createIndex('user_id_competency_id', 'rel_users_competencies', ['user_id', 'competency_id'], true);
 	}
 
 	/**
