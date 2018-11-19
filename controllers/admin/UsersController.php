@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin;
 
+use app\models\competencies\Competencies;
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;
@@ -111,13 +112,54 @@ class UsersController extends WigetableController {
 	 */
 	public function actionCompetencies(int $id) {
 		$user = Users::findModel($id, new NotFoundHttpException());
-		$competencies = $user->competencies;
+		$competencies = $user->relCompetencies;
 
 		return $this->render('competencies/index', [
 			'user' => $user,
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $competencies
 			])
+		]);
+	}
+
+	/**
+	 * Контроллер создания новой компетенции у пользователя
+	 * @param int $user_id
+	 * @return string|Response
+	 * @throws Throwable
+	 */
+	public function actionCompetencyCreate(int $user_id) {
+		$user = Users::findModel($user_id, new NotFoundHttpException());
+		$competency = new Competencies();
+
+		if ($competency->load(Yii::$app->request->post) && $competency->save()) {
+			return $this->redirect(['competencies', 'id' => $user_id]);
+		}
+
+		return $this->render('competencies/create', [
+			'user' => $user,
+			'competency' => $competency
+		]);
+	}
+
+	/**
+	 * Контроллер изменения компетенции пользователя
+	 * @param int $user_id
+	 * @param int $competency_id
+	 * @return string|Response
+	 * @throws Throwable
+	 */
+	public function actionCompetencyUpdate(int $user_id, int $competency_id) {
+		$user = Users::findModel($user_id, new NotFoundHttpException());
+		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
+
+		if ($competency->load(Yii::$app->request->post) && $competency->save()) {
+			return $this->redirect(['competencies', 'id' => $user_id]);
+		}
+
+		return $this->render('competencies/update', [
+			'user' => $user,
+			'competency' => $competency
 		]);
 	}
 }

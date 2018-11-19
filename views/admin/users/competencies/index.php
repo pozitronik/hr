@@ -4,12 +4,11 @@ declare(strict_types = 1);
 /**
  * Шаблон главной страницы списка всех пользователей
  * @var View $this
- * @var ArrayDataProvider $dataProvider
+ * @var DataProviderInterface $dataProvider
  * @var Users $user
  **/
 
-use yii\data\ArrayDataProvider;
-use app\models\competencies\Competencies;
+use yii\data\DataProviderInterface;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -18,7 +17,7 @@ use app\models\users\Users;
 $this->title = 'Компетенции пользователя';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
-$this->params['breadcrumbs'][] = ['label' => 'Профиль пользователя '.$user->username, 'url' => ['/admin/users', 'id' => $user->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Профиль пользователя '.$user->username, 'url' => ['/admin/users/update', 'id' => $user->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
