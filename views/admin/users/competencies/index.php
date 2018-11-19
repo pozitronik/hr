@@ -17,11 +17,6 @@ use yii\data\ActiveDataProvider;
 use kartik\select2\Select2;
 use kartik\grid\CheckboxColumn;
 
-$this->title = 'Компетенции пользователя';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
-$this->params['breadcrumbs'][] = ['label' => 'Профиль пользователя '.$user->username, 'url' => ['/admin/users/update', 'id' => $user->id]];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
