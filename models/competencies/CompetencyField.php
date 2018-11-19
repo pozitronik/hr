@@ -3,6 +3,14 @@ declare(strict_types = 1);
 
 namespace app\models\competencies;
 
+use app\models\competencies\types\CompetencyFieldBoolean;
+use app\models\competencies\types\CompetencyFieldDate;
+use app\models\competencies\types\CompetencyFieldInteger;
+use app\models\competencies\types\CompetencyFieldPercent;
+use app\models\competencies\types\CompetencyFieldRange;
+use app\models\competencies\types\CompetencyFieldString;
+use app\models\competencies\types\CompetencyFieldTime;
+use http\Exception\RuntimeException;
 use yii\base\Model;
 
 /**
@@ -43,7 +51,7 @@ class CompetencyField extends Model {
 			[['id'], 'integer'],
 			[['id'], 'unique'],
 			[['name', 'type'], 'string'],
-			[['type'], 'in' , 'range' => array_keys(self::FIELD_TYPES)],//todo check this
+			[['type'], 'in', 'range' => array_keys(self::FIELD_TYPES)],//todo check this
 			[['required'], 'boolean'],
 			[['name', 'type', 'required'], 'required']
 		];
@@ -138,6 +146,38 @@ class CompetencyField extends Model {
 		$this->competency_id = $competency_id;
 	}
 
-
+	/**
+	 * Вернёт значение поля компетенции для указанного пользователя
+	 * @param int $user_id
+	 * @return mixed
+	 */
+	public function getValue(int $user_id) {
+		switch ($this->type) {
+			case 'boolean':
+				return CompetencyFieldBoolean::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			case 'date':
+				return CompetencyFieldDate::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			case 'integer':
+				return CompetencyFieldInteger::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			case 'percent':
+				return CompetencyFieldPercent::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			case 'range':
+				return CompetencyFieldRange::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			case 'string':
+				return CompetencyFieldString::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			case 'time':
+				return CompetencyFieldTime::getValue($this->competency_id, $this->id, $user_id);
+			break;
+			default:
+				throw new RuntimeException("Field type not implemented: {$this->type}");
+			break;
+		}
+	}
 
 }

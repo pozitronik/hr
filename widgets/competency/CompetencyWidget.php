@@ -33,23 +33,17 @@ class CompetencyWidget extends Widget {
 	 */
 	public function run():string {
 		$competency = Competencies::findModel($this->competency_id);
-		$user = Users::findModel($this->user_id);
+		//$user = Users::findModel($this->user_id);
 
 		if (empty($competency->structure)) return "Компетенция не имеет атрибутов";
-
+		$result = [];
 		foreach ($competency->structure as $field_data) {
- 			$field = new CompetencyField($field_data);
-			switch ($field->type) {
-				case 'integer':
-					$value = CompetencyFieldInteger::getValue($this->competency_id, $field->id, $this->user_id);//todo move to competency filed attribute
-					return "{$field->name}:{$value}";
-				break;
-				default:
-					return $field->type;///todo
-				break;
-			}
-
+			$field = new CompetencyField($field_data);
+			$field->competencyId = $this->competency_id;
+			$result[] = "{$field->name}:{$field->getValue($this->user_id)}";
 		}
+
+		return implode(', ', $result);
 
 //		return $this->render('competency',[
 //			'structure' => $competency->structure,
