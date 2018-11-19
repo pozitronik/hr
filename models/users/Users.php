@@ -9,6 +9,7 @@ use app\models\competencies\Competencies;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserPositions;
+use app\models\relations\RelUsersCompetencies;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
@@ -60,7 +61,8 @@ use yii\web\UploadedFile;
  * **************************
  * Компетенции
  * **************************
- * @property-read Competencies[] $competencies
+ * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
+ * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -309,4 +311,28 @@ class Users extends ActiveRecord {
 		}
 		return false;
 	}
+
+	/**
+	 * @return RelUsersCompetencies[]|ActiveQuery
+	 */
+	public function getRelUsersCompetencies() {
+		return $this->hasMany(RelUsersCompetencies::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * @return Competencies[]|ActiveQuery
+	 */
+	public function getRelCompetencies() {
+		return $this->hasMany(Competencies::class, ['id' => 'competency_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @param Competencies[]|ActiveQuery $relCompetencies
+	 */
+	public function setRelCompetencies(array $relCompetencies):void {
+		RelUsersCompetencies::linkModels($this, $relCompetencies);
+	}
+
+
+
 }

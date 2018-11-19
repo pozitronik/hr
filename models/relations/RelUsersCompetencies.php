@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $competency_id
  */
 class RelUsersCompetencies extends ActiveRecord {
+	use Relations;
 	/**
 	 * {@inheritdoc}
 	 */
