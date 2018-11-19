@@ -8,11 +8,14 @@ declare(strict_types = 1);
  * @var array $data
  **/
 
+use app\helpers\ArrayHelper;
+use app\models\competencies\Competencies;
 use yii\web\View;
 use kartik\grid\GridView;
 use app\models\users\Users;
 use yii\data\ActiveDataProvider;
 use kartik\select2\Select2;
+use kartik\grid\CheckboxColumn;
 
 $this->title = 'Компетенции пользователя';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -49,7 +52,30 @@ $this->params['breadcrumbs'][] = $this->title;
 			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
-			'responsive' => true
+			'responsive' => true,
+			'columns' => [
+				[
+					'class' => CheckboxColumn::class,
+					'width' => '36px',
+					'headerOptions' => ['class' => 'kartik-sheet-style'],
+					'header' => 'Удалить',
+					'name' => $user->classNameShort.'[dropCompetencies]'
+				],
+				'name',
+				[
+					'attribute' => 'category',
+					'value' => function($model) {
+						/** @var Competencies $model */
+						return ArrayHelper::getValue(Competencies::CATEGORIES,$model->id);
+					}
+				],
+				[
+					'value' =>function($model) use ($user) {
+						/** @var Competencies $model */
+						return 'Здесь будет виджет компетенции';
+					}
+				]
+			]
 
 		]); ?>
 	</div>

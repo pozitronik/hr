@@ -62,6 +62,7 @@ use yii\web\UploadedFile;
  * Компетенции
  * **************************
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
+ * @property integer[] $dropCompetencies
  * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
  */
 class Users extends ActiveRecord {
@@ -330,8 +331,17 @@ class Users extends ActiveRecord {
 	 * @param Competencies[]|ActiveQuery $relCompetencies
 	 * @throws Throwable
 	 */
-	public function setRelCompetencies(array $relCompetencies):void {
+	public function setRelCompetencies($relCompetencies):void {
 		RelUsersCompetencies::linkModels($this, $relCompetencies);
+	}
+
+	/**
+	 * @param integer[] $dropCompetencies
+	 * @throws Throwable
+	 */
+	public function setDropCompetencies(array $dropCompetencies):void {
+		/*Сами значения компетенций сохранятся в базе и должны будут восстановиться, если компетенцию присвоить пользователю обратно*/
+		RelUsersCompetencies::unlinkModels($this, $dropCompetencies);
 	}
 
 }
