@@ -2,10 +2,12 @@
 declare(strict_types = 1);
 
 /**
+ * @var CompetencyField $model
  * @var Competencies $competency
  * @var View $this
  */
 
+use app\models\competencies\CompetencyField;
 use app\models\competencies\Competencies;
 use yii\web\View;
 
