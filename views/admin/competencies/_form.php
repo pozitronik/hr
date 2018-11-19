@@ -38,9 +38,13 @@ use kartik\select2\Select2;
 					</div>
 				</div>
 				<div class="row">
-					<?= $this->render('field/index.php',[
-						'competency' => $model
-					]); ?>
+					<?php if ($model->isNewRecord): ?>
+						Редактирование полей будет доступно после сохранения
+					<?php else: ?>
+						<?= $this->render('field/index.php',[
+							'competency' => $model
+						]); ?>
+					<?php endif; ?>
 				</div>
 			</div>
 
