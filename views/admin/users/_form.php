@@ -88,7 +88,7 @@ use kartik\file\FileInput;
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<?= $this->render('chunks/_groups', [
+						<?= $this->render('groups/index', [
 							'model' => $model
 						]); ?>
 					</div>

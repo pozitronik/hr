@@ -79,13 +79,13 @@ use kartik\file\FileInput;
 				<div class="row">
 					<div class="col-md-6">
 						<label class="control-label">Родительские группы</label>
-						<?= $this->render('chunks/_parent_groups.php', [
+						<?= $this->render('parent_groups/index', [
 							'model' => $model
 						]); ?>
 					</div>
 					<div class="col-md-6">
 						<label class="control-label">Дочерние группы</label>
-						<?= $this->render('chunks/_child_groups.php', [
+						<?= $this->render('child_groups/index', [
 							'model' => $model
 						]); ?>
 					</div>
@@ -95,7 +95,7 @@ use kartik\file\FileInput;
 				<div class="row">
 					<div class="col-md-12">
 						<label class="control-label">Пользователи в группе</label>
-						<?= $this->render('chunks/_users.php', [
+						<?= $this->render('users/index', [
 							'model' => $model
 						]); ?>
 					</div>
