@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property int $user_id ID пользователя
  * @property int $value Значение
  */
-class CompetencyFiledInteger extends ActiveRecord {
+class CompetencyFieldInteger extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
