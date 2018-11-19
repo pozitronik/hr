@@ -6,6 +6,7 @@ declare(strict_types = 1);
  *
  * @var View $this
  * @var Users $model
+ * @var array $competenciesData
  */
 
 use app\models\users\Users;
@@ -15,6 +16,7 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use app\models\references\refs\RefUserPositions;
 use kartik\file\FileInput;
+
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -44,7 +46,7 @@ use kartik\file\FileInput;
 								'initialPreviewAsData' => true,
 								'browseClass' => 'btn btn-primary pull-right',
 								'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-								'browseLabel' =>  'Выберите изображение',
+								'browseLabel' => 'Выберите изображение',
 								'showCaption' => false
 							]
 						]) ?>
@@ -86,8 +88,16 @@ use kartik\file\FileInput;
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<?= $this->render('chunks/_groups.php', [
+						<?= $this->render('chunks/_groups', [
 							'model' => $model
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<?= $this->render('competencies/index', [
+							'user' => $model,
+							'data' => $competenciesData
 						]); ?>
 					</div>
 				</div>

@@ -4,15 +4,15 @@ declare(strict_types = 1);
 /**
  * Шаблон главной страницы списка всех пользователей
  * @var View $this
- * @var DataProviderInterface $dataProvider
  * @var Users $user
+ * @var array $data
  **/
 
-use yii\data\DataProviderInterface;
 use yii\web\View;
 use kartik\grid\GridView;
-use yii\bootstrap\Html;
 use app\models\users\Users;
+use yii\data\ActiveDataProvider;
+use kartik\select2\Select2;
 
 $this->title = 'Компетенции пользователя';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -24,18 +24,33 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
 	<div class="col-xs-12">
 		<?= GridView::widget([
-			'dataProvider' => $dataProvider,
+			'dataProvider' => new ActiveDataProvider([
+				'query' => $user->getRelCompetencies()->orderBy('name')
+			]),
+			'showFooter' => false,
+			'showPageSummary' => false,
+			'summary' => '',
 			'panel' => [
-				'heading' => $this->title
+				'type' => GridView::TYPE_DEFAULT,
+				'after' => false,
+				'before' => Select2::widget([
+					'model' => $user,
+					'attribute' => 'relCompetencies',
+					'name' => 'competency_id',
+					'data' => $data,
+					'options' => [
+						'multiple' => true,
+						'placeholder' => 'Добавить компетенцию'
+					]
+				]),
+				'heading' => false,
+				'footer' => false
 			],
-			'toolbar' => [
-				[
-					'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
-				]
-			],
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true
+
 		]); ?>
 	</div>
 </div>

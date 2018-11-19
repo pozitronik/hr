@@ -99,7 +99,7 @@ class Users extends ActiveRecord {
 			[['login'], 'unique'],
 			[['email'], 'unique'],
 			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
-			[['relGroups', 'dropGroups'], 'safe']
+			[['relGroups', 'dropGroups', 'relCompetencies', 'dropCompetencies'], 'safe']
 		];
 	}
 
@@ -333,7 +333,5 @@ class Users extends ActiveRecord {
 	public function setRelCompetencies(array $relCompetencies):void {
 		RelUsersCompetencies::linkModels($this, $relCompetencies);
 	}
-
-
 
 }
