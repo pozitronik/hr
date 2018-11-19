@@ -19,8 +19,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Компетенции', 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', [
-	'user' => $user,
-	'competency' => $competency
-]);
+<?= $this->render('_form', compact('user', 'competency'));
 ?>

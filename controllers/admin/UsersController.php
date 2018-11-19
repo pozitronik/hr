@@ -109,8 +109,9 @@ class UsersController extends WigetableController {
 	 * Список компетенций пользователя
 	 * @param int $id
 	 * @return string
+	 * @throws Throwable
 	 */
-	public function actionCompetencies(int $id) {
+	public function actionCompetencies(int $id):string {
 		$user = Users::findModel($id, new NotFoundHttpException());
 		$competencies = $user->relCompetencies;
 
@@ -132,14 +133,11 @@ class UsersController extends WigetableController {
 		$user = Users::findModel($user_id, new NotFoundHttpException());
 		$competency = new Competencies();
 
-		if ($competency->load(Yii::$app->request->post) && $competency->save()) {
+		if ($competency->load(Yii::$app->request->post()) && $competency->save()) {
 			return $this->redirect(['competencies', 'id' => $user_id]);
 		}
 
-		return $this->render('competencies/create', [
-			'user' => $user,
-			'competency' => $competency
-		]);
+		return $this->render('competencies/create', compact('user', 'competency'));
 	}
 
 	/**
@@ -153,13 +151,10 @@ class UsersController extends WigetableController {
 		$user = Users::findModel($user_id, new NotFoundHttpException());
 		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
 
-		if ($competency->load(Yii::$app->request->post) && $competency->save()) {
+		if ($competency->load(Yii::$app->request->post()) && $competency->save()) {
 			return $this->redirect(['competencies', 'id' => $user_id]);
 		}
 
-		return $this->render('competencies/update', [
-			'user' => $user,
-			'competency' => $competency
-		]);
+		return $this->render('competencies/update', compact('user', 'competency'));
 	}
 }

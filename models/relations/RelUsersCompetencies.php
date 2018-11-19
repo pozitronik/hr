@@ -17,29 +17,29 @@ class RelUsersCompetencies extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'rel_users_competencies';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['user_id', 'competency_id'], 'required'],
 			[['user_id', 'competency_id'], 'integer'],
-			[['user_id', 'competency_id'], 'unique', 'targetAttribute' => ['user_id', 'competency_id']],
+			[['user_id', 'competency_id'], 'unique', 'targetAttribute' => ['user_id', 'competency_id']]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'user_id' => 'User ID',
-			'competency_id' => 'Competency ID',
+			'competency_id' => 'Competency ID'
 		];
 	}
 }

@@ -328,6 +328,7 @@ class Users extends ActiveRecord {
 
 	/**
 	 * @param Competencies[]|ActiveQuery $relCompetencies
+	 * @throws Throwable
 	 */
 	public function setRelCompetencies(array $relCompetencies):void {
 		RelUsersCompetencies::linkModels($this, $relCompetencies);

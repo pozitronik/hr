@@ -18,31 +18,31 @@ class CompetencyFiledInteger extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'sys_competencies_integer';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['competency_id', 'field_id', 'user_id'], 'required'],
 			[['competency_id', 'field_id', 'user_id', 'value'], 'integer'],
-			[['competency_id', 'field_id', 'user_id'], 'unique', 'targetAttribute' => ['competency_id', 'field_id', 'user_id']],
+			[['competency_id', 'field_id', 'user_id'], 'unique', 'targetAttribute' => ['competency_id', 'field_id', 'user_id']]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'competency_id' => 'ID компетенции',
 			'field_id' => 'ID поля',
 			'user_id' => 'ID пользователя',
-			'value' => 'Значение',
+			'value' => 'Значение'
 		];
 	}
 }

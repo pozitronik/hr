@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'export' => false,
 			'resizableColumns' => true,
-			'responsive' => true,
+			'responsive' => true
 		]); ?>
 	</div>
 </div>
