@@ -9,6 +9,8 @@ use yii\base\Widget;
 use yii\db\ActiveRecord;
 
 /**
+ * @todo не нужно в таком виде, стоит использовать не виджет, а прямое обращение
+ * Возможно, стоит переписать в более общий вид, не только для групп
  * Class GroupSelectWidget
  * Виджет списка групп (для добавления пользователя)
  * @package app\components\group_select
