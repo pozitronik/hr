@@ -5,7 +5,7 @@ namespace app\models\competencies\types;
 
 
 /**
- * This is the model class for table "sys_competencies_integer".
+ * This is the model class for table "sys_competencies_percent".
  *
  * @property int $id
  * @property int $competency_id ID компетенции
@@ -13,12 +13,12 @@ namespace app\models\competencies\types;
  * @property int $user_id ID пользователя
  * @property int $value Значение
  */
-class CompetencyFieldInteger extends CompetencyFieldDefault {
+class CompetencyFieldPercent extends CompetencyFieldDefault  {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_competencies_integer';
+		return 'sys_competencies_percent';
 	}
 
 	/**

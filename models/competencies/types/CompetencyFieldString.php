@@ -5,20 +5,20 @@ namespace app\models\competencies\types;
 
 
 /**
- * This is the model class for table "sys_competencies_integer".
+ * This is the model class for table "sys_competencies_string".
  *
  * @property int $id
  * @property int $competency_id ID компетенции
  * @property int $field_id ID поля
  * @property int $user_id ID пользователя
- * @property int $value Значение
+ * @property string $value Значение
  */
-class CompetencyFieldInteger extends CompetencyFieldDefault {
+class CompetencyFieldString extends CompetencyFieldDefault {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_competencies_integer';
+		return 'sys_competencies_string';
 	}
 
 	/**
@@ -27,7 +27,8 @@ class CompetencyFieldInteger extends CompetencyFieldDefault {
 	public function rules():array {
 		return [
 			[['competency_id', 'field_id', 'user_id'], 'required'],
-			[['competency_id', 'field_id', 'user_id', 'value'], 'integer'],
+			[['competency_id', 'field_id', 'user_id'], 'integer'],
+			[['value'], 'string'],
 			[['competency_id', 'field_id', 'user_id'], 'unique', 'targetAttribute' => ['competency_id', 'field_id', 'user_id']]
 		];
 	}
