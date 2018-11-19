@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
+use app\widgets\competency\CompetencyWidget;
 use yii\web\View;
 use kartik\grid\GridView;
 use app\models\users\Users;
@@ -67,7 +68,10 @@ use kartik\grid\CheckboxColumn;
 				[
 					'value' =>function($model) use ($user) {
 						/** @var Competencies $model */
-						return 'Здесь будет виджет компетенции';
+						return CompetencyWidget::widget([
+							'user_id' => $user->id,
+							'competency_id' => $model->id,
+						]);
 					}
 				]
 			]
