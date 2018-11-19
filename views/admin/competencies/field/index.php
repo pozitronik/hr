@@ -8,6 +8,7 @@ use kartik\grid\GridView;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use kartik\grid\ActionColumn;
+use app\helpers\ArrayHelper;
 
 /**
  * @var View $this
@@ -37,6 +38,10 @@ use kartik\grid\ActionColumn;
 	'responsive' => true,
 	'columns' => [
 		[
+			'attribute' => 'id',
+			'label' => 'id'
+		],
+		[
 			'attribute' => 'name',
 			'label' => 'Название'
 		],
@@ -53,9 +58,9 @@ use kartik\grid\ActionColumn;
 			'class' => ActionColumn::class,
 			'template' => '{update} {delete}',
 			'buttons' => [
-				'update' => function($url, $model) {
+				'update' => function($url, $model) use ($competency) {
 					/** @var CompetencyField $model */
-					return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['competencies/field', 'id' => $model->id]);
+					return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['admin/competencies/field', 'competency_id' => $competency->id, 'field_id' => ArrayHelper::getValue($model, 'id')]);
 				}
 			]
 		]

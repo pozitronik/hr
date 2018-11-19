@@ -3,8 +3,10 @@ declare(strict_types = 1);
 
 namespace app\models\competencies;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
+use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
@@ -116,20 +118,31 @@ class Competencies extends ActiveRecord {
 	public function setField(CompetencyField $field, $field_id):void {
 		$t = $this->structure;
 		if (null === $field_id) {
-			$t[] = [
-				'id' => $field->id,
+			$t[count($this->structure) + 1] = [
+				'id' => count($this->structure) + 1,
 				'name' => $field->name,
 				'type' => $field->type,
 				'required' => $field->required
 			];
 		} else {
 			$t[$field_id] = [
-				'id' => $field->id,
+				'id' => $field_id,
 				'name' => $field->name,
 				'type' => $field->type,
 				'required' => $field->required
 			];
 		}
-		$this->setAndSaveAttribute('structure',$t);
+		$this->setAndSaveAttribute('structure', $t);
+	}
+
+	/**
+	 * Ищет поле по индексу
+	 * @param int $id
+	 * @return CompetencyField|false
+	 */
+	public function getField(int $id, $throw = null):?CompetencyField {
+		if (null !== $data = ArrayHelper::getValue($this->structure, $id)) return new CompetencyField(array_merge($data, ['competencyId' => $this->id]));
+		if (null !== $throw) SysExceptions::log($throw, $throw, true);
+		return false;
 	}
 }

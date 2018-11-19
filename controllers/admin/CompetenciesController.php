@@ -95,15 +95,27 @@ class CompetenciesController extends WigetableController {
 	 */
 	public function actionField(int $competency_id, $field_id = null) {
 		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
-		$field = new CompetencyField();
+		$field = new CompetencyField([
+			'competencyId' => $competency_id
+		]);
 		if ($field->load(Yii::$app->request->post())) {
 			$competency->setField($field, $field_id);
 			return $this->redirect(['update', 'id' => $competency_id]);
 
 		}
 
-		return $this->render('field/create', [
-			'competency' => $competency
+		if (null === $field_id) {
+			return $this->render('field/create', [
+				'competency' => $competency,
+				'model' => $field
+			]);
+		}
+
+		$field = $competency->getField((int)$field_id, new NotFoundHttpException());
+		return $this->render('field/update', [
+			'competency' => $competency,
+			'model' => $field
 		]);
+
 	}
 }

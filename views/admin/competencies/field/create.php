@@ -16,5 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $competency->name, 'url' => ['/admi
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form');
+<?= $this->render('_form', [
+	'model' => $model
+]);
 ?>

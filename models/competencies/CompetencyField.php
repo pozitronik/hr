@@ -10,6 +10,7 @@ use yii\base\Model;
  * Описание структуры поля компетенции
  * @package app\models\competencies
  *
+ * @property integer $competencyId
  * @property integer $id
  * @property string $name
  * @property string $type
@@ -17,6 +18,7 @@ use yii\base\Model;
  * @property boolean isNewRecord
  */
 class CompetencyField extends Model {
+	private $competency_id; //Внутреннее поле для связи с компетенцией
 	private $id;
 	private $name = '';
 	private $type = 'integer';
@@ -116,10 +118,26 @@ class CompetencyField extends Model {
 	}
 
 	/**
-	 * @param integer $id
+	 * @return int
+	 */
+	public function getCompetencyId():int {
+		return $this->competency_id;
+	}
+
+	/**
+	 * @param int $id
 	 */
 	public function setId(int $id):void {
 		$this->id = $id;
 	}
+
+	/**
+	 * @param int $competency_id
+	 */
+	public function setCompetencyId(int $competency_id):void {
+		$this->competency_id = $competency_id;
+	}
+
+
 
 }
