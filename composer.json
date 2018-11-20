@@ -33,7 +33,11 @@
 		"components/font-awesome": "dev-master",
 		"bower-asset/font-awesome": "dev-master",
 		"kartik-v/yii2-editable": "dev-master",
-		"kartik-v/yii2-builder": "dev-master"
+		"kartik-v/yii2-builder": "dev-master",
+		"kartik-v/yii2-widget-rangeinput": "^1.0@dev",
+		"kartik-v/yii2-widget-datepicker": "^1.4@dev",
+		"kartik-v/yii2-widget-timepicker": "^1.0@dev",
+		"kartik-v/yii2-slider": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
