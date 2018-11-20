@@ -49,44 +49,35 @@ $dataProvider = new ArrayDataProvider([
 
 						switch ($model->type) {
 							case 'boolean':
-								return $form->field($model, (string)$model->id)->widget(SwitchInput::class, [
-									'value' => null === $model->value?'':$model->value
-								]);
+								return $form->field($model, (string)$model->id)->widget(SwitchInput::class);
 							break;
 							case 'date':
-								return $form->field($model, (string)$model->id)->widget(DatePicker::class, [
-									'value' => null === $model->value?'':$model->value
-								]);
+								return $form->field($model, (string)$model->id)->widget(DatePicker::class);
 							break;
 							case 'integer':
-								return $form->field($model, (string)$model->id)->textInput([
-									'value' => null === $model->value?'':$model->value
-								]);
+								return $form->field($model, (string)$model->id)->textInput();
 							break;
 							case 'percent':
-								return $form->field($model, (string)$model->id)->widget(Slider::class, [
-									'value' => null === $model->value?'':$model->value
-								]);
+								return $form->field($model, (string)$model->id)->widget(Slider::class);
 							break;
 							case 'range':
-								return $form->field($model, (string)$model->id)->widget(RangeInput::class, [
-									'value' => null === $model->value?'':$model->value
-								]);
+								return $form->field($model, (string)$model->id)->widget(RangeInput::class);
 							break;
 							case 'string':
-								return $form->field($model, (string)$model->id)->textarea([
-									'value' => null === $model->value?'':$model->value
-								]);
+								return $form->field($model, (string)$model->id)->textarea();
 							break;
 							case 'time':
 								return $form->field($model, (string)$model->id)->widget(TimePicker::class, [
-									'value' => null === $model->value?'':$model->value
+									'pluginOptions' => [
+										'showSeconds' => true,
+										'showMeridian' => false,
+										'minuteStep' => 1,
+										'secondStep' => 5,
+									]
 								]);
 							break;
 							default:
-								return $form->field($model, (string)$model->id)->textInput([
-									'value' => null === $model->value?'':$model->value
-								])->label(false);
+								return $form->field($model, (string)$model->id)->textInput()->label(false);
 							break;
 
 						}

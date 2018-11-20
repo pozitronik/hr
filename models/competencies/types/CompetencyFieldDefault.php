@@ -61,6 +61,6 @@ class CompetencyFieldDefault extends ActiveRecord implements DataFieldInterface 
 	public static function setValue(int $competency_id, int $field_id, int $user_id, $value) {
 		$value = new self(compact('competency_id', 'user_id', 'field_id', 'value'));
 		return $value->save();
-
 	}
+
 }
