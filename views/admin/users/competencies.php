@@ -49,22 +49,22 @@ $dataProvider = new ArrayDataProvider([
 
 						switch ($model->type) {
 							case 'boolean':
-								return $form->field($model, (string)$model->id)->widget(SwitchInput::class);
+								return $form->field($model, (string)$model->id)->widget(SwitchInput::class)->label(false);
 							break;
 							case 'date':
-								return $form->field($model, (string)$model->id)->widget(DatePicker::class);
+								return $form->field($model, (string)$model->id)->widget(DatePicker::class)->label(false);
 							break;
 							case 'integer':
-								return $form->field($model, (string)$model->id)->textInput();
+								return $form->field($model, (string)$model->id)->textInput()->label(false);
 							break;
 							case 'percent':
-								return $form->field($model, (string)$model->id)->widget(Slider::class);
+								return $form->field($model, (string)$model->id)->widget(Slider::class)->label(false);
 							break;
 							case 'range':
-								return $form->field($model, (string)$model->id)->widget(RangeInput::class);
+								return $form->field($model, (string)$model->id)->widget(RangeInput::class)->label(false);
 							break;
 							case 'string':
-								return $form->field($model, (string)$model->id)->textarea();
+								return $form->field($model, (string)$model->id)->textarea()->label(false);
 							break;
 							case 'time':
 								return $form->field($model, (string)$model->id)->widget(TimePicker::class, [
@@ -72,9 +72,9 @@ $dataProvider = new ArrayDataProvider([
 										'showSeconds' => true,
 										'showMeridian' => false,
 										'minuteStep' => 1,
-										'secondStep' => 5,
+										'secondStep' => 5
 									]
-								]);
+								])->label(false);
 							break;
 							default:
 								return $form->field($model, (string)$model->id)->textInput()->label(false);
