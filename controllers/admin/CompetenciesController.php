@@ -92,6 +92,7 @@ class CompetenciesController extends WigetableController {
 	 * @param null|int $field_id id поля (null для нового)
 	 * @return string|Response
 	 * @throws Throwable
+	 * @todo fixme не работает кнопка "сохранить+добавить"
 	 */
 	public function actionField(int $competency_id, $field_id = null) {
 		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
