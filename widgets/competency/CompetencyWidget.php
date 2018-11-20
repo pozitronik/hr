@@ -5,9 +5,9 @@ namespace app\widgets\competency;
 
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
-use app\models\competencies\types\CompetencyFieldInteger;
-use app\models\users\Users;
+use Throwable;
 use yii\base\Widget;
+use yii\data\ArrayDataProvider;
 
 /**
  * Class GroupSelectWidget
@@ -30,24 +30,31 @@ class CompetencyWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$competency = Competencies::findModel($this->competency_id);
 		//$user = Users::findModel($this->user_id);
 
 		if (empty($competency->structure)) return "Компетенция не имеет атрибутов";
+
+		$widgetDataProvider = new ArrayDataProvider();
+
 		$result = [];
 		foreach ($competency->structure as $field_data) {
 			$field = new CompetencyField($field_data);
-			$field->competencyId = $this->competency_id;
-			$result[] = "{$field->name}:{$field->getValue($this->user_id)}";
+			$field->competencyId = $this->competency_id;//todo move to initializer
+			$result[] = [
+				'name' => $field->name,
+				'value' => $field->getValue($this->user_id)
+			];
+
 		}
 
-		return implode(', ', $result);
+		$widgetDataProvider->allModels = $result;
 
-//		return $this->render('competency',[
-//			'structure' => $competency->structure,
-//			'user' => $user
-//		]);
+		return $this->render('competency',[
+			'widgetDataProvider' => $widgetDataProvider
+		]);
 	}
 }

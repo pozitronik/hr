@@ -70,9 +70,10 @@ use kartik\grid\CheckboxColumn;
 						/** @var Competencies $model */
 						return CompetencyWidget::widget([
 							'user_id' => $user->id,
-							'competency_id' => $model->id,
+							'competency_id' => $model->id
 						]);
-					}
+					},
+					'format' => 'raw'
 				]
 			]
 
