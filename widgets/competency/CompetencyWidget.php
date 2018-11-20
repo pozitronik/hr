@@ -41,7 +41,7 @@ class CompetencyWidget extends Widget {
 		$widgetDataProvider->allModels = $competency->getUserFields($this->user_id);
 
 		return $this->render('competency', [
-			'widgetDataProvider' => $widgetDataProvider,
+			'widgetDataProvider' => $widgetDataProvider
 		]);
 	}
 }

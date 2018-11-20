@@ -88,7 +88,7 @@ class CompetencyField extends Model {
 		if (method_exists($this, 'set'.$name)) {
 			throw new InvalidCallException('Getting write-only property: '.get_class($this).'::'.$name);
 		}
-		if ($name == $this->id) {/*Хачим геттер метода для совместимости с ActiveForm::field*/
+		if ((int)$name === $this->id) {/*Хачим геттер метода для совместимости с ActiveForm::field*/
 			return $this->value;
 		}
 

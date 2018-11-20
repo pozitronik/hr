@@ -5,7 +5,6 @@ namespace app\controllers\admin;
 
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
-use app\models\competencies\CompetencyField;
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;
@@ -113,6 +112,7 @@ class UsersController extends WigetableController {
 	 * @param int $user_id
 	 * @param int $competency_id
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionCompetencies(int $user_id, int $competency_id):string {
 		$user = Users::findModel($user_id, new NotFoundHttpException());
@@ -121,10 +121,7 @@ class UsersController extends WigetableController {
 			$competency->setUserFields($user_id, $data);
 		}
 
-		return $this->render('competencies', [
-			'user' => $user,
-			'competency' => $competency
-		]);
+		return $this->render('competencies', compact('user', 'competency'));
 	}
 
 }

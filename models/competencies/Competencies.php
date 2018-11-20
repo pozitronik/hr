@@ -38,6 +38,7 @@ use yii\db\Exception;
  *
  * @property CompetencyField[] $fields
  *
+ * @property int $userFields
  * @property-read Users|ActiveQuery $affected_users Пользователи с этой компетенцией
  */
 class Competencies extends ActiveRecord {
@@ -161,9 +162,11 @@ class Competencies extends ActiveRecord {
 
 	/**
 	 * Массив компетенций пользователя пользователя
+	 * @param int $user_id
 	 * @return CompetencyField[]
 	 */
 	public function getUserFields(int $user_id):array {
+		$result = [];
 		foreach ($this->structure as $field_data) {
 			$field = new CompetencyField($field_data);
 			$field->competencyId = $this->id;//todo move to initializer
@@ -173,7 +176,12 @@ class Competencies extends ActiveRecord {
 		return $result;
 	}
 
-	public function setUserFields(int $user_id, $values) {
+	/**
+	 * @param int $user_id
+	 * @param array $values
+	 * @throws Throwable
+	 */
+	public function setUserFields(int $user_id, array $values):void {
 		foreach ($values as $key => $value) {
 			$this->setUserField($user_id, $key, $value);
 		}
@@ -184,6 +192,7 @@ class Competencies extends ActiveRecord {
 	 * @param int $user_id
 	 * @param int $field_id
 	 * @param $field_value
+	 * @throws Throwable
 	 */
 	public function setUserField(int $user_id, int $field_id, $field_value):void {
 		$field = $this->getFieldById($field_id);
