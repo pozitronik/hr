@@ -23,7 +23,11 @@ use yii\base\Model;
  * @property string $name
  * @property string $type
  * @property boolean $required
+ *
+ * @property integer $userId;
+ *
  * @property boolean isNewRecord
+ * @property mixed $value
  */
 class CompetencyField extends Model {
 	private $competency_id; //Внутреннее поле для связи с компетенцией
@@ -32,6 +36,8 @@ class CompetencyField extends Model {
 	private $type = 'integer';
 	private $required = false;
 	private $isNewRecord = true;
+
+	private $user_id;
 
 	public const FIELD_TYPES = [
 		'integer' => 'Число',
@@ -148,36 +154,49 @@ class CompetencyField extends Model {
 
 	/**
 	 * Вернёт значение поля компетенции для указанного пользователя
-	 * @param int $user_id
 	 * @return mixed
 	 */
-	public function getValue(int $user_id) {
+	public function getValue() {
 		switch ($this->type) {
 			case 'boolean':
-				return CompetencyFieldBoolean::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldBoolean::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'date':
-				return CompetencyFieldDate::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldDate::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'integer':
-				return CompetencyFieldInteger::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldInteger::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'percent':
-				return CompetencyFieldPercent::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldPercent::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'range':
-				return CompetencyFieldRange::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldRange::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'string':
-				return CompetencyFieldString::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldString::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'time':
-				return CompetencyFieldTime::getValue($this->competency_id, $this->id, $user_id);
+				return CompetencyFieldTime::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			default:
 				throw new RuntimeException("Field type not implemented: {$this->type}");
 			break;
 		}
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUserId():int {
+		return $this->user_id;
+	}
+
+	/**
+	 * @param int $user_id
+	 */
+	public function setUserId(int $user_id):void {
+		$this->user_id = $user_id;
 	}
 
 }
