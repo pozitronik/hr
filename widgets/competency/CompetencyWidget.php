@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\widgets\competency;
 
 use app\models\competencies\Competencies;
-use app\models\competencies\CompetencyField;
 use Throwable;
 use yii\base\Widget;
 use yii\data\ArrayDataProvider;
@@ -34,27 +33,15 @@ class CompetencyWidget extends Widget {
 	 */
 	public function run():string {
 		$competency = Competencies::findModel($this->competency_id);
-		//$user = Users::findModel($this->user_id);
 
 		if (empty($competency->structure)) return "Компетенция не имеет атрибутов";
 
 		$widgetDataProvider = new ArrayDataProvider();
 
-		$result = [];
-		foreach ($competency->structure as $field_data) {
-			$field = new CompetencyField($field_data);
-			$field->competencyId = $this->competency_id;//todo move to initializer
-			$result[] = [
-				'name' => $field->name,
-				'value' => $field->getValue($this->user_id)
-			];
+		$widgetDataProvider->allModels = $competency->getUserFields($this->user_id);
 
-		}
-
-		$widgetDataProvider->allModels = $result;
-
-		return $this->render('competency',[
-			'widgetDataProvider' => $widgetDataProvider
+		return $this->render('competency', [
+			'widgetDataProvider' => $widgetDataProvider,
 		]);
 	}
 }

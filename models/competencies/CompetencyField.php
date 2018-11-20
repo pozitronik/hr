@@ -11,7 +11,9 @@ use app\models\competencies\types\CompetencyFieldRange;
 use app\models\competencies\types\CompetencyFieldString;
 use app\models\competencies\types\CompetencyFieldTime;
 use http\Exception\RuntimeException;
+use yii\base\InvalidCallException;
 use yii\base\Model;
+use yii\base\UnknownPropertyException;
 
 /**
  * Class CompetencyItem
@@ -73,6 +75,24 @@ class CompetencyField extends Model {
 			'type' => 'Тип',
 			'required' => 'Обязательное поле'
 		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function __get($name) {
+		$getter = 'get'.$name;
+		if (method_exists($this, $getter)) {
+			return $this->$getter();
+		}
+		if (method_exists($this, 'set'.$name)) {
+			throw new InvalidCallException('Getting write-only property: '.get_class($this).'::'.$name);
+		}
+		if ($name == $this->id) {/*Хачим геттер метода для совместимости с ActiveForm::field*/
+			return $this->value;
+		}
+
+		throw new UnknownPropertyException('Getting unknown property: '.get_class($this).'::'.$name);
 	}
 
 	/**
@@ -183,6 +203,13 @@ class CompetencyField extends Model {
 				throw new RuntimeException("Field type not implemented: {$this->type}");
 			break;
 		}
+	}
+
+	/**
+	 * @param mixed $value
+	 */
+	public function setValue($value):void {
+
 	}
 
 	/**

@@ -4,11 +4,11 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var array $structure
- * @var Users $user
  * @var DataProviderInterface $widgetDataProvider
  */
 
-use app\models\users\Users;
+use app\helpers\ArrayHelper;
+use app\models\competencies\CompetencyField;
 use yii\data\DataProviderInterface;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -28,6 +28,25 @@ use kartik\grid\GridView;
 	'responsive' => true,
 	'options' => [
 		'class' => 'competency_table'
+	],
+	'columns' => [
+		[
+			'attribute' => 'type',
+			'value' => function($model) {
+				/** @var CompetencyField $model */
+				return ArrayHelper::getValue(CompetencyField::FIELD_TYPES, $model->type);
+			}
+		],
+		'name',
+		[
+			'format' => 'raw',
+			'attribute' => 'value',
+			'value' => function($model) {
+				/** @var CompetencyField $model */
+
+				return $model->value;//todo: художественный вывод
+			}
+		]
 	]
 ]); ?>
 

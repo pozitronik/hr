@@ -5,11 +5,19 @@ namespace app\models\competencies;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\competencies\types\CompetencyFieldBoolean;
+use app\models\competencies\types\CompetencyFieldDate;
+use app\models\competencies\types\CompetencyFieldInteger;
+use app\models\competencies\types\CompetencyFieldPercent;
+use app\models\competencies\types\CompetencyFieldRange;
+use app\models\competencies\types\CompetencyFieldString;
+use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;
 use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
+use RuntimeException;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -27,6 +35,8 @@ use yii\db\Exception;
  * @property array $structure Структура
  * @property integer $access
  * @property int $deleted Флаг удаления
+ *
+ * @property CompetencyField[] $fields
  *
  * @property-read Users|ActiveQuery $affected_users Пользователи с этой компетенцией
  */
@@ -147,5 +157,62 @@ class Competencies extends ActiveRecord {
 		if (null !== $data = ArrayHelper::getValue($this->structure, $id)) return new CompetencyField(array_merge($data, ['competencyId' => $this->id]));
 		if (null !== $throw) SysExceptions::log($throw, $throw, true);
 		return false;
+	}
+
+	/**
+	 * Массив компетенций пользователя пользователя
+	 * @return CompetencyField[]
+	 */
+	public function getUserFields(int $user_id):array {
+		foreach ($this->structure as $field_data) {
+			$field = new CompetencyField($field_data);
+			$field->competencyId = $this->id;//todo move to initializer
+			$field->userId = $user_id;
+			$result[] = $field;
+		}
+		return $result;
+	}
+
+	public function setUserFields(int $user_id, $values) {
+		foreach ($values as $key => $value) {
+			$this->setUserField($user_id, $key, $value);
+		}
+	}
+
+	/**
+	 * Устанавливает значение атрибута компетенции для пользователя
+	 * @param int $user_id
+	 * @param int $field_id
+	 * @param $field_value
+	 */
+	public function setUserField(int $user_id, int $field_id, $field_value):void {
+		$field = $this->getFieldById($field_id);
+
+		switch ($field->type) {//todo: проверить все методы на соответсиве параметрам
+			case 'boolean':
+				CompetencyFieldBoolean::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			case 'date':
+				CompetencyFieldDate::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			case 'integer':
+				CompetencyFieldInteger::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			case 'percent':
+				CompetencyFieldPercent::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			case 'range':
+				CompetencyFieldRange::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			case 'string':
+				CompetencyFieldString::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			case 'time':
+				CompetencyFieldTime::setValue($this->id, $field_id, $user_id, $field_value);
+			break;
+			default:
+				throw new RuntimeException("Field type not implemented: {$field->type}");
+			break;
+		}
 	}
 }

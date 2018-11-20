@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
+use app\models\competencies\CompetencyField;
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;
@@ -84,10 +85,10 @@ class UsersController extends WigetableController {
 
 	/**
 	 * @param integer $id
-	 * @return string
+	 * @return string|array
 	 * @throws Throwable
 	 */
-	public function actionUpdate(int $id):string {
+	public function actionUpdate(int $id) {
 		$user = Users::findModel($id, new NotFoundHttpException());
 
 		if ((null !== ($updateArray = Yii::$app->request->post($user->classNameShort))) && $user->updateUser($updateArray)) $user->uploadAvatar();
@@ -105,6 +106,25 @@ class UsersController extends WigetableController {
 	public function actionDelete(int $id):void {
 		Users::findModel($id, new NotFoundHttpException())->safeDelete();
 		$this->redirect('index');
+	}
+
+	/**
+	 * Редактор компетенций пользователя
+	 * @param int $user_id
+	 * @param int $competency_id
+	 * @return string
+	 */
+	public function actionCompetencies(int $user_id, int $competency_id):string {
+		$user = Users::findModel($user_id, new NotFoundHttpException());
+		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
+		if (null !== $data = Yii::$app->request->post('CompetencyField')) {
+			$competency->setUserFields($user_id, $data);
+		}
+
+		return $this->render('competencies', [
+			'user' => $user,
+			'competency' => $competency
+		]);
 	}
 
 }

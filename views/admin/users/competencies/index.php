@@ -17,6 +17,8 @@ use app\models\users\Users;
 use yii\data\ActiveDataProvider;
 use kartik\select2\Select2;
 use kartik\grid\CheckboxColumn;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
@@ -57,16 +59,23 @@ use kartik\grid\CheckboxColumn;
 					'header' => 'Удалить',
 					'name' => $user->classNameShort.'[dropCompetencies]'
 				],
-				'name',
+				[
+					'attribute' => 'name',
+					'value' => function($model) use ($user) {
+						/** @var Competencies $model */
+						return Html::a($model->name, Url::to(['admin/users/competencies', 'user_id' => $user->id, 'competency_id' => $model->id]));
+					},
+					'format' => 'raw'
+				],
 				[
 					'attribute' => 'category',
 					'value' => function($model) {
 						/** @var Competencies $model */
-						return ArrayHelper::getValue(Competencies::CATEGORIES,$model->id);
+						return ArrayHelper::getValue(Competencies::CATEGORIES, $model->id);
 					}
 				],
 				[
-					'value' =>function($model) use ($user) {
+					'value' => function($model) use ($user) {
 						/** @var Competencies $model */
 						return CompetencyWidget::widget([
 							'user_id' => $user->id,
