@@ -14,6 +14,7 @@ use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;
 use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
+use app\models\relations\RelUsersCompetencies;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
 use RuntimeException;
@@ -38,7 +39,9 @@ use yii\db\Exception;
  * @property CompetencyField[] $fields
  *
  * @property int $userFields
- * @property-read Users|ActiveQuery $affected_users Пользователи с этой компетенцией
+ *
+ * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
+ * @property Users|ActiveQuery $relUsers Пользователи с этой компетенцией
  */
 class Competencies extends ActiveRecord {
 	use ARExtended;
@@ -221,5 +224,19 @@ class Competencies extends ActiveRecord {
 				CompetencyFieldString::setValue($this->id, $field_id, $user_id, $field_value);
 			break;
 		}
+	}
+
+	/**
+	 * @return Users|ActiveQuery
+	 */
+	public function getRelUsers() {
+		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @return RelUsersCompetencies[]|ActiveQuery
+	 */
+	public function getRelUsersCompetencies() {
+		return $this->hasMany(RelUsersCompetencies::class, ['competency_id' => 'id']);
 	}
 }

@@ -39,6 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			'responsive' => true,
 			'columns' => [
 				'id',
+				[
+					'value' => function($model) {
+						/** @var Competencies $model */
+						return $model->getRelUsers()->count();
+					},
+					'label' => 'Пользователи'
+				],
 				'name',
 				[
 					'attribute' => 'category',
