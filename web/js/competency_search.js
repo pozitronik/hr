@@ -10,11 +10,15 @@ $(document).on('change', '#prototypecompetenciessearch-competency', function () 
 				var fieldSelect = $('#prototypecompetenciessearch-field');
 				fieldSelect.empty();
 				for (var key in data.items) {
-					fieldSelect.append("<option value='" + data.items[key].id + "'>" + data.items[key].name + "</option>");
+					var option = $('<option>',{
+						value: data.items[key].id,
+						text: data.items[key].name,
+						'data-type': data.items[key].type
+					});
+
+					fieldSelect.append(option);
 				}
 			}
-
-
 		}
 	});
 });
