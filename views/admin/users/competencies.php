@@ -52,9 +52,9 @@ $dataProvider = new ArrayDataProvider([
 								return $form->field($model, (string)$model->id)->widget(SwitchInput::class)->label(false);
 							break;
 							case 'date':
-								return $form->field($model, (string)$model->id)->widget(DatePicker::class,[
+								return $form->field($model, (string)$model->id)->widget(DatePicker::class, [
 									'pluginOptions' => [
-										'autoclose'=>true,
+										'autoclose' => true,
 										'format' => 'yyyy-mm-dd'
 									]
 								])->label(false);
@@ -63,7 +63,24 @@ $dataProvider = new ArrayDataProvider([
 								return $form->field($model, (string)$model->id)->textInput()->label(false);
 							break;
 							case 'percent':
-								return $form->field($model, (string)$model->id)->widget(Slider::class)->label(false);
+								return $form->field($model, (string)$model->id)->widget(RangeInput::class, [
+									'html5Options' => [
+										'min' => 0,
+										'max' => 100
+									],
+									'html5Container' => [
+										'style' => 'width:50%'
+									],
+									'addon' => [
+										'append' => [
+											'content' => '%'
+										],
+										'prepend' => [
+											'content'=>'<span class="text-danger">0%</span>'
+										],
+										'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
+									]
+								])->label(false);
 							break;
 							case 'range':
 								return $form->field($model, (string)$model->id)->widget(RangeInput::class)->label(false);
