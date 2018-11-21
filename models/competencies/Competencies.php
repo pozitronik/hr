@@ -210,9 +210,6 @@ class Competencies extends ActiveRecord {
 			case 'percent':
 				CompetencyFieldPercent::setValue($this->id, $field_id, $user_id, $field_value);
 			break;
-			case 'range':
-				CompetencyFieldRange::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
 			case 'string':
 				CompetencyFieldString::setValue($this->id, $field_id, $user_id, $field_value);
 			break;

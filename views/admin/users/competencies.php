@@ -11,6 +11,7 @@ use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
 use app\models\users\Users;
 use kartik\date\DatePicker;
+use kartik\field\FieldRange;
 use kartik\range\RangeInput;
 use kartik\slider\Slider;
 use kartik\switchinput\SwitchInput;
@@ -81,9 +82,6 @@ $dataProvider = new ArrayDataProvider([
 										'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
 									]
 								])->label(false);
-							break;
-							case 'range':
-								return $form->field($model, (string)$model->id)->widget(RangeInput::class)->label(false);
 							break;
 							case 'string':
 								return $form->field($model, (string)$model->id)->textarea()->label(false);
