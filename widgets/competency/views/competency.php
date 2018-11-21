@@ -39,13 +39,22 @@ use kartik\grid\GridView;
 		],
 		'name',
 		[
-			'format' => 'raw',
 			'attribute' => 'value',
 			'value' => function($model) {
 				/** @var CompetencyField $model */
-
-				return $model->value;//todo: художественный вывод
-			}
+				switch ($model->type) {
+					case 'boolean':
+						return $model->value?'Да':'Нет';
+					break;
+					case 'percent':
+						return $model->value.'%';
+					break;
+					default:
+						return $model->value;
+					break;
+				}
+			},
+			'format' => 'raw'
 		]
 	]
 ]); ?>
