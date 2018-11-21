@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\ArrayHelper;
+use app\models\competencies\Competencies;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
@@ -61,7 +62,8 @@ class AjaxController extends Controller {
 							'set-user-roles-in-group',
 							'users-search',
 							'user-add-bookmark',
-							'user-remove-bookmark'
+							'user-remove-bookmark',
+							'competency-get-fields'
 						],
 						'roles' => ['@', '?']
 					]
@@ -322,5 +324,33 @@ class AjaxController extends Controller {
 			]
 		];
 
+	}
+
+	/**
+	 * Возвращает поля компетенции
+	 * @return array
+	 */
+	public function actionCompetencyGetFields():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		if (false !== $competency_id = Yii::$app->request->post('competency', false)) {
+			if (false !== $competency = Competencies::findModel($competency_id)) {
+				return [
+					'result' => self::RESULT_OK,
+					'items' => $competency->structure
+				];
+			}
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'competency' => 'not found'
+				]
+			];
+		}
+		return [
+			'result' => self::RESULT_ERROR,
+			'errors' => [
+				'competency' => 'empty'
+			]
+		];
 	}
 }
