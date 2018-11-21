@@ -140,7 +140,7 @@ class CompetencyField extends Model {
 	 * @return bool
 	 */
 	public function getIsNewRecord():bool {
-		return $this->isNewRecord;//todo: use id
+		return null === $this->id;
 	}
 
 	/**
