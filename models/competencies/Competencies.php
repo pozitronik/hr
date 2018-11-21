@@ -167,9 +167,10 @@ class Competencies extends ActiveRecord {
 	public function getUserFields(int $user_id):array {
 		$result = [];
 		foreach ($this->structure as $field_data) {
-			$field = new CompetencyField($field_data);
-			$field->competencyId = $this->id;//todo move to initializer
-			$field->userId = $user_id;
+			$field = new CompetencyField(array_merge($field_data, [
+				'competencyId' => $this->id,
+				'userId' => $user_id
+			]));
 			$result[] = $field;
 		}
 		return $result;
