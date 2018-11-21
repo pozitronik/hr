@@ -20,10 +20,6 @@ use yii\data\ArrayDataProvider;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
-$dataProvider = new ArrayDataProvider([//todo move to controller
-	'allModels' => $competency->getUserFields($user->id)
-]);
-
 $this->title = "{$user->username}: {$competency->name} ";
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
@@ -42,7 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="row">
 			<div class="col-xs-12">
 				<?= GridView::widget([
-					'dataProvider' => $dataProvider,
+					'dataProvider' => new ArrayDataProvider([
+						'allModels' => $competency->getUserFields($user->id)
+					]),
 					'showFooter' => false,
 					'showPageSummary' => false,
 					'summary' => '',
