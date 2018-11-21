@@ -53,6 +53,7 @@ class CompetenciesController extends WigetableController {
 	public function actionCreate() {
 		$newCompetency = new Competencies();
 		if ($newCompetency->createCompetency(Yii::$app->request->post($newCompetency->classNameShort))) {
+			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newCompetency->id]);
 		}
 		return $this->render('create', [
@@ -92,7 +93,6 @@ class CompetenciesController extends WigetableController {
 	 * @param null|int $field_id id поля (null для нового)
 	 * @return string|Response
 	 * @throws Throwable
-	 * @todo fixme не работает кнопка "сохранить+добавить"
 	 */
 	public function actionField(int $competency_id, $field_id = null) {
 		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
@@ -101,6 +101,7 @@ class CompetenciesController extends WigetableController {
 		]);
 		if ($field->load(Yii::$app->request->post())) {
 			$competency->setField($field, $field_id);
+			if (Yii::$app->request->post('more', false)) return $this->redirect(['field', 'competency_id' => $competency_id, 'field_id' => $field_id]);//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $competency_id]);
 
 		}
