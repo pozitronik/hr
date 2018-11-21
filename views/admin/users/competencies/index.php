@@ -71,7 +71,7 @@ use yii\helpers\Url;
 					'attribute' => 'category',
 					'value' => function($model) {
 						/** @var Competencies $model */
-						return ArrayHelper::getValue(Competencies::CATEGORIES, $model->id);
+						return ArrayHelper::getValue(Competencies::CATEGORIES, $model->category);
 					}
 				],
 				[
