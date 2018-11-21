@@ -39,7 +39,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'onText' => 'И',
 								'offText' => 'ИЛИ',
 								'onColor' => 'primary',
-								'offColor' => 'primary',
+								'offColor' => 'primary'
 							]
 						]); ?>
 					</div>

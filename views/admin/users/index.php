@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'email:email',
 				[
 					'class' => ActionColumn::class,
-					'template' => '{update} {delete}',
+					'template' => '{update} {delete}'
 				]
 			]
 		]); ?>

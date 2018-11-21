@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				[
 					'content' => Html::a('Поиск', 'search', ['class' => 'btn btn-info'])
-				],
+				]
 			],
 			'export' => false,
 			'resizableColumns' => true,

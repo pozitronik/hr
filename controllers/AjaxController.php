@@ -331,6 +331,7 @@ class AjaxController extends Controller {
 	/**
 	 * Возвращает поля компетенции
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionCompetencyGetFields():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
