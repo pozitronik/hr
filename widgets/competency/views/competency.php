@@ -47,7 +47,7 @@ use kartik\grid\GridView;
 						return $model->value?'Да':'Нет';
 					break;
 					case 'percent':
-						return $model->value.'%';
+						return (null === $model->value)?null:$model->value.'%';
 					break;
 					default:
 						return $model->value;
