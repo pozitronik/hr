@@ -3,11 +3,22 @@ declare(strict_types = 1);
 
 namespace app\models\competencies\types;
 
+use yii\db\ActiveRecord;
+
 /**
  * Interface DataFieldInterface
  * @package app\models\competencies\types
  */
 interface DataFieldInterface {
+
+	/**
+	 * Поиск соответствующей записи по подходящим параметрам
+	 * @param int $competency_id
+	 * @param int $field_id
+	 * @param int $user_id
+	 * @return self|null
+	 */
+	public static function getRecord(int $competency_id, int $field_id, int $user_id);
 
 	/**
 	 * Вернуть из соответствующей таблицы значение поля для этого поля этой компетенции этого юзера

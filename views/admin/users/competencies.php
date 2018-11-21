@@ -52,7 +52,12 @@ $dataProvider = new ArrayDataProvider([
 								return $form->field($model, (string)$model->id)->widget(SwitchInput::class)->label(false);
 							break;
 							case 'date':
-								return $form->field($model, (string)$model->id)->widget(DatePicker::class)->label(false);
+								return $form->field($model, (string)$model->id)->widget(DatePicker::class,[
+									'pluginOptions' => [
+										'autoclose'=>true,
+										'format' => 'yyyy-mm-dd'
+									]
+								])->label(false);
 							break;
 							case 'integer':
 								return $form->field($model, (string)$model->id)->textInput()->label(false);
