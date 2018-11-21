@@ -7,7 +7,6 @@ use app\models\competencies\types\CompetencyFieldBoolean;
 use app\models\competencies\types\CompetencyFieldDate;
 use app\models\competencies\types\CompetencyFieldInteger;
 use app\models\competencies\types\CompetencyFieldPercent;
-use app\models\competencies\types\CompetencyFieldRange;
 use app\models\competencies\types\CompetencyFieldString;
 use app\models\competencies\types\CompetencyFieldTime;
 use http\Exception\RuntimeException;
@@ -188,9 +187,6 @@ class CompetencyField extends Model {
 			break;
 			case 'percent':
 				return CompetencyFieldPercent::getValue($this->competency_id, $this->id, $this->user_id);
-			break;
-			case 'range':
-				return CompetencyFieldRange::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			case 'string':
 				return CompetencyFieldString::getValue($this->competency_id, $this->id, $this->user_id);

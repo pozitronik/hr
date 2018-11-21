@@ -9,7 +9,6 @@ use app\models\competencies\types\CompetencyFieldBoolean;
 use app\models\competencies\types\CompetencyFieldDate;
 use app\models\competencies\types\CompetencyFieldInteger;
 use app\models\competencies\types\CompetencyFieldPercent;
-use app\models\competencies\types\CompetencyFieldRange;
 use app\models\competencies\types\CompetencyFieldString;
 use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;

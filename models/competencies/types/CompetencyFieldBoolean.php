@@ -82,7 +82,7 @@ class CompetencyFieldBoolean extends ActiveRecord implements DataFieldInterface 
 	 * @param int $user_id
 	 * @return self|null
 	 */
-	public static function getRecord(int $competency_id, int $field_id, int $user_id) {
+	public static function getRecord(int $competency_id, int $field_id, int $user_id):?self {
 		return self::find()->where(compact('competency_id', 'field_id', 'user_id'))->one();
 	}
 
