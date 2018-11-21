@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										])->label(false);
 									break;
 									case 'integer':
-										return $form->field($model, (string)$model->id)->textInput()->label(false);
+										return $form->field($model, (string)$model->id)->textInput(['type' => 'number'])->label(false);
 									break;
 									case 'percent':
 										return $form->field($model, (string)$model->id)->widget(RangeInput::class, [
