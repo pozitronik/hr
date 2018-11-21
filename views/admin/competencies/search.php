@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var PrototypeCompetenciesSearch $model
  */
 
+use app\assets\AppAsset;
 use app\models\prototypes\PrototypeCompetenciesSearch;
 use yii\web\View;
 use kartik\form\ActiveForm;
@@ -19,7 +20,7 @@ $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Компетенции', 'url' => ['/admin/competencies']];
 $this->params['breadcrumbs'][] = $this->title;
-
+$this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class]);//todo: после прототипирования вытащить в виджет или модуль
 ?>
 <div class="row">
 	<div class="col-xs-12">
