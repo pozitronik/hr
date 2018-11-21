@@ -11,6 +11,7 @@ use app\models\competencies\types\CompetencyFieldString;
 use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\SysExceptions;
 use RuntimeException;
+use Throwable;
 use yii\base\InvalidCallException;
 use yii\base\Model;
 use yii\base\UnknownPropertyException;
@@ -37,7 +38,6 @@ class CompetencyField extends Model {
 	private $name = '';
 	private $type = 'integer';
 	private $required = false;
-	private $isNewRecord = true;
 
 	private $user_id;
 
@@ -174,6 +174,7 @@ class CompetencyField extends Model {
 	/**
 	 * Вернёт значение поля компетенции для указанного пользователя
 	 * @return mixed
+	 * @throws Throwable
 	 */
 	public function getValue() {
 		switch ($this->type) {
