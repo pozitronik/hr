@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\groups\Groups;
+use app\models\prototypes\PrototypeCompetencySearchCondition;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
 use app\models\users\Bookmarks;
@@ -63,7 +64,8 @@ class AjaxController extends Controller {
 							'users-search',
 							'user-add-bookmark',
 							'user-remove-bookmark',
-							'competency-get-fields'
+							'competency-get-fields',
+							'competency-get-field-condition'
 						],
 						'roles' => ['@', '?']
 					]
@@ -350,6 +352,36 @@ class AjaxController extends Controller {
 			'result' => self::RESULT_ERROR,
 			'errors' => [
 				'competency' => 'empty'
+			]
+		];
+	}
+
+	/**
+	 * Возвращает набор условий для этого типа поля
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionCompetencyGetFieldCondition():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		if (false !== $type = Yii::$app->request->post('type', false)) {
+			/** @var string $type */
+			if (false !== $condition = PrototypeCompetencySearchCondition::findCondition($type)) {
+				return [
+					'result' => self::RESULT_OK,
+					'items' => $condition
+				];
+			}
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'type' => 'not found'
+				]
+			];
+		}
+		return [
+			'result' => self::RESULT_ERROR,
+			'errors' => [
+				'type' => 'empty'
 			]
 		];
 	}
