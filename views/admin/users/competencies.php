@@ -69,6 +69,9 @@ $this->params['breadcrumbs'][] = $this->title;
 											'pluginOptions' => [
 												'autoclose' => true,
 												'format' => 'yyyy-mm-dd'
+											],
+											'options' => [
+												'placeholder' => 'Укажите дату'
 											]
 										])->label(false);
 									break;
@@ -104,7 +107,11 @@ $this->params['breadcrumbs'][] = $this->title;
 												'showSeconds' => true,
 												'showMeridian' => false,
 												'minuteStep' => 1,
-												'secondStep' => 5
+												'secondStep' => 5,
+												'defaultTime' => false
+											],
+											'options' => [
+												'placeholder' => 'Укажите время'
 											]
 										])->label(false);
 									break;
