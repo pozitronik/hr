@@ -58,7 +58,7 @@ class CompetencyField extends Model {
 			[['id'], 'integer'],
 			[['id'], 'unique'],
 			[['name', 'type'], 'string'],
-			[['type'], 'in', 'range' => array_keys(self::FIELD_TYPES)],//todo check this
+			[['type'], 'in', 'range' => array_keys(self::FIELD_TYPES)],
 			[['required'], 'boolean'],
 			[['name', 'type', 'required'], 'required']
 		];
