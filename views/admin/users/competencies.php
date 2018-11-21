@@ -95,6 +95,9 @@ $this->params['breadcrumbs'][] = $this->title;
 													'content' => '<span class="text-danger">0%</span>'
 												],
 												'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
+											],
+											'options' => [
+												'placeholder' => 'Укажите значение'
 											]
 										])->label(false);
 									break;
