@@ -196,7 +196,7 @@ class Competencies extends ActiveRecord {
 	public function setUserField(int $user_id, int $field_id, $field_value):void {
 		$field = $this->getFieldById($field_id);
 
-		switch ($field->type) {//todo: проверить все методы на соответсиве параметрам
+		switch ($field->type) {
 			case 'boolean':
 				CompetencyFieldBoolean::setValue($this->id, $field_id, $user_id, $field_value);
 			break;
@@ -216,7 +216,8 @@ class Competencies extends ActiveRecord {
 				CompetencyFieldTime::setValue($this->id, $field_id, $user_id, $field_value);
 			break;
 			default:
-				throw new RuntimeException("Field type not implemented: {$field->type}");
+				SysExceptions::log(new RuntimeException("Field type not implemented: {$field->type}"), false, true);
+				CompetencyFieldString::setValue($this->id, $field_id, $user_id, $field_value);
 			break;
 		}
 	}

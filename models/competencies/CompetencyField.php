@@ -9,7 +9,8 @@ use app\models\competencies\types\CompetencyFieldInteger;
 use app\models\competencies\types\CompetencyFieldPercent;
 use app\models\competencies\types\CompetencyFieldString;
 use app\models\competencies\types\CompetencyFieldTime;
-use http\Exception\RuntimeException;
+use app\models\core\SysExceptions;
+use RuntimeException;
 use yii\base\InvalidCallException;
 use yii\base\Model;
 use yii\base\UnknownPropertyException;
@@ -195,7 +196,9 @@ class CompetencyField extends Model {
 				return CompetencyFieldTime::getValue($this->competency_id, $this->id, $this->user_id);
 			break;
 			default:
-				throw new RuntimeException("Field type not implemented: {$this->type}");
+				SysExceptions::log(new RuntimeException("Field type not implemented: {$this->type}"), false, true);
+				return CompetencyFieldString::getValue($this->competency_id, $this->id, $this->user_id);
+
 			break;
 		}
 	}
