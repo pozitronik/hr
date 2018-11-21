@@ -118,6 +118,12 @@ class CompetenciesController extends WigetableController {
 			'competency' => $competency,
 			'model' => $field
 		]);
+	}
 
+	/**
+	 * @return string
+	 */
+	public function actionSearch():string {
+		return $this->render('search');
 	}
 }
