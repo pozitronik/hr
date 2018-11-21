@@ -11,6 +11,9 @@ use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 use kartik\switchinput\SwitchInput;
+use kartik\select2\Select2;
+use app\helpers\ArrayHelper;
+use app\models\competencies\Competencies;
 
 $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -23,17 +26,53 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title pull-left">
-					<?= $form->field($model, 'logic_mode_and', [
-						'options' => [
-							'style' => 'width:500px;'
-						]
-					])->widget(SwitchInput::class)->label(null, ['class' => 'pull-left']); ?>
-				</h3>
-
+				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
 			</div>
 
 			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-1">
+						<?= $form->field($model, 'logic')->widget(SwitchInput::class, [
+							'pluginOptions' => [
+								'size' => 'mini',
+								'onText' => 'И',
+								'offText' => 'ИЛИ',
+								'onColor' => 'primary',
+								'offColor' => 'primary',
+							]
+						]); ?>
+					</div>
+					<div class="col-md-3">
+						<?= $form->field($model, 'competency')->widget(Select2::class, [
+							'data' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+							'options' => [
+								'multiple' => false,
+								'placeholder' => 'Выбрать компетенцию'
+							]
+						]); ?>
+					</div>
+					<div class="col-md-3">
+						<?= $form->field($model, 'field')->widget(Select2::class, [
+							'data' => [],
+							'options' => [
+								'multiple' => false,
+								'placeholder' => 'Выбрать поле'
+							]
+						]); ?>
+					</div>
+					<div class="col-md-2">
+						<?= $form->field($model, 'condition')->widget(Select2::class, [
+							'data' => [],
+							'options' => [
+								'multiple' => false,
+								'placeholder' => 'Выбрать условие'
+							]
+						]); ?>
+					</div>
+					<div class="col-md-3">
+						<?= $form->field($model, 'value'); ?>
+					</div>
+				</div>
 			</div>
 
 			<div class="panel-footer">

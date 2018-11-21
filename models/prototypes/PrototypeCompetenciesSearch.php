@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
+use app\models\competencies\Competencies;
+use app\models\competencies\CompetencyField;
 use yii\base\Model;
 
 /**
@@ -10,18 +12,26 @@ use yii\base\Model;
  * Прототип модели поиска пользователей по компетенциям
  * @package app\models\prototypes
  *
- * @property boolean $logic_mode_and Режим поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
+ * @property boolean $logic Режим поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
+ * @property Competencies $competency Искомая компетенция
+ * @property CompetencyField $field Поле компетенции
+ * @property PrototypeCompetencySearchCondition $condition
+ * @property mixed $value Искомое значение
  */
 class PrototypeCompetenciesSearch extends Model {
-	public $logic_mode_and = true;
-
+	public $logic = true;
+	public $competency;
+	public $field;
+	public $condition;
+	public $value;
 
 	/**
 	 * @inheritdoc
 	 */
 	public function rules():array {
 		return [
-			[['logic_mode_and'], 'boolean']
+			[['logic'], 'boolean'],
+			[['competency', 'field', 'condition', 'value'], 'safe']
 		];
 	}
 
@@ -30,7 +40,11 @@ class PrototypeCompetenciesSearch extends Model {
 	 */
 	public function attributeLabels():array {
 		return [
-			'logic_mode_and' => 'Учитывать все правила'
+			'logic' => 'Объединение',
+			'competency' => 'Компетенция',
+			'field' => 'Поле',
+			'condition' => 'Условие',
+			'value' => 'Значение'
 		];
 	}
 
