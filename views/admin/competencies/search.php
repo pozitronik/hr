@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var PrototypeCompetenciesSearch $model
+ * @var PrototypeCompetenciesSearchSet $model
  */
 
 use app\assets\AppAsset;
 use app\models\prototypes\PrototypeCompetenciesSearch;
+use app\models\prototypes\PrototypeCompetenciesSearchSet;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
@@ -31,50 +32,53 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 			</div>
 
 			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-1">
-						<?= $form->field($model, 'logic')->widget(SwitchInput::class, [
-							'pluginOptions' => [
-								'size' => 'mini',
-								'onText' => 'И',
-								'offText' => 'ИЛИ',
-								'onColor' => 'primary',
-								'offColor' => 'primary'
-							]
-						]); ?>
+				<?php foreach ($model->conditions as $index => $condition): ?>
+
+					<div class="row">
+						<div class="col-md-1">
+							<?= $form->field($condition, 'logic')->widget(SwitchInput::class, [
+								'pluginOptions' => [
+									'size' => 'mini',
+									'onText' => 'И',
+									'offText' => 'ИЛИ',
+									'onColor' => 'primary',
+									'offColor' => 'primary'
+								]
+							]); ?>
+						</div>
+						<div class="col-md-3">
+							<?= $form->field($condition, 'competency')->widget(Select2::class, [
+								/*todo: группировка по категориям*/
+								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
+								'options' => [
+									'multiple' => false,
+									'placeholder' => 'Выбрать компетенцию'
+								]
+							]); ?>
+						</div>
+						<div class="col-md-3">
+							<?= $form->field($condition, 'field')->widget(Select2::class, [
+								'data' => [],
+								'options' => [
+									'multiple' => false,
+									'placeholder' => 'Выбрать поле'
+								]
+							]); ?>
+						</div>
+						<div class="col-md-2">
+							<?= $form->field($condition, 'condition')->widget(Select2::class, [
+								'data' => [],
+								'options' => [
+									'multiple' => false,
+									'placeholder' => 'Выбрать условие'
+								]
+							]); ?>
+						</div>
+						<div class="col-md-3">
+							<?= $form->field($condition, 'value'); ?>
+						</div>
 					</div>
-					<div class="col-md-3">
-						<?= $form->field($model, 'competency')->widget(Select2::class, [
-							/*todo: группировка по категориям*/
-							'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
-							'options' => [
-								'multiple' => false,
-								'placeholder' => 'Выбрать компетенцию'
-							]
-						]); ?>
-					</div>
-					<div class="col-md-3">
-						<?= $form->field($model, 'field')->widget(Select2::class, [
-							'data' => [],
-							'options' => [
-								'multiple' => false,
-								'placeholder' => 'Выбрать поле'
-							]
-						]); ?>
-					</div>
-					<div class="col-md-2">
-						<?= $form->field($model, 'condition')->widget(Select2::class, [
-							'data' => [],
-							'options' => [
-								'multiple' => false,
-								'placeholder' => 'Выбрать условие'
-							]
-						]); ?>
-					</div>
-					<div class="col-md-3">
-						<?= $form->field($model, 'value'); ?>
-					</div>
-				</div>
+				<?php endforeach; ?>
 			</div>
 
 			<div class="panel-footer">

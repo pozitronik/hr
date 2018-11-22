@@ -8,6 +8,7 @@ use app\models\competencies\CompetenciesSearch;
 use app\models\competencies\CompetencyField;
 use app\models\core\WigetableController;
 use app\models\prototypes\PrototypeCompetenciesSearch;
+use app\models\prototypes\PrototypeCompetenciesSearchSet;
 use Throwable;
 use yii\db\Exception;
 use yii\web\ErrorAction;
@@ -126,7 +127,7 @@ class CompetenciesController extends WigetableController {
 	 */
 	public function actionSearch():string {
 		return $this->render('search',[
-			'model' => new PrototypeCompetenciesSearch()
+			'model' => new PrototypeCompetenciesSearchSet()
 		]);
 	}
 }
