@@ -7,7 +7,6 @@ declare(strict_types = 1);
  */
 
 use app\assets\AppAsset;
-use app\models\prototypes\PrototypeCompetenciesSearch;
 use app\models\prototypes\PrototypeCompetenciesSearchSet;
 use yii\web\View;
 use kartik\form\ActiveForm;
@@ -36,7 +35,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 
 					<div class="row">
 						<div class="col-md-1">
-							<?= $form->field($condition, 'logic')->widget(SwitchInput::class, [
+							<?= $form->field($model, "logic[$index]")->widget(SwitchInput::class, [
 								'pluginOptions' => [
 									'size' => 'mini',
 									'onText' => 'И',
@@ -47,7 +46,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($condition, 'competency')->widget(Select2::class, [
+							<?= $form->field($model, "competency[$index]")->widget(Select2::class, [
 								/*todo: группировка по категориям*/
 								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
 								'options' => [
@@ -57,7 +56,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($condition, 'field')->widget(Select2::class, [
+							<?= $form->field($model, "field[$index]")->widget(Select2::class, [
 								'data' => [],
 								'options' => [
 									'multiple' => false,
@@ -66,7 +65,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-2">
-							<?= $form->field($condition, 'condition')->widget(Select2::class, [
+							<?= $form->field($model, "condition[$index]")->widget(Select2::class, [
 								'data' => [],
 								'options' => [
 									'multiple' => false,
@@ -75,7 +74,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($condition, 'value'); ?>
+							<?= $form->field($model, "value[$index]"); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
