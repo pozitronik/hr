@@ -33,7 +33,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 			<div class="panel-body">
 				<?php foreach ($model->conditions as $index => $condition): ?>
 
-					<div class="row">
+					<div class="row data-index='<?= $index ?>'">
 						<div class="col-md-1">
 							<?= $form->field($model, "logic[$index]")->widget(SwitchInput::class, [
 								'pluginOptions' => [
@@ -64,7 +64,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								]
 							]); ?>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-1">
 							<?= $form->field($model, "condition[$index]")->widget(Select2::class, [
 								'data' => [],
 								'options' => [
@@ -76,6 +76,12 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 						<div class="col-md-3">
 							<?= $form->field($model, "value[$index]"); ?>
 						</div>
+						<div class="col-md-1">
+							<div class="btn-group form-group pull-right">
+								<?= Html::button(...$model->removeConditionButton($index)); ?>
+								<?= Html::button(...$model->addConditionButton()); ?>
+							</div>
+						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
@@ -84,7 +90,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 				<div class="btn-group">
 					<?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']); ?>
 				</div>
-				<div class="btn-group  pull-right">
+				<div class="btn-group pull-right">
 					<?= Html::button('Сохранить поиск', ['class' => 'btn btn-info']); ?>
 				</div>
 			</div>

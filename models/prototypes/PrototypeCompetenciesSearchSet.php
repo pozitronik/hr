@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
 use yii\base\Model;
+use yii\helpers\Html;
 
 /**
  * Class PrototypeCompetenciesSearchSet
@@ -21,6 +22,9 @@ use yii\base\Model;
  * @property CompetencyField[]|null $field;
  * @property PrototypeCompetencySearchCondition[]|null $condition;
  * @property string[]|null[] $value
+ *
+ * @property $removeCondition
+ * @property $addCondition
  */
 class PrototypeCompetenciesSearchSet extends Model {
 	private $conditions = [];
@@ -132,9 +136,18 @@ class PrototypeCompetenciesSearchSet extends Model {
 	}
 
 	/**
-	 * @param array $value
+	 * @param int $searchIndex
+	 * @return array
 	 */
-	public function setValue(array $value):void {
+	public function removeConditionButton(int $searchIndex):array {
+		return ["<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger pull-left', 'disabled' => (0 === $searchIndex)?'disabled':false]];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function addConditionButton():array {
+		return ["<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success pull-left']];
 	}
 
 }
