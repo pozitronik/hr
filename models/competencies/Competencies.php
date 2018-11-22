@@ -2,7 +2,11 @@
 declare(strict_types = 1);
 
 namespace app\models\competencies;
-
+/**
+ * Глобально нужно переписать хранилище компетенций в некоторую абстрактную сущность a-la DynamicStorage, а компетенции сделать надстройкой над ней.
+ * Это позволит абстрагироваться от внутренних методов работы модели, и использовать её в любых местах где нужно динамическое атрибутирование.
+ * Саму сущность потребуется утащить в компонент.
+ */
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\competencies\types\CompetencyFieldBoolean;
