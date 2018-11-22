@@ -41,7 +41,7 @@ use yii\db\Exception;
  * @property integer $access
  * @property int $deleted Флаг удаления
  *
- * @property CompetencyField[] $fields
+ * @property CompetencyField[] $fields//todo переименовать, чтобы не было коллизий с fields()
  *
  * @property int $userFields
  *

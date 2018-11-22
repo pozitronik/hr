@@ -73,10 +73,10 @@ class PrototypeCompetencySearchCondition extends Model {
 
 	/**
 	 * @param string $type
-	 * @return array|null
+	 * @return array
 	 * @throws Throwable
 	 */
-	public static function findCondition(string $type):?array {
-		return ArrayHelper::getValue(self::$conditions, $type, false);
+	public static function findCondition(string $type):array {
+		return ArrayHelper::getValue(self::$conditions, $type, []);
 	}
 }

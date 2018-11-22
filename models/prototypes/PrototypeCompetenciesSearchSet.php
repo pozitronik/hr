@@ -6,14 +6,16 @@ namespace app\models\prototypes;
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
+use app\models\core\SysExceptions;
+use ReflectionClass;
+use Throwable;
 use yii\base\Model;
-use yii\helpers\Html;
 
 /**
  * Class PrototypeCompetenciesSearchSet
  * @package app\models\prototypes
  *
- * @property PrototypeCompetenciesSearch[] $conditions
+ * @property PrototypeCompetenciesSearch[] $set
  *
  *
  *
@@ -24,17 +26,31 @@ use yii\helpers\Html;
  * @property string[]|null[] $value
  *
  * @property $removeCondition
+ * @property null|string $classNameShort
  * @property $addCondition
  */
 class PrototypeCompetenciesSearchSet extends Model {
-	private $conditions = [];
+	private $set = [];
+
+	/**
+	 * @return string|null
+	 * @throws Throwable
+	 */
+	public function getClassNameShort():?string {
+		try {
+			return (new ReflectionClass($this))->getShortName();
+		} catch (Throwable $t) {
+			SysExceptions::log($t, $t);
+		}
+		return null;
+	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function rules():array {
 		return [
-			[['conditions'], 'safe']
+			[['set', 'logic', 'competency', 'field', 'condition', 'value'], 'safe']
 		];
 	}
 
@@ -43,35 +59,74 @@ class PrototypeCompetenciesSearchSet extends Model {
 	 */
 	public function attributeLabels():array {
 		return [
-			'conditions' => 'Набор условий'
+			'set' => 'Набор условий',
+			'logic' => 'Объединение',
+			'competency' => 'Компетенция',
+			'field' => 'Поле',
+			'condition' => 'Условие',
+			'value' => 'Значение'
 		];
 	}
 
 	public function init():void {
 		parent::init();
-		if ([] === $this->conditions) $this->conditions[] = new PrototypeCompetenciesSearch();//По умолчанию одно условие
+		if ([] === $this->set) $this->set[] = new PrototypeCompetenciesSearch();//По умолчанию одно условие
 	}
 
 	/**
 	 * @param PrototypeCompetenciesSearch|null $condition
 	 */
-	public function addCondition(PrototypeCompetenciesSearch $condition = null):void {
+	public function addItem(PrototypeCompetenciesSearch $condition = null):void {
 		if (null === $condition) $condition = new PrototypeCompetenciesSearch();
-		$this->conditions[] = $condition;
+		$this->set[] = $condition;
 	}
 
 	/**
 	 * @param int $index
 	 */
-	public function removeCondition(int $index):void {
-		ArrayHelper::remove($this->conditions, $index);
+	public function removeItem(int $index):void {
+		ArrayHelper::remove($this->set, $index);
 	}
 
 	/**
 	 * @return PrototypeCompetenciesSearch[]
 	 */
-	public function getConditions():array {
-		return $this->conditions;
+	public function getSet():array {
+		return $this->set;
+	}
+
+	/**
+	 * @param int $count
+	 */
+	private function initSet(int $count):void {
+		/** @noinspection ForeachInvariantsInspection */
+		for ($i = 0; $i < $count; $i++) {
+			if (!isset($this->set[$i])) $this->set[$i] = new PrototypeCompetenciesSearch();
+		}
+	}
+
+	/**
+	 * Для предвыбранной компетенции нужно отдать её поля
+	 * @param integer $index
+	 */
+	public function competencyFields($index):array {
+		if (false !== $competency = Competencies::findModel($index)) {
+			return ArrayHelper::map($competency->structure, 'id', 'name');
+		}
+		return [];
+	}
+
+	/**
+	 * Для предвыбранной компетенции нужно отдать её поля
+	 */
+	public function fieldsConditions($competencyIndex, $fieldIndex) {
+		if (false !== $competency = Competencies::findModel($competencyIndex)) {
+			$field = $competency->structure[$fieldIndex];
+
+			$type = $field['type'];
+			return PrototypeCompetencySearchCondition::findCondition($type);
+		}
+		return [];
 	}
 
 	/******************************************/
@@ -80,74 +135,85 @@ class PrototypeCompetenciesSearchSet extends Model {
 	 * @return boolean[]
 	 */
 	public function getLogic():array {
-		return ArrayHelper::getColumn($this->conditions, 'logic');
+		return ArrayHelper::getColumn($this->set, 'logic');
 	}
 
 	/**
 	 * @param boolean[] $logic
 	 */
 	public function setLogic(array $logic):void {
+		self::initSet(count($logic));
+		foreach ($logic as $index => $value) {
+			$this->set[$index]->logic = $value;
+		}
 	}
 
 	/**
 	 * @return Competencies[]|null[]
 	 */
 	public function getCompetency():?array {
-		return ArrayHelper::getColumn($this->conditions, 'competency');
+		return ArrayHelper::getColumn($this->set, 'competency');
 	}
 
 	/**
 	 * @param Competencies[]|null[] $competency
 	 */
 	public function setCompetency(?array $competency):void {
+		self::initSet(count($competency));
+		foreach ($competency as $index => $value) {
+			$this->set[$index]->competency = $value;
+		}
 	}
 
 	/**
 	 * @return CompetencyField[]|null
 	 */
 	public function getField():?array {
-		return ArrayHelper::getColumn($this->conditions, 'field');
+		return ArrayHelper::getColumn($this->set, 'field');
 	}
 
 	/**
 	 * @param CompetencyField[]|null $field
 	 */
 	public function setField(?array $field):void {
+		self::initSet(count($field));
+		foreach ($field as $index => $value) {
+			$this->set[$index]->field = $value;
+		}
 	}
 
 	/**
 	 * @return PrototypeCompetencySearchCondition[]|null
 	 */
 	public function getCondition():?array {
-		return ArrayHelper::getColumn($this->conditions, 'condition');
+		return ArrayHelper::getColumn($this->set, 'condition');
 	}
 
 	/**
 	 * @param PrototypeCompetencySearchCondition[]|null $condition
 	 */
 	public function setCondition(?array $condition):void {
+		self::initSet(count($condition));
+		foreach ($condition as $index => $value) {
+			$this->set[$index]->condition = $value;
+		}
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getValue():array {
-		return ArrayHelper::getColumn($this->conditions, 'value');
+		return ArrayHelper::getColumn($this->set, 'value');
 	}
 
 	/**
-	 * @param int $searchIndex
-	 * @return array
+	 * @param null[]|string[] $value
 	 */
-	public function removeConditionButton(int $searchIndex):array {
-		return ["<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger pull-left', 'disabled' => (0 === $searchIndex)?'disabled':false]];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function addConditionButton():array {
-		return ["<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success pull-left']];
+	public function setValue(?array $values):void {
+		self::initSet(count($values));
+		foreach ($values as $index => $value) {
+			$this->set[$index]->value = $value;
+		}
 	}
 
 }

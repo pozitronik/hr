@@ -1,13 +1,15 @@
-$(document).on('change', '#prototypecompetenciessearch-competency', function () {
+function competency_changed(element){
 	$.ajax({
 		type: 'POST',
 		url: '/ajax/competency-get-fields',
 		data: {
-			competency: $(this).val()
+			competency: element.val()
 		},
 		success: function (data) {
 			if (0 === data.result) {
-				var fieldSelect = $('#prototypecompetenciessearch-field');
+				var conditionIndex = element.data('competency');
+
+				var fieldSelect = $('*[data-field="'+conditionIndex+'"]');
 				fieldSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {
@@ -15,24 +17,25 @@ $(document).on('change', '#prototypecompetenciessearch-competency', function () 
 						text: data.items[key].name,
 						'data-type': data.items[key].type
 					});
-
 					fieldSelect.append(option);
 				}
+				field_changed(fieldSelect);
 			}
 		}
 	});
-});
+}
 
-$(document).on('change', '#prototypecompetenciessearch-field', function () {
+function field_changed(element){
 	$.ajax({
 		type: 'POST',
 		url: '/ajax/competency-get-field-condition',
 		data: {
-			type: $(this).find(':selected').data('type')
+			type: element.find(':selected').data('type')
 		},
 		success: function (data) {
 			if (0 === data.result) {
-				var conditionSelect = $('#prototypecompetenciessearch-condition');
+				var fieldIndex = element.data('field');
+				var conditionSelect =  $('*[data-condition="'+fieldIndex+'"]');
 				conditionSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {
@@ -45,4 +48,12 @@ $(document).on('change', '#prototypecompetenciessearch-field', function () {
 			}
 		}
 	});
-});
+}
+
+function duplicate_condition(index) {
+	var initialRow = $('.row[data-index="'+index+'"]');
+	var newRow = $(initialRow.parent().html());
+
+	initialRow.after(newRow);
+
+}

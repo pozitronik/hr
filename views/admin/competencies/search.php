@@ -27,13 +27,17 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="panel panel-primary">
 			<div class="panel-heading">
+				<div class="panel-control">
+					<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'onclick' => 'removeCondition()']); ?>
+					<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true]); ?>
+				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
 			</div>
 
 			<div class="panel-body">
-				<?php foreach ($model->conditions as $index => $condition): ?>
+				<?php foreach ($model->set as $index => $condition): ?>
 
-					<div class="row data-index='<?= $index ?>'">
+					<div class="row" data-index='<?= $index ?>'>
 						<div class="col-md-1">
 							<?= $form->field($model, "logic[$index]")->widget(SwitchInput::class, [
 								'pluginOptions' => [
@@ -51,36 +55,35 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
 								'options' => [
 									'multiple' => false,
-									'placeholder' => 'Выбрать компетенцию'
+									'placeholder' => 'Выбрать компетенцию',
+									'data-competency' => $index,
+									'onchange' => 'competency_changed($(this))'
 								]
 							]); ?>
 						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "field[$index]")->widget(Select2::class, [
-								'data' => [],
+								'data' => $model->competencyFields($model->set[$index]->competency),
 								'options' => [
 									'multiple' => false,
-									'placeholder' => 'Выбрать поле'
+									'placeholder' => 'Выбрать поле',
+									'data-field' => $index,
+									'onchange' => 'field_changed($(this))'
 								]
 							]); ?>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<?= $form->field($model, "condition[$index]")->widget(Select2::class, [
-								'data' => [],
+								'data' => $model->fieldsConditions($model->set[$index]->competency, $model->set[$index]->field),
 								'options' => [
 									'multiple' => false,
-									'placeholder' => 'Выбрать условие'
+									'placeholder' => 'Выбрать условие',
+									'data-condition' => $index,
 								]
 							]); ?>
 						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "value[$index]"); ?>
-						</div>
-						<div class="col-md-1">
-							<div class="btn-group form-group pull-right">
-								<?= Html::button(...$model->removeConditionButton($index)); ?>
-								<?= Html::button(...$model->addConditionButton()); ?>
-							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>
