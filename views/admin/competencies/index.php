@@ -50,13 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'label' => 'Пользователи'
 				],
 				'name',
-				[
-					'attribute' => 'category',
-					'value' => function($model) {
-						/** @var Competencies $model */
-						return Competencies::CATEGORIES[$model->category];
-					}
-				],
+				'categoryName',
 				[
 					'class' => ActionColumn::class,
 					'template' => '{update} {delete}'

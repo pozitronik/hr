@@ -67,13 +67,7 @@ use yii\helpers\Url;
 					},
 					'format' => 'raw'
 				],
-				[
-					'attribute' => 'category',
-					'value' => function($model) {
-						/** @var Competencies $model */
-						return ArrayHelper::getValue(Competencies::CATEGORIES, $model->category);
-					}
-				],
+				'categoryName',
 				[
 					'value' => function($model) use ($user) {
 						/** @var Competencies $model */

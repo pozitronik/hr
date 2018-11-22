@@ -131,4 +131,27 @@ class ArrayHelper extends YiiArrayHelper {
 		return $merged;
 	}
 
+	/**
+	 * Аналог ArrayHelper::map склеивающий значения нескольких аттрибутов
+	 * @param array $array
+	 * @param string $id
+	 * @param array $concat_attributes
+	 * @param string $separator
+	 * @return array
+	 * @throws Throwable
+	 */
+	public static function cmap($array, $id, $concat_attributes = [], $separator = ' '):array {
+		$result = [];
+		foreach ($array as $element) {
+			$key = self::getValue($element, $id);
+			$value = [];
+			foreach ($concat_attributes as $el) {
+				$value[] = self::getValue($element, $el);
+			}
+			$result[$key] = implode($separator, $value);
+		}
+
+		return $result;
+	}
+
 }

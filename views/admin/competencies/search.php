@@ -45,7 +45,8 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 					</div>
 					<div class="col-md-3">
 						<?= $form->field($model, 'competency')->widget(Select2::class, [
-							'data' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+							/*todo: группировка по категориям*/
+							'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
 							'options' => [
 								'multiple' => false,
 								'placeholder' => 'Выбрать компетенцию'

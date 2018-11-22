@@ -7,6 +7,7 @@ namespace app\models\competencies;
  * Это позволит абстрагироваться от внутренних методов работы модели, и использовать её в любых местах где нужно динамическое атрибутирование.
  * Саму сущность потребуется утащить в компонент.
  */
+
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\competencies\types\CompetencyFieldBoolean;
@@ -46,6 +47,7 @@ use yii\db\Exception;
  *
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property Users|ActiveQuery $relUsers Пользователи с этой компетенцией
+ * @property-read string $categoryName Строковое имя категории
  */
 class Competencies extends ActiveRecord {
 	use ARExtended;
@@ -242,5 +244,12 @@ class Competencies extends ActiveRecord {
 	 */
 	public function getRelUsersCompetencies() {
 		return $this->hasMany(RelUsersCompetencies::class, ['competency_id' => 'id']);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCategoryName():string {
+		return ArrayHelper::getValue(Competencies::CATEGORIES, $this->category);
 	}
 }
