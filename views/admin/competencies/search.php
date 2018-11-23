@@ -46,7 +46,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'onColor' => 'primary',
 									'offColor' => 'primary'
 								]
-							]); ?>
+							])->label('Объединение'); ?>
 						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][competency]")->widget(Select2::class, [
@@ -57,8 +57,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'data-competency' => $index,
 									'onchange' => 'competency_changed($(this))'
 								]
-							]); ?>
-						</div>
+							])->label('Компетенция'); ?>
+
+
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][field]")->widget(Select2::class, [
 								'data' => $model->competencyFields($model->searchItems[$index]->competency),
@@ -68,7 +69,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'data-field' => $index,
 									'onchange' => 'field_changed($(this))'
 								]
-							]); ?>
+							])->label('Поле'); ?>
 						</div>
 						<div class="col-md-2">
 							<?= $form->field($model, "searchItems[$index][condition]")->widget(Select2::class, [
@@ -78,10 +79,10 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'placeholder' => 'Выбрать условие',
 									'data-condition' => $index
 								]
-							]); ?>
+							])->label('Условие'); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($model, "searchItems[$index][value]")->textInput(); ?>
+							<?= $form->field($model, "searchItems[$index][value]")->textInput()->label('Значение'); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
