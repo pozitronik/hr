@@ -21,6 +21,7 @@ trait ARExtended {
 	/**
 	 * @return string|null
 	 * @throws Throwable
+	 * @deprecated use $model->formName()
 	 */
 	public function getClassNameShort():?string {
 		try {
