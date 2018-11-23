@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var PrototypeCompetenciesSearchSet $model
+ * @var CompetenciesSearchCollection $model
  */
 
 use app\assets\AppAsset;
-use app\models\prototypes\PrototypeCompetenciesSearchSet;
+use app\models\prototypes\CompetenciesSearchCollection;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
@@ -35,13 +35,10 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 			</div>
 
 			<div class="panel-body">
-				<?php foreach ($model->set as $index => $condition): ?>
+				<?php foreach ($model->searchItems as $index => $condition): ?>
 					<div class="row" data-index='<?= $index ?>'>
 						<div class="col-md-1">
-							<?= $form->field($condition, "logic[$index]")->widget(SwitchInput::class, [
-								'options' => [
-									'name' => "{$model->formName()}[$index][logic]"
-								],
+							<?= $form->field($model, "searchItems[$index][logic]")->widget(SwitchInput::class, [
 								'pluginOptions' => [
 									'size' => 'mini',
 									'onText' => 'И',
@@ -52,11 +49,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($condition, "competency[$index]")->widget(Select2::class, [
-								/*todo: группировка по категориям*/
-								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
+							<?= $form->field($model, "searchItems[$index][competency]")->widget(Select2::class, [
+								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),//todo: группировка по категориям
 								'options' => [
-									'name' => "{$model->formName()}[$index][competency]",
 									'multiple' => false,
 									'placeholder' => 'Выбрать компетенцию',
 									'data-competency' => $index,
@@ -65,10 +60,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($condition, "field[$index]")->widget(Select2::class, [
-								'data' => $model->competencyFields($model->set[$index]->competency),
+							<?= $form->field($model, "searchItems[$index][field]")->widget(Select2::class, [
+								'data' => $model->competencyFields($model->searchItems[$index]->competency),
 								'options' => [
-									'name' => "{$model->formName()}[$index][field]",
 									'multiple' => false,
 									'placeholder' => 'Выбрать поле',
 									'data-field' => $index,
@@ -77,10 +71,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-2">
-							<?= $form->field($condition, "condition[$index]")->widget(Select2::class, [
-								'data' => $model->fieldsConditions($model->set[$index]->competency, $model->set[$index]->field),
+							<?= $form->field($model, "searchItems[$index][condition]")->widget(Select2::class, [
+								'data' => $model->fieldsConditions($model->searchItems[$index]->competency, $model->searchItems[$index]->field),
 								'options' => [
-									'name' => "{$model->formName()}[$index][condition]",
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',
 									'data-condition' => $index,
@@ -88,9 +81,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($model, "value[$index]")->textInput([
-								'name' => "{$model->formName()}[$index][value]"
-							]); ?>
+							<?= $form->field($model, "searchItems[$index][value]")->textInput(); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
