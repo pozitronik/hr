@@ -36,10 +36,12 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 
 			<div class="panel-body">
 				<?php foreach ($model->set as $index => $condition): ?>
-
 					<div class="row" data-index='<?= $index ?>'>
 						<div class="col-md-1">
-							<?= $form->field($model, "logic[$index]")->widget(SwitchInput::class, [
+							<?= $form->field($condition, "logic[$index]")->widget(SwitchInput::class, [
+								'options' => [
+									'name' => "{$model->formName()}[$index][logic]"
+								],
 								'pluginOptions' => [
 									'size' => 'mini',
 									'onText' => 'И',
@@ -50,10 +52,11 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($model, "competency[$index]")->widget(Select2::class, [
+							<?= $form->field($condition, "competency[$index]")->widget(Select2::class, [
 								/*todo: группировка по категориям*/
 								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),
 								'options' => [
+									'name' => "{$model->formName()}[$index][competency]",
 									'multiple' => false,
 									'placeholder' => 'Выбрать компетенцию',
 									'data-competency' => $index,
@@ -62,9 +65,10 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($model, "field[$index]")->widget(Select2::class, [
+							<?= $form->field($condition, "field[$index]")->widget(Select2::class, [
 								'data' => $model->competencyFields($model->set[$index]->competency),
 								'options' => [
+									'name' => "{$model->formName()}[$index][field]",
 									'multiple' => false,
 									'placeholder' => 'Выбрать поле',
 									'data-field' => $index,
@@ -73,9 +77,10 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-2">
-							<?= $form->field($model, "condition[$index]")->widget(Select2::class, [
+							<?= $form->field($condition, "condition[$index]")->widget(Select2::class, [
 								'data' => $model->fieldsConditions($model->set[$index]->competency, $model->set[$index]->field),
 								'options' => [
+									'name' => "{$model->formName()}[$index][condition]",
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',
 									'data-condition' => $index,
@@ -83,7 +88,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							]); ?>
 						</div>
 						<div class="col-md-3">
-							<?= $form->field($model, "value[$index]"); ?>
+							<?= $form->field($model, "value[$index]")->textInput([
+								'name' => "{$model->formName()}[$index][value]"
+							]); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
