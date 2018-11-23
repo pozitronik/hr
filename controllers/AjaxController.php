@@ -6,7 +6,7 @@ namespace app\controllers;
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\groups\Groups;
-use app\models\prototypes\PrototypeCompetencySearchCondition;
+use app\models\prototypes\CompetencySearchCondition;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
 use app\models\users\Bookmarks;
@@ -366,7 +366,7 @@ class AjaxController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		if (false !== $type = Yii::$app->request->post('type', false)) {
 			/** @var string $type */
-			if (false !== $condition = PrototypeCompetencySearchCondition::findCondition($type)) {
+			if (false !== $condition = CompetencySearchCondition::findCondition($type)) {
 				return [
 					'result' => self::RESULT_OK,
 					'items' => $condition

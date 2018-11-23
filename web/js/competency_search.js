@@ -39,7 +39,7 @@ function field_changed(element){
 				conditionSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {
-						value: data.items['key'],
+						value: key,
 						text: key
 					});
 

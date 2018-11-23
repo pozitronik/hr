@@ -12,7 +12,7 @@ use yii\base\Model;
  * Модель условий поиска по компетенциям
  * @package app\models\prototypes
  */
-class PrototypeCompetencySearchCondition extends Model {
+class CompetencySearchCondition extends Model {
 
 	public static $conditions = [
 		'string' => [
