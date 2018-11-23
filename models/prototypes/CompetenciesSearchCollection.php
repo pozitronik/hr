@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace app\models\prototypes;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\competencies\Competencies;
 use Throwable;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 /**
  * Class PrototypeCompetenciesSearchSet
@@ -105,4 +107,37 @@ class CompetenciesSearchCollection extends Model {
 		return [];
 	}
 
+	/**
+	 * @return ActiveDataProvider
+	 */
+	public function searchCondition():ActiveDataProvider {
+		$query = Competencies::find()->active();
+
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query
+		]);
+
+		$dataProvider->setSort([
+			'defaultOrder' => ['id' => SORT_ASC],
+			'attributes' => [
+				'id',
+				'name'
+			]
+		]);
+
+		$query->joinWith('relUsers');
+
+//		$this->load($params);
+
+//		if (!$this->validate()) {
+//			return $dataProvider;
+//		}
+		foreach ($this->searchItems as $searchItem) {
+			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
+		}
+
+//		Utils::log($query->createCommand()->rawSql);
+
+		return $dataProvider;
+	}
 }

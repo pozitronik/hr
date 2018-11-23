@@ -4,10 +4,13 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var CompetenciesSearchCollection $model
+ * @var ActiveDataProvider $dataProvider
  */
 
 use app\assets\AppAsset;
 use app\models\prototypes\CompetenciesSearchCollection;
+use kartik\grid\GridView;
+use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
@@ -22,21 +25,21 @@ $this->params['breadcrumbs'][] = ['label' => 'Компетенции', 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class]);//todo: после прототипирования вытащить в виджет или модуль
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<?php $form = ActiveForm::begin(); ?>
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<div class="panel-control">
-					<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'onclick' => 'removeCondition()']); ?>
-					<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true]); ?>
-				</div>
-				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
-			</div>
 
-			<div class="panel-body">
-				<?php foreach ($model->searchItems as $index => $condition): ?>
-					<div class="row" data-index='<?= $index ?>'>
+<?php $form = ActiveForm::begin(); ?>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="panel-control">
+				<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'onclick' => 'removeCondition()']); ?>
+				<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true]); ?>
+			</div>
+			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		</div>
+
+		<div class="panel-body">
+			<?php foreach ($model->searchItems as $index => $condition): ?>
+				<div class="row" data-index='<?= $index ?>'>
+					<div class="col-xs-12">
 						<div class="col-md-1">
 							<?= $form->field($model, "searchItems[$index][logic]")->widget(SwitchInput::class, [
 								'pluginOptions' => [
@@ -58,7 +61,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'onchange' => 'competency_changed($(this))'
 								]
 							])->label('Компетенция'); ?>
-
+						</div>
 
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][field]")->widget(Select2::class, [
@@ -85,19 +88,30 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							<?= $form->field($model, "searchItems[$index][value]")->textInput()->label('Значение'); ?>
 						</div>
 					</div>
-				<?php endforeach; ?>
-			</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
 
-			<div class="panel-footer">
-				<div class="btn-group">
-					<?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']); ?>
-				</div>
-				<div class="btn-group pull-right">
-					<?= Html::button('Сохранить поиск', ['class' => 'btn btn-info']); ?>
-				</div>
+		<div class="panel-footer">
+			<div class="btn-group">
+				<?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']); ?>
+			</div>
+			<div class="btn-group pull-right">
+				<?= Html::button('Сохранить поиск', ['class' => 'btn btn-info']); ?>
 			</div>
 		</div>
-		<?php ActiveForm::end(); ?>
 	</div>
-</div>
+<?php ActiveForm::end(); ?>
 
+<?php if (null !== $dataProvider): ?>
+	<?= GridView::widget([
+		'dataProvider' => $dataProvider,
+		'panel' => [
+			'heading' => 'Результат'
+		],
+		'toolbar' => false,
+		'export' => false,
+		'resizableColumns' => true,
+		'responsive' => true,
+	]); ?>
+<?php endif; ?>

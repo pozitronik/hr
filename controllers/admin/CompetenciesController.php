@@ -127,13 +127,20 @@ class CompetenciesController extends WigetableController {
 	 */
 	public function actionSearch():string {
 		$searchSet = new CompetenciesSearchCollection();
-		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем SearchSet*/
-			$searchSet->load(Yii::$app->request->post());
+		$searchSet->load(Yii::$app->request->post());
+		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
 			$searchSet->addItem(new CompetenciesSearchItem());
+		} else {/*Нажали поиск, нужно сгенерировать запрос, поискать, отдать результат*/
+			$searchCondition = $searchSet->searchCondition();
+			return $this->render('search', [
+				'model' => $searchSet,
+				'dataProvider' => $searchCondition
+			]);
 		}
 
 		return $this->render('search', [
-			'model' => $searchSet
+			'model' => $searchSet,
+			'dataProvider' => null
 		]);
 	}
 }
