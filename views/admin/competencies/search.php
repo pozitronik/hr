@@ -76,7 +76,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',
-									'data-condition' => $index,
+									'data-condition' => $index
 								]
 							]); ?>
 						</div>

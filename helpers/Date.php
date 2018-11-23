@@ -6,6 +6,7 @@ namespace app\helpers;
 use app\models\core\SysExceptions;
 use DateTime;
 use DateInterval;
+use Exception;
 use Throwable;
 
 /**
@@ -116,6 +117,7 @@ class Date {
 	 * @param string $date Проверяемая дата (Y-m-d)
 	 * @param array $interval Массив интервала дат ['start' => 'Y-m-d', 'end' => 'Y-m-d']
 	 * @return bool
+	 * @throws Exception
 	 */
 	public static function isBetweenDate(string $date, array $interval):bool {
 		$d = new DateTime($date);
@@ -149,6 +151,7 @@ class Date {
 	 * @param string $dateEnd
 	 * @param string $format
 	 * @return string
+	 * @throws Exception
 	 */
 	public static function diff($dateStart, $dateEnd, $format):string {
 		$date1 = new DateTime($dateStart);
@@ -174,6 +177,7 @@ class Date {
 	 * @param string $dateStart
 	 * @param string $dateEnd
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public static function fullDays($dateStart, $dateEnd) {
 		$date1 = new DateTime($dateStart);
@@ -195,6 +199,7 @@ class Date {
 	 * @param bool|int $delay - количество секунд для преобразования
 	 * @param bool $short_format
 	 * @return string|false
+	 * @throws Exception
 	 */
 	public static function seconds2times($delay, $short_format = false) {
 		if (null === $delay) $delay = false;

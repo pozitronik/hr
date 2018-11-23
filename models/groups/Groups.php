@@ -296,7 +296,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Добавляет массив ролей пользователя к группе
-	 * @param array<int, int[]> $userRoles
+	 * @param array<integer, array<integer>> $userRoles
 	 */
 	public function setRolesInGroup(array $userRoles):void {
 		foreach ($userRoles as $user => $roles) {

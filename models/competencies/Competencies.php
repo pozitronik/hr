@@ -248,8 +248,9 @@ class Competencies extends ActiveRecord {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function getCategoryName():string {
-		return ArrayHelper::getValue(Competencies::CATEGORIES, $this->category);
+		return ArrayHelper::getValue(self::CATEGORIES, $this->category);
 	}
 }

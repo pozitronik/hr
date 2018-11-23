@@ -8,7 +8,6 @@ declare(strict_types = 1);
  * @var array $data
  **/
 
-use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\widgets\competency\CompetencyWidget;
 use yii\web\View;
