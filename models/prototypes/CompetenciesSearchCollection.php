@@ -6,6 +6,7 @@ namespace app\models\prototypes;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\competencies\Competencies;
+use app\models\users\Users;
 use Throwable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -111,7 +112,7 @@ class CompetenciesSearchCollection extends Model {
 	 * @return ActiveDataProvider
 	 */
 	public function searchCondition():ActiveDataProvider {
-		$query = Competencies::find()->active();
+		$query = Users::find()->active();
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query
@@ -125,18 +126,23 @@ class CompetenciesSearchCollection extends Model {
 			]
 		]);
 
-		$query->joinWith('relUsers');
+		$query->joinWith(['relCompetencies', 'relCompetenciesIntegers']);
+//		$query->join('left join', 'sys_competencies_integer', ['sys_competencies_integer.competency_id' => 'sys_competencies.id', 'sys_competencies_integer.user_id' => 'sys_users.id']);
 
-//		$this->load($params);
-
-//		if (!$this->validate()) {
-//			return $dataProvider;
-//		}
 		foreach ($this->searchItems as $searchItem) {
+			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
+			if (false === $model = Competencies::findModel($searchItem->competency)) continue;
+			$type = $model->structure[$searchItem->field]['type'];
+			switch ($type) {
+				case 'integer':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
+			}
+
 			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
 		}
 
-//		Utils::log($query->createCommand()->rawSql);
+		Utils::log($query->createCommand()->rawSql);
 
 		return $dataProvider;
 	}

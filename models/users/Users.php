@@ -6,6 +6,7 @@ namespace app\models\users;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\competencies\Competencies;
+use app\models\competencies\types\CompetencyFieldInteger;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserPositions;
@@ -64,6 +65,7 @@ use yii\web\UploadedFile;
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property integer[] $dropCompetencies
  * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
+ * @property ActiveQuery $relCompetenciesIntegers Релейшен к цифровым полям компетенций
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -342,6 +344,13 @@ class Users extends ActiveRecord {
 	public function setDropCompetencies(array $dropCompetencies):void {
 		/*Сами значения компетенций сохранятся в базе и должны будут восстановиться, если компетенцию присвоить пользователю обратно*/
 		RelUsersCompetencies::unlinkModels($this, $dropCompetencies);
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesIntegers():ActiveQuery {
+		return $this->hasMany(CompetencyFieldInteger::class, ['competency_id' => 'id'])->via('relCompetencies');
 	}
 
 }
