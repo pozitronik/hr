@@ -397,7 +397,7 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelCompetenciesTime():ActiveQuery {
+	public function getRelCompetenciesTimes():ActiveQuery {
 		return $this->hasMany(CompetencyFieldTime::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
 	}
 }
