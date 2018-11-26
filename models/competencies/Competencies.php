@@ -48,6 +48,8 @@ use yii\db\Exception;
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property Users|ActiveQuery $relUsers Пользователи с этой компетенцией
  * @property-read string $categoryName Строковое имя категории
+ *
+ * @todo: функцию Value, тупо по id юзера и id поля возвращающая его нетипизированное значение.
  */
 class Competencies extends ActiveRecord {
 	use ARExtended;
