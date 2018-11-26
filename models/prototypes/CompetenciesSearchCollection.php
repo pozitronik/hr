@@ -6,8 +6,12 @@ namespace app\models\prototypes;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\competencies\Competencies;
+use app\models\competencies\CompetencyField;
+use app\models\competencies\types\CompetencyFieldString;
+use app\models\core\SysExceptions;
 use app\models\users\Users;
 use Throwable;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -101,9 +105,8 @@ class CompetenciesSearchCollection extends Model {
 	public function fieldsConditions(?int $competencyIndex, ?int $fieldIndex):array {
 		if (false !== $competency = Competencies::findModel($competencyIndex)) {
 			$field = $competency->structure[$fieldIndex];
-
-			$type = $field['type'];
-			return CompetencySearchCondition::findCondition($type);//todo: здесь поменяется, когда будет понятна структура SearchCondition
+			$className = CompetencyField::getTypeClass($type = $field['type']);
+			return ArrayHelper::keymap($className::conditionConfig(), 0);
 		}
 		return [];
 	}
@@ -125,40 +128,26 @@ class CompetenciesSearchCollection extends Model {
 				'name'
 			]
 		]);
-
-		$query->joinWith(['relCompetencies', 'relCompetenciesIntegers']);
-//		$query->join('left join', 'sys_competencies_integer', ['sys_competencies_integer.competency_id' => 'sys_competencies.id', 'sys_competencies_integer.user_id' => 'sys_users.id']);
+		/*todo: Джойны сделать опционально-зависимыми*/
+		$query->joinWith(['relCompetencies', 'relCompetenciesIntegers', 'relCompetenciesStrings', 'relCompetenciesBooleans', 'relCompetenciesDates', 'relCompetenciesTimes', 'relCompetenciesPercents', 'relCompetenciesTexts']);
 
 		foreach ($this->searchItems as $searchItem) {
 			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
 			if (false === $model = Competencies::findModel($searchItem->competency)) continue;
-			$type = $model->structure[$searchItem->field]['type'];
-			switch ($type) {
-				case 'boolean':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
-				case 'date':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
-				case 'integer':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
-				case 'percent':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
-				case 'string':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
-				case 'text':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
-				case 'time':
-					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
-				break;
+			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->field}.type")) {
+				$className = CompetencyField::getTypeClass($type);
+				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
+					try {
+						$query->andFilterWhere(call_user_func($condition, $searchItem->value));
+					} catch (Throwable $t) {
+						SysExceptions::log($t, true);
+					}
+
+				}
 			}
 
 		}
-
+		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }
