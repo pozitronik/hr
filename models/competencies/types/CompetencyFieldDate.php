@@ -27,7 +27,32 @@ class CompetencyFieldDate extends ActiveRecord implements DataFieldInterface {
 	 * @return array
 	 */
 	public static function conditionConfig():array {
-		return [];//todo
+		return [
+			['равно', function($searchValue) {
+				return ['=', self::tableName().".value", $searchValue];
+			}],
+			['не равно', function($searchValue) {
+				return ['!=', self::tableName().".value", $searchValue];
+			}],
+			['раньше', function($searchValue) {
+				return ['<', self::tableName().".value", $searchValue];
+			}],
+			['позже', function($searchValue) {
+				return ['>', self::tableName().".value", $searchValue];
+			}],
+			['раньше или равно', function($searchValue) {
+				return ['<=', self::tableName().".value", $searchValue];
+			}],
+			['позже или равно', function($searchValue) {
+				return ['<=', self::tableName().".value", $searchValue];
+			}],
+			['заполнено', function($searchValue) {
+				return ['not null', self::tableName().".value"];
+			}],
+			['не заполнено', function($searchValue) {
+				return ['null', self::tableName().".value"];
+			}]
+		];
 	}
 
 	/**
