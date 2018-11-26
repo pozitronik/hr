@@ -141,14 +141,16 @@ class CompetenciesController extends WigetableController {
 			return $this->render('search', [
 				'model' => $searchSet,
 				'dataProvider' => $searchCondition,
-				'competency_data' => $competency_data
+				'competency_data' => $competency_data,
+				'userModel' => null
 			]);
 		}
 
 		return $this->render('search', [
 			'model' => $searchSet,
 			'dataProvider' => null,
-			'competency_data' => $competency_data
+			'competency_data' => $competency_data,
+			'userModel' => null
 		]);
 	}
 }
