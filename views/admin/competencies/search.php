@@ -9,6 +9,8 @@ declare(strict_types = 1);
 
 use app\assets\AppAsset;
 use app\models\prototypes\CompetenciesSearchCollection;
+use app\models\users\Users;
+use app\widgets\competency\CompetencyWidget;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -18,6 +20,7 @@ use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
+use yii\helpers\Url;
 
 $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -113,5 +116,62 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 		'export' => false,
 		'resizableColumns' => true,
 		'responsive' => true,
+		'columns' => [
+			'id',
+			[
+				'value' => function($column) {
+					/** @var Users $column */
+					return Html::img($column->avatar, ['class' => 'img-circle img-xs']);
+				},
+				'label' => 'Аватар',
+				'format' => 'raw'
+			],
+			'username',
+			'positionName',
+			[
+				'label' => 'Компетенции',
+				'format' => 'raw',
+				'value' => function($user) {
+					return GridView::widget([
+						'dataProvider' => new ActiveDataProvider([
+							'query' => $user->getRelCompetencies()->orderBy('name')
+						]),
+						'showFooter' => false,
+						'showPageSummary' => false,
+						'summary' => '',
+						'panel' => false,
+						'toolbar' => false,
+						'export' => false,
+						'resizableColumns' => true,
+						'responsive' => true,
+						'options' => [
+							'class' => 'competency_table'
+						],
+						'columns' => [
+							[
+								'attribute' => 'name',
+								'value' => function($model) use ($user) {
+									/** @var Competencies $model */
+									return Html::a($model->name, Url::to(['admin/users/competencies', 'user_id' => $user->id, 'competency_id' => $model->id]));
+								},
+								'format' => 'raw'
+							],
+							'categoryName',
+							[
+								'value' => function($model) use ($user) {
+									/** @var Competencies $model */
+									return CompetencyWidget::widget([
+										'user_id' => $user->id,
+										'competency_id' => $model->id
+									]);
+								},
+								'format' => 'raw'
+							]
+						]
+
+					]);
+				}
+			]
+		]
 	]); ?>
 <?php endif; ?>
