@@ -44,33 +44,40 @@ class CompetencyField extends Model {
 	private $user_id;
 
 	public const FIELD_TYPES = [
-		'integer' => [
-			'label' => 'Число',
-			'model' => CompetencyFieldInteger::class
+		'integer' => [/*Название (индекс) типа данных*/
+			'label' => 'Число',/*Отображаемое в интефейсах имя*/
+			'model' => CompetencyFieldInteger::class,/*Имя класса, реализующего взаимоделйствие с типом данных, обязательно имплементация DataFieldInterface. Поле названо model, потому что на class ругается инспектор*/
+			'searchRelation' => 'relCompetenciesIntegers' /*Имя релейшена, подключаемого при поиске (релейшены определены в Users, т.к. эта модель инциирующая)*/
 		],
 		'boolean' => [
 			'label' => 'Логический тип',
-			'model' => CompetencyFieldBoolean::class
+			'model' => CompetencyFieldBoolean::class,
+			'searchRelation' => 'relCompetenciesBooleans'
 		],
 		'string' => [
 			'label' => 'Строка',
-			'model' => CompetencyFieldString::class
+			'model' => CompetencyFieldString::class,
+			'searchRelation' => 'relCompetenciesStrings'
 		],
 		'date' => [
 			'label' => 'Дата',
-			'model' => CompetencyFieldDate::class
+			'model' => CompetencyFieldDate::class,
+			'searchRelation' => 'relCompetenciesDates'
 		],
 		'time' => [
 			'label' => 'Время',
-			'model' => CompetencyFieldTime::class
+			'model' => CompetencyFieldTime::class,
+			'searchRelation' => 'relCompetenciesTimes'
 		],
 		'percent' => [
 			'label' => 'Проценты',
-			'model' => CompetencyFieldPercent::class
+			'model' => CompetencyFieldPercent::class,
+			'searchRelation' => 'relCompetenciesPercents'
 		],
 		'text' => [
 			'label' => 'Текст',
-			'model' => CompetencyFieldText::class
+			'model' => CompetencyFieldText::class,
+			'searchRelation' => 'relCompetenciesTexts'
 		]
 	];
 
