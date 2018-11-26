@@ -138,9 +138,9 @@ class CompetenciesSearchCollection extends Model {
 					try {
 						if (null !== $typeSearchRelation = CompetencyField::getTypeSearchRelation($type)) $query->joinWith($typeSearchRelation);
 						if ($searchItem->logic) {
-							$query->andFilterWhere(call_user_func($condition, $searchItem->value));
+							$query->andFilterWhere($condition($searchItem->value));
 						} else {
-							$query->orFilterWhere(call_user_func($condition, $searchItem->value));
+							$query->orFilterWhere($condition($condition, $searchItem->value));
 						}
 
 					} catch (Throwable $t) {
