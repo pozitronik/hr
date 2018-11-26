@@ -7,7 +7,6 @@ use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
 use app\models\groups\Groups;
-use app\models\prototypes\CompetencySearchCondition;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
 use app\models\users\Bookmarks;
