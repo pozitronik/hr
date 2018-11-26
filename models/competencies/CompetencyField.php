@@ -91,6 +91,15 @@ class CompetencyField extends Model {
 	}
 
 	/**
+	 * @param string $type
+	 * @return mixed
+	 * @throws Throwable
+	 */
+	public static function getTypeSearchRelation (string $type) {
+		return ArrayHelper::getValue(self::FIELD_TYPES, "$type.searchRelation");
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public function rules():array {

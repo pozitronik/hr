@@ -128,8 +128,7 @@ class CompetenciesSearchCollection extends Model {
 				'name'
 			]
 		]);
-		/*todo: Джойны сделать опционально-зависимыми*/
-		$query->joinWith(['relCompetencies', 'relCompetenciesIntegers', 'relCompetenciesStrings', 'relCompetenciesBooleans', 'relCompetenciesDates', 'relCompetenciesTimes', 'relCompetenciesPercents', 'relCompetenciesTexts']);
+		$query->joinWith(['relCompetencies']);
 
 		foreach ($this->searchItems as $searchItem) {
 			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
@@ -138,6 +137,7 @@ class CompetenciesSearchCollection extends Model {
 				$className = CompetencyField::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
 					try {
+						if (null !== $typeSearchRelation = CompetencyField::getTypeSearchRelation($type)) $query->joinWith($typeSearchRelation);
 						if ($searchItem->logic) {
 							$query->andFilterWhere(call_user_func($condition, $searchItem->value));
 						} else {
