@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 namespace app\models\competencies;
 
+use app\helpers\ArrayHelper;
 use app\models\competencies\types\CompetencyFieldBoolean;
 use app\models\competencies\types\CompetencyFieldDate;
 use app\models\competencies\types\CompetencyFieldInteger;
 use app\models\competencies\types\CompetencyFieldPercent;
 use app\models\competencies\types\CompetencyFieldString;
+use app\models\competencies\types\CompetencyFieldText;
 use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\SysExceptions;
 use RuntimeException;
@@ -42,14 +44,44 @@ class CompetencyField extends Model {
 	private $user_id;
 
 	public const FIELD_TYPES = [
-		'integer' => 'Число',
-		'boolean' => 'Логический тип',
-		'string' => 'Строка',
-		'date' => 'Дата',
-		'time' => 'Время',
-		'percent' => 'Проценты',
-		'text' => 'text'
+		'integer' => [
+			'label' => 'Число',
+			'model' => CompetencyFieldInteger::class
+		],
+		'boolean' => [
+			'label' => 'Логический тип',
+			'model' => CompetencyFieldBoolean::class
+		],
+		'string' => [
+			'label' => 'Строка',
+			'model' => CompetencyFieldString::class
+		],
+		'date' => [
+			'label' => 'Дата',
+			'model' => CompetencyFieldDate::class
+		],
+		'time' => [
+			'label' => 'Время',
+			'model' => CompetencyFieldTime::class
+		],
+		'percent' => [
+			'label' => 'Проценты',
+			'model' => CompetencyFieldPercent::class
+		],
+		'text' => [
+			'label' => 'Текст',
+			'model' => CompetencyFieldText::class
+		]
 	];
+
+	/**
+	 * @param string $type
+	 * @return mixed
+	 * @throws Throwable
+	 */
+	public static function getTypeClass(string $type) {
+		return ArrayHelper::getValue(self::FIELD_TYPES, "$type.model");
+	}
 
 	/**
 	 * @inheritdoc
