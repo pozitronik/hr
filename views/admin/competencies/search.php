@@ -72,7 +72,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать поле',
-									'data-field' => $index,
+									'options' => [
+										1 => ['data-field' => $index]//todo: придумать, как добавлять типы к опциям
+									],
 									'onchange' => 'field_changed($(this))'
 								]
 							])->label('Поле'); ?>
