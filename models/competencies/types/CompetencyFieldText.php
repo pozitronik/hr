@@ -26,7 +26,29 @@ class CompetencyFieldText extends ActiveRecord implements DataFieldInterface {
 	 * @return array
 	 */
 	public static function conditionConfig():array {
-		return [];//todo
+		return [
+			['равно', function($searchValue) {
+				return ['=', self::tableName().".value", $searchValue];
+			}],
+			['не равно', function($searchValue) {
+				return ['!=', self::tableName().".value", $searchValue];
+			}],
+			['начинается с', function($searchValue) {
+				return ['like', self::tableName().".value", "%$searchValue", false];
+			}],
+			['содержит', function($searchValue) {
+				return ['like', self::tableName().".value", "%$searchValue%", false];
+			}],
+			['не содержит', function($searchValue) {
+				return ['not like', self::tableName().".value", "%$searchValue", false];
+			}],
+			['заполнено', function($searchValue) {
+				return ['not null', self::tableName().".value"];
+			}],
+			['не заполнено', function($searchValue) {
+				return ['null', self::tableName().".value"];
+			}]
+		];
 	}
 
 
