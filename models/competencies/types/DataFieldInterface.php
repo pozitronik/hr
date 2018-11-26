@@ -12,6 +12,12 @@ use yii\db\ActiveRecordInterface;
 interface DataFieldInterface extends ActiveRecordInterface {
 
 	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array;
+
+	/**
 	 * Поиск соответствующей записи по подходящим параметрам
 	 * @param int $competency_id
 	 * @param int $field_id
