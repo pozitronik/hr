@@ -138,7 +138,12 @@ class CompetenciesSearchCollection extends Model {
 				$className = CompetencyField::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
 					try {
-						$query->andFilterWhere(call_user_func($condition, $searchItem->value));
+						if ($searchItem->logic) {
+							$query->andFilterWhere(call_user_func($condition, $searchItem->value));
+						} else {
+							$query->orFilterWhere(call_user_func($condition, $searchItem->value));
+						}
+
 					} catch (Throwable $t) {
 						SysExceptions::log($t, true);
 					}
