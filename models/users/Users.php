@@ -350,7 +350,7 @@ class Users extends ActiveRecord {
 	 * @return ActiveQuery
 	 */
 	public function getRelCompetenciesIntegers():ActiveQuery {
-		return $this->hasMany(CompetencyFieldInteger::class, ['competency_id' => 'id'])->via('relCompetencies');
+		return $this->hasMany(CompetencyFieldInteger::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
 	}
 
 }
