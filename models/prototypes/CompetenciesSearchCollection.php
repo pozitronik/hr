@@ -125,14 +125,14 @@ class CompetenciesSearchCollection extends Model {
 			'defaultOrder' => ['id' => SORT_ASC],
 			'attributes' => [
 				'id',
-				'name'
+				'username'
 			]
 		]);
 		$query->joinWith(['relCompetencies']);
 
 		foreach ($this->searchItems as $searchItem) {
-			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
 			if (false === $model = Competencies::findModel($searchItem->competency)) continue;
+			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
 			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->field}.type")) {
 				$className = CompetencyField::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
