@@ -21,7 +21,20 @@ class CompetencyFieldBoolean extends ActiveRecord implements DataFieldInterface 
 	 * @return array
 	 */
 	public static function conditionConfig():array {
-		return [];//todo
+		return [
+			['да', function($searchValue) {
+				return ['=', self::tableName().".value", true];
+			}],
+			['нет', function($searchValue) {
+				return ['!=', self::tableName().".value", false];
+			}],
+			['заполнено', function($searchValue) {
+				return ['not null', self::tableName().".value"];
+			}],
+			['не заполнено', function($searchValue) {
+				return ['null', self::tableName().".value"];
+			}]
+		];
 	}
 
 	/**
