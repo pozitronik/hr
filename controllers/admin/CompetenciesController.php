@@ -124,6 +124,7 @@ class CompetenciesController extends WigetableController {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionSearch():string {
 		$searchSet = new CompetenciesSearchCollection();
