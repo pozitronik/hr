@@ -4,10 +4,8 @@ declare(strict_types = 1);
 namespace app\models\prototypes;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Utils;
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
-use app\models\competencies\types\CompetencyFieldString;
 use app\models\core\SysExceptions;
 use app\models\users\Users;
 use Throwable;
@@ -113,6 +111,7 @@ class CompetenciesSearchCollection extends Model {
 
 	/**
 	 * @return ActiveDataProvider
+	 * @throws Throwable
 	 */
 	public function searchCondition():ActiveDataProvider {
 		$query = Users::find()->active();

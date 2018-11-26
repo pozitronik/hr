@@ -10,12 +10,6 @@ namespace app\models\competencies;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
-use app\models\competencies\types\CompetencyFieldBoolean;
-use app\models\competencies\types\CompetencyFieldDate;
-use app\models\competencies\types\CompetencyFieldInteger;
-use app\models\competencies\types\CompetencyFieldPercent;
-use app\models\competencies\types\CompetencyFieldString;
-use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;
 use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
@@ -212,6 +206,7 @@ class Competencies extends ActiveRecord {
 		try {
 			$typeClass::setValue($this->id, $field_id, $user_id, $field_value);
 		} catch (Throwable $t) {
+			SysExceptions::log($t);
 			SysExceptions::log(new RuntimeException("Field type {$field->type} not implemented or not configured "), false, true);
 		}
 	}

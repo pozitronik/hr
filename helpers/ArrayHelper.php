@@ -164,7 +164,7 @@ class ArrayHelper extends YiiArrayHelper {
 	public static function keymap(array $array, $attribute): array {
 		$result = [];
 		foreach ($array as $key => $element) {
-			$result[$key] = ArrayHelper::getValue($element, $attribute);
+			$result[$key] = self::getValue($element, $attribute);
 		}
 		return $result;
 	}

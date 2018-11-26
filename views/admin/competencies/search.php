@@ -134,10 +134,11 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 			[
 				'label' => 'Компетенции',
 				'format' => 'raw',
-				'value' => function($user) {
+				'value' => function($userModel) {
+					/** @var Users $userModel */
 					return GridView::widget([
 						'dataProvider' => new ActiveDataProvider([
-							'query' => $user->getRelCompetencies()->orderBy('name')
+							'query' => $userModel->getRelCompetencies()->orderBy('name')
 						]),
 						'showFooter' => false,
 						'showPageSummary' => false,
@@ -153,19 +154,19 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 						'columns' => [
 							[
 								'attribute' => 'name',
-								'value' => function($model) use ($user) {
+								'value' => function($model) use ($userModel) {
 									/** @var Competencies $model */
-									return Html::a($model->name, Url::to(['admin/users/competencies', 'user_id' => $user->id, 'competency_id' => $model->id]));
+									return Html::a($model->name, Url::to(['admin/users/competencies', 'user_id' => $userModel->id, 'competency_id' => $model->id]));
 								},
 								'format' => 'raw'
 							],
 							'categoryName',
 							[
 								'label' => 'Данные',
-								'value' => function($model) use ($user) {
+								'value' => function($model) use ($userModel) {
 									/** @var Competencies $model */
 									return CompetencyWidget::widget([
-										'user_id' => $user->id,
+										'user_id' => $userModel->id,
 										'competency_id' => $model->id
 									]);
 								},

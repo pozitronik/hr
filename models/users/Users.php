@@ -71,6 +71,12 @@ use yii\web\UploadedFile;
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property integer[] $dropCompetencies
  * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
+ * @property ActiveQuery $relCompetenciesTimes
+ * @property ActiveQuery $relCompetenciesTexts
+ * @property ActiveQuery $relCompetenciesDates
+ * @property ActiveQuery $relCompetenciesBooleans
+ * @property ActiveQuery $relCompetenciesStrings
+ * @property ActiveQuery $relCompetenciesPercents
  * @property ActiveQuery $relCompetenciesIntegers Релейшен к цифровым полям компетенций
  */
 class Users extends ActiveRecord {
