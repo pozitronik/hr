@@ -207,30 +207,11 @@ class Competencies extends ActiveRecord {
 	 */
 	public function setUserField(int $user_id, int $field_id, $field_value):void {
 		$field = $this->getFieldById($field_id);
-
-		switch ($field->type) {
-			case 'boolean':
-				CompetencyFieldBoolean::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
-			case 'date':
-				CompetencyFieldDate::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
-			case 'integer':
-				CompetencyFieldInteger::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
-			case 'percent':
-				CompetencyFieldPercent::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
-			case 'string':
-				CompetencyFieldString::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
-			case 'time':
-				CompetencyFieldTime::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
-			default:
-				SysExceptions::log(new RuntimeException("Field type not implemented: {$field->type}"), false, true);
-				CompetencyFieldString::setValue($this->id, $field_id, $user_id, $field_value);
-			break;
+		$typeClass = CompetencyField::getTypeClass($field->type);
+		try {
+			$typeClass::setValue($this->id, $field_id, $user_id, $field_value);
+		} catch (Throwable $t) {
+			SysExceptions::log(new RuntimeException("Field type {$field->type} not implemented or not configured "), false, true);
 		}
 	}
 
