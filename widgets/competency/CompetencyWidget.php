@@ -13,10 +13,12 @@ use yii\data\ArrayDataProvider;
  * @package app\components\competency
  * @property integer $user_id
  * @property integer $competency_id
+ * @property boolean $show_category
  */
 class CompetencyWidget extends Widget {
 	public $user_id;
 	public $competency_id;
+	public $show_category = false;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -41,7 +43,8 @@ class CompetencyWidget extends Widget {
 		$widgetDataProvider->allModels = $competency->getUserFields($this->user_id);
 
 		return $this->render('competency', [
-			'widgetDataProvider' => $widgetDataProvider
+			'widgetDataProvider' => $widgetDataProvider,
+			'show_category' => $this->show_category
 		]);
 	}
 }

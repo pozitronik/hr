@@ -5,6 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var array $structure
  * @var DataProviderInterface $widgetDataProvider
+ * @var boolean $show_category
  */
 
 use app\helpers\ArrayHelper;
@@ -35,7 +36,8 @@ use kartik\grid\GridView;
 			'value' => function($model) {
 				/** @var CompetencyField $model */
 				return ArrayHelper::getValue(ArrayHelper::getColumn(CompetencyField::FIELD_TYPES, 'label'), $model->type);
-			}
+			},
+			'visible' => $show_category
 		],
 		'name',
 		[
