@@ -6,7 +6,7 @@ namespace app\models\competencies\types;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "sys_competencies_string".
+ * This is the model class for table "sys_competencies_text".
  *
  * @property int $id
  * @property int $competency_id ID компетенции
@@ -14,12 +14,12 @@ use yii\db\ActiveRecord;
  * @property int $user_id ID пользователя
  * @property string $value Значение
  */
-class CompetencyFieldString extends ActiveRecord implements DataFieldInterface {
+class CompetencyFieldText extends ActiveRecord implements DataFieldInterface {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_competencies_string';
+		return 'sys_competencies_text';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class CompetencyFieldString extends ActiveRecord implements DataFieldInterface {
 		return [
 			[['competency_id', 'field_id', 'user_id'], 'required'],
 			[['competency_id', 'field_id', 'user_id'], 'integer'],
-			[['value'], 'string', 'max' => 255],
+			[['value'], 'string'],
 			[['competency_id', 'field_id', 'user_id'], 'unique', 'targetAttribute' => ['competency_id', 'field_id', 'user_id']]
 		];
 	}
