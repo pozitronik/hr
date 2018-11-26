@@ -27,7 +27,32 @@ class CompetencyFieldPercent extends ActiveRecord implements DataFieldInterface 
 	 * @return array
 	 */
 	public static function conditionConfig():array {
-		return [];//todo
+		return [
+			['равно', function($searchValue) {
+				return ['=', self::tableName().".value", $searchValue];
+			}],
+			['не равно', function($searchValue) {
+				return ['!=', self::tableName().".value", $searchValue];
+			}],
+			['больше', function($searchValue) {
+				return ['>', self::tableName().".value", $searchValue];
+			}],
+			['меньше', function($searchValue) {
+				return ['<', self::tableName().".value", $searchValue];
+			}],
+			['меньше или равно', function($searchValue) {
+				return ['<=', self::tableName().".value", $searchValue];
+			}],
+			['больше или равно', function($searchValue) {
+				return ['>=', self::tableName().".value", $searchValue];
+			}],
+			['заполнено', function($searchValue) {
+				return ['not null', self::tableName().".value"];
+			}],
+			['не заполнено', function($searchValue) {
+				return ['null', self::tableName().".value"];
+			}]
+		];
 	}
 
 	/**
