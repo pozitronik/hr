@@ -47,7 +47,8 @@ class CompetencyField extends Model {
 		'string' => 'Строка',
 		'date' => 'Дата',
 		'time' => 'Время',
-		'percent' => 'Проценты'
+		'percent' => 'Проценты',
+		'text' => 'text'
 	];
 
 	/**

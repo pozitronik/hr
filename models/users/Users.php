@@ -11,6 +11,7 @@ use app\models\competencies\types\CompetencyFieldDate;
 use app\models\competencies\types\CompetencyFieldInteger;
 use app\models\competencies\types\CompetencyFieldPercent;
 use app\models\competencies\types\CompetencyFieldString;
+use app\models\competencies\types\CompetencyFieldText;
 use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
@@ -384,6 +385,13 @@ class Users extends ActiveRecord {
 	 */
 	public function getRelCompetenciesStrings():ActiveQuery {
 		return $this->hasMany(CompetencyFieldString::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesTexts():ActiveQuery {
+		return $this->hasMany(CompetencyFieldText::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
 	}
 
 	/**
