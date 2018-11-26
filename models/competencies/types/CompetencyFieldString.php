@@ -48,6 +48,36 @@ class CompetencyFieldString extends ActiveRecord implements DataFieldInterface {
 	}
 
 	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [
+			['равно', function($searchValue) {
+				return ['=', self::tableName().".value", $searchValue];
+			}],
+			['не равно', function($searchValue) {
+				return ['!=', self::tableName().".value", $searchValue];
+			}],
+			['начинается с', function($searchValue) {
+				return ['like', self::tableName().".value", "%$searchValue", false];
+			}],
+			['содержит', function($searchValue) {
+				return ['like', self::tableName().".value", "%$searchValue%", false];
+			}],
+			['не содержит', function($searchValue) {
+				return ['not like', self::tableName().".value", "%$searchValue", false];
+			}],
+			['заполнено', function($searchValue) {
+				return ['not null', self::tableName().".value"];
+			}],
+			['не заполнено', function($searchValue) {
+				return ['null', self::tableName().".value"];
+			}]
+		];
+	}
+
+	/**
 	 * Вернуть из соответствующей таблицы значение поля для этого поля этой компетенции этого юзера
 	 * @param int $competency_id
 	 * @param int $field_id
@@ -86,4 +116,5 @@ class CompetencyFieldString extends ActiveRecord implements DataFieldInterface {
 	public static function getRecord(int $competency_id, int $field_id, int $user_id):?self {
 		return self::find()->where(compact('competency_id', 'field_id', 'user_id'))->one();
 	}
+
 }
