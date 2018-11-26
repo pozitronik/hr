@@ -34,7 +34,7 @@ use kartik\grid\GridView;
 			'attribute' => 'type',
 			'value' => function($model) {
 				/** @var CompetencyField $model */
-				return ArrayHelper::getValue(CompetencyField::FIELD_TYPES, $model->type);
+				return ArrayHelper::getValue(ArrayHelper::getColumn(CompetencyField::FIELD_TYPES, 'label'), $model->type);
 			}
 		],
 		'name',
