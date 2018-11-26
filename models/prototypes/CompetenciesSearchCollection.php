@@ -134,15 +134,30 @@ class CompetenciesSearchCollection extends Model {
 			if (false === $model = Competencies::findModel($searchItem->competency)) continue;
 			$type = $model->structure[$searchItem->field]['type'];
 			switch ($type) {
+				case 'boolean':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
+				case 'date':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
 				case 'integer':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
+				case 'percent':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
+				case 'string':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
+				case 'text':
+					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
+				break;
+				case 'time':
 					$query->andFilterWhere(['sys_competencies_integer.value' => $searchItem->value]);
 				break;
 			}
 
-			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
 		}
-
-		Utils::log($query->createCommand()->rawSql);
 
 		return $dataProvider;
 	}
