@@ -5,6 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var CompetenciesSearchCollection $model
  * @var ActiveDataProvider $dataProvider
+ * @var array $competency_data
  */
 
 use app\assets\AppAsset;
@@ -18,7 +19,6 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
-use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use yii\helpers\Url;
 
@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['
 $this->params['breadcrumbs'][] = ['label' => 'Компетенции', 'url' => ['/admin/competencies']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class]);//todo: после прототипирования вытащить в виджет или модуль
+
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -56,7 +57,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][competency]")->widget(Select2::class, [
-								'data' => ArrayHelper::cmap(Competencies::find()->active()->all(), 'id', ['name', 'categoryName'], ' => '),//todo: группировка по категориям
+								'data' => $competency_data,
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать компетенцию',
