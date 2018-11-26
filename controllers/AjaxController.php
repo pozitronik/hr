@@ -5,6 +5,7 @@ namespace app\controllers;
 
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
+use app\models\competencies\CompetencyField;
 use app\models\groups\Groups;
 use app\models\prototypes\CompetencySearchCondition;
 use app\models\prototypes\PrototypeNodeData;
@@ -366,10 +367,10 @@ class AjaxController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		if (false !== $type = Yii::$app->request->post('type', false)) {
 			/** @var string $type */
-			if (false !== $condition = CompetencySearchCondition::findCondition($type)) {
+			if (null !== $className = CompetencyField::getTypeClass($type)) {
 				return [
 					'result' => self::RESULT_OK,
-					'items' => $condition
+					'items' => ArrayHelper::keymap($className::conditionConfig(), 0)
 				];
 			}
 			return [

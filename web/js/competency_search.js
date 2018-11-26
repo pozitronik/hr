@@ -40,7 +40,7 @@ function field_changed(element){
 				for (var key in data.items) {
 					var option = $('<option>', {
 						value: key,
-						text: key
+						text: data.items[key]
 					});
 
 					conditionSelect.append(option);
