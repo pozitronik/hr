@@ -6,7 +6,12 @@ namespace app\models\users;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\competencies\Competencies;
+use app\models\competencies\types\CompetencyFieldBoolean;
+use app\models\competencies\types\CompetencyFieldDate;
 use app\models\competencies\types\CompetencyFieldInteger;
+use app\models\competencies\types\CompetencyFieldPercent;
+use app\models\competencies\types\CompetencyFieldString;
+use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserPositions;
@@ -353,4 +358,38 @@ class Users extends ActiveRecord {
 		return $this->hasMany(CompetencyFieldInteger::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
 	}
 
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesBooleans():ActiveQuery {
+		return $this->hasMany(CompetencyFieldBoolean::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesDates():ActiveQuery {
+		return $this->hasMany(CompetencyFieldDate::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesPercents():ActiveQuery {
+		return $this->hasMany(CompetencyFieldPercent::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesStrings():ActiveQuery {
+		return $this->hasMany(CompetencyFieldString::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelCompetenciesTime():ActiveQuery {
+		return $this->hasMany(CompetencyFieldTime::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
+	}
 }
