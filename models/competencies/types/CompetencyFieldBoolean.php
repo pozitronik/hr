@@ -15,6 +15,15 @@ use yii\db\ActiveRecord;
  * @property int $value Значение
  */
 class CompetencyFieldBoolean extends ActiveRecord implements DataFieldInterface {
+
+	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [];//todo
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */

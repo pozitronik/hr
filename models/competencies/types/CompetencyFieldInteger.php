@@ -17,6 +17,14 @@ use yii\db\ActiveRecord;
 class CompetencyFieldInteger extends ActiveRecord implements DataFieldInterface {
 
 	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [];//todo
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
@@ -86,4 +94,5 @@ class CompetencyFieldInteger extends ActiveRecord implements DataFieldInterface 
 	public static function getRecord(int $competency_id, int $field_id, int $user_id):?self {
 		return self::find()->where(compact('competency_id', 'field_id', 'user_id'))->one();
 	}
+
 }

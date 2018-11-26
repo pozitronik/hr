@@ -21,6 +21,14 @@ class CompetencyFieldText extends ActiveRecord implements DataFieldInterface {
 	public static function tableName():string {
 		return 'sys_competencies_text';
 	}
+	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [];//todo
+	}
+
 
 	/**
 	 * @inheritdoc

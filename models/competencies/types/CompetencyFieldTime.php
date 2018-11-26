@@ -36,6 +36,14 @@ class CompetencyFieldTime extends ActiveRecord implements DataFieldInterface {
 	}
 
 	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [];//todo
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function rules():array {
