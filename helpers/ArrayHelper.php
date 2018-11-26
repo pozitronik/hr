@@ -154,4 +154,19 @@ class ArrayHelper extends YiiArrayHelper {
 		return $result;
 	}
 
+	/**
+	 * Мапит значения субмассива к верхнему индексу массива
+	 * @param array $array
+	 * @param mixed $attribute
+	 * @return array
+	 * @throws Throwable
+	 */
+	public static function keymap(array $array, $attribute): array {
+		$result = [];
+		foreach ($array as $key => $element) {
+			$result[$key] = ArrayHelper::getValue($element, $attribute);
+		}
+		return $result;
+	}
+
 }
