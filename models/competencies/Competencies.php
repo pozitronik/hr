@@ -94,6 +94,7 @@ class Competencies extends ActiveRecord {
 			'id' => 'ID',
 			'name' => 'Название компетенции',
 			'category' => 'Категория',
+			'categoryName' => 'Категория',
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'structure' => 'Структура',

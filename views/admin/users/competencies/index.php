@@ -68,6 +68,7 @@ use yii\helpers\Url;
 				],
 				'categoryName',
 				[
+					'label' => 'Данные',
 					'value' => function($model) use ($user) {
 						/** @var Competencies $model */
 						return CompetencyWidget::widget([

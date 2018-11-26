@@ -158,6 +158,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 							],
 							'categoryName',
 							[
+								'label' => 'Данные',
 								'value' => function($model) use ($user) {
 									/** @var Competencies $model */
 									return CompetencyWidget::widget([
