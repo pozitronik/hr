@@ -1,4 +1,4 @@
-function competency_changed(element){
+function competency_changed(element) {
 	$.ajax({
 		type: 'POST',
 		url: '/ajax/competency-get-fields',
@@ -7,9 +7,9 @@ function competency_changed(element){
 		},
 		success: function (data) {
 			if (0 === data.result) {
-				var conditionIndex = element.val();
+				var Index = element.data('index');
 
-				var fieldSelect = $('*[data-tag="search-field"]');
+				var fieldSelect = $('*[data-tag="search-field"][data-index="' + Index + '"]');
 				fieldSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {
@@ -25,7 +25,7 @@ function competency_changed(element){
 	});
 }
 
-function field_changed(element){
+function field_changed(element) {
 	$.ajax({
 		type: 'POST',
 		url: '/ajax/competency-get-field-condition',
@@ -34,8 +34,8 @@ function field_changed(element){
 		},
 		success: function (data) {
 			if (0 === data.result) {
-				var fieldIndex = element.data('field');
-				var conditionSelect =  $('*[data-tag="search-condition"]');
+				var Index = element.data('index');
+				var conditionSelect = $('*[data-tag="search-condition"][data-index="' + Index + '"]');
 				conditionSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {
@@ -48,12 +48,4 @@ function field_changed(element){
 			}
 		}
 	});
-}
-
-function duplicate_condition(index) {
-	var initialRow = $('.row[data-index="'+index+'"]');
-	var newRow = $(initialRow.parent().html());
-
-	initialRow.after(newRow);
-
 }

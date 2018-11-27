@@ -34,7 +34,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<div class="panel-control">
-				<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'onclick' => 'removeCondition()']); ?>
+				<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'name' => 'remove', 'value' => true]); ?>
 				<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true]); ?>
 			</div>
 			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
@@ -62,6 +62,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'multiple' => false,
 									'placeholder' => 'Выбрать компетенцию',
 									'data-tag' => "search-competency",
+									'data-index' => $index,
 									'onchange' => 'competency_changed($(this))'
 								]
 							])->label('Компетенция'); ?>
@@ -74,7 +75,9 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'multiple' => false,
 									'placeholder' => 'Выбрать поле',
 									'data-tag' => "search-field",
+									'data-index' => $index,
 									'onchange' => 'field_changed($(this))'
+									//todo: data-type
 								]
 							])->label('Поле'); ?>
 						</div>
@@ -84,7 +87,8 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',
-									'data-tag' => "search-condition"
+									'data-tag' => "search-condition",
+									'data-index' => $index,
 								]
 							])->label('Условие'); ?>
 						</div>
