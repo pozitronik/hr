@@ -88,7 +88,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',
 									'data-tag' => "search-condition",
-									'data-index' => $index,
+									'data-index' => $index
 								]
 							])->label('Условие'); ?>
 						</div>
