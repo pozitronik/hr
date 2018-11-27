@@ -102,9 +102,10 @@ class CompetenciesSearchCollection extends Model {
 	 */
 	public function fieldsConditions(?int $competencyIndex, ?int $fieldIndex):array {
 		if (false !== $competency = Competencies::findModel($competencyIndex)) {
-			$field = $competency->structure[$fieldIndex];
-			$className = CompetencyField::getTypeClass($type = $field['type']);
-			return ArrayHelper::keymap($className::conditionConfig(), 0);
+			if (null !== $field = ArrayHelper::getValue($competency->structure, $fieldIndex)) {
+				$className = CompetencyField::getTypeClass($type = $field['type']);
+				return ArrayHelper::keymap($className::conditionConfig(), 0);
+			}
 		}
 		return [];
 	}
