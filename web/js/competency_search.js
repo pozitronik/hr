@@ -7,9 +7,9 @@ function competency_changed(element){
 		},
 		success: function (data) {
 			if (0 === data.result) {
-				var conditionIndex = element.data('competency');
+				var conditionIndex = element.val();
 
-				var fieldSelect = $('*[data-field="'+conditionIndex+'"]');
+				var fieldSelect = $('*[data-tag="search-field"]');
 				fieldSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {
@@ -35,7 +35,7 @@ function field_changed(element){
 		success: function (data) {
 			if (0 === data.result) {
 				var fieldIndex = element.data('field');
-				var conditionSelect =  $('*[data-condition="'+fieldIndex+'"]');
+				var conditionSelect =  $('*[data-tag="search-condition"]');
 				conditionSelect.empty();
 				for (var key in data.items) {
 					var option = $('<option>', {

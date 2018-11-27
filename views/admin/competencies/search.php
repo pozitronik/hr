@@ -61,7 +61,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать компетенцию',
-									'data-competency' => $index,
+									'data-tag' => "search-competency",
 									'onchange' => 'competency_changed($(this))'
 								]
 							])->label('Компетенция'); ?>
@@ -73,9 +73,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать поле',
-									'options' => [
-										1 => ['data-field' => $index]//todo: придумать, как добавлять типы к опциям
-									],
+									'data-tag' => "search-field",
 									'onchange' => 'field_changed($(this))'
 								]
 							])->label('Поле'); ?>
@@ -86,7 +84,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',
-									'data-condition' => $index
+									'data-tag' => "search-condition"
 								]
 							])->label('Условие'); ?>
 						</div>
