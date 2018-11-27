@@ -73,7 +73,7 @@ class CompetencyFieldString extends ActiveRecord implements DataFieldInterface {
 				return ['not', self::tableName().".value", null];
 			}],
 			['не заполнено', function($searchValue) {
-				return ['is', self::tableName().".value", new Expression('null')];
+				return ['is', self::tableName().".value", new Expression('null')];//todo: пустые строки не равны Null
 			}]
 		];
 	}
