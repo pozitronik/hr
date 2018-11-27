@@ -70,20 +70,20 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][field]")->widget(Select2::class, [
-								'data' => $model->competencyFields($model->searchItems[$index]->competency),
+								'data' => $model->competencyFields($condition->competency),
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать поле',
 									'data-tag' => "search-field",
 									'data-index' => $index,
-									'onchange' => 'field_changed($(this))'
-									//todo: data-type
+									'onchange' => 'field_changed($(this))',
+									'options' => $model->fieldsTypes($condition->competency)
 								]
 							])->label('Поле'); ?>
 						</div>
 						<div class="col-md-2">
 							<?= $form->field($model, "searchItems[$index][condition]")->widget(Select2::class, [
-								'data' => $model->fieldsConditions($model->searchItems[$index]->competency, $model->searchItems[$index]->field),
+								'data' => $model->fieldsConditions($condition->competency, $condition->field),
 								'options' => [
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие',

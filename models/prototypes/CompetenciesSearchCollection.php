@@ -111,6 +111,22 @@ class CompetenciesSearchCollection extends Model {
 	}
 
 	/**
+	 * Для задания data-type-атрибутов у выбиралки типов при поиске придумано вот такое решение
+	 * @see https://github.com/kartik-v/yii2-widgets/issues/247
+	 * @return array
+	 */
+	public function fieldsTypes($index):array {
+		$result = [];
+		if (false !== $competency = Competencies::findModel($index)) {
+			foreach ($competency->structure as $key => $value) {
+				$result[$key]['data-type'] = ArrayHelper::getValue($value, 'type');
+			}
+
+		}
+		return $result;
+	}
+
+	/**
 	 * @return ActiveDataProvider
 	 * @throws Throwable
 	 */
