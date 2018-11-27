@@ -153,6 +153,7 @@ class CompetenciesSearchCollection extends Model {
 				$className = CompetencyField::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
 					try {
+						/*todo: поиск по атрибутам не через джойны, либо через алиасы джойнов, иначе тупо не работает поиск по множественным компетенциям*/
 						if (null !== $typeSearchRelation = CompetencyField::getTypeSearchRelation($type)) $query->joinWith($typeSearchRelation);
 						if ($searchItem->logic) {
 							$query->andFilterWhere($condition($searchItem->value));
