@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\competencies\types;
 
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "sys_competencies_time".
@@ -60,10 +61,10 @@ class CompetencyFieldTime extends ActiveRecord implements DataFieldInterface {
 				return ['<=', self::tableName().".value", $searchValue];
 			}],
 			['заполнено', function($searchValue) {
-				return ['not null', self::tableName().".value"];
+				return ['not', self::tableName().".value", null];
 			}],
 			['не заполнено', function($searchValue) {
-				return ['null', self::tableName().".value"];
+				return ['is', self::tableName().".value", new Expression('null')];
 			}]
 		];
 	}
