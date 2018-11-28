@@ -36,7 +36,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 		<div class="panel-heading">
 			<div class="panel-control">
 				<?= Html::button("", ['class' => 'hidden', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>
-				<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'type' => 'submit', 'name' => 'remove', 'value' => (count($model->searchItems) > 1), 'disabled' => (count($model->searchItems) > 1)?false:'disabled', 'title' => 'Убрать условие']); ?>
+				<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'type' => 'submit', 'name' => 'remove', 'value' => count($model->searchItems) > 1, 'disabled' => (count($model->searchItems) > 1)?false:'disabled', 'title' => 'Убрать условие']); ?>
 				<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true, 'title' => 'Добавить условие']); ?>
 			</div>
 			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
