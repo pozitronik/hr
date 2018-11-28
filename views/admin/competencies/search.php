@@ -103,9 +103,6 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 
 		<div class="panel-footer">
 			<div class="btn-group">
-<!--				--><?//= Html::button('Сохранить поиск', ['class' => 'btn btn-info']); ?>
-			</div>
-			<div class="btn-group pull-right">
 				<?= Html::button("Поиск", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>
 
 			</div>
