@@ -12,6 +12,7 @@ use app\assets\AppAsset;
 use app\models\prototypes\CompetenciesSearchCollection;
 use app\models\users\Users;
 use app\widgets\competency\CompetencyWidget;
+use app\widgets\user\UserWidget;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -121,17 +122,28 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 		'resizableColumns' => true,
 		'responsive' => true,
 		'columns' => [
-			'id',
+//			'id',
+//			[
+//				'value' => function($column) {
+//					/** @var Users $column */
+//					return Html::img($column->avatar, ['class' => 'img-circle img-xs']);
+//				},
+//				'label' => 'Аватар',
+//				'format' => 'raw'
+//			],
 			[
-				'value' => function($column) {
-					/** @var Users $column */
-					return Html::img($column->avatar, ['class' => 'img-circle img-xs']);
+				'attribute' => 'username',
+				'value' => function($model) {
+					/** @var Users $model */
+					return UserWidget::widget([
+						'user' => $model
+					]);
 				},
-				'label' => 'Аватар',
-				'format' => 'raw'
+				'format' => 'raw',
+				'label' => 'Сотрудник'
 			],
-			'username',
-			'positionName',
+//			'username',
+//			'positionName',
 			[
 				'label' => 'Компетенции',
 				'format' => 'raw',

@@ -8,6 +8,7 @@ declare(strict_types = 1);
 
 use app\models\users\Users;
 use yii\web\View;
+use yii\helpers\Html;
 
 ?>
 <div class="fixed-fluid pull-left">
@@ -20,7 +21,8 @@ use yii\web\View;
 					<?php endif; ?>
 					<img src="<?= $model->avatar; ?>" class="img-lg img-border img-circle" alt="<?= $model->username; ?>">
 				</div>
-				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= $model->username; ?></h4>
+
+				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= Html::a($model->username, ['admin/users/update', 'id' => $model->id]) ?></h4>
 			</div>
 			<div class="mar-btm">
 				<p class="text-semibold text-main pad-all mar-no"><?= $model->positionName; ?></p>
