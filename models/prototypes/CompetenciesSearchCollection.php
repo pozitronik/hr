@@ -9,7 +9,6 @@ use app\models\competencies\CompetencyField;
 use app\models\core\SysExceptions;
 use app\models\users\Users;
 use Throwable;
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
