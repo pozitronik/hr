@@ -29,29 +29,29 @@ class CompetencyFieldDate extends ActiveRecord implements DataFieldInterface {
 	 */
 	public static function conditionConfig():array {
 		return [
-			['равно', function($searchValue) {
-				return ['=', self::tableName().".value", $searchValue];
+			['равно', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", $searchValue];
 			}],
-			['не равно', function($searchValue) {
-				return ['!=', self::tableName().".value", $searchValue];
+			['не равно', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.value", $searchValue];
 			}],
-			['раньше', function($searchValue) {
-				return ['<', self::tableName().".value", $searchValue];
+			['раньше', function($tableAlias, $searchValue) {
+				return ['<', "$tableAlias.value", $searchValue];
 			}],
-			['позже', function($searchValue) {
-				return ['>', self::tableName().".value", $searchValue];
+			['позже', function($tableAlias, $searchValue) {
+				return ['>', "$tableAlias.value", $searchValue];
 			}],
-			['раньше или равно', function($searchValue) {
-				return ['<=', self::tableName().".value", $searchValue];
+			['раньше или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.value", $searchValue];
 			}],
-			['позже или равно', function($searchValue) {
-				return ['<=', self::tableName().".value", $searchValue];
+			['позже или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.value", $searchValue];
 			}],
-			['заполнено', function($searchValue) {
-				return ['not', self::tableName().".value", null];
+			['заполнено', function($tableAlias, $searchValue) {
+				return ['not', "$tableAlias.value", null];
 			}],
-			['не заполнено', function($searchValue) {
-				return ['is', self::tableName().".value", new Expression('null')];
+			['не заполнено', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.value", new Expression('null')];
 			}]
 		];
 	}

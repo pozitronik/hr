@@ -28,26 +28,26 @@ class CompetencyFieldText extends ActiveRecord implements DataFieldInterface {
 	 */
 	public static function conditionConfig():array {
 		return [
-			['равно', function($searchValue) {
-				return ['=', self::tableName().".value", $searchValue];
+			['равно', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", $searchValue];
 			}],
-			['не равно', function($searchValue) {
-				return ['!=', self::tableName().".value", $searchValue];
+			['не равно', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.value", $searchValue];
 			}],
-			['начинается с', function($searchValue) {
-				return ['like', self::tableName().".value", "%$searchValue", false];
+			['начинается с', function($tableAlias, $searchValue) {
+				return ['like', "$tableAlias.value", "%$searchValue", false];
 			}],
-			['содержит', function($searchValue) {
-				return ['like', self::tableName().".value", "%$searchValue%", false];
+			['содержит', function($tableAlias, $searchValue) {
+				return ['like', "$tableAlias.value", "%$searchValue%", false];
 			}],
-			['не содержит', function($searchValue) {
-				return ['not like', self::tableName().".value", "%$searchValue", false];
+			['не содержит', function($tableAlias, $searchValue) {
+				return ['not like', "$tableAlias.value", "%$searchValue", false];
 			}],
-			['заполнено', function($searchValue) {
-				return ['not', self::tableName().".value", null];
+			['заполнено', function($tableAlias, $searchValue) {
+				return ['not', "$tableAlias.value", null];
 			}],
-			['не заполнено', function($searchValue) {
-				return ['is', self::tableName().".value", new Expression('null')];
+			['не заполнено', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.value", new Expression('null')];
 			}]
 		];
 	}
