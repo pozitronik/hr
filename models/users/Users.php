@@ -6,13 +6,6 @@ namespace app\models\users;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\competencies\Competencies;
-use app\models\competencies\types\CompetencyFieldBoolean;
-use app\models\competencies\types\CompetencyFieldDate;
-use app\models\competencies\types\CompetencyFieldInteger;
-use app\models\competencies\types\CompetencyFieldPercent;
-use app\models\competencies\types\CompetencyFieldString;
-use app\models\competencies\types\CompetencyFieldText;
-use app\models\competencies\types\CompetencyFieldTime;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserPositions;
@@ -71,13 +64,6 @@ use yii\web\UploadedFile;
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property integer[] $dropCompetencies
  * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
- * @property ActiveQuery $relCompetenciesTimes
- * @property ActiveQuery $relCompetenciesTexts
- * @property ActiveQuery $relCompetenciesDates
- * @property ActiveQuery $relCompetenciesBooleans
- * @property ActiveQuery $relCompetenciesStrings
- * @property ActiveQuery $relCompetenciesPercents
- * @property ActiveQuery $relCompetenciesIntegers Релейшен к цифровым полям компетенций
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -356,54 +342,5 @@ class Users extends ActiveRecord {
 	public function setDropCompetencies(array $dropCompetencies):void {
 		/*Сами значения компетенций сохранятся в базе и должны будут восстановиться, если компетенцию присвоить пользователю обратно*/
 		RelUsersCompetencies::unlinkModels($this, $dropCompetencies);
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesIntegers():ActiveQuery {
-		return $this->hasMany(CompetencyFieldInteger::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesBooleans():ActiveQuery {
-		return $this->hasMany(CompetencyFieldBoolean::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesDates():ActiveQuery {
-		return $this->hasMany(CompetencyFieldDate::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesPercents():ActiveQuery {
-		return $this->hasMany(CompetencyFieldPercent::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesStrings():ActiveQuery {
-		return $this->hasMany(CompetencyFieldString::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesTexts():ActiveQuery {
-		return $this->hasMany(CompetencyFieldText::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
-	}
-
-	/**
-	 * @return ActiveQuery
-	 */
-	public function getRelCompetenciesTimes():ActiveQuery {
-		return $this->hasMany(CompetencyFieldTime::class, ['competency_id' => 'competency_id', 'user_id' => 'user_id'])->via('relUsersCompetencies');
 	}
 }
