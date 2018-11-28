@@ -44,7 +44,7 @@ class CompetencyFieldText extends ActiveRecord implements DataFieldInterface {
 				return ['not like', "$tableAlias.value", "%$searchValue", false];
 			}],
 			['заполнено', function($tableAlias, $searchValue) {
-				return ['not', "$tableAlias.value", null];
+				return ['not', ["$tableAlias.value" => null]];
 			}],
 			['не заполнено', function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.value", new Expression('null')];
