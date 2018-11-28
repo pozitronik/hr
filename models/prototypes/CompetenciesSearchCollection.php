@@ -144,21 +144,33 @@ class CompetenciesSearchCollection extends Model {
 				'username'
 			]
 		]);
-		$query->joinWith(['relCompetencies']);
+		$usedAliases = [];//Массив-счётчик использованных алиасов. Если имя алиаса было использовано, второй раз ссылаться на него не нужно
 
 		foreach ($this->searchItems as $searchItem) {
 			if (false === $model = Competencies::findModel($searchItem->competency)) continue;
-			$query->andFilterWhere(['sys_competencies.id' => $searchItem->competency]);
+			$aliasName = "competencies{$searchItem->competency}";
+			if (!in_array($aliasName, $usedAliases)) {
+				$query->leftJoin("rel_users_competencies $aliasName", "$aliasName.user_id = sys_users.id");
+				$usedAliases[] = $aliasName;
+			}
+
+			$query->andFilterWhere(["$aliasName.competency_id" => $searchItem->competency]);
 			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->field}.type")) {
 				$className = CompetencyField::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
 					try {
-						/*todo: поиск по атрибутам не через джойны, либо через алиасы джойнов, иначе тупо не работает поиск по множественным компетенциям*/
-						if (null !== $typeSearchRelation = CompetencyField::getTypeSearchRelation($type)) $query->joinWith($typeSearchRelation);
+						$typeAlias = $aliasName.$type;
+						if (!in_array($typeAlias, $usedAliases)) {
+							$typeTableName = $className::tableName();
+
+							$query->leftJoin("$typeTableName $typeAlias", "$aliasName.user_id = sys_users.id");
+							$usedAliases[] = $typeAlias;
+						}
+
 						if ($searchItem->logic) {
-							$query->andFilterWhere($condition($searchItem->value));
+							$query->andFilterWhere($condition($typeAlias, $searchItem->value));
 						} else {
-							$query->orFilterWhere($condition($searchItem->value));
+							$query->orFilterWhere($condition($typeAlias, $searchItem->value));
 						}
 
 					} catch (Throwable $t) {
@@ -169,7 +181,7 @@ class CompetenciesSearchCollection extends Model {
 			}
 
 		}
-		Yii::debug($query->createCommand()->rawSql, 'sql');
+//		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }
