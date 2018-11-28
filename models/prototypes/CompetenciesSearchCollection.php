@@ -56,10 +56,15 @@ class CompetenciesSearchCollection extends Model {
 	}
 
 	/**
-	 * @param int $index
+	 * @param null|int $index
 	 */
-	public function removeItem(int $index):void {
-		ArrayHelper::remove($this->searchItems, $index);
+	public function removeItem(?int $index = null):void {
+		if (null === $index) {
+			ArrayHelper::remove($this->searchItems, count($this->searchItems) - 1);
+		} else {
+			ArrayHelper::remove($this->searchItems, $index);
+		}
+
 	}
 
 	/**

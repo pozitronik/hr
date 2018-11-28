@@ -147,6 +147,9 @@ class CompetenciesController extends WigetableController {
 		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
 			$searchSet->addItem(new CompetenciesSearchItem());
 		}
+		if (null !== Yii::$app->request->post('remove')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
+			$searchSet->removeItem();
+		}
 		return $this->render('search', [
 			'model' => $searchSet,
 			'dataProvider' => null,
