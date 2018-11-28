@@ -47,37 +47,30 @@ class CompetencyField extends Model {
 		'integer' => [/*Название (индекс) типа данных*/
 			'label' => 'Число',/*Отображаемое в интефейсах имя*/
 			'model' => CompetencyFieldInteger::class,/*Имя класса, реализующего взаимоделйствие с типом данных, обязательно имплементация DataFieldInterface. Поле названо model, потому что на class ругается инспектор*/
-			'searchRelation' => 'relCompetenciesIntegers' /*Имя релейшена, подключаемого при поиске (релейшены определены в Users, т.к. эта модель инциирующая)*/
 		],
 		'boolean' => [
 			'label' => 'Логический тип',
-			'model' => CompetencyFieldBoolean::class,
-			'searchRelation' => 'relCompetenciesBooleans'
+			'model' => CompetencyFieldBoolean::class
 		],
 		'string' => [
 			'label' => 'Строка',
-			'model' => CompetencyFieldString::class,
-			'searchRelation' => 'relCompetenciesStrings'
+			'model' => CompetencyFieldString::class
 		],
 		'date' => [
 			'label' => 'Дата',
-			'model' => CompetencyFieldDate::class,
-			'searchRelation' => 'relCompetenciesDates'
+			'model' => CompetencyFieldDate::class
 		],
 		'time' => [
 			'label' => 'Время',
-			'model' => CompetencyFieldTime::class,
-			'searchRelation' => 'relCompetenciesTimes'
+			'model' => CompetencyFieldTime::class
 		],
 		'percent' => [
 			'label' => 'Проценты',
-			'model' => CompetencyFieldPercent::class,
-			'searchRelation' => 'relCompetenciesPercents'
+			'model' => CompetencyFieldPercent::class
 		],
 		'text' => [
 			'label' => 'Текст',
-			'model' => CompetencyFieldText::class,
-			'searchRelation' => 'relCompetenciesTexts'
+			'model' => CompetencyFieldText::class
 		]
 	];
 
@@ -88,15 +81,6 @@ class CompetencyField extends Model {
 	 */
 	public static function getTypeClass(string $type) {
 		return ArrayHelper::getValue(self::FIELD_TYPES, "$type.model");
-	}
-
-	/**
-	 * @param string $type
-	 * @return mixed
-	 * @throws Throwable
-	 */
-	public static function getTypeSearchRelation (string $type) {
-		return ArrayHelper::getValue(self::FIELD_TYPES, "$type.searchRelation");
 	}
 
 	/**
