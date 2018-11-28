@@ -172,9 +172,9 @@ class CompetenciesSearchCollection extends Model {
 						}
 
 						if ($searchItem->logic) {
-							$query->andFilterWhere($condition($typeAlias, $searchItem->value));
+							$query->andWhere($condition($typeAlias, $searchItem->value));
 						} else {
-							$query->orFilterWhere($condition($typeAlias, $searchItem->value));
+							$query->orWhere($condition($typeAlias, $searchItem->value));
 						}
 
 					} catch (Throwable $t) {
