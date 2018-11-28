@@ -1,11 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\prototypes;
+namespace app\models\competencies;
 
 use app\helpers\ArrayHelper;
-use app\models\competencies\Competencies;
-use app\models\competencies\CompetencyField;
 use app\models\core\SysExceptions;
 use app\models\users\Users;
 use Throwable;

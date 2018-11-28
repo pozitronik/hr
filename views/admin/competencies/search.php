@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\assets\AppAsset;
-use app\models\prototypes\CompetenciesSearchCollection;
+use app\models\competencies\CompetenciesSearchCollection;
 use app\models\users\Users;
 use app\widgets\competency\CompetencyWidget;
 use app\widgets\user\UserWidget;

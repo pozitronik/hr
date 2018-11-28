@@ -5,10 +5,10 @@ namespace app\controllers\admin;
 
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetenciesSearch;
+use app\models\competencies\CompetenciesSearchItem;
 use app\models\competencies\CompetencyField;
 use app\models\core\WigetableController;
-use app\models\prototypes\CompetenciesSearchItem;
-use app\models\prototypes\CompetenciesSearchCollection;
+use app\models\competencies\CompetenciesSearchCollection;
 use Throwable;
 use yii\db\Exception;
 use yii\web\ErrorAction;
