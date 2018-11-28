@@ -185,7 +185,7 @@ class CompetenciesSearchCollection extends Model {
 			}
 
 		}
-		\Yii::debug($query->createCommand()->rawSql, 'sql');
+//		\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }
