@@ -165,7 +165,7 @@ class CompetenciesSearchCollection extends Model {
 						if (!in_array($typeAlias, $usedAliases)) {
 							$typeTableName = $className::tableName();
 
-							$query->leftJoin("$typeTableName $typeAlias", "$typeAlias.user_id = sys_users.id");
+							$query->leftJoin("$typeTableName $typeAlias", "$typeAlias.user_id = sys_users.id AND $typeAlias.field_id = {$searchItem->field}");
 							$usedAliases[] = $typeAlias;
 						}
 
@@ -183,7 +183,7 @@ class CompetenciesSearchCollection extends Model {
 			}
 
 		}
-//		\Yii::debug($query->createCommand()->rawSql, 'sql');
+		\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }
