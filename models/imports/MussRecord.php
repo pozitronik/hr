@@ -33,7 +33,7 @@ class MussRecord extends Model {
 
 	private $models = [];
 
-	public function clearDB() {
+	public function clearDB():void {
 
 		$sql = "TRUNCATE sys_exceptions; TRUNCATE sys_groups; TRUNCATE sys_users; TRUNCATE sys_competencies_boolean; TRUNCATE sys_competencies_date; TRUNCATE sys_competencies_integer; TRUNCATE sys_competencies_percent; TRUNCATE sys_users_options;
 				TRUNCATE sys_competencies_string; TRUNCATE sys_competencies_text; TRUNCATE sys_competencies_time; TRUNCATE rel_users_groups_roles; TRUNCATE rel_users_groups; TRUNCATE rel_users_competencies; TRUNCATE rel_groups_groups;
