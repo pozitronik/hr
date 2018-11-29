@@ -267,7 +267,7 @@ class FosRecord extends Model {
 			$competency = new Competencies();
 			$competency->createCompetency(['name' => $attribute['competency'], 'category' => 0]);
 		}
-		if (null === $field = $competency->getField($attribute['field'])) {
+		if (null === $field = $competency->getFieldByName($attribute['field'])) {
 			$field = new CompetencyField([
 				'competencyId' => $competency->id,
 				'name' => $attribute['field'],

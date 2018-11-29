@@ -152,7 +152,7 @@ class Competencies extends ActiveRecord {
 	 * @return CompetencyField|null
 	 * @throws Throwable
 	 */
-	public function getField(string $fieldName):?CompetencyField {
+	public function getFieldByName(string $fieldName):?CompetencyField {
 		foreach ($this->structure as $field) {
 			if ($fieldName === ArrayHelper::getValue($field, 'name')) {
 				return new CompetencyField(array_merge($field, ['competencyId' => $this->id]));
