@@ -46,7 +46,7 @@ use kartik\grid\GridView;
 				/** @var CompetencyField $model */
 				switch ($model->type) {
 					case 'boolean':
-						return $model->value?'Да':'Нет';
+						return (null === $model->value)?null:($model->value?'Да':'Нет');
 					break;
 					case 'percent':
 						return (null === $model->value)?null:$model->value.'%';
