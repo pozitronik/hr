@@ -6,6 +6,8 @@ namespace app\models\imports;
 use app\helpers\ArrayHelper;
 use app\helpers\Csv;
 use app\helpers\Utils;
+use app\models\competencies\Competencies;
+use app\models\competencies\CompetencyField;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
@@ -255,9 +257,23 @@ class FosRecord extends Model {
 	/**
 	 * @param array<string, string> $attribute
 	 * @param int $user_id
+	 * todo: в модель компетенцию всю херню, чтобы работа со структурой была под капотом
 	 */
 	public function addCompetencyAttribute(array $attribute, int $user_id):void {
-		//todo
+		if (null === $competency = Competencies::find()->where(['name' => $attribute['competency']])->one()) {
+			$competency = new Competencies();
+			$competency->createCompetency(['name' => $attribute['competency'], 'category' => 0]);
+		}
+		if (null === $field = $competency->getField($attribute['field'])) {
+			$field = new CompetencyField([
+				'competencyId' => $competency->id,
+				'name' => $attribute['field'],
+				'type' => $attribute['type'],
+			]);
+			$field->id = $competency->setField($field, null);
+		}
+		$competency->setUserField($user_id, $field->id, $attribute['value']);
+
 	}
 
 	/**
