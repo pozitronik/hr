@@ -28,4 +28,9 @@ class MussController extends Controller {
 		$muss->linkChapters();
 	}
 
+	public function actionClearDb():void {
+		$muss = new MussRecord();
+		$muss->clearDB();
+	}
+
 }
