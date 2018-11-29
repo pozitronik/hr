@@ -243,7 +243,7 @@ class Users extends ActiveRecord {
 	 * @param array $relUsersGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups(array $relUsersGroups):void {
+	public function setRelGroups($relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
