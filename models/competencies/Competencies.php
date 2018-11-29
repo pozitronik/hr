@@ -131,25 +131,19 @@ class Competencies extends ActiveRecord {
 	/**
 	 * @param CompetencyField $field
 	 * @param int|null $field_id
+	 * @return int field_id
 	 */
-	public function setField(CompetencyField $field, $field_id):void {
+	public function setField(CompetencyField $field, $field_id):int {
 		$t = $this->structure;
-		if (null === $field_id) {
-			$t[count($this->structure) + 1] = [
-				'id' => count($this->structure) + 1,
-				'name' => $field->name,
-				'type' => $field->type,
-				'required' => $field->required
-			];
-		} else {
-			$t[$field_id] = [
-				'id' => $field_id,
-				'name' => $field->name,
-				'type' => $field->type,
-				'required' => $field->required
-			];
-		}
+		if (null === $field_id) $field_id = count($this->structure) + 1;
+		$t[$field_id] = [
+			'id' => $field_id,
+			'name' => $field->name,
+			'type' => $field->type,
+			'required' => $field->required
+		];
 		$this->setAndSaveAttribute('structure', $t);
+		return $field_id;
 	}
 
 	/**
