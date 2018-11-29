@@ -147,6 +147,21 @@ class Competencies extends ActiveRecord {
 	}
 
 	/**
+	 * Ищет поле по его имени
+	 * @param string $fieldName
+	 * @return CompetencyField|null
+	 * @throws Throwable
+	 */
+	public function getField(string $fieldName):?CompetencyField {
+		foreach ($this->structure as $field) {
+			if ($fieldName === ArrayHelper::getValue($field, 'name')) {
+				return new CompetencyField(array_merge($field, ['competencyId' => $this->id]));
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Ищет поле по индексу
 	 * @param int $id
 	 * @param null $throw
