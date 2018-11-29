@@ -72,6 +72,7 @@ class FosRecord extends Model {
 
 	/**
 	 * @param string $filename
+	 * @throws Exception
 	 */
 	public function importRecords(string $filename):void {
 		$array = Csv::csvToArray($filename);
@@ -118,7 +119,7 @@ class FosRecord extends Model {
 				'chapter_leader_th' => trim($row[36]),
 				'chapter_leader' => trim($row[37]),
 				'email_sigma' => trim($row[38]),
-				'email' => trim($row[39]),
+				'email' => trim($row[39])
 			]);
 
 			$models[] = $rowModel;
@@ -159,6 +160,9 @@ class FosRecord extends Model {
 					]
 
 				];
+				if ($model->id == 1089) {
+					echo "debug point";
+				}
 				$this->addUser($model->username, $model->position, $model->email, $attributes);
 			}
 
@@ -168,7 +172,7 @@ class FosRecord extends Model {
 				$this->linkRole($model->tribe, $model->tribe_leader_username, Groups::LEADER);
 				$this->linkRole($model->tribe, $model->tribe_leader_it_username, Groups::LEADER_IT);
 				$this->linkRole($model->cluster, $model->cluster_leader, Groups::LEADER);
-				$this->linkRole($model->command, $model->product_owner, Groups::OWNER);
+				$this->linkRole($model->command, $model->product_owner);
 				$this->linkRole($model->chapter, $model->chapter_leader, Groups::LEADER);
 
 				if (null !== $role_id = $this->addUserRole($model->position_in_command)) {
@@ -236,7 +240,7 @@ class FosRecord extends Model {
 			'login' => Utils::generateLogin(),
 			'password' => Utils::gen_uuid(5),
 			'salt' => null,
-			'email' => $email
+			'email' => ('' === $email)?Utils::generateLogin()."@localhost":$email
 		]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
@@ -251,7 +255,7 @@ class FosRecord extends Model {
 	 * @param int $user_id
 	 */
 	public function addCompetencyAttribute(array $attribute, int $user_id):void {
-
+		//todo
 	}
 
 	/**
