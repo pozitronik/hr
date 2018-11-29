@@ -309,4 +309,8 @@ class FosRecord extends Model {
 		return $role->id;
 	}
 
+	public function linkGroups(){
+
+	}
+
 }

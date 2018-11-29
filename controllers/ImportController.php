@@ -19,8 +19,13 @@ class ImportController extends Controller {
 	 * @throws Exception
 	 */
 	public function actionIndex($filename):void {
-		$muss = new FosRecord();
-		$muss->importRecords(Yii::getAlias('@app/').$filename);
+		$fos = new FosRecord();
+		$fos->importRecords(Yii::getAlias('@app/').$filename);
+	}
+
+	public function actionLinkGroups():void {
+		$fos = new FosRecord();
+		$fos->linkGroups();
 	}
 
 }
