@@ -15,6 +15,7 @@ use app\models\core\SysExceptions;
 use RuntimeException;
 use Throwable;
 use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\UnknownPropertyException;
 
@@ -76,11 +77,16 @@ class CompetencyField extends Model {
 
 	/**
 	 * @param string $type
-	 * @return mixed
+	 * @return string
 	 * @throws Throwable
 	 */
-	public static function getTypeClass(string $type) {
-		return ArrayHelper::getValue(self::FIELD_TYPES, "$type.model");
+	public static function getTypeClass(string $type):string {
+		if (null === $value = ArrayHelper::getValue(self::FIELD_TYPES, "$type.model")) {
+			$t = new InvalidConfigException("$type.model DataFieldInterface not set or not properly configured");
+			SysExceptions::log($t, $t);
+		}
+		return $value;
+
 	}
 
 	/**
