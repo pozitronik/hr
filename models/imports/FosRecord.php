@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection BadExceptionsProcessingInspection */
 declare(strict_types = 1);
 
 namespace app\models\imports;
@@ -185,7 +185,7 @@ class FosRecord extends Model {
 				}
 			}
 
-		} catch (Throwable $t) {
+		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
 			$transaction->rollBack();
 			return;
 		}
@@ -215,7 +215,7 @@ class FosRecord extends Model {
 		$group->createGroup([
 			'name' => $name,
 			'type' => $groupType->id,
-			'deleted' => false,
+			'deleted' => false
 		]);
 		return $group->id;
 	}
@@ -261,6 +261,8 @@ class FosRecord extends Model {
 	 * @param array<string, string> $attribute
 	 * @param int $user_id
 	 * todo: в модель компетенцию всю херню, чтобы работа со структурой была под капотом
+	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function addCompetencyAttribute(array $attribute, int $user_id):void {
 		if (null === $competency = Competencies::find()->where(['name' => $attribute['competency']])->one()) {
@@ -271,7 +273,7 @@ class FosRecord extends Model {
 			$field = new CompetencyField([
 				'competencyId' => $competency->id,
 				'name' => $attribute['field'],
-				'type' => $attribute['type'],
+				'type' => $attribute['type']
 			]);
 			$field->id = $competency->setField($field, null);
 		}
@@ -309,7 +311,7 @@ class FosRecord extends Model {
 		return $role->id;
 	}
 
-	public function linkGroups(){
+	public function linkGroups():void {
 
 	}
 
