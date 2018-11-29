@@ -137,7 +137,7 @@ class FosRecord extends Model {
 				$this->addGroup($model->command, $model->command_type);
 				$this->addGroup($model->chapter, 'Чаптер');
 			}
-			/*Всё, что юзеры*/
+			/*Всё, что просто юзеры*/
 			foreach ($models as $model) {
 				$attributes = [
 					[
@@ -160,10 +160,12 @@ class FosRecord extends Model {
 					]
 
 				];
-				if ($model->id == 1089) {
-					echo "debug point";
-				}
 				$this->addUser($model->username, $model->position, $model->email, $attributes);
+			}
+
+			/*Всё, что юзеры других колонок*/
+			foreach ($models as $model) {
+				$this->addUser($model->tribe_leader_username, 'Управляющий директор', '');
 			}
 
 			/*Всё, что роли*/
@@ -222,7 +224,7 @@ class FosRecord extends Model {
 	 * @return int
 	 * @throws Throwable
 	 */
-	public function addUser(string $name, string $position, string $email, array $attributes):int {
+	public function addUser(string $name, string $position, string $email, array $attributes = []):int {
 		if (empty($name)) return -1;
 		$user = Users::find()->where(['username' => $name])->one();
 		if ($user) return $user->id;
