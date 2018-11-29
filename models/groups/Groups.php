@@ -85,8 +85,9 @@ class Groups extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['comment'], 'string'],
-			[['deleted', 'daddy', 'type'], 'integer'],
+			[['daddy', 'type'], 'integer'],
 			[['create_date'], 'safe'],
+			[['deleted'], 'boolean'],
 			[['name'], 'string', 'max' => 512],
 			[['logotype'], 'string', 'max' => 255],
 			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'relUsers', 'dropUsers'], 'safe'],
