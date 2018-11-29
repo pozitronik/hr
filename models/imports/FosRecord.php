@@ -12,6 +12,7 @@ use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
 use app\models\references\refs\RefUserRoles;
+use app\models\relations\RelUsersCompetencies;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use Throwable;
@@ -213,7 +214,8 @@ class FosRecord extends Model {
 		$group = new Groups();
 		$group->createGroup([
 			'name' => $name,
-			'type' => $groupType->id
+			'type' => $groupType->id,
+			'deleted' => false,
 		]);
 		return $group->id;
 	}
@@ -244,7 +246,8 @@ class FosRecord extends Model {
 			'login' => Utils::generateLogin(),
 			'password' => Utils::gen_uuid(5),
 			'salt' => null,
-			'email' => ('' === $email)?Utils::generateLogin()."@localhost":$email
+			'email' => ('' === $email)?Utils::generateLogin()."@localhost":$email,
+			'deleted' => false
 		]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
@@ -272,6 +275,7 @@ class FosRecord extends Model {
 			]);
 			$field->id = $competency->setField($field, null);
 		}
+		RelUsersCompetencies::linkModels($user_id, $competency);
 		$competency->setUserField($user_id, $field->id, $attribute['value']);
 
 	}
