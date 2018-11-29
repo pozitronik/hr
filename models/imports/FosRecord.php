@@ -147,7 +147,7 @@ class FosRecord extends Model {
 						'competency' => 'Расположение',
 						'type' => 'boolean',
 						'field' => 'Удалённое рабочее место',
-						"value" => $model->urm
+						"value" => !empty($model->urm)
 					],
 					[
 						'competency' => 'Расположение',
