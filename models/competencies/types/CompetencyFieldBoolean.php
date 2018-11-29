@@ -27,7 +27,7 @@ class CompetencyFieldBoolean extends ActiveRecord implements DataFieldInterface 
 				return ['=', "$tableAlias.value", true];
 			}],
 			['нет', function($tableAlias, $searchValue) {
-				return ['!=', "$tableAlias.value", false];
+				return ['=', "$tableAlias.value", false];
 			}],
 			['заполнено', function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.value" => null]];
