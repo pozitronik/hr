@@ -171,9 +171,9 @@ class FosRecord extends Model {
 				$this->linkRole($model->command, $model->product_owner, Groups::OWNER);
 				$this->linkRole($model->chapter, $model->chapter_leader, Groups::LEADER);
 
-				$role_id = $this->addUserRole($model->position_in_command);
-				$this->linkRole($model->command, $model->username, $role_id);
-
+				if (null !== $role_id = $this->addUserRole($model->position_in_command)) {
+					$this->linkRole($model->command, $model->username, $role_id);
+				}
 			}
 
 		} catch (Throwable $t) {
@@ -272,10 +272,15 @@ class FosRecord extends Model {
 
 	/**
 	 * @param string $roleName
-	 * @return int
+	 * @return int|null
 	 */
-	public function addUserRole(string $roleName):int {
-
+	public function addUserRole(string $roleName):?int {
+		if (empty($roleName)) return null;
+		if (null === $role = RefUserRoles::find()->where(['name' => $roleName])->one()) {
+			$role = new RefUserRoles(['name' => $roleName]);
+			$role->save();
+		}
+		return $role->id;
 	}
 
 }
