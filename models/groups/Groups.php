@@ -54,11 +54,11 @@ use yii\web\UploadedFile;
 class Groups extends ActiveRecord {
 	use ARExtended;
 	use Graph;
-	public const OWNER = 1;
-	public const LEADER = 2;
-	public const LEADER_IT = 3;
-	public const TRIBE = 6;
-	public const CHAPTER = 5;
+	public const OWNER = 4;
+	public const LEADER = 1;
+	public const LEADER_IT = 2;
+//	public const TRIBE = 6;
+//	public const CHAPTER = 5;
 
 	public const LOGO_IMAGE_DIRECTORY = '@app/web/group_logotypes/';
 
