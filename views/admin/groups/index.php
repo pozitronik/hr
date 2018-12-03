@@ -10,9 +10,10 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\models\groups\GroupsSearch;
+use app\models\references\refs\RefGroupTypes;
+use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
-use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use kartik\grid\ActionColumn;
 
@@ -41,8 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'id',
 				'name',
 				[
-					'attribute' => 'relGroupTypes.name',
-					'label' => 'Тип'
+					'attribute' => 'type',
+					'value' => 'relGroupTypes.name',
+					'filterType' => GridView::FILTER_SELECT2,
+					'filter' => RefGroupTypes::mapData(),
+					'filterInputOptions' => ['placeholder' => 'Тип'],
+					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]],
 				],
 				[
 					'attribute' => 'leaders',

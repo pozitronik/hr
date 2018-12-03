@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
  * @package app\models\groups
  */
 class GroupsSearch extends Groups {
+	public $relGroupTypes_name;
 
 	/**
 	 * @inheritdoc
@@ -19,7 +20,8 @@ class GroupsSearch extends Groups {
 	public function rules():array {
 		return [
 			[['id'], 'integer'],
-			[['name', 'comment'], 'safe']
+			[['name', 'comment', 'type'], 'safe'],
+			[['relGroupTypes_name'], 'safe']
 		];
 	}
 
@@ -43,6 +45,7 @@ class GroupsSearch extends Groups {
 			'attributes' => [
 				'id',
 				'name',
+				'type',
 				'comment',
 				'daddy'
 			]
@@ -50,13 +53,13 @@ class GroupsSearch extends Groups {
 
 		$dataProvider->setSort($MainAttributes);
 
-//		$query->joinWith(['users', 'childrens', 'parent', 'supergroups', 'creator']);
+		$query->joinWith(['relGroupTypes']);
 
 //		$query->groupBy('id');
 
-
 		$query->andFilterWhere(['id' => $this->id])
 			->andFilterWhere(['like', 'sys_groups.name', $this->name])
+			->andFilterWhere(['=', 'sys_groups.type', $this->type])
 			->andFilterWhere(['=', 'sys_groups.daddy', $this->daddy]);
 
 		return $dataProvider;
