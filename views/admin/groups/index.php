@@ -24,7 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
 	<div class="col-xs-12">
-		<?= GridView::widget([
+		<?= /** @noinspection MissedFieldInspection */
+		GridView::widget([
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'panel' => [
@@ -47,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'filterType' => GridView::FILTER_SELECT2,
 					'filter' => RefGroupTypes::mapData(),
 					'filterInputOptions' => ['placeholder' => 'Тип'],
-					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]],
+					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]]
 				],
 				[
 					'attribute' => 'leaders',
