@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\references\refs;
 
-
 use app\models\references\Reference;
+use app\models\users\Users;
 
 /**
  * This is the model class for table "ref_user_positions".
@@ -45,5 +45,15 @@ class RefUserPositions extends Reference {
 			'name' => 'Название',
 			'deleted' => 'Deleted'
 		];
+	}
+
+	/**
+	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
+	 * @param int $fromId
+	 * @param int $toId
+	 */
+	public function merge(int $fromId, int $toId):void {
+		Users::updateAll(['position' => $toId], ['position' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
 	}
 }

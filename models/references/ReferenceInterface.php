@@ -31,7 +31,7 @@ interface ReferenceInterface {
 	 * @return array
 	 */
 	public function getColumns():array;
-	
+
 	/**
 	 * Набор колонок для отображения на странице просмотра
 	 * @return array
@@ -50,4 +50,11 @@ interface ReferenceInterface {
 	 * @return ActiveQuery
 	 */
 	public function search($params):ActiveQuery;
+
+	/**
+	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
+	 * @param int $fromId
+	 * @param int $toId
+	 */
+	public function merge(int $fromId, int $toId):void;
 }

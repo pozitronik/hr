@@ -95,4 +95,14 @@ class RefUserRoles extends Reference {
 		return self::find()->joinWith('relUsersGroups')->where(['user_id' => $userId, 'group_id' => $groupId])->all();
 	}
 
+	/**
+	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
+	 * @param int $fromId
+	 * @param int $toId
+	 */
+	public function merge(int $fromId, int $toId):void {
+		RelUsersGroupsRoles::updateAll(['role' => $toId], ['role' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
+	}
+
 }

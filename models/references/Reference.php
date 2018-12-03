@@ -11,6 +11,7 @@ use RecursiveIteratorIterator;
 use ReflectionException;
 use Throwable;
 use Yii;
+use yii\base\ErrorException;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -198,11 +199,11 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	}
 
 	/**
-	 * Объединяет две записи (например, в случае, если они дублируют друг друга).
-	 * Вторая запись удаляется, а все ссылки на неё теперь ссылаются на первую.
-	 * @param self $model
+	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
+	 * @param int $fromId
+	 * @param int $toId
 	 */
-//	public function merge(self $model):void {
-//
-//	}
+	public function merge(int $fromId, int $toId):void {
+		throw new ErrorException('Метод merge не имеет реализации по умолчанию');
+	}
 }

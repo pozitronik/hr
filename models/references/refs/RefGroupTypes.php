@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\references\refs;
 
 use app\helpers\ArrayHelper;
+use app\models\groups\Groups;
 use app\models\references\Reference;
 
 /**
@@ -61,5 +62,15 @@ class RefGroupTypes extends Reference {
 	 */
 	public function getColor():string {
 		return ArrayHelper::getValue(self::COLORS, $this->id, 'rgb(255,10,255)');
+	}
+
+	/**
+	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
+	 * @param int $fromId
+	 * @param int $toId
+	 */
+	public function merge(int $fromId, int $toId):void {
+		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
 	}
 }
