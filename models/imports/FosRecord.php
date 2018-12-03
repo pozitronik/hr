@@ -12,6 +12,7 @@ use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
 use app\models\references\refs\RefUserRoles;
+use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersCompetencies;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
@@ -204,6 +205,21 @@ class FosRecord extends Model {
 		}
 
 		$transaction->commit();
+
+		foreach ($models as $model) {
+			if (!empty($model->tribe) && (!empty($model->chapter))) {
+				if ((null !== $tribe = Groups::find()->where(['name' => $model->tribe])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
+					RelGroupsGroups::linkModels($tribe, $chapter);
+				}
+			}
+		}
+		foreach ($models as $model) {
+			if (!empty($model->command) && (!empty($model->chapter))) {
+				if ((null !== $command = Groups::find()->where(['name' => $model->command])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
+					RelGroupsGroups::linkModels($chapter, $command);
+				}
+			}
+		}
 	}
 
 	/**
@@ -325,7 +341,18 @@ class FosRecord extends Model {
 	}
 
 	public function linkGroups():void {
+		$tribe = Groups::find()->where(['type' => Groups::TRIBE])->one();//Взяли трайб
+		$chapters = Groups::find()->where(['type' => Groups::CHAPTER])->all();
+		$transaction = Yii::$app->db->beginTransaction();
 
+		try {
+			RelGroupsGroups::linkModels($tribe, $chapters);
+		} catch (Throwable $t) {
+			$transaction->rollBack();
+			return;
+		}
+
+		$transaction->commit();
 	}
 
 }
