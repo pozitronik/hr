@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
+use app\models\imports\CompetencyRecord;
 use app\models\imports\FosRecord;
 use Yii;
 use yii\db\Exception;
@@ -21,6 +22,14 @@ class ImportController extends Controller {
 	public function actionIndex($filename):void {
 		$fos = new FosRecord();
 		$fos->importRecords(Yii::getAlias('@app/').$filename);
+	}
+
+	/**
+	 * @param $filename
+	 */
+	public function actionCompetency($filename):void {
+		$competency = new CompetencyRecord();
+		$competency->importRecords(Yii::getAlias('@app/').$filename);
 	}
 
 
