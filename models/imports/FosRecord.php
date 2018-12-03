@@ -30,6 +30,7 @@ use yii\db\Exception;
  * 3. Проходимся по пользователям, аналогично. Связываем с группами.
  * 4. Проходимся по должностям и ролям в группах, распихиваем по пользователям и по группам.
  * 5. Проходимся по аттрибутам, добавляем в компетенции (которые и есть произвольные атрибуты).
+ * 6. Иерархия: Трайб->Чаптеры->Команды. Кластеры/Продукты делаем атрибутами.
  */
 class FosRecord extends Model {
 	public $id;//не используем
@@ -136,7 +137,7 @@ class FosRecord extends Model {
 			foreach ($models as $model) {
 				$this->addGroup($model->block, 'Функциональный блок');
 				$this->addGroup($model->tribe, 'Трайб');
-				$this->addGroup($model->cluster, 'Кластер');
+				//$this->addGroup($model->cluster, 'Кластер');
 				$this->addGroup($model->command, $model->command_type);
 				$this->addGroup($model->chapter, 'Чаптер');
 			}
@@ -144,22 +145,34 @@ class FosRecord extends Model {
 			foreach ($models as $model) {
 				$attributes = [
 					[
-						'competency' => 'Расположение',
+						'competency' => 'Адрес',
 						'type' => 'boolean',
 						'field' => 'Удалённое рабочее место',
 						"value" => !empty($model->urm)
 					],
 					[
-						'competency' => 'Расположение',
+						'competency' => 'Адрес',
 						'type' => 'string',
 						'field' => 'Населённый пункт',
 						"value" => $model->city
 					],
 					[
-						'competency' => 'Атрибуты',
+						'competency' => 'Адрес',
 						'type' => 'string',
 						'field' => 'Внешний почтовый адрес',
 						"value" => $model->email_sigma
+					],
+					[
+						'competency' => 'Кластер/продукт',
+						'type' => 'string',
+						'field' => 'Название',
+						"value" => $model->cluster
+					],
+					[
+						'competency' => 'Кластер/продукт',
+						'type' => 'string',
+						'field' => 'Лидер',
+						"value" => $model->cluster_leader
 					]
 
 				];
@@ -176,7 +189,7 @@ class FosRecord extends Model {
 
 				$this->linkRole($model->tribe, $model->tribe_leader_username, Groups::LEADER);
 				$this->linkRole($model->tribe, $model->tribe_leader_it_username, Groups::LEADER_IT);
-				$this->linkRole($model->cluster, $model->cluster_leader, Groups::LEADER);
+//				$this->linkRole($model->cluster, $model->cluster_leader, Groups::LEADER);
 				$this->linkRole($model->command, $model->product_owner);
 				$this->linkRole($model->chapter, $model->chapter_leader, Groups::LEADER);
 
