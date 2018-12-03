@@ -9,7 +9,6 @@ use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use app\widgets\user_select\UserSelectWidget;
 
 /**
@@ -52,7 +51,7 @@ use app\widgets\user_select\UserSelectWidget;
 					'attribute' => 'username',
 					'value' => function($user) {
 						/** @var Users $user */
-						return Html::a($user->username, Url::to(['admin/users/update', 'id' => $user->id]));
+						return Html::a($user->username, ['admin/users/update', 'id' => $user->id]);
 					}
 				],
 				[
