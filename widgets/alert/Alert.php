@@ -25,6 +25,7 @@ use yii\bootstrap\Widget;
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @author Alexander Makarov <sam@rmcreative.ru>
+ * @todo: переписать, чтобы умело рендерить всплывахи
  */
 class Alert extends Widget {
 	/**
