@@ -3,9 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
-use app\helpers\Utils;
 use Yii;
-use yii\bootstrap\Alert;
 use yii\base\Model;
 
 /**
@@ -60,7 +58,7 @@ class AlertPrototype extends Model {
 	 * @param array $errors
 	 * @return string
 	 */
-	private static function ArrayErrors2String(array $errors) {
+	private static function ArrayErrors2String(array $errors):string {
 		$array_values = [];
 		array_walk_recursive($errors, function($v, $k) use (&$array_values) {
 			if (!empty($v)) {
