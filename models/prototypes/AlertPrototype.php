@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
+use app\helpers\Utils;
+use Yii;
+use yii\bootstrap\Alert;
 use yii\base\Model;
 
 /**
@@ -45,4 +48,35 @@ class AlertPrototype extends Model {
 		$this->type = $type;
 	}
 
+	/**
+	 *
+	 */
+	public static function SuccessNotify():void {
+		Yii::$app->session->setFlash(self::TYPE_SUCCESS, "Успешно!");
+	}
+
+	/**
+	 * Форматирует стандартный массив ошибок модели в читаемую строку, чисто для удобства заказчика
+	 * @param array $errors
+	 * @return string
+	 */
+	private static function ArrayErrors2String(array $errors) {
+		$array_values = [];
+		array_walk_recursive($errors, function($v, $k) use (&$array_values) {
+			if (!empty($v)) {
+				$array_values[] = $v;
+			}
+		});
+		return implode(',</br>', $array_values);
+	}
+
+	/**
+	 * @param array $errors
+	 */
+	public static function ErrorsNotify(array $errors):void {
+		Yii::$app->session->setFlash(self::TYPE_DANGER, self::ArrayErrors2String($errors));
+	}
+
 }
+
+
