@@ -207,8 +207,8 @@ class MussRecord extends Model {
 	 * Быстрофункция для линковки всех чаптеров в трайб
 	 */
 	public function linkChapters():void {
-		$tribe = Groups::find()->where(['type' => Groups::TRIBE])->one();//Взяли трайб
-		$chapters = Groups::find()->where(['type' => Groups::CHAPTER])->all();
+		$tribe = Groups::find()->where(['type' => 6])->one();//Взяли трайб
+		$chapters = Groups::find()->where(['type' => 5])->all();
 		$transaction = Yii::$app->db->beginTransaction();
 
 		try {
