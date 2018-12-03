@@ -8,6 +8,7 @@ use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\groups\traits\Graph;
+use app\models\prototypes\AlertPrototype;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
@@ -178,8 +179,10 @@ class Groups extends ActiveRecord {
 				/** @noinspection NotOptimalIfConditionsInspection */
 				if ($this->save()) {
 					$transaction->commit();
+					AlertPrototype::SuccessNotify();
 					return true;
 				}
+				AlertPrototype::ErrorsNotify($this->errors);
 			}
 		}
 		$transaction->rollBack();

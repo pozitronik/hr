@@ -13,6 +13,7 @@ use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
+use app\models\prototypes\AlertPrototype;
 use app\models\relations\RelUsersCompetencies;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
@@ -110,8 +111,10 @@ class Competencies extends ActiveRecord {
 			$this->structure = [];
 			if ($this->save()) {
 				$transaction->commit();
+				AlertPrototype::SuccessNotify();
 				return true;
 			}
+			AlertPrototype::ErrorsNotify($this->errors);
 		}
 		$transaction->rollBack();
 		return false;

@@ -8,10 +8,12 @@ declare(strict_types = 1);
  */
 
 use app\models\references\Reference;
+use app\widgets\alert\Alert;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
+<?= Alert::widget(); ?>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="panel">
