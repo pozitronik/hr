@@ -202,6 +202,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
 	 * @param int $fromId
 	 * @param int $toId
+	 * @throws ErrorException
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		throw new ErrorException('Метод merge не имеет реализации по умолчанию');
