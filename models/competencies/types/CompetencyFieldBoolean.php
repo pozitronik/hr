@@ -64,7 +64,8 @@ class CompetencyFieldBoolean extends ActiveRecord implements DataFieldInterface 
 	public function rules():array {
 		return [
 			[['competency_id', 'field_id', 'user_id'], 'required'],
-			[['competency_id', 'field_id', 'user_id', 'value'], 'integer'],
+			[['competency_id', 'field_id', 'user_id'], 'integer'],
+			[['value'], 'boolean'],
 			[['competency_id', 'field_id', 'user_id'], 'unique', 'targetAttribute' => ['competency_id', 'field_id', 'user_id']]
 		];
 	}
