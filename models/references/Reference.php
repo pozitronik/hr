@@ -6,6 +6,7 @@ namespace app\models\references;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\models\core\traits\ARExtended;
+use app\models\prototypes\AlertPrototype;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionException;
@@ -182,7 +183,11 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 */
 	public function createRecord($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-			return $this->save();
+			if ($this->save()) {
+				AlertPrototype::SuccessNotify();
+				return true;
+			}
+			AlertPrototype::ErrorsNotify($this->errors);
 		}
 		return false;
 	}
@@ -193,7 +198,11 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 */
 	public function updateRecord($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-			return $this->save();
+			if ($this->save()) {
+				AlertPrototype::SuccessNotify();
+				return true;
+			}
+			AlertPrototype::ErrorsNotify($this->errors);
 		}
 		return false;
 	}

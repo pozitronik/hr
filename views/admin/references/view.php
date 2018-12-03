@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var Reference $model
  */
 
+use app\widgets\alert\Alert;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use yii\helpers\Html;
@@ -19,6 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => 
 $this->params['breadcrumbs'][] = ['label' => $model->menuCaption, 'url' => ['/admin/references/index', 'class' => $model->classNameShort]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?= Alert::widget(); ?>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="panel">
