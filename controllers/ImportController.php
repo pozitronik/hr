@@ -23,9 +23,5 @@ class ImportController extends Controller {
 		$fos->importRecords(Yii::getAlias('@app/').$filename);
 	}
 
-	public function actionLinkGroups():void {
-		$fos = new FosRecord();
-		$fos->linkGroups();
-	}
 
 }

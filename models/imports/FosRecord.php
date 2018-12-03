@@ -340,19 +340,4 @@ class FosRecord extends Model {
 		return $role->id;
 	}
 
-	public function linkGroups():void {
-		$tribe = Groups::find()->where(['type' => Groups::TRIBE])->one();//Взяли трайб
-		$chapters = Groups::find()->where(['type' => Groups::CHAPTER])->all();
-		$transaction = Yii::$app->db->beginTransaction();
-
-		try {
-			RelGroupsGroups::linkModels($tribe, $chapters);
-		} catch (Throwable $t) {
-			$transaction->rollBack();
-			return;
-		}
-
-		$transaction->commit();
-	}
-
 }
