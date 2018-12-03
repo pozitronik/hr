@@ -33,7 +33,7 @@ use yii\web\UploadedFile;
  * @property string $create_date Дата регистрации
  * @property string $profile_image Название файла фотографии профиля
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
- * @property int $deleted Флаг удаления
+ * @property boolean $deleted Флаг удаления
  *
  * @property integer|null $position Должность/позиция
  *
@@ -155,7 +155,8 @@ class Users extends ActiveRecord {
 
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate()
+				'create_date' => Date::lcDate(),
+				'deleted' => false
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));

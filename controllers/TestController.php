@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
+use app\models\references\refs\RefGroupTypes;
 use app\models\users\Users;
 use app\models\users\UsersOptions;
 use yii\base\Response;
@@ -19,8 +20,7 @@ class TestController extends Controller {
 	 * @return string|Response
 	 */
 	public function actionIndex() {
-		$user = Users::findModel(1);
-		return json_encode($user->options->get('test'));
+		RefGroupTypes::merge(5, 33);
 	}
 
 }

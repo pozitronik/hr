@@ -47,7 +47,7 @@ use yii\web\UploadedFile;
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property array $rolesInGroup
  * @property array $dropUsers
- * @property int $deleted
+ * @property boolean $deleted
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
  */
@@ -170,7 +170,8 @@ class Groups extends ActiveRecord {
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate()
+				'create_date' => Date::lcDate(),
+				'deleted' => false
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
