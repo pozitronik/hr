@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'username',
 					'value' => function($model) {
 						/** @var Users $model */
-						return $model->username;
+						return Html::a($model->username, ['admin/users/update', 'id' => $model->id]);
 //						return UserWidget::widget([
 //							'user' => $model,
 //							'chat' => false,
