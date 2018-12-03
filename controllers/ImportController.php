@@ -5,6 +5,7 @@ namespace app\controllers;
 
 use app\models\imports\CompetencyRecord;
 use app\models\imports\FosRecord;
+use Throwable;
 use Yii;
 use yii\db\Exception;
 use yii\web\Controller;
@@ -18,6 +19,7 @@ class ImportController extends Controller {
 	/**
 	 * @param string $filename
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function actionIndex($filename):void {
 		$fos = new FosRecord();
@@ -26,6 +28,7 @@ class ImportController extends Controller {
 
 	/**
 	 * @param $filename
+	 * @throws Exception
 	 */
 	public function actionCompetency($filename):void {
 		$competency = new CompetencyRecord();

@@ -78,6 +78,7 @@ class FosRecord extends Model {
 	/**
 	 * @param string $filename
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function importRecords(string $filename):void {
 		$array = Csv::csvToArray($filename);
@@ -207,17 +208,13 @@ class FosRecord extends Model {
 		$transaction->commit();
 
 		foreach ($models as $model) {
-			if (!empty($model->tribe) && (!empty($model->chapter))) {
-				if ((null !== $tribe = Groups::find()->where(['name' => $model->tribe])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
-					RelGroupsGroups::linkModels($tribe, $chapter);
-				}
+			if (!empty($model->tribe) && !empty($model->chapter) && (null !== $tribe = Groups::find()->where(['name' => $model->tribe])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
+				RelGroupsGroups::linkModels($tribe, $chapter);
 			}
 		}
 		foreach ($models as $model) {
-			if (!empty($model->command) && (!empty($model->chapter))) {
-				if ((null !== $command = Groups::find()->where(['name' => $model->command])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
-					RelGroupsGroups::linkModels($chapter, $command);
-				}
+			if (!empty($model->command) && !empty($model->chapter) && (null !== $command = Groups::find()->where(['name' => $model->command])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
+				RelGroupsGroups::linkModels($chapter, $command);
 			}
 		}
 	}
