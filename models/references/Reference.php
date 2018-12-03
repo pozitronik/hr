@@ -203,7 +203,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param int $fromId
 	 * @param int $toId
 	 */
-	public function merge(int $fromId, int $toId):void {
+	public static function merge(int $fromId, int $toId):void {
 		throw new ErrorException('Метод merge не имеет реализации по умолчанию');
 	}
 }

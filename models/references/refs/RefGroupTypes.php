@@ -69,7 +69,7 @@ class RefGroupTypes extends Reference {
 	 * @param int $fromId
 	 * @param int $toId
 	 */
-	public function merge(int $fromId, int $toId):void {
+	public static function merge(int $fromId, int $toId):void {
 		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 	}

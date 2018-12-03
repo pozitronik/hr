@@ -52,7 +52,7 @@ class RefUserPositions extends Reference {
 	 * @param int $fromId
 	 * @param int $toId
 	 */
-	public function merge(int $fromId, int $toId):void {
+	public static function merge(int $fromId, int $toId):void {
 		Users::updateAll(['position' => $toId], ['position' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 	}
