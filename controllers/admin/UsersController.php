@@ -132,6 +132,7 @@ class UsersController extends WigetableController {
 	 * В post['selection'] приходят айдишники выбранных юзеров
 	 * @param int|null $group_id - если указано, то выбираются пользователи этой группы
 	 * @return string|Response
+	 * @throws Throwable
 	 */
 	public function actionMassUpdate(int $group_id = null) {
 		$massUpdate = new UsersMassUpdate();
@@ -152,15 +153,13 @@ class UsersController extends WigetableController {
 			]);
 		}
 
-		if (null !== $group_id) {
-			if (false !== $massUpdate->loadGroupSelection($group_id)) {
-				return $this->render('mass-update', [
-					'massUpdateModel' => $massUpdate,
-					'statistics' => null,
-					'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
-					'group' => Groups::findModel($group_id)
-				]);
-			}
+		if ((null !== $group_id) && false !== $massUpdate->loadGroupSelection($group_id)) {
+			return $this->render('mass-update', [
+				'massUpdateModel' => $massUpdate,
+				'statistics' => null,
+				'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+				'group' => Groups::findModel($group_id)
+			]);
 		}
 
 		if (false !== $massUpdate->loadSelection(Yii::$app->request->post('selection'))) {

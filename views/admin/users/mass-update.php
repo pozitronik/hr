@@ -23,11 +23,11 @@ use yii\grid\GridView;
 $this->title = 'Групповое изменение пользователей';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 
-if ((false === $group)) {
-	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
-} else {
+if ($group) {
 	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
 	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
+} else {
+	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>

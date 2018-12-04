@@ -6,6 +6,7 @@ namespace app\models\users;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\widgets\alert\AlertModel;
+use Throwable;
 use yii\base\Model;
 
 /**
@@ -54,6 +55,7 @@ class UsersMassUpdate extends Model {
 	 * @param array $data
 	 * @param null|string $formName
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public function load($data, $formName = null):bool {
 		if (parent::load($data, $formName) && $this->virtualUser->load($data[$this->virtualUser->classNameShort], '')) {
@@ -107,8 +109,10 @@ class UsersMassUpdate extends Model {
 	/**
 	 * Пытается загрузить пользователей группы для массовой обработки + генерирует доступные наборы параметров
 	 * @param int $groupId
+	 * @return bool
+	 * @throws Throwable
 	 */
-	public function loadGroupSelection(int $groupId) {
+	public function loadGroupSelection(int $groupId):bool {
 		if (false !== $group = Groups::findModel($groupId)) {
 			$this->usersId = ArrayHelper::getColumn($group->relUsers, 'id');
 			return true;
@@ -119,6 +123,8 @@ class UsersMassUpdate extends Model {
 	/**
 	 * Пытается загрузить массив id пользователей для массовой обработки + генерирует доступные наборы параметров
 	 * @param int[] $selection
+	 * @return bool
+	 * @throws Throwable
 	 */
 	public function loadSelection(array $selection):bool {
 		if ([] !== $users = Users::findModels($selection)) {
@@ -157,6 +163,7 @@ class UsersMassUpdate extends Model {
 
 	/**
 	 * @return Users[]
+	 * @throws Throwable
 	 */
 	public function getUsers():array {
 		return Users::findModels($this->usersId);
