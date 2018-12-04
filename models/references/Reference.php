@@ -13,6 +13,7 @@ use ReflectionException;
 use Throwable;
 use Yii;
 use yii\base\ErrorException;
+use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -145,6 +146,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function getForm():string {
 		$file_path = mb_strtolower($this->formName()).'/_form.php';

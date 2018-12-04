@@ -10,6 +10,7 @@ use app\models\competencies\CompetencyField;
 use app\models\core\WigetableController;
 use app\models\competencies\CompetenciesSearchCollection;
 use Throwable;
+use yii\base\InvalidConfigException;
 use yii\db\Exception;
 use yii\web\ErrorAction;
 use Yii;
@@ -51,6 +52,7 @@ class CompetenciesController extends WigetableController {
 	/**
 	 * @return string|Response
 	 * @throws Exception
+	 * @throws InvalidConfigException
 	 */
 	public function actionCreate() {
 		$newCompetency = new Competencies();
