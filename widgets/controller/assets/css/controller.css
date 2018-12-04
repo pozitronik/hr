@@ -3,6 +3,10 @@
 	height: 64px;
 }
 
+.panel-icon .panel-body {
+	padding:0px;
+}
+
 .dropdown-menu.mega-dropdown-menu .list-unstyled li a.icon:hover {
 	background-color: transparent;
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
