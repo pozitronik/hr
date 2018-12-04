@@ -13,7 +13,7 @@ use yii\base\Model;
  * @property string $body
  * @property string|false $icon
  * @property string|null $title
- * @propety string|null $linkUrl
+ * @property string|null $linkUrl
  * @property string $linkTarget
  * @property boolean $showSeparator
  * @property int|false $delay
