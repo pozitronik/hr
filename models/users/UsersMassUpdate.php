@@ -20,6 +20,7 @@ use yii\base\Model;
 class UsersMassUpdate extends Model {
 	private $usersId = [];
 	private $virtualUser;
+	private $relGroups; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
 	private $relCompetencies; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
 
 	/**
@@ -58,6 +59,7 @@ class UsersMassUpdate extends Model {
 		if (parent::load($data, $formName) && $this->virtualUser->load($data[$this->virtualUser->classNameShort], '')) {
 			/*Параметры, которые в модели пользователя применяются без промежуточного сохранения нам нужно всё-таки хранить*/
 			$this->relCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->classNameShort}.relCompetencies");
+			$this->relGroups = ArrayHelper::getValue($data, "{$this->virtualUser->classNameShort}.relGroups");
 			return true;
 		}
 		return false;
@@ -70,9 +72,8 @@ class UsersMassUpdate extends Model {
 	public function apply():array {
 		$statistic = [];
 		$paramsArray = [];
-		if (!empty($this->relCompetencies)) {
-			$paramsArray['relCompetencies'] = $this->relCompetencies;
-		}
+		if (!empty($this->relGroups)) $paramsArray['relGroups'] = $this->relGroups;
+		if (!empty($this->relCompetencies)) $paramsArray['relCompetencies'] = $this->relCompetencies;
 
 		foreach ($this->usersId as $userId) {
 			if (false !== $user = Users::findModel($userId)) {

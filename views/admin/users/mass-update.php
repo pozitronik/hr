@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="row">
 		<div class="col-xs-12">
 			<?php $form = ActiveForm::begin(); ?>
-			<div class="panel">
+			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title"><?= $this->title; ?></h3>
 				</div>
@@ -50,6 +50,15 @@ $this->params['breadcrumbs'][] = $this->title;
 										'allowClear' => false,
 										'multiple' => true
 									]
+								]); ?>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-12">
+								<?= $this->render('groups/index', [
+									'model' => $massUpdateModel->virtualUser
 								]); ?>
 							</div>
 						</div>
