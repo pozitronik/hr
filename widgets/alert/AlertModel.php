@@ -73,7 +73,7 @@ class AlertModel extends Model {
 	 * Создаёт модель и пушает её в стек сообщений
 	 * @param array $config
 	 */
-	public static function notify(array $config = []):void {
+	public static function Notify(array $config = []):void {
 		$model = new self($config);
 		$model->push();
 	}
@@ -99,14 +99,20 @@ class AlertModel extends Model {
 	 *
 	 */
 	public static function SuccessNotify():void {
-		Yii::$app->session->setFlash(Growl::TYPE_SUCCESS, "Успешно!");
+		self::Notify([
+			'type' => Growl::TYPE_SUCCESS,
+			'body' => "Успешно"
+		]);
 	}
 
 	/**
 	 * @param array $errors
 	 */
 	public static function ErrorsNotify(array $errors):void {
-		Yii::$app->session->setFlash(Growl::TYPE_DANGER, self::ArrayErrors2String($errors));
+		self::Notify([
+			'type' => Growl::TYPE_DANGER,
+			'body' => self::ArrayErrors2String($errors)
+		]);
 	}
 
 	/**

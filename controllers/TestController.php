@@ -28,9 +28,7 @@ class TestController extends Controller {
 
 	public function actionFlash() {
 //		AlertPrototype::SuccessNotify();
-		AlertModel::notify([
-			'type' => Growl::TYPE_INFO
-		]);
+		AlertModel::SuccessNotify();
 	return $this->render('flash');
 
 	}
