@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\widgets\alert;
 
+use kartik\growl\Growl;
 use Yii;
-use yii\bootstrap\Alert as BootstrapAlert;
 use yii\bootstrap\Widget;
 
 /**
@@ -25,27 +25,8 @@ use yii\bootstrap\Widget;
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
  * @author Alexander Makarov <sam@rmcreative.ru>
- * @todo: переписать, чтобы умело рендерить всплывахи
  */
 class Alert extends Widget {
-	/**
-	 * @var array the alert types configuration for the flash messages.
-	 * This array is setup as $key => $value, where:
-	 * - key: the name of the session flash variable
-	 * - value: the bootstrap alert type (i.e. danger, success, info, warning)
-	 */
-	public $alertTypes = [
-		'error' => 'alert-danger',
-		'danger' => 'alert-danger',
-		'success' => 'alert-success',
-		'info' => 'alert-info',
-		'warning' => 'alert-warning'
-	];
-	/**
-	 * @var array the options for rendering the close button tag.
-	 * Array will be passed to [[\yii\bootstrap\Alert::closeButton]].
-	 */
-	public $closeButton = [];
 
 	/**
 	 * {@inheritdoc}
@@ -53,21 +34,24 @@ class Alert extends Widget {
 	public function run() {
 		$session = Yii::$app->session;
 		$flashes = $session->getAllFlashes();
-		$appendClass = isset($this->options['class'])?' '.$this->options['class']:'';
 
 		foreach ($flashes as $type => $flash) {
-			if (!isset($this->alertTypes[$type])) {
-				continue;
-			}
 
 			foreach ((array)$flash as $i => $message) {
-				echo BootstrapAlert::widget([
+				echo Growl::widget([
+					'type' => $type,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
 					'body' => $message,
-					'closeButton' => $this->closeButton,
-					'options' => array_merge($this->options, [
-						'id' => $this->getId().'-'.$type.'-'.$i,
-						'class' => $this->alertTypes[$type].$appendClass
-					])
+					'showSeparator' => true,
+					'delay' => 0,
+					'pluginOptions' => [
+						'showProgressbar' => true,
+						'placement' => [
+							'from' => 'top',
+							'align' => 'right',
+						]
+					]
 				]);
 			}
 
