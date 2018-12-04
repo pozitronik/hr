@@ -58,10 +58,10 @@ class UsersMassUpdate extends Model {
 	 * @throws Throwable
 	 */
 	public function load($data, $formName = null):bool {
-		if (parent::load($data, $formName) && $this->virtualUser->load($data[$this->virtualUser->classNameShort], '')) {
+		if (parent::load($data, $formName) && $this->virtualUser->load($data[$this->virtualUser->formName()], '')) {
 			/*Параметры, которые в модели пользователя применяются без промежуточного сохранения нам нужно всё-таки хранить*/
-			$this->relCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->classNameShort}.relCompetencies");
-			$this->relGroups = ArrayHelper::getValue($data, "{$this->virtualUser->classNameShort}.relGroups");
+			$this->relCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relCompetencies");
+			$this->relGroups = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relGroups");
 			return true;
 		}
 		return false;

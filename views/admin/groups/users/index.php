@@ -44,7 +44,7 @@ use app\widgets\user_select\UserSelectWidget;
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $model->classNameShort.'[dropUsers]'
+					'name' => $model->formName().'[dropUsers]'
 				],
 				[
 					'format' => 'raw',

@@ -49,7 +49,7 @@ use kartik\grid\CheckboxColumn;
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $model->classNameShort.'[dropGroups]'
+					'name' => $model->formName().'[dropGroups]'
 				],
 				[
 					'format' => 'raw',

@@ -147,7 +147,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @return string
 	 */
 	public function getForm():string {
-		$file_path = mb_strtolower($this->classNameShort).'/_form.php';
+		$file_path = mb_strtolower($this->formName()).'/_form.php';
 		return file_exists(Yii::getAlias("@app/views/{$file_path}"))?$file_path:'_form';
 	}
 

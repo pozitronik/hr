@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'label' => 'Название справочника',
 							'value' => function($referenceModel) {
 								/** @var Reference $referenceModel */
-								return Html::a($referenceModel->menuCaption, ['index', 'class' => $referenceModel->classNameShort]);
+								return Html::a($referenceModel->menuCaption, ['index', 'class' => $referenceModel->formName()]);
 							},
 							'format' => 'raw'
 						],

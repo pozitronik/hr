@@ -7,31 +7,14 @@ use app\models\core\SysExceptions;
 use Iterator;
 use RuntimeException;
 use yii\db\ActiveRecord;
-use ReflectionClass;
 use Throwable;
 
 /**
  * Trait ARExtended
  * Расширения модели ActiveRecord
  *
- * @property-read string $classNameShort
  */
 trait ARExtended {
-
-	/**
-	 * @return string|null
-	 * @throws Throwable
-	 * todo deprecated
-	 * @deprecated use $model->formName()
-	 */
-	public function getClassNameShort():?string {
-		try {
-			return (new ReflectionClass($this))->getShortName();
-		} catch (Throwable $t) {
-			SysExceptions::log($t, $t);
-		}
-		return null;
-	}
 
 	/**
 	 * Обёртка для быстрого поиска моделей

@@ -54,7 +54,7 @@ class CompetenciesController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newCompetency = new Competencies();
-		if ($newCompetency->createCompetency(Yii::$app->request->post($newCompetency->classNameShort))) {
+		if ($newCompetency->createCompetency(Yii::$app->request->post($newCompetency->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newCompetency->id]);
 		}
@@ -71,7 +71,7 @@ class CompetenciesController extends WigetableController {
 	public function actionUpdate(int $id):string {
 		$competency = Competencies::findModel($id, new NotFoundHttpException());
 
-		if (null !== ($updateArray = Yii::$app->request->post($competency->classNameShort))) {
+		if (null !== ($updateArray = Yii::$app->request->post($competency->formName()))) {
 			$competency->updateCompetency($updateArray);
 		}
 

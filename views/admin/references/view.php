@@ -16,7 +16,7 @@ use app\models\references\Reference;
 $this->title = "Просмотр записи в справочнике ".$model->menuCaption;
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['/admin/references']];
-$this->params['breadcrumbs'][] = ['label' => $model->menuCaption, 'url' => ['/admin/references/index', 'class' => $model->classNameShort]];
+$this->params['breadcrumbs'][] = ['label' => $model->menuCaption, 'url' => ['/admin/references/index', 'class' => $model->formName()]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -27,12 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div class="btn-group">
 						<?= Html::a(
 								'Изменить',
-								['update', 'id' => $model->id, 'class' => $model->classNameShort],
+								['update', 'id' => $model->id, 'class' => $model->formName()],
 								['class' => 'btn btn-primary']
 						); ?>
 						<?= Html::a(
 								'Удалить',
-								['delete', 'id' => $model->id, 'class' => $model->classNameShort],
+								['delete', 'id' => $model->id, 'class' => $model->formName()],
 								[
 									'class' => 'btn btn-danger',
 									'data' => [

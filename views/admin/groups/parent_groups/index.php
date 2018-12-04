@@ -47,7 +47,7 @@ use kartik\grid\ActionColumn;
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $model->classNameShort.'[dropParentGroups]'
+					'name' => $model->formName().'[dropParentGroups]'
 				],
 				[
 					'format' => 'raw',

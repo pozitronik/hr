@@ -28,21 +28,21 @@ $columns[] = [
 			/** @var Reference $model */
 			return Html::a(
 				'<span class="glyphicon glyphicon-eye-open"></span>',
-				['view', 'class' => $class->classNameShort, 'id' => $model->id]
+				['view', 'class' => $class->formName(), 'id' => $model->id]
 			);
 		},
 		'update' => function($url, $model) use ($class) {
 			/** @var Reference $model */
 			return Html::a(
 				'<span class="glyphicon glyphicon-pencil"></span>',
-				['update', 'class' => $class->classNameShort, 'id' => $model->id]
+				['update', 'class' => $class->formName(), 'id' => $model->id]
 			);
 		},
 		'delete' => function($url, $model) use ($class) {
 			/** @var Reference $model */
 			return Html::a(
 				'<span class="glyphicon glyphicon-trash"></span>',
-				['delete', 'class' => $class->classNameShort, 'id' => $model->id],
+				['delete', 'class' => $class->formName(), 'id' => $model->id],
 				[
 					'title' => 'Удалить запись',
 					'data' => [
@@ -60,7 +60,7 @@ $columns[] = [
 		<div class="panel">
 			<div class="panel-heading">
 				<div class="panel-control">
-					<?= Html::a('Создать запись', ['create', 'class' => $class->classNameShort], ['class' => 'btn btn-success']); ?>
+					<?= Html::a('Создать запись', ['create', 'class' => $class->formName()], ['class' => 'btn btn-success']); ?>
 				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
 			</div>
