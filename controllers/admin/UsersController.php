@@ -6,10 +6,12 @@ namespace app\controllers\admin;
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\core\WigetableController;
+use app\models\users\UsersMassUpdate;
 use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
+use yii\data\ArrayDataProvider;
 use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -122,6 +124,37 @@ class UsersController extends WigetableController {
 		}
 
 		return $this->render('competencies', compact('user', 'competency'));
+	}
+
+	/**
+	 * Групповое изменение пользователей
+	 * В post['selection'] приходят айдишники выбранных юзеров
+	 * @return string|Response
+	 */
+	public function actionMassUpdate() {
+		$massUpdate = new UsersMassUpdate();
+		if ($massUpdate->load(Yii::$app->request->post())) {
+			$statistics = new ArrayDataProvider([
+				'allModels' => $massUpdate->apply(),
+				'sort' => [
+					'attributes' => ['id', 'status', 'error']
+				]
+			]);
+			$massUpdate->loadSelection($massUpdate->usersId);/*Переподгружаем список айдишников для перегенерации доступных наборов параметров*/
+			return $this->render('mass-update', [
+				'massUpdateModel' => $massUpdate,
+				'statistics' => $statistics
+			]);
+		}
+
+		if (false !== $massUpdate->loadSelection(Yii::$app->request->post('selection'))) {
+			return $this->render('mass-update', [
+				'massUpdateModel' => $massUpdate,
+				'statistics' => null
+			]);
+		}
+
+		return $this->redirect(['index']);
 	}
 
 }
