@@ -59,7 +59,7 @@ class AlertModel extends Model {
 	 * @param array $errors
 	 * @return string
 	 */
-	private static function ArrayErrors2String(array $errors):string {
+	public static function ArrayErrors2String(array $errors):string {
 		$array_values = [];
 		array_walk_recursive($errors, function($v, $k) use (&$array_values) {
 			if (!empty($v)) {
