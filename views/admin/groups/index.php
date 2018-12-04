@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'attribute' => 'name',
 					'value' => function($model) {
+						/** @var GroupsSearch $model */
 						return Html::a($model->name, ['update', 'id' => $model->id]);
 					},
 					'format' => 'raw'
@@ -60,8 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'leaders',
 					'value' => function($model) {
 						/** @var GroupsSearch $model */
-						return implode(", ", ArrayHelper::getColumn($model->leaders, 'username'));
-					}
+						$users = [];
+						foreach ($model->leaders as $leader) {
+							$users[] = Html::a($leader->username, ['admin/users/update', 'id' => $leader->id]);
+						}
+						return implode(", ", $users);
+					},
+					'format' => 'raw'
 				],
 				'comment',
 				[
