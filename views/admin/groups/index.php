@@ -41,7 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			'responsive' => true,
 			'columns' => [
 				'id',
-				'name',
+				[
+					'attribute' => 'name',
+					'value' => function($model) {
+						return Html::a($model->name, ['update', 'id' => $model->id]);
+					},
+					'format' => 'raw'
+				],
 				[
 					'attribute' => 'type',
 					'value' => 'relGroupTypes.name',
