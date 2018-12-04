@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  * @package app\models\users
  */
 class UsersSearch extends Users {
-	public $mainGroupName;
+	public $groupName;
 
 	/**
 	 * @inheritdoc
@@ -19,7 +19,8 @@ class UsersSearch extends Users {
 	public function rules():array {
 		return [
 			[['id'], 'integer'],
-			[['username', 'login', 'email'], 'safe']
+			[['username', 'login', 'email'], 'safe'],
+			[['groupName'], 'safe']
 		];
 	}
 
@@ -42,23 +43,24 @@ class UsersSearch extends Users {
 				'id',
 				'username',
 				'login',
-				'email'
+				'email',
+				'groupName'
 			]
 		]);
 
 		$this->load($params);
 		if (false === $pagination) $dataProvider->pagination = $pagination;
 
-		if (!$this->validate()) {
-			return $dataProvider;
-		}
+		if (!$this->validate()) return $dataProvider;
 
-		$query->andFilterWhere([
-			'sys_users.id' => $this->id
-		])->andFilterWhere(['group_id' => $allowedGroups])
+		$query->joinWith(['relGroups']);
+
+		$query->andFilterWhere(['sys_users.id' => $this->id])
+			->andFilterWhere(['group_id' => $allowedGroups])
 			->andFilterWhere(['like', 'sys_users.username', $this->username])
 			->andFilterWhere(['like', 'login', $this->login])
-			->andFilterWhere(['like', 'email', $this->email]);
+			->andFilterWhere(['like', 'email', $this->email])
+			->andFilterWhere(['like', 'sys_groups.name', $this->groupName]);
 
 		return $dataProvider;
 	}

@@ -61,8 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format' => 'raw'
 				],
 				[
-					'attribute' => 'relGroups',
-
+					'attribute' => 'groupName',
+					'label' => 'Группы',
 					'value' => function($model) {
 						/** @var UsersSearch $model */
 						$groups = [];
