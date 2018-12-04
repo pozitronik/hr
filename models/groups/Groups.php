@@ -122,7 +122,7 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|Users[]
+	 * @return ActiveQuery|Users[]|LCQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
@@ -213,7 +213,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Вернет все группы, дочерние по отношению к текущей
-	 * @return Groups[]|ActiveQuery
+	 * @return Groups[]|ActiveQuery|LCQuery
 	 */
 	public function getRelChildGroups() {
 		return $this->hasMany(self::class, ['id' => 'child_id'])->via('relGroupsGroupsChild');
@@ -246,7 +246,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Вернет все группы, дочерние по отношению к текущей
-	 * @return Groups[]|ActiveQuery
+	 * @return Groups[]|ActiveQuery|LCQuery
 	 */
 	public function getRelParentGroups() {
 		return $this->hasMany(self::class, ['id' => 'parent_id'])->via('relGroupsGroupsParent');

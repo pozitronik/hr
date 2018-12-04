@@ -235,7 +235,7 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return Groups[]|ActiveQuery|LCQuery
 	 */
 	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
@@ -331,7 +331,7 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return Competencies[]|ActiveQuery
+	 * @return Competencies[]|ActiveQuery|LCQuery
 	 */
 	public function getRelCompetencies() {
 		return $this->hasMany(Competencies::class, ['id' => 'competency_id'])->via('relUsersCompetencies');

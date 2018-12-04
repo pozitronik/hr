@@ -22,7 +22,7 @@ use kartik\grid\CheckboxColumn;
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelGroups()->orderBy('name')
+				'query' => $model->getRelGroups()->orderBy('name')->active()
 			]),
 			'showFooter' => false,
 			'showPageSummary' => false,

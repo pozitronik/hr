@@ -20,7 +20,7 @@ use app\widgets\user_select\UserSelectWidget;
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelUsers()
+				'query' => $model->getRelUsers()->active()
 			]),
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,

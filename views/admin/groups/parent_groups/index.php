@@ -23,7 +23,7 @@ use kartik\grid\ActionColumn;
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelParentGroups()->orderBy('name')
+				'query' => $model->getRelParentGroups()->orderBy('name')->active()
 			]),
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,

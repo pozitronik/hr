@@ -151,7 +151,7 @@ $this->registerJsFile('js/competency_search.js', ['depends' => AppAsset::class])
 					/** @var Users $userModel */
 					return GridView::widget([
 						'dataProvider' => new ActiveDataProvider([
-							'query' => $userModel->getRelCompetencies()->orderBy('name')
+							'query' => $userModel->getRelCompetencies()->orderBy('name')->active()
 						]),
 						'showFooter' => false,
 						'showPageSummary' => false,

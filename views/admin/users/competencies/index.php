@@ -25,7 +25,7 @@ use yii\helpers\Url;
 	<div class="col-xs-12">
 		<?= GridView::widget([
 			'dataProvider' => new ActiveDataProvider([
-				'query' => $user->getRelCompetencies()->orderBy('name')
+				'query' => $user->getRelCompetencies()->orderBy('name')->active()
 			]),
 			'showFooter' => false,
 			'showPageSummary' => false,
