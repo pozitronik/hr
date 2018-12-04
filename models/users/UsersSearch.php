@@ -44,7 +44,10 @@ class UsersSearch extends Users {
 				'username',
 				'login',
 				'email',
-				'groupName'
+				'groupName' => [
+					'asc' => ['sys_groups.name' => SORT_ASC],
+					'desc' => ['sys_groups.name' => SORT_DESC]
+				]
 			]
 		]);
 
