@@ -8,7 +8,6 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\ArrayHelper;
 use app\models\groups\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
 use kartik\grid\GridView;

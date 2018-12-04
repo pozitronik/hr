@@ -4,11 +4,12 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use app\models\prototypes\AlertPrototype;
 use app\models\references\refs\RefGroupTypes;
 use app\models\users\Users;
 use app\models\users\UsersOptions;
 use app\widgets\alert\Alert;
+use app\widgets\alert\AlertModel;
+use kartik\growl\Growl;
 use yii\base\Response;
 use yii\web\Controller;
 
@@ -25,9 +26,12 @@ class TestController extends Controller {
 		RefGroupTypes::merge(5, 33);
 	}
 
-	public function actionFlash(){
-		AlertPrototype::SuccessNotify();
-		return $this->render('flash');
+	public function actionFlash() {
+//		AlertPrototype::SuccessNotify();
+		AlertModel::notify([
+			'type' => Growl::TYPE_INFO
+		]);
+	return $this->render('flash');
 
 	}
 

@@ -13,10 +13,10 @@ use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
-use app\models\prototypes\AlertPrototype;
 use app\models\relations\RelUsersCompetencies;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
+use app\widgets\alert\AlertModel;
 use RuntimeException;
 use Throwable;
 use yii\db\ActiveQuery;
@@ -111,10 +111,10 @@ class Competencies extends ActiveRecord {
 			$this->structure = [];
 			if ($this->save()) {
 				$transaction->commit();
-				AlertPrototype::SuccessNotify();
+				AlertModel::SuccessNotify();
 				return true;
 			}
-			AlertPrototype::ErrorsNotify($this->errors);
+			AlertModel::ErrorsNotify($this->errors);
 		}
 		$transaction->rollBack();
 		return false;

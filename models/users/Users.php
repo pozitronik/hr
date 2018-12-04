@@ -8,7 +8,7 @@ use app\helpers\Date;
 use app\models\competencies\Competencies;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
-use app\models\prototypes\AlertPrototype;
+use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
 use app\models\relations\RelUsersCompetencies;
 use app\models\relations\RelUsersGroups;
@@ -164,10 +164,10 @@ class Users extends ActiveRecord {
 				/** @noinspection NotOptimalIfConditionsInspection */
 				if ($this->save()) {
 					$transaction->commit();
-					AlertPrototype::SuccessNotify();
+					AlertModel::SuccessNotify();
 					return true;
 				}
-				AlertPrototype::ErrorsNotify($this->errors);
+				AlertModel::ErrorsNotify($this->errors);
 			}
 		}
 		$transaction->rollBack();
@@ -187,10 +187,10 @@ class Users extends ActiveRecord {
 			}
 
 			if ($this->save()) {
-				AlertPrototype::SuccessNotify();
+				AlertModel::SuccessNotify();
 				return true;
 			}
-			AlertPrototype::ErrorsNotify($this->errors);
+			AlertModel::ErrorsNotify($this->errors);
 		}
 		return false;
 	}

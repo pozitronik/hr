@@ -7,6 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\assets\AppAsset;
+use app\widgets\alert\Alert;
 use yii\helpers\Html;
 use app\widgets\navbar\NavbarWidget;
 use app\models\user\CurrentUser;
@@ -35,6 +36,7 @@ AppAsset::register($this);
 	<div class="boxed">
 		<div id="content-container">
 			<div id="page-content">
+				<?= Alert::widget(); ?>
 				<?= $content; ?>
 			</div>
 		</div>

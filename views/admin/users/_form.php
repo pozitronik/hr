@@ -10,7 +10,6 @@ declare(strict_types = 1);
  */
 
 use app\models\users\Users;
-use app\widgets\alert\Alert;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -19,7 +18,6 @@ use app\models\references\refs\RefUserPositions;
 use kartik\file\FileInput;
 
 ?>
-<?= Alert::widget(); ?>
 
 <div class="row">
 	<div class="col-xs-12">

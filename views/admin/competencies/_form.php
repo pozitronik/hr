@@ -11,10 +11,8 @@ use yii\helpers\Html;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
-use app\widgets\alert\Alert;
 
 ?>
-<?= Alert::widget(); ?>
 <div class="row">
 	<div class="col-xs-12">
 		<?php $form = ActiveForm::begin(); ?>

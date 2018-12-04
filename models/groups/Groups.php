@@ -8,7 +8,7 @@ use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\groups\traits\Graph;
-use app\models\prototypes\AlertPrototype;
+use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
@@ -179,10 +179,10 @@ class Groups extends ActiveRecord {
 				/** @noinspection NotOptimalIfConditionsInspection */
 				if ($this->save()) {
 					$transaction->commit();
-					AlertPrototype::SuccessNotify();
+					AlertModel::SuccessNotify();
 					return true;
 				}
-				AlertPrototype::ErrorsNotify($this->errors);
+				AlertModel::ErrorsNotify($this->errors);
 			}
 		}
 		$transaction->rollBack();
@@ -196,10 +196,10 @@ class Groups extends ActiveRecord {
 	public function updateGroup($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
-				AlertPrototype::SuccessNotify();
+				AlertModel::SuccessNotify();
 				return true;
 			}
-			AlertPrototype::ErrorsNotify($this->errors);
+			AlertModel::ErrorsNotify($this->errors);
 		}
 		return false;
 	}

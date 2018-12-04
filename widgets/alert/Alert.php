@@ -15,16 +15,6 @@ use yii\bootstrap\Widget;
  * Yii::$app->session->setFlash('error', 'This is the message');
  * Yii::$app->session->setFlash('success', 'This is the message');
  * Yii::$app->session->setFlash('info', 'This is the message');
- * ```
- *
- * Multiple messages could be set as follows:
- *
- * ```php
- * Yii::$app->session->setFlash('error', ['Error 1', 'Error 2']);
- * ```
- *
- * @author Kartik Visweswaran <kartikv2@gmail.com>
- * @author Alexander Makarov <sam@rmcreative.ru>
  */
 class Alert extends Widget {
 
@@ -36,24 +26,16 @@ class Alert extends Widget {
 		$flashes = $session->getAllFlashes();
 
 		foreach ($flashes as $type => $flash) {
-
-			foreach ((array)$flash as $i => $message) {
-				echo Growl::widget([
-					'type' => $type,
-					'title' => 'Well done!',
-					'icon' => 'glyphicon glyphicon-ok-sign',
-					'body' => $message,
-					'showSeparator' => true,
-					'delay' => 0,
-					'pluginOptions' => [
-						'showProgressbar' => true,
-						'placement' => [
-							'from' => 'top',
-							'align' => 'right',
-						]
-					]
-				]);
-			}
+			$alert = new AlertModel($flash);
+			echo Growl::widget([
+				'type' => $alert->type,
+				'title' => $alert->title,
+				'icon' => $alert->icon,//'glyphicon glyphicon-ok-sign',
+				'body' => $alert->body,
+				'showSeparator' => $alert->showSeparator,
+				'delay' => $alert->delay,
+				'pluginOptions' => $alert->pluginOptions
+			]);
 
 			$session->removeFlash($type);
 		}
