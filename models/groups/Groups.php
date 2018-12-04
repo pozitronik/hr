@@ -195,7 +195,11 @@ class Groups extends ActiveRecord {
 	 */
 	public function updateGroup($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
-			return $this->save();
+			if ($this->save()) {
+				AlertPrototype::SuccessNotify();
+				return true;
+			}
+			AlertPrototype::ErrorsNotify($this->errors);
 		}
 		return false;
 	}
