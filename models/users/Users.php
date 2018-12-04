@@ -124,7 +124,8 @@ class Users extends ActiveRecord {
 			'position' => 'Должность',
 			'profile_image' => 'Изображение профиля',
 			'upload_image' => 'Изображение профиля',
-			'update_password' => 'Смена пароля'
+			'update_password' => 'Смена пароля',
+			'relGroups' => 'Группы'
 		];
 	}
 

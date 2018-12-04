@@ -40,9 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'columns' => [
 				'id',
 				[
-					'value' => function($column) {
-						/** @var Users $column */
-						return Html::img($column->avatar, ['class' => 'img-circle img-xs']);
+					'value' => function($model) {
+						/** @var UsersSearch $model */
+						return Html::img($model->avatar, ['class' => 'img-circle img-xs']);
 					},
 					'label' => 'Аватар',
 					'format' => 'raw'
@@ -50,13 +50,26 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'attribute' => 'username',
 					'value' => function($model) {
-						/** @var Users $model */
+						/** @var UsersSearch $model */
 						return Html::a($model->username, ['admin/users/update', 'id' => $model->id]);
 //						return UserWidget::widget([
 //							'user' => $model,
 //							'chat' => false,
 //							'update' => false
 //						]);
+					},
+					'format' => 'raw'
+				],
+				[
+					'attribute' => 'relGroups',
+
+					'value' => function($model) {
+						/** @var UsersSearch $model */
+						$groups = [];
+						foreach ((array)$model->relGroups as $group) {
+							$groups[] = Html::a($group->name, ['admin/groups/update', 'id' => $group->id]);
+						}
+						return implode(", ", $groups);
 					},
 					'format' => 'raw'
 				],
