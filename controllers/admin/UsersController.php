@@ -6,6 +6,7 @@ namespace app\controllers\admin;
 use app\helpers\ArrayHelper;
 use app\models\competencies\Competencies;
 use app\models\core\WigetableController;
+use app\models\groups\Groups;
 use app\models\users\UsersMassUpdate;
 use app\models\users\UsersSearch;
 use Throwable;
@@ -129,10 +130,12 @@ class UsersController extends WigetableController {
 	/**
 	 * Групповое изменение пользователей
 	 * В post['selection'] приходят айдишники выбранных юзеров
+	 * @param int|null $group_id - если указано, то выбираются пользователи этой группы
 	 * @return string|Response
 	 */
-	public function actionMassUpdate() {
+	public function actionMassUpdate(int $group_id = null) {
 		$massUpdate = new UsersMassUpdate();
+
 		if ($massUpdate->load(Yii::$app->request->post())) {
 			$statistics = new ArrayDataProvider([
 				'allModels' => $massUpdate->apply(),
@@ -143,14 +146,29 @@ class UsersController extends WigetableController {
 			$massUpdate->loadSelection($massUpdate->usersId);/*Переподгружаем список айдишников для перегенерации доступных наборов параметров*/
 			return $this->render('mass-update', [
 				'massUpdateModel' => $massUpdate,
-				'statistics' => $statistics
+				'statistics' => $statistics,
+				'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+				'group' => Groups::findModel($group_id)
 			]);
+		}
+
+		if (null !== $group_id) {
+			if (false !== $massUpdate->loadGroupSelection($group_id)) {
+				return $this->render('mass-update', [
+					'massUpdateModel' => $massUpdate,
+					'statistics' => null,
+					'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+					'group' => Groups::findModel($group_id)
+				]);
+			}
 		}
 
 		if (false !== $massUpdate->loadSelection(Yii::$app->request->post('selection'))) {
 			return $this->render('mass-update', [
 				'massUpdateModel' => $massUpdate,
-				'statistics' => null
+				'statistics' => null,
+				'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+				'group' => Groups::findModel($group_id)
 			]);
 		}
 
