@@ -69,6 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						foreach ((array)$model->relGroups as $group) {
 							$groups[] = Html::a($group->name, ['admin/groups/update', 'id' => $group->id]);
 						}
+						if (count($groups) > 3) {
+							$badge = "<b class='badge pull-right'>...ещё ".(string)(count($groups) - 3)."</b>";
+							array_splice($groups, 3, count($groups));
+							return implode(", ", $groups).$badge;
+						}
 						return implode(", ", $groups);
 					},
 					'format' => 'raw'
