@@ -75,7 +75,8 @@ class Competencies extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
-			[['category', 'daddy', 'deleted', 'access'], 'integer'],
+			[['category', 'daddy', 'access'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['create_date', 'structure'], 'safe'],
 			[['name'], 'string', 'max' => 255]
 		];
