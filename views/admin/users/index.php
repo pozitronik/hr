@@ -8,7 +8,6 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\models\users\Users;
 use app\models\users\UsersSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
