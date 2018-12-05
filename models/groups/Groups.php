@@ -49,6 +49,7 @@ use yii\web\UploadedFile;
  * @property array $rolesInGroup
  * @property array $dropUsers
  * @property boolean $deleted
+ * @property LCQuery $relUsersHierarchy Пользователи во всех группах вниз по иерархии
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
  */
@@ -336,6 +337,29 @@ class Groups extends ActiveRecord {
 	 */
 	public function getLogo():string {
 		return is_file(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY.$this->logotype))?"/group_logotypes/{$this->logotype}":"/img/group_logo.jpg";
+	}
+
+	/**
+	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
+	 * @return array<int>
+	 */
+	private function collectRecursiveIds():array {
+		$groupsId = [[]];//Сюда соберём айдишники всех обходимых групп
+		foreach ((array)$this->relChildGroups as $childGroup) {
+			$groupsId[] = $childGroup->collectRecursiveIds();
+		}
+		$groupsId = array_merge(...$groupsId);
+		$groupsId[] = $this->id;
+		return $groupsId;
+	}
+
+	/**
+	 * Прототипируемая функция: обходим всю иерархию групп вниз по дереву, возвращаем всех пользователей групп в иерархии.
+	 * Голым запросом не сделано, потому что в MySQL рекурсивные вызовы (а без них придётся задавать глубину обхода вручную) появились только в 8.0, и с ними я просто не знаком.
+	 * К тому же непонятно, как это делать средствами фреймворка. В общем, прототипирую идею, дальше как получится.
+	 */
+	public function getRelUsersHierarchy():LCQuery {
+		return Users::find()->joinWith(['relUsersGroups'])->where(['rel_users_groups.group_id' => $this->collectRecursiveIds()])->active();
 	}
 
 }
