@@ -17,13 +17,14 @@ use kartik\grid\CheckboxColumn;
  * @var Users $model
  */
 
+$provider = new ActiveDataProvider([
+	'query' => $model->getRelGroups()->orderBy('name')->active()
+]);//todo controller
 ?>
 <div class="row">
 	<div class="col-xs-12">
 		<?= GridView::widget([
-			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelGroups()->orderBy('name')->active()
-			]),
+			'dataProvider' => $provider,
 			'showFooter' => false,
 			'showPageSummary' => false,
 			'summary' => '',
@@ -37,7 +38,7 @@ use kartik\grid\CheckboxColumn;
 					'multiple' => true
 				]),
 				'heading' => false,
-				'footer' => false
+				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 			],
 			'toolbar' => false,
 			'export' => false,

@@ -104,7 +104,7 @@ use kartik\file\FileInput;
 
 				<div class="row">
 					<div class="col-md-12">
-						<label class="control-label">Пользователи в группе</label>
+						<label class="control-label">Пользователи в иерархии групп</label>
 						<?= $this->render('users/index_all', [
 							'model' => $model
 						]); ?>

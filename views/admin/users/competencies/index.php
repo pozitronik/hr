@@ -19,14 +19,15 @@ use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$provider = new ActiveDataProvider([
+	'query' => $user->getRelCompetencies()->orderBy('name')->active()
+]);//todo controller
 ?>
 
 <div class="row">
 	<div class="col-xs-12">
 		<?= GridView::widget([
-			'dataProvider' => new ActiveDataProvider([
-				'query' => $user->getRelCompetencies()->orderBy('name')->active()
-			]),
+			'dataProvider' => $provider,
 			'showFooter' => false,
 			'showPageSummary' => false,
 			'summary' => '',
@@ -44,7 +45,7 @@ use yii\helpers\Url;
 					]
 				]),
 				'heading' => false,
-				'footer' => false
+				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 			],
 			'toolbar' => false,
 			'export' => false,

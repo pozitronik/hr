@@ -15,18 +15,17 @@ use app\helpers\ArrayHelper;
  * @var Competencies $competency
  */
 
+$provider = new ArrayDataProvider(['allModels' => $competency->structure]);//todo controller
 ?>
 
 
 <?= GridView::widget([
-	'dataProvider' => new ArrayDataProvider([
-		'allModels' => $competency->structure
-	]),
+	'dataProvider' => $provider,
 	'panel' => [
 		'type' => GridView::TYPE_DEFAULT,
 		'after' => false,
 		'heading' => false,
-		'footer' => false
+		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 	],
 	'toolbar' => [
 		[

@@ -16,7 +16,7 @@ use app\widgets\user_select\UserSelectWidget;
  * @var View $this
  * @var Groups $model
  */
-$provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
+$provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);//todo controller
 
 ?>
 <div class="row">
@@ -50,6 +50,7 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 				[
 					'format' => 'raw',
 					'attribute' => 'groupName',
+					'label' => 'Группы',
 					'value' => function($model) {
 						/** @var Users $model */
 						return BadgeWidget::widget([

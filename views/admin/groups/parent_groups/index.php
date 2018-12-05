@@ -18,18 +18,19 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\grid\ActionColumn;
 
+$provider = new ActiveDataProvider([
+	'query' => $model->getRelParentGroups()->orderBy('name')->active()
+]);//todo controller
 ?>
 <div class="row">
 	<div class="col-xs-12">
 		<?= GridView::widget([
-			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelParentGroups()->orderBy('name')->active()
-			]),
+			'dataProvider' => $provider,
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
 				'heading' => false,
-				'footer' => false,
+				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => GroupSelectWidget::widget([
 					'model' => $model,
 					'attribute' => 'relParentGroups',
