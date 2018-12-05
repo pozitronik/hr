@@ -56,7 +56,7 @@ use yii\helpers\Url;
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $user->classNameShort.'[dropCompetencies]'
+					'name' => $user->formName().'[dropCompetencies]'
 				],
 				[
 					'attribute' => 'name',
