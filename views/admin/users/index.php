@@ -9,6 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\models\users\UsersSearch;
+use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -64,16 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
 					'label' => 'Группы',
 					'value' => function($model) {
 						/** @var UsersSearch $model */
-						$groups = [];
-						foreach ((array)$model->relGroups as $group) {
-							$groups[] = Html::a($group->name, ['admin/groups/update', 'id' => $group->id]);
-						}
-						if (count($groups) > 3) {
-							$badge = "<b class='badge pull-right'>...ещё ".(count($groups) - 3)."</b>";
-							array_splice($groups, 3, count($groups));
-							return implode(", ", $groups).$badge;
-						}
-						return implode(", ", $groups);
+						return BadgeWidget::widget([
+							'data' => $model->relGroups,
+							'badgeClass' => 'pull-right',
+							'attribute' => 'name',
+							'linkScheme' => ['admin/groups/update', 'id' => 'id'],
+						]);
 					},
 					'format' => 'raw'
 				],

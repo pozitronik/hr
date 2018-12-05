@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 use app\models\users\Users;
 use app\models\groups\Groups;
+use app\widgets\badge\BadgeWidget;
 use app\widgets\roles_select\RolesSelectWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -26,7 +27,7 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
 				'heading' => false,
-				'footer' => $provider->totalCount > $provider->pagination->pageSize,
+				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => UserSelectWidget::widget([
 					'model' => $model,
 					'attribute' => 'relUsers',
@@ -45,6 +46,19 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
 					'name' => $model->formName().'[dropUsers]'
+				],
+				[
+					'format' => 'raw',
+					'attribute' => 'groupName',
+					'value' => function($model) {
+						/** @var Users $model */
+						return BadgeWidget::widget([
+							'data' => $model->relGroups,
+							'badgeClass' => 'pull-right',
+							'attribute' => 'name',
+							'linkScheme' => ['admin/groups/update', 'id' => 'id'],
+						]);
+					}
 				],
 				[
 					'format' => 'raw',
