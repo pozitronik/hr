@@ -28,25 +28,13 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 				'after' => false,
 				'heading' => false,
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-				'before' => UserSelectWidget::widget([
-					'model' => $model,
-					'attribute' => 'relUsers',
-					'notData' => $model->relUsers,
-					'multiple' => true
-				])
+				'before' => false
 			],
 			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-				[
-					'class' => CheckboxColumn::class,
-					'width' => '36px',
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => 'Удалить',
-					'name' => $model->formName().'[dropUsers]'
-				],
 				[
 					'format' => 'raw',
 					'attribute' => 'groupName',
@@ -55,6 +43,7 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 						/** @var Users $model */
 						return BadgeWidget::widget([
 							'data' => $model->relGroups,
+							'unbadgedCount' => 5,
 							'badgeClass' => 'pull-right',
 							'attribute' => 'name',
 							'linkScheme' => ['admin/groups/update', 'id' => 'id'],
@@ -68,17 +57,6 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 						/** @var Users $user */
 						return Html::a($user->username, ['admin/users/update', 'id' => $user->id]);
 					}
-				],
-				[
-					'label' => 'Роли в группе',
-					'value' => function($user) use ($model) {
-						/** @var Groups $model */
-						return RolesSelectWidget::widget([
-							'groupId' => $model->id,
-							'userId' => $user->id
-						]);
-					},
-					'format' => 'raw'
 				]
 			]
 		]); ?>
