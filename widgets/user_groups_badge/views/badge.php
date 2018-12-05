@@ -7,5 +7,5 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
-echo 'widget user_groups_badge view';
+echo 'widget badge view';
 
