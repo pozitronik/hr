@@ -15,18 +15,20 @@ use app\widgets\user_select\UserSelectWidget;
  * @var View $this
  * @var Groups $model
  */
+
+$provider = new ActiveDataProvider([
+	'query' => $model->getRelUsers()->active()
+])
 ?>
 <div class="row">
 	<div class="col-xs-12">
 		<?= GridView::widget([
-			'dataProvider' => new ActiveDataProvider([
-				'query' => $model->getRelUsers()->active()
-			]),
+			'dataProvider' => $provider,
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
 				'heading' => false,
-				'footer' => false,
+				'footer' => $provider->totalCount > $provider->pagination->pageSize,
 				'before' => UserSelectWidget::widget([
 					'model' => $model,
 					'attribute' => 'relUsers',
