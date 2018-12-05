@@ -4,13 +4,10 @@ declare(strict_types = 1);
 use app\models\users\Users;
 use app\models\groups\Groups;
 use app\widgets\badge\BadgeWidget;
-use app\widgets\roles_select\RolesSelectWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
-use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
-use app\widgets\user_select\UserSelectWidget;
 
 /**
  * @var View $this
@@ -46,7 +43,7 @@ $provider = new ActiveDataProvider(['query' => $model->getRelUsersHierarchy()]);
 							'unbadgedCount' => 5,
 							'badgeClass' => 'pull-right',
 							'attribute' => 'name',
-							'linkScheme' => ['admin/groups/update', 'id' => 'id'],
+							'linkScheme' => ['admin/groups/update', 'id' => 'id']
 						]);
 					}
 				],

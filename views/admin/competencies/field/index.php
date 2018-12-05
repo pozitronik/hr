@@ -25,7 +25,7 @@ $provider = new ArrayDataProvider(['allModels' => $competency->structure]);//tod
 		'type' => GridView::TYPE_DEFAULT,
 		'after' => false,
 		'heading' => false,
-		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
+		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
 	],
 	'toolbar' => [
 		[

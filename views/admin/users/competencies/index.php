@@ -45,7 +45,7 @@ $provider = new ActiveDataProvider([
 					]
 				]),
 				'heading' => false,
-				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
+				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
 			],
 			'toolbar' => false,
 			'export' => false,

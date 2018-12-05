@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'data' => $model->relGroups,
 							'badgeClass' => 'pull-right',
 							'attribute' => 'name',
-							'linkScheme' => ['admin/groups/update', 'id' => 'id'],
+							'linkScheme' => ['admin/groups/update', 'id' => 'id']
 						]);
 					},
 					'format' => 'raw'

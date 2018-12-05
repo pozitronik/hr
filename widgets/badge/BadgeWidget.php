@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\badge;
 
 use app\helpers\ArrayHelper;
+use Throwable;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\helpers\Html;
@@ -41,6 +42,7 @@ class BadgeWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$result = [];
@@ -49,9 +51,7 @@ class BadgeWidget extends Widget {
 			if ($this->itemsAsLinks) {
 				$linkScheme = $this->linkScheme;
 				foreach ($linkScheme as $key => &$value) {//постановка в схему значений из модели
-					if ($model->hasProperty($value)) {
-						if (false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
-					}
+					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
 				}
 				unset($value);
 				$result[] = Html::a(ArrayHelper::getValue($model, $this->attribute), $linkScheme);
