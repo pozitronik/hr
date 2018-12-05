@@ -4,13 +4,14 @@ declare(strict_types = 1);
 namespace app\widgets\badge;
 
 use app\helpers\ArrayHelper;
+use yii\base\Model;
 use yii\base\Widget;
 use yii\helpers\Html;
 
 /**
  * Class BadgeWidget
  * @package app\widgets\badge
- * @property array $data
+ * @property array<Model> $data
  * @property string $attribute
  * @property integer $unbadgedCount
  * @property string $badgeClass
@@ -43,14 +44,17 @@ class BadgeWidget extends Widget {
 	 */
 	public function run():string {
 		$result = [];
+		/** @var Model $model */
 		foreach ($this->data as $model) {
 			if ($this->itemsAsLinks) {
 				$linkScheme = $this->linkScheme;
 				foreach ($linkScheme as $key => &$value) {//постановка в схему значений из модели
-					if (false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
+					if ($model->hasProperty($value)) {
+						if (false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
+					}
 				}
 				unset($value);
-				$result[] = Html::a(ArrayHelper::getValue($model, $this->attribute), [$linkScheme]);
+				$result[] = Html::a(ArrayHelper::getValue($model, $this->attribute), $linkScheme);
 			} else {
 				$result[] = ArrayHelper::getValue($model, $this->attribute);
 			}
