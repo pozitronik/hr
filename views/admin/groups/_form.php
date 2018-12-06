@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use app\models\references\refs\RefGroupTypes;
 use kartik\file\FileInput;
-
+//todo: кнопка для реадктирования всех пользователей в иерархии
 ?>
 <div class="row">
 	<div class="col-xs-12">
