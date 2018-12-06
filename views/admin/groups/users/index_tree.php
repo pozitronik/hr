@@ -9,7 +9,6 @@ use yii\widgets\Breadcrumbs;
  * @var View $this
  * @var Groups $group
  */
-$ierarchy[] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
 
 if ($group->getRelUsers()->count() > 0) {
 	echo $this->render('index', [
@@ -24,11 +23,13 @@ if ($group->getRelUsers()->count() > 0) {
 }
 
 /** @var Groups[] $subgroups */
+$ierarchy[] = [];
 $subgroups = $group->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
 foreach ($subgroups as $subgroup) {
 	echo $this->render('index_tree', [
 		'group' => $subgroup
 	]);
 }
+ArrayHelper::setLast($ierarchy);
 
 ?>
