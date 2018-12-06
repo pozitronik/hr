@@ -161,12 +161,28 @@ class ArrayHelper extends YiiArrayHelper {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public static function keymap(array $array, $attribute): array {
+	public static function keymap(array $array, $attribute):array {
 		$result = [];
 		foreach ($array as $key => $element) {
 			$result[$key] = self::getValue($element, $attribute);
 		}
 		return $result;
+	}
+
+	/**
+	 * Устанавливает значение последней ячейке массива. Если параметр $value не установлен, удаляет последнюю ячейку массива
+	 * @param array $array
+	 * @param mixed $value
+	 */
+	public static function setLast(array &$array, $value = null):void {
+		if (!count($array)) return null;
+		end($array);
+		if (null === $value) {
+			unset($array[key($array)]);
+		} else {
+			$array[key($array)] = $value;
+		}
+
 	}
 
 }
