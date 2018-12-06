@@ -7,6 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\models\competencies\Competencies;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 use kartik\form\ActiveForm;
@@ -42,7 +43,8 @@ use kartik\select2\Select2;
 						Редактирование полей будет доступно после сохранения
 					<?php else: ?>
 						<?= $this->render('field/index.php',[
-							'competency' => $model
+							'competency' => $model,
+							'provider' => new ArrayDataProvider(['allModels' => $model->structure])
 						]); ?>
 					<?php endif; ?>
 				</div>

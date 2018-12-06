@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 use app\models\competencies\Competencies;
 use app\models\competencies\CompetencyField;
+use yii\data\BaseDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
-use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use kartik\grid\ActionColumn;
 use app\helpers\ArrayHelper;
@@ -13,9 +13,9 @@ use app\helpers\ArrayHelper;
 /**
  * @var View $this
  * @var Competencies $competency
+ * @var BaseDataProvider $provider
  */
 
-$provider = new ArrayDataProvider(['allModels' => $competency->structure]);//todo controller
 ?>
 
 
