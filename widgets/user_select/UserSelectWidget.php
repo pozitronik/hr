@@ -13,6 +13,8 @@ use yii\db\ActiveRecord;
  * Виджет списка пользователей (для добавления в группу)
  * @package app\components\user_select
  *
+ * fixme: вероятно, некорректно работает отображение двух выбиралок на одной странице (коллизия по id)?
+ *
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
  * @property array $notData Пользователи, исключённые из списка (например те, которые уже есть в группе)
