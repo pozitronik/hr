@@ -19,12 +19,14 @@ use yii\db\ActiveRecord;
  * @property string|null $attribute ...и свойством модели
  * @property array $notData Пользователи, исключённые из списка (например те, которые уже есть в группе)
  * @property boolean $multiple
+ * @property string $placeholder
  */
 class UserSelectWidget extends Widget {
 	public $model;
 	public $attribute;
 	public $notData;
 	public $multiple = false;
+	public $placeholder = 'Добавить пользователя';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -46,7 +48,8 @@ class UserSelectWidget extends Widget {
 			'model' => $this->model,
 			'attribute' => $this->attribute,
 			'data' => ArrayHelper::map($data, 'id', 'username'),
-			'multiple' => $this->multiple
+			'multiple' => $this->multiple,
+			'placeholder' => $this->placeholder
 		]);
 	}
 }
