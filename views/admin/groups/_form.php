@@ -33,49 +33,58 @@ use kartik\file\FileInput;
 			</div>
 
 			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-3">
-						<?= $form->field($model, 'upload_image')->widget(FileInput::class, [
-							'options' => [
-								'accept' => 'image/*',
-								'multiple' => false
-							],
-							'pluginOptions' => [
-								'initialPreview' => !empty($model->logotype)?[
-									$model->logo
-								]:false,
-								'initialPreviewAsData' => true,
-								'browseClass' => 'btn btn-primary pull-right',
-								'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-								'browseLabel' => 'Выберите изображение',
-								'showCaption' => false
-							]
-						]) ?>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Общие параметры группы</h3>
 					</div>
-
-					<div class="col-md-9">
+					<div class="panel-body">
 						<div class="row">
-
-							<div class="col-md-12">
-								<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
-							</div>
-
-							<div class="col-md-12">
-								<?= $form->field($model, 'type')->widget(Select2::class, [
-									'data' => RefGroupTypes::mapData(),
-									'options' => ['placeholder' => 'Выберите тип'],
+							<div class="col-md-3">
+								<?= $form->field($model, 'upload_image')->widget(FileInput::class, [
+									'options' => [
+										'accept' => 'image/*',
+										'multiple' => false
+									],
 									'pluginOptions' => [
-										'allowClear' => true
+										'initialPreview' => !empty($model->logotype)?[
+											$model->logo
+										]:false,
+										'initialPreviewAsData' => true,
+										'browseClass' => 'btn btn-primary pull-right',
+										'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+										'browseLabel' => 'Выберите изображение',
+										'showCaption' => false
 									]
-								]); ?>
+								]) ?>
 							</div>
 
-							<div class="col-md-12">
-								<?= $form->field($model, 'comment')->textarea(); ?>
+							<div class="col-md-9">
+								<div class="row">
+
+									<div class="col-md-12">
+										<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
+									</div>
+
+									<div class="col-md-12">
+										<?= $form->field($model, 'type')->widget(Select2::class, [
+											'data' => RefGroupTypes::mapData(),
+											'options' => ['placeholder' => 'Выберите тип'],
+											'pluginOptions' => [
+												'allowClear' => true
+											]
+										]); ?>
+									</div>
+
+									<div class="col-md-12">
+										<?= $form->field($model, 'comment')->textarea(); ?>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+
 				<div class="row">
 					<div class="col-md-6">
 
