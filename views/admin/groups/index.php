@@ -19,6 +19,7 @@ use kartik\grid\ActionColumn;
 $this->title = 'Команды';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
+//todo: фильтр/поиск по главнюку
 ?>
 
 <div class="row">
