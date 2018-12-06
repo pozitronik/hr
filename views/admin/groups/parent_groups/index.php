@@ -69,7 +69,7 @@ $provider = new ActiveDataProvider([
 				[
 //					'dropdown' => true,
 					'class' => ActionColumn::class,
-					'template' => '{tree}',
+					'template' => '{tree}{mass-update}',
 					'buttons' => [
 						'tree' => function($url, $model) {
 							return Html::a('Граф', $url, ['class' => 'btn btn-xs btn-info']);
