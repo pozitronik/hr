@@ -97,7 +97,7 @@ use kartik\file\FileInput;
 					<div class="col-md-12">
 						<?= $this->render('users/index', [
 							'model' => $model,
-							'heading' => '<label class="control-label">Пользователи в группе</label>'.Html::a('Иерархия', ['/admin/groups/users-hierarchy', 'id' => $model->id], ['class' => 'btn btn-info pull-right']),
+							'heading' => '<label class="control-label">Пользователи в группе'.Html::a('Иерархия', ['/admin/groups/users-hierarchy', 'id' => $model->id], ['class' => 'btn btn-xs btn-info', 'style' => 'margin-left:15px	']).'</label>',
 							'selectorInPanel' => true,
 							'showRolesSelector' => true,
 							'showDropColumn' => true
