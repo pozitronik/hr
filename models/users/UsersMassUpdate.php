@@ -40,7 +40,7 @@ class UsersMassUpdate extends Model {
 	 */
 	public function rules():array {
 		return [
-			[['usersId', 'virtualUser'], 'safe']
+			[['usersId', 'usersIdSelected', 'virtualUser'], 'safe']
 		];
 	}
 
@@ -81,7 +81,7 @@ class UsersMassUpdate extends Model {
 		if (!empty($this->relGroups)) $paramsArray['relGroups'] = $this->relGroups;
 		if (!empty($this->relCompetencies)) $paramsArray['relCompetencies'] = $this->relCompetencies;
 
-		foreach ($this->usersId as $userId) {
+		foreach ($this->usersIdSelected as $userId) {
 			if (false !== $user = Users::findModel($userId)) {
 				if ($user->updateUser($paramsArray)) {
 					$statistic[] = [
