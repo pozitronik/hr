@@ -21,9 +21,6 @@ use kartik\select2\Select2;
 	'attribute' => $attribute,
 	'name' => 'user_id',
 	'data' => $data,
-	'options' => [
-		'multiple' => $multiple,
-		'placeholder' => $placeholder
-	]
+	'options' => compact('multiple', 'placeholder')
 ]); ?>
 
