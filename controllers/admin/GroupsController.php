@@ -103,6 +103,18 @@ class GroupsController extends WigetableController {
 	}
 
 	/**
+	 * Страница иерархичного отображения пользователей для группы
+	 * @param int $id
+	 * @return string
+	 */
+	public function actionUsersHierarchy(int $id):string {
+		$group = Groups::findModel($id, new NotFoundHttpException());
+		return $this->render('users/hierarchy', [
+			'group' => $group
+		]);
+	}
+
+	/**
 	 * @param int $id
 	 * @return string
 	 */
