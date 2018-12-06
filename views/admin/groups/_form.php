@@ -101,6 +101,14 @@ use kartik\file\FileInput;
 						]); ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="control-label">Пользователи в иерархии</label>
+						<?= $this->render('users/index_tree', [
+							'model' => $model
+						]); ?>
+					</div>
+				</div>
 
 			</div>
 
