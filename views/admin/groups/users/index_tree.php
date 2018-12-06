@@ -9,7 +9,7 @@ use yii\widgets\Breadcrumbs;
 /**
  * @var View $this
  * @var Groups $group
- * @var array $ierarchy Рекурсивная иерархия для навигации в заголовке
+ * @var array $hierarchy Рекурсивная иерархия для навигации в заголовке
  */
 
 if ($group->getRelUsers()->count() > 0) {
@@ -20,20 +20,20 @@ if ($group->getRelUsers()->count() > 0) {
 		'showDropColumn' => false,
 		'heading' => Breadcrumbs::widget([
 			'homeLink' => false,
-			'links' => $ierarchy
+			'links' => $hierarchy
 		])
 	]);
 }
 
 /** @var Groups[] $subgroups */
-$ierarchy[] = [];
+$hierarchy[] = [];
 $subgroups = $group->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
 foreach ($subgroups as $subgroup) {
-	ArrayHelper::setLast($ierarchy, ['label' => $subgroup->name, 'url' => ['/admin/groups/update', 'id' => $subgroup->id]]);
+	ArrayHelper::setLast($hierarchy, ['label' => $subgroup->name, 'url' => ['/admin/groups/update', 'id' => $subgroup->id]]);
 	echo $this->render('index_tree', [
 		'group' => $subgroup,
-		'ierarchy' => $ierarchy
+		'hierarchy' => $hierarchy
 	]);
 }
-ArrayHelper::setLast($ierarchy);
+ArrayHelper::setLast($hierarchy);
 
