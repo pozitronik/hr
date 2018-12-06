@@ -68,6 +68,10 @@ use app\helpers\ArrayHelper;
 		<!--================================-->
 		<div class="navbar-content clearfix">
 			<?= Breadcrumbs::widget([
+				'homeLink' => [
+					'label' => 'Домой',
+					'url' => Yii::$app->homeUrl
+				],
 				'links' => ArrayHelper::getValue($this->params, 'breadcrumbs', [])
 			]); ?>
 			<ul class="nav navbar-top-links pull-right">
