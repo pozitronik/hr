@@ -35,10 +35,6 @@ $provider = new ActiveDataProvider([
 					'format' => 'raw',
 					'attribute' => 'name',
 					'value' => function($model) {
-						/** @var Groups $model */
-						$gc = $model->getRelChildGroups()->active()->count();
-						$uc = $model->getRelUsers()->count();
-						return "$gc | $uc";
 					}
 				]
 			]
