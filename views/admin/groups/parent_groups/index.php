@@ -59,6 +59,14 @@ $provider = new ActiveDataProvider([
 					}
 				],
 				[
+					'attribute' => 'usersCount',
+					'label' => 'Пользователей'
+				],
+				[
+					'attribute' => 'childGroupsCount',
+					'label' => 'Подгрупп'
+				],
+				[
 					'class' => ActionColumn::class,
 					'template' => '{tree}',
 					'buttons' => [

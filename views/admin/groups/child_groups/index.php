@@ -21,7 +21,6 @@ use kartik\grid\ActionColumn;
 $provider = new ActiveDataProvider([
 	'query' => $model->getRelChildGroups()->orderBy('name')->active()
 ]);//todo controller
-//todo: Научить показывать количество пользюков
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -60,6 +59,15 @@ $provider = new ActiveDataProvider([
 					}
 				],
 				[
+					'attribute' => 'usersCount',
+					'label' => 'Пользователей'
+				],
+				[
+					'attribute' => 'childGroupsCount',
+					'label' => 'Подгрупп'
+				],
+				[
+//					'dropdown' => true,
 					'class' => ActionColumn::class,
 					'template' => '{tree}',
 					'buttons' => [
