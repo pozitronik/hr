@@ -13,7 +13,7 @@ use yii\widgets\Breadcrumbs;
  * @var boolean $showRolesSelector Показывать челикам выбиралку ролей (может тормозить)
  */
 
-if ($group->getRelUsers()->count() > 0) {
+if ($group->usersCount > 0) {
 	echo $this->render('index', [
 		'model' => $group,
 		'selectorInPanel' => false,
