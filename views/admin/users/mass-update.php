@@ -14,6 +14,7 @@ use app\models\groups\Groups;
 use app\models\users\UsersMassUpdate;
 use kartik\select2\Select2;
 use app\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -58,7 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						<div class="row">
 							<div class="col-md-12">
 								<?= $this->render('groups/index', [
-									'model' => $massUpdateModel->virtualUser
+									'model' => $massUpdateModel->virtualUser,
+									'provider' => new ActiveDataProvider(['query' => $massUpdateModel->virtualUser->getRelGroups()->orderBy('name')->active()])
 								]); ?>
 							</div>
 						</div>
@@ -68,7 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							<div class="col-md-12">
 								<?= $this->render('competencies/index', [
 									'user' => $massUpdateModel->virtualUser,
-									'data' => $competenciesData
+									'data' => $competenciesData,
+									'provider' => new ActiveDataProvider(['query' => $massUpdateModel->virtualUser->getRelCompetencies()->orderBy('name')->active()])
 								]); ?>
 							</div>
 						</div>
