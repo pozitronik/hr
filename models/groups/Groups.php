@@ -52,6 +52,8 @@ use yii\web\UploadedFile;
  * @property LCQuery $relUsersHierarchy Пользователи во всех группах вниз по иерархии
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
+ * @property-read integer $usersCount Количество пользователей в группе
+ *
  */
 class Groups extends ActiveRecord {
 	use ARExtended;
@@ -111,7 +113,8 @@ class Groups extends ActiveRecord {
 			'leaders' => 'Руководители',
 			'logotype' => 'Логотип',
 			'upload_image' => 'Логотип',
-			'deleted' => 'Deleted'
+			'deleted' => 'Deleted',
+			'usersCount' => 'Количество пользователей'
 		];
 	}
 
@@ -360,6 +363,13 @@ class Groups extends ActiveRecord {
 	 */
 	public function getRelUsersHierarchy():LCQuery {
 		return Users::find()->joinWith(['relUsersGroups'])->where(['rel_users_groups.group_id' => $this->collectRecursiveIds()])->active();
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsersCount():int {
+		return (int)$this->getRelUsers()->count();
 	}
 
 }
