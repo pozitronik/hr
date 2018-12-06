@@ -15,11 +15,9 @@ use kartik\grid\CheckboxColumn;
 /**
  * @var View $this
  * @var Users $model
+ * @var ActiveDataProvider $provider
  */
 
-$provider = new ActiveDataProvider([
-	'query' => $model->getRelGroups()->orderBy('name')->active()
-]);//todo controller
 ?>
 <div class="row">
 	<div class="col-xs-12">

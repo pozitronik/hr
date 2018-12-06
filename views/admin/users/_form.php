@@ -91,7 +91,8 @@ use kartik\file\FileInput;
 				<div class="row">
 					<div class="col-md-12">
 						<?= $this->render('groups/index', [
-							'model' => $model
+							'model' => $model,
+							'provider' => new ActiveDataProvider(['query' => $model->getRelGroups()->orderBy('name')->active()])
 						]); ?>
 					</div>
 				</div>
