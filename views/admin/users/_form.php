@@ -10,6 +10,7 @@ declare(strict_types = 1);
  */
 
 use app\models\users\Users;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -98,7 +99,8 @@ use kartik\file\FileInput;
 					<div class="col-md-12">
 						<?= $this->render('competencies/index', [
 							'user' => $model,
-							'data' => $competenciesData
+							'data' => $competenciesData,
+							'provider' => new ActiveDataProvider(['query' => $model->getRelCompetencies()->orderBy('name')->active()])
 						]); ?>
 					</div>
 				</div>

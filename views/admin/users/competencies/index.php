@@ -2,26 +2,23 @@
 declare(strict_types = 1);
 
 /**
- * Шаблон главной страницы списка всех пользователей
  * @var View $this
  * @var Users $user
  * @var array $data
+ * @var BaseDataProvider $provider
  **/
 
 use app\models\competencies\Competencies;
 use app\widgets\competency\CompetencyWidget;
+use yii\data\BaseDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use app\models\users\Users;
-use yii\data\ActiveDataProvider;
 use kartik\select2\Select2;
 use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$provider = new ActiveDataProvider([
-	'query' => $user->getRelCompetencies()->orderBy('name')->active()
-]);//todo controller
 ?>
 
 <div class="row">
