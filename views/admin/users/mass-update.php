@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										'allowClear' => false,
 										'multiple' => true
 									]
-								]); ?>
+								])->label('Пользователи: '.count($massUpdateModel->users)); ?>
 							</div>
 						</div>
 					</div>

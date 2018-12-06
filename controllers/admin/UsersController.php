@@ -137,7 +137,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionMassUpdate(int $group_id = null, bool $hierarchy = false) {
 		$massUpdate = new UsersMassUpdate();
-
+		$massUpdate->usersId = ArrayHelper::getColumn(Users::find()->active()->all(), 'id');
 		if ($massUpdate->load(Yii::$app->request->post())) {
 			$statistics = new ArrayDataProvider([
 				'allModels' => $massUpdate->apply(),
@@ -145,7 +145,7 @@ class UsersController extends WigetableController {
 					'attributes' => ['id', 'status', 'error']
 				]
 			]);
-			$massUpdate->loadSelection($massUpdate->usersId);/*Переподгружаем список айдишников для перегенерации доступных наборов параметров*/
+			$massUpdate->loadSelection($massUpdate->usersIdSelected);/*Переподгружаем список айдишников для перегенерации доступных наборов параметров*/
 			return $this->render('mass-update', [
 				'massUpdateModel' => $massUpdate,
 				'statistics' => $statistics,
@@ -172,7 +172,7 @@ class UsersController extends WigetableController {
 			]);
 		}
 		/*Никаких фильтрационных параметров не передали, редактим всех*/
-		$massUpdate->usersId = ArrayHelper::getColumn(Users::find()->active()->all(), 'id');
+
 		return $this->render('mass-update', [
 			'massUpdateModel' => $massUpdate,
 			'statistics' => null,

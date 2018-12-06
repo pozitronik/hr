@@ -135,7 +135,7 @@ class UsersMassUpdate extends Model {
 	public function loadSelection(?array $selection):bool {
 		if (null === $selection) return false;
 		if ([] !== $users = Users::findModels($selection)) {
-			$this->usersId = ArrayHelper::getColumn($users, 'id');
+			$this->usersIdSelected = ArrayHelper::getColumn($users, 'id');
 		}
 		return false;
 	}
