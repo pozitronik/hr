@@ -53,6 +53,7 @@ use yii\web\UploadedFile;
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
  * @property-read integer $usersCount Количество пользователей в группе
+ * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
 class Groups extends ActiveRecord {
@@ -114,7 +115,8 @@ class Groups extends ActiveRecord {
 			'logotype' => 'Логотип',
 			'upload_image' => 'Логотип',
 			'deleted' => 'Deleted',
-			'usersCount' => 'Количество пользователей'
+			'usersCount' => 'Количество пользователей',
+			'childGroupsCount' => 'Количество подгрупп'
 		];
 	}
 
@@ -370,6 +372,13 @@ class Groups extends ActiveRecord {
 	 */
 	public function getUsersCount():int {
 		return (int)$this->getRelUsers()->count();
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getChildGroupsCount():int {
+		return (int)$this->getRelChildGroups()->count();
 	}
 
 }
