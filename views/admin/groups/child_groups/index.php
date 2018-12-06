@@ -5,9 +5,9 @@ use app\models\groups\Groups;
 use app\widgets\group_select\GroupSelectWidget;
 
 /**
- *
  * @var View $this
  * @var Groups $model
+ * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
 use yii\data\ActiveDataProvider;
@@ -21,7 +21,7 @@ use kartik\grid\ActionColumn;
 $provider = new ActiveDataProvider([
 	'query' => $model->getRelChildGroups()->orderBy('name')->active()
 ]);//todo controller
-
+//todo: Научить показывать количество пользюков
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -30,7 +30,7 @@ $provider = new ActiveDataProvider([
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
-				'heading' => false,
+				'heading' => $heading,
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => GroupSelectWidget::widget([
 					'model' => $model,

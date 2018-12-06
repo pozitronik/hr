@@ -25,13 +25,11 @@ if ($group->getRelUsers()->count() > 0) {
 	]);
 }
 
-/** @var Groups[] $subgroups */
 $hierarchy[] = [];
+/** @var Groups[] $subgroups */
 $subgroups = $group->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
 foreach ($subgroups as $subgroup) {
-	$label = $subgroup->name;
-	$label = null === $subgroup->type?$label:"{$subgroup->relGroupTypes->name}: $label";
-	ArrayHelper::setLast($hierarchy, ['label' => $label, 'url' => ['/admin/groups/update', 'id' => $subgroup->id]]);
+	ArrayHelper::setLast($hierarchy, ['label' => null === $subgroup->type?$subgroup->name:"{$subgroup->relGroupTypes->name}: $subgroup->name", 'url' => ['/admin/groups/update', 'id' => $subgroup->id]]);
 	echo $this->render('index_tree', [
 		'group' => $subgroup,
 		'hierarchy' => $hierarchy

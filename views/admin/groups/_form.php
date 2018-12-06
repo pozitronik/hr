@@ -53,7 +53,6 @@ use kartik\file\FileInput;
 						]) ?>
 					</div>
 
-
 					<div class="col-md-9">
 						<div class="row">
 
@@ -79,15 +78,16 @@ use kartik\file\FileInput;
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<label class="control-label">Родительские группы</label>
+
 						<?= $this->render('parent_groups/index', [
-							'model' => $model
+							'model' => $model,
+							'heading' => '<label class="control-label">Родительские группы</label>'
 						]); ?>
 					</div>
 					<div class="col-md-6">
-						<label class="control-label">Дочерние группы</label>
 						<?= $this->render('child_groups/index', [
-							'model' => $model
+							'model' => $model,
+							'heading' => '<label class="control-label">Дочерние группы</label>'
 						]); ?>
 					</div>
 				</div>
@@ -95,22 +95,12 @@ use kartik\file\FileInput;
 
 				<div class="row">
 					<div class="col-md-12">
-						<label class="control-label">Пользователи в группе</label>
 						<?= $this->render('users/index', [
 							'model' => $model,
-							'heading' => false,
+							'heading' => '<label class="control-label">Пользователи в группе</label>'.Html::a('Иерархия', ['/admin/groups/users-hierarchy', 'id' => $model->id], ['class' => 'btn btn-info pull-right']),
 							'selectorInPanel' => true,
 							'showRolesSelector' => true,
 							'showDropColumn' => true
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<label class="control-label">Пользователи в иерархии</label>
-						<?= $this->render('users/index_tree', [
-							'group' => $model,
-							'ierarchy' => [['label' => $model->name, 'url' => ['/admin/groups/update', 'id' => $model->id]]]
 						]); ?>
 					</div>
 				</div>
