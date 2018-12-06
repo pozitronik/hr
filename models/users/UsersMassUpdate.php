@@ -178,6 +178,7 @@ class UsersMassUpdate extends Model {
 
 	/**
 	 * @return Users[]
+	 * @throws Throwable
 	 */
 	public function getUsersSelected():array {
 		return Users::findModels($this->usersIdSelected);
