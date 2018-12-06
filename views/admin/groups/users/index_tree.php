@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
@@ -8,16 +9,18 @@ use yii\widgets\Breadcrumbs;
 /**
  * @var View $this
  * @var Groups $group
+ * @var array $ierarchy Рекурсивная иерархия для навигации в заголовке
  */
 
 if ($group->getRelUsers()->count() > 0) {
 	echo $this->render('index', [
 		'model' => $group,
 		'selectorInPanel' => false,
-		'rolesSelector' => false,
+		'showRolesSelector' => false,
+		'showDropColumn' => false,
 		'heading' => Breadcrumbs::widget([
 			'homeLink' => false,
-			'links' => [['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]]]
+			'links' => $ierarchy
 		])
 	]);
 }
@@ -26,10 +29,11 @@ if ($group->getRelUsers()->count() > 0) {
 $ierarchy[] = [];
 $subgroups = $group->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
 foreach ($subgroups as $subgroup) {
+	ArrayHelper::setLast($ierarchy, ['label' => $subgroup->name, 'url' => ['/admin/groups/update', 'id' => $subgroup->id]]);
 	echo $this->render('index_tree', [
-		'group' => $subgroup
+		'group' => $subgroup,
+		'ierarchy' => $ierarchy
 	]);
 }
 ArrayHelper::setLast($ierarchy);
 
-?>

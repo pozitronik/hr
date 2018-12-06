@@ -100,7 +100,8 @@ use kartik\file\FileInput;
 							'model' => $model,
 							'heading' => false,
 							'selectorInPanel' => true,
-							'rolesSelector' => true
+							'showRolesSelector' => true,
+							'showDropColumn' => true
 						]); ?>
 					</div>
 				</div>
@@ -108,7 +109,8 @@ use kartik\file\FileInput;
 					<div class="col-md-12">
 						<label class="control-label">Пользователи в иерархии</label>
 						<?= $this->render('users/index_tree', [
-							'group' => $model
+							'group' => $model,
+							'ierarchy' => [['label' => $model->name, 'url' => ['/admin/groups/update', 'id' => $model->id]]]
 						]); ?>
 					</div>
 				</div>

@@ -15,7 +15,8 @@ use app\widgets\user_select\UserSelectWidget;
  * @var View $this
  * @var Groups $model
  * @var boolean $selectorInPanel Отображать виджет выбора группы в панели
- * @var boolean $rolesSelector Отображать колонку выбиралки роли для пользователя (отключаем в некоторых случаях для ускорения)
+ * @var boolean $showRolesSelector Отображать колонку выбиралки роли для пользователя (отключаем в некоторых случаях для ускорения)
+ * @var boolean $showDropColumn Отображать колонку удаления пользюков
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
@@ -49,7 +50,8 @@ $provider = new ActiveDataProvider([
 					'width' => '36px',
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => 'Удалить',
-					'name' => $model->formName().'[dropUsers]'
+					'name' => $model->formName().'[dropUsers]',
+					'visible' => $showDropColumn
 				],
 				[
 					'format' => 'raw',
@@ -69,7 +71,7 @@ $provider = new ActiveDataProvider([
 						]);
 					},
 					'format' => 'raw',
-					'visible' => $rolesSelector
+					'visible' => $showRolesSelector
 				]
 			]
 		]); ?>
