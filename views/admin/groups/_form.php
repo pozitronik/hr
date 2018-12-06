@@ -99,7 +99,8 @@ use kartik\file\FileInput;
 						<?= $this->render('users/index', [
 							'model' => $model,
 							'heading' => false,
-							'selectorInPanel' => true
+							'selectorInPanel' => true,
+							'rolesSelector' => true
 						]); ?>
 					</div>
 				</div>
@@ -107,7 +108,7 @@ use kartik\file\FileInput;
 					<div class="col-md-12">
 						<label class="control-label">Пользователи в иерархии</label>
 						<?= $this->render('users/index_tree', [
-							'model' => $model
+							'group' => $model
 						]); ?>
 					</div>
 				</div>

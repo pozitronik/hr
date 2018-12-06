@@ -3,26 +3,31 @@ declare(strict_types = 1);
 
 use app\models\groups\Groups;
 use yii\web\View;
+use yii\widgets\Breadcrumbs;
 
 /**
  * @var View $this
- * @var Groups $model
+ * @var Groups $group
  */
+$ierarchy[] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
 
-if ($model->getRelUsers()->count() > 0) {
+if ($group->getRelUsers()->count() > 0) {
 	echo $this->render('index', [
-		'model' => $model,
+		'model' => $group,
 		'selectorInPanel' => false,
-		'heading' => false
+		'rolesSelector' => false,
+		'heading' => Breadcrumbs::widget([
+			'homeLink' => false,
+			'links' => [['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]]]
+		])
 	]);
 }
 
-$subgroups = $model->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
+/** @var Groups[] $subgroups */
+$subgroups = $group->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
 foreach ($subgroups as $subgroup) {
-	echo $this->render('index', [
-		'model' => $subgroup,
-		'selectorInPanel' => false,
-		'heading' => "Йохохо, ублюдки"
+	echo $this->render('index_tree', [
+		'group' => $subgroup
 	]);
 }
 

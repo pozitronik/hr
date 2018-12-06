@@ -15,6 +15,7 @@ use app\widgets\user_select\UserSelectWidget;
  * @var View $this
  * @var Groups $model
  * @var boolean $selectorInPanel Отображать виджет выбора группы в панели
+ * @var boolean $rolesSelector Отображать колонку выбиралки роли для пользователя (отключаем в некоторых случаях для ускорения)
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
@@ -67,7 +68,8 @@ $provider = new ActiveDataProvider([
 							'userId' => $user->id
 						]);
 					},
-					'format' => 'raw'
+					'format' => 'raw',
+					'visible' => $rolesSelector
 				]
 			]
 		]); ?>
