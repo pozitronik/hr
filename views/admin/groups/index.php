@@ -19,7 +19,7 @@ use kartik\grid\ActionColumn;
 $this->title = 'Группы';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
-//todo: фильтр/поиск по главнюку
+//todo: фильтр/поиск по главнюку. Будет, когда определим критерий лидера (м.б. атрибут в справочнике)
 ?>
 
 <div class="row">
