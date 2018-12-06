@@ -69,6 +69,14 @@ $this->params['breadcrumbs'][] = $this->title;
 					},
 					'format' => 'raw'
 				],
+				[
+					'attribute' => 'usersCount',
+					'label' => 'Пользователей'
+				],
+				[
+					'attribute' => 'childGroupsCount',
+					'label' => 'Подгрупп'
+				],
 				'comment',
 				[
 					'class' => ActionColumn::class,
