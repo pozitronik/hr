@@ -171,8 +171,14 @@ class UsersController extends WigetableController {
 				'group' => Groups::findModel($group_id)
 			]);
 		}
-
-		return $this->redirect(['index']);
+		/*Никаких фильтрационных параметров не передали, редактим всех*/
+		$massUpdate->usersId = ArrayHelper::getColumn(Users::find()->active()->all(), 'id');
+		return $this->render('mass-update', [
+			'massUpdateModel' => $massUpdate,
+			'statistics' => null,
+			'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+			'group' => false
+		]);
 	}
 
 }

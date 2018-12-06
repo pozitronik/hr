@@ -15,11 +15,14 @@ use yii\base\Model;
  * @package app\models\users
  *
  * @property int[] $usersId
+ * @property int[] $usersIdSelected id пользователей, установленных в фильтре.
  * @property Users $virtualUser
  * @property-read Users[] $users
+ * @property-read Users[] $usersSelected
  */
 class UsersMassUpdate extends Model {
 	private $usersId = [];
+	private $usersIdSelected = [];
 	private $virtualUser;
 	private $relGroups; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
 	private $relCompetencies; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
@@ -46,7 +49,8 @@ class UsersMassUpdate extends Model {
 	 */
 	public function attributeLabels():array {
 		return [
-			'usersId' => 'Пользователи'
+			'usersId' => 'Пользователи',
+			'usersIdSelected' => 'Пользователи'
 		];
 	}
 
@@ -116,6 +120,7 @@ class UsersMassUpdate extends Model {
 	public function loadGroupSelection(?int $groupId = null, bool $hierarchy = false):bool {
 		if (false !== $group = Groups::findModel($groupId)) {
 			$this->usersId = $hierarchy?ArrayHelper::getColumn($group->getRelUsersHierarchy()->all(), 'id'):ArrayHelper::getColumn($group->relUsers, 'id');
+			$this->usersIdSelected = $this->usersId;//При загрузке пользователей из группы выбираем сразу всех
 			return true;
 		}
 		return false;
@@ -169,6 +174,27 @@ class UsersMassUpdate extends Model {
 	 */
 	public function getUsers():array {
 		return Users::findModels($this->usersId);
+	}
+
+	/**
+	 * @return Users[]
+	 */
+	public function getUsersSelected():array {
+		return Users::findModels($this->usersIdSelected);
+	}
+
+	/**
+	 * @return bool|int[]
+	 */
+	public function getUsersIdSelected():array {
+		return $this->usersIdSelected;
+	}
+
+	/**
+	 * @param bool|int[] $usersIdSelected
+	 */
+	public function setUsersIdSelected(array $usersIdSelected):void {
+		$this->usersIdSelected = $usersIdSelected;
 	}
 
 }
