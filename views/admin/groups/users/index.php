@@ -33,7 +33,7 @@ $provider = new ActiveDataProvider([
 				'after' => false,
 				'heading' => $heading,
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-				'before' => $selectorInPanel?UserSelectWidget::widget([//todo: выбиралке можно сделать режим readonly, возможно это будет быстрее
+				'before' => $selectorInPanel?UserSelectWidget::widget([
 					'model' => $model,
 					'attribute' => 'relUsers',
 					'notData' => $model->relUsers,
@@ -65,7 +65,7 @@ $provider = new ActiveDataProvider([
 					'label' => 'Роли в группе',
 					'value' => function($user) use ($model) {
 						/** @var Groups $model */
-						return RolesSelectWidget::widget([
+						return RolesSelectWidget::widget([//todo: выбиралке можно сделать режим readonly, возможно это будет быстрее
 							'groupId' => $model->id,
 							'userId' => $user->id
 						]);
