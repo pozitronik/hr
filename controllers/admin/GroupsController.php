@@ -107,10 +107,11 @@ class GroupsController extends WigetableController {
 	 * @param int $id
 	 * @return string
 	 */
-	public function actionUsersHierarchy(int $id):string {
+	public function actionUsersHierarchy(int $id, bool $showRolesSelector = false):string {
 		$group = Groups::findModel($id, new NotFoundHttpException());
 		return $this->render('users/hierarchy', [
-			'group' => $group
+			'group' => $group,
+			'showRolesSelector' => $showRolesSelector
 		]);
 	}
 

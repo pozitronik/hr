@@ -10,13 +10,14 @@ use yii\widgets\Breadcrumbs;
  * @var View $this
  * @var Groups $group
  * @var array $hierarchy Рекурсивная иерархия для навигации в заголовке
+ * @var boolean $showRolesSelector Показывать челикам выбиралку ролей (может тормозить)
  */
 
 if ($group->getRelUsers()->count() > 0) {
 	echo $this->render('index', [
 		'model' => $group,
 		'selectorInPanel' => false,
-		'showRolesSelector' => false,
+		'showRolesSelector' => $showRolesSelector,
 		'showDropColumn' => false,
 		'heading' => Breadcrumbs::widget([
 			'homeLink' => false,
@@ -32,7 +33,8 @@ foreach ($subgroups as $subgroup) {
 	ArrayHelper::setLast($hierarchy, ['label' => null === $subgroup->type?$subgroup->name:"{$subgroup->relGroupTypes->name}: $subgroup->name", 'url' => ['/admin/groups/update', 'id' => $subgroup->id]]);
 	echo $this->render('index_tree', [
 		'group' => $subgroup,
-		'hierarchy' => $hierarchy
+		'hierarchy' => $hierarchy,
+		'showRolesSelector' => $showRolesSelector
 	]);
 }
 ArrayHelper::setLast($hierarchy);

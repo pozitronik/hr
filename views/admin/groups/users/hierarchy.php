@@ -7,6 +7,7 @@ use yii\web\View;
 /**
  * @var View $this
  * @var Groups $group
+ * @var boolean $showRolesSelector Показывать челикам выбиралку ролей (может тормозить)
  */
 
 $this->title = 'Иерархия пользователей';
@@ -22,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="col-md-12">
 				<?= $this->render('index_tree', [
 					'group' => $group,
+					'showRolesSelector' => $showRolesSelector,
 					'hierarchy' => [['label' => null === $group->type?$group->name:"{$group->relGroupTypes->name}: $group->name", 'url' => ['/admin/groups/update', 'id' => $group->id]]]
 				]); ?>
 			</div>
