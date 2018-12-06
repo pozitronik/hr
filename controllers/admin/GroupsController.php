@@ -18,7 +18,7 @@ use yii\web\Response;
  * Class GroupsController
  */
 class GroupsController extends WigetableController {
-	public $menuCaption = "Команды";
+	public $menuCaption = "Группы";
 	public $menuIcon = "/img/admin/groups.png";
 
 	/**

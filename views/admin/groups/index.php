@@ -16,7 +16,7 @@ use yii\web\View;
 use yii\bootstrap\Html;
 use kartik\grid\ActionColumn;
 
-$this->title = 'Команды';
+$this->title = 'Группы';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
 //todo: фильтр/поиск по главнюку
