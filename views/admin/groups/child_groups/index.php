@@ -20,7 +20,7 @@ use kartik\grid\ActionColumn;
 
 $provider = new ActiveDataProvider([
 	'query' => $model->getRelChildGroups()->orderBy('name')->active()
-]);//todo controller
+]);
 ?>
 <div class="row">
 	<div class="col-xs-12">
