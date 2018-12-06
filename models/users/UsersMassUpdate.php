@@ -109,12 +109,13 @@ class UsersMassUpdate extends Model {
 	/**
 	 * Пытается загрузить пользователей группы для массовой обработки + генерирует доступные наборы параметров
 	 * @param int $groupId
+	 * @param bool $hierarchy Подгрузить пользователей вниз по иерархии
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function loadGroupSelection(int $groupId):bool {
+	public function loadGroupSelection(int $groupId, bool $hierarchy = false):bool {
 		if (false !== $group = Groups::findModel($groupId)) {
-			$this->usersId = ArrayHelper::getColumn($group->relUsers, 'id');
+			$this->usersId = $hierarchy?ArrayHelper::getColumn($group->getRelUsersHierarchy()->all(), 'id'):ArrayHelper::getColumn($group->relUsers, 'id');
 			return true;
 		}
 		return false;

@@ -27,6 +27,7 @@ use kartik\file\FileInput;
 					<?php if (!$model->isNewRecord): ?>
 						<?= Html::a('Граф', ['tree', 'id' => $model->id], ['class' => 'btn btn-info']); ?>
 						<?= Html::a('Редактировать пользователей', ['admin/users/mass-update', 'group_id' => $model->id], ['class' => 'btn btn-info']); ?>
+						<?= Html::a('Редактировать пользователей (всех)', ['admin/users/mass-update', 'group_id' => $model->id, 'hierarchy' => true], ['class' => 'btn btn-warning']); ?>
 					<?php endif; ?>
 				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>

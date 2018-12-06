@@ -131,10 +131,11 @@ class UsersController extends WigetableController {
 	 * Групповое изменение пользователей
 	 * В post['selection'] приходят айдишники выбранных юзеров
 	 * @param int|null $group_id - если указано, то выбираются пользователи этой группы
+	 * @param bool $hierarchy вместе с group_id прогружает иерархично всех пользователей вниз
 	 * @return string|Response
 	 * @throws Throwable
 	 */
-	public function actionMassUpdate(int $group_id = null) {
+	public function actionMassUpdate(int $group_id = null, bool $hierarchy = false) {
 		$massUpdate = new UsersMassUpdate();
 
 		if ($massUpdate->load(Yii::$app->request->post())) {
@@ -153,7 +154,7 @@ class UsersController extends WigetableController {
 			]);
 		}
 
-		if ((null !== $group_id) && false !== $massUpdate->loadGroupSelection($group_id)) {
+		if ((null !== $group_id) && false !== $massUpdate->loadGroupSelection($group_id, $hierarchy)) {
 			return $this->render('mass-update', [
 				'massUpdateModel' => $massUpdate,
 				'statistics' => null,
