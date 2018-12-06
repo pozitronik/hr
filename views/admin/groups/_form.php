@@ -97,7 +97,9 @@ use kartik\file\FileInput;
 					<div class="col-md-12">
 						<label class="control-label">Пользователи в группе</label>
 						<?= $this->render('users/index', [
-							'model' => $model
+							'model' => $model,
+							'heading' => false,
+							'selectorInPanel' => true
 						]); ?>
 					</div>
 				</div>

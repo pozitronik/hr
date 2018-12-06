@@ -11,16 +11,19 @@ use yii\web\View;
 
 if ($model->getRelUsers()->count() > 0) {
 	echo $this->render('index', [
-		'model' => $model
+		'model' => $model,
+		'selectorInPanel' => false,
+		'heading' => false
 	]);
 }
 
 $subgroups = $model->getRelChildGroups()->orderBy('name')->active()->all();//Группы нижестоящего уровня
 foreach ($subgroups as $subgroup) {
 	echo $this->render('index', [
-		'model' => $subgroup
+		'model' => $subgroup,
+		'selectorInPanel' => false,
+		'heading' => "Йохохо, ублюдки"
 	]);
 }
-
 
 ?>

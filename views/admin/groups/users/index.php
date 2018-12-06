@@ -14,6 +14,8 @@ use app\widgets\user_select\UserSelectWidget;
 /**
  * @var View $this
  * @var Groups $model
+ * @var boolean $selectorInPanel Отображать виджет выбора группы в панели
+ * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
 $provider = new ActiveDataProvider([
@@ -27,14 +29,14 @@ $provider = new ActiveDataProvider([
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
-				'heading' => false,
+				'heading' => $heading,
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-				'before' => UserSelectWidget::widget([
+				'before' => $selectorInPanel?UserSelectWidget::widget([
 					'model' => $model,
 					'attribute' => 'relUsers',
 					'notData' => $model->relUsers,
 					'multiple' => true
-				])
+				]):false
 			],
 			'toolbar' => false,
 			'export' => false,
