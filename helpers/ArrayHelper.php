@@ -175,7 +175,7 @@ class ArrayHelper extends YiiArrayHelper {
 	 * @param mixed $value
 	 */
 	public static function setLast(array &$array, $value = null):void {
-		if (!count($array)) return null;
+		if (!count($array)) return;
 		end($array);
 		if (null === $value) {
 			unset($array[key($array)]);
