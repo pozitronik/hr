@@ -67,6 +67,7 @@ $provider = new ActiveDataProvider([
 					'label' => 'Подгрупп'
 				],
 				[
+//					'dropdown' => true,
 					'class' => ActionColumn::class,
 					'template' => '{tree}',
 					'buttons' => [

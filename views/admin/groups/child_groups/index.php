@@ -76,7 +76,6 @@ $provider = new ActiveDataProvider([
 						}
 					]
 				]
-
 			]
 
 		]); ?>
