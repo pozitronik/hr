@@ -69,14 +69,14 @@ $provider = new ActiveDataProvider([
 				[
 //					'dropdown' => true,
 					'class' => ActionColumn::class,
-					'template' => '{tree}{mass-update}',
+					'template' => '{tree}{bunch}',
 					'buttons' => [
 						'tree' => function($url, $model) {
 							return Html::a('Граф', $url, ['class' => 'btn btn-xs btn-info']);
 						},
-						'mass-update' => function($url, $model) {
+						'bunch' => function($url, $model) {
 							/** @var Groups $model */
-							return Html::a('Редактировать пользователей', ['admin/users/mass-update', 'group_id' => $model->id], ['class' => 'btn btn-xs btn-info']);
+							return Html::a('Редактировать пользователей', ['admin/bunch', 'group_id' => $model->id], ['class' => 'btn btn-xs btn-info']);
 						}
 					]
 				]
