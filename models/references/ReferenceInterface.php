@@ -57,4 +57,10 @@ interface ReferenceInterface {
 	 * @param int $toId
 	 */
 	public static function merge(int $fromId, int $toId):void;
+
+	/**
+	 * Сбрасывает все кеши для этого справочника.
+	 * Названия кешей перечислены в дефолтной реализации
+	 */
+	public static function flushCache(): void;
 }

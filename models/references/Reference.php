@@ -170,13 +170,14 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * @inheritdoc
 	 */
-	public static function mapData($sort = false):array {
-		$data = ArrayHelper::map(self::find()->active()->all(), 'id', 'name');
-		if ($sort) {
-			asort($data);
-		}
-
-		return $data;
+	public static function mapData($sort = true):array {
+		return Yii::$app->cache->getOrSet(static::class."MapData".$sort, function() use ($sort) {
+			$data = ArrayHelper::map(self::find()->active()->all(), 'id', 'name');
+			if ($sort) {
+				asort($data);
+			}
+			return $data;
+		});
 	}
 
 	/**
@@ -187,6 +188,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
+				self::flushCache();
 				return true;
 			}
 			AlertModel::ErrorsNotify($this->errors);
@@ -202,6 +204,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
+				self::flushCache();
 				return true;
 			}
 			AlertModel::ErrorsNotify($this->errors);
@@ -217,5 +220,19 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		throw new ErrorException('Метод merge не имеет реализации по умолчанию');
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function flushCache():void {
+		$class = static::class;
+		$cacheNames = [
+			"{$class}MapData",
+			"{$class}MapData1"
+		];
+		foreach ($cacheNames as $className) {
+			Yii::$app->cache->delete($className);
+		}
 	}
 }

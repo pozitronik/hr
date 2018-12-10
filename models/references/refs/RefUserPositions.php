@@ -55,5 +55,6 @@ class RefUserPositions extends Reference {
 	public static function merge(int $fromId, int $toId):void {
 		Users::updateAll(['position' => $toId], ['position' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
+		self::flushCache();
 	}
 }
