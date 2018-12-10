@@ -12,6 +12,7 @@ declare(strict_types = 1);
 
 use app\models\groups\Groups;
 use app\models\users\UsersMassUpdate;
+use app\widgets\group_select\GroupSelectWidget;
 use kartik\select2\Select2;
 use app\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
@@ -57,21 +58,28 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12">
-								<?= $this->render('groups/index', [
+								<?= GroupSelectWidget::widget([
 									'model' => $massUpdateModel->virtualUser,
-									'provider' => new ActiveDataProvider(['query' => $massUpdateModel->virtualUser->getRelGroups()->orderBy('name')->active()])
-								]); ?>
+									'attribute' => 'relGroups',
+									'notData' => $massUpdateModel->virtualUser->relGroups,
+									'multiple' => true
+								]) ?>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="row">
 							<div class="col-md-12">
-								<?= $this->render('competencies/index', [
-									'user' => $massUpdateModel->virtualUser,
+								<?=  Select2::widget([
+									'model' => $massUpdateModel->virtualUser,
+									'attribute' => 'relCompetencies',
+									'name' => 'competency_id',
 									'data' => $competenciesData,
-									'provider' => new ActiveDataProvider(['query' => $massUpdateModel->virtualUser->getRelCompetencies()->orderBy('name')->active()])
-								]); ?>
+									'options' => [
+										'multiple' => true,
+										'placeholder' => 'Добавить компетенцию'
+									]
+								]) ?>
 							</div>
 						</div>
 					</div>
