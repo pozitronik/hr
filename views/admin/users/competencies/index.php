@@ -72,7 +72,7 @@ use yii\helpers\Url;
 						return CompetencyWidget::widget([
 							'user_id' => $user->id,
 							'competency_id' => $model->id,
-							'show_category' => true
+//							'show_category' => true
 						]);
 					},
 					'format' => 'raw'
