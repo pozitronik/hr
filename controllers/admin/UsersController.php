@@ -146,6 +146,7 @@ class UsersController extends WigetableController {
 				]
 			]);
 			$massUpdate->loadSelection($massUpdate->usersIdSelected);/*Переподгружаем список айдишников для перегенерации доступных наборов параметров*/
+			$massUpdate->usersId = $massUpdate->usersIdSelected;
 			return $this->render('mass-update', [
 				'massUpdateModel' => $massUpdate,
 				'statistics' => $statistics,
