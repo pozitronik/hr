@@ -53,7 +53,7 @@ use yii\web\UploadedFile;
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles Релейшен к ролям пользователей в группах
- * @property-write integer[] $dropGroups
+ * @property integer[] $dropGroups
  *
  * ***************************
  * Опции
@@ -256,6 +256,12 @@ class Users extends ActiveRecord {
 	public function setRelGroups($relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
+	/**
+	 * @return integer[]
+	 */
+	public function getDropGroups():array {
+		return [];
+	}
 
 	/**
 	 * @param integer[] $dropGroups
@@ -353,4 +359,12 @@ class Users extends ActiveRecord {
 		/*Сами значения компетенций сохранятся в базе и должны будут восстановиться, если компетенцию присвоить пользователю обратно*/
 		RelUsersCompetencies::unlinkModels($this, $dropCompetencies);
 	}
+
+	/**
+	 * @return integer[]
+	 */
+	public function getDropCompetencies():array {
+		return [];
+	}
+
 }
