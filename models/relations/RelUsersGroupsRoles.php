@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "rel_users_groups_roles".
  *
  * @property int $user_group_id ID связки пользователь/группа
+ * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property int $role Роль
  */
 class RelUsersGroupsRoles extends ActiveRecord {
@@ -47,7 +50,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	 * @param int $user
 	 * @return bool
 	 */
-	public static function setRoleInGroup($role, $group, $user):bool {
+	public static function setRoleInGroup($role, int $group, int $user):bool {
 		/*Связь пользователя в группе уже есть*/
 		$rel = RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $user])->one();
 		if ($rel) {
@@ -58,4 +61,22 @@ class RelUsersGroupsRoles extends ActiveRecord {
 		/*Попытка добавления пользователя в группу, в которой он не присутствует. Такое невозможно по логике связей таблиц, но может быть инициировано при сохранении с одновременным удалением */
 		return false;
 	}
+
+	/**
+	 * @return ActiveQuery|RelUsersGroups[]
+	 */
+	public function getRelUsersGroups():ActiveQuery {
+		return $this->hasMany(RelUsersGroups::class, ['id' => 'user_group_id']);
+	}
+
+	/**
+	 * Возвращает id ролей пользователя в группе (полезно при отображении результата, когда не нужно поддёргивать справочник)
+	 * @param int $user
+	 * @param int $group
+	 * @return int[]
+	 */
+	public static function getRoleIdInGroup(int $user, int $group):array {
+		return ArrayHelper::getColumn(self::find()->joinWith(['relUsersGroups'])->where(['rel_users_groups.user_id' => $user, 'rel_users_groups.group_id' => $group])->select('rel_users_groups_roles.role')->all(), 'role');
+	}
+
 }

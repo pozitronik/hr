@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\widgets\roles_select;
 
-use app\helpers\ArrayHelper;
 use app\models\references\refs\RefUserRoles;
+use app\models\relations\RelUsersGroupsRoles;
 use yii\base\Widget;
 
 /**
@@ -36,7 +36,7 @@ class RolesSelectWidget extends Widget {
 	public function run():string {
 		return $this->render('roles_select', [
 			'data' => $this->data??RefUserRoles::mapData(),
-			'value' => $this->value??ArrayHelper::getColumn(RefUserRoles::getUserRolesInGroup($this->userId, $this->groupId), 'id'),
+			'value' => $this->value??RelUsersGroupsRoles::getRoleIdInGroup($this->userId, $this->groupId),
 			'userId' => $this->userId,
 			'groupId' => $this->groupId
 		]);
