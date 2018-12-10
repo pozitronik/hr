@@ -71,11 +71,13 @@ class RelUsersGroupsRoles extends ActiveRecord {
 
 	/**
 	 * Возвращает id ролей пользователя в группе (полезно при отображении результата, когда не нужно поддёргивать справочник)
-	 * @param int $user
-	 * @param int $group
+	 * Если любой из параметров пуст, то ничего не возвращаем (нужно в массредакторе)
+	 * @param int|null $user
+	 * @param int|null $group
 	 * @return int[]
 	 */
-	public static function getRoleIdInGroup(int $user, int $group):array {
+	public static function getRoleIdInGroup(?int $user, ?int $group):array {
+		if (null === $user || null === $group) return [];
 		return ArrayHelper::getColumn(self::find()->joinWith(['relUsersGroups'])->where(['rel_users_groups.user_id' => $user, 'rel_users_groups.group_id' => $group])->select('rel_users_groups_roles.role')->all(), 'role');
 	}
 
