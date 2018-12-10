@@ -37,10 +37,11 @@ class Magic {
 	/**
 	 * @param string $className
 	 * @return false|string
+	 * @todo: функция не умеет преобразовывать имена классов по той же схеме, что Yii. Реализован простейший вариант, а вот что-то вроде MassUpdateController к mass-update эта регулярка уже не вернёт.
 	 */
 	private static function ExtractControllerId($className) {
 		$id =  mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
-		return "admin/{$id}";//todo make more smarty
+		return "admin/{$id}";
 	}
 
 	/**
