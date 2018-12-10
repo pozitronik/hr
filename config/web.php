@@ -1,6 +1,11 @@
 <?php
+declare(strict_types = 1);
 
+use yii\caching\FileCache;
+use kartik\grid\Module as GridModule;
 use app\models\user\User;
+use yii\debug\Module as DebugModule;
+use yii\gii\Module as GIIModule;
 use yii\swiftmailer\Mailer;
 use yii\log\FileTarget;
 use yii\caching\DummyCache;
@@ -16,11 +21,11 @@ $config = [
 	'bootstrap' => ['log'],
 	'aliases' => [
 		'@bower' => '@vendor/bower-asset',
-		'@npm' => '@vendor/npm-asset',
+		'@npm' => '@vendor/npm-asset'
 	],
 	'modules' => [
 		'gridview' =>  [
-			'class' => '\kartik\grid\Module',
+			'class' => GridModule::class,
 			'bsVersion' => 3
 			// enter optional module parameters below - only if you need to
 			// use your own export download action or custom translation
@@ -31,12 +36,12 @@ $config = [
 	],
 	'components' => [
 		'request' => [
-			'cookieValidationKey' => 'CjhjrNsczxJ,tpmzyD:jgeCeyekb<fyfyf',
+			'cookieValidationKey' => 'CjhjrNsczxJ,tpmzyD:jgeCeyekb<fyfyf'
 		],
 		'urlManager' => [
-			'class' => 'yii\web\UrlManager',
+			'class' => UrlManager::class,
 			'enablePrettyUrl' => true,
-			'showScriptName' => false,
+			'showScriptName' => false
 		],
 		'assetManager' => [
 			'appendTimestamp' => false,
@@ -46,48 +51,48 @@ $config = [
 			'class' => '\yii\redis\Connection',
 			'hostname' => 'localhost',
 			'port' => 6379,
-			'database' => 0,
+			'database' => 0
 		],
 		'cache' => [
 //			'class' => 'yii\redis\Cache',
-//			'class' => 'yii\caching\FileCache',
-			'class' => DummyCache::class,
+			'class' => FileCache::class,
+//			'class' => DummyCache::class
 		],
 		'user' => [
 			'identityClass' => User::class,
-			'enableAutoLogin' => true,
+			'enableAutoLogin' => true
 		],
 		'errorHandler' => [
-			'errorAction' => 'site/error',
+			'errorAction' => 'site/error'
 		],
 		'mailer' => [
 			'class' => Mailer::class,
-			'useFileTransport' => true,
+			'useFileTransport' => true
 		],
 		'log' => [
 			'traceLevel' => YII_DEBUG?3:0,
 			'targets' => [
 				[
 					'class' => FileTarget::class,
-					'levels' => ['error', 'warning'],
-				],
-			],
+					'levels' => ['error', 'warning']
+				]
+			]
 		],
-		'db' => $db,
+		'db' => $db
 	],
-	'params' => $params,
+	'params' => $params
 ];
 
 if (YII_ENV_DEV) {
 	$config['bootstrap'][] = 'debug';
 	$config['modules']['debug'] = [
-		'class' => 'yii\debug\Module',
+		'class' => DebugModule::class,
 		//'allowedIPs' => ['127.0.0.1', '::1'],
 	];
 
 	$config['bootstrap'][] = 'gii';
 	$config['modules']['gii'] = [
-		'class' => 'yii\gii\Module',
+		'class' => GIIModule::class,
 		//'allowedIPs' => ['127.0.0.1', '::1'],
 	];
 }
