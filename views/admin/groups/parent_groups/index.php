@@ -44,7 +44,7 @@ $provider = new ActiveDataProvider([
 			'resizableColumns' => true,
 			'responsive' => true,
 			'showFooter' => true,
-//			'footerRowOptions' => ['style' => 'font-weight:bold;text-decoration: underline;'],
+			'footerRowOptions' => [],
 			'columns' => [
 				[
 					'class' => CheckboxColumn::class,
