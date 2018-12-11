@@ -64,7 +64,7 @@ $provider = new ActiveDataProvider([
 				],
 				[
 					'attribute' => 'type',
-					'value' => 'relGroupTypes.name',
+					'value' => 'relGroupTypes.name'
 				],
 				[
 					'attribute' => 'usersCount',
