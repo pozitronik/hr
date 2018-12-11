@@ -26,6 +26,8 @@ class UsersMassUpdate extends Model {
 	private $virtualUser;
 	private $relGroups; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
 	private $relCompetencies; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
+	private $dropGroups;
+	private $dropCompetencies;
 
 	/**
 	 * @inheritdoc
@@ -66,6 +68,8 @@ class UsersMassUpdate extends Model {
 			/*Параметры, которые в модели пользователя применяются без промежуточного сохранения нам нужно всё-таки хранить*/
 			$this->relCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relCompetencies");
 			$this->relGroups = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relGroups");
+			$this->dropCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.dropCompetencies");
+			$this->dropGroups = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.dropGroups");
 			return true;
 		}
 		return false;
@@ -80,6 +84,8 @@ class UsersMassUpdate extends Model {
 		$paramsArray = [];
 		if (!empty($this->relGroups)) $paramsArray['relGroups'] = $this->relGroups;
 		if (!empty($this->relCompetencies)) $paramsArray['relCompetencies'] = $this->relCompetencies;
+		if (!empty($this->dropGroups)) $paramsArray['dropGroups'] = $this->dropGroups;
+		if (!empty($this->dropCompetencies)) $paramsArray['dropCompetencies'] = $this->dropCompetencies;
 
 		foreach ($this->usersIdSelected as $userId) {
 			if (false !== $user = Users::findModel($userId)) {
