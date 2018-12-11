@@ -267,7 +267,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropGroups
 	 * @throws Throwable
 	 */
-	public function setDropGroups(array $dropGroups):void {
+	public function setDropGroups($dropGroups):void {
 		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
@@ -355,7 +355,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropCompetencies
 	 * @throws Throwable
 	 */
-	public function setDropCompetencies(array $dropCompetencies):void {
+	public function setDropCompetencies($dropCompetencies):void {
 		/*Сами значения компетенций сохранятся в базе и должны будут восстановиться, если компетенцию присвоить пользователю обратно*/
 		RelUsersCompetencies::unlinkModels($this, $dropCompetencies);
 	}
