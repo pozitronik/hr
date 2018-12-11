@@ -63,6 +63,10 @@ $provider = new ActiveDataProvider([
 					}
 				],
 				[
+					'attribute' => 'type',
+					'value' => 'relGroupTypes.name',
+				],
+				[
 					'attribute' => 'usersCount',
 					'label' => 'Пользователей',
 					'footer' => Utils::pageTotal($provider, 'usersCount')
