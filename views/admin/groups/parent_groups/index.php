@@ -76,7 +76,7 @@ $provider = new ActiveDataProvider([
 						},
 						'bunch' => function($url, $model) {
 							/** @var Groups $model */
-							return Html::a('Редактировать пользователей', ['admin/bunch', 'group_id' => $model->id], ['class' => 'btn btn-xs btn-info']);
+							return Html::a('Редактировать пользователей', ['admin/bunch/index', 'group_id' => $model->id], ['class' => 'btn btn-xs btn-info']);
 						}
 					]
 				]
