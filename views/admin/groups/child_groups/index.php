@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\widgets\group_select\GroupSelectWidget;
 
@@ -21,6 +22,7 @@ use kartik\grid\ActionColumn;
 $provider = new ActiveDataProvider([
 	'query' => $model->getRelChildGroups()->orderBy('name')->active()
 ]);
+
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -42,6 +44,8 @@ $provider = new ActiveDataProvider([
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
+			'showFooter' => true,
+//			'footerRowOptions' => ['style' => 'font-weight:bold;text-decoration: underline;'],
 			'columns' => [
 				[
 					'class' => CheckboxColumn::class,
@@ -60,11 +64,13 @@ $provider = new ActiveDataProvider([
 				],
 				[
 					'attribute' => 'usersCount',
-					'label' => 'Пользователей'
+					'label' => 'Пользователей',
+					'footer' => Utils::pageTotal($provider, 'usersCount')
 				],
 				[
 					'attribute' => 'childGroupsCount',
-					'label' => 'Подгрупп'
+					'label' => 'Подгрупп',
+					'footer' => Utils::pageTotal($provider, 'childGroupsCount')
 				],
 				[
 //					'dropdown' => true,
