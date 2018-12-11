@@ -26,8 +26,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['
 if ($group) {
 	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
 	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
+	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
 	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
+	$usersLabel = "Пользователи: ".count($massUpdateModel->users). " всего";
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -49,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										'allowClear' => false,
 										'multiple' => true
 									]
-								])->label('Пользователи: '.count($massUpdateModel->users)); ?>
+								])->label($usersLabel); ?>
 							</div>
 						</div>
 					</div>
