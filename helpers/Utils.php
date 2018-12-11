@@ -6,6 +6,8 @@ namespace app\helpers;
 use Exception;
 use Yii;
 use Throwable;
+use yii\data\BaseDataProvider;
+use yii\data\DataProviderInterface;
 
 /**
  * Class Utils
@@ -192,4 +194,18 @@ class Utils {
 		return self::random_str(5);//ololo
 	}
 
+	/**
+	 * Высчитывает сумму значений в колонке DataProvider
+	 * @param BaseDataProvider $provider
+	 * @param string $columnName
+	 * @return int
+	 * @throws Throwable
+	 */
+	public static function pageTotal(BaseDataProvider $provider, string $columnName):int {
+		$total = 0;
+		foreach ($provider->models as $item) {
+			$total += ArrayHelper::getValue($item, $columnName, 0);
+		}
+		return $total;
+	}
 }
