@@ -59,11 +59,6 @@ use yii\web\UploadedFile;
 class Groups extends ActiveRecord {
 	use ARExtended;
 	use Graph;
-	public const OWNER = 4;
-	public const LEADER = 1;
-	public const LEADER_IT = 2;
-//	public const TRIBE = 6;
-//	public const CHAPTER = 5;
 
 	public const LOGO_IMAGE_DIRECTORY = '@app/web/group_logotypes/';
 
@@ -304,10 +299,9 @@ class Groups extends ActiveRecord {
 	 * Простая функция проверки, является ли пользователь лидером в этой группе
 	 * @param Users $user
 	 * @return bool
-	 * temporary
 	 */
 	public function isLeader(Users $user):bool {
-		return self::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.user_id' => $user->id, 'rel_users_groups.group_id' => $this->id])->count() > 0;
+		return self::find()->joinWith(['relRefUserRoles'])->where(['ref_user_roles.boss_flag' => true, 'rel_users_groups.group_id' => $this->id, 'rel_users_groups.user_id' => $user->id])->count() > 0;
 	}
 
 	/**
