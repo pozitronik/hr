@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\models\groups\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
+use app\models\users\Users;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -67,7 +68,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						}
 						return implode(", ", $users);
 					},
-					'format' => 'raw'
+					'format' => 'raw',
+					'filterType' => GridView::FILTER_SELECT2,
+					'filter' => Users::mapLeaders(),
+					'filterInputOptions' => ['placeholder' => 'Руководители'],
+					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]]
 				],
 				[
 					'attribute' => 'usersCount',

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
+use app\helpers\Utils;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -12,6 +13,7 @@ use yii\data\ActiveDataProvider;
  * @package app\models\groups
  */
 class GroupsSearch extends Groups {
+	public $leaders;
 	public $relGroupTypes_name;
 
 	/**
@@ -20,7 +22,7 @@ class GroupsSearch extends Groups {
 	public function rules():array {
 		return [
 			[['id'], 'integer'],
-			[['name', 'comment', 'type'], 'safe'],
+			[['name', 'comment', 'type', 'leaders'], 'safe'],
 			[['relGroupTypes_name'], 'safe']
 		];
 	}
@@ -46,6 +48,7 @@ class GroupsSearch extends Groups {
 				'id',
 				'name',
 				'type',
+				'leaders',
 				'comment',
 				'daddy'
 			]
@@ -55,13 +58,15 @@ class GroupsSearch extends Groups {
 
 		$query->joinWith(['relGroupTypes']);
 
-//		$query->groupBy('id');
-
 		$query->andFilterWhere(['id' => $this->id])
 			->andFilterWhere(['like', 'sys_groups.name', $this->name])
 			->andFilterWhere(['=', 'sys_groups.type', $this->type])
 			->andFilterWhere(['=', 'sys_groups.daddy', $this->daddy]);
+		if (!empty($this->leaders)) {
+			$query->joinWith(['relRefUserRoles'])->where(['boss_flag' => true, 'rel_users_groups.user_id' => $this->leaders]);
+		}
 
+//		Utils::log($query->createCommand()->rawSql);
 		return $dataProvider;
 	}
 }
