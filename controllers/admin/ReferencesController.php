@@ -81,6 +81,7 @@ class ReferencesController extends WigetableController {
 	 * @return mixed
 	 * @throws Throwable
 	 * @throws ServerErrorHttpException
+	 * @unused
 	 */
 	public function actionView($class, $id) {
 		return $this->render('view', [
@@ -119,7 +120,7 @@ class ReferencesController extends WigetableController {
 		$model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException());
 
 		if ($model->updateRecord(Yii::$app->request->post($model->formName()))) {
-			return $this->redirect(['view', 'id' => $model->id, 'class' => $class]);
+			return $this->redirect(['update', 'id' => $model->id, 'class' => $class]);
 		}
 
 		return $this->render('update', [
