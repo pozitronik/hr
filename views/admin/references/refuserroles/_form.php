@@ -24,32 +24,29 @@ use yii\widgets\ActiveForm;
 			<?php $form = ActiveForm::begin(); ?>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-9">
+					<div class="col-md-7">
 						<?= $form->field($model, 'name')->textInput([
 							'maxlength' => true,
 							'autofocus' => 'autofocus',
 							'spellcheck' => 'true'
 						]); ?>
 					</div>
+
 					<div class="col-md-3">
-						<?= $form->field($model, 'boss_flag')->checkbox(); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
 						<?= $form->field($model, 'color')->widget(ColorInput::class, [
 							'options' => [
 								'placeholder' => 'Выбрать цвет'
 							],
 							'pluginOptions' => [
 								'showAlpha' => false,
-								'showInput' => false,
 								'preferredFormat' => 'rgb'
 							]
 						]) ?>
 					</div>
+					<div class="col-md-2">
+						<?= $form->field($model, 'boss_flag')->checkbox(); ?>
+					</div>
 				</div>
-
 
 			</div>
 			<div class="panel-footer">
