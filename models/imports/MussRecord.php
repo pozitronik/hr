@@ -30,6 +30,12 @@ use yii\db\Exception;
  *
  */
 class MussRecord extends Model {
+	public const OWNER = 4;
+	public const LEADER = 1;
+	public const LEADER_IT = 2;
+//	public const TRIBE = 6;
+//	public const CHAPTER = 5;
+
 
 	private $models = [];
 

@@ -34,6 +34,13 @@ use yii\db\Exception;
  * 6. Иерархия: Трайб->Чаптеры->Команды. Кластеры/Продукты делаем атрибутами.
  */
 class FosRecord extends Model {
+	public const OWNER = 4;
+	public const LEADER = 1;
+	public const LEADER_IT = 2;
+//	public const TRIBE = 6;
+//	public const CHAPTER = 5;
+
+
 	public $id;//не используем
 	public $position_id;//не используем
 	public $position;//должность
