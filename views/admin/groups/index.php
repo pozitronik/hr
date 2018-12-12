@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
 use app\models\users\Users;
@@ -20,7 +21,6 @@ use kartik\grid\ActionColumn;
 $this->title = 'Группы';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
-//todo: фильтр/поиск по главнюку. Будет, когда определим критерий лидера (м.б. атрибут в справочнике)
 ?>
 
 <div class="row">
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'attribute' => 'leaders',
 					'value' => function($model) {
-						/** @var GroupsSearch $model */
+						/** @var Groups $model */
 						$users = [];
 						foreach ($model->leaders as $leader) {
 							$users[] = Html::a($leader->username, ['admin/users/update', 'id' => $leader->id]);
