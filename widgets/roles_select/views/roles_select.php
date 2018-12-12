@@ -40,7 +40,7 @@ JS;
 		'multiple' => true,
 		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
 		'templateSelection' => new JsExpression('function(item) {return formatSelectedItem(item)}'),
-		'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
 	],
 	'pluginEvents' => [
 		"change.select2" => "function(e) {set_roles($userId, $groupId, jQuery(e.target).val())}"

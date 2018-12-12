@@ -7,7 +7,6 @@ use Exception;
 use Yii;
 use Throwable;
 use yii\data\BaseDataProvider;
-use yii\data\DataProviderInterface;
 
 /**
  * Class Utils

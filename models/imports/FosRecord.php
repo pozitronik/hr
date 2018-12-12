@@ -196,11 +196,11 @@ class FosRecord extends Model {
 			/*Всё, что роли*/
 			foreach ($models as $model) {
 
-				$this->linkRole($model->tribe, $model->tribe_leader_username, Groups::LEADER);
-				$this->linkRole($model->tribe, $model->tribe_leader_it_username, Groups::LEADER_IT);
-//				$this->linkRole($model->cluster, $model->cluster_leader, Groups::LEADER);
+				$this->linkRole($model->tribe, $model->tribe_leader_username, self::LEADER);
+				$this->linkRole($model->tribe, $model->tribe_leader_it_username, self::LEADER_IT);
+//				$this->linkRole($model->cluster, $model->cluster_leader, self::LEADER);
 				$this->linkRole($model->command, $model->product_owner);
-				$this->linkRole($model->chapter, $model->chapter_leader, Groups::LEADER);
+				$this->linkRole($model->chapter, $model->chapter_leader, self::LEADER);
 
 				if (null !== $role_id = $this->addUserRole($model->position_in_command)) {
 					$this->linkRole($model->command, $model->username, $role_id);
@@ -320,7 +320,7 @@ class FosRecord extends Model {
 	 * @param string $userName
 	 * @param int $role
 	 */
-	public function linkRole(string $groupName, string $userName, int $role = Groups::OWNER):void {
+	public function linkRole(string $groupName, string $userName, int $role = self::OWNER):void {
 		if ('' === $userName || '' === $groupName) return;
 		$user = Users::find()->where(['username' => $userName])->one();//Предполагаем, что пользователь добавлен в бд
 		if (!$user) return;

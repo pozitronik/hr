@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
-use app\helpers\Utils;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -11,6 +10,7 @@ use yii\data\ActiveDataProvider;
  * UserGroupsSearch represents the model behind the search form about `app\models\UserGroups`.
  * Class GroupsSearch
  * @package app\models\groups
+ * @property int|int[] $leaders
  */
 class GroupsSearch extends Groups {
 	public $leaders;

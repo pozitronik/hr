@@ -117,7 +117,7 @@ class MussRecord extends Model {
 	 * @param string $userName
 	 * @param int $role
 	 */
-	public function linkRole(string $groupName, string $userName, int $role = Groups::OWNER):void {
+	public function linkRole(string $groupName, string $userName, int $role = self::OWNER):void {
 		if ('' === $userName || '' === $groupName) return;
 		$user = Users::find()->where(['username' => $userName])->one();//Предполагаем, что пользователь добавлен в бд
 		if (!$user) return;
@@ -136,7 +136,7 @@ class MussRecord extends Model {
 		/*1. Добавляем чаптер. 2. Добавляем лидера. 3. Всем группам добавляем чаптер, как родителя*/
 		foreach ($chapters as $chapter => $data) {
 			$chapterId = $this->addGroup($chapter, 'Chapter');
-			$this->linkRole($chapter, $data['leader'], Groups::LEADER);
+			$this->linkRole($chapter, $data['leader'], self::LEADER);
 			foreach ($data['groups'] as $groupName) {
 				$group = Groups::find()->where(['name' => $groupName])->one();
 				RelGroupsGroups::linkModels($chapterId, $group);

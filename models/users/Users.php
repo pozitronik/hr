@@ -65,6 +65,7 @@ use yii\web\UploadedFile;
  * **************************
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property integer[] $dropCompetencies
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
  * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
  */
 class Users extends ActiveRecord {
