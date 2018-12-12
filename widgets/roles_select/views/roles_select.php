@@ -12,6 +12,7 @@ declare(strict_types = 1);
 use kartik\select2\Select2;
 use yii\web\View;
 use kartik\spinner\Spinner;
+use yii\web\JsExpression;
 
 ?>
 <?= Select2::widget([
@@ -23,7 +24,10 @@ use kartik\spinner\Spinner;
 	],
 	'pluginOptions' => [
 		'allowClear' => true,
-		'multiple' => true
+		'multiple' => true,
+		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
+		'templateSelection' => new JsExpression('function(item) {return formatSelectedItem(item)}'),
+		'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
 	],
 	'pluginEvents' => [
 		"change.select2" => "function(e) {set_roles($userId, $groupId, jQuery(e.target).val())}"
