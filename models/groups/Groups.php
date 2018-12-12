@@ -284,12 +284,12 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * Не очень чёткая логика выбора главнюка
+	 * Вернёт всех пользователей в группе с меткой босса
 	 * @return Users[]
 	 * @throws Throwable
 	 */
 	public function getLeaders():array {
-		return Users::find()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['rel_users_groups_roles.role' => self::LEADER, 'rel_users_groups.group_id' => $this->id])->all();
+		return Users::find()->joinWith(['relRefUserRoles'])->where(['ref_user_roles.boss_flag' => true, 'rel_users_groups.group_id' => $this->id])->all();
 	}
 
 	/**
