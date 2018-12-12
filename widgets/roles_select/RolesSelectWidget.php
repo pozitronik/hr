@@ -38,7 +38,8 @@ class RolesSelectWidget extends Widget {
 			'data' => $this->data??RefUserRoles::mapData(),
 			'value' => $this->value??RelUsersGroupsRoles::getRoleIdInGroup($this->userId, $this->groupId),
 			'userId' => $this->userId,
-			'groupId' => $this->groupId
+			'groupId' => $this->groupId,
+			'options' => RefUserRoles::dataOptions()
 		]);
 	}
 }

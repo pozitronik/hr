@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var array $value
  * @var integer $groupId
  * @var integer $userId
+ * @var array $options
  */
 
 use kartik\select2\Select2;
@@ -14,13 +15,25 @@ use yii\web\View;
 use kartik\spinner\Spinner;
 use yii\web\JsExpression;
 
+$resultsJs = <<< JS
+function (data, params) {
+    params.page = params.page || 1;
+    return {
+        results: data.items,
+        pagination: {
+            more: (params.page * 30) < data.total_count
+        }
+    };
+}
+JS;
 ?>
 <?= Select2::widget([
 	'data' => $data,
 	'name' => "UserRoles[$userId]",
 	'value' => $value,
 	'options' => [
-		'placeholder' => 'Укажите роль в группе'
+		'placeholder' => 'Укажите роль в группе',
+		'options' => $options
 	],
 	'pluginOptions' => [
 		'allowClear' => true,
