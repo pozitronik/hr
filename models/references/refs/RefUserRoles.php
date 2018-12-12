@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\references\refs;
 
+use Yii;
 use app\models\groups\Groups;
 use app\models\references\Reference;
 use app\models\relations\RelUsersGroups;
@@ -116,4 +117,22 @@ class RefUserRoles extends Reference {
 		self::flushCache();
 	}
 
+	/**
+	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
+	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
+	 * @return array
+	 */
+	public static function dataOptions():array {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+			$items = self::find()->active()->all();
+			$result = [];
+			foreach ($items as $key => $item) {
+				$result[$item->id] = [
+					'data-color' => $item->color,
+					'data-boss' => $item->boss_flag
+				];
+			}
+			return $result;
+		});
+	}
 }

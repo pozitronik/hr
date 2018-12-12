@@ -229,7 +229,8 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		$class = static::class;
 		$cacheNames = [
 			"{$class}MapData",
-			"{$class}MapData1"
+			"{$class}MapData1",
+			"{$class}DataOptions"
 		];
 		foreach ($cacheNames as $className) {
 			Yii::$app->cache->delete($className);
