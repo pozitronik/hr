@@ -7,6 +7,7 @@ use app\models\users\Users;
 use Throwable;
 use Yii;
 use yii\web\Response;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Class CurrentUser
@@ -42,6 +43,6 @@ class CurrentUser extends User {
 	 * @throws Throwable
 	 */
 	public static function User() {
-		return Users::findModel(self::Id());
+		return Users::findModel(self::Id(), new UnauthorizedHttpException('Пользователь не авторизован'));
 	}
 }
