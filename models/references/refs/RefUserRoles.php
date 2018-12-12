@@ -17,10 +17,16 @@ use yii\db\ActiveQuery;
  * @property string $name Название
  * @property int $deleted
  *
+ * custom properties:
+ * @property bool $boss_flag
+ * @property string $color
+ *
+ *
  * @property ActiveQuery|RelUsersGroupsRoles[] $relUsersGroupsRoles Связующий релейшен к привязкам пользователей в группы (just via)
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Релейшен к привязке пользователей в группах
  * @property ActiveQuery|Groups[] $groups
  * @property ActiveQuery|Users[] $users
+ *
  */
 class RefUserRoles extends Reference {
 	public $menuCaption = 'Роли пользователей внутри групп';
@@ -41,7 +47,9 @@ class RefUserRoles extends Reference {
 			[['name'], 'required'],
 			[['name'], 'unique'],
 			[['deleted'], 'integer'],
-			[['name'], 'string', 'max' => 256]
+			[['name'], 'string', 'max' => 256],
+			[['boss_flag'], 'boolean'],
+			[['color'], 'safe']
 		];
 	}
 
@@ -52,7 +60,9 @@ class RefUserRoles extends Reference {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
-			'deleted' => 'Deleted'
+			'deleted' => 'Deleted',
+			'boss_flag' => 'Лидер',
+			'color' => 'Цвет'
 		];
 	}
 
