@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\Utils;
+use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersGroups;
@@ -27,8 +28,8 @@ class TestController extends Controller {
 	 */
 	public function actionIndex() {
 
-		$q = RelUsersGroups::getUserGroupId(3,4);
-		Utils::log($q);
+		Utils::log(Groups::find()->joinWith(['relRefUserRoles'])->where(['boss_flag' => true, 'rel_users_groups.user_id' => 1])->createCommand()->rawSql);
+		Utils::log(Users::find()->joinWith('relRefUserRoles')->where(['ref_user_roles.boss_flag' => true])->createCommand()->rawSql);
 
 	}
 
