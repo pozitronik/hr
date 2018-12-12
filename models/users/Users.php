@@ -265,6 +265,7 @@ class Users extends ActiveRecord {
 	public function setRelGroups($relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
+
 	/**
 	 * @return integer[]
 	 */
@@ -376,4 +377,14 @@ class Users extends ActiveRecord {
 		return [];
 	}
 
+	/**
+	 * Вернёт массив всех пользователей с галочкой лидеров
+	 * @return array
+	 */
+	public static function mapLeaders():array {
+//		return Yii::$app->cache->getOrSet(static::class."MapLeaders", function() {
+			$data = self::find()->joinWith('relRefUserRoles')->where(['ref_user_roles.boss_flag' => true])->all();
+			return ArrayHelper::map($data, 'id', 'username');
+//		});
+	}
 }
