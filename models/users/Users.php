@@ -8,6 +8,7 @@ use app\helpers\Date;
 use app\models\competencies\Competencies;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\references\refs\RefUserRoles;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
 use app\models\relations\RelUsersCompetencies;
@@ -247,6 +248,14 @@ class Users extends ActiveRecord {
 	 */
 	public function getRelUsersGroupsRoles() {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
+	}
+
+	/**
+	 * Все назначенные роли этого пользователя (используется изначально для определения руководителя)
+	 * @return ActiveQuery|RefUserRoles[]
+	 */
+	public function getRelRefUserRoles() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
 	/**
