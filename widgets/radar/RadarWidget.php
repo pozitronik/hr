@@ -13,10 +13,12 @@ use yii\base\Widget;
  * @package app\widgets\radar
  * @property Users $user
  * @property Competencies $competency
+ * @property array|null $reference
  */
 class RadarWidget extends Widget {
 	public $user;
 	public $competency;
+	public $reference;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -38,6 +40,7 @@ class RadarWidget extends Widget {
 			if ('percent' === $field->type) {
 				$labels[] = $field->name;
 				$data[] = $field->value;
+				$this->reference[] = random_int(10, 90);
 			}
 		}
 		return [
@@ -46,6 +49,11 @@ class RadarWidget extends Widget {
 				[
 					'label' => $this->competency->name,
 					'data' => $data
+				],
+				[
+					'label' => 'Референс (сейчас он случайный)',
+					'backgroundColor' => 'rgba(0, 200, 20, 0.1)',
+					'data' => $this->reference
 				]
 			]
 		];
@@ -58,6 +66,7 @@ class RadarWidget extends Widget {
 	 */
 	public function run():string {
 		$data = $this->GetGraphMap();
+
 
 		return $this->render('radar',[
 			'data' => $data
