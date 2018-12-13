@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $attribute_data
  */
 
-use app\assets\AppAsset;
+use app\assets\DynamicAttributesSearchAsset;
 use app\models\dynamic_attributes\DynamicAttributesSearchCollection;
 use app\models\users\Users;
 use app\widgets\user_attributes\UserAttributesWidget;
@@ -22,12 +22,12 @@ use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
 use app\models\dynamic_attributes\DynamicAttributes;
 use yii\helpers\Url;
+DynamicAttributesSearchAsset::register($this);
 
 $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Атрибуты', 'url' => ['/admin/attributes']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerJsFile('js/attribute_search.js', ['depends' => AppAsset::class]);//todo: после прототипирования вытащить в виджет или модуль
 
 ?>
 
