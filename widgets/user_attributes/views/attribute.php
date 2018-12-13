@@ -35,7 +35,7 @@ use kartik\grid\GridView;
 			'attribute' => 'type',
 			'value' => function($model) {
 				/** @var DynamicAttributeProperty $model */
-				return ArrayHelper::getValue(ArrayHelper::getColumn(DynamicAttributeProperty::FIELD_TYPES, 'label'), $model->type);
+				return ArrayHelper::getValue(ArrayHelper::getColumn(DynamicAttributeProperty::PROPERTY_TYPES, 'label'), $model->type);
 			},
 			'visible' => $show_category
 		],

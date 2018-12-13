@@ -43,7 +43,7 @@ class DynamicAttributeProperty extends Model {
 
 	private $user_id;
 
-	public const FIELD_TYPES = [
+	public const PROPERTY_TYPES = [
 		'integer' => [/*Название (индекс) типа данных*/
 			'label' => 'Число',/*Отображаемое в интефейсах имя*/
 			'model' => AttributePropertyInteger::class,/*Имя класса, реализующего взаимоделйствие с типом данных, обязательно имплементация AttributePropertyInterface. Поле названо model, потому что на class ругается инспектор*/
@@ -80,7 +80,7 @@ class DynamicAttributeProperty extends Model {
 	 * @throws Throwable
 	 */
 	public static function getTypeClass(string $type):string {
-		if (null === $value = ArrayHelper::getValue(self::FIELD_TYPES, "$type.model")) {
+		if (null === $value = ArrayHelper::getValue(self::PROPERTY_TYPES, "$type.model")) {
 			$t = new InvalidConfigException("$type.model AttributePropertyInterface not set or not properly configured");
 			SysExceptions::log($t, $t);
 		}
@@ -96,7 +96,7 @@ class DynamicAttributeProperty extends Model {
 			[['id'], 'integer'],
 			[['id'], 'unique'],
 			[['name', 'type'], 'string'],
-			[['type'], 'in', 'range' => array_keys(self::FIELD_TYPES)],
+			[['type'], 'in', 'range' => array_keys(self::PROPERTY_TYPES)],
 			[['required'], 'boolean'],
 			[['name', 'type', 'required'], 'required']
 		];

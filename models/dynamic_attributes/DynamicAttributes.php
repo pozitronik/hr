@@ -265,7 +265,9 @@ class DynamicAttributes extends ActiveRecord {
 	 * @return bool
 	 */
 	public function getHasIntegerProperties():bool {
-		//todo
-		return true;
+		foreach ($this->properties as $property) {
+			if (in_array($property->type, ['integer', 'percent'])) return true;//большего особо не требуется
+		}
+		return false;
 	}
 }

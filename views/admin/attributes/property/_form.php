@@ -34,7 +34,7 @@ use kartik\switchinput\SwitchInput;
 					</div>
 					<div class="col-md-4">
 						<?= $form->field($model, 'type')->widget(Select2::class, [
-							'data' => ArrayHelper::keymap(DynamicAttributeProperty::FIELD_TYPES, 'label')
+							'data' => ArrayHelper::keymap(DynamicAttributeProperty::PROPERTY_TYPES, 'label')
 						]); ?>
 					</div>
 					<div class="col-md-4">
