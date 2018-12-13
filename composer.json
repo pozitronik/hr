@@ -40,7 +40,8 @@
 		"kartik-v/yii2-slider": "dev-master",
 		"kartik-v/yii2-field-range": "^1.3@dev",
 		"kartik-v/yii2-widget-growl": "^1.1@dev",
-		"kartik-v/yii2-widget-colorinput": "*"
+		"kartik-v/yii2-widget-colorinput": "*",
+		"2amigos/yii2-chartjs-widget": "~2.0"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
