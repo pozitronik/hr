@@ -124,4 +124,17 @@ class UsersController extends WigetableController {
 		return $this->render('competencies', compact('user', 'competency'));
 	}
 
+	/**
+	 * Просмотр графика компетенции пользователя
+	 * @param int $user_id
+	 * @param int $competency_id
+	 * @return string
+	 * @throws Throwable
+	 */
+	public function actionCompetencyGraph(int $user_id, int $competency_id):string {
+		$user = Users::findModel($user_id, new NotFoundHttpException());
+		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
+		return $this->render('competency_graph', compact('user', 'competency'));
+	}
+
 }

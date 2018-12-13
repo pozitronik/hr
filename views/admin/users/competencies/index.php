@@ -87,7 +87,7 @@ use yii\helpers\Url;
 								'<span class="glyphicon glyphicon-eye-open"></span>',
 								['competency-graph', 'user_id' => $user->id, 'competency_id' => $model->id]
 							);
-						},
+						}
 					]
 				]
 			]
