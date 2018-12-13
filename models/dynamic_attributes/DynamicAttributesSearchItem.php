@@ -6,14 +6,14 @@ namespace app\models\dynamic_attributes;
 use yii\base\Model;
 
 /**
- * @property boolean $logic Режим поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
+ * @property boolean $union Режим объединения поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
  * @property integer|null $attribute Искомый атрибут (id)
  * @property integer|null $property Свойство атрибута (id)
  * @property string|null $condition Условие поиска
  * @property mixed|null $value Искомое значение
  */
 class DynamicAttributesSearchItem extends Model {
-	private $logic = true;//todo rename
+	private $union = true;
 	private $attribute;
 	private $property;
 	private $condition;
@@ -24,7 +24,7 @@ class DynamicAttributesSearchItem extends Model {
 	 */
 	public function rules():array {
 		return [
-			[['logic'], 'boolean'],
+			[['union'], 'boolean'],
 			[['attribute', 'property'], 'integer'],
 			[['condition', 'value'], 'safe']
 		];
@@ -35,7 +35,7 @@ class DynamicAttributesSearchItem extends Model {
 	 */
 	public function attributeLabels():array {
 		return [
-			'logic' => 'Объединение',
+			'union' => 'Объединение',
 			'attribute' => 'Атрибут',
 			'property' => 'Свойство',
 			'condition' => 'Условие',
@@ -46,15 +46,15 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @return bool
 	 */
-	public function getLogic():bool {
-		return $this->logic;
+	public function getUnion():bool {
+		return $this->union;
 	}
 
 	/**
-	 * @param bool $logic
+	 * @param bool $union
 	 */
-	public function setLogic(bool $logic):void {
-		$this->logic = $logic;
+	public function setUnion(bool $union):void {
+		$this->union = $union;
 	}
 
 

@@ -47,7 +47,7 @@ $this->registerJsFile('js/attribute_search.js', ['depends' => AppAsset::class]);
 				<div class="row" data-index='<?= $index ?>'>
 					<div class="col-xs-12">
 						<div class="col-md-1">
-							<?= $form->field($model, "searchItems[$index][logic]")->widget(SwitchInput::class, [
+							<?= $form->field($model, "searchItems[$index][union]")->widget(SwitchInput::class, [
 								'pluginOptions' => [
 									'size' => 'mini',
 									'onText' => 'И',
