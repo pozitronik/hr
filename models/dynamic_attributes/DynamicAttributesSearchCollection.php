@@ -166,7 +166,7 @@ class DynamicAttributesSearchCollection extends Model {
 							$usedAliases[] = $typeAlias;
 						}
 
-						if ($searchItem->logic) {
+						if ($searchItem->union) {
 							$query->andWhere($condition($typeAlias, $searchItem->value));
 						} else {
 							$query->orWhere($condition($typeAlias, $searchItem->value));
