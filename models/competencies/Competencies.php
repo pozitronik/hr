@@ -185,7 +185,7 @@ class Competencies extends ActiveRecord {
 	 * @return CompetencyField[]
 	 */
 	public function getUserFields(int $user_id):array {
-		return Yii::$app->cache->getOrSet(static::class."GetUserFields".$user_id, function() use ($user_id) {
+		return Yii::$app->cache->getOrSet(static::class."GetUser{$this->id}Fields".$user_id, function() use ($user_id) {
 			$result = [];
 			foreach ($this->structure as $field_data) {
 				$field = new CompetencyField(array_merge($field_data, [
@@ -208,7 +208,7 @@ class Competencies extends ActiveRecord {
 		foreach ($values as $key => $value) {
 			$this->setUserField($user_id, $key, $value);
 		}
-		Yii::$app->cache->delete(static::class."GetUserFields".$user_id);
+		Yii::$app->cache->delete(static::class."GetUser{$this->id}Fields".$user_id);
 	}
 
 	/**
@@ -227,7 +227,7 @@ class Competencies extends ActiveRecord {
 			SysExceptions::log($t);
 			SysExceptions::log(new RuntimeException("Field type {$field->type} not implemented or not configured "), false, true);
 		}
-		Yii::$app->cache->delete(static::class."GetUserFields".$user_id);
+		Yii::$app->cache->delete(static::class."GetUser{$this->id}Fields".$user_id);
 	}
 
 	/**
