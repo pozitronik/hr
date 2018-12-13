@@ -24,6 +24,6 @@ class LoginAsset extends AssetBundle {
 		AppAsset::class,
 		YiiAsset::class,
 		BootstrapAsset::class,
-		Particles::class
+		ParticlesAsset::class
 	];
 }
