@@ -37,13 +37,14 @@ use yii\db\Exception;
  * @property integer $access
  * @property int $deleted Флаг удаления
  *
- * @property CompetencyField[] $fields//todo переименовать, чтобы не было коллизий с fields()
+ * @property-read CompetencyField[] $fields//todo переименовать, чтобы не было коллизий с fields()
  *
  * @property int $userFields
  *
  * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
  * @property Users|ActiveQuery $relUsers Пользователи с этой компетенцией
  * @property-read string $categoryName Строковое имя категории
+ * @property-read bool $hasIntegerFields
  */
 class Competencies extends ActiveRecord {
 	use ARExtended;
@@ -248,5 +249,24 @@ class Competencies extends ActiveRecord {
 	 */
 	public function getCategoryName():string {
 		return ArrayHelper::getValue(self::CATEGORIES, $this->category);
+	}
+
+	/**
+	 * @return CompetencyField[]
+	 */
+	public function getFields():array {
+		$fields = [];
+		foreach ($this->structure as $field) {
+			$fields[] = new CompetencyField(array_merge($field, ['competencyId' => $this->id]));
+		}
+		return $fields;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getHasIntegerFields():bool {
+		//todo
+		return true;
 	}
 }
