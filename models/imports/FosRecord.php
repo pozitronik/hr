@@ -293,7 +293,6 @@ class FosRecord extends Model {
 	/**
 	 * @param array<string, string> $dynamic_attribute
 	 * @param int $user_id
-	 * todo: в модель атрибутов всю херню, чтобы работа со структурой была под капотом
 	 * @throws Throwable
 	 * Добавляет атрибуту свойство
 	 */
