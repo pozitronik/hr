@@ -83,10 +83,8 @@ use yii\helpers\Url;
 					'template' => '{graph}',
 					'buttons' => [
 						'graph' => function($url, $model) use ($user) {
-							return Html::a(
-								'<span class="glyphicon glyphicon-eye-open"></span>',
-								['competency-graph', 'user_id' => $user->id, 'competency_id' => $model->id]
-							);
+							/** @var Competencies $model */
+							return ($model->hasIntegerFields)?Html::a('Диаграмма', ['competency-graph', 'user_id' => $user->id, 'competency_id' => $model->id], ['class' => 'btn btn-xs btn-success']):false;
 						}
 					]
 				]
