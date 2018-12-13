@@ -11,6 +11,7 @@ declare(strict_types = 1);
 use app\models\competencies\Competencies;
 use app\widgets\competency\CompetencyWidget;
 use yii\data\BaseDataProvider;
+use yii\grid\ActionColumn;
 use yii\web\View;
 use kartik\grid\GridView;
 use app\models\users\Users;
@@ -76,6 +77,18 @@ use yii\helpers\Url;
 						]);
 					},
 					'format' => 'raw'
+				],
+				[
+					'class' => ActionColumn::class,
+					'template' => '{graph}',
+					'buttons' => [
+						'graph' => function($url, $model) use ($user) {
+							return Html::a(
+								'<span class="glyphicon glyphicon-eye-open"></span>',
+								['competency-graph', 'user_id' => $user->id, 'competency_id' => $model->id]
+							);
+						},
+					]
 				]
 			]
 
