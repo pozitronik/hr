@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var Users $model
  * @var View $this
- * @var array $competenciesData
+ * @var array $attributesData
  */
 
 use app\models\users\Users;
@@ -16,5 +16,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', compact('model', 'competenciesData'));
+<?= $this->render('_form', compact('model', 'attributesData'));
 ?>

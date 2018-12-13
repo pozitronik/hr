@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers\admin;
 
 use app\helpers\ArrayHelper;
-use app\models\competencies\Competencies;
+use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;
@@ -78,7 +78,7 @@ class UsersController extends WigetableController {
 
 		return $this->render('create', [
 			'model' => $newUser,
-			'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name')
+			'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->all(), 'id', 'name')
 		]);
 	}
 
@@ -94,7 +94,7 @@ class UsersController extends WigetableController {
 
 		return $this->render('update', [
 			'model' => $user,
-			'competenciesData' => ArrayHelper::map(Competencies::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($user->relCompetencies, 'id')])->all(), 'id', 'name')
+			'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($user->relDynamicAttributes, 'id')])->all(), 'id', 'name')
 		]);
 	}
 
@@ -108,33 +108,33 @@ class UsersController extends WigetableController {
 	}
 
 	/**
-	 * Редактор компетенций пользователя
+	 * Редактор атрибутов пользователя
 	 * @param int $user_id
-	 * @param int $competency_id
+	 * @param int $attribute_id
 	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionCompetencies(int $user_id, int $competency_id):string {
+	public function actionAttributes(int $user_id, int $attribute_id):string {
 		$user = Users::findModel($user_id, new NotFoundHttpException());
-		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
-		if (null !== $data = Yii::$app->request->post('CompetencyField')) {
-			$competency->setUserFields($user_id, $data);
+		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+		if (null !== $data = Yii::$app->request->post('DynamicAttributeProperty')) {
+			$attribute->setUserProperties($user_id, $data);
 		}
 
-		return $this->render('competencies', compact('user', 'competency'));
+		return $this->render('attributes', compact('user', 'attribute'));
 	}
 
 	/**
-	 * Просмотр графика компетенции пользователя
+	 * Просмотр графика атрибутов пользователя
 	 * @param int $user_id
-	 * @param int $competency_id
+	 * @param int $attribute_id
 	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionCompetencyGraph(int $user_id, int $competency_id):string {
+	public function actionAttributeGraph(int $user_id, int $attribute_id):string {
 		$user = Users::findModel($user_id, new NotFoundHttpException());
-		$competency = Competencies::findModel($competency_id, new NotFoundHttpException());
-		return $this->render('competency_graph', compact('user', 'competency'));
+		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+		return $this->render('attribute_graph', compact('user', 'attribute'));
 	}
 
 }

@@ -6,7 +6,7 @@ declare(strict_types = 1);
  *
  * @var View $this
  * @var Users $model
- * @var array $competenciesData
+ * @var array $attributesData
  */
 
 use app\models\users\Users;
@@ -98,10 +98,10 @@ use kartik\file\FileInput;
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<?= $this->render('competencies/index', [
+						<?= $this->render('attributes/index', [
 							'user' => $model,
-							'data' => $competenciesData,
-							'provider' => new ActiveDataProvider(['query' => $model->getRelCompetencies()->orderBy('name')->active()])
+							'data' => $attributesData,
+							'provider' => new ActiveDataProvider(['query' => $model->getRelDynamicAttributes()->orderBy('name')->active()])
 						]); ?>
 					</div>
 				</div>

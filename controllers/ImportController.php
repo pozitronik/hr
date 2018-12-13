@@ -31,8 +31,8 @@ class ImportController extends Controller {
 	 * @throws Exception
 	 */
 	public function actionCompetency($filename):void {
-		$competency = new CompetencyRecord();
-		$competency->importRecords(Yii::getAlias('@app/').$filename);
+		$attribute = new CompetencyRecord();
+		$attribute->importRecords(Yii::getAlias('@app/').$filename);
 	}
 
 

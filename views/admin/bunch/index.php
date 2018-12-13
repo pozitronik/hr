@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var UsersMassUpdate $massUpdateModel
  * @var ArrayDataProvider|null $statistics Статистика предыдущей операции
- * @var array $competenciesData
+ * @var array $attributesData
  * @var false|Groups $group
  */
 
@@ -90,24 +90,24 @@ $this->params['breadcrumbs'][] = $this->title;
 							<div class="col-md-6">
 								<?= Select2::widget([
 									'model' => $massUpdateModel->virtualUser,
-									'attribute' => 'relCompetencies',
-									'name' => 'relCompetencies',
-									'data' => $competenciesData,
+									'attribute' => 'relDynamicAttributes',
+									'name' => 'relDynamicAttributes',
+									'data' => $attributesData,
 									'options' => [
 										'multiple' => true,
-										'placeholder' => 'Добавить компетенции'
+										'placeholder' => 'Добавить атрибут'
 									]
 								]) ?>
 							</div>
 							<div class="col-md-6">
 								<?= Select2::widget([
 									'model' => $massUpdateModel->virtualUser,
-									'attribute' => 'dropCompetencies',
-									'name' => 'dropCompetencies',
-									'data' => $competenciesData,
+									'attribute' => 'dropUsersAttributes',
+									'name' => 'dropUsersAttributes',
+									'data' => $attributesData,
 									'options' => [
 										'multiple' => true,
-										'placeholder' => 'Удалить компетенции'
+										'placeholder' => 'Удалить атрибуты'
 									]
 								]) ?>
 							</div>

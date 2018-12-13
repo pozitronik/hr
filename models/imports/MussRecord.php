@@ -41,8 +41,8 @@ class MussRecord extends Model {
 
 	public function clearDB():void {
 
-		$sql = "TRUNCATE sys_exceptions; TRUNCATE sys_groups; TRUNCATE sys_users; TRUNCATE sys_competencies_boolean; TRUNCATE sys_competencies_date; TRUNCATE sys_competencies_integer; TRUNCATE sys_competencies_percent; TRUNCATE sys_users_options;
-				TRUNCATE sys_competencies_string; TRUNCATE sys_competencies_text; TRUNCATE sys_competencies_time; TRUNCATE rel_users_groups_roles; TRUNCATE rel_users_groups; TRUNCATE rel_users_competencies; TRUNCATE rel_groups_groups;
+		$sql = "TRUNCATE sys_exceptions; TRUNCATE sys_groups; TRUNCATE sys_users; TRUNCATE sys_attributes_boolean; TRUNCATE sys_attributes_date; TRUNCATE sys_attributes_integer; TRUNCATE sys_attributes_percent; TRUNCATE sys_users_options;
+				TRUNCATE sys_attributes_string; TRUNCATE sys_attributes_text; TRUNCATE sys_attributes_time; TRUNCATE rel_users_groups_roles; TRUNCATE rel_users_groups; TRUNCATE rel_users_attributes; TRUNCATE rel_groups_groups;
 				INSERT INTO hr.sys_users (id, username, login, password, salt, email, comment, create_date, profile_image, daddy, deleted, position) VALUES (1, 'admin', 'admin', '820f86dc3ddc97f1ffc3b27e5a04a2a177a833a6', '9d0c7ed0b2d182885c168924bdd8e11ffbc2cad5', 'admin@POZITRONEBOOK', 'Системный администратор', '2018-10-29 15:00:27', '1.jpg', null, 0, null);";
 		Yii::$app->db->createCommand($sql)->execute();
 

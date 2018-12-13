@@ -24,10 +24,10 @@ class UsersMassUpdate extends Model {
 	private $usersId = [];
 	private $usersIdSelected = [];
 	private $virtualUser;
-	private $relGroups; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
-	private $relCompetencies; //Поскольку модель пользователя сразу применяет переданные компетенции, то в вирутальную модель вводим переменную для хранения.
+	private $relGroups; //Поскольку модель пользователя сразу применяет переданные группы, то в вирутальную модель вводим переменную для хранения.
+	private $relDynamicAttributes; //Поскольку модель пользователя сразу применяет переданные атрибуты, то в вирутальную модель вводим переменную для хранения.
 	private $dropGroups;
-	private $dropCompetencies;
+	private $dropUsersAttributes;
 
 	/**
 	 * @inheritdoc
@@ -66,9 +66,9 @@ class UsersMassUpdate extends Model {
 	public function load($data, $formName = null):bool {
 		if (parent::load($data, $formName) && $this->virtualUser->load($data[$this->virtualUser->formName()], '')) {
 			/*Параметры, которые в модели пользователя применяются без промежуточного сохранения нам нужно всё-таки хранить*/
-			$this->relCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relCompetencies");
+			$this->relDynamicAttributes = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relDynamicAttributes");
 			$this->relGroups = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.relGroups");
-			$this->dropCompetencies = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.dropCompetencies");
+			$this->dropUsersAttributes = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.dropUsersAttributes");
 			$this->dropGroups = ArrayHelper::getValue($data, "{$this->virtualUser->formName()}.dropGroups");
 			return true;
 		}
@@ -83,9 +83,9 @@ class UsersMassUpdate extends Model {
 		$statistic = [];
 		$paramsArray = [];
 		if (!empty($this->relGroups)) $paramsArray['relGroups'] = $this->relGroups;
-		if (!empty($this->relCompetencies)) $paramsArray['relCompetencies'] = $this->relCompetencies;
+		if (!empty($this->relDynamicAttributes)) $paramsArray['relDynamicAttributes'] = $this->relDynamicAttributes;
 		if (!empty($this->dropGroups)) $paramsArray['dropGroups'] = $this->dropGroups;
-		if (!empty($this->dropCompetencies)) $paramsArray['dropCompetencies'] = $this->dropCompetencies;
+		if (!empty($this->dropUsersAttributes)) $paramsArray['dropUsersAttributes'] = $this->dropUsersAttributes;
 
 		foreach ($this->usersIdSelected as $userId) {
 			if (false !== $user = Users::findModel($userId)) {

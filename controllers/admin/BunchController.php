@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers\admin;
 
 use app\helpers\ArrayHelper;
-use app\models\competencies\Competencies;
+use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\WigetableController;
 use app\models\groups\Groups;
 use app\models\users\UsersMassUpdate;
@@ -74,7 +74,7 @@ class BunchController extends WigetableController {
 			return $this->render('index', [
 				'massUpdateModel' => $massUpdate,
 				'statistics' => $statistics,
-				'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+				'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->all(), 'id', 'name'),
 				'group' => Groups::findModel($group_id)
 			]);
 		}
@@ -83,7 +83,7 @@ class BunchController extends WigetableController {
 			return $this->render('index', [
 				'massUpdateModel' => $massUpdate,
 				'statistics' => null,
-				'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+				'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->all(), 'id', 'name'),
 				'group' => Groups::findModel($group_id)
 			]);
 		}
@@ -92,7 +92,7 @@ class BunchController extends WigetableController {
 			return $this->render('index', [
 				'massUpdateModel' => $massUpdate,
 				'statistics' => null,
-				'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+				'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->all(), 'id', 'name'),
 				'group' => Groups::findModel($group_id)
 			]);
 		}
@@ -101,7 +101,7 @@ class BunchController extends WigetableController {
 		return $this->render('index', [
 			'massUpdateModel' => $massUpdate,
 			'statistics' => null,
-			'competenciesData' => ArrayHelper::map(Competencies::find()->active()->all(), 'id', 'name'),
+			'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->all(), 'id', 'name'),
 			'group' => false
 		]);
 	}

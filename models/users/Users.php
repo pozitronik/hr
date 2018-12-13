@@ -5,13 +5,13 @@ namespace app\models\users;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
-use app\models\competencies\Competencies;
+use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
-use app\models\relations\RelUsersCompetencies;
+use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
@@ -61,12 +61,12 @@ use yii\web\UploadedFile;
  * ***************************
  * @property Options $options
  * **************************
- * Компетенции
+ * Атрибуты
  * **************************
- * @property RelUsersCompetencies[]|ActiveQuery $relUsersCompetencies Релейшен к таблице связей с компетенциям
- * @property integer[] $dropCompetencies
+ * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
+ * @property integer[] $dropUsersAttributes
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
- * @property Competencies[]|ActiveQuery $relCompetencies Релейшен к компетенциям
+ * @property DynamicAttributes[]|ActiveQuery $relDynamicAttributes Релейшен к атрибутам
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -104,7 +104,7 @@ class Users extends ActiveRecord {
 			[['login'], 'unique'],
 			[['email'], 'unique'],
 			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
-			[['relGroups', 'dropGroups', 'relCompetencies', 'dropCompetencies'], 'safe']
+			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes'], 'safe']
 		];
 	}
 
@@ -341,40 +341,40 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersCompetencies[]|ActiveQuery
+	 * @return RelUsersAttributes[]|ActiveQuery
 	 */
-	public function getRelUsersCompetencies() {
-		return $this->hasMany(RelUsersCompetencies::class, ['user_id' => 'id']);
+	public function getRelUsersAttributes() {
+		return $this->hasMany(RelUsersAttributes::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return Competencies[]|ActiveQuery|LCQuery
+	 * @return DynamicAttributes[]|ActiveQuery|LCQuery
 	 */
-	public function getRelCompetencies() {
-		return $this->hasMany(Competencies::class, ['id' => 'competency_id'])->via('relUsersCompetencies');
+	public function getRelDynamicAttributes() {
+		return $this->hasMany(DynamicAttributes::class, ['id' => 'attribute_id'])->via('relUsersAttributes');
 	}
 
 	/**
-	 * @param Competencies[]|ActiveQuery $relCompetencies
+	 * @param DynamicAttributes[]|ActiveQuery $relDynamicAttributes
 	 * @throws Throwable
 	 */
-	public function setRelCompetencies($relCompetencies):void {
-		RelUsersCompetencies::linkModels($this, $relCompetencies);
+	public function setRelDynamicAttributes($relDynamicAttributes):void {
+		RelUsersAttributes::linkModels($this, $relDynamicAttributes);
 	}
 
 	/**
-	 * @param integer[] $dropCompetencies
+	 * @param integer[] $dropUsersAttributes
 	 * @throws Throwable
 	 */
-	public function setDropCompetencies($dropCompetencies):void {
-		/*Сами значения компетенций сохранятся в базе и должны будут восстановиться, если компетенцию присвоить пользователю обратно*/
-		RelUsersCompetencies::unlinkModels($this, $dropCompetencies);
+	public function setDropUsersAttributes($dropUsersAttributes):void {
+		/*Сами значения атрибутов сохранятся в базе и должны будут восстановиться, если атрибут присвоить пользователю обратно*/
+		RelUsersAttributes::unlinkModels($this, $dropUsersAttributes);
 	}
 
 	/**
 	 * @return integer[]
 	 */
-	public function getDropCompetencies():array {
+	public function getDropUsersAttributes():array {
 		return [];
 	}
 

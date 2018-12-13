@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\ArrayHelper;
-use app\models\competencies\Competencies;
-use app\models\competencies\CompetencyField;
+use app\models\dynamic_attributes\DynamicAttributes;
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
@@ -64,8 +64,8 @@ class AjaxController extends Controller {
 							'users-search',
 							'user-add-bookmark',
 							'user-remove-bookmark',
-							'competency-get-fields',
-							'competency-get-field-condition'
+							'attribute-get-properties',
+							'attribute-get-property-condition'
 						],
 						'roles' => ['@', '?']
 					]
@@ -329,44 +329,44 @@ class AjaxController extends Controller {
 	}
 
 	/**
-	 * Возвращает поля компетенции
+	 * Возвращает свойства атрибута
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionCompetencyGetFields():array {
+	public function actionAttributeGetProperties():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false !== $competency_id = Yii::$app->request->post('competency', false)) {
-			if (false !== $competency = Competencies::findModel($competency_id)) {
+		if (false !== $attribute_id = Yii::$app->request->post('attribute', false)) {
+			if (false !== $attribute = DynamicAttributes::findModel($attribute_id)) {
 				return [
 					'result' => self::RESULT_OK,
-					'items' => $competency->structure
+					'items' => $attribute->structure
 				];
 			}
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
-					'competency' => 'not found'
+					'attribute' => 'not found'
 				]
 			];
 		}
 		return [
 			'result' => self::RESULT_ERROR,
 			'errors' => [
-				'competency' => 'empty'
+				'attribute' => 'empty'
 			]
 		];
 	}
 
 	/**
-	 * Возвращает набор условий для этого типа поля
+	 * Возвращает набор условий для этого типа свойства
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionCompetencyGetFieldCondition():array {
+	public function actionAttributeGetPropertyCondition():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		if (false !== $type = Yii::$app->request->post('type', false)) {
 			/** @var string $type */
-			if (null !== $className = CompetencyField::getTypeClass($type)) {
+			if (null !== $className = DynamicAttributeProperty::getTypeClass($type)) {
 				return [
 					'result' => self::RESULT_OK,
 					'items' => ArrayHelper::keymap($className::conditionConfig(), 0)

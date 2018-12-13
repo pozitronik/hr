@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace app\widgets\radar;
 
-use app\models\competencies\Competencies;
+use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\users\Users;
+use Exception;
 use yii\base\Widget;
 
 /**
@@ -12,12 +13,12 @@ use yii\base\Widget;
  * Рисует радарную схему
  * @package app\widgets\radar
  * @property Users $user
- * @property Competencies $competency
+ * @property DynamicAttributes $attribute
  * @property array|null $reference
  */
 class RadarWidget extends Widget {
 	public $user;
-	public $competency;
+	public $attribute;
 	public $reference;
 
 	/**
@@ -29,17 +30,18 @@ class RadarWidget extends Widget {
 	}
 
 	/**
-	 * Преобразет данные компетенции в набор данных для радарного графа
+	 * Преобразует данные атрибута в набор данных для радарного графа
 	 * @return array
+	 * @throws Exception
 	 */
 	private function GetGraphMap():array {
 		$labels = [];
 		$data = [];
-		$fields = $this->competency->getUserFields($this->user->id);
-		foreach ($fields as $field) {
-			if ('percent' === $field->type) {
-				$labels[] = $field->name;
-				$data[] = $field->value;
+		$properties = $this->attribute->getUserProperties($this->user->id);
+		foreach ($properties as $property) {
+			if ('percent' === $property->type) {
+				$labels[] = $property->name;
+				$data[] = $property->value;
 				$this->reference[] = random_int(10, 90);
 			}
 		}
@@ -47,7 +49,7 @@ class RadarWidget extends Widget {
 			'labels' => $labels,
 			'datasets' => [
 				[
-					'label' => $this->competency->name,
+					'label' => $this->attribute->name,
 					'data' => $data
 				],
 				[
@@ -63,6 +65,7 @@ class RadarWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Exception
 	 */
 	public function run():string {
 		$data = $this->GetGraphMap();

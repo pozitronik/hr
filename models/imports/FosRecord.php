@@ -6,14 +6,14 @@ namespace app\models\imports;
 use app\helpers\ArrayHelper;
 use app\helpers\Csv;
 use app\helpers\Utils;
-use app\models\competencies\Competencies;
-use app\models\competencies\CompetencyField;
+use app\models\dynamic_attributes\DynamicAttributes;
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
-use app\models\relations\RelUsersCompetencies;
+use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use Throwable;
@@ -154,31 +154,31 @@ class FosRecord extends Model {
 			foreach ($models as $model) {
 				$attributes = [
 					[
-						'competency' => 'Адрес',
+						'attribute' => 'Адрес',
 						'type' => 'boolean',
 						'field' => 'Удалённое рабочее место',
 						"value" => !empty($model->urm)
 					],
 					[
-						'competency' => 'Адрес',
+						'attribute' => 'Адрес',
 						'type' => 'string',
 						'field' => 'Населённый пункт',
 						"value" => $model->city
 					],
 					[
-						'competency' => 'Адрес',
+						'attribute' => 'Адрес',
 						'type' => 'string',
 						'field' => 'Внешний почтовый адрес',
 						"value" => $model->email_sigma
 					],
 					[
-						'competency' => 'Кластер/продукт',
+						'attribute' => 'Кластер/продукт',
 						'type' => 'string',
 						'field' => 'Название',
 						"value" => $model->cluster
 					],
 					[
-						'competency' => 'Кластер/продукт',
+						'attribute' => 'Кластер/продукт',
 						'type' => 'string',
 						'field' => 'Лидер',
 						"value" => $model->cluster_leader
@@ -285,34 +285,33 @@ class FosRecord extends Model {
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
 		foreach ($attributes as $attribute) {
-			$this->addCompetencyAttribute($attribute, $user->id);
+			$this->addAttributeProperty($attribute, $user->id);
 		}
 		return $user->id;
 	}
 
 	/**
-	 * @param array<string, string> $attribute
+	 * @param array<string, string> $dynamic_attribute
 	 * @param int $user_id
-	 * todo: в модель компетенцию всю херню, чтобы работа со структурой была под капотом
-	 * @throws Exception
+	 * todo: в модель атрибутов всю херню, чтобы работа со структурой была под капотом
 	 * @throws Throwable
+	 * Добавляет атрибуту свойство
 	 */
-	public function addCompetencyAttribute(array $attribute, int $user_id):void {
-		if (null === $competency = Competencies::find()->where(['name' => $attribute['competency']])->one()) {
-			$competency = new Competencies();
-			$competency->createCompetency(['name' => $attribute['competency'], 'category' => 0]);
+	public function addAttributeProperty(array $dynamic_attribute, int $user_id):void {
+		if (null === $attribute = DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
+			$attribute = new DynamicAttributes();
+			$attribute->createCompetency(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
 		}
-		if (null === $field = $competency->getFieldByName($attribute['field'])) {
-			$field = new CompetencyField([
-				'competencyId' => $competency->id,
-				'name' => $attribute['field'],
-				'type' => $attribute['type']
+		if (null === $field = $attribute->getPropertyByName($dynamic_attribute['field'])) {
+			$field = new DynamicAttributeProperty([
+				'attributeId' => $attribute->id,
+				'name' => $dynamic_attribute['field'],
+				'type' => $dynamic_attribute['type']
 			]);
-			$field->id = $competency->setField($field, null);
+			$field->id = $attribute->setProperty($field, null);
 		}
-		RelUsersCompetencies::linkModels($user_id, $competency);
-		$competency->setUserField($user_id, $field->id, $attribute['value']);
-
+		RelUsersAttributes::linkModels($user_id, $attribute);
+		$attribute->setUserProperty($user_id, $field->id, $dynamic_attribute['value']);
 	}
 
 	/**
