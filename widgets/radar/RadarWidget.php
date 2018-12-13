@@ -66,7 +66,9 @@ class RadarWidget extends Widget {
 	 */
 	public function run():string {
 		$data = $this->GetGraphMap();
-
+		if ([] === $data['labels']) {
+			return $this->render('empty');
+		}
 
 		return $this->render('radar',[
 			'data' => $data
