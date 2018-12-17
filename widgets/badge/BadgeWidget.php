@@ -14,7 +14,7 @@ use yii\helpers\Html;
  * @package app\widgets\badge
  * @property array<Model> $data
  * @property string $attribute
- * @property integer $unbadgedCount
+ * @property integer|false $unbadgedCount
  * @property string $badgeClass
  * @property bool $itemsAsLinks
  * @property string $linkAttribute
@@ -59,7 +59,7 @@ class BadgeWidget extends Widget {
 				$result[] = ArrayHelper::getValue($model, $this->attribute);
 			}
 		}
-		if (count($result) > $this->unbadgedCount) {
+		if ($this->unbadgedCount && count($result) > $this->unbadgedCount) {
 			$badge = "<b class='badge {$this->badgeClass}'>...ещё ".(count($result) - $this->unbadgedCount)."</b>";
 			array_splice($result, $this->unbadgedCount, count($result));
 			return implode($this->itemsSeparator, $result).$badge;
