@@ -40,9 +40,7 @@ class UserWidget extends Widget {
 
 		$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
 		array_walk($options, function(&$value, $key) {
-			if (empty($value)) {
-				$value = [];
-			} else {
+			if (!empty($value)) {
 				$value = [
 					'style' => "background: $value;"
 				];
