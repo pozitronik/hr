@@ -21,6 +21,7 @@ use yii\helpers\Html;
  * @property string $itemsSeparator
  * @property integer|false $unbadgedCount
  * @property array $optionsMap
+ * @property array $badgeOptions
  * @property array $moreBadgeOptions
  */
 class BadgeWidget extends Widget {
@@ -33,6 +34,7 @@ class BadgeWidget extends Widget {
 	public $linkScheme = false;//Url-схема, например ['/admin/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
 	public $itemsSeparator = ', ';//Разделитель объектов
 	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([id => options])"
+	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
 
 	/**
@@ -54,7 +56,8 @@ class BadgeWidget extends Widget {
 		/** @var Model $model */
 		foreach ($this->data as $model) {
 			/** @noinspection PhpUndefinedFieldInspection - checked via hasProperty */
-			$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, []):[];
+			$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, $this->badgeOptions):$this->badgeOptions;
+			$badgeHtmlOptions = $badgeHtmlOptions??$this->badgeOptions;
 			if ($this->linkScheme) {
 				array_walk($this->linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
 					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
