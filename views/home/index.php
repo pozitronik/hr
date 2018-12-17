@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php foreach ($model->relGroups as $group): ?>
 	<?= GroupWidget::widget([
-		'group' => $group,
-		'user' => $model
+		'group' => $group
 	]); ?>
 <?php endforeach;?>

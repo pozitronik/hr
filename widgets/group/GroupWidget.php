@@ -13,7 +13,6 @@ use yii\base\Widget;
  */
 class GroupWidget extends Widget {
 	public $group;
-	public $user;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -29,8 +28,7 @@ class GroupWidget extends Widget {
 	 */
 	public function run():string {
 		return $this->render('group', [
-			'group' => $this->group,
-			'users' => $this->group->getRelUsers()->joinWith(['relUsersGroups', 'relUsersGroupsRoles'])->where(['group_id'=>$this->group->id])->orderBy(['rel_users_groups_roles.role' => SORT_DESC])->all()
+			'group' => $this->group
 		]);
 	}
 }

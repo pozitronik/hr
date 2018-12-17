@@ -3,17 +3,15 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var Users[]|null $users
  * @var Groups $group
  */
 
+use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
 use yii\web\View;
 use app\widgets\user\UserWidget;
 
-if (null === $users) $users = $group->relUsers;
 ?>
 
 <div class="panel">
@@ -24,17 +22,19 @@ if (null === $users) $users = $group->relUsers;
 				<li><a href="#tab2-<?= $group->id ?>" data-toggle="tab">Описание</a></li>
 				<?php if ($group->isLeader(CurrentUser::User())): ?>
 					<li>
-						<a href="#tab3-<?= $group->id ?>" data-toggle="tab"><div class="crown-mark"></div>Запрос на сотрудника</a>
+						<a href="#tab3-<?= $group->id ?>" data-toggle="tab">
+							<div class="crown-mark"></div>
+							Запрос на сотрудника</a>
 					</li>
 				<?php endif; ?>
 			</ul>
 		</div>
-		<h3 class="panel-title"><?= $group->name; ?></h3>
+		<h3 class="panel-title"><?= ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа'); ?>: <?= $group->name; ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="tab1-<?= $group->id ?>">
-				<?php foreach ($users as $user): ?>
+				<?php foreach ($group->relUsers as $user): ?>
 					<?= UserWidget::widget(compact('user', 'group')); ?>
 				<?php endforeach; ?>
 			</div>
