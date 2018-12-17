@@ -15,24 +15,25 @@ use yii\helpers\Html;
  * @property array<Model> $data
  * @property string $attribute
  * @property boolean $useBadges
- * @property string $moreBadgeClass
  * @property string|false $allBadgeClass
- * @property bool $itemsAsLinks
  * @property string $linkAttribute
- * @property array $linkScheme
+ * @property array|false $linkScheme
  * @property string $itemsSeparator
  * @property integer|false $unbadgedCount
+ * @property array $optionsMap
+ * @property array $moreBadgeOptions
  */
 class BadgeWidget extends Widget {
 	public $data = [];//Массив отображаемых моделей
 	public $attribute;//Атрибут модели, отображаемый в текст
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
 	public $useBadges = false;//использовать бейджи для основного списка.
-	public $moreBadgeClass = '';//дополнительный класс бейджа "Ещё".
-	public $itemsAsLinks = true;//преобразоввывать подписи в ссылки
+
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
-	public $linkScheme = [];//Url-схема, например ['/admin/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели)
+	public $linkScheme = false;//Url-схема, например ['/admin/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
 	public $itemsSeparator = ', ';//Разделитель объектов
+	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([id => options])"
+	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -52,25 +53,27 @@ class BadgeWidget extends Widget {
 		$moreBadge = '';
 		/** @var Model $model */
 		foreach ($this->data as $model) {
-			if ($this->itemsAsLinks) {
-				$linkScheme = $this->linkScheme;
-				array_walk($linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
+			/** @noinspection PhpUndefinedFieldInspection - checked via hasProperty */
+			$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, []):[];
+			if ($this->linkScheme) {
+				array_walk($this->linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
 					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
 				});
-				$result[] = Html::a(ArrayHelper::getValue($model, $this->attribute), $linkScheme);
+				$badgeContent = Html::a(ArrayHelper::getValue($model, $this->attribute), $this->linkScheme);
 			} else {
-				$result[] = ArrayHelper::getValue($model, $this->attribute);
+				$badgeContent = ArrayHelper::getValue($model, $this->attribute);
 			}
+
+			if ($this->useBadges) {
+				$result[] = Html::tag("span", $badgeContent, array_merge(['class' => 'badge'], $badgeHtmlOptions));
+			} else {
+				$result[] = $badgeContent;
+			}
+
 		}
 		if ($this->unbadgedCount && count($result) > $this->unbadgedCount) {
-			$moreBadge = "<span class='badge {$this->moreBadgeClass}'>...ещё ".(count($result) - $this->unbadgedCount)."</span>";
+			$moreBadge = Html::tag("span", "...ещё ".(count($result) - $this->unbadgedCount), $this->moreBadgeOptions);
 			array_splice($result, $this->unbadgedCount, count($result));
-		}
-		if ($this->useBadges) {
-			array_walk($result, function(&$value, $key) {//foreach быстрее, но это удобнее
-				$value = "<span class='badge'>$value</span>";
-			});
-
 		}
 		return implode($this->itemsSeparator, $result).$moreBadge;
 
