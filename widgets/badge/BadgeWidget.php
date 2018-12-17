@@ -14,18 +14,21 @@ use yii\helpers\Html;
  * @package app\widgets\badge
  * @property array<Model> $data
  * @property string $attribute
- * @property integer|false $unbadgedCount
- * @property string $badgeClass
+ * @property boolean $useBadges
+ * @property string $moreBadgeClass
+ * @property string|false $allBadgeClass
  * @property bool $itemsAsLinks
  * @property string $linkAttribute
  * @property array $linkScheme
  * @property string $itemsSeparator
+ * @property integer|false $unbadgedCount
  */
 class BadgeWidget extends Widget {
 	public $data = [];//Массив отображаемых моделей
 	public $attribute;//Атрибут модели, отображаемый в текст
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
-	public $badgeClass = '';//дополнительный класс бейджа
+	public $useBadges = false;//использовать бейджи для основного списка.
+	public $moreBadgeClass = '';//дополнительный класс бейджа "Ещё".
 	public $itemsAsLinks = true;//преобразоввывать подписи в ссылки
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
 	public $linkScheme = [];//Url-схема, например ['/admin/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели)
@@ -46,6 +49,7 @@ class BadgeWidget extends Widget {
 	 */
 	public function run():string {
 		$result = [];
+		$moreBadge = '';
 		/** @var Model $model */
 		foreach ($this->data as $model) {
 			if ($this->itemsAsLinks) {
@@ -60,11 +64,16 @@ class BadgeWidget extends Widget {
 			}
 		}
 		if ($this->unbadgedCount && count($result) > $this->unbadgedCount) {
-			$badge = "<b class='badge {$this->badgeClass}'>...ещё ".(count($result) - $this->unbadgedCount)."</b>";
+			$moreBadge = "<span class='badge {$this->moreBadgeClass}'>...ещё ".(count($result) - $this->unbadgedCount)."</span>";
 			array_splice($result, $this->unbadgedCount, count($result));
-			return implode($this->itemsSeparator, $result).$badge;
 		}
-		return implode($this->itemsSeparator, $result);
+		if ($this->useBadges) {
+			array_walk($result, function(&$value, $key) {
+				$value = "<span class='badge'>$value</span>";
+			});
+
+		}
+		return implode($this->itemsSeparator, $result).$moreBadge;
 
 	}
 }
