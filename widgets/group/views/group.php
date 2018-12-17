@@ -23,9 +23,9 @@ if (null === $users) $users = $group->relUsers;
 				<li class="active"><a href="#tab1-<?= $group->id ?>" data-toggle="tab">Сотрудники</a></li>
 				<li><a href="#tab2-<?= $group->id ?>" data-toggle="tab">Описание</a></li>
 				<?php if ($group->isLeader(CurrentUser::User())): ?>
-					<li><a href="#tab3-<?= $group->id ?>" data-toggle="tab">
-							<div class="crown-mark"></div>
-							Запрос на сотрудника</a></li>
+					<li>
+						<a href="#tab3-<?= $group->id ?>" data-toggle="tab"><div class="crown-mark"></div>Запрос на сотрудника</a>
+					</li>
 				<?php endif; ?>
 			</ul>
 		</div>
@@ -35,10 +35,7 @@ if (null === $users) $users = $group->relUsers;
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="tab1-<?= $group->id ?>">
 				<?php foreach ($users as $user): ?>
-					<?= UserWidget::widget([
-						'user' => $user,
-						'mode' => $group->isLeader($user)?'boss':'user'
-					]); ?>
+					<?= UserWidget::widget(compact('user', 'group')); ?>
 				<?php endforeach; ?>
 			</div>
 			<div class="tab-pane fade" id="tab2-<?= $group->id ?>">

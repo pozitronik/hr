@@ -3,18 +3,21 @@ declare(strict_types = 1);
 
 namespace app\widgets\user;
 
+use app\helpers\ArrayHelper;
+use app\models\groups\Groups;
+use app\models\references\refs\RefUserRoles;
 use app\models\users\Users;
 use yii\base\Widget;
 
 /**
  * Class UserWidget
  * @property Users $user
- * @property string $mode boss|user|etc - prototype
+ * @property Groups $group
  *
  */
 class UserWidget extends Widget {
 	public $user;
-	public $mode = 'user';
+	public $group;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -29,9 +32,26 @@ class UserWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('user', [
+		if (null === $this->group) {
+			return $this->render('user', [
+				'model' => $this->user
+			]);
+		}
+
+		$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
+		array_walk($options, function(&$value, $key) {
+			if (empty($value)) {
+				$value = [];
+			} else {
+				$value = [
+					'style' => "background: $value;"
+				];
+			}
+		});
+		return $this->render('leader', [
 			'model' => $this->user,
-			'boss' => 'boss' === $this->mode
+			'group' => $this->group,
+			'options' => $options
 		]);
 
 	}

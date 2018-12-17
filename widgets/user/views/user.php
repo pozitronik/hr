@@ -16,9 +16,6 @@ use yii\helpers\Html;
 		<div class="panel">
 			<div class="text-center pad-all bord-btm">
 				<div class="pad-ver">
-					<?php if ($boss): ?>
-						<div class="crown"></div>
-					<?php endif; ?>
 					<img src="<?= $model->avatar; ?>" class="img-lg img-border img-circle" alt="<?= $model->username; ?>">
 				</div>
 
