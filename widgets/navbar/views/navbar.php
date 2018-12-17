@@ -83,7 +83,7 @@ use app\helpers\ArrayHelper;
 					<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
 						<div class="username hidden-xs"><?= $user->username; ?></div>
 						<span class="pull-right">
-							<img class="img-circle img-user media-object" src="<?= $user->avatar; ?>" alt="Profile Picture">
+							<img class="img-circle img-user media-object img-border-current" src="<?= $user->avatar; ?>" alt="Profile Picture">
 							<i class="demo-pli-male ic-user"></i>
 						</span>
 					</a>

@@ -6,17 +6,18 @@ declare(strict_types = 1);
  * @var boolean $boss
  */
 
+use app\models\user\CurrentUser;
 use app\models\users\Users;
 use yii\web\View;
 use yii\helpers\Html;
-
+$borderStyle = (CurrentUser::Id() === $model->id)?'img-border-current':'img-border';
 ?>
 <div class="fixed-fluid pull-left">
 	<div class="pull-sm-left">
 		<div class="panel">
 			<div class="text-center pad-all bord-btm">
 				<div class="pad-ver">
-					<?= Html::a(Html::img($model->avatar, ['class' => 'img-sm img-border img-circle', 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
+					<?= Html::a(Html::img($model->avatar, ['class' => "img-sm {$borderStyle} img-circle", 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
 				</div>
 
 				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= Html::a($model->username, ['admin/users/update', 'id' => $model->id]) ?></h4>

@@ -62,3 +62,7 @@
 	float: left;
 	line-height: 40px;
 }
+
+.img-border-current {
+	box-shadow: 0 0 0 4px rgba(59, 158, 59, 0.21);
+}

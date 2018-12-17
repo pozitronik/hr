@@ -11,10 +11,13 @@ declare(strict_types = 1);
 use app\models\groups\Groups;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
+use app\models\user\CurrentUser;
 use app\models\users\Users;
 use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
+
+$borderStyle = (CurrentUser::Id() === $model->id)?'img-border-current':'img-border';
 
 ?>
 
@@ -23,12 +26,12 @@ use yii\web\View;
 		<div class="panel user">
 			<?php if ($group->isLeader($model)): ?>
 				<div class="crown text-center pull-left">
-					<?= Html::a(Html::img($model->avatar, ['class' => 'img-sm img-border img-circle', 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
+					<?= Html::a(Html::img($model->avatar, ['class' => "img-sm {$borderStyle} img-circle", 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
 				</div>
 
 			<?php else: ?>
 				<div class="avatar text-center pull-left">
-					<?= Html::a(Html::img($model->avatar, ['class' => 'img-sm img-border img-circle', 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
+					<?= Html::a(Html::img($model->avatar, ['class' => "img-sm {$borderStyle} img-circle", 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
 				</div>
 			<?php endif; ?>
 
