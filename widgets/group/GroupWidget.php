@@ -28,7 +28,8 @@ class GroupWidget extends Widget {
 	 */
 	public function run():string {
 		return $this->render('group', [
-			'group' => $this->group
+			'group' => $this->group,
+			'users' => $this->group->getRelUsers()->joinWith(['relRefUserRoles'])->where(['group_id' => $this->group->id])->orderBy(['ref_user_roles.boss_flag' => SORT_DESC, 'ref_user_roles.id' => SORT_ASC])->all()
 		]);
 	}
 }

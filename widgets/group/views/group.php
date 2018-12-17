@@ -4,16 +4,19 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
+ * @var Users[] $users
  */
 
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\user\CurrentUser;
+use app\models\users\Users;
 use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use app\widgets\user\UserWidget;
+
 
 ?>
 
@@ -38,7 +41,7 @@ use app\widgets\user\UserWidget;
 	<div class="panel-body">
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="tab1-<?= $group->id ?>">
-				<?php foreach ($group->relUsers as $user): ?>
+				<?php foreach ($users as $user): ?>
 					<?= UserWidget::widget(compact('user', 'group')); ?>
 				<?php endforeach; ?>
 			</div>
@@ -64,7 +67,7 @@ use app\widgets\user\UserWidget;
 				'itemsSeparator' => false,
 				'linkScheme' => ['admin/groups/update', 'id' => 'id']
 			]); ?>
-		<?= Html::a('Визуализация иерархии', ['admin/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
+			<?= Html::a('Визуализация иерархии', ['admin/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
 		<?php endif; ?>
 
 	</div>
