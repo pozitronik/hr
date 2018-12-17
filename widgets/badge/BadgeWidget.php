@@ -54,10 +54,9 @@ class BadgeWidget extends Widget {
 		foreach ($this->data as $model) {
 			if ($this->itemsAsLinks) {
 				$linkScheme = $this->linkScheme;
-				foreach ($linkScheme as $key => &$value) {//постановка в схему значений из модели
+				array_walk($linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
 					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
-				}
-				unset($value);
+				});
 				$result[] = Html::a(ArrayHelper::getValue($model, $this->attribute), $linkScheme);
 			} else {
 				$result[] = ArrayHelper::getValue($model, $this->attribute);
@@ -68,7 +67,7 @@ class BadgeWidget extends Widget {
 			array_splice($result, $this->unbadgedCount, count($result));
 		}
 		if ($this->useBadges) {
-			array_walk($result, function(&$value, $key) {
+			array_walk($result, function(&$value, $key) {//foreach быстрее, но это удобнее
 				$value = "<span class='badge'>$value</span>";
 			});
 
