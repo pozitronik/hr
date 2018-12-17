@@ -16,5 +16,7 @@ class FontAwesomeAsset extends AssetBundle {
 
 	public $css = [
 		'css/fontawesome-all.min.css',
+		'css/fa-regular.min.css',
+		'css/regular.min.css'
 	];
 }

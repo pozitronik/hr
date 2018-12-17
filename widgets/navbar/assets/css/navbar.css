@@ -66,3 +66,13 @@
 .img-border-current {
 	box-shadow: 0 0 0 4px rgba(59, 158, 59, 0.21);
 }
+
+.breadcrumb > li + li::before {
+	content: "/\00a0";
+	display: inline-block;
+	font-family: "Font Awesome 5 Free";
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+
+}
