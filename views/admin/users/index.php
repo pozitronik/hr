@@ -67,7 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
 						/** @var UsersSearch $model */
 						return BadgeWidget::widget([
 							'data' => $model->relGroups,
-							'badgeClass' => 'pull-right',
 							'attribute' => 'name',
 							'linkScheme' => ['admin/groups/update', 'id' => 'id']
 						]);
