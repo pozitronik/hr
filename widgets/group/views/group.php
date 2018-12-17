@@ -7,8 +7,11 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\user\CurrentUser;
+use app\widgets\badge\BadgeWidget;
+use yii\helpers\Html;
 use yii\web\View;
 use app\widgets\user\UserWidget;
 
@@ -29,7 +32,8 @@ use app\widgets\user\UserWidget;
 				<?php endif; ?>
 			</ul>
 		</div>
-		<h3 class="panel-title"><?= ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа'); ?>: <?= $group->name; ?></h3>
+		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['admin/groups/update', 'id' => $group->id]); ?>
+		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['admin/groups/update', 'id' => $group->id]); ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="tab-content">
@@ -47,6 +51,22 @@ use app\widgets\user\UserWidget;
 				</div>
 			<?php endif; ?>
 		</div>
+	</div>
+	<div class="panel-footer">
+		<!--Сводка-->
+		<?php if (0 < ($childCount = $group->childGroupsCount)): ?>
+			Ещё <?= Utils::pluralForm($childCount, ['дочерняя группа', 'дочерние группы', 'дочерних групп']); ?>:
+			<?= BadgeWidget::widget([
+				'data' => $group->relChildGroups,
+				'attribute' => 'name',
+				'unbadgedCount' => 3,
+				'moreBadgeOptions' => ['class' => 'badge'],
+				'itemsSeparator' => false,
+				'linkScheme' => ['admin/groups/update', 'id' => 'id']
+			]); ?>
+		<?= Html::a('Визуализация иерархии', ['admin/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
+		<?php endif; ?>
+
 	</div>
 </div>
 

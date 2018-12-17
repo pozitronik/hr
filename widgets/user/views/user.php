@@ -16,7 +16,7 @@ use yii\helpers\Html;
 		<div class="panel">
 			<div class="text-center pad-all bord-btm">
 				<div class="pad-ver">
-					<img src="<?= $model->avatar; ?>" class="img-lg img-border img-circle" alt="<?= $model->username; ?>">
+					<?= Html::a(Html::img($model->avatar, ['class' => 'img-sm img-border img-circle', 'alt' => $model->username]), ['admin/users/update', 'id' => $model->id]); ?>
 				</div>
 
 				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= Html::a($model->username, ['admin/users/update', 'id' => $model->id]) ?></h4>

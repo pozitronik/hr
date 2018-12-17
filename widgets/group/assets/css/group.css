@@ -6,6 +6,17 @@
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
-	float:left;
+	float: left;
 	margin: 6px 0px 0 -15px;
+}
+
+.panel-logo {
+	max-height: 50px;
+	float: left;
+	margin-left: 20px;
+	padding: 2px 0px;
+}
+
+.panel-footer .badge a {
+	color: floralwhite;
 }
