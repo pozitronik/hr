@@ -27,7 +27,7 @@ class BadgeWidget extends Widget {
 	public $data = [];//Массив отображаемых моделей
 	public $attribute;//Атрибут модели, отображаемый в текст
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
-	public $useBadges = false;//использовать бейджи для основного списка.
+	public $useBadges = true;//использовать бейджи для основного списка.
 
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
 	public $linkScheme = false;//Url-схема, например ['/admin/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
