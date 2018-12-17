@@ -207,4 +207,14 @@ class Utils {
 		}
 		return $total;
 	}
+
+	/**
+	 * Склонение числительных
+	 * @param int $number
+	 * @param array $titles
+	 * @return string
+	 */
+	public static function pluralForm(int $number, array $titles):string {
+		return $number." ".$titles[($number % 100 > 4 && $number % 100 < 20)?2:[2, 0, 1, 1, 1, 2][min($number % 10, 5)]];
+	}
 }
