@@ -11,6 +11,7 @@ declare(strict_types = 1);
 use app\assets\DynamicAttributesSearchAsset;
 use app\models\dynamic_attributes\DynamicAttributesSearchCollection;
 use app\models\users\Users;
+use app\widgets\badge\BadgeWidget;
 use app\widgets\user_attributes\UserAttributesWidget;
 use app\widgets\user\UserWidget;
 use kartik\grid\GridView;
@@ -122,15 +123,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		'resizableColumns' => true,
 		'responsive' => true,
 		'columns' => [
-//			'id',
-//			[
-//				'value' => function($column) {
-//					/** @var Users $column */
-//					return Html::img($column->avatar, ['class' => 'img-circle img-xs']);
-//				},
-//				'label' => 'Аватар',
-//				'format' => 'raw'
-//			],
 			[
 				'attribute' => 'username',
 				'value' => function($model) {
@@ -142,7 +134,20 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'raw',
 				'label' => 'Сотрудник'
 			],
-//			'username',
+			[
+				'attribute' => 'groupName',
+				'label' => 'Группы',
+				'value' => function($model) {
+					/** @var Users $model */
+					return BadgeWidget::widget([
+						'data' => $model->relGroups,
+						'useBadges' => false,
+						'attribute' => 'name',
+						'linkScheme' => ['admin/groups/update', 'id' => 'id']
+					]);
+				},
+				'format' => 'raw'
+			],
 //			'positionName',
 			[
 				'label' => 'Атрибуты',
