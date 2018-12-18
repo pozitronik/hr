@@ -41,7 +41,6 @@ use app\helpers\ArrayHelper;
 									<li class="dropdown-header">Навигация</li>
 									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Группы</p><small class="text-muted">Рабочие группы в сфере моей ответственности</small></div>', ["home/index"]); ?></li>
 									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Атрибуты</p><small class="text-muted">Поиск сотрудников по атрибутам</small></div>', ["admin/attributes/search"]); ?></li>
-<!--									<li>--><?//= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Матрица ресурсов</p><small class="text-muted">Матрица связей рабочих групп</small></div>', ["home/matrix"]); ?><!--</li>-->
 								</ul>
 
 							</div>
