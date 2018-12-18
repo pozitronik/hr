@@ -4,27 +4,34 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\core\SysExceptions;
+use app\models\groups\Groups;
 use app\models\users\Users;
+use Exception;
 use Throwable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * @property DynamicAttributesSearchItem[] $searchItems
- *
- * @property $removeCondition
- * @property $addCondition
+ * @property-write int $searchScope
+ * @property-write bool $searchTree
  */
 class DynamicAttributesSearchCollection extends Model {
 	private $searchItems = [];
+	private $searchScope = 184;//Область поиска. 0 - все группы, иначе выбранная группа
+	private $searchTree = true;//true - искать по всему дереву, false - только в выбранной группе
 
 	/**
 	 * @inheritdoc
 	 */
 	public function rules():array {
 		return [
-			[['searchItems'], 'safe']
+			[['searchItems'], 'safe'],
+			[['searchScope'], 'integer'],
+			[['searchTree'], 'boolean']
 		];
 	}
 
@@ -126,11 +133,29 @@ class DynamicAttributesSearchCollection extends Model {
 	}
 
 	/**
+	 * @param ActiveQuery $query
+	 * @return ActiveQuery
+	 */
+	private function applySearchScope(ActiveQuery $query):ActiveQuery {
+		if (0 !== $this->searchScope) {
+			$query->joinWith(['relGroups']);
+			if ($this->searchTree) {
+				$query->andWhere(['sys_groups.id' => Groups::findModel($this->searchScope, new Exception("Wrong group id {$this->searchScope}"))->collectRecursiveIds()]);
+			} else {
+				$query->andWhere(['sys_groups.id' => $this->searchScope]);
+			}
+
+		}
+		return $query;
+	}
+
+	/**
 	 * @return ActiveDataProvider
 	 * @throws Throwable
 	 */
 	public function searchCondition():ActiveDataProvider {
 		$query = Users::find()->active();
+		$query = $this->applySearchScope($query);
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query
@@ -182,5 +207,19 @@ class DynamicAttributesSearchCollection extends Model {
 		}
 		//\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
+	}
+
+	/**
+	 * @param bool $searchTree
+	 */
+	public function setSearchTree(bool $searchTree):void {
+		$this->searchTree = $searchTree;
+	}
+
+	/**
+	 * @param int $searchScope
+	 */
+	public function setSearchScope(int $searchScope):void {
+		$this->searchScope = $searchScope;
 	}
 }
