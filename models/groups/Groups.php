@@ -237,6 +237,7 @@ class Groups extends ActiveRecord {
 	 */
 	public function setRelChildGroups($childGroups):void {
 		RelGroupsGroups::linkModels($this, $childGroups);
+		$this->dropCaches();
 	}
 
 	/**
@@ -246,6 +247,7 @@ class Groups extends ActiveRecord {
 	 */
 	public function setDropChildGroups(array $dropChildGroups):void {
 		RelGroupsGroups::unlinkModels($this, $dropChildGroups);
+		$this->dropCaches();
 	}
 
 	/**
@@ -270,6 +272,12 @@ class Groups extends ActiveRecord {
 	 */
 	public function setRelParentGroups($parentGroups):void {
 		RelGroupsGroups::linkModels($parentGroups, $this);
+		if (!empty($parentGroups)) {
+			foreach ($parentGroups as $group) {
+				Groups::findModel($group)->dropCaches();
+			}
+		}
+
 	}
 
 	/**
@@ -279,6 +287,11 @@ class Groups extends ActiveRecord {
 	 */
 	public function setDropParentGroups(array $dropParentGroups):void {
 		RelGroupsGroups::unlinkModels($dropParentGroups, $this);
+		if (!empty($dropParentGroups)) {
+			foreach ($dropParentGroups as $group) {
+				Groups::findModel($group)->dropCaches();
+			}
+		}
 	}
 
 	/**
@@ -350,23 +363,25 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
-	 * @todo: кеширование
 	 * @param int|null $initialId Параметр для учёта рекурсии
 	 * @return array<int>
 	 */
 	public function collectRecursiveIds(?int $initialId = null):array {
-		$initialId = $initialId??$this->id;
-		$groupsId = [[]];//Сюда соберём айдишники всех обходимых групп
-		/** @var Groups $childGroup */
-		foreach ((array)$this->relChildGroups as $childGroup) {
-			if ($initialId !== $childGroup->id) {//избегаем рекурсии
-				$groupsId[] = $childGroup->collectRecursiveIds($initialId);
-			}
+		return Yii::$app->cache->getOrSet(static::class."CollectRecursiveIds".$this->id, function() use ($initialId) {
+			$initialId = $initialId??$this->id;
+			$groupsId = [[]];//Сюда соберём айдишники всех обходимых групп
+			/** @var Groups $childGroup */
+			foreach ((array)$this->relChildGroups as $childGroup) {
+				if ($initialId !== $childGroup->id) {//избегаем рекурсии
+					$groupsId[] = $childGroup->collectRecursiveIds($initialId);
+				}
 
-		}
-		$groupsId = array_merge(...$groupsId);
-		$groupsId[] = $this->id;
-		return $groupsId;
+			}
+			$groupsId = array_merge(...$groupsId);
+			$groupsId[] = $this->id;
+			return $groupsId;
+		});
+
 	}
 
 	/**
@@ -390,6 +405,13 @@ class Groups extends ActiveRecord {
 	 */
 	public function getChildGroupsCount():int {
 		return (int)$this->getRelChildGroups()->count();
+	}
+
+	/**
+	 * Удаляет все кеши, связанные с группой
+	 */
+	private function dropCaches():void {
+		Yii::$app->cache->delete(static::class."CollectRecursiveIds".$this->id);
 	}
 
 }
