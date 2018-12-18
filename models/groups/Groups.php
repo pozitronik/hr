@@ -342,10 +342,15 @@ class Groups extends ActiveRecord {
 	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
 	 * @return array<int>
 	 */
-	private function collectRecursiveIds():array {
+	public function collectRecursiveIds(int $initialId = null):array {
+		$initialId = $initialId??$this->id;
 		$groupsId = [[]];//Сюда соберём айдишники всех обходимых групп
+		/** @var Groups $childGroup */
 		foreach ((array)$this->relChildGroups as $childGroup) {
-			$groupsId[] = $childGroup->collectRecursiveIds();
+			if ($initialId !== $childGroup->id) {//избегаем рекурсии
+				$groupsId[] = $childGroup->collectRecursiveIds($initialId);
+			}
+
 		}
 		$groupsId = array_merge(...$groupsId);
 		$groupsId[] = $this->id;
