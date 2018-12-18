@@ -66,7 +66,9 @@ use yii\web\UploadedFile;
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
  * @property integer[] $dropUsersAttributes
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader Релейшен к ролям пользователей с флагом босса
  * @property DynamicAttributes[]|ActiveQuery $relDynamicAttributes Релейшен к атрибутам
+ * @property ActiveQuery|Groups[] $relLeadingGroups Группы, в которых пользователь лидер
  */
 class Users extends ActiveRecord {
 	use ARExtended;
@@ -258,6 +260,13 @@ class Users extends ActiveRecord {
 	public function getRelRefUserRoles() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
+	/**
+	 * Все роли этого пользователя с флагом лидера
+	 * @return ActiveQuery|RefUserRoles[]
+	 */
+	public function getRelRefUserRolesLeader() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
+	}
 
 	/**
 	 * @param array $relUsersGroups
@@ -384,8 +393,16 @@ class Users extends ActiveRecord {
 	 */
 	public static function mapLeaders():array {
 //		return Yii::$app->cache->getOrSet(static::class."MapLeaders", function() {
-			$data = self::find()->joinWith('relRefUserRoles')->where(['ref_user_roles.boss_flag' => true])->all();
-			return ArrayHelper::map($data, 'id', 'username');
+		$data = self::find()->joinWith(['relRefUserRolesLeader'])->all();
+		return ArrayHelper::map($data, 'id', 'username');
 //		});
+	}
+
+	/**
+	 * Вернёт все группы, в которых пользователь имеет галочку босса
+	 * @return LCQuery|ActiveQuery
+	 */
+	public function getRelLeadingGroups() {
+		return $this->getRelGroups()->joinWith(['relRefUserRolesLeader']);
 	}
 }
