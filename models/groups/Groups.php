@@ -45,6 +45,7 @@ use yii\web\UploadedFile;
  * @property-read Users[] $leaders Пользюки, прописанне в группе с релейшеном лидера (владелец/руководитель)
  * @property-read Users|null $leader Один пользователь из лидеров (для презентации)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property array $rolesInGroup
  * @property array $dropUsers
@@ -53,6 +54,7 @@ use yii\web\UploadedFile;
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
  * @property-read integer $usersCount Количество пользователей в группе
+ *
  * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
@@ -349,9 +351,10 @@ class Groups extends ActiveRecord {
 	/**
 	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
 	 * @todo: кеширование
+	 * @param int|null $initialId Параметр для учёта рекурсии
 	 * @return array<int>
 	 */
-	public function collectRecursiveIds(int $initialId = null):array {
+	public function collectRecursiveIds(?int $initialId = null):array {
 		$initialId = $initialId??$this->id;
 		$groupsId = [[]];//Сюда соберём айдишники всех обходимых групп
 		/** @var Groups $childGroup */

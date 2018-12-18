@@ -8,7 +8,6 @@ use app\models\core\SysExceptions;
 use app\models\groups\Groups;
 use app\models\user\CurrentUser;
 use app\models\users\Users;
-use Exception;
 use Throwable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -151,6 +150,7 @@ class DynamicAttributesSearchCollection extends Model {
 	/**
 	 * @param ActiveQuery $query
 	 * @return ActiveQuery
+	 * @throws Throwable
 	 */
 	private function applySearchScope(ActiveQuery $query):ActiveQuery {
 		$groups = [[]];
@@ -258,7 +258,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 * @param int[] $searchScope
 	 */
 	public function setSearchScope($searchScope):void {
-		$this->searchScope = (empty($searchScope))?[]:$searchScope;
+		$this->searchScope = empty($searchScope)?[]:$searchScope;
 	}
 
 	/**
