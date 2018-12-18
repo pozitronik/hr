@@ -47,16 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-xs-12">
-				<div class="col-md-6">
+				<div class="col-md-10">
 					<?= $form->field($model, "searchScope")->widget(Select2::class, [
 						'data' => $model::searchGroups(),
 						'value' => $model->searchScope,
 						'options' => [
-							'multiple' => false
+							'multiple' => true,
+							'placeholder' => 'Все группы'
 						]
-					])->label('Область поиска'); ?>
+					])->label('Искать в группах'); ?>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-2">
 					<?= $form->field($model, "searchTree")->widget(SwitchInput::class, [
 						'pluginOptions' => [
 							'size' => 'mini',

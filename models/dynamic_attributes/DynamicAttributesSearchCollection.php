@@ -6,6 +6,7 @@ namespace app\models\dynamic_attributes;
 use app\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\models\groups\Groups;
+use app\models\user\CurrentUser;
 use app\models\users\Users;
 use Exception;
 use Throwable;
@@ -15,13 +16,17 @@ use yii\db\ActiveQuery;
 
 /**
  * @property DynamicAttributesSearchItem[] $searchItems
- * @property int $searchScope
+ * @property int[] $searchScope
  * @property bool $searchTree
  */
 class DynamicAttributesSearchCollection extends Model {
 	private $searchItems = [];
-	private $searchScope = 0;//Область поиска. 0 - все группы, иначе выбранная группа
+	private $searchScope = [0];//Область поиска. 0 - все группы, -1 - все мои группы, -2 - все группы, где я босс. Иначе выбранная группа
 	private $searchTree = true;//true - искать по всему дереву, false - только в выбранной группе
+
+	public const SCOPE_ALL_GROUPS = 0;
+	public const SCOPE_MY_GROUPS = -1;
+	public const SCOPE_BOSS_GROUPS = -2;
 
 	/**
 	 * @inheritdoc
@@ -29,7 +34,7 @@ class DynamicAttributesSearchCollection extends Model {
 	public function rules():array {
 		return [
 			[['searchItems'], 'safe'],
-			[['searchScope'], 'integer'],
+			[['searchScope'], 'safe'],
 			[['searchTree'], 'boolean']
 		];
 	}
@@ -132,19 +137,53 @@ class DynamicAttributesSearchCollection extends Model {
 	}
 
 	/**
+	 * Значения поисковой выбиралки
+	 * @return array
+	 */
+	public static function searchGroups():array {
+		return [
+				self::SCOPE_ALL_GROUPS => 'Все группы',
+				self::SCOPE_MY_GROUPS => 'Группы, в которых я состою',
+				self::SCOPE_BOSS_GROUPS => 'Группы под моим руководством'
+			] + ArrayHelper::map(Groups::find()->active()->all(), 'id', 'name');
+	}
+
+	/**
 	 * @param ActiveQuery $query
 	 * @return ActiveQuery
 	 */
 	private function applySearchScope(ActiveQuery $query):ActiveQuery {
-		if (0 !== $this->searchScope) {
-			$query->joinWith(['relGroups']);
-			if ($this->searchTree) {
-				$query->andWhere(['sys_groups.id' => Groups::findModel($this->searchScope, new Exception("Wrong group id {$this->searchScope}"))->collectRecursiveIds()]);
-			} else {
-				$query->andWhere(['sys_groups.id' => $this->searchScope]);
+		$groups = [[]];
+		foreach ($this->searchScope as $groupId) {
+			switch ($groupId) {
+				case self::SCOPE_ALL_GROUPS://все группы - это все группы
+					return $query;
+				break;
+				default:
+					$groups[] = Groups::findModels($this->searchScope);
+				break;
+				case self::SCOPE_MY_GROUPS:
+					$groups[] = CurrentUser::User()->relGroups;
+				break;
+				case self::SCOPE_BOSS_GROUPS:
+					$groups[] = CurrentUser::User()->relLeadingGroups;
+				break;
 			}
-
 		}
+		$groups = array_merge(...$groups);
+
+		$query->joinWith(['relGroups']);
+		if ($this->searchTree) {
+			$t = [[]];
+			foreach ($groups as $group) {
+				$t[] = $group->collectRecursiveIds();
+			}
+			$ids = array_unique(array_merge(...$t));
+			$query->andWhere(['sys_groups.id' => $ids]);
+		} else {
+			$query->andWhere(['sys_groups.id' => ArrayHelper::getColumn($groups, 'id')]);
+		}
+
 		return $query;
 	}
 
@@ -216,16 +255,16 @@ class DynamicAttributesSearchCollection extends Model {
 	}
 
 	/**
-	 * @param int $searchScope
+	 * @param int[] $searchScope
 	 */
-	public function setSearchScope(int $searchScope):void {
-		$this->searchScope = $searchScope;
+	public function setSearchScope($searchScope):void {
+		$this->searchScope = (empty($searchScope))?[]:$searchScope;
 	}
 
 	/**
-	 * @return int
+	 * @return int[]
 	 */
-	public function getSearchScope():int {
+	public function getSearchScope():array {
 		return $this->searchScope;
 	}
 
@@ -236,11 +275,4 @@ class DynamicAttributesSearchCollection extends Model {
 		return $this->searchTree;
 	}
 
-	/**
-	 * Значения поисковой выбиралки
-	 * @return array
-	 */
-	public static function searchGroups():array {
-		return [0 => 'Все группы'] + ArrayHelper::map(Groups::find()->active()->all(), 'id', 'name');
-	}
 }
