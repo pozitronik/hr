@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 use app\models\references\refs\RefUserRoles;
 use kartik\color\ColorInput;
+use kartik\switchinput\SwitchInput;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -44,7 +45,15 @@ use yii\widgets\ActiveForm;
 						]) ?>
 					</div>
 					<div class="col-md-2">
-						<?= $form->field($model, 'boss_flag')->checkbox(); ?>
+						<?= $form->field($model, 'boss_flag')->widget(SwitchInput::class, [
+							'pluginOptions' => [
+								'size' => 'mini',
+								'onText' => 'ДА',
+								'offText' => 'НЕТ',
+								'onColor' => 'primary',
+								'offColor' => 'default'
+							]
+						]); ?>
 					</div>
 				</div>
 
