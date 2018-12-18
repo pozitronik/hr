@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Utils;
 use app\models\core\SysExceptions;
 use app\models\groups\Groups;
 use app\models\users\Users;

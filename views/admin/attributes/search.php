@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'onColor' => 'primary',
 							'offColor' => 'default'
 						]
-					])->label('Поиск по всей структуре'); ?>
+					])->label('Поиск в дочерних группах'); ?>
 				</div>
 			</div>
 
