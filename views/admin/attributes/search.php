@@ -23,6 +23,7 @@ use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
 use app\models\dynamic_attributes\DynamicAttributes;
 use yii\helpers\Url;
+
 DynamicAttributesSearchAsset::register($this);
 
 $this->title = 'Поиск';
@@ -34,16 +35,40 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $form = ActiveForm::begin(); ?>
 	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<div class="panel-control">
-				<?= Html::button("", ['class' => 'hidden', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>
-				<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'type' => 'submit', 'name' => 'remove', 'value' => count($model->searchItems) > 1, 'disabled' => (count($model->searchItems) > 1)?false:'disabled', 'title' => 'Убрать условие']); ?>
-				<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true, 'title' => 'Добавить условие']); ?>
-			</div>
-			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+	<div class="panel-heading">
+		<div class="panel-control">
+			<?= Html::button("", ['class' => 'hidden', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>
+			<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'type' => 'submit', 'name' => 'remove', 'value' => count($model->searchItems) > 1, 'disabled' => (count($model->searchItems) > 1)?false:'disabled', 'title' => 'Убрать условие']); ?>
+			<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true, 'title' => 'Добавить условие']); ?>
 		</div>
+		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+	</div>
 
-		<div class="panel-body">
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-md-6">
+					<?= $form->field($model, "searchScope")->widget(Select2::class, [
+						'data' => $model::searchGroups(),
+						'value' => $model->searchScope,
+						'options' => [
+							'multiple' => false
+						]
+					])->label('Область поиска'); ?>
+				</div>
+				<div class="col-md-6">
+					<?= $form->field($model, "searchTree")->widget(SwitchInput::class, [
+						'pluginOptions' => [
+							'size' => 'mini',
+							'onText' => 'ДА',
+							'offText' => 'НЕТ',
+							'onColor' => 'primary',
+							'offColor' => 'default'
+						]
+					])->label('Поиск по всей структуре'); ?>
+				</div>
+			</div>
+
 			<?php foreach ($model->searchItems as $index => $condition): ?>
 				<div class="row" data-index='<?= $index ?>'>
 					<div class="col-xs-12">

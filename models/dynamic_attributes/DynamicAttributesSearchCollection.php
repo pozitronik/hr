@@ -16,12 +16,12 @@ use yii\db\ActiveQuery;
 
 /**
  * @property DynamicAttributesSearchItem[] $searchItems
- * @property-write int $searchScope
- * @property-write bool $searchTree
+ * @property int $searchScope
+ * @property bool $searchTree
  */
 class DynamicAttributesSearchCollection extends Model {
 	private $searchItems = [];
-	private $searchScope = 184;//Область поиска. 0 - все группы, иначе выбранная группа
+	private $searchScope = 0;//Область поиска. 0 - все группы, иначе выбранная группа
 	private $searchTree = true;//true - искать по всему дереву, false - только в выбранной группе
 
 	/**
@@ -221,5 +221,27 @@ class DynamicAttributesSearchCollection extends Model {
 	 */
 	public function setSearchScope(int $searchScope):void {
 		$this->searchScope = $searchScope;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getSearchScope():int {
+		return $this->searchScope;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getSearchTree():bool {
+		return $this->searchTree;
+	}
+
+	/**
+	 * Значения поисковой выбиралки
+	 * @return array
+	 */
+	public static function searchGroups():array {
+		return [0 => 'Все группы'] + ArrayHelper::map(Groups::find()->active()->all(), 'id', 'name');
 	}
 }
