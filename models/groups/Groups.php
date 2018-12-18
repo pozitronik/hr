@@ -163,6 +163,14 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
+	 * Все роли боссов в этой группе
+	 * @return ActiveQuery|RefUserRoles[]
+	 */
+	public function getRelRefUserRolesLeader() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
+	}
+
+	/**
 	 * @param array $paramsArray
 	 * @return bool
 	 * @throws Exception
@@ -340,6 +348,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
+	 * @todo: кеширование
 	 * @return array<int>
 	 */
 	public function collectRecursiveIds(int $initialId = null):array {
