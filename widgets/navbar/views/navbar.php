@@ -41,7 +41,7 @@ use app\helpers\ArrayHelper;
 									<li class="dropdown-header">Навигация</li>
 									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Группы</p><small class="text-muted">Рабочие группы в сфере моей ответственности</small></div>', ["home/index"]); ?></li>
 									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Атрибуты</p><small class="text-muted">Поиск сотрудников по атрибутам</small></div>', ["admin/attributes/search"]); ?></li>
-									<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Матрица ресурсов</p><small class="text-muted">Матрица связей рабочих групп</small></div>', ["home/matrix"]); ?></li>
+<!--									<li>--><?//= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Матрица ресурсов</p><small class="text-muted">Матрица связей рабочих групп</small></div>', ["home/matrix"]); ?><!--</li>-->
 								</ul>
 
 							</div>
@@ -101,16 +101,6 @@ use app\helpers\ArrayHelper;
 						<ul class="head-list">
 							<li>
 								<?= Html::a("Профиль", ["admin/users/update", "id" => $user->id]); ?>
-							</li>
-							<li>
-								<?= Html::a('<span class="badge badge-danger pull-right">9</span>Сообщения', ["home/messenger"]); ?>
-
-							</li>
-							<li>
-								<?= Html::a("Настройки", ["home/settings"]); ?>
-							</li>
-							<li>
-								<?= Html::a("Помощь", ["home/help"]); ?>
 							</li>
 						</ul>
 
