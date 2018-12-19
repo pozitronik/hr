@@ -10,6 +10,7 @@ use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use yii\db\ActiveQuery;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "ref_user_roles".
@@ -134,5 +135,39 @@ class RefUserRoles extends Reference {
 			}
 			return $result;
 		});
+	}
+
+	/**
+	 * Набор колонок для отображения на главной
+	 * @return array
+	 */
+	public function getColumns():array {
+		return [
+			'id',
+			[
+				'attribute' => 'boss-flag',
+				'header' => '<i class="fa fa-crown"></i>',
+				'value' => function($model) {
+					/** @var self $model */
+					return $model->boss_flag?'<i class="fa fa-crown"></i>':false;
+				},
+				'format' => 'raw',
+				'options' => [
+					'style' => 'width:30px'
+				]
+			],
+			[
+				'attribute' => 'name',
+				'value' => function($model) {
+					/** @var self $model */
+					return $model->deleted?Html::tag('span', "Удалено:", [
+							'class' => 'label label-danger'
+						]).$model->name:Html::tag('span', $model->name, [
+						'style' => "background: {$model->color}"
+					]);
+				},
+				'format' => 'raw'
+			]
+		];
 	}
 }
