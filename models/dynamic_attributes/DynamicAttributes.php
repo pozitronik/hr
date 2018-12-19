@@ -220,10 +220,15 @@ class DynamicAttributes extends ActiveRecord {
 		$property = $this->getPropertyById($property_id);
 		$typeClass = DynamicAttributeProperty::getTypeClass($property->type);
 		try {
-			$typeClass::setValue($this->id, $property_id, $user_id, $property_value);
+			if ($typeClass::setValue($this->id, $property_id, $user_id, $property_value)) {
+				AlertModel::SuccessNotify();
+			} else {
+				AlertModel::ErrorsNotify([$typeClass => 'not saved!']);
+			}
 		} catch (Throwable $t) {
 			SysExceptions::log($t);
-			SysExceptions::log(new RuntimeException("Attribute property type {$property->type} not implemented or not configured "), false, true);
+			SysExceptions::log(new RuntimeException("Attribute property type {$property->type} not implemented or not configured."), false, true);
+			AlertModel::ErrorsNotify([$typeClass => "Attribute property type {$property->type} not implemented or not configured."]);
 		}
 		Yii::$app->cache->delete(static::class."GetUser{$this->id}Properties".$user_id);
 	}
