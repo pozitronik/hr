@@ -40,7 +40,7 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param int $property_id
 	 * @param int $user_id
 	 * @param mixed $value
-	 * @return mixed
+	 * @return bool
 	 */
-	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value);
+	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
 }

@@ -87,9 +87,9 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	 * @param int $property_id
 	 * @param int $user_id
 	 * @param mixed $value
-	 * @return mixed
+	 * @return boolean
 	 */
-	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value) {
+	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		} else {
