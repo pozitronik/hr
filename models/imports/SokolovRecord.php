@@ -146,11 +146,10 @@ class SokolovRecord extends Model {
 		$transaction = Yii::$app->db->beginTransaction();
 
 		try {
-
 			/*Чистим текущих пользователей*/
 			/** @var self $model */
 			foreach ($models as $model) {
-				if (false !== $user = Users::find()->where(['username' => $model->username])->one()) {
+				if (null !== $user = Users::find()->where(['username' => $model->username])->one()) {
 					$userGroups = ArrayHelper::getColumn($user->relGroups, 'id');
 					$user->dropGroups = $userGroups;
 					$userAttributes = ArrayHelper::getColumn($user->relUsersAttributes, 'id');
@@ -159,15 +158,33 @@ class SokolovRecord extends Model {
 					$user->delete();
 				}
 			}
+		} catch (Throwable $t) {
+			$transaction->rollBack();
+			return;
+		}
 
-			$tribeLeader = RefUserRoles::getInstance(['name' => 'Лидер трайба']);
-			$tribeLeader->save();
-			$tribeITLeader = RefUserRoles::getInstance(['name' => 'ИТ-лидер трайба']);
-			$tribeITLeader->save();
-			$clusterLeader = RefUserRoles::getInstance(['name' => 'Лидер кластера']);
-			$clusterLeader->save();
-			$productOwner = RefUserRoles::getInstance(['name' => 'Владелец продукта']);
-			$productOwner->save();
+		$transaction->commit();
+
+		$transaction = Yii::$app->db->beginTransaction();
+
+		try {
+
+			if (null === $tribeLeader = RefUserRoles::find()->where(['name' => 'Лидер трайба'])->one()) {
+				$tribeLeader = new RefUserRoles(['name' => 'Лидер трайба']);
+				$tribeLeader->save();
+			}
+			if (null === $tribeITLeader = RefUserRoles::find()->where(['name' => 'ИТ-лидер трайба'])->one()) {
+				$tribeITLeader = new RefUserRoles(['name' => 'ИТ-лидер трайба']);
+				$tribeITLeader->save();
+			}
+			if (null === $clusterLeader = RefUserRoles::find()->where(['name' => 'Лидер кластера'])->one()) {
+				$clusterLeader = new RefUserRoles(['name' => 'Лидер кластера']);
+				$clusterLeader->save();
+			}
+			if (null === $productOwner = RefUserRoles::find()->where(['name' => 'Владелец продукта'])->one()) {
+				$productOwner = new RefUserRoles(['name' => 'Владелец продукта']);
+				$productOwner->save();
+			}
 
 			/*Всё, что группы*/
 			/** @var self $model */
@@ -243,13 +260,13 @@ class SokolovRecord extends Model {
 		$transaction->commit();
 
 		foreach ($models as $model) {
-			if (!empty($model->tribe) && !empty($model->chapter) && (null !== $tribe = Groups::find()->where(['name' => $model->tribe])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
-				RelGroupsGroups::linkModels($tribe, $chapter);
+			if (!empty($model->tribe) && !empty($model->cluster) && (null !== $tribe = Groups::find()->where(['name' => $model->tribe])->one()) && (null !== $cluster = Groups::find()->where(['name' => $model->cluster])->one())) {
+				RelGroupsGroups::linkModels($tribe, $cluster);
 			}
 		}
 		foreach ($models as $model) {
-			if (!empty($model->command) && !empty($model->chapter) && (null !== $command = Groups::find()->where(['name' => $model->command])->one()) && (null !== $chapter = Groups::find()->where(['name' => $model->chapter])->one())) {
-				RelGroupsGroups::linkModels($chapter, $command);
+			if (!empty($model->command) && !empty($model->cluster) && (null !== $command = Groups::find()->where(['name' => $model->command])->one()) && (null !== $cluster = Groups::find()->where(['name' => $model->cluster])->one())) {
+				RelGroupsGroups::linkModels($cluster, $command);
 			}
 		}
 	}
@@ -291,7 +308,7 @@ class SokolovRecord extends Model {
 	 */
 	public function addUser(string $name, string $position, string $email, array $attributes = []):int {
 		if (empty($name)) return -1;
-		$user = Users::getInstance(['username' => $name]);
+		$user = Users::find()->where(['username' => $name])->one();
 		if ($user) return $user->id;
 		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
 		if (!$userPosition) {
