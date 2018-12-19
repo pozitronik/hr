@@ -6,6 +6,7 @@ namespace app\models\references\refs;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\references\Reference;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "ref_group_types".
@@ -59,5 +60,27 @@ class RefGroupTypes extends Reference {
 		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
+	}
+
+	/**
+	 * Набор колонок для отображения на главной
+	 * @return array
+	 */
+	public function getColumns():array {
+		return [
+			'id',
+			[
+				'attribute' => 'name',
+				'value' => function($model) {
+					/** @var self $model */
+					return $model->deleted?Html::tag('span', "Удалено:", [
+							'class' => 'label label-danger'
+						]).$model->name:Html::tag('span', $model->name, [
+						'style' => "background: {$model->color}"
+					]);
+				},
+				'format' => 'raw'
+			]
+		];
 	}
 }
