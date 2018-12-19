@@ -18,6 +18,7 @@ use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use app\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\web\ServerErrorHttpException;
 use RuntimeException;
 
@@ -127,8 +128,10 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 			[
 				'attribute' => 'name',
 				'value' => function($model) {
-					/** @var Reference $model */
-					return $model->deleted?"<span class='label label-danger'>Удалено</span> {$model->name}":$model->name;
+					/** @var self $model */
+					return $model->deleted?Html::tag('span', "Удалено:", [
+							'class' => 'label label-danger'
+						]).$model->name:$model->name;
 				},
 				'format' => 'raw'
 			]
