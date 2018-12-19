@@ -8,6 +8,7 @@ use app\models\dynamic_attributes\types\AttributePropertyBoolean;
 use app\models\dynamic_attributes\types\AttributePropertyDate;
 use app\models\dynamic_attributes\types\AttributePropertyInteger;
 use app\models\dynamic_attributes\types\AttributePropertyPercent;
+use app\models\dynamic_attributes\types\AttributePropertyScore;
 use app\models\dynamic_attributes\types\AttributePropertyString;
 use app\models\dynamic_attributes\types\AttributePropertyText;
 use app\models\dynamic_attributes\types\AttributePropertyTime;
@@ -71,6 +72,10 @@ class DynamicAttributeProperty extends Model {
 		'text' => [
 			'label' => 'Текст',
 			'model' => AttributePropertyText::class
+		],
+		'score' => [
+			'label' => 'Оценка',
+			'model' => AttributePropertyScore::class
 		]
 	];
 
