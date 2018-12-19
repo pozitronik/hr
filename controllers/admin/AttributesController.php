@@ -98,7 +98,7 @@ class AttributesController extends WigetableController {
 	 * @return string|Response
 	 * @throws Throwable
 	 */
-	public function actionProperty(int $attribute_id, $property_id = null) {
+	public function actionProperty(int $attribute_id, ?int $property_id = null) {
 		/** @var DynamicAttributes $attribute */
 		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
 		$property = new DynamicAttributeProperty([
