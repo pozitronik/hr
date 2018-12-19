@@ -26,7 +26,7 @@ class Permissions extends Model {
 	 * @return bool
 	 */
 	public function isGroupWritable(Groups $group):bool {
-
+		return true;
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Permissions extends Model {
 	 * @return bool
 	 */
 	public function isUserWritable(Users $user):bool {
-
+		return true;
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Permissions extends Model {
 	 * @return bool
 	 */
 	public function isGroupSubmitted(Groups $group):bool {
-
+		return true;
 	}
 
 	/**

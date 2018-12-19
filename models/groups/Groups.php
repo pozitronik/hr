@@ -273,8 +273,8 @@ class Groups extends ActiveRecord {
 	public function setRelParentGroups($parentGroups):void {
 		RelGroupsGroups::linkModels($parentGroups, $this);
 		if (!empty($parentGroups)) {
-			foreach ($parentGroups as $group) {
-				Groups::findModel($group)->dropCaches();
+			foreach ((array)$parentGroups as $group) {
+				self::findModel($group)->dropCaches();
 			}
 		}
 
@@ -289,7 +289,7 @@ class Groups extends ActiveRecord {
 		RelGroupsGroups::unlinkModels($dropParentGroups, $this);
 		if (!empty($dropParentGroups)) {
 			foreach ($dropParentGroups as $group) {
-				Groups::findModel($group)->dropCaches();
+				self::findModel($group)->dropCaches();
 			}
 		}
 	}

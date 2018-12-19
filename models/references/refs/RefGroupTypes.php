@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\references\refs;
 
-use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\references\Reference;
 use yii\helpers\Html;

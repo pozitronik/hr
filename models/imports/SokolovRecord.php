@@ -188,7 +188,7 @@ class SokolovRecord extends Model {
 			}
 			Utils::log('roles created');
 			/*Всё, что группы*/
-			/** @var self $model */
+			/** @var self[] $models */
 			foreach ($models as $model) {
 				$this->addGroup($model->block, 'Функциональный блок');
 				$this->addGroup($model->tribe, 'Трайб');
