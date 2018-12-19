@@ -146,10 +146,10 @@ class RefUserRoles extends Reference {
 			'id',
 			[
 				'attribute' => 'boss-flag',
-				'header' => '<i class="fa fa-crown"></i>',
+				'header' => Html::tag('i', false, ['class' => 'fa fa-crown']),
 				'value' => function($model) {
 					/** @var self $model */
-					return $model->boss_flag?'<i class="fa fa-crown"></i>':false;
+					return $model->boss_flag?Html::tag('i', false, ['class' => 'fa fa-crown']):false;
 				},
 				'format' => 'raw',
 				'options' => [
