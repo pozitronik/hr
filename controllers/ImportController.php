@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\models\imports\CompetencyRecord;
-use app\models\imports\FosRecord;
+use app\models\imports\SokolovRecord;
 use Throwable;
 use Yii;
 use yii\db\Exception;
@@ -22,7 +22,7 @@ class ImportController extends Controller {
 	 * @throws Throwable
 	 */
 	public function actionIndex($filename):void {
-		$fos = new FosRecord();
+		$fos = new SokolovRecord();
 		$fos->importRecords(Yii::getAlias('@app/').$filename);
 	}
 
@@ -34,6 +34,5 @@ class ImportController extends Controller {
 		$attribute = new CompetencyRecord();
 		$attribute->importRecords(Yii::getAlias('@app/').$filename);
 	}
-
 
 }
