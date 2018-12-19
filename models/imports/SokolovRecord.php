@@ -86,7 +86,7 @@ class SokolovRecord extends Model {
 	 * @throws Throwable
 	 */
 	public function importRecords(string $filename):void {
-
+		Utils::log('start import file...');
 		$models = Yii::$app->cache->getOrSet("Import$filename", function() use ($filename) {
 			$array = Csv::csvToArray($filename);
 			$models = [];
@@ -142,7 +142,7 @@ class SokolovRecord extends Model {
 			}
 			return $models;
 		});
-
+		Utils::log('file loaded...');
 		$transaction = Yii::$app->db->beginTransaction();
 
 		try {
@@ -160,11 +160,12 @@ class SokolovRecord extends Model {
 			}
 		} catch (Throwable $t) {
 			$transaction->rollBack();
+			Utils::log('failed user clearing');
 			return;
 		}
 
 		$transaction->commit();
-
+		Utils::log('users cleared...');
 		$transaction = Yii::$app->db->beginTransaction();
 
 		try {
@@ -185,7 +186,7 @@ class SokolovRecord extends Model {
 				$productOwner = new RefUserRoles(['name' => 'Владелец продукта']);
 				$productOwner->save();
 			}
-
+			Utils::log('roles created');
 			/*Всё, что группы*/
 			/** @var self $model */
 			foreach ($models as $model) {
@@ -195,6 +196,7 @@ class SokolovRecord extends Model {
 				$this->addGroup($model->command, $model->command_type);
 //				$this->addGroup($model->chapter, 'Чаптер');
 			}
+			Utils::log('groups created');
 			/*Всё, что просто юзеры*/
 			foreach ($models as $model) {
 				$attributes = [
@@ -232,7 +234,7 @@ class SokolovRecord extends Model {
 				];
 				$this->addUser($model->username, $model->position, $model->email, $attributes);
 			}
-
+			Utils::log('all users added');
 			/*Всё, что юзеры других колонок*/
 			foreach ($models as $model) {
 				$this->addUser($model->tribe_leader_username, 'Управляющий директор', '');
@@ -251,14 +253,14 @@ class SokolovRecord extends Model {
 					$this->linkRole($model->command, $model->username, $role_id);
 				}
 			}
-
+			Utils::log('roles created');
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
 			$transaction->rollBack();
 			return;
 		}
 
 		$transaction->commit();
-
+		Utils::log('update committed');
 		foreach ($models as $model) {
 			if (!empty($model->tribe) && !empty($model->cluster) && (null !== $tribe = Groups::find()->where(['name' => $model->tribe])->one()) && (null !== $cluster = Groups::find()->where(['name' => $model->cluster])->one())) {
 				RelGroupsGroups::linkModels($tribe, $cluster);
@@ -269,6 +271,7 @@ class SokolovRecord extends Model {
 				RelGroupsGroups::linkModels($cluster, $command);
 			}
 		}
+		Utils::log('Groups linked. Done!');
 	}
 
 	/**
