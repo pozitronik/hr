@@ -99,6 +99,20 @@ $this->params['breadcrumbs'][] = $this->title;
 											]
 										])->label(false);
 									break;
+									case 'score':
+										return $form->field($model, (string)$model->id)->widget(RangeInput::class, [
+											'html5Options' => [
+												'min' => 0,
+												'max' => 5
+											],
+											'html5Container' => [
+												'style' => 'width:50%'
+											],
+											'options' => [
+												'placeholder' => 'Укажите значение'
+											]
+										])->label(false);
+									break;
 									case 'string':
 										return $form->field($model, (string)$model->id)->textarea()->label(false);
 									break;

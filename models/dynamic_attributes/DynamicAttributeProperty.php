@@ -230,6 +230,9 @@ class DynamicAttributeProperty extends Model {
 			case 'integer':
 				return AttributePropertyInteger::getValue($this->attribute_id, $this->id, $this->user_id);
 			break;
+			case 'score':
+				return AttributePropertyScore::getValue($this->attribute_id, $this->id, $this->user_id);
+			break;
 			case 'percent':
 				return AttributePropertyPercent::getValue($this->attribute_id, $this->id, $this->user_id);
 			break;
