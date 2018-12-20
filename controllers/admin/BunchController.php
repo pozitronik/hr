@@ -21,8 +21,8 @@ use yii\web\Response;
  * @package app\controllers\admin
  */
 class BunchController extends WigetableController {
-	public $menuCaption = "Групповое изменение пользователей";
-	public $menuIcon = "/img/admin/users.png";
+	public $menuCaption = "<i class='fa fa-user-edit'></i>Групповое изменение пользователей";
+//	public $menuIcon = "/img/admin/users.png";
 
 	/**
 	 * @inheritdoc

@@ -22,7 +22,7 @@ use yii\web\Response;
  * @package app\controllers\admin
  */
 class AttributesController extends WigetableController {
-	public $menuCaption = "Атрибуты пользователей";
+	public $menuCaption = "<i class='fa fa-tags'></i>Атрибуты пользователей";
 	public $menuIcon = "/img/admin/attributes.png";
 
 	/**

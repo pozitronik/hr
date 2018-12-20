@@ -18,7 +18,7 @@ use yii\web\ServerErrorHttpException;
  * Управление всеми справочниками
  */
 class ReferencesController extends WigetableController {
-	public $menuCaption = "Справочники";
+	public $menuCaption = "<i class='fa fa-book'></i>Справочники";
 	public $menuIcon = "/img/admin/references.png";
 
 	public const REFERENCES_DIRECTORY = '@app/models/references/refs';
