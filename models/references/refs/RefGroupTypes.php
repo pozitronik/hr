@@ -33,7 +33,7 @@ class RefGroupTypes extends Reference {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
-			[['deleted'], 'integer'],
+			[['id', 'deleted'], 'integer'],
 			[['name', 'color'], 'string', 'max' => 256],
 			[['color'], 'safe']
 		];
@@ -82,7 +82,10 @@ class RefGroupTypes extends Reference {
 				},
 				'format' => 'raw'
 			],
-			'usedCount'
+			[
+				'attribute' => 'usedCount'
+			]
+
 		];
 	}
 

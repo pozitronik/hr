@@ -17,6 +17,8 @@ use yii\db\ActiveQuery;
  * @property-read array $view_columns
  * @property-read string|false $form
  * @property-read string $title
+ * @property-read integer $usedCount
+ * @property-read array|false $searchSort
  */
 interface ReferenceInterface {
 	/**
@@ -52,6 +54,11 @@ interface ReferenceInterface {
 	public function search($params):ActiveQuery;
 
 	/**
+	 * @return array|false
+	 */
+	public function getSearchSort():?array;
+
+	/**
 	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
 	 * @param int $fromId
 	 * @param int $toId
@@ -62,7 +69,7 @@ interface ReferenceInterface {
 	 * Сбрасывает все кеши для этого справочника.
 	 * Названия кешей перечислены в дефолтной реализации
 	 */
-	public static function flushCache(): void;
+	public static function flushCache():void;
 
 	/**
 	 * Количество объектов, использующих это значение справочника

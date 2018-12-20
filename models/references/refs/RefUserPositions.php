@@ -32,7 +32,7 @@ class RefUserPositions extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'unique'],
-			[['deleted'], 'integer'],
+			[['id', 'deleted'], 'integer'],
 			[['name'], 'string', 'max' => 256]
 		];
 	}

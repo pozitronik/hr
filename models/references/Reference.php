@@ -61,7 +61,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
-			[['deleted'], 'integer'],
+			[['id', 'deleted', 'usedCount'], 'integer'],
 			[['name'], 'string', 'max' => 256],
 			[['value'], 'string', 'max' => 512]
 		];
@@ -250,5 +250,22 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 */
 	public function getUsedCount():int {
 		return 0;
+	}
+
+	/**
+	 * @return array|false
+	 */
+	public function getSearchSort():?array {
+		$sortAttributes = [[]];
+		foreach ($this->rules() as $rule) {//Сортировать по всему, что вписано в рулесы
+			$sortAttributes[] = is_array($rule[0])?$rule[0]:[$rule[0]];
+		}
+		$sortAttributes = array_unique(array_merge(...$sortAttributes));
+		return [
+			'defaultOrder' => [
+				'id' => SORT_ASC
+			],
+			'attributes' => $sortAttributes
+		];
 	}
 }

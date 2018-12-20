@@ -65,7 +65,8 @@ class ReferencesController extends WigetableController {
 
 		$className = Reference::getReferenceClass($class);
 		$dataProvider = new ActiveDataProvider([
-			'query' => $className->search(Yii::$app->request->queryParams)
+			'query' => $className->search(Yii::$app->request->queryParams),
+			'sort' => $className->searchSort
 		]);
 
 		return $this->render('index', [

@@ -49,9 +49,9 @@ class RefUserRoles extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'unique'],
-			[['deleted'], 'integer'],
+			[['id', 'deleted', 'usedCount'], 'integer'],
 			[['name'], 'string', 'max' => 256],
-			[['boss_flag'], 'boolean'],
+			['boss_flag', 'boolean'],
 			[['color'], 'safe']
 		];
 	}
@@ -148,7 +148,7 @@ class RefUserRoles extends Reference {
 			'id',
 			[
 				'attribute' => 'boss_flag',
-				'header' => Html::tag('i', false, ['class' => 'fa fa-crown']),
+//				'header' => Html::tag('i', false, ['class' => 'fa fa-crown']),
 				'value' => function($model) {
 					/** @var self $model */
 					return $model->boss_flag?Html::tag('i', false, ['class' => 'fa fa-crown']):false;
@@ -158,6 +158,7 @@ class RefUserRoles extends Reference {
 					'style' => 'width:30px;'
 				],
 				'headerOptions' => ['style' => 'text-align:center'],
+				'filterOptions' => ['style' => 'text-align:center'],
 				'contentOptions' => ['style' => 'text-align:center; vertical-align: middle;'],
 				'filterType' => GridView::FILTER_CHECKBOX_X
 			],
