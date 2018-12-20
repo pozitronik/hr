@@ -74,7 +74,19 @@ $this->params['breadcrumbs'][] = $this->title;
 					},
 					'format' => 'raw'
 				],
-				'login',
+				[
+					'label' => 'Роли',
+					'value' => function($model) {
+						/** @var UsersSearch $model */
+						return BadgeWidget::widget([
+							'data' => $model->relRefUserRoles,
+							'useBadges' => false,
+							'attribute' => 'name',
+//							'linkScheme' => ['admin/groups/update', 'id' => 'id']
+						]);
+					},
+					'format' => 'raw'
+				],
 				'email:email',
 				[
 					'class' => ActionColumn::class,
