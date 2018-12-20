@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
