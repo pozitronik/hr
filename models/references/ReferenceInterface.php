@@ -63,4 +63,10 @@ interface ReferenceInterface {
 	 * Названия кешей перечислены в дефолтной реализации
 	 */
 	public static function flushCache(): void;
+
+	/**
+	 * Количество объектов, использующих это значение справочника
+	 * @return int
+	 */
+	public function getUsedCount():int;
 }

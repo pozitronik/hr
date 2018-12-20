@@ -14,6 +14,7 @@ use yii\helpers\Html;
  * @property string $name Название
  * @property int $deleted
  * @property string $color
+ * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
 class RefGroupTypes extends Reference {
 	public $menuCaption = 'Типы групп';
@@ -46,7 +47,8 @@ class RefGroupTypes extends Reference {
 			'id' => 'ID',
 			'name' => 'Название',
 			'deleted' => 'Deleted',
-			'color' => 'Цвет'
+			'color' => 'Цвет',
+			'usedCount' => 'Использований'
 		];
 	}
 
@@ -79,7 +81,15 @@ class RefGroupTypes extends Reference {
 					]);
 				},
 				'format' => 'raw'
-			]
+			],
+			'usedCount'
 		];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsedCount():int {
+		return (int)Groups::find()->where(['type' => $this->id])->count();
 	}
 }

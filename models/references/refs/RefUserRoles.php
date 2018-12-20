@@ -23,7 +23,7 @@ use yii\helpers\Html;
  * custom properties:
  * @property bool $boss_flag
  * @property string $color
- *
+ * @property int $usedCount Количество объектов, использующих это значение справочника
  *
  * @property ActiveQuery|RelUsersGroupsRoles[] $relUsersGroupsRoles Связующий релейшен к привязкам пользователей в группы (just via)
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Релейшен к привязке пользователей в группах
@@ -65,7 +65,8 @@ class RefUserRoles extends Reference {
 			'name' => 'Название',
 			'deleted' => 'Deleted',
 			'boss_flag' => 'Лидер',
-			'color' => 'Цвет'
+			'color' => 'Цвет',
+			'usedCount' => 'Использований'
 		];
 	}
 
@@ -171,7 +172,8 @@ class RefUserRoles extends Reference {
 					]);
 				},
 				'format' => 'raw'
-			]
+			],
+			'usedCount'
 		];
 	}
 
@@ -188,5 +190,12 @@ class RefUserRoles extends Reference {
 		$query->andFilterWhere(['=', 'boss_flag', $this->boss_flag]);
 
 		return $query;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsedCount():int {
+		return (int)RelUsersGroupsRoles::find()->where(['role' => $this->id])->count();
 	}
 }

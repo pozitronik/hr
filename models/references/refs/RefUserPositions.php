@@ -11,6 +11,7 @@ use app\models\users\Users;
  *
  * @property int $id
  * @property string $name Название
+ * @property int $usedCount Количество объектов, использующих это значение справочника
  * @property int $deleted
  */
 class RefUserPositions extends Reference {
@@ -43,7 +44,8 @@ class RefUserPositions extends Reference {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
-			'deleted' => 'Deleted'
+			'deleted' => 'Deleted',
+			'usedCount' => 'Использований'
 		];
 	}
 
@@ -56,5 +58,12 @@ class RefUserPositions extends Reference {
 		Users::updateAll(['position' => $toId], ['position' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsedCount():int {
+		return (int)Users::find()->where(['position' => $this->id])->count();
 	}
 }

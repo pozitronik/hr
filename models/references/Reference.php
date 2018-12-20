@@ -38,6 +38,8 @@ use RuntimeException;
  * Получение данных из справочника для выбиралок делаем через mapData() (метод можно перекрывать по необходимости, см. Mcc)
  *
  * @package app\models\references
+ *
+ * @property int $usedCount Количество объектов, использующих это значение справочника
  */
 class Reference extends ActiveRecord implements ReferenceInterface {
 	use ARExtended;
@@ -91,7 +93,8 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
-			'deleted' => 'Удалёно'
+			'deleted' => 'Удалёно',
+			'usedCount' => 'Использований'
 		];
 	}
 
@@ -134,7 +137,8 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 						]).$model->name:$model->name;
 				},
 				'format' => 'raw'
-			]
+			],
+			'usedCount'
 		];
 	}
 
@@ -238,5 +242,13 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		foreach ($cacheNames as $className) {
 			Yii::$app->cache->delete($className);
 		}
+	}
+
+	/**
+	 * Количество объектов, использующих это значение справочника
+	 * @return int
+	 */
+	public function getUsedCount():int {
+		return 0;
 	}
 }
