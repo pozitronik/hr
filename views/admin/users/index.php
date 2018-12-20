@@ -8,6 +8,8 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\helpers\ArrayHelper;
+use app\models\references\refs\RefUserRoles;
 use app\models\users\UsersSearch;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
@@ -23,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
 	<div class="col-xs-12">
-		<?= GridView::widget([
+		<?= /** @noinspection MissedFieldInspection */
+		GridView::widget([
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'panel' => [
@@ -52,11 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					'value' => function($model) {
 						/** @var UsersSearch $model */
 						return Html::a($model->username, ['admin/users/update', 'id' => $model->id]);
-//						return UserWidget::widget([
-//							'user' => $model,
-//							'chat' => false,
-//							'update' => false
-//						]);
 					},
 					'format' => 'raw'
 				],
@@ -75,14 +73,30 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format' => 'raw'
 				],
 				[
+					'attribute' => 'roles',
+					'filterType' => GridView::FILTER_SELECT2,
+					'filter' => RefUserRoles::mapData(),
+					'filterInputOptions' => ['placeholder' => 'Тип'],
+					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
+
 					'label' => 'Роли',
 					'value' => function($model) {
 						/** @var UsersSearch $model */
+						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
+						array_walk($options, function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
 						return BadgeWidget::widget([
-							'data' => $model->relRefUserRoles,
-							'useBadges' => false,
+							'data' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+							'useBadges' => true,
 							'attribute' => 'name',
-//							'linkScheme' => ['admin/groups/update', 'id' => 'id']
+							'unbadgedCount' => 6,
+							"itemsSeparator" => false,
+							"optionsMap" => $options
 						]);
 					},
 					'format' => 'raw'

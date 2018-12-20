@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
  */
 class UsersSearch extends Users {
 	public $groupName;
+	public $roles;
 
 	/**
 	 * @inheritdoc
@@ -20,7 +21,7 @@ class UsersSearch extends Users {
 		return [
 			[['id'], 'integer'],
 			[['username', 'login', 'email'], 'safe'],
-			[['groupName'], 'safe']
+			[['groupName', 'roles'], 'safe']
 		];
 	}
 
@@ -47,6 +48,10 @@ class UsersSearch extends Users {
 				'groupName' => [
 					'asc' => ['sys_groups.name' => SORT_ASC],
 					'desc' => ['sys_groups.name' => SORT_DESC]
+				],
+				'roles' => [
+					'asc' => ['ref_user_roles.name' => SORT_ASC],
+					'desc' => ['ref_user_roles.name' => SORT_DESC]
 				]
 			]
 		]);
@@ -56,14 +61,15 @@ class UsersSearch extends Users {
 
 		if (!$this->validate()) return $dataProvider;
 
-		$query->joinWith(['relGroups']);
+		$query->joinWith(['relGroups', 'relRefUserRoles']);
 
 		$query->andFilterWhere(['sys_users.id' => $this->id])
 			->andFilterWhere(['group_id' => $allowedGroups])
 			->andFilterWhere(['like', 'sys_users.username', $this->username])
 			->andFilterWhere(['like', 'login', $this->login])
 			->andFilterWhere(['like', 'email', $this->email])
-			->andFilterWhere(['like', 'sys_groups.name', $this->groupName]);
+			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
+			->andFilterWhere(['=', 'ref_user_roles.id', $this->roles]);
 
 		return $dataProvider;
 	}

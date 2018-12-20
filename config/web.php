@@ -1,4 +1,5 @@
 <?php
+/** @noinspection UsingInclusionReturnValueInspection */
 declare(strict_types = 1);
 
 use yii\caching\FileCache;
@@ -8,7 +9,8 @@ use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
 use yii\swiftmailer\Mailer;
 use yii\log\FileTarget;
-use yii\caching\DummyCache;
+use /** @noinspection PhpUnusedAliasInspection */
+	yii\caching\DummyCache;
 use yii\web\UrlManager;
 
 $params = require __DIR__.'/params.php';
