@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\references\refs;
 
+use kartik\grid\GridView;
 use Yii;
 use app\models\groups\Groups;
 use app\models\references\Reference;
@@ -145,7 +146,7 @@ class RefUserRoles extends Reference {
 		return [
 			'id',
 			[
-				'attribute' => 'boss-flag',
+				'attribute' => 'boss_flag',
 				'header' => Html::tag('i', false, ['class' => 'fa fa-crown']),
 				'value' => function($model) {
 					/** @var self $model */
@@ -153,8 +154,11 @@ class RefUserRoles extends Reference {
 				},
 				'format' => 'raw',
 				'options' => [
-					'style' => 'width:30px'
-				]
+					'style' => 'width:30px;'
+				],
+				'headerOptions' => ['style' => 'text-align:center'],
+				'contentOptions' => ['style' => 'text-align:center; vertical-align: middle;'],
+				'filterType' => GridView::FILTER_CHECKBOX_X
 			],
 			[
 				'attribute' => 'name',
@@ -169,5 +173,20 @@ class RefUserRoles extends Reference {
 				'format' => 'raw'
 			]
 		];
+	}
+
+	/**
+	 * Поиск по модели справочника
+	 * @param array $params
+	 * @return ActiveQuery
+	 */
+	public function search($params):ActiveQuery {
+		/** @var ActiveQuery $query */
+		$query = self::find();
+		$this->load($params);
+		$query->andFilterWhere(['LIKE', 'name', $this->name]);
+		$query->andFilterWhere(['=', 'boss_flag', $this->boss_flag]);
+
+		return $query;
 	}
 }
