@@ -17,12 +17,13 @@ use yii\web\ErrorAction;
 use yii\web\Response;
 
 /**
- * Class MassUpdateController
+ * Class BunchController
  * @package app\controllers\admin
  */
 class BunchController extends WigetableController {
-	public $menuCaption = "<i class='fa fa-user-edit'></i>Групповое изменение пользователей";
+	public $menuCaption = "<i class='fa fa-user-edit'></i>Редактор пользователей";
 //	public $menuIcon = "/img/admin/users.png";
+	public $orderWeight = 5;
 
 	/**
 	 * @inheritdoc

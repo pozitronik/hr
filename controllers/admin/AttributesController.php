@@ -24,6 +24,7 @@ use yii\web\Response;
 class AttributesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-tags'></i>Атрибуты пользователей";
 	public $menuIcon = "/img/admin/attributes.png";
+	public $orderWeight = 4;
 
 	/**
 	 * @inheritdoc

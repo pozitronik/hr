@@ -20,6 +20,7 @@ use yii\web\ServerErrorHttpException;
 class ReferencesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-book'></i>Справочники";
 	public $menuIcon = "/img/admin/references.png";
+	public $orderWeight = 3;
 
 	public const REFERENCES_DIRECTORY = '@app/models/references/refs';
 

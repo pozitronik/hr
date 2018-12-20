@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
+use app\helpers\ArrayHelper;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionException;
@@ -16,10 +17,12 @@ use yii\web\Controller;
  *
  * @property-read false|string $menuIcon
  * @property-read false|string $menuCaption
+ * @property-read boolean $disabled
+ * @property-read integer $orderWeight
  */
 class WigetableController extends Controller {
 	public $disabled = false;
-
+	public $orderWeight = 0;
 	/**
 	 * Возвращает путь к иконке контроллера
 	 * @return false|string
@@ -53,6 +56,7 @@ class WigetableController extends Controller {
 				$result[] = $controller;
 			}
 		}
+		ArrayHelper::multisort($result, ['orderWeight']);
 		return $result;
 	}
 }

@@ -20,6 +20,7 @@ use yii\web\Response;
 class GroupsController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-users'></i>Группы";
 	public $menuIcon = "/img/admin/groups.png";
+	public $orderWeight = 2;
 
 	/**
 	 * @inheritdoc
