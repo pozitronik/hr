@@ -5,6 +5,7 @@ use app\helpers\Icons;
 use app\models\users\Users;
 use app\models\groups\Groups;
 use app\widgets\roles_select\RolesSelectWidget;
+use yii\bootstrap\ButtonDropdown;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -42,6 +43,29 @@ $provider = new ActiveDataProvider([
 				]):false
 			],
 			'toolbar' => false,
+			'summary' => ButtonDropdown::widget([
+				'label' => Icons::menu(),
+				'encodeLabel' => false,
+				'options' => [
+					'style' => 'margin: 10px 10px auto auto'
+				],
+				'dropdown' => [
+					'options' => [
+						'class' => 'pull-right'
+					],
+					'items' => [
+						[
+							'label' => 'Иерархия',
+							'url' => ['/admin/groups/users-hierarchy', 'id' => $model->id]
+						],
+						[
+							'label' => 'Иерархия (с ролями)',
+							'url' => ['/admin/groups/users-hierarchy', 'id' => $model->id, 'showRolesSelector' => true]
+						]
+					]
+				]
+			]),
+
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
