@@ -14,12 +14,14 @@ use yii\base\Widget;
  * @property array $value
  * @property int $groupId
  * @property int $userId
+ * @property bool $showStatus
  */
 class RolesSelectWidget extends Widget {
 	public $data;
 	public $value;
 	public $groupId;
 	public $userId;
+	public $showStatus = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -39,7 +41,8 @@ class RolesSelectWidget extends Widget {
 			'value' => $this->value??RelUsersGroupsRoles::getRoleIdInGroup($this->userId, $this->groupId),
 			'userId' => $this->userId,
 			'groupId' => $this->groupId,
-			'options' => RefUserRoles::dataOptions()
+			'options' => RefUserRoles::dataOptions(),
+			'showStatus' => $this->showStatus
 		]);
 	}
 }

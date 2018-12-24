@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var integer $groupId
  * @var integer $userId
  * @var array $options
+ * @var bool $showStatus
  */
 
 use kartik\select2\Select2;
@@ -34,12 +35,12 @@ use yii\web\JsExpression;
 	'pluginEvents' => [
 		"change.select2" => "function(e) {set_roles($userId, $groupId, jQuery(e.target).val())}"
 	],
-	'addon' => [
+	'addon' => $showStatus?[
 		'append' => [
 			'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$userId}-{$groupId}-roles-progress"]),
 			'asButton' => false
 		]
-	]
+	]:false
 
 ]);
 

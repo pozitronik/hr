@@ -5,7 +5,6 @@ namespace app\widgets\group_type_select;
 
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
-use app\models\relations\RelGroupsGroups;
 use yii\base\Widget;
 use yii\web\NotFoundHttpException;
 
@@ -15,11 +14,13 @@ use yii\web\NotFoundHttpException;
  * @property array $data
  * @property array $value
  * @property int $groupId
+ * @property bool $showStatus
  */
 class GroupTypeSelectWidget extends Widget {
 	public $data;
 	public $value;
 	public $groupId;
+	public $showStatus = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -40,7 +41,8 @@ class GroupTypeSelectWidget extends Widget {
 			'data' => $this->data??RefGroupTypes::mapData(),
 			'value' => $this->value??$group->type,
 			'groupId' => $this->groupId,
-			'options' => RefGroupTypes::dataOptions()
+			'options' => RefGroupTypes::dataOptions(),
+			'showStatus' => $this->showStatus
 		]);
 	}
 }

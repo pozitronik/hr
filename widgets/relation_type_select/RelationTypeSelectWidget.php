@@ -14,12 +14,14 @@ use yii\base\Widget;
  * @property array $value
  * @property int $parentGroupId
  * @property int $childGroupId
+ * @property bool $showStatus
  */
 class RelationTypeSelectWidget extends Widget {
 	public $data;
 	public $value;
 	public $parentGroupId;
 	public $childGroupId;
+	public $showStatus = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -39,7 +41,8 @@ class RelationTypeSelectWidget extends Widget {
 			'value' => $this->value??RelGroupsGroups::getRelationId($this->parentGroupId, $this->childGroupId),
 			'parentGroupId' => $this->parentGroupId,
 			'childGroupId' => $this->childGroupId,
-			'options' => RefGroupRelationTypes::dataOptions()
+			'options' => RefGroupRelationTypes::dataOptions(),
+			'showStatus' => $this->showStatus
 		]);
 	}
 }

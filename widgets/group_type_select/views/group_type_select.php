@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var array $value
  * @var integer $groupId
  * @var array $options
+ * @var bool $showStatus
  */
 
 use kartik\select2\Select2;
@@ -34,12 +35,12 @@ use yii\web\JsExpression;
 	'pluginEvents' => [
 		"change.select2" => "function(e) {set_group_type($groupId, jQuery(e.target).val())}"
 	],
-	'addon' => [
+	'addon' => $showStatus?[
 		'append' => [
 			'content' => Spinner::widget(['preset' => 'small', 'align' => 'right', 'hidden' => true, 'id' => "{$groupId}-type-progress"]),
 			'asButton' => false
 		]
-	]
+	]:false
 
 ]);
 
