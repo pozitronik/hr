@@ -64,6 +64,6 @@ class RelGroupsGroups extends ActiveRecord {
 	 * @return int|null
 	 */
 	public static function getRelationId(int $parentGroupId, int $childGroupId):?int {
-		return ArrayHelper::getValue(self::find()->where(['parent_id' => $parentGroupId, $childGroupId => $childGroupId])->select('relation')->one(), 'relation');
+		return ArrayHelper::getValue(self::find()->where(['parent_id' => $parentGroupId, 'child_id' => $childGroupId])->select('relation')->one(), 'relation');
 	}
 }
