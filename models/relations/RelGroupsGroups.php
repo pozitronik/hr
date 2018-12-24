@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\helpers\ArrayHelper;
+use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefGroupRelationTypes;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -19,6 +20,7 @@ use yii\db\ActiveRecord;
  */
 class RelGroupsGroups extends ActiveRecord {
 	use Relations;
+	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
