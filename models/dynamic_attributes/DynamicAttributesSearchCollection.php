@@ -216,7 +216,6 @@ class DynamicAttributesSearchCollection extends Model {
 				$usedAliases[] = $aliasName;
 			}
 
-			$query->andFilterWhere(["$aliasName.attribute_id" => $searchItem->attribute]);
 			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->property}.type")) {
 				$className = DynamicAttributeProperty::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
@@ -225,14 +224,14 @@ class DynamicAttributesSearchCollection extends Model {
 						if (!in_array($typeAlias, $usedAliases)) {
 							$typeTableName = $className::tableName();
 
-							$query->leftJoin("$typeTableName $typeAlias", "$typeAlias.user_id = sys_users.id AND $typeAlias.property_id = {$searchItem->property}");
+							$query->leftJoin("$typeTableName $typeAlias", "$typeAlias.user_id = sys_users.id AND $typeAlias.property_id = {$searchItem->property} AND $typeAlias.attribute_id = $aliasName.attribute_id");
 							$usedAliases[] = $typeAlias;
 						}
-
+						$conditionResult = $condition($typeAlias, $searchItem->value);
 						if ($searchItem->union) {
-							$query->andWhere($condition($typeAlias, $searchItem->value));
+							$query->andWhere($conditionResult);
 						} else {
-							$query->orWhere($condition($typeAlias, $searchItem->value));
+							$query->orWhere($conditionResult);
 						}
 
 					} catch (Throwable $t) {
@@ -241,9 +240,9 @@ class DynamicAttributesSearchCollection extends Model {
 
 				}
 			}
-
+			$query->andFilterWhere(["$aliasName.attribute_id" => $searchItem->attribute]);
 		}
-		//\Yii::debug($query->createCommand()->rawSql, 'sql');
+//		\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 
