@@ -8,6 +8,7 @@ use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\groups\Groups;
 use app\models\prototypes\PrototypeNodeData;
+use app\models\relations\RelGroupsGroups;
 use app\models\user\CurrentUser;
 use app\models\users\Bookmarks;
 use app\models\users\Users;
@@ -61,6 +62,7 @@ class AjaxController extends Controller {
 							'groups-tree-save-nodes-positions',
 							'get-group-info',
 							'set-user-roles-in-group',
+							'set-group-relation-type',
 							'users-search',
 							'user-add-bookmark',
 							'user-remove-bookmark',
@@ -247,6 +249,42 @@ class AjaxController extends Controller {
 		}
 
 		$group->setRolesInGroup([$userId => Yii::$app->request->post('roles', [])]);
+		return [
+			'result' => self::RESULT_OK
+		];
+
+	}
+
+	/**
+	 * Принимает и применяет тип релейшена между двумя группами
+	 * Предполагается, что релейшен уже существует
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionSetGroupRelationType():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		$parentGroupId = Yii::$app->request->post('parentGroupId', false);
+		$childGroupId = Yii::$app->request->post('childGroupId', false);
+		$relation = Yii::$app->request->post('relation', false);
+		if (!($parentGroupId || $childGroupId || $relation)) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'parameters' => 'Not enough parameters'
+				]
+			];
+		}
+
+		/** @var Groups $group */
+		if (false === ($groupsRelation = RelGroupsGroups::find()->where(['parent_id' => $parentGroupId, 'child_id' => $childGroupId])->one())) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'groupsRelation' => 'Not found'
+				]
+			];
+		}
+		$groupsRelation->setAndSaveAttribute('relation', $relation);
 		return [
 			'result' => self::RESULT_OK
 		];
