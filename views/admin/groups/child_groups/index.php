@@ -1,16 +1,18 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\Utils;
-use app\models\groups\Groups;
-use app\widgets\group_select\GroupSelectWidget;
-
 /**
  * @var View $this
  * @var Groups $model
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
+use app\helpers\Icons;
+use app\helpers\Utils;
+use app\models\groups\Groups;
+use app\widgets\group_select\GroupSelectWidget;
+use app\widgets\group_type_select\GroupTypeSelectWidget;
+use app\widgets\relation_type_select\RelationTypeSelectWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -48,11 +50,23 @@ $provider = new ActiveDataProvider([
 			'footerRowOptions' => [],
 			'columns' => [
 				[
-					'class' => CheckboxColumn::class,
-					'width' => '36px',
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => 'Удалить',
-					'name' => $model->formName().'[dropChildGroups]'
+					'header' => Icons::menu(),
+					'dropdown' => true,
+					'dropdownButton' => [
+						'label' => Icons::menu(),
+						'caret' => ''
+					],
+					'class' => ActionColumn::class,
+					'template' => '{tree}{bunch}',
+					'buttons' => [
+						'tree' => function($url, $model) {
+							return Html::a('Граф структуры', $url, ['class' => 'btn']);
+						},
+						'bunch' => function($url, $model) {
+							/** @var Groups $model */
+							return Html::a('Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id], ['class' => 'btn']);
+						}
+					]
 				],
 				[
 					'format' => 'raw',
@@ -64,34 +78,45 @@ $provider = new ActiveDataProvider([
 				],
 				[
 					'attribute' => 'type',
-					'value' => 'relGroupTypes.name'
+					'value' => function($group) {
+						/** @var Groups $model */
+						return GroupTypeSelectWidget::widget([
+							'groupId' => $group->id,
+							'showStatus' => false
+						]);
+					},
+					'format' => 'raw'
+				],
+				[
+					'attribute' => 'relGroupsGroupsChild.refGroupsRelationTypes.name',
+					'label' => 'Тип связи',
+					'value' => function($group) use ($model) {
+						/** @var Groups $model */
+						return RelationTypeSelectWidget::widget([
+							'parentGroupId' => $model->id,
+							'childGroupId' => $group->id,
+							'showStatus' => false
+						]);
+					},
+					'format' => 'raw'
 				],
 				[
 					'attribute' => 'usersCount',
-					'label' => 'Пользователей',
+					'header' => Icons::users(),
 					'footer' => Utils::pageTotal($provider, 'usersCount')
 				],
 				[
 					'attribute' => 'childGroupsCount',
-					'label' => 'Подгрупп',
+					'header' => Icons::subgroups(),
 					'footer' => Utils::pageTotal($provider, 'childGroupsCount')
 				],
 				[
-//					'dropdown' => true,
-					'class' => ActionColumn::class,
-					'template' => '{tree}{bunch}',
-					'buttons' => [
-						'tree' => function($url, $model) {
-							return Html::a('Граф', $url, ['class' => 'btn btn-xs btn-info']);
-						},
-						'bunch' => function($url, $model) {
-							/** @var Groups $model */
-							return Html::a('Редактировать пользователей', ['admin/bunch/index', 'group_id' => $model->id], ['class' => 'btn btn-xs btn-info']);
-						}
-					]
+					'class' => CheckboxColumn::class,
+					'headerOptions' => ['class' => 'kartik-sheet-style'],
+					'header' => Icons::trash(),
+					'name' => $model->formName().'[dropChildGroups]'
 				]
 			]
-
 		]); ?>
 	</div>
 </div>
