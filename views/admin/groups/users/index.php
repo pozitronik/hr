@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 
 use app\helpers\Icons;
+use app\helpers\Utils;
 use app\models\users\Users;
 use app\models\groups\Groups;
 use app\widgets\roles_select\RolesSelectWidget;
@@ -33,7 +34,7 @@ $provider = new ActiveDataProvider([
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
-				'heading' => $heading,
+				'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)"),
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => $selectorInPanel?UserSelectWidget::widget([
 					'model' => $model,
