@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var RefUserRoles $model
+ * @var RefGroupTypes $model
  * @var ActiveForm $form
  */
 
-use app\models\references\refs\RefUserRoles;
+use app\models\references\refs\RefGroupTypes;
 use kartik\color\ColorInput;
 use yii\web\View;
 use yii\helpers\Html;
