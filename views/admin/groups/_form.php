@@ -6,13 +6,16 @@ declare(strict_types = 1);
  * @var Groups $model
  */
 
+use app\helpers\Icons;
 use app\models\groups\Groups;
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use app\models\references\refs\RefGroupTypes;
 use kartik\file\FileInput;
+
 //todo: кнопка для реадктирования всех пользователей в иерархии
 ?>
 <div class="row">
@@ -22,12 +25,36 @@ use kartik\file\FileInput;
 			<div class="panel-heading">
 				<div class="panel-control">
 					<?php if (!$model->isNewRecord): ?>
-						<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']); ?>
-					<?php endif; ?>
-					<?php if (!$model->isNewRecord): ?>
-						<?= Html::a('Граф', ['tree', 'id' => $model->id], ['class' => 'btn btn-info']); ?>
-						<?= Html::a('Редактировать пользователей', ['admin/bunch/index', 'group_id' => $model->id], ['class' => 'btn btn-info']); ?>
-						<?= Html::a('Редактировать пользователей (всех)', ['admin/bunch/index', 'group_id' => $model->id, 'hierarchy' => true], ['class' => 'btn btn-warning']); ?>
+						<?= ButtonDropdown::widget([
+							'options' => [
+								'class' => 'btn-lg btn-default',
+							],
+							'label' => Icons::menu(),
+							'encodeLabel' => false,
+							'dropdown' => [
+								'options' => [
+									'class' => 'pull-right'
+								],
+								'items' => [
+									[
+										'label' => 'Новая группа',
+										'url' => 'create'
+									],
+									[
+										'label' => 'Граф структуры',
+										'url' => ['tree', 'id' => $model->id]
+									],
+									[
+										'label' => 'Редактировать пользователей',
+										'url' => ['admin/bunch/index', 'group_id' => $model->id]
+									],
+									[
+										'label' => 'Редактировать пользователей (всех)',
+										'url' => ['admin/bunch/index', 'group_id' => $model->id, 'hierarchy' => true]
+									]
+								]
+							]
+						]) ?>
 					<?php endif; ?>
 				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
