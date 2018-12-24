@@ -63,6 +63,7 @@ class AjaxController extends Controller {
 							'get-group-info',
 							'set-user-roles-in-group',
 							'set-group-relation-type',
+							'set-group-type',
 							'users-search',
 							'user-add-bookmark',
 							'user-remove-bookmark',
@@ -266,7 +267,7 @@ class AjaxController extends Controller {
 		$parentGroupId = Yii::$app->request->post('parentGroupId', false);
 		$childGroupId = Yii::$app->request->post('childGroupId', false);
 		$relation = Yii::$app->request->post('relation', false);
-		if (!($parentGroupId || $childGroupId || $relation)) {
+		if (!($parentGroupId || $childGroupId)) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -289,6 +290,39 @@ class AjaxController extends Controller {
 			'result' => self::RESULT_OK
 		];
 
+	}
+
+	/**
+	 * Принимает и применяет тип группы
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionSetGroupType():array {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		$groupId = Yii::$app->request->post('groupid', false);
+		$type = Yii::$app->request->post('type', false);
+		if (!($groupId)) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'parameters' => 'Not enough parameters'
+				]
+			];
+		}
+		/** @var Groups $group */
+		if (false === ($group = Groups::findModel($groupId))) {
+			return [
+				'result' => self::RESULT_ERROR,
+				'errors' => [
+					'group' => 'Not found'
+				]
+			];
+		}
+
+		$group->setAndSaveAttribute('type', $type);
+		return [
+			'result' => self::RESULT_OK
+		];
 	}
 
 	/**
