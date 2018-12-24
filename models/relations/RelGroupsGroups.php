@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\models\references\refs\RefGroupRelationTypes;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -12,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property int $parent_id Вышестоящая группа
  * @property int $child_id Нижестоящая группа
  * @property int $relation Тип связи
+ * @property ActiveQuery|RefGroupRelationTypes refGroupsRelationTypes Типы связей (справочник)
  */
 class RelGroupsGroups extends ActiveRecord {
 	use Relations;
@@ -46,5 +49,10 @@ class RelGroupsGroups extends ActiveRecord {
 		];
 	}
 
-
+	/**
+	 * @return ActiveQuery|RefGroupRelationTypes
+	 */
+	public function getRefGroupsRelationTypes() {
+		return $this->hasOne(RefGroupRelationTypes::class, ['id' => 'relation']);
+	}
 }
