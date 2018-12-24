@@ -152,7 +152,7 @@ class AttributesController extends WigetableController {
 		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
 			$searchSet->addItem(new DynamicAttributesSearchItem());
 		}
-		if (null !== Yii::$app->request->post('remove')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
+		if (null !== Yii::$app->request->post('remove')) {/*Нажали кнопку "убрать поле", догенерируем набор условий*/
 			$searchSet->removeItem();
 		}
 		return $this->render('search', [
