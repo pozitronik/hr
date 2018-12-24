@@ -229,8 +229,8 @@ class AjaxController extends Controller {
 	 */
 	public function actionSetUserRolesInGroup():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$groupId = Yii::$app->request->post('groupid', false);
-		$userId = Yii::$app->request->post('userid', false);
+		$groupId = Yii::$app->request->post('groupId', false);
+		$userId = Yii::$app->request->post('userId', false);
 		if (!($groupId || $userId)) {
 			return [
 				'result' => self::RESULT_ERROR,
@@ -299,7 +299,7 @@ class AjaxController extends Controller {
 	 */
 	public function actionSetGroupType():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$groupId = Yii::$app->request->post('groupid', false);
+		$groupId = Yii::$app->request->post('groupId', false);
 		$type = Yii::$app->request->post('type', false);
 		if (!($groupId)) {
 			return [
