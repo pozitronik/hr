@@ -5,6 +5,7 @@ namespace app\models\groups\traits;
 
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
+use app\models\relations\RelGroupsGroups;
 use Exception;
 use Throwable;
 
@@ -55,7 +56,8 @@ trait Graph {
 			'target' => (string)$to->id,
 			'type' => 'curvedArrow',
 			'label' => $to->leader->username,
-			'size' => '5'
+			'size' => '5',
+			'color' => RelGroupsGroups::getRelationColor($this->id, $to->id)
 		];
 	}
 
