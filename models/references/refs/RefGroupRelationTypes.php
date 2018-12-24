@@ -5,6 +5,7 @@ namespace app\models\references\refs;
 
 use app\models\references\Reference;
 use app\models\relations\RelGroupsGroups;
+use Yii;
 use yii\helpers\Html;
 
 /**
@@ -94,5 +95,23 @@ class RefGroupRelationTypes extends Reference {
 	 */
 	public function getUsedCount():int {
 		return (int)RelGroupsGroups::find()->where(['relation' => $this->id])->count();
+	}
+
+	/**
+	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
+	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
+	 * @return array
+	 */
+	public static function dataOptions():array {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+			$items = self::find()->active()->all();
+			$result = [];
+			foreach ($items as $key => $item) {
+				$result[$item->id] = [
+					'data-color' => $item->color,
+				];
+			}
+			return $result;
+		});
 	}
 }
