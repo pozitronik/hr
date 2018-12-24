@@ -68,4 +68,20 @@ class RelGroupsGroups extends ActiveRecord {
 	public static function getRelationId(int $parentGroupId, int $childGroupId):?int {
 		return ArrayHelper::getValue(self::find()->where(['parent_id' => $parentGroupId, 'child_id' => $childGroupId])->select('relation')->one(), 'relation');
 	}
+
+	/**
+	 * Вернёт цвет, присвоенный этому типу связи
+	 * @param int $parentGroupId
+	 * @param int $childGroupId
+	 * @return false|string
+	 */
+	public static function getRelationColor(int $parentGroupId, int $childGroupId) {
+		if (null !== $model = self::find()->where(['parent_id' => $parentGroupId, 'child_id' => $childGroupId])->one()) {
+			if (null === $model->refGroupsRelationTypes) {
+				return false;
+			}
+			return $model->refGroupsRelationTypes->color;
+		}
+		return false;
+	}
 }
