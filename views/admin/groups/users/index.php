@@ -65,7 +65,7 @@ $provider = new ActiveDataProvider([
 					'label' => 'Роли в группе',
 					'value' => function($user) use ($model) {
 						/** @var Groups $model */
-						return RolesSelectWidget::widget([//todo: выбиралке можно сделать режим readonly, возможно это будет быстрее
+						return RolesSelectWidget::widget([
 							'groupId' => $model->id,
 							'userId' => $user->id
 						]);
