@@ -26,7 +26,7 @@ use kartik\file\FileInput;
 					<?php if (!$model->isNewRecord): ?>
 						<?= ButtonDropdown::widget([
 							'options' => [
-								'class' => 'btn-lg btn-default',
+								'class' => 'btn-lg btn-default'
 							],
 							'label' => Icons::menu(),
 							'encodeLabel' => false,

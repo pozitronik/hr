@@ -5,6 +5,7 @@ namespace app\widgets\group_type_select;
 
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
+use Throwable;
 use yii\base\Widget;
 use yii\web\NotFoundHttpException;
 
@@ -33,6 +34,7 @@ class GroupTypeSelectWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$group = Groups::findModel($this->groupId, new NotFoundHttpException("Group {$this->groupId} not found!"));

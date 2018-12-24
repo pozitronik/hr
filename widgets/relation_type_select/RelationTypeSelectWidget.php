@@ -5,6 +5,7 @@ namespace app\widgets\relation_type_select;
 
 use app\models\references\refs\RefGroupRelationTypes;
 use app\models\relations\RelGroupsGroups;
+use Throwable;
 use yii\base\Widget;
 
 /**
@@ -34,6 +35,7 @@ class RelationTypeSelectWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		return $this->render('relation_type_select', [

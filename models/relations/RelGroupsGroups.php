@@ -6,6 +6,7 @@ namespace app\models\relations;
 use app\helpers\ArrayHelper;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefGroupRelationTypes;
+use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -64,6 +65,7 @@ class RelGroupsGroups extends ActiveRecord {
 	 * @param int $parentGroupId
 	 * @param int $childGroupId
 	 * @return int|null
+	 * @throws Throwable
 	 */
 	public static function getRelationId(int $parentGroupId, int $childGroupId):?int {
 		return ArrayHelper::getValue(self::find()->where(['parent_id' => $parentGroupId, 'child_id' => $childGroupId])->select('relation')->one(), 'relation');

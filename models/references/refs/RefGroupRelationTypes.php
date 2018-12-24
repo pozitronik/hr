@@ -108,7 +108,7 @@ class RefGroupRelationTypes extends Reference {
 			$result = [];
 			foreach ($items as $key => $item) {
 				$result[$item->id] = [
-					'data-color' => $item->color,
+					'data-color' => $item->color
 				];
 			}
 			return $result;

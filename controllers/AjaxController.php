@@ -301,7 +301,7 @@ class AjaxController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$groupId = Yii::$app->request->post('groupId', false);
 		$type = Yii::$app->request->post('type', false);
-		if (!($groupId)) {
+		if (!$groupId) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
