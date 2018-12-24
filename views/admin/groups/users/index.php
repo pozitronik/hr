@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\Icons;
 use app\models\users\Users;
 use app\models\groups\Groups;
 use app\widgets\roles_select\RolesSelectWidget;
@@ -46,14 +47,6 @@ $provider = new ActiveDataProvider([
 			'responsive' => true,
 			'columns' => [
 				[
-					'class' => CheckboxColumn::class,
-					'width' => '36px',
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => 'Удалить',
-					'name' => $model->formName().'[dropUsers]',
-					'visible' => $showDropColumn
-				],
-				[
 					'format' => 'raw',
 					'attribute' => 'username',
 					'value' => function($user) {
@@ -72,6 +65,13 @@ $provider = new ActiveDataProvider([
 					},
 					'format' => 'raw',
 					'visible' => $showRolesSelector
+				],
+				[
+					'class' => CheckboxColumn::class,
+					'headerOptions' => ['class' => 'kartik-sheet-style'],
+					'header' => Icons::trash(),
+					'name' => $model->formName().'[dropUsers]',
+					'visible' => $showDropColumn
 				]
 			]
 		]); ?>
