@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\helpers\ArrayHelper;
 use app\models\references\refs\RefGroupRelationTypes;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -54,5 +55,15 @@ class RelGroupsGroups extends ActiveRecord {
 	 */
 	public function getRefGroupsRelationTypes() {
 		return $this->hasOne(RefGroupRelationTypes::class, ['id' => 'relation']);
+	}
+
+	/**
+	 * Возвращает ID типа связи между группами
+	 * @param int $parentGroupId
+	 * @param int $childGroupId
+	 * @return int|null
+	 */
+	public static function getRelationId(int $parentGroupId, int $childGroupId):?int {
+		return ArrayHelper::getValue(self::find()->where(['parent_id' => $parentGroupId, $childGroupId => $childGroupId])->select('relation')->one(), 'relation');
 	}
 }
