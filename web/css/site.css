@@ -117,3 +117,8 @@ a.desc:after {
 .summary-content {
 	margin: 10px 10px auto auto;
 }
+
+.open > .dropdown-menu {
+	display: block;
+	top: -100%;
+}
