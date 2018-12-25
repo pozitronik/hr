@@ -37,7 +37,10 @@ use kartik\grid\GridView;
 				/** @var DynamicAttributeProperty $model */
 				return ArrayHelper::getValue(ArrayHelper::getColumn(DynamicAttributeProperty::PROPERTY_TYPES, 'label'), $model->type);
 			},
-			'visible' => $show_category
+			'visible' => $show_category,
+			'options' => [
+				'style' => 'width:20%'
+			],
 		],
 		'name',
 		[
@@ -56,6 +59,9 @@ use kartik\grid\GridView;
 					break;
 				}
 			},
+			'options' => [
+				'style' => 'width:50%'
+			],
 			'format' => 'raw'
 		]
 	]
