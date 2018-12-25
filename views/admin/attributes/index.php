@@ -8,7 +8,10 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\helpers\Icons;
+use app\helpers\Utils;
 use app\models\users\UsersSearch;
+use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -27,34 +30,46 @@ $this->params['breadcrumbs'][] = $this->title;
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'panel' => [
-				'heading' => $this->title
+				'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['атрибут', 'атрибута', 'атрибутов']).")":" (нет атрибутов)")
 			],
-			'toolbar' => [
-				[
-					'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
+			'summary' => ButtonGroup::widget([
+				'options' => [
+					'class' => 'summary-content'
 				],
-				[
-					'content' => Html::a('Поиск', 'search', ['class' => 'btn btn-info'])
+				'buttons' => [
+					Html::a('Новый атрибут', 'create', ['class' => 'btn btn-success']),
+					Html::a('Поиск', 'search', ['class' => 'btn btn-info']),
 				]
-			],
+			]),
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-				'id',
 				[
-					'value' => function($model) {
-						/** @var DynamicAttributes $model */
-						return $model->getRelUsers()->count();
-					},
-					'label' => 'Пользователи'
+					'header' => Icons::menu(),
+					'dropdown' => true,
+					'dropdownButton' => [
+						'label' => Icons::menu(),
+						'caret' => ''
+					],
+					'class' => ActionColumn::class,
+					'template' => '{update} {delete}'
+				],
+				[
+					'attribute' => 'id',
+					'options' => [
+						'style' => 'width:36px'
+
+					]
 				],
 				'name',
 				'categoryName',
 				[
-					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
-				]
+					'attribute' => 'usersCount',
+					'header' => Icons::users(),
+					'headerOptions' => ['class' => 'text-center']
+				],
 			]
 
 		]); ?>
