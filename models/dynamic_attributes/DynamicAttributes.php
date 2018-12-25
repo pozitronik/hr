@@ -44,6 +44,7 @@ use yii\db\Exception;
  * @property Users|ActiveQuery $relUsers Пользователи с этим атрибутом
  * @property-read string $categoryName Строковое имя категории
  * @property-read bool $hasIntegerProperties
+ * @property-read int $usersCount
  */
 class DynamicAttributes extends ActiveRecord {
 	use ARExtended;
@@ -274,5 +275,12 @@ class DynamicAttributes extends ActiveRecord {
 			if (in_array($property->type, ['integer', 'percent'])) return true;//большего особо не требуется
 		}
 		return false;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsersCount():int {
+		return (int)$this->getRelUsers()->count();
 	}
 }
