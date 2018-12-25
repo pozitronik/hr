@@ -39,8 +39,9 @@ $this->title = 'Вход';
 		<?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']); ?>
 		<?php ActiveForm::end(); ?>
 	</div>
-	<div class="pad-all">
+<!--	<div class="pad-all">
 		<?= Html::a('Восстановление пароля', ['site/restore-password'], ['class' => 'btn-link mar-rgt']); ?>
 		<?= Html::a('Регистрация', ['site/register'], ['class' => 'btn-link mar-lft']); ?>
 	</div>
+	-->
 </div>
