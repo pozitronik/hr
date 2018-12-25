@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'panel' => [
 				'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)")
 			],
-			'summary' => Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success', 'style' => 'margin: 10px 10px auto auto']),
+			'summary' => Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success summary-content']),
 			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,

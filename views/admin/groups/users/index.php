@@ -48,7 +48,7 @@ $provider = new ActiveDataProvider([
 				'label' => Icons::menu(),
 				'encodeLabel' => false,
 				'options' => [
-					'style' => 'margin: 10px 10px auto auto'
+					'class' => 'summary-content'
 				],
 				'dropdown' => [
 					'options' => [
