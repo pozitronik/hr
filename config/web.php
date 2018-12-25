@@ -47,7 +47,7 @@ $config = [
 		],
 		'assetManager' => [
 			'appendTimestamp' => false,
-			'forceCopy' => true
+			'forceCopy' => false
 		],
 		'redis' => [
 			'class' => '\yii\redis\Connection',
