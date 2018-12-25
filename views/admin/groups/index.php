@@ -62,7 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
 						'style' => 'width:36px'
 
 					]
-
 				],
 				[
 					'attribute' => 'name',
@@ -99,10 +98,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'attribute' => 'usersCount',
 					'header' => Icons::users(),
+					'headerOptions' => ['class' => 'text-center']
 				],
 				[
 					'attribute' => 'childGroupsCount',
 					'header' => Icons::subgroups(),
+					'headerOptions' => ['class' => 'text-center']
 				],
 //				'comment',
 			]

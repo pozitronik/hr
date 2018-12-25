@@ -9,6 +9,8 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
+use app\helpers\Utils;
 use app\models\references\refs\RefUserRoles;
 use app\models\users\UsersSearch;
 use app\widgets\badge\BadgeWidget;
@@ -30,25 +32,41 @@ $this->params['breadcrumbs'][] = $this->title;
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'panel' => [
-				'heading' => $this->title
+				'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)")
 			],
-			'toolbar' => [
-				[
-					'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
-				]
-			],
+			'summary' => Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success', 'style' => 'margin: 10px 10px auto auto']),
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-				'id',
+				[
+					'class' => ActionColumn::class,
+					'header' => Icons::menu(),
+					'dropdown' => true,
+					'dropdownButton' => [
+						'label' => Icons::menu(),
+						'caret' => ''
+					],
+					'template' => '{update} {delete}'
+				],
+				[
+					'attribute' => 'id',
+					'options' => [
+						'style' => 'width:36px'
+					]
+				],
 				[
 					'value' => function($model) {
 						/** @var UsersSearch $model */
 						return Html::img($model->avatar, ['class' => 'img-circle img-xs']);
 					},
 					'label' => 'Аватар',
-					'format' => 'raw'
+					'format' => 'raw',
+					'contentOptions' => ['class' => 'text-center'],
+					'options' => [
+						'style' => 'width: 40px;'
+					]
 				],
 				[
 					'attribute' => 'username',
@@ -102,10 +120,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format' => 'raw'
 				],
 				'email:email',
-				[
-					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
-				]
 			]
 		]); ?>
 	</div>

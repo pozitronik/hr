@@ -103,12 +103,14 @@ $provider = new ActiveDataProvider([
 				[
 					'attribute' => 'usersCount',
 					'header' => Icons::users(),
-					'footer' => Utils::pageTotal($provider, 'usersCount')
+					'footer' => Utils::pageTotal($provider, 'usersCount'),
+					'headerOptions' => ['class' => 'text-center']
 				],
 				[
 					'attribute' => 'childGroupsCount',
 					'header' => Icons::subgroups(),
-					'footer' => Utils::pageTotal($provider, 'childGroupsCount')
+					'footer' => Utils::pageTotal($provider, 'childGroupsCount'),
+					'headerOptions' => ['class' => 'text-center']
 				],
 				[
 					'class' => CheckboxColumn::class,
