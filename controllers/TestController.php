@@ -27,9 +27,8 @@ class TestController extends Controller {
 	 * @return string|Response
 	 */
 	public function actionIndex() {
-
-		Utils::log(Groups::find()->joinWith(['relRefUserRoles'])->where(['boss_flag' => true, 'rel_users_groups.user_id' => 1])->createCommand()->rawSql);
-		Utils::log(Users::find()->joinWith('relRefUserRoles')->where(['ref_user_roles.boss_flag' => true])->createCommand()->rawSql);
+		$this->layout = 'empty';
+		return $this->render('index');
 
 	}
 
