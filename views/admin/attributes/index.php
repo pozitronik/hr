@@ -17,7 +17,6 @@ use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use kartik\grid\ActionColumn;
-use app\models\dynamic_attributes\DynamicAttributes;
 
 $this->title = 'Атрибуты';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];

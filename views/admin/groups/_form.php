@@ -38,7 +38,7 @@ use kartik\file\FileInput;
 								'items' => [
 									[
 										'label' => Icons::group().'Новая группа',
-										'url' => 'create',
+										'url' => 'create'
 									],
 									[
 										'label' => Icons::network().'Граф структуры',

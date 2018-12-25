@@ -40,7 +40,7 @@ use kartik\grid\GridView;
 			'visible' => $show_category,
 			'options' => [
 				'style' => 'width:20%'
-			],
+			]
 		],
 		'name',
 		[

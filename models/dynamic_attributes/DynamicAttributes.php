@@ -213,6 +213,7 @@ class DynamicAttributes extends ActiveRecord {
 	/**
 	 * Очищает значения всех свойств атрибута у пользователя
 	 * @param int $user_id
+	 * @throws Throwable
 	 */
 	public function clearUserProperties(int $user_id):void {
 		foreach ($this->properties as $property) {

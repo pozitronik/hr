@@ -129,6 +129,7 @@ class UsersController extends WigetableController {
 	 * @param int $user_id
 	 * @param int $attribute_id
 	 * @return Response
+	 * @throws Throwable
 	 */
 	public function actionAttributesClear(int $user_id, int $attribute_id):Response {
 		Users::findModel($user_id, new NotFoundHttpException());
