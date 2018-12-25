@@ -123,6 +123,10 @@ a.desc:after {
 	top: -100%;
 }
 
+.open > .mega-dropdown-menu, #dropdown-user > .dropdown-menu  {
+	top: auto;
+}
+
 a > i.fa {
 	margin-right: 5px;
 	width:15px;
