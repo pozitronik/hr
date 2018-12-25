@@ -56,7 +56,8 @@ use kartik\grid\CheckboxColumn;
 					'template' => '{tree}{bunch}',
 					'buttons' => [
 						'tree' => function($url, $model) {
-							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
+							/** @var Groups $model */
+							return Html::tag('li', Html::a(Icons::network().'Граф структуры',['admin/groups/tree', 'id' => $model->id]));
 						},
 						'bunch' => function($url, $model) {
 							/** @var Groups $model */
