@@ -21,6 +21,7 @@ class AppAsset extends AssetBundle {
 	public $baseUrl = '@web';
 	public $css = [
 		'templates/nifty/css/nifty.min.css',//Nifty
+		'css/site.css'
 
 	];
 	public $js = [
