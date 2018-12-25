@@ -127,14 +127,19 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 */
 	public function getColumns():array {
 		return [
-			'id',
+			[
+				'attribute' => 'id',
+				'options' => [
+					'style' => 'width:36px;'
+				]
+			],
 			[
 				'attribute' => 'name',
 				'value' => function($model) {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
-						]).$model->name:$model->name;
+						]).$model->name:Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]);
 				},
 				'format' => 'raw'
 			],

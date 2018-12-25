@@ -145,7 +145,12 @@ class RefUserRoles extends Reference {
 	 */
 	public function getColumns():array {
 		return [
-			'id',
+			[
+				'attribute' => 'id',
+				'options' => [
+					'style' => 'width:36px;'
+				]
+			],
 			[
 				'attribute' => 'boss_flag',
 //				'header' => Html::tag('i', false, ['class' => 'fa fa-crown']),
@@ -168,7 +173,7 @@ class RefUserRoles extends Reference {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
-						]).$model->name:Html::tag('span', $model->name, [
+						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), [
 						'style' => "background: {$model->color}"
 					]);
 				},

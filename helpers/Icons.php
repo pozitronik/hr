@@ -13,6 +13,27 @@ class Icons {
 	/**
 	 * @return string
 	 */
+	public static function view():string {
+		return "<i class='fa fa-eye ' title='Просмотр'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function update():string {
+		return "<i class='fa fa-edit ' title='Редактирование'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function delete():string {
+		return "<i class='fa fa-trash-alt ' title='Удаление'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function trash():string {
 		return "<i class='fa fa-trash' title='Отметить к удалению'></i>";
 	}
