@@ -31,6 +31,6 @@ class AppAsset extends AssetBundle {
 	public $depends = [
 		YiiAsset::class,
 		BootstrapPluginAsset::class,
-		FontAwesomeAsset::class
+		FontAwesomeProAsset::class
 	];
 }
