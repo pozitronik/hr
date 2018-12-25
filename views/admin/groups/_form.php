@@ -34,21 +34,22 @@ use kartik\file\FileInput;
 								'options' => [
 									'class' => 'pull-right'
 								],
+								'encodeLabels' => false,
 								'items' => [
 									[
-										'label' => 'Новая группа',
-										'url' => 'create'
+										'label' => Icons::group().'Новая группа',
+										'url' => 'create',
 									],
 									[
-										'label' => 'Граф структуры',
+										'label' => Icons::network().'Граф структуры',
 										'url' => ['tree', 'id' => $model->id]
 									],
 									[
-										'label' => 'Редактировать пользователей',
+										'label' => Icons::users_edit().'Редактировать пользователей',
 										'url' => ['admin/bunch/index', 'group_id' => $model->id]
 									],
 									[
-										'label' => 'Редактировать пользователей (всех)',
+										'label' => Icons::users_edit_red().'Редактировать пользователей (всех)',
 										'url' => ['admin/bunch/index', 'group_id' => $model->id, 'hierarchy' => true]
 									]
 								]

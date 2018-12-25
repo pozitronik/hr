@@ -33,7 +33,7 @@ $provider = new ActiveDataProvider([
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
-				'heading' => $heading,
+				'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)"),
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => GroupSelectWidget::widget([
 					'model' => $model,
@@ -44,6 +44,7 @@ $provider = new ActiveDataProvider([
 			],
 			'toolbar' => false,
 			'export' => false,
+			'summary' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
 			'showFooter' => true,
@@ -60,11 +61,11 @@ $provider = new ActiveDataProvider([
 					'template' => '{tree}{bunch}',
 					'buttons' => [
 						'tree' => function($url, $model) {
-							return Html::a('Граф структуры', $url, ['class' => 'btn']);
+							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
 						},
 						'bunch' => function($url, $model) {
 							/** @var Groups $model */
-							return Html::a('Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id], ['class' => 'btn']);
+							return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id]));
 						}
 					]
 				],
