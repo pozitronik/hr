@@ -6,6 +6,7 @@ use app\models\groups\Groups;
 use app\widgets\group_select\GroupSelectWidget;
 use app\models\users\Users;
 use app\widgets\roles_select\RolesSelectWidget;
+use kartik\grid\ActionColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -44,6 +45,25 @@ use kartik\grid\CheckboxColumn;
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
+				[
+					'header' => Icons::menu(),
+					'dropdown' => true,
+					'dropdownButton' => [
+						'label' => Icons::menu(),
+						'caret' => ''
+					],
+					'class' => ActionColumn::class,
+					'template' => '{tree}{bunch}',
+					'buttons' => [
+						'tree' => function($url, $model) {
+							return Html::tag('li', Html::a('Граф структуры', $url));
+						},
+						'bunch' => function($url, $model) {
+							/** @var Groups $model */
+							return Html::tag('li', Html::a('Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id]));
+						}
+					]
+				],
 				[
 					'format' => 'raw',
 					'attribute' => 'name',
