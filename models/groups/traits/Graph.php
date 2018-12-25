@@ -50,9 +50,9 @@ trait Graph {
 	 * @return array
 	 */
 	private function Edge($to):array {
-		if (false === $color = RelGroupsGroups::getRelationColor($this->id, $to->id)) {
-			 //todo: цвет вычисляется, как средний между цветом исходящей группы и входящей группы
-		}
+//		if (false === $color = RelGroupsGroups::getRelationColor($this->id, $to->id)) {
+//			 //todo: цвет вычисляется, как средний между цветом исходящей группы и входящей группы
+//		}
 		return [
 			'id' => "{$this->id}x{$to->id}",
 			'source' => (string)$this->id,
@@ -60,7 +60,7 @@ trait Graph {
 			'type' => 'curvedArrow',
 			'label' => $to->leader->username,
 			'size' => '5',
-			'color' => $color
+			'color' => RelGroupsGroups::getRelationColor($this->id, $to->id)
 		];
 	}
 

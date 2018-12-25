@@ -99,7 +99,7 @@ use yii\helpers\Url;
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => Icons::trash(),
 					'name' => $user->formName().'[dropUsersAttributes]'
-				],
+				]
 			]
 
 		]); ?>

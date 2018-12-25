@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				'buttons' => [
 					Html::a('Новый атрибут', 'create', ['class' => 'btn btn-success']),
-					Html::a('Поиск', 'search', ['class' => 'btn btn-info']),
+					Html::a('Поиск', 'search', ['class' => 'btn btn-info'])
 				]
 			]),
 			'toolbar' => false,
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'usersCount',
 					'header' => Icons::users(),
 					'headerOptions' => ['class' => 'text-center']
-				],
+				]
 			]
 
 		]); ?>
