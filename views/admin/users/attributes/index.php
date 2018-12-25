@@ -62,14 +62,14 @@ use yii\helpers\Url;
 					'template' => '{update}{attribute-graph}{clear}',
 					'buttons' => [
 						'update' => function($url, $model) use ($user) {
-							return Html::tag('li', Html::a(Icons::attributes().' Открыть для изменения', Url::to(['admin/users/attributes', 'user_id' => $user->id, 'attribute_id' => $model->id])));
+							return Html::tag('li', Html::a(Icons::attributes().'Открыть для изменения', Url::to(['admin/users/attributes', 'user_id' => $user->id, 'attribute_id' => $model->id])));
 						},
 						'attribute-graph' => function($url, $model) use ($user) {
 							/** @var DynamicAttributes $model */
-							return $model->hasIntegerProperties?Html::tag('li', Html::a(Icons::chart().' Диаграмма', ['attribute-graph', 'user_id' => $user->id, 'attribute_id' => $model->id])):false;
+							return $model->hasIntegerProperties?Html::tag('li', Html::a(Icons::chart().'Диаграмма', ['attribute-graph', 'user_id' => $user->id, 'attribute_id' => $model->id])):false;
 						},
 						'clear' => function($url, $model) use ($user) {
-							return Html::tag('li', Html::a(Icons::clear().' Сбросить все значения', Url::to(['admin/users/attributes-clear', 'user_id' => $user->id, 'attribute_id' => $model->id])));
+							return Html::tag('li', Html::a(Icons::clear().'Сбросить все значения', Url::to(['admin/users/attributes-clear', 'user_id' => $user->id, 'attribute_id' => $model->id])));
 						}
 					]
 				],

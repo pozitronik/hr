@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'template' => '{tree} {update} {delete} ',
 					'buttons' => [
 						'tree' => function($url, $model) {
-							return Html::tag('li', Html::a(Icons::network().' Граф структуры', $url));
+							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
 						}
 					]
 

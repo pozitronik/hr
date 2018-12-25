@@ -73,9 +73,6 @@ class Icons {
 	 * @return string
 	 */
 	public static function users_edit():string {
-		return "<span class='fa-stack fa-2x'>
-		<i class='fa fa-users'></i>
-		<i class='fa fa-edit fa-stack-1x fa-inverse'></i>
-		</span>";
+		return "<i class='fa fa-user-edit'></i>";
 	}
 }
