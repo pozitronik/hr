@@ -60,11 +60,11 @@ $provider = new ActiveDataProvider([
 					'template' => '{tree}{bunch}',
 					'buttons' => [
 						'tree' => function($url, $model) {
-							return Html::a('Граф структуры', $url, ['class' => 'btn']);
+							return Html::tag('li', Html::a('Граф структуры', $url));
 						},
 						'bunch' => function($url, $model) {
 							/** @var Groups $model */
-							return Html::a('Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id], ['class' => 'btn']);
+							return Html::tag('li', Html::a('Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id]));
 						}
 					]
 				],
