@@ -8,6 +8,8 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\helpers\Icons;
+use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
@@ -30,18 +32,38 @@ $this->params['breadcrumbs'][] = $this->title;
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'panel' => [
-				'heading' => $this->title
+				'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)")
 			],
-			'toolbar' => [
-				[
-					'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
-				]
-			],
+			'summary' => Html::a('Новая группа', 'create', ['class' => 'btn btn-success', 'style' => 'margin: 10px 10px auto auto']),
+			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-				'id',
+				[
+					'class' => ActionColumn::class,
+					'header' => Icons::menu(),
+					'dropdown' => true,
+					'dropdownButton' => [
+						'label' => Icons::menu(),
+						'caret' => ''
+					],
+					'template' => '{tree} {update} {delete} ',
+					'buttons' => [
+						'tree' => function($url, $model) {
+							return Html::tag('li', Html::a(Icons::network().' Граф структуры', $url));
+						}
+					]
+
+				],
+				[
+					'attribute' => 'id',
+					'options' => [
+						'style' => 'width:36px'
+
+					]
+
+				],
 				[
 					'attribute' => 'name',
 					'value' => function($model) {
@@ -76,23 +98,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				[
 					'attribute' => 'usersCount',
-					'label' => 'Пользователей'
+					'header' => Icons::users(),
 				],
 				[
 					'attribute' => 'childGroupsCount',
-					'label' => 'Подгрупп'
+					'header' => Icons::subgroups(),
 				],
-				'comment',
-				[
-					'class' => ActionColumn::class,
-					'template' => '{tree} {update} {delete}',
-					'buttons' => [
-						'tree' => function($url, $model) {
-							return Html::a('Граф', $url, ['class' => 'btn btn-xs btn-info']);
-						}
-					]
-
-				]
+//				'comment',
 			]
 		]); ?>
 	</div>
