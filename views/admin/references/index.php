@@ -54,7 +54,6 @@ $columns[] = [
 
 $columns = array_merge($columns, $class->columns);
 
-
 ?>
 <div class="row">
 	<div class="col-xs-12">
