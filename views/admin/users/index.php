@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'roles',
 					'filterType' => GridView::FILTER_SELECT2,
 					'filter' => RefUserRoles::mapData(),
-					'filterInputOptions' => ['placeholder' => 'Тип'],
+					'filterInputOptions' => ['placeholder' => 'Выберите роль'],
 					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
 
 					'label' => 'Роли',
