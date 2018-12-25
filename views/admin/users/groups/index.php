@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\Icons;
 use app\models\groups\Groups;
 use app\widgets\group_select\GroupSelectWidget;
 use app\models\users\Users;
@@ -44,13 +45,6 @@ use kartik\grid\CheckboxColumn;
 			'responsive' => true,
 			'columns' => [
 				[
-					'class' => CheckboxColumn::class,
-					'width' => '36px',
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => 'Удалить',
-					'name' => $model->formName().'[dropGroups]'
-				],
-				[
 					'format' => 'raw',
 					'attribute' => 'name',
 					'value' => function($group) {
@@ -67,8 +61,13 @@ use kartik\grid\CheckboxColumn;
 						]);
 					},
 					'format' => 'raw'
+				],
+				[
+					'class' => CheckboxColumn::class,
+					'headerOptions' => ['class' => 'kartik-sheet-style'],
+					'header' => Icons::trash(),
+					'name' => $model->formName().'[dropGroups]'
 				]
-
 			]
 
 		]); ?>

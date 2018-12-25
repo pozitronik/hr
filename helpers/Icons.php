@@ -30,12 +30,24 @@ class Icons {
 	public static function subgroups():string {
 		return "<i class='fa fa-users' title='Подгруппы'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function attributes():string {
+		return "<i class='fa fa-address-card' title='Подгруппы'></i>";
+	}
 
 	/**
 	 * @return string
 	 */
 	public static function network():string {
 		return "<i class='fa fa-chart-network'></i>";
+	}
+	/**
+	 * @return string
+	 */
+	public static function chart():string {
+		return "<i class='fa fa-chart-pie'></i>";
 	}
 
 	/**
@@ -48,7 +60,13 @@ class Icons {
 	 * @return string
 	 */
 	public static function menu_caret():string {
-		return "<i class='fa chevron-circle-down'></i>";
+		return "<i class='fa fa-chevron-circle-down'></i>";
+	}
+	/**
+	 * @return string
+	 */
+	public static function clear():string {
+		return "<i class='fa toilet'></i>";
 	}
 
 	/**

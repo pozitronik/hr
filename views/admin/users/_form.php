@@ -27,7 +27,7 @@ use kartik\file\FileInput;
 			<div class="panel-heading">
 				<div class="panel-control">
 					<?php if (!$model->isNewRecord): ?>
-						<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']); ?>
+						<?= Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success']); ?>
 					<?php endif; ?>
 				</div>
 				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
