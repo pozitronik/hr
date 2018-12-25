@@ -51,7 +51,7 @@ trait Graph {
 	 */
 	private function Edge($to):array {
 		if (false === $color = RelGroupsGroups::getRelationColor($this->id, $to->id)) {
-			//todo: цвет вычисляется, как средний между цветом исходящей группы и входящей группы
+			 //todo: цвет вычисляется, как средний между цветом исходящей группы и входящей группы
 		}
 		return [
 			'id' => "{$this->id}x{$to->id}",
