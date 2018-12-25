@@ -122,3 +122,8 @@ a.desc:after {
 	display: block;
 	top: -100%;
 }
+
+a > i.fa {
+	margin-right: 5px;
+	width:15px;
+}
