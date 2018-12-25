@@ -13,7 +13,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
-use yii\grid\ActionColumn;
+use kartik\grid\ActionColumn;
 use app\models\dynamic_attributes\DynamicAttributes;
 
 $this->title = 'Атрибуты';

@@ -18,7 +18,7 @@ use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 $this->title = 'Групповое изменение пользователей';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];

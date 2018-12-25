@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use yii\grid\ActionColumn;
+use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
