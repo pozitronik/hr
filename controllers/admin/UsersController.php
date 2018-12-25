@@ -121,8 +121,21 @@ class UsersController extends WigetableController {
 		if (null !== $data = Yii::$app->request->post('DynamicAttributeProperty')) {
 			$attribute->setUserProperties($user_id, $data);
 		}
-
 		return $this->render('attributes', compact('user', 'attribute'));
+	}
+
+	/**
+	 * Сбросить все свойства атрибута для пользователя
+	 * @param int $user_id
+	 * @param int $attribute_id
+	 * @return Response
+	 */
+	public function actionAttributesClear(int $user_id, int $attribute_id):Response {
+		Users::findModel($user_id, new NotFoundHttpException());
+		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+		$attribute->clearUserProperties($user_id);
+		return $this->redirect(Yii::$app->request->referrer);
+		//return $this->goBack();//лень возиться с setReturnUrl()
 	}
 
 	/**
