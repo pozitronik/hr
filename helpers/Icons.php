@@ -66,7 +66,7 @@ class Icons {
 	 * @return string
 	 */
 	public static function clear():string {
-		return "<i class='fa toilet'></i>";
+		return "<i class='fa fa-toilet'></i>";
 	}
 
 	/**
