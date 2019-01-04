@@ -110,6 +110,7 @@ class RefGroupTypes extends Reference {
 	 */
 	public static function dataOptions():array {//todo: вынести в интерфейс?
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+			/** @var self[] $items */
 			$items = self::find()->active()->all();
 			$result = [];
 			foreach ($items as $key => $item) {

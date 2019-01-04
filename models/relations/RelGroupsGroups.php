@@ -78,6 +78,7 @@ class RelGroupsGroups extends ActiveRecord {
 	 * @return false|string
 	 */
 	public static function getRelationColor(int $parentGroupId, int $childGroupId) {
+		/** @var self|null $model */
 		if (null !== $model = self::find()->where(['parent_id' => $parentGroupId, 'child_id' => $childGroupId])->one()) {
 			if (null === $model->refGroupsRelationTypes) {
 				return false;

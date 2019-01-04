@@ -109,6 +109,7 @@ class RefGroupRelationTypes extends Reference {
 	 */
 	public static function dataOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+			/** @var self[] $items */
 			$items = self::find()->active()->all();
 			$result = [];
 			foreach ($items as $key => $item) {
