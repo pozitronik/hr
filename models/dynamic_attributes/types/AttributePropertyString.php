@@ -112,7 +112,7 @@ class AttributePropertyString extends ActiveRecord implements AttributePropertyI
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @return self|null
+	 * @return self|ActiveRecord|null
 	 */
 	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
