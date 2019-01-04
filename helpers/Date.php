@@ -256,7 +256,7 @@ class Date {
 	 * @return int
 	 * @deprecated (just to check usage)
 	 */
-	public function interval2seconds($interval):int {
+	public static function interval2seconds($interval):int {
 		$seconds = 0;
 		foreach ($interval as $time => $value) {
 			switch ($time) {
