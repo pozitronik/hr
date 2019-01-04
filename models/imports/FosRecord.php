@@ -234,6 +234,7 @@ class FosRecord extends Model {
 	 */
 	public function addGroup(string $name, string $type):int {
 		if (empty($name)) return -1;
+		/** @var null|Groups $group */
 		$group = Groups::find()->where(['name' => $name])->one();
 		if ($group) return $group->id;
 		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
@@ -263,6 +264,7 @@ class FosRecord extends Model {
 	 */
 	public function addUser(string $name, string $position, string $email, array $attributes = []):int {
 		if (empty($name)) return -1;
+		/** @var null|Users $user */
 		$user = Users::find()->where(['username' => $name])->one();
 		if ($user) return $user->id;
 		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
@@ -320,8 +322,10 @@ class FosRecord extends Model {
 	 */
 	public function linkRole(string $groupName, string $userName, int $role = self::OWNER):void {
 		if ('' === $userName || '' === $groupName) return;
+		/** @var null|Users $user */
 		$user = Users::find()->where(['username' => $userName])->one();//Предполагаем, что пользователь добавлен в бд
 		if (!$user) return;
+		/** @var null|Groups $group */
 		$group = Groups::find()->where(['name' => $groupName])->one();
 		if (!in_array($group->id, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
 			$user->relGroups = $group;
