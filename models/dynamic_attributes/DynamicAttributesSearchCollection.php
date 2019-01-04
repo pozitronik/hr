@@ -219,6 +219,7 @@ class DynamicAttributesSearchCollection extends Model {
 			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->property}.type")) {
 				$className = DynamicAttributeProperty::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
+					/** @noinspection BadExceptionsProcessingInspection */
 					try {
 						$typeAlias = $aliasName.$type;
 						if (!in_array($typeAlias, $usedAliases)) {
