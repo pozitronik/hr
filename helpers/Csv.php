@@ -1,4 +1,5 @@
 <?php
+/** @noinspection ReturnFalseInspection */
 declare(strict_types = 1);
 
 namespace app\helpers;
@@ -14,7 +15,7 @@ class Csv {
 	 * @param string $delimiter Разделитель строк
 	 * @return array
 	 */
-	public static function csvToArray($file, $delimiter = ';'):array {
+	public static function csvToArray(string $file, string $delimiter = ';'):array {
 		$csvArray = [];
 
 		if (false !== ($handle = fopen($file, 'rb'))) {
@@ -31,32 +32,34 @@ class Csv {
 	 * Преобразование массива в CSV
 	 * @param array $array Исходный массив
 	 * @param string $delimiter разделитель строк
-	 * @return string CSV contents
+	 * @return string|null CSV contents
 	 */
-	public static function arrayToCsv($array, $delimiter = ';'):string {
-		$file = fopen('php://temp/maxmemory:'.(5 * 1024 * 1024), 'wb');
-		foreach ($array as $value) fputcsv($file, $value, $delimiter);
+	public static function arrayToCsv(array $array, string $delimiter = ';'):?string {
+		if (false !== ($file = fopen('php://temp/maxmemory:'.(5 * 1024 * 1024), 'wb'))) {
+			foreach ($array as $value) fputcsv($file, $value, $delimiter);
 
-		rewind($file);
+			rewind($file);
 
-		return stream_get_contents($file);
+			return stream_get_contents($file);
+		}
+		return null;
 	}
 
 	/**
 	 * @param array $array
 	 * @param string|null $fileName Полный путь к файлу, если не задан - создастся временный файл
 	 * @param string $delimiter
-	 * @return bool|string CSV filename
+	 * @return null|string CSV filename
 	 */
-	public static function arrayToCsvFile($array, $fileName = null, $delimiter = ';') {
+	public static function arrayToCsvFile(array $array, ?string $fileName = null, string $delimiter = ';'):?string {
 		$_fileName = $fileName??tempnam(sys_get_temp_dir(), 'csv');
-		if (!$_fileName) return false;
-		$file = fopen($_fileName, 'wb');
+		if (!$_fileName) return null;
+		if (false !== $file = fopen($_fileName, 'wb')) {
+			foreach ($array as $value) fputcsv($file, $value, $delimiter);
+			fclose($file);
+			return $_fileName;
+		}
+		return null;
 
-		foreach ($array as $value) fputcsv($file, $value, $delimiter);
-
-		fclose($file);
-
-		return $_fileName;
 	}
 }
