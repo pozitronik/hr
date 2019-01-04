@@ -1,4 +1,5 @@
-<?php /** @noinspection BadExceptionsProcessingInspection */
+<?php /** @noinspection ALL */
+/** @noinspection BadExceptionsProcessingInspection */
 declare(strict_types = 1);
 
 namespace app\models\imports;
@@ -147,7 +148,7 @@ class SokolovRecord extends Model {
 
 		try {
 			/*Чистим текущих пользователей*/
-			/** @var self $model */
+			/** @var self[] $models */
 			foreach ($models as $model) {
 				if (null !== $user = Users::find()->where(['username' => $model->username])->one()) {
 					$userGroups = ArrayHelper::getColumn($user->relGroups, 'id');

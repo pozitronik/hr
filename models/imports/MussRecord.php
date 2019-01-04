@@ -1,4 +1,5 @@
-<?php /** @noinspection BadExceptionsProcessingInspection */
+<?php /** @noinspection ALL */
+/** @noinspection BadExceptionsProcessingInspection */
 /** @noinspection ForeachSourceInspection */
 declare(strict_types = 1);
 
