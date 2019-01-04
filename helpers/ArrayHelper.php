@@ -176,6 +176,7 @@ class ArrayHelper extends YiiArrayHelper {
 	 */
 	public static function setLast(array &$array, $value = null):void {
 		if (!count($array)) return;
+		/** @noinspection ReturnFalseInspection */
 		end($array);
 		if (null === $value) {
 			unset($array[key($array)]);
