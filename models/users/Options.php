@@ -66,6 +66,7 @@ class Options extends Model {
 	 * @return array
 	 */
 	public function get(string $option):array {
+		/** @var UsersOptions $result */
 		return (null === $result = UsersOptions::find()->where(['option' => $option, 'user_id' => $this->user_id])->one())?[]:$result->value;
 	}
 
@@ -75,6 +76,7 @@ class Options extends Model {
 	 * @return bool
 	 */
 	public function set(string $option, array $value):bool {
+		/** @var UsersOptions $userOptions */
 		if (null === $userOptions = UsersOptions::find()->where(['option' => $option, 'user_id' => $this->userId])->one()) {
 			$userOptions = new UsersOptions(['user_id' => $this->user_id, 'option' => $option, 'value' => $value]);
 		} else {
