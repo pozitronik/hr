@@ -62,15 +62,13 @@ class UsersSearch extends Users {
 		if (!$this->validate()) return $dataProvider;
 
 		$query->joinWith(['relGroups', 'relRefUserRoles']);
-
-		$query->andFilterWhere(['sys_users.id' => $this->id])
-			->andFilterWhere(['group_id' => $allowedGroups])
-			->andFilterWhere(['like', 'sys_users.username', $this->username])
-			->andFilterWhere(['like', 'login', $this->login])
-			->andFilterWhere(['like', 'email', $this->email])
-			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
-			->andFilterWhere(['=', 'ref_user_roles.id', $this->roles]);
-
+				$query->andFilterWhere(['sys_users.id' => $this->id])
+					->andFilterWhere(['group_id' => $allowedGroups])
+					->andFilterWhere(['like', 'sys_users.username', $this->username])
+					->andFilterWhere(['like', 'login', $this->login])
+					->andFilterWhere(['like', 'email', $this->email])
+					->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
+					->andFilterWhere(['in', 'ref_user_roles.id', $this->roles]);
 		return $dataProvider;
 	}
 }
