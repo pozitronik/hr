@@ -1,4 +1,7 @@
 <?php
+/** @noinspection MissingParameterTypeDeclarationInspection */
+/** @noinspection MissingReturnTypeInspection */
+/** @noinspection ReturnFalseInspection */
 declare(strict_types = 1);
 
 namespace app\helpers;
@@ -31,47 +34,12 @@ class Date {
 	}
 
 	/**
-	 * Получение интервала квартала
-	 * @param mixed $d Микротайм mktime(0,0,0,4,1,2016)
-	 * @return array
-	 */
-	public static function intervalQuarter($d):array {
-		$kv = (int)((date('n', $d) - 1) / 3 + 1);
-		$year = date('y', $d);
-
-		return [
-			'start' => date('Y-m-d', mktime(0, 0, 0, ($kv - 1) * 3 + 1, 1, $year)),
-			'end' => date('Y-m-d', mktime(0, 0, 0, $kv * 3 + 1, 0, $year))
-		];
-	}
-
-	/**
-	 * Получить номер текущего квартала
-	 * @return int
-	 */
-	public static function currentQuarter():int {
-		return (int)((date('n') + 2) / 3);
-	}
-
-	/**
-	 * Получить номер следующего квартала от текущего
-	 * @return int
-	 */
-	public static function nextQuarter():int {
-		if (self::currentQuarter() + 1 > 4) {
-			return 1;
-		}
-
-		return self::currentQuarter() + 1;
-	}
-
-	/**
 	 * Прибавляет заданное кол-во к месяцу
 	 * @param null|int $int
 	 * @param null|int $month
 	 * @return false|string
 	 */
-	public static function monthPlus($int = null, $month = null) {
+	public static function monthPlus(?int $int = null, ?int $month = null) {
 		if (null === $int) {
 			return date('m');
 		}
@@ -91,7 +59,7 @@ class Date {
 	 * @param null|int $month
 	 * @return false|null|string
 	 */
-	public static function monthMinus($int = null, $month = null) {
+	public static function monthMinus(?int $int = null, ?int $month = null) {
 		if (null === $int) {
 			return date('m');
 		}
@@ -108,7 +76,7 @@ class Date {
 	 * @param int $month
 	 * @return string
 	 */
-	public static function zeroAddMoth($month):string {
+	public static function zeroAddMoth(int $month):string {
 		return 1 === strlen($month)?'0'.$month:(string)$month;
 	}
 
@@ -133,7 +101,7 @@ class Date {
 	 * @return DateTime
 	 * @throws Throwable
 	 */
-	public static function getWeekEnd($currentDate):?DateTime {
+	public static function getWeekEnd(DateTime $currentDate):?DateTime {
 		$currentWeekDay = $currentDate->format('w');
 		$t = 7 - $currentWeekDay;
 		$td = clone $currentDate;
@@ -153,7 +121,7 @@ class Date {
 	 * @return string
 	 * @throws Exception
 	 */
-	public static function diff($dateStart, $dateEnd, $format):string {
+	public static function diff(string $dateStart, string $dateEnd, string $format):string {
 		$date1 = new DateTime($dateStart);
 		$date2 = new DateTime($dateEnd);
 		$diff = $date1->diff($date2);
@@ -167,7 +135,7 @@ class Date {
 	 * @param string $format
 	 * @return bool
 	 */
-	public static function isValidDate($date, $format = 'Y-m-d H:i:s'):bool {
+	public static function isValidDate(string $date, string $format = 'Y-m-d H:i:s'):bool {
 		$d = DateTime::createFromFormat($format, $date);
 		return $d && $d->format($format) === $date;
 	}
@@ -179,7 +147,7 @@ class Date {
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public static function fullDays($dateStart, $dateEnd) {
+	public static function fullDays(string $dateStart, string $dateEnd) {
 		$date1 = new DateTime($dateStart);
 		$date2 = new DateTime($dateEnd);
 
@@ -190,18 +158,18 @@ class Date {
 	 * @param integer $date - timestamp
 	 * @return int
 	 */
-	public static function getDayEnd($date):int {
+	public static function getDayEnd(int $date):int {
 		return mktime(0, 0, 0, date("m", $date), date("d", $date) + 1, date("y", $date));
 	}
 
 	/**
 	 * Выдаёт форматированное в заданный формат время
-	 * @param bool|int $delay - количество секунд для преобразования
+	 * @param bool|int|null $delay - количество секунд для преобразования
 	 * @param bool $short_format
 	 * @return string|false
 	 * @throws Exception
 	 */
-	public static function seconds2times($delay, $short_format = false) {
+	public static function seconds2times($delay, bool $short_format = false) {
 		if (null === $delay) $delay = false;
 		if (true === $delay) return "Отключено";
 		if (false === $delay) return false;//используется для оптимизации статистики SLA
@@ -236,7 +204,7 @@ class Date {
 	 * @param string $date
 	 * @return int|false
 	 */
-	public static function unix_timestamp($date) {
+	public static function unix_timestamp(string $date) {
 		if (!$date) return false;
 		$dt = DateTime::createFromFormat("Y-m-d H:i:s", $date);
 		return $dt->getTimestamp();
@@ -244,10 +212,10 @@ class Date {
 
 	/**
 	 * Конвертирует таймстамп в дату
-	 * @param $timestamp
+	 * @param int $timestamp
 	 * @return false|string
 	 */
-	public static function from_unix_timestamp($timestamp) {
+	public static function from_unix_timestamp(int $timestamp) {
 		return date("Y-m-d H:i:s", $timestamp);
 	}
 
@@ -256,7 +224,7 @@ class Date {
 	 * @return int
 	 * @deprecated (just to check usage)
 	 */
-	public static function interval2seconds($interval):int {
+	public static function interval2seconds(array $interval):int {
 		$seconds = 0;
 		foreach ($interval as $time => $value) {
 			switch ($time) {
