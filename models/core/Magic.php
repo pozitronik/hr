@@ -5,6 +5,7 @@ namespace app\models\core;
 
 use app\helpers\ArrayHelper;
 use app\models\references\Reference;
+use app\models\user_rights\UserRightInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -103,6 +104,23 @@ class Magic {
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ($class->isSubclassOf(Reference::class)) {
+			return new $className(/*['className'=>$className]*/);
+		}
+		return false;
+	}
+	/**
+	 * Загружает динамически класс права пользователя по его пути
+	 * @param string $fileName
+	 * @return UserRightInterface|false
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
+	 */
+	public static function GetUserRightModel($fileName) {
+		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+
+		if (!class_exists($className)) Yii::autoload($className);
+		$class = new ReflectionClass($className);
+		if ($class->isSubclassOf(UserRightInterface::class)) {
 			return new $className(/*['className'=>$className]*/);
 		}
 		return false;
