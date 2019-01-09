@@ -78,6 +78,19 @@ class Magic {
 	}
 
 	/**
+	 * Переводит вид имени экшена к виду запроса, который этот экшен дёргает.
+	 * @example actionSomeActionName => some-action-name
+	 * @example OtherActionName => other-action-name
+	 * @param string $action
+	 * @return string
+	 */
+	public static function GetActionRequestName(string $action):string {
+		$lines = preg_split('/(?=[A-Z])/', $action, -1, PREG_SPLIT_NO_EMPTY);
+		if ('action' === $lines[0]) unset($lines[0]);
+		return mb_strtolower(implode('-', $lines));
+	}
+
+	/**
 	 * Загружает динамически класс справочника Yii2 по его пути
 	 * @param string $fileName
 	 * @return Reference|false
