@@ -6,10 +6,12 @@ namespace app\controllers\admin;
 use app\helpers\ArrayHelper;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\WigetableController;
+use app\models\user_rights\UserAccess;
 use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
+use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -35,7 +37,12 @@ class UsersController extends WigetableController {
 					'application/xml' => Response::FORMAT_XML,
 					'text/html' => Response::FORMAT_HTML
 				]
+			],
+			'access' => [
+				'class' => AccessControl::class,
+				'rules' => UserAccess::getUserAccessRules($this)
 			]
+
 		];
 	}
 
