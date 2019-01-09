@@ -70,7 +70,7 @@ class Magic {
 	 * @return string[]
 	 * @throws ReflectionException
 	 */
-	public static function GetControllerActions(object $controllerClass):array {
+	public static function GetControllerActions(Controller $controllerClass):array {
 		$class = new ReflectionClass($controllerClass);
 		$publicMethods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
 		$names = ArrayHelper::getColumn($publicMethods, 'name');
