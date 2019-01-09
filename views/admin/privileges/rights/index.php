@@ -13,12 +13,11 @@ use app\models\groups\Groups;
  */
 
 use app\models\user_rights\Privileges;
+use app\widgets\user_right_select\UserRightSelectWidget;
 use yii\data\ArrayDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
-use yii\helpers\Html;
-use kartik\grid\ActionColumn;
 
 ?>
 <div class="row">
@@ -30,12 +29,12 @@ use kartik\grid\ActionColumn;
 				'after' => false,
 				'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['право', 'права', 'прав']).")":" (нет прав)"),
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-//				'before' => UserRightsWidget::widget([
-//					'model' => $model,
-//					'attribute' => 'relParentGroups',
-//					'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
-//					'multiple' => true
-//				])
+				'before' => UserRightSelectWidget::widget([
+					'model' => $model,
+					'attribute' => 'relUserRights',
+					'notData' => $model->isNewRecord?[]:array_merge($model->relUserRights, [$model]),
+					'multiple' => true
+				])
 			],
 			'toolbar' => false,
 			'export' => false,

@@ -117,4 +117,10 @@ class Privileges extends ActiveRecord {
 		}
 		return $result;
 	}
+
+	public function getRelUserRights() {
+	}
+
+	public function setRelUsers($relGroupsUsers):void {
+	}
 }
