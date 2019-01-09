@@ -5,12 +5,13 @@ namespace app\models\user_rights\rights;
 
 use app\helpers\ArrayHelper;
 use app\models\user_rights\UserRightInterface;
+use yii\base\Model;
 
 /**
  * Class RightUserCreate
  * @package app\models\user_rights\rights
  */
-class RightUserCreate implements UserRightInterface {
+class RightUserCreate extends Model implements UserRightInterface {
 
 	/**
 	 * Имя права
@@ -25,7 +26,7 @@ class RightUserCreate implements UserRightInterface {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Право на заведение нового пользователя";
+		return "Разрешает создать нового пользователя в системе";
 	}
 
 	/**

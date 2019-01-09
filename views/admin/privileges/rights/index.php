@@ -51,7 +51,7 @@ use kartik\grid\ActionColumn;
 					'class' => CheckboxColumn::class,
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => Icons::trash(),
-					'name' => $model->formName().'[dropParentGroups]'
+					'name' => $model->formName().'[dropUserRights]'
 				]
 			]
 

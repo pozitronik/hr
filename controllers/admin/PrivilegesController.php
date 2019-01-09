@@ -8,6 +8,7 @@ use app\models\user_rights\Privileges;
 use Throwable;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\web\ErrorAction;
 use yii\web\Response;
 
@@ -56,8 +57,13 @@ class PrivilegesController extends WigetableController {
 			return $this->redirect(['update', 'id' => $newPrivilege->id]);
 		}
 
+		$userRightsProvider = new ArrayDataProvider([
+			'allModels' => Privileges::GetRightsList()
+		]);
+
 		return $this->render('create', [
-			'model' => $newPrivilege
+			'model' => $newPrivilege,
+			'userRights' => $userRightsProvider
 		]);
 	}
 }

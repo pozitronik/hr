@@ -4,12 +4,14 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var ActiveRecord $model
+ * @var ArrayDataProvider $userRights
  */
 
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use yii\data\ArrayDataProvider;
 
 ?>
 <div class="row">
@@ -27,22 +29,30 @@ use yii\widgets\ActiveForm;
 
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-6">
-						<!-- insert form field here -->
-					</div>
-					<div class="col-md-6">
-						<!-- insert form field here -->
+					<div class="col-md-12">
+						<?= $form->field($model, 'name') ?>
 					</div>
 				</div>
+
 				<div class="row">
 					<div class="col-md-12">
-						<!-- insert form field here -->
+						<?= $this->render('rights/index', [
+							'model' => $model,
+							'provider' => $userRights,
+							'heading' => '<label class="control-label">Права в привилегии</label>',
+//							'selectorInPanel' => true,
+//							'showRolesSelector' => true,
+//							'showDropColumn' => true
+						]); ?>
 					</div>
 				</div>
 			</div>
 			<div class="panel-footer">
 				<div class="btn-group">
-					<?= Html::submitButton($model->isNewRecord?'Добавить':'Изменить информацию', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+					<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+					<?php if ($model->isNewRecord): ?>
+						<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+					<?php endif ?>
 				</div>
 			</div>
 		</div>

@@ -9,7 +9,10 @@ declare(strict_types = 1);
 use yii\db\ActiveRecord;
 use yii\web\View;
 
-
+$this->title = 'Изменить привилегию';
+$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+$this->params['breadcrumbs'][] = ['label' => 'Привилегии', 'url' => ['/admin/privileges']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= $this->render('_form', [
