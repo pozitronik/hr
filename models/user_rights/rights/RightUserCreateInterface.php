@@ -4,13 +4,13 @@ declare(strict_types = 1);
 namespace app\models\user_rights\rights;
 
 use app\helpers\ArrayHelper;
-use app\models\user_rights\UserRight;
+use app\models\user_rights\UserRightInterface;
 
 /**
  * Class RightUserCreate
  * @package app\models\user_rights\rights
  */
-class RightUserCreate implements UserRight {
+class RightUserCreateInterface implements UserRightInterface {
 
 	/**
 	 * Имя права

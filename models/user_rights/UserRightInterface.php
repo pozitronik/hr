@@ -12,7 +12,7 @@ namespace app\models\user_rights;
  * @property-read string $name
  * @property-read string $description
  */
-interface UserRight {
+interface UserRightInterface {
 	/*Константы доступа*/
 	public const ACCESS_DENY = false;
 	public const ACCESS_ALLOW = true;
