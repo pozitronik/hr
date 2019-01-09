@@ -9,8 +9,14 @@ namespace app\models\user_rights;
  * Интерфейс права пользователя.
  * Каждое право определяет ту или иную возможность действия.
  * Набор прав объединяется под общим алиасом (RightsSet)
+ * @property-read string $name
+ * @property-read string $description
  */
 interface UserRight {
+	/*Константы доступа*/
+	public const ACCESS_DENY = false;
+	public const ACCESS_ALLOW = true;
+	public const ACCESS_UNDEFINED = null;
 
 	/**
 	 * Имя права
@@ -23,6 +29,13 @@ interface UserRight {
 	 * @return string
 	 */
 	public function getDescription():string;
+
+	/**
+	 * @param string $controller Имя класса контроллера
+	 * @param string $action Имя экшена
+	 * @return bool|null Одна из констант доступа
+	 */
+	public function getAccess(string $controller, string $action):?bool;
 
 	/**
 	 * Набор действий, предоставляемых правом. Пока прототипирую
