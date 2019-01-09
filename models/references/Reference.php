@@ -46,6 +46,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
+	public const REFERENCES_DIRECTORY = '@app/models/references/refs';
 
 	/**
 	 * @return string
@@ -73,7 +74,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetReferencesList($path):array {
+	public static function GetReferencesList(string $path = self::REFERENCES_DIRECTORY):array {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);

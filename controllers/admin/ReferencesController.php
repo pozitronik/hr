@@ -22,8 +22,6 @@ class ReferencesController extends WigetableController {
 	public $menuIcon = "/img/admin/references.png";
 	public $orderWeight = 3;
 
-	public const REFERENCES_DIRECTORY = '@app/models/references/refs';
-
 	/**
 	 * @inheritdoc
 	 */
@@ -57,7 +55,7 @@ class ReferencesController extends WigetableController {
 	public function actionIndex($class = false) {
 		if (!$class) {//list all reference models
 			$dataProvider = new ArrayDataProvider([
-				'allModels' => Reference::GetReferencesList(self::REFERENCES_DIRECTORY)
+				'allModels' => Reference::GetReferencesList()
 			]);
 			return $this->render('list', [
 				'dataProvider' => $dataProvider
