@@ -7,12 +7,12 @@ use app\models\core\WigetableController;
 use yii\web\ErrorAction;
 
 /**
- * Class RolesController
+ * Class RightsController
  * @package app\controllers\admin
  */
-class RolesController extends WigetableController {
-	public $menuCaption = "<i class='fa fa-users-crown'></i>Управление ролями";
-	public $menuIcon = "/img/admin/roles.png";
+class RightsController extends WigetableController {
+	public $menuCaption = "<i class='fa fa-users-crown'></i>Права";
+	public $menuIcon = "/img/admin/rights.png";
 	public $disabled = false;
 	public $orderWeight = 5;
 	/**
