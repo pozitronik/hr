@@ -9,6 +9,8 @@ use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
+use app\models\user_rights\rights\RightUserCreate;
+use app\models\user_rights\UserRight;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
 use app\models\relations\RelUsersAttributes;
@@ -58,11 +60,12 @@ use yii\web\UploadedFile;
  *
  * ***************************
  * Опции
- * ***************************
  * @property Options $options
  * **************************
- * Атрибуты
+ * Права в системе
+ * @property UserRight[] $rights Массив прав пользователя в системе
  * **************************
+ * Атрибуты
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
  * @property integer[] $dropUsersAttributes
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
@@ -404,5 +407,15 @@ class Users extends ActiveRecord {
 	 */
 	public function getRelLeadingGroups() {
 		return $this->getRelGroups()->joinWith(['relRefUserRolesLeader']);
+	}
+
+	/**
+	 * @return UserRight[]
+	 * @prototype
+	 */
+	public function getRights():array {
+		return [
+			new RightUserCreate
+		];
 	}
 }
