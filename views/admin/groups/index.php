@@ -52,6 +52,20 @@ $this->params['breadcrumbs'][] = $this->title;
 					'buttons' => [
 						'tree' => function($url, $model) {
 							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
+						},
+						'update' => function($url, $model) {
+							/** @var GroupsSearch $model */
+							return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
+						},
+						'delete' => function($url, $model) {
+							/** @var GroupsSearch $model */
+							return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
+								'title' => 'Удалить запись',
+								'data' => [
+									'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
+									'method' => 'post'
+								]
+							]));
 						}
 					]
 
