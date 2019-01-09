@@ -10,7 +10,7 @@ use app\models\user_rights\UserRightInterface;
  * Class RightUserCreate
  * @package app\models\user_rights\rights
  */
-class RightUserCreateInterface implements UserRightInterface {
+class RightUserCreate implements UserRightInterface {
 
 	/**
 	 * Имя права
