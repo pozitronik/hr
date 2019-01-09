@@ -6,9 +6,15 @@ namespace app\models\user_rights;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
+use app\models\core\Magic;
 use app\models\core\traits\ARExtended;
 use app\models\user\CurrentUser;
 use app\widgets\alert\AlertModel;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ReflectionException;
+use Yii;
+use yii\base\UnknownClassException;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 
@@ -23,6 +29,7 @@ use yii\db\Exception;
  */
 class Privileges extends ActiveRecord {
 	use ARExtended;
+	public const RIGHTS_DIRECTORY = '@app/models/user_rights/rights';
 
 	/**
 	 * @return LCQuery
@@ -89,5 +96,25 @@ class Privileges extends ActiveRecord {
 		}
 		$transaction->rollBack();
 		return false;
+	}
+
+	/**
+	 * Возвращает массив всех возможных прав
+	 * @param string $path
+	 * @return array
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
+	 */
+	public static function GetRightsList(string $path = self::RIGHTS_DIRECTORY):array {
+		$result = [];
+
+		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
+		/** @var RecursiveDirectoryIterator $file */
+		foreach ($files as $file) {
+			if ($file->isFile() && 'php' === $file->getExtension() && false !== $model = Magic::GetUserRightModel($file->getRealPath())) {
+				$result[] = $model;
+			}
+		}
+		return $result;
 	}
 }
