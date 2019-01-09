@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
+use app\helpers\ArrayHelper;
 use app\models\references\Reference;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionMethod;
 use Yii;
 use app\helpers\Path;
 use yii\base\UnknownClassException;
@@ -40,7 +42,7 @@ class Magic {
 	 * @todo: функция не умеет преобразовывать имена классов по той же схеме, что Yii. Реализован простейший вариант, а вот что-то вроде MassUpdateController к mass-update эта регулярка уже не вернёт.
 	 */
 	private static function ExtractControllerId($className) {
-		$id =  mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
+		$id = mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
 		return "admin/{$id}";
 	}
 
@@ -62,6 +64,18 @@ class Magic {
 		return false;
 	}
 
+	/**
+	 * Возвращает все экшены контроллера
+	 * @param Controller $controllerClass
+	 * @return string[]
+	 * @throws ReflectionException
+	 */
+	public static function GetControllerActions(object $controllerClass):array {
+		$class = new ReflectionClass($controllerClass);
+		$publicMethods = $class->getMethods(ReflectionMethod::IS_PUBLIC);
+		$names = ArrayHelper::getColumn($publicMethods, 'name');
+		return preg_filter('/^action([A-Z])(\w+?)/', '$1$2', $names);
+	}
 
 	/**
 	 * Загружает динамически класс справочника Yii2 по его пути
