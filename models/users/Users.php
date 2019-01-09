@@ -10,7 +10,7 @@ use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
 use app\models\user_rights\rights\RightUserCreate;
-use app\models\user_rights\UserRight;
+use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
 use app\models\relations\RelUsersAttributes;
@@ -63,7 +63,7 @@ use yii\web\UploadedFile;
  * @property Options $options
  * **************************
  * Права в системе
- * @property UserRight[] $rights Массив прав пользователя в системе
+ * @property UserRightInterface[] $rights Массив прав пользователя в системе
  * **************************
  * Атрибуты
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
@@ -410,7 +410,7 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return UserRight[]
+	 * @return UserRightInterface[]
 	 * @prototype
 	 */
 	public function getRights():array {
