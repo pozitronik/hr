@@ -13,6 +13,8 @@ class m190109_125459_user_rights_tables extends Migration {
 		$this->createTable('sys_privileges', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string()->notNull()->comment('Название набора прав'),
+			'daddy' => $this->integer()->null()->comment('id создателя'),
+			'create_date' => $this->dateTime()->notNull()->comment('Дата создания'),
 			'deleted' => $this->boolean()->defaultValue(false)
 		]);
 
