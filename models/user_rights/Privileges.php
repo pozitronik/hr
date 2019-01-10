@@ -76,6 +76,7 @@ class Privileges extends ActiveRecord {
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'deleted' => 'Deleted',
+			'userRights' => 'Права'
 		];
 	}
 

@@ -7,7 +7,9 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\models\user_rights\Privileges;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -35,8 +37,35 @@ $this->params['breadcrumbs'][] = $this->title;
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-				'id',
 				'name',
+				[
+					'attribute' => 'userRights',
+					'value' => function($model) {
+						/** @var Privileges $model */
+						return GridView::widget([
+							'dataProvider' => new ArrayDataProvider([
+								'allModels' => $model->userRights
+							]),
+							'panel' => false,
+							'summary' => false,
+							'headerRowOptions' => [
+								'style' => 'display:none'
+							],
+							'toolbar' => false,
+							'export' => false,
+							'resizableColumns' => false,
+							'responsive' => true,
+							'options' => [
+								'class' => 'grid_view_cell'
+							],
+							'columns' => [
+								'name',
+								'description'
+							]
+						]);
+					},
+					'format' => 'raw'
+				],
 				[
 					'class' => ActionColumn::class,
 					'template' => '{update} {delete}'

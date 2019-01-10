@@ -131,3 +131,12 @@ a > i.fa {
 	margin-right: 5px;
 	width:15px;
 }
+
+/*Таблица GridView, вложенная в другой GridView*/
+.grid_view_cell table{
+	margin-bottom: 0;
+}
+
+.grid_view_cell {
+	margin: -8px;
+}
