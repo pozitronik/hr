@@ -203,7 +203,26 @@ class Privileges extends ActiveRecord {
 	 * Удаляет все кеши, связанные с привилегией
 	 */
 	private function dropCaches():void {
-		//todo caching
+		Yii::$app->cache->delete(static::class."DataOptions");
+		//todo caching everywhere
+	}
+
+	/**
+	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
+	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
+	 * @return array
+	 */
+	public static function dataOptions():array {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+			$items = self::GetRightsList();
+			$result = [];
+			foreach ($items as $key => $item) {
+				$result[$item->id] = [
+					'data-description' => $item->description,
+				];
+			}
+			return $result;
+		});
 	}
 
 }
