@@ -26,7 +26,7 @@ class m190109_125459_user_rights_tables extends Migration {
 			'privilege' => $this->integer()->notNull()->comment('id набора привилегий'),
 			'right' => $this->string()->notNull()->comment('Класс, предоставляющий право')
 		]);
-		$this->createIndex('privilege_right', 'sys_privileges', 'rel_privileges_rights', true);
+		$this->createIndex('privilege_right', 'rel_privileges_rights', ['privilege', 'right'], true);
 	}
 
 	/**
