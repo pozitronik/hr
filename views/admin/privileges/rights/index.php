@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\helpers\Utils;
-use app\models\groups\Groups;
 
 /**
  * @var View $this
@@ -31,8 +30,8 @@ use kartik\grid\CheckboxColumn;
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => UserRightSelectWidget::widget([
 					'model' => $model,
-					'attribute' => 'relUserRights',
-					'notData' => $model->isNewRecord?[]:array_merge($model->relUserRights, [$model]),
+					'attribute' => 'userRightsNames',
+					'notData' => $model->isNewRecord?[]:array_merge($model->userRightsNames, [$model]),
 					'multiple' => true
 				])
 			],
