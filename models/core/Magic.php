@@ -50,19 +50,18 @@ class Magic {
 	/**
 	 * Загружает динамически класс веб-контроллера Yii2 по его пути
 	 * @param string $fileName
-	 * @return Controller|false
+	 * @return Controller|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetController($fileName) {
+	public static function GetController($fileName):?object {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
-
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ($class->isSubclassOf(Controller::class)) {
 			return new $className(self::ExtractControllerId($className), Yii::$app);
 		}
-		return false;
+		return null;
 	}
 
 	/**
@@ -94,36 +93,42 @@ class Magic {
 	/**
 	 * Загружает динамически класс справочника Yii2 по его пути
 	 * @param string $fileName
-	 * @return Reference|false
+	 * @return Reference|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetReferenceModel($fileName) {
+	public static function GetReferenceModel(string $fileName):?object {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+		return self::LoadClassByName($className, Reference::class);
 
-		if (!class_exists($className)) Yii::autoload($className);
-		$class = new ReflectionClass($className);
-		if ($class->isSubclassOf(Reference::class)) {
-			return new $className(/*['className'=>$className]*/);
-		}
-		return false;
 	}
+
 	/**
 	 * Загружает динамически класс права пользователя по его пути
 	 * @param string $fileName
-	 * @return UserRightInterface|false
+	 * @return UserRightInterface|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetUserRightModel($fileName) {
+	public static function GetUserRightModel(string $fileName):?object {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+		return self::LoadClassByName($className, UserRightInterface::class);
+	}
 
+	/**
+	 * Загружает и возвращает экземпляр класса при условии его существования
+	 * @param string $className Имя класса
+	 * @param string|null $parentClass Опциональный фильтр родительского класса
+	 * @return object|null
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
+	 */
+	public static function LoadClassByName(string $className, ?string $parentClass = null):?object {
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
-		if ($class->isSubclassOf(UserRightInterface::class)) {
-			return new $className(/*['className'=>$className]*/);
-		}
-		return false;
+		if ((null !== $parentClass && $class->isSubclassOf($parentClass)) || null === $parentClass) return new $className;
+
+		return null;
 	}
 
 	/**
