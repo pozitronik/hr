@@ -11,7 +11,6 @@ use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersPrivileges;
 use app\models\user_rights\Privileges;
-use app\models\user_rights\rights\users\RightUserAdmin;
 use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
@@ -446,7 +445,7 @@ class Users extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public function setRelPrivileges($relPrivileges):void {
-		RelUsersPrivileges::unlinkModels($this,$this->relPrivileges);
+		RelUsersPrivileges::unlinkModels($this, $this->relPrivileges);
 		RelUsersPrivileges::linkModels($this, $relPrivileges);
 	}
 
