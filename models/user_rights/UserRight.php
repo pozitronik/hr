@@ -65,4 +65,13 @@ class UserRight extends Model implements UserRightInterface {
 	public function getAccess(string $controller, string $action):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
+
+	/**
+	 * Магическое свойство, необходимое для сравнения классов, например
+	 * Предполагается, что будет использоваться имя класса
+	 * @return string
+	 */
+	public function __toString():string {
+		return $this->formName();
+	}
 }

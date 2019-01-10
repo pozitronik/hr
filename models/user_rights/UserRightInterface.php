@@ -20,6 +20,13 @@ interface UserRightInterface {
 	public const ACCESS_UNDEFINED = null;
 
 	/**
+	 * Магическое свойство, необходимое для сравнения классов, например
+	 * Предполагается, что будет использоваться имя класса
+	 * @return string
+	 */
+	public function __toString():string;
+
+	/**
 	 * Уникальный идентификатор (подразумевается имя класса)
 	 * @return string
 	 */
