@@ -52,7 +52,7 @@ class WigetableController extends Controller {
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && false !== $controller = Magic::GetController($file->getRealPath())) {
+			if ($file->isFile() && 'php' === $file->getExtension() && null !== $controller = Magic::GetController($file->getRealPath())) {
 				$result[] = $controller;
 			}
 		}

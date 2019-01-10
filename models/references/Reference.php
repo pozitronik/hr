@@ -80,7 +80,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && false !== $model = Magic::GetReferenceModel($file->getRealPath())) {
+			if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetReferenceModel($file->getRealPath())) {
 				$result[] = $model;
 			}
 		}
