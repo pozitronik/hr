@@ -162,10 +162,9 @@ class Privileges extends ActiveRecord {
 	 * @throws UnknownClassException
 	 */
 	public function getUserRights():array {
-		$classNames = $this->userRightsNames;
 		$result = [];
-		foreach ($classNames as $className) {
-			if (null !== $class = Magic::LoadClassByName($className, UserRightInterface::class)) $result[] = $class;
+		foreach ($this->userRightsNames as $className) {
+			if (null !== $class = Magic::GetUserRightModel(Yii::getAlias(self::RIGHTS_DIRECTORY).DIRECTORY_SEPARATOR.$className.'.php')) $result[] = $class;
 		}
 		return $result;
 	}
