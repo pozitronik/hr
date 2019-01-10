@@ -18,7 +18,7 @@ class RelUsersPrivileges extends ActiveRecord {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'rel_users_attributes';
+		return 'rel_users_privileges';
 	}
 
 	/**
