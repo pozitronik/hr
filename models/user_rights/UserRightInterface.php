@@ -9,6 +9,7 @@ namespace app\models\user_rights;
  * Интерфейс права пользователя.
  * Каждое право определяет ту или иную возможность действия.
  * Набор прав объединяется под общим алиасом (привилегией), определённым в классе Privileges
+ * @property-read string $id
  * @property-read string $name
  * @property-read string $description
  */
@@ -17,6 +18,12 @@ interface UserRightInterface {
 	public const ACCESS_DENY = false;
 	public const ACCESS_ALLOW = true;
 	public const ACCESS_UNDEFINED = null;
+
+	/**
+	 * Уникальный идентификатор (подразумевается имя класса)
+	 * @return string
+	 */
+	public function getId():string;
 
 	/**
 	 * Имя права

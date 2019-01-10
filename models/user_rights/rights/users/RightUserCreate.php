@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights\rights;
+namespace app\models\user_rights\rights\users;
 
 use app\helpers\ArrayHelper;
 use app\models\user_rights\UserRight;
@@ -40,7 +40,7 @@ class RightUserCreate extends UserRight {
 				]
 			]
 		];
-		return ArrayHelper::getValue($definedRules, "{$controller}.actions.{$action}", self::ACCESS_UNDEFINED);
+		return ArrayHelper::getValue($definedRules, "{$controller}.actions.{$action}", parent::getAccess($controller, $action));
 
 	}
 }

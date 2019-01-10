@@ -192,8 +192,9 @@ class Privileges extends ActiveRecord {
 	 */
 	public function getUserRights():array {
 		$result = [];
-		foreach ($this->userRightsNames as $className) {
-			if (null !== $class = Magic::GetUserRightModel(Yii::getAlias(self::RIGHTS_DIRECTORY).DIRECTORY_SEPARATOR.$className.'.php')) $result[] = $class;
+		$allRights = self::GetRightsList();
+		foreach ($allRights as $right) {
+			if (in_array($right->id, $this->userRightsNames)) $result[] = $right;
 		}
 		return $result;
 	}

@@ -23,7 +23,7 @@ class UserAccess extends Model {
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 */
-	public static function getUserAccessRules(Controller $controller, bool $defaultAllow = true):array {
+	public static function getUserAccessRules(Controller $controller, bool $defaultAllow = false):array {
 		$user = CurrentUser::User();
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];

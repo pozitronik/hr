@@ -9,7 +9,7 @@ use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
-use app\models\user_rights\rights\RightUserCreate;
+use app\models\user_rights\rights\users\RightUserAdmin;
 use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
@@ -411,11 +411,11 @@ class Users extends ActiveRecord {
 
 	/**
 	 * @return UserRightInterface[]
-	 * @prototype
+	 * @prototype todo
 	 */
 	public function getRights():array {
 		return [
-			new RightUserCreate
+			new RightUserAdmin()
 		];
 	}
 }
