@@ -128,18 +128,19 @@ class Privileges extends ActiveRecord {
 	/**
 	 * Возвращает массив всех возможных прав
 	 * @param string $path
+	 * @param string[] $excludedRights Массив имён, исключённых из общего списка
 	 * @return UserRightInterface[]
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetRightsList(string $path = self::RIGHTS_DIRECTORY, array $exludedRights = []):array {
+	public static function GetRightsList(string $path = self::RIGHTS_DIRECTORY, array $excludedRights = []):array {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
 			if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) {
-				if (!in_array($model->formName(), $exludedRights)) $result[] = $model;
+				if (!in_array($model->formName(), $excludedRights)) $result[] = $model;//todo: проверить
 			}
 		}
 		return $result;
@@ -177,6 +178,7 @@ class Privileges extends ActiveRecord {
 	/**
 	 * Дропнет права в привилегии
 	 * @param int[] $dropUserRights - ПОРЯДКОВЫЙ номер привилегии в списке (особенность работы CheckboxColumn), потому дополнительно делаем сопоставление номера к названию класса (который является тут айдишником)
+	 * @throws Throwable
 	 */
 	public function setDropUserRights(array $dropUserRights):void {
 		$dropUserRights = array_intersect_key($this->userRights, $dropUserRights);

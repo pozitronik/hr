@@ -17,8 +17,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Привилегии', 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', [
-	'model' => $model,
-	'userRights' => $userRights
-]);
+<?= $this->render('_form', compact('model', 'userRights'));
 ?>

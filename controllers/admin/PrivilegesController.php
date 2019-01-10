@@ -78,7 +78,7 @@ class PrivilegesController extends WigetableController {
 	public function actionUpdate(int $id):string {
 		$privilege = Privileges::findModel($id, new NotFoundHttpException());
 
-		if ((null !== ($updateArray = Yii::$app->request->post($privilege->formName())))) $privilege->updatePrivilege($updateArray);
+		if (null !== ($updateArray = Yii::$app->request->post($privilege->formName()))) $privilege->updatePrivilege($updateArray);
 		$userRightsProvider = new ArrayDataProvider([
 			'allModels' => $privilege->userRights
 		]);
