@@ -4,13 +4,11 @@ declare(strict_types = 1);
 namespace app\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
-use app\models\groups\Groups;
+use app\models\user_rights\Privileges;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 
 /**
- * @todo не нужно в таком виде, стоит использовать не виджет, а прямое обращение
- * Возможно, стоит переписать в более общий вид, не только для групп
  * Class UserRightSelectWidget
  * Виджет списка групп (для добавления пользователя)
  * @package app\components\user_right_select
@@ -32,6 +30,7 @@ class UserRightSelectWidget extends Widget {
 	public function init() {
 		parent::init();
 		UserRightSelectWidgetAssets::register($this->getView());
+		//@todo: форматирование в JS - подсказка к праву
 	}
 
 	/**
@@ -39,8 +38,8 @@ class UserRightSelectWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		$data = Groups::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])
-			->all();
+
+		$data = Privileges::GetRightsList(Privileges::RIGHTS_DIRECTORY, $this->notData);
 
 		return $this->render('user_right_select', [
 			'model' => $this->model,

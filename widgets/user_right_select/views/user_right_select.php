@@ -17,11 +17,11 @@ use kartik\select2\Select2;
 <?= Select2::widget([
 	'model' => $model,
 	'attribute' => $attribute,
-	'name' => 'group_id',
+	'name' => 'right_class',
 	'data' => $data,
 	'options' => [
 		'multiple' => $multiple,
-		'placeholder' => 'Добавить группу'
+		'placeholder' => 'Добавить право'
 	]
 ]); ?>
 
