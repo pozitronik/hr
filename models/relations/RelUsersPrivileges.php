@@ -1,0 +1,45 @@
+<?php
+declare(strict_types = 1);
+
+namespace app\models\relations;
+
+use yii\db\ActiveRecord;
+
+/**
+ * This is the model class for table "rel_users_privileges".
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $privilege_id
+ */
+class RelUsersPrivileges extends ActiveRecord {
+	use Relations;
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tableName():string {
+		return 'rel_users_attributes';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function rules():array {
+		return [
+			[['user_id', 'privilege_id'], 'required'],
+			[['user_id', 'privilege_id'], 'integer'],
+			[['user_id', 'privilege_id'], 'unique', 'targetAttribute' => ['user_id', 'privilege_id']]
+		];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function attributeLabels():array {
+		return [
+			'id' => 'ID',
+			'user_id' => 'User ID',
+			'privilege_id' => 'Privilege ID'
+		];
+	}
+}
