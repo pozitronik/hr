@@ -57,8 +57,8 @@ $config = [
 		],
 		'cache' => [
 //			'class' => 'yii\redis\Cache',
-			'class' => FileCache::class,
-//			'class' => DummyCache::class
+//			'class' => FileCache::class,
+			'class' => DummyCache::class
 		],
 		'user' => [
 			'identityClass' => User::class,
