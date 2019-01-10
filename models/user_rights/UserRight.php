@@ -70,6 +70,7 @@ class UserRight extends Model implements UserRightInterface {
 	 * Магическое свойство, необходимое для сравнения классов, например
 	 * Предполагается, что будет использоваться имя класса
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function __toString():string {
 		return $this->formName();

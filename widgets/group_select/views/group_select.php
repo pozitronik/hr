@@ -23,7 +23,7 @@ use kartik\select2\Select2;
 		'placeholder' => 'Добавить группу'
 	],
 	'pluginOptions' => [
-		'multiple' => $multiple,
+		'multiple' => $multiple
 	]
 ]); ?>
 

@@ -188,8 +188,6 @@ class Privileges extends ActiveRecord {
 
 	/**
 	 * @return UserRightInterface[]
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
 	 */
 	public function getUserRights():array {
 		return Yii::$app->cache->getOrSet(static::class."getUserRights".$this->id, function() {
@@ -221,7 +219,7 @@ class Privileges extends ActiveRecord {
 			$result = [];
 			foreach ($items as $key => $item) {
 				$result[$item->id] = [
-					'data-description' => $item->description,
+					'data-description' => $item->description
 				];
 			}
 			return $result;

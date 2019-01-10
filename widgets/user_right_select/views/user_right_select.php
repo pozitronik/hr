@@ -31,6 +31,6 @@ use kartik\select2\Select2;
 		'multiple' => $multiple,
 		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
-	],
+	]
 ]); ?>
 
