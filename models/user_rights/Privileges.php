@@ -191,12 +191,14 @@ class Privileges extends ActiveRecord {
 	 * @throws UnknownClassException
 	 */
 	public function getUserRights():array {
-		$result = [];
-		$allRights = self::GetRightsList();
-		foreach ($allRights as $right) {
-			if (in_array($right->id, $this->userRightsNames)) $result[] = $right;
-		}
-		return $result;
+		return Yii::$app->cache->getOrSet(static::class."getUserRights".$this->id, function() {
+			$result = [];
+			$allRights = self::GetRightsList();
+			foreach ($allRights as $right) {
+				if (in_array($right->id, $this->userRightsNames)) $result[] = $right;
+			}
+			return $result;
+		});
 	}
 
 	/**
@@ -204,7 +206,6 @@ class Privileges extends ActiveRecord {
 	 */
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."DataOptions");
-		//todo caching everywhere
 	}
 
 	/**
