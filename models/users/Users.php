@@ -420,9 +420,7 @@ class Users extends ActiveRecord {
 	 * @prototype todo
 	 */
 	public function getRights():array {
-		return [
-			new RightUserAdmin()
-		];
+		return array_unique(array_merge(... ArrayHelper::getColumn($this->relPrivileges, 'userRights')));
 	}
 
 	/**
