@@ -172,6 +172,7 @@ class Privileges extends ActiveRecord {
 			]);
 			$relRight->save();
 		}
+		$this->dropCaches();
 	}
 
 	/**
@@ -206,6 +207,7 @@ class Privileges extends ActiveRecord {
 	 */
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."DataOptions");
+		Yii::$app->cache->delete(static::class."getUserRights".$this->id);
 	}
 
 	/**
