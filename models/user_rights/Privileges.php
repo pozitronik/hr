@@ -14,6 +14,7 @@ use app\widgets\alert\AlertModel;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionException;
+use Throwable;
 use Yii;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
@@ -32,7 +33,8 @@ use yii\db\Exception;
  *
  * @property ActiveQuery|LCQuery|RelPrivilegesRights[] $relPrivilegesRights
  * @property string[] $userRightsNames
- * @property UserRightInterface[] $userRights
+ * @property-write int[] $dropUserRights
+ * @property-read UserRightInterface[] $userRights
  */
 class Privileges extends ActiveRecord {
 	use ARExtended;
@@ -62,7 +64,7 @@ class Privileges extends ActiveRecord {
 			[['deleted'], 'boolean'],
 			[['name'], 'string', 'max' => 256],
 			[['name'], 'required'],
-			[['userRightsNames'], 'safe']
+			[['userRightsNames', 'dropUserRights'], 'safe']
 		];
 	}
 
@@ -173,6 +175,16 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
+	 * Дропнет права в привилегии
+	 * @param int[] $dropUserRights - ПОРЯДКОВЫЙ номер привилегии в списке (особенность работы CheckboxColumn), потому дополнительно делаем сопоставление номера к названию класса (который является тут айдишником)
+	 */
+	public function setDropUserRights(array $dropUserRights):void {
+		$dropUserRights = array_intersect_key($this->userRights, $dropUserRights);
+		RelPrivilegesRights::unlinkModels($this, $dropUserRights);
+		$this->dropCaches();
+	}
+
+	/**
 	 * @return UserRightInterface[]
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
@@ -183,6 +195,13 @@ class Privileges extends ActiveRecord {
 			if (null !== $class = Magic::GetUserRightModel(Yii::getAlias(self::RIGHTS_DIRECTORY).DIRECTORY_SEPARATOR.$className.'.php')) $result[] = $class;
 		}
 		return $result;
+	}
+
+	/**
+	 * Удаляет все кеши, связанные с привилегией
+	 */
+	private function dropCaches():void {
+		//todo caching
 	}
 
 }
