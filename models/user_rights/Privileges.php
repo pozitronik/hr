@@ -61,6 +61,7 @@ class Privileges extends ActiveRecord {
 			[['create_date'], 'safe'],
 			[['deleted'], 'boolean'],
 			[['name'], 'string', 'max' => 256],
+			[['name'], 'required'],
 			[['userRightsNames'], 'safe']
 		];
 	}
