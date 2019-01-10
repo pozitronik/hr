@@ -4,8 +4,10 @@ declare(strict_types = 1);
 /**
  * @var ActiveRecord $model
  * @var View $this
+ * @var ArrayDataProvider $userRights
  */
 
+use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
@@ -16,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= $this->render('_form', [
-	'model' => $model
+	'model' => $model,
+	'userRights' => $userRights
 ]);
 ?>
