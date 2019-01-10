@@ -128,7 +128,7 @@ class Privileges extends ActiveRecord {
 	/**
 	 * Возвращает массив всех возможных прав
 	 * @param string $path
-	 * @param string[] $excludedRights Массив имён, исключённых из общего списка
+	 * @param UserRightInterface[] $excludedRights Массив моделей, исключённых из общего списка
 	 * @return UserRightInterface[]
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
@@ -137,10 +137,11 @@ class Privileges extends ActiveRecord {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
+		$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
 			if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) {
-				if (!in_array($model->formName(), $excludedRights)) $result[] = $model;//todo: проверить
+				if (!in_array($model->id, $excludedIds)) $result[] = $model;
 			}
 		}
 		return $result;

@@ -30,8 +30,8 @@ use kartik\grid\CheckboxColumn;
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => UserRightSelectWidget::widget([
 					'model' => $model,
-					'attribute' => 'userRightsNames',
-					'notData' => $model->isNewRecord?[]:array_merge($model->userRightsNames, [$model]),
+					'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
+					'notData' => $model->isNewRecord?[]:$model->userRights,
 					'multiple' => true
 				])
 			],
