@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\helpers\Icons;
 use app\models\user_rights\Privileges;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
@@ -37,7 +38,41 @@ $this->params['breadcrumbs'][] = $this->title;
 			'resizableColumns' => true,
 			'responsive' => true,
 			'columns' => [
-				'name',
+				[
+					'class' => ActionColumn::class,
+					'header' => Icons::menu(),
+					'dropdown' => true,
+					'dropdownButton' => [
+						'label' => Icons::menu(),
+						'caret' => ''
+					],
+					'template' => '{update} {delete}',
+					'buttons' => [
+						'update' => function($url, $model) {
+							/** @var Privileges $model */
+							return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
+						},
+						'delete' => function($url, $model) {
+							/** @var Privileges $model */
+							return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
+								'title' => 'Удалить запись',
+								'data' => [
+									'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
+									'method' => 'post'
+								]
+							]));
+						}
+					]
+				],
+				[
+					'attribute' => 'name',
+					'value' => function($model) {
+						/** @var Privileges $model */
+						return Html::a($model->name, ['admin/privileges/update', 'id' => $model->id]);
+					},
+					'format' => 'raw'
+				],
+
 				[
 					'attribute' => 'userRights',
 					'value' => function($model) {
@@ -70,11 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						]);
 					},
 					'format' => 'raw'
-				],
-				[
-					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
 				]
+
 			]
 		]); ?>
 	</div>
