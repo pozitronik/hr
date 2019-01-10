@@ -9,6 +9,8 @@ declare(strict_types = 1);
  * @var array $attributesData
  */
 
+use app\helpers\ArrayHelper;
+use app\models\user_rights\Privileges;
 use app\models\users\Users;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -76,11 +78,21 @@ use kartik\file\FileInput;
 								<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
 							</div>
 
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<?= $form->field($model, 'position')->widget(Select2::class, [
 									'data' => RefUserPositions::mapData(),
 									'options' => ['placeholder' => 'Выберите роль'],
 									'pluginOptions' => [
+										'allowClear' => true
+									]
+								]); ?>
+							</div>
+							<div class="col-md-6">
+								<?= $form->field($model, 'relPrivileges')->widget(Select2::class, [
+									'data' => ArrayHelper::map(Privileges::find()->active()->all(),'id','name'),
+									'options' => ['placeholder' => 'Выберите привилегии пользователя'],
+									'pluginOptions' => [
+										'multiple' => true,
 										'allowClear' => true
 									]
 								]); ?>

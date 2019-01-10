@@ -9,6 +9,8 @@ use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
+use app\models\relations\RelUsersPrivileges;
+use app\models\user_rights\Privileges;
 use app\models\user_rights\rights\users\RightUserAdmin;
 use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
@@ -63,7 +65,10 @@ use yii\web\UploadedFile;
  * @property Options $options
  * **************************
  * Права в системе
- * @property UserRightInterface[] $rights Массив прав пользователя в системе
+ * @property RelUsersPrivileges[]|ActiveQuery $relUsersPrivileges Релейшен к таблице связей с привилегиями
+ * @property Privileges[]|ActiveQuery $relPrivileges Релейшен к привилегиям
+ * @property integer[] $dropUsersPrivileges Атрибут для удаления привилегий
+ * @property-read UserRightInterface[] $rights Массив прав пользователя в системе, вычисляется из суммы привилегий
  * **************************
  * Атрибуты
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
@@ -109,7 +114,7 @@ class Users extends ActiveRecord {
 			[['login'], 'unique'],
 			[['email'], 'unique'],
 			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
-			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes'], 'safe']
+			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges'], 'safe']
 		];
 	}
 
@@ -132,7 +137,8 @@ class Users extends ActiveRecord {
 			'profile_image' => 'Изображение профиля',
 			'upload_image' => 'Изображение профиля',
 			'update_password' => 'Смена пароля',
-			'relGroups' => 'Группы'
+			'relGroups' => 'Группы',
+			'relPrivileges' => 'Привилегии'
 		];
 	}
 
@@ -263,6 +269,7 @@ class Users extends ActiveRecord {
 	public function getRelRefUserRoles() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
+
 	/**
 	 * Все роли этого пользователя с флагом лидера
 	 * @return ActiveQuery|RefUserRoles[]
@@ -417,5 +424,45 @@ class Users extends ActiveRecord {
 		return [
 			new RightUserAdmin()
 		];
+	}
+
+	/**
+	 * @return RelUsersPrivileges[]|ActiveQuery
+	 */
+	public function getRelUsersPrivileges() {
+		return $this->hasMany(RelUsersPrivileges::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * @return Privileges[]|ActiveQuery
+	 */
+	public function getRelPrivileges() {
+		return $this->hasMany(Privileges::class, ['id' => 'privilege_id'])->via('relUsersPrivileges');
+	}
+
+	/**
+	 * Кривоватый метод работы с привлегиями; пока оставляю так, после рефакторинга админки привлегии будут редаткироваться или аяксом, или просто отдельно, соответственно будет юзаться удаление отдельным атрибутом
+	 * @param Privileges[]|ActiveQuery $relPrivileges
+	 * @throws Throwable
+	 */
+	public function setRelPrivileges($relPrivileges):void {
+		RelUsersPrivileges::unlinkModels($this,$this->relPrivileges);
+		RelUsersPrivileges::linkModels($this, $relPrivileges);
+	}
+
+	/**
+	 * Отдельный атрибут, если нужно будет удалять через аякс, например
+	 * @param integer[] $dropUsersPrivileges
+	 * @throws Throwable
+	 */
+	public function setDropUsersPrivileges($dropUsersPrivileges):void {
+		RelUsersPrivileges::unlinkModels($this, $dropUsersPrivileges);
+	}
+
+	/**
+	 * @return integer[]
+	 */
+	public function getDropUsersPrivileges():array {
+		return [];
 	}
 }
