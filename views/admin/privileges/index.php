@@ -59,7 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
 								'class' => 'grid_view_cell'
 							],
 							'columns' => [
-								'name',
+								[
+									'attribute' => 'name',
+									'options' => [
+										'style' => 'width:20%'
+									],
+								],
 								'description'
 							]
 						]);
