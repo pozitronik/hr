@@ -111,7 +111,7 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
-	 * @param array $paramsArray
+	 * @param array|null $paramsArray
 	 * @return bool
 	 */
 	public function updatePrivilege(?array $paramsArray):bool {

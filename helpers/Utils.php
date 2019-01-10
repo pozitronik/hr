@@ -211,7 +211,7 @@ class Utils {
 	/**
 	 * Склонение числительных
 	 * @param int $number
-	 * @param array $titles
+	 * @param string[] $titles
 	 * @return string
 	 */
 	public static function pluralForm(int $number, array $titles):string {

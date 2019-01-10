@@ -154,7 +154,7 @@ class UsersMassUpdate extends Model {
 	}
 
 	/**
-	 * @param array $usersId
+	 * @param int[] $usersId
 	 */
 	public function setUsersId(array $usersId):void {
 		$this->usersId = $usersId;

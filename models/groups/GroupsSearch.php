@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\groups;
 
 use Yii;
+use Yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -31,7 +32,7 @@ class GroupsSearch extends Groups {
 	 * Creates data provider instance with search query applied
 	 * @param array $params
 	 * @return ActiveDataProvider
-	 * @throws yii\base\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function search($params):ActiveDataProvider {
 		$query = Groups::find()->active();
