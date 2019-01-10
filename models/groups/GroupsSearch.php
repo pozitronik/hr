@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
-use Yii;
 use Yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 

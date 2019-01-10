@@ -5,6 +5,8 @@ namespace app\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
 use app\models\user_rights\Privileges;
+use ReflectionException;
+use yii\base\UnknownClassException;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 
@@ -36,6 +38,8 @@ class UserRightSelectWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public function run():string {
 
