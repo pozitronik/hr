@@ -105,7 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						]);
 					},
 					'format' => 'raw'
-				]
+				],
+				'usersCount'
 
 			]
 		]); ?>

@@ -9,7 +9,9 @@ use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\models\core\traits\ARExtended;
 use app\models\relations\RelPrivilegesRights;
+use app\models\relations\RelUsersPrivileges;
 use app\models\user\CurrentUser;
+use app\models\users\Users;
 use app\widgets\alert\AlertModel;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -34,6 +36,9 @@ use yii\db\Exception;
  * @property ActiveQuery|LCQuery|RelPrivilegesRights[] $relPrivilegesRights
  * @property string[] $userRightsNames
  * @property-write int[] $dropUserRights
+ * @property ActiveQuery|RelUsersPrivileges[] $relUsersPrivileges
+ * @property int $usersCount
+ * @property ActiveQuery|Users $relUsers
  * @property-read UserRightInterface[] $userRights
  */
 class Privileges extends ActiveRecord {
@@ -78,7 +83,8 @@ class Privileges extends ActiveRecord {
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'deleted' => 'Deleted',
-			'userRights' => 'Права'
+			'userRights' => 'Права',
+			'usersCount' => 'Пользователей'
 		];
 	}
 
@@ -224,6 +230,27 @@ class Privileges extends ActiveRecord {
 			}
 			return $result;
 		});
+	}
+
+	/**
+	 * @return RelUsersPrivileges[]|ActiveQuery
+	 */
+	public function getRelUsersPrivileges() {
+		return $this->hasMany(RelUsersPrivileges::class, ['privilege_id' => 'id']);
+	}
+
+	/**
+	 * @return Users|ActiveQuery
+	 */
+	public function getRelUsers() {
+		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersPrivileges');
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsersCount():int {
+		return (int)$this->getRelUsers()->count();
 	}
 
 }
