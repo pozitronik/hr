@@ -140,3 +140,8 @@ a > i.fa {
 .grid_view_cell {
 	margin: -8px;
 }
+/*Стиль для иконочной менюшки управления в гридах*/
+.panel * table.kv-grid-table * button.dropdown-toggle {
+	margin: -20px;
+
+}
