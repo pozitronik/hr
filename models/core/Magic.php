@@ -93,7 +93,7 @@ class Magic {
 	/**
 	 * Загружает динамически класс справочника Yii2 по его пути
 	 * @param string $fileName
-	 * @return Reference|null
+	 * @return Reference|null|ReflectionClass
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
@@ -106,7 +106,7 @@ class Magic {
 	/**
 	 * Загружает динамически класс права пользователя по его пути
 	 * @param string $fileName
-	 * @return UserRightInterface|null
+	 * @return UserRightInterface|null|ReflectionClass
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
@@ -119,7 +119,7 @@ class Magic {
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
 	 * @param string|null $parentClass Опциональный фильтр родительского класса
-	 * @return object|null
+	 * @return ReflectionClass|object|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
