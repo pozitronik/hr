@@ -4,23 +4,14 @@ declare(strict_types = 1);
 namespace app\models\user_rights\rights;
 
 use app\helpers\ArrayHelper;
-use app\models\user_rights\UserRightInterface;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
+use app\models\user_rights\UserRight;
 
 /**
  * Class RightUserCreate
  * @package app\models\user_rights\rights
  */
-class RightUserCreate extends Model implements UserRightInterface {
+class RightUserCreate extends UserRight {
 
-	/**
-	 * @return string
-	 * @throws InvalidConfigException
-	 */
-	public function getId():string {
-		return $this->formName();
-	}
 
 	/**
 	 * Имя права
@@ -36,15 +27,6 @@ class RightUserCreate extends Model implements UserRightInterface {
 	 */
 	public function getDescription():string {
 		return "Разрешает создать нового пользователя в системе";
-	}
-
-	/**
-	 * Набор действий, предоставляемых правом. Пока прототипирую
-	 *
-	 * @return array
-	 */
-	public function getActions():array {
-		// TODO: Implement getActions() method.
 	}
 
 	/**

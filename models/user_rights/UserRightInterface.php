@@ -8,7 +8,7 @@ namespace app\models\user_rights;
  * @package app\models\user_rights
  * Интерфейс права пользователя.
  * Каждое право определяет ту или иную возможность действия.
- * Набор прав объединяется под общим алиасом (RightsSet)
+ * Набор прав объединяется под общим алиасом (привилегией), определённым в классе Privileges
  * @property-read string $name
  * @property-read string $description
  */
