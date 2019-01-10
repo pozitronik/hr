@@ -32,7 +32,6 @@ class UserRightSelectWidget extends Widget {
 	public function init() {
 		parent::init();
 		UserRightSelectWidgetAssets::register($this->getView());
-		//@todo: форматирование в JS - подсказка к праву
 	}
 
 	/**
@@ -49,7 +48,8 @@ class UserRightSelectWidget extends Widget {
 			'model' => $this->model,
 			'attribute' => $this->attribute,
 			'data' => ArrayHelper::map($data, 'id', 'name'),
-			'multiple' => $this->multiple
+			'multiple' => $this->multiple,
+			'options' => Privileges::dataOptions()
 		]);
 	}
 }

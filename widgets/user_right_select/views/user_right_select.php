@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var \yii\db\ActiveRecord $model
+ * @var ActiveRecord $model
  * @var string $attribute,
  * @var array $data
  * @var boolean $multiple
+ * @var array $options
  */
 
+use yii\db\ActiveRecord;
+use yii\web\JsExpression;
 use yii\web\View;
 use kartik\select2\Select2;
 
@@ -20,8 +23,14 @@ use kartik\select2\Select2;
 	'name' => 'right_class',
 	'data' => $data,
 	'options' => [
+		'placeholder' => 'Добавить право',
+		'options' => $options
+	],
+	'pluginOptions' => [
+		'allowClear' => true,
 		'multiple' => $multiple,
-		'placeholder' => 'Добавить право'
-	]
+		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
+		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
+	],
 ]); ?>
 
