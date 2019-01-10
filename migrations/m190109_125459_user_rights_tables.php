@@ -18,11 +18,15 @@ class m190109_125459_user_rights_tables extends Migration {
 			'deleted' => $this->boolean()->defaultValue(false)
 		]);
 
-		$this->createTable('rel_privileges_rights',[
+		$this->createIndex('name', 'sys_privileges', 'name');
+		$this->createIndex('deleted', 'sys_privileges', 'deleted');
+
+		$this->createTable('rel_privileges_rights', [
 			'id' => $this->primaryKey(),
 			'privilege' => $this->integer()->notNull()->comment('id набора привилегий'),
 			'right' => $this->string()->notNull()->comment('Класс, предоставляющий право')
 		]);
+		$this->createIndex('privilege_right', 'sys_privileges', 'rel_privileges_rights', true);
 	}
 
 	/**
