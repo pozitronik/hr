@@ -58,7 +58,7 @@ class PrivilegesController extends WigetableController {
 		}
 
 		$userRightsProvider = new ArrayDataProvider([
-			'allModels' => Privileges::GetRightsList()
+			'allModels' => $newPrivilege->userRights
 		]);
 
 		return $this->render('create', [
