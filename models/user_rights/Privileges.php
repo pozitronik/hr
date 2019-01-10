@@ -108,6 +108,21 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
+	 * @param array $paramsArray
+	 * @return bool
+	 */
+	public function updatePrivilege(?array $paramsArray):bool {
+		if ($this->loadArray($paramsArray)) {
+			if ($this->save()) {
+				AlertModel::SuccessNotify();
+				return true;
+			}
+			AlertModel::ErrorsNotify($this->errors);
+		}
+		return false;
+	}
+
+	/**
 	 * Возвращает массив всех возможных прав
 	 * @param string $path
 	 * @return UserRightInterface[]
@@ -145,8 +160,8 @@ class Privileges extends ActiveRecord {
 	/**
 	 * @param string[] $userRightsNames
 	 */
-	public function setUserRightsNames(array $userRightsNames):void {
-		if ($this->isNewRecord) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
+	public function setUserRightsNames($userRightsNames):void {
+		if ($this->isNewRecord || empty($userRightsNames)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
 		foreach ($userRightsNames as $className) {
 			$relRight = new RelPrivilegesRights([
 				'privilege' => $this->id,
