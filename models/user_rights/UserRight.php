@@ -17,6 +17,16 @@ use yii\base\Model;
 class UserRight extends Model implements UserRightInterface {
 
 	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels():array {
+		return [
+			'name' => 'Название',
+			'description' => 'Описание'
+		];
+	}
+
+	/**
 	 * @return string
 	 * @throws InvalidConfigException
 	 */
