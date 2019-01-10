@@ -5,6 +5,7 @@ namespace app\models\user_rights\rights;
 
 use app\helpers\ArrayHelper;
 use app\models\user_rights\UserRightInterface;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 
 /**
@@ -12,6 +13,14 @@ use yii\base\Model;
  * @package app\models\user_rights\rights
  */
 class RightUserCreate extends Model implements UserRightInterface {
+
+	/**
+	 * @return string
+	 * @throws InvalidConfigException
+	 */
+	public function getId():string {
+		return $this->formName();
+	}
 
 	/**
 	 * Имя права
