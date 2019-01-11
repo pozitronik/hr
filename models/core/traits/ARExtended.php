@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use app\models\core\SysExceptions;
-use Iterator;
 use RuntimeException;
 use yii\db\ActiveRecord;
 use Throwable;
@@ -22,12 +21,13 @@ trait ARExtended {
 	 * if ($user = Users::findModel($id) {
 	 *        //$user инициализирован
 	 * } else throw new Exception('Not found')
-	 * @param int $id
+	 * @param mixed $id
 	 * @param null|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
 	 * @return bool|self
 	 * @throws Throwable
+	 * todo: рефакторим на возврат null
 	 */
-	public static function findModel(int $id, ?Throwable $throw = null) {
+	public static function findModel($id, ?Throwable $throw = null) {
 		/** @noinspection PhpIncompatibleReturnTypeInspection *///Давим некорректно отрабатывающую инспекцию (не учитывает два возможных типа возвращаемых значений)
 		if (null !== ($model = self::findOne($id))) return $model;
 		if (null !== $throw) SysExceptions::log($throw, true, true);
