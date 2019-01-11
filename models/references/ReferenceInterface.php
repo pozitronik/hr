@@ -26,7 +26,7 @@ interface ReferenceInterface {
 	 * @param boolean $sort Сортировка выдачи
 	 * @return array
 	 */
-	public static function mapData($sort = false):array;
+	public static function mapData(bool $sort = false):array;
 
 	/**
 	 * Набор колонок для отображения на главной

@@ -183,7 +183,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	/**
 	 * @inheritdoc
 	 */
-	public static function mapData($sort = true):array {
+	public static function mapData(bool $sort = true):array {
 		return Yii::$app->cache->getOrSet(static::class."MapData".$sort, function() use ($sort) {
 			$data = ArrayHelper::map(self::find()->active()->all(), 'id', 'name');
 			if ($sort) {
