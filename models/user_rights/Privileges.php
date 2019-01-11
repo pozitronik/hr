@@ -146,7 +146,7 @@ class Privileges extends ActiveRecord {
 		$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
-			if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) && (!in_array($model->id, $excludedIds))) $result[] = $model;
+			if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) $result[] = $model;
 		}
 		return $result;
 	}

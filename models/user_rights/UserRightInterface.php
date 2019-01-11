@@ -12,6 +12,7 @@ namespace app\models\user_rights;
  * @property-read string $id
  * @property-read string $name
  * @property-read string $description
+ * @property-read bool $hidden
  */
 interface UserRightInterface {
 	/*Константы доступа*/
@@ -31,6 +32,12 @@ interface UserRightInterface {
 	 * @return string
 	 */
 	public function getId():string;
+
+	/**
+	 * Вернуть true, если правило не должно быть доступно в выбиралке
+	 * @return bool
+	 */
+	public function getHidden():bool;
 
 	/**
 	 * Имя права

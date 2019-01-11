@@ -75,4 +75,12 @@ class UserRight extends Model implements UserRightInterface {
 	public function __toString():string {
 		return $this->formName();
 	}
+
+	/**
+	 * Вернуть true, если правило не должно быть доступно в выбиралке
+	 * @return bool
+	 */
+	public function getHidden():bool {
+		return false;
+	}
 }
