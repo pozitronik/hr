@@ -30,7 +30,7 @@ trait ARExtended {
 	public static function findModel(int $id, ?Throwable $throw = null) {
 		/** @noinspection PhpIncompatibleReturnTypeInspection *///Давим некорректно отрабатывающую инспекцию (не учитывает два возможных типа возвращаемых значений)
 		if (null !== ($model = self::findOne($id))) return $model;
-		if (null !== $throw) SysExceptions::log($throw, $throw, true);
+		if (null !== $throw) SysExceptions::log($throw, true, true);
 		return false;
 	}
 

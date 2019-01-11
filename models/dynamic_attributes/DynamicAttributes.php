@@ -174,7 +174,7 @@ class DynamicAttributes extends ActiveRecord {
 	 */
 	public function getPropertyById(int $id, $throw = null):?DynamicAttributeProperty {
 		if (null !== $data = ArrayHelper::getValue($this->structure, $id)) return new DynamicAttributeProperty(array_merge($data, ['attributeId' => $this->id]));
-		if (null !== $throw) SysExceptions::log($throw, $throw, true);
+		if (null !== $throw) SysExceptions::log($throw, true, true);
 		return false;
 	}
 

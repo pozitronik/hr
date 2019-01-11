@@ -87,7 +87,7 @@ class DynamicAttributeProperty extends Model {
 	public static function getTypeClass(string $type):string {
 		if (null === $value = ArrayHelper::getValue(self::PROPERTY_TYPES, "$type.model")) {
 			$t = new InvalidConfigException("$type.model AttributePropertyInterface not set or not properly configured");
-			SysExceptions::log($t, $t);
+			SysExceptions::log($t, true);
 		}
 		return $value;
 

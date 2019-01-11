@@ -108,7 +108,7 @@ class Date {
 		try {
 			return $td->add(new DateInterval("P{$t}D"));
 		} catch (Throwable $t) {
-			SysExceptions::log($t, $t);
+			SysExceptions::log($t, true);
 			return null;
 		}
 	}
