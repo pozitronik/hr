@@ -169,7 +169,7 @@ class Privileges extends ActiveRecord {
 	/**
 	 * @param string[] $userRightsNames
 	 */
-	public function setUserRightsNames($userRightsNames):void {
+	public function setUserRightsNames(array $userRightsNames):void {
 		if ($this->isNewRecord || empty($userRightsNames)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
 		foreach ($userRightsNames as $className) {
 			$relRight = new RelPrivilegesRights([
