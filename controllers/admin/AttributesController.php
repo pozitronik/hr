@@ -68,11 +68,11 @@ class AttributesController extends WigetableController {
 
 	/**
 	 * @param int $id
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function actionUpdate(int $id):string {
-		$attribute = DynamicAttributes::findModel($id, new NotFoundHttpException());
+	public function actionUpdate(int $id):?string {
+		if (null === $attribute = DynamicAttributes::findModel($id, new NotFoundHttpException())) return null;
 
 		if (null !== ($updateArray = Yii::$app->request->post($attribute->formName()))) {
 			$attribute->updateAttribute($updateArray);
@@ -88,7 +88,7 @@ class AttributesController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionDelete(int $id):void {
-		DynamicAttributes::findModel($id, new NotFoundHttpException())->safeDelete();
+		if (null === $model = DynamicAttributes::findModel($id, new NotFoundHttpException())) $model->safeDelete();
 		$this->redirect('index');
 	}
 
@@ -96,12 +96,11 @@ class AttributesController extends WigetableController {
 	 * Сохранение/изменение свойства атрибута
 	 * @param int $attribute_id id атрибута
 	 * @param null|int $property_id id свойства (null для нового)
-	 * @return string|Response
+	 * @return null|string|Response
 	 * @throws Throwable
 	 */
 	public function actionProperty(int $attribute_id, ?int $property_id = null) {
-		/** @var DynamicAttributes $attribute */
-		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+		if (null === $attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException())) return null;
 		$property = new DynamicAttributeProperty([
 			'attributeId' => $attribute_id
 		]);

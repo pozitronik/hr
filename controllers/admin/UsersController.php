@@ -11,6 +11,7 @@ use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
+use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
@@ -92,11 +93,12 @@ class UsersController extends WigetableController {
 
 	/**
 	 * @param integer $id
-	 * @return string|array
+	 * @return string|null
 	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
-	public function actionUpdate(int $id) {
-		$user = Users::findModel($id, new NotFoundHttpException());
+	public function actionUpdate(int $id):?string {
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
 
 		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateUser($updateArray)) $user->uploadAvatar();
 
@@ -108,23 +110,24 @@ class UsersController extends WigetableController {
 
 	/**
 	 * @param int $id
+	 * @return Response
 	 * @throws Throwable
 	 */
-	public function actionDelete(int $id):void {
-		Users::findModel($id, new NotFoundHttpException())->safeDelete();
-		$this->redirect('index');
+	public function actionDelete(int $id):Response {
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) $user->safeDelete();
+		return $this->redirect('index');
 	}
 
 	/**
 	 * Редактор атрибутов пользователя
 	 * @param int $user_id
 	 * @param int $attribute_id
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function actionAttributes(int $user_id, int $attribute_id):string {
-		$user = Users::findModel($user_id, new NotFoundHttpException());
-		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+	public function actionAttributes(int $user_id, int $attribute_id):?string {
+		if ((null === $user = Users::findModel($user_id, new NotFoundHttpException())) || (null === $attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException()))) return null;
+
 		if (null !== $data = Yii::$app->request->post('DynamicAttributeProperty')) {
 			$attribute->setUserProperties($user_id, $data);
 		}
@@ -135,12 +138,11 @@ class UsersController extends WigetableController {
 	 * Сбросить все свойства атрибута для пользователя
 	 * @param int $user_id
 	 * @param int $attribute_id
-	 * @return Response
+	 * @return null|Response
 	 * @throws Throwable
 	 */
-	public function actionAttributesClear(int $user_id, int $attribute_id):Response {
-		Users::findModel($user_id, new NotFoundHttpException());
-		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+	public function actionAttributesClear(int $user_id, int $attribute_id):?Response {
+		if ((null === Users::findModel($user_id, new NotFoundHttpException())) || (null === $attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException()))) return null;
 		$attribute->clearUserProperties($user_id);
 		return $this->redirect(Yii::$app->request->referrer);
 		//return $this->goBack();//лень возиться с setReturnUrl()
@@ -150,12 +152,11 @@ class UsersController extends WigetableController {
 	 * Просмотр графика атрибутов пользователя
 	 * @param int $user_id
 	 * @param int $attribute_id
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function actionAttributeGraph(int $user_id, int $attribute_id):string {
-		$user = Users::findModel($user_id, new NotFoundHttpException());
-		$attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException());
+	public function actionAttributeGraph(int $user_id, int $attribute_id):?string {
+		if ((null === $user = Users::findModel($user_id, new NotFoundHttpException())) || (null === $attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException()))) return null;
 		return $this->render('attribute_graph', compact('user', 'attribute'));
 	}
 

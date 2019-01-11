@@ -71,12 +71,12 @@ class PrivilegesController extends WigetableController {
 
 	/**
 	 * @param int $id
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 * @throws InvalidConfigException
 	 */
-	public function actionUpdate(int $id):string {
-		$privilege = Privileges::findModel($id, new NotFoundHttpException());
+	public function actionUpdate(int $id):?string {
+		if (null === $privilege = Privileges::findModel($id, new NotFoundHttpException())) return null;
 
 		if (null !== ($updateArray = Yii::$app->request->post($privilege->formName()))) $privilege->updatePrivilege($updateArray);
 		$userRightsProvider = new ArrayDataProvider([

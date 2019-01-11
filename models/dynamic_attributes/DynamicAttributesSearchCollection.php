@@ -96,7 +96,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 * @throws Throwable
 	 */
 	public function attributeProperties(?int $index):array {
-		if (false !== $attribute = DynamicAttributes::findModel($index)) {
+		if (null !== $attribute = DynamicAttributes::findModel($index)) {
 			return ArrayHelper::map($attribute->structure, 'id', 'name');
 		}
 		return [];
@@ -110,7 +110,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 * @throws Throwable
 	 */
 	public function propertiesConditions(?int $attributeIndex, ?int $propertyIndex):array {
-		if ((false !== $attribute = DynamicAttributes::findModel($attributeIndex)) && null !== $property = ArrayHelper::getValue($attribute->structure, $propertyIndex)) {
+		if ((null !== $attribute = DynamicAttributes::findModel($attributeIndex)) && null !== $property = ArrayHelper::getValue($attribute->structure, $propertyIndex)) {
 			$className = DynamicAttributeProperty::getTypeClass($type = $property['type']);
 			return ArrayHelper::keymap($className::conditionConfig(), 0);
 		}
@@ -126,7 +126,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 */
 	public function propertyTypes(?int $index):array {
 		$result = [];
-		if (false !== $attribute = DynamicAttributes::findModel($index)) {
+		if (null !== $attribute = DynamicAttributes::findModel($index)) {
 			foreach ($attribute->structure as $key => $value) {
 				$result[$key]['data-type'] = ArrayHelper::getValue($value, 'type');
 			}
@@ -209,7 +209,7 @@ class DynamicAttributesSearchCollection extends Model {
 		$usedAliases = [];//Массив-счётчик использованных алиасов. Если имя алиаса было использовано, второй раз ссылаться на него не нужно
 
 		foreach ($this->searchItems as $searchItem) {
-			if (false === $model = DynamicAttributes::findModel($searchItem->attribute)) continue;
+			if (null === $model = DynamicAttributes::findModel($searchItem->attribute)) continue;
 			$aliasName = "attributes{$searchItem->attribute}";
 			if (!in_array($aliasName, $usedAliases)) {
 				$query->leftJoin("rel_users_attributes $aliasName", "$aliasName.user_id = sys_users.id");

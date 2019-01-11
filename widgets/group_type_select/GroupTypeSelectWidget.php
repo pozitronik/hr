@@ -33,11 +33,11 @@ class GroupTypeSelectWidget extends Widget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function run():string {
-		$group = Groups::findModel($this->groupId, new NotFoundHttpException("Group {$this->groupId} not found!"));
+	public function run():?string {
+		if (null === $group = Groups::findModel($this->groupId, new NotFoundHttpException("Group {$this->groupId} not found!"))) return null;
 
 		return $this->render('group_type_select', [
 			'data' => $this->data??RefGroupTypes::mapData(),

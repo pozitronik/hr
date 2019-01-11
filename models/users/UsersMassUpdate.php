@@ -88,7 +88,7 @@ class UsersMassUpdate extends Model {
 		if (!empty($this->dropUsersAttributes)) $paramsArray['dropUsersAttributes'] = $this->dropUsersAttributes;
 
 		foreach ($this->usersIdSelected as $userId) {
-			if (false !== $user = Users::findModel($userId)) {
+			if (null !== $user = Users::findModel($userId)) {
 				if ($user->updateUser($paramsArray)) {
 					$statistic[] = [
 						'id' => $userId,
@@ -124,7 +124,7 @@ class UsersMassUpdate extends Model {
 	 * @throws Throwable
 	 */
 	public function loadGroupSelection(?int $groupId = null, bool $hierarchy = false):bool {
-		if (false !== $group = Groups::findModel($groupId)) {
+		if (null !== $group = Groups::findModel($groupId)) {
 			$this->usersId = $hierarchy?ArrayHelper::getColumn($group->getRelUsersHierarchy()->all(), 'id'):ArrayHelper::getColumn($group->relUsers, 'id');
 			$this->usersIdSelected = $this->usersId;//При загрузке пользователей из группы выбираем сразу всех
 			return true;

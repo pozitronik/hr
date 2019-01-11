@@ -39,10 +39,10 @@ class CurrentUser extends User {
 	}
 
 	/**
-	 * @return Users|false
+	 * @return Users
 	 * @throws Throwable
 	 */
-	public static function User() {
+	public static function User():Users {
 		return Users::findModel(self::Id(), new UnauthorizedHttpException('Пользователь не авторизован'));
 	}
 }

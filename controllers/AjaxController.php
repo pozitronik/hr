@@ -94,7 +94,7 @@ class AjaxController extends Controller {
 	 */
 	public function actionGroupsTree(int $id, int $restorePositions = 0):array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false === $group = Groups::findModel($id)) {
+		if (null === $group = Groups::findModel($id)) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -206,7 +206,7 @@ class AjaxController extends Controller {
 	 */
 	public function actionGetGroupInfo():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false === ($group = Groups::findModel(Yii::$app->request->post('groupid')))) {
+		if (null === ($group = Groups::findModel(Yii::$app->request->post('groupid')))) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -240,7 +240,7 @@ class AjaxController extends Controller {
 			];
 		}
 		/** @var Groups $group */
-		if (false === ($group = Groups::findModel($groupId))) {
+		if (null === ($group = Groups::findModel($groupId))) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -310,7 +310,7 @@ class AjaxController extends Controller {
 			];
 		}
 		/** @var Groups $group */
-		if (false === ($group = Groups::findModel($groupId))) {
+		if (null === ($group = Groups::findModel($groupId))) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -407,8 +407,8 @@ class AjaxController extends Controller {
 	 */
 	public function actionAttributeGetProperties():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false !== $attribute_id = Yii::$app->request->post('attribute', false)) {
-			if (false !== $attribute = DynamicAttributes::findModel($attribute_id)) {
+		if (null !== $attribute_id = Yii::$app->request->post('attribute')) {
+			if (null !== $attribute = DynamicAttributes::findModel($attribute_id)) {
 				return [
 					'result' => self::RESULT_OK,
 					'items' => $attribute->structure

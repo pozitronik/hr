@@ -7,6 +7,7 @@ use app\models\dynamic_attributes\DynamicAttributes;
 use Throwable;
 use yii\base\Widget;
 use yii\data\ArrayDataProvider;
+use yii\web\ServerErrorHttpException;
 
 /**
  * @property integer $user_id
@@ -28,11 +29,11 @@ class UserAttributesWidget extends Widget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function run():string {
-		$attribute = DynamicAttributes::findModel($this->attribute_id);
+	public function run():?string {
+		if (null === $attribute = DynamicAttributes::findModel($this->attribute_id, new ServerErrorHttpException("Dynamic attribute {$this->attribute_id} not found"))) return null;
 
 		if (empty($attribute->structure)) return "Атрибут не имеет свойств";
 

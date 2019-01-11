@@ -81,11 +81,11 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param integer $id
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function actionUpdate(int $id):string {
-		$group = Groups::findModel($id, new NotFoundHttpException());
+	public function actionUpdate(int $id):?string {
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 
 		if ((null !== ($updateArray = Yii::$app->request->post($group->formName()))) && $group->updateGroup($updateArray)) $group->uploadLogotype();
 
@@ -96,11 +96,12 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param int $id
+	 * @return Response|null
 	 * @throws Throwable
 	 */
-	public function actionDelete(int $id):void {
-		Groups::findModel($id, new NotFoundHttpException())->safeDelete();
-		$this->redirect('index');
+	public function actionDelete(int $id):?Response {
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) $group->safeDelete();
+		return $this->redirect('index');
 	}
 
 	/**
@@ -130,7 +131,7 @@ class GroupsController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionGraphMap(int $id):void {
-		$group = Groups::findModel($id, new NotFoundHttpException());
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return;
 		$map = [0 => 1];
 		$group->getGraphMap($map);
 		Utils::log($map);

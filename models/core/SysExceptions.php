@@ -110,7 +110,7 @@ class SysExceptions extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function acknowledgeOne(int $id):void {
-		self::findModel($id, new NotFoundHttpException())->updateAttributes(['known' => true]);
+		if (null === $model = self::findModel($id, new NotFoundHttpException())) $model->updateAttributes(['known' => true]);
 	}
 
 	/**

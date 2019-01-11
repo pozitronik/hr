@@ -12,6 +12,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use Throwable;
+use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
 /**
@@ -91,13 +92,12 @@ class ReferencesController extends WigetableController {
 
 	/**
 	 * @param string $class
-	 * @return mixed
+	 * @return null|string|Response
 	 * @throws ServerErrorHttpException
 	 * @throws Throwable
 	 */
 	public function actionCreate($class) {
-		/** @var Reference $model */
-		$model = Reference::getReferenceClass($class);
+		if (null === $model = Reference::getReferenceClass($class)) return null;
 		if ($model->createRecord(Yii::$app->request->post($model->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect(['create', 'class' => $class]);//Создали и создаём ещё
 			return $this->redirect(['index', 'class' => $class]);
@@ -111,13 +111,12 @@ class ReferencesController extends WigetableController {
 	/**
 	 * @param string $class
 	 * @param integer $id
-	 * @return mixed
+	 * @return null|string|Response
 	 * @throws Throwable
 	 * @throws ServerErrorHttpException
 	 */
 	public function actionUpdate($class, $id) {
-		/** @var Reference $model */
-		$model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException());
+		if (null === $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) return null;
 
 		if ($model->updateRecord(Yii::$app->request->post($model->formName()))) {
 			return $this->redirect(['update', 'id' => $model->id, 'class' => $class]);
@@ -136,9 +135,7 @@ class ReferencesController extends WigetableController {
 	 * @throws ServerErrorHttpException
 	 */
 	public function actionDelete($class, $id) {
-		/** @var Reference $model */
-		$model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException());
-		$model->safeDelete();
+		if (null === $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) $model->safeDelete();
 		return $this->redirect(['index', 'class' => $class]);
 	}
 }
