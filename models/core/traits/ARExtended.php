@@ -22,12 +22,12 @@ trait ARExtended {
 	 * if ($user = Users::findModel($id) {
 	 *        //$user инициализирован
 	 * } else throw new Exception('Not found')
-	 * @param integer $id
-	 * @param bool|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
+	 * @param int $id
+	 * @param null|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
 	 * @return bool|self
 	 * @throws Throwable
 	 */
-	public static function findModel($id, $throw = null) {
+	public static function findModel(int $id, ?Throwable $throw = null) {
 		/** @noinspection PhpIncompatibleReturnTypeInspection *///Давим некорректно отрабатывающую инспекцию (не учитывает два возможных типа возвращаемых значений)
 		if (null !== ($model = self::findOne($id))) return $model;
 		if (null !== $throw) SysExceptions::log($throw, $throw, true);
@@ -36,11 +36,11 @@ trait ARExtended {
 
 	/**
 	 * По итерируемому списку ключей вернёт список подходящих моделей
-	 * @param Iterator|array $keys Итерируемый список ключей
+	 * @param int[] $keys Итерируемый список ключей
 	 * @return self[]
 	 * @throws Throwable
 	 */
-	public static function findModels($keys):array {
+	public static function findModels(array $keys):array {
 		$result = [];
 		foreach ($keys as $key) {
 			$model = self::findModel($key);
@@ -51,7 +51,7 @@ trait ARExtended {
 
 	/**
 	 * Возвращает существующую запись в ActiveRecord-модели, найденную по условию, если же такой записи нет - возвращает новую модель
-	 * @param array $searchCondition
+	 * @param array|string $searchCondition
 	 * @return array|null|ActiveRecord|self
 	 * @todo: не работает с наследуемыми моделями, вроде референсов, разобраться.
 	 */
@@ -66,7 +66,7 @@ trait ARExtended {
 	 * @param array $changedAttributes Массив старых изменённых аттрибутов
 	 * @return array
 	 */
-	public function newAttributes($changedAttributes):array {
+	public function newAttributes(array $changedAttributes):array {
 		/** @var ActiveRecord $this */
 		$newAttributes = [];
 		$currentAttributes = $this->attributes;
@@ -81,7 +81,7 @@ trait ARExtended {
 	 * @param array $changedAttributes
 	 * @return array
 	 */
-	public function changedAttributes($changedAttributes):array {
+	public function changedAttributes(array $changedAttributes):array {
 		/** @var ActiveRecord $this */
 		$updatedAttributes = [];
 		$currentAttributes = $this->attributes;
@@ -111,7 +111,7 @@ trait ARExtended {
 	 * @param string $name
 	 * @param mixed $value
 	 */
-	public function setAndSaveAttribute($name, $value):void {
+	public function setAndSaveAttribute(string $name, $value):void {
 		$this->setAttribute($name, $value);
 		$this->save();
 	}
@@ -121,13 +121,13 @@ trait ARExtended {
 	 * Отличается от updateAttributes тем, что триггерит onAfterSave
 	 * @param array $values
 	 */
-	public function setAndSaveAttributes($values):void {
+	public function setAndSaveAttributes(array $values):void {
 		$this->setAttributes($values, false);
 		$this->save();
 	}
 
 	/**
-	 * Универсальная функция удаления любой лайткабовской модели
+	 * Универсальная функция удаления любой модели
 	 */
 	public function safeDelete():void {
 		if ($this->hasAttribute('deleted')) {
@@ -147,10 +147,10 @@ trait ARExtended {
 	}
 
 	/**
-	 * @param $property
+	 * @param string $property
 	 * @return string
 	 */
-	public function asJSON($property):string {
+	public function asJSON(string $property):string {
 		if (!$this->hasAttribute($property)) throw new RuntimeException("Field $property not exists in the table ".$this::tableName());
 		return json_encode($this->$property, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
 	}
