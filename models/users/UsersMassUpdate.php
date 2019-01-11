@@ -168,9 +168,9 @@ class UsersMassUpdate extends Model {
 	}
 
 	/**
-	 * @param mixed $virtualUser
+	 * @param Users $virtualUser
 	 */
-	public function setVirtualUser($virtualUser):void {
+	public function setVirtualUser(Users $virtualUser):void {
 		$this->virtualUser = $virtualUser;
 	}
 

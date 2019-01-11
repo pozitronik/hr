@@ -31,12 +31,12 @@ class UsersSearch extends Users {
 	}
 
 	/**
-	 * @param $params
-	 * @param $allowedGroups
+	 * @param array $params
+	 * @param int[] $allowedGroups
 	 * @param bool $pagination
 	 * @return ActiveDataProvider
 	 */
-	public function search($params, $allowedGroups, $pagination = true):ActiveDataProvider {
+	public function search(array $params, array $allowedGroups, $pagination = true):ActiveDataProvider {
 		$query = Users::find()->active();
 
 		$dataProvider = new ActiveDataProvider([
