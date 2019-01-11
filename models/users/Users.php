@@ -281,7 +281,7 @@ class Users extends ActiveRecord {
 	 * @param array $relUsersGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups(array $relUsersGroups):void {
+	public function setRelGroups($relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
@@ -420,7 +420,9 @@ class Users extends ActiveRecord {
 	 * @prototype todo
 	 */
 	public function getRights():array {
-		return array_unique(array_merge(... ArrayHelper::getColumn($this->relPrivileges, 'userRights')));
+		$rights = [[]];
+		$rights[] = ArrayHelper::getColumn($this->relPrivileges, 'userRights');
+		return array_unique(array_merge(...$rights));
 	}
 
 	/**
