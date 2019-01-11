@@ -142,7 +142,7 @@ trait ARExtended {
 	 * @param array $arrayData
 	 * @return boolean
 	 */
-	public function loadArray($arrayData):bool {
+	public function loadArray(array $arrayData):bool {
 		return $this->load($arrayData, '');
 	}
 

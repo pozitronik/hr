@@ -158,11 +158,11 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param $paramsArray
+	 * @param array $paramsArray
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function createUser($paramsArray):bool {
+	public function createUser(array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
@@ -188,11 +188,11 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param $paramsArray
+	 * @param array $paramsArray
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function updateUser($paramsArray):bool {
+	public function updateUser(array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if (!empty($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
 				$this->password = $newPassword;
@@ -281,7 +281,7 @@ class Users extends ActiveRecord {
 	 * @param array $relUsersGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups($relUsersGroups):void {
+	public function setRelGroups(array $relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
@@ -296,13 +296,13 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropGroups
 	 * @throws Throwable
 	 */
-	public function setDropGroups($dropGroups):void {
+	public function setDropGroups(array $dropGroups):void {
 		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
 
 	/**
-	 * prototype
+	 * @prototype
 	 * @param $access
 	 * @return bool
 	 */
@@ -384,7 +384,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropUsersAttributes
 	 * @throws Throwable
 	 */
-	public function setDropUsersAttributes($dropUsersAttributes):void {
+	public function setDropUsersAttributes(array $dropUsersAttributes):void {
 		/*Сами значения атрибутов сохранятся в базе и должны будут восстановиться, если атрибут присвоить пользователю обратно*/
 		RelUsersAttributes::unlinkModels($this, $dropUsersAttributes);
 	}
@@ -449,10 +449,10 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Отдельный атрибут, если нужно будет удалять через аякс, например
-	 * @param integer[] $dropUsersPrivileges
+	 * @param int[] $dropUsersPrivileges
 	 * @throws Throwable
 	 */
-	public function setDropUsersPrivileges($dropUsersPrivileges):void {
+	public function setDropUsersPrivileges(array $dropUsersPrivileges):void {
 		RelUsersPrivileges::unlinkModels($this, $dropUsersPrivileges);
 	}
 
