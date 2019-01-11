@@ -9,10 +9,15 @@ use yii\data\ActiveDataProvider;
  * UsersSearch represents the model behind the search form about `app\models\users\Users`.
  * Class UsersSearch
  * @package app\models\users
+ *
+ * @property string $groupName Фильтр названия группы
+ * @property int[] $roles Фильтр ролей
+ * @property int[] $privileges Фильтр привилегий
  */
 class UsersSearch extends Users {
 	public $groupName;
 	public $roles;
+	public $privileges;
 
 	/**
 	 * @inheritdoc
@@ -21,7 +26,7 @@ class UsersSearch extends Users {
 		return [
 			[['id'], 'integer'],
 			[['username', 'login', 'email'], 'safe'],
-			[['groupName', 'roles'], 'safe']
+			[['groupName', 'roles', 'privileges'], 'safe']
 		];
 	}
 
@@ -52,6 +57,10 @@ class UsersSearch extends Users {
 				'roles' => [
 					'asc' => ['ref_user_roles.name' => SORT_ASC],
 					'desc' => ['ref_user_roles.name' => SORT_DESC]
+				],
+				'privileges' => [
+					'asc' => ['sys_privileges.name' => SORT_ASC],
+					'desc' => ['sys_privileges.name' => SORT_DESC]
 				]
 			]
 		]);
@@ -61,14 +70,15 @@ class UsersSearch extends Users {
 
 		if (!$this->validate()) return $dataProvider;
 
-		$query->joinWith(['relGroups', 'relRefUserRoles']);
-				$query->andFilterWhere(['sys_users.id' => $this->id])
-					->andFilterWhere(['group_id' => $allowedGroups])
-					->andFilterWhere(['like', 'sys_users.username', $this->username])
-					->andFilterWhere(['like', 'login', $this->login])
-					->andFilterWhere(['like', 'email', $this->email])
-					->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
-					->andFilterWhere(['in', 'ref_user_roles.id', $this->roles]);
+		$query->joinWith(['relGroups', 'relRefUserRoles', 'relPrivileges']);
+		$query->andFilterWhere(['sys_users.id' => $this->id])
+			->andFilterWhere(['group_id' => $allowedGroups])
+			->andFilterWhere(['like', 'sys_users.username', $this->username])
+			->andFilterWhere(['like', 'login', $this->login])
+			->andFilterWhere(['like', 'email', $this->email])
+			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
+			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
+			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges]);
 		return $dataProvider;
 	}
 }

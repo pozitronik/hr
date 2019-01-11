@@ -12,6 +12,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\models\references\refs\RefUserRoles;
+use app\models\user_rights\Privileges;
 use app\models\users\UsersSearch;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
@@ -135,6 +136,27 @@ $this->params['breadcrumbs'][] = $this->title;
 					},
 					'format' => 'raw'
 				],
+				[
+					'attribute' => 'privileges',
+					'filterType' => GridView::FILTER_SELECT2,
+					'filter' => ArrayHelper::map(Privileges::find()->active()->all(), 'id', 'name'),
+					'filterInputOptions' => ['placeholder' => 'Выберите привилегии'],
+					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
+
+					'label' => 'Привилегии',
+					'value' => function($model) {
+						/** @var UsersSearch $model */
+						return BadgeWidget::widget([
+							'data' => $model->getRelPrivileges()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+							'useBadges' => true,
+							'attribute' => 'name',
+							'unbadgedCount' => 6,
+							"itemsSeparator" => false
+						]);
+					},
+					'format' => 'raw'
+				],
+
 				'email:email'
 			]
 		]); ?>
