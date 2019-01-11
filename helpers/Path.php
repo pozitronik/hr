@@ -14,11 +14,11 @@ class Path {
 
 	/**
 	 * Создаём каталог с нужными проверками
-	 * @param $path
+	 * @param string $path
 	 * @param int $mode
 	 * @return bool
 	 */
-	public static function CreateDirIfNotExisted($path, $mode = 0777):bool {
+	public static function CreateDirIfNotExisted(string $path, int $mode = 0777):bool {
 		if (file_exists($path)) {
 			if (is_dir($path)) return true;
 			throw new RuntimeException(sprintf('Имя "%s" занято', $path));
@@ -30,11 +30,11 @@ class Path {
 	}
 
 	/**
-	 * @param $filename
+	 * @param string $filename
 	 * @param string $new_extension
 	 * @return string
 	 */
-	public static function ChangeFileExtension($filename, $new_extension = ''):string {
+	public static function ChangeFileExtension(string $filename, string $new_extension = ''):string {
 		return pathinfo($filename, PATHINFO_FILENAME).$new_extension;
 	}
 }
