@@ -16,22 +16,20 @@ use Throwable;
 trait ARExtended {
 
 	/**
-	 * Обёртка для быстрого поиска моделей
-	 * Упрощает проверку поиска моделей по индексу. Пример:
-	 * if ($user = Users::findModel($id) {
-	 *        //$user инициализирован
-	 * } else throw new Exception('Not found')
-	 * @param mixed $id
+	 * Обёртка для быстрого поиска моделей с опциональным выбросом логируемого исключения
+	 * Упрощает проверку поиска моделей
+	 * @example Users::findModel($id, new NotFoundException('Пользователь не найден'))
+	 *
+	 * @example if (null !== $user = Users::findModel($id)) return $user
+	 * @param mixed $id Поисковое условие (предпочтительно primaryKey, но не ограничиваемся им)
 	 * @param null|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
-	 * @return bool|self
+	 * @return null|self
 	 * @throws Throwable
-	 * todo: рефакторим на возврат null
 	 */
-	public static function findModel($id, ?Throwable $throw = null) {
-		/** @noinspection PhpIncompatibleReturnTypeInspection *///Давим некорректно отрабатывающую инспекцию (не учитывает два возможных типа возвращаемых значений)
+	public static function findModel($id, ?Throwable $throw = null):?self {
 		if (null !== ($model = self::findOne($id))) return $model;
 		if (null !== $throw) SysExceptions::log($throw, true, true);
-		return false;
+		return null;
 	}
 
 	/**
@@ -43,8 +41,7 @@ trait ARExtended {
 	public static function findModels(array $keys):array {
 		$result = [];
 		foreach ($keys as $key) {
-			$model = self::findModel($key);
-			if ($model) $result[] = $model;
+			if (null !== $model = self::findModel($key)) $result[] = $model;
 		}
 		return $result;
 	}
