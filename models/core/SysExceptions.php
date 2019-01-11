@@ -77,11 +77,11 @@ class SysExceptions extends ActiveRecord {
 	/**
 	 * В случае, если надо поставить отлов и логирование исключения
 	 * @param Throwable $t
-	 * @param bool|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
+	 * @param bool|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели //todo ?Throwable
 	 * @param bool $known_error - Пометить исключение, как известное. Сделано для пометки исключений, с которыми мы ничего сделать не можем (ошибка сторонних сервисов, например).
 	 * @throws Throwable
 	 */
-	public static function log($t, $throw = false, $known_error = false):void {
+	public static function log(Throwable $t, $throw = false, bool $known_error = false):void {
 		$logger = new self;
 		try {
 			$logger->setAttributes([
@@ -109,7 +109,7 @@ class SysExceptions extends ActiveRecord {
 	 * @param integer $id
 	 * @throws Throwable
 	 */
-	public static function acknowledgeOne($id):void {
+	public static function acknowledgeOne(int $id):void {
 		self::findModel($id, new NotFoundHttpException())->updateAttributes(['known' => true]);
 	}
 

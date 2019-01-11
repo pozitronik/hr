@@ -29,7 +29,7 @@ class SqlDebugInfo extends Model {
 	 * @param string $sql
 	 * @return boolean
 	 */
-	public function getFromSql($sql):bool {
+	public function getFromSql(string $sql):bool {
 		$this->userid = null;
 		$this->operation = null;
 		$matches = [];
@@ -45,7 +45,7 @@ class SqlDebugInfo extends Model {
 	 * adds debug information to any AQ
 	 * @param ActiveQuery $query
 	 */
-	public function addDebugInfo(&$query):void {
+	public function addDebugInfo(ActiveQuery $query):void {
 		$query->andWhere("1 = 1{$this}");
 	}
 }

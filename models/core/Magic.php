@@ -11,6 +11,7 @@ use ReflectionException;
 use ReflectionMethod;
 use Yii;
 use app\helpers\Path;
+use yii\base\Model;
 use yii\base\UnknownClassException;
 use yii\web\Controller;
 
@@ -26,7 +27,7 @@ class Magic {
 	 * @param string $path
 	 * @return string|false
 	 */
-	public static function ExtractNamespaceFromFile($path) {
+	public static function ExtractNamespaceFromFile(string $path) {
 		$lines = file($path);
 		foreach ($lines as $line) {
 			$line = trim($line);
@@ -39,10 +40,10 @@ class Magic {
 
 	/**
 	 * @param string $className
-	 * @return false|string
+	 * @return string
 	 * @todo: функция не умеет преобразовывать имена классов по той же схеме, что Yii. Реализован простейший вариант, а вот что-то вроде MassUpdateController к mass-update эта регулярка уже не вернёт.
 	 */
-	private static function ExtractControllerId($className) {
+	private static function ExtractControllerId(string $className):string {
 		$id = mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
 		return "admin/{$id}";
 	}
@@ -54,7 +55,7 @@ class Magic {
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetController($fileName):?object {
+	public static function GetController(string $fileName):?object {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
@@ -132,12 +133,12 @@ class Magic {
 	}
 
 	/**
-	 * @param $controller
-	 * @param $property
+	 * @param Model $controller
+	 * @param string $property
 	 * @return bool
 	 * @throws ReflectionException
 	 */
-	public static function hasProperty($controller, $property):bool {
+	public static function hasProperty(Model $controller, string $property):bool {
 		return (new ReflectionClass($controller))->hasProperty($property);
 	}
 

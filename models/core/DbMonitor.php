@@ -44,10 +44,10 @@ class DbMonitor {
 
 	/**
 	 * Die mf die
-	 * @param $id
+	 * @param int $id
 	 * @return string;
 	 */
-	public function kill($id):string {
+	public function kill(int $id):string {
 		try {
 			$affected = Yii::$app->db->createCommand("kill {$id}")
 				->execute();
