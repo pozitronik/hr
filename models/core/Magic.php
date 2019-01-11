@@ -11,7 +11,7 @@ use ReflectionException;
 use ReflectionMethod;
 use Yii;
 use app\helpers\Path;
-use yii\base\Model;
+use yii\base\Configurable;
 use yii\base\UnknownClassException;
 use yii\web\Controller;
 
@@ -133,12 +133,12 @@ class Magic {
 	}
 
 	/**
-	 * @param Model $controller
+	 * @param Configurable $controller
 	 * @param string $property
 	 * @return bool
 	 * @throws ReflectionException
 	 */
-	public static function hasProperty(Model $controller, string $property):bool {
+	public static function hasProperty(Configurable $controller, string $property):bool {
 		return (new ReflectionClass($controller))->hasProperty($property);
 	}
 
