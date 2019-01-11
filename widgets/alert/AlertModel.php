@@ -11,12 +11,12 @@ use yii\base\Model;
  * Модель передачи алертов
  * @property string $type
  * @property string $body
- * @property string|false $icon
+ * @property string $icon
  * @property string|null $title
  * @property string|null $linkUrl
  * @property string $linkTarget
  * @property boolean $showSeparator
- * @property int|false $delay
+ * @property int $delay
  * @property boolean $useAnimation
  * @property array $pluginOptions
  */
@@ -139,35 +139,35 @@ class AlertModel extends Model {
 	/**
 	 * @param string $body
 	 */
-	public function setBody($body):void {
+	public function setBody(string $body):void {
 		$this->body = $body;
 	}
 
 	/**
-	 * @return string|false
+	 * @return string
 	 */
-	public function getIcon() {
+	public function getIcon():string {
 		return $this->icon;
 	}
 
 	/**
-	 * @param string|false $icon
+	 * @param string $icon
 	 */
-	public function setIcon($icon):void {
+	public function setIcon(string $icon):void {
 		$this->icon = $icon;
 	}
 
 	/**
-	 * @return string|false
+	 * @return string|null
 	 */
-	public function getTitle() {
+	public function getTitle():?string {
 		return $this->title;
 	}
 
 	/**
-	 * @param string|false $title
+	 * @param string|null $title
 	 */
-	public function setTitle($title):void {
+	public function setTitle(?string $title):void {
 		$this->title = $title;
 	}
 
@@ -181,7 +181,7 @@ class AlertModel extends Model {
 	/**
 	 * @param null|string $linkUrl
 	 */
-	public function setLinkUrl($linkUrl):void {
+	public function setLinkUrl(?string $linkUrl):void {
 		$this->linkUrl = $linkUrl;
 	}
 
@@ -221,9 +221,9 @@ class AlertModel extends Model {
 	}
 
 	/**
-	 * @param int|false $delay
+	 * @param int $delay
 	 */
-	public function setDelay($delay):void {
+	public function setDelay(int $delay):void {
 		$this->delay = $delay;
 	}
 
