@@ -189,7 +189,7 @@ class RefUserRoles extends Reference {
 	 * @param array $params
 	 * @return ActiveQuery
 	 */
-	public function search($params):ActiveQuery {
+	public function search(array $params):ActiveQuery {
 		/** @var ActiveQuery $query */
 		$query = self::find();
 		$this->load($params);

@@ -54,7 +54,7 @@ class LoginForm extends Model {
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
 	 */
-	public function validatePassword($attribute):void {
+	public function validatePassword(string $attribute):void {
 		if (!$this->hasErrors()) {
 			$user = $this->getUser();
 			if (!$user || !$user->validatePassword($this->password)) {
@@ -80,7 +80,7 @@ class LoginForm extends Model {
 	 * @param string $attribute the attribute currently being validated
 	 * @internal param array $params the additional name-value pairs given in the rule
 	 */
-	public function validateLogin($attribute):void {
+	public function validateLogin(string $attribute):void {
 		if (!$this->hasErrors()) {
 			$user = $this->getUser();
 			if (null !== $user && $user->CurrentUser->deleted) {

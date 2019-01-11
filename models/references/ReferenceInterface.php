@@ -51,7 +51,7 @@ interface ReferenceInterface {
 	 * @param array $params
 	 * @return ActiveQuery
 	 */
-	public function search($params):ActiveQuery;
+	public function search(array $params):ActiveQuery;
 
 	/**
 	 * @return array|false

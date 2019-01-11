@@ -21,7 +21,7 @@ trait Graph {
 	 * @throws Exception
 	 * @throws Throwable
 	 */
-	public function asNode($x = 0, $y = 0):array {
+	public function asNode(?int $x = 0, ?int $y = 0):array {
 		/** @var Groups $this */
 		$red = random_int(10, 255);
 		$green = random_int(10, 255);
@@ -49,7 +49,7 @@ trait Graph {
 	 * @param self $to
 	 * @return array
 	 */
-	private function Edge($to):array {
+	private function Edge(self $to):array {
 //		if (false === $color = RelGroupsGroups::getRelationColor($this->id, $to->id)) {
 //			 //todo: цвет вычисляется, как средний между цветом исходящей группы и входящей группы
 //		}
@@ -72,7 +72,7 @@ trait Graph {
 	 * @param int $x
 	 * @throws Throwable
 	 */
-	public function getGraph(&$graphStack = [], &$edgesStack = [], array &$childStack = [], &$x = 0, &$y = 0):void {
+	public function getGraph(array &$graphStack = [], array &$edgesStack = [], array &$childStack = [], int &$x = 0, int &$y = 0):void {
 		/** @var Groups $this */
 		$childStack[$this->id] = true;
 		$graphStack[] = $this->asNode($x, $y);
@@ -97,7 +97,7 @@ trait Graph {
 	 * @param array $graphMap
 	 * @param int $level
 	 */
-	public function getGraphMap(array &$graphMap = [0 => 0], &$level = 0):void {
+	public function getGraphMap(array &$graphMap = [0 => 0], int &$level = 0):void {
 		/** @var Groups $this */
 		if (!isset($graphMap[$level + 1])) $graphMap[$level + 1] = 0;
 		$graphMap[$level + 1] += count($this->relChildGroups);

@@ -50,7 +50,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	 * @param int $user
 	 * @return bool
 	 */
-	public static function setRoleInGroup($role, int $group, int $user):bool {
+	public static function setRoleInGroup(int $role, int $group, int $user):bool {
 		/*Связь пользователя в группе уже есть*/
 		/** @var RelUsersGroups|null $rel */
 		$rel = RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $user])->one();

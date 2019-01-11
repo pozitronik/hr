@@ -112,7 +112,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @throws ServerErrorHttpException
 	 * @throws Throwable
 	 */
-	public static function getReferenceClass($class_name):Reference {
+	public static function getReferenceClass(string $class_name):Reference {
 		$class = 'app\models\references\refs\\'.$class_name;
 
 		if (!class_exists($class)) {
@@ -171,7 +171,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param array $params
 	 * @return ActiveQuery
 	 */
-	public function search($params):ActiveQuery {
+	public function search(array $params):ActiveQuery {
 		/** @var ActiveQuery $query */
 		$query = self::find();
 		$this->load($params);
@@ -197,7 +197,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param array $paramsArray
 	 * @return boolean
 	 */
-	public function createRecord($paramsArray):bool {
+	public function createRecord(array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
@@ -213,7 +213,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param array $paramsArray
 	 * @return bool
 	 */
-	public function updateRecord($paramsArray):bool {
+	public function updateRecord(array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
