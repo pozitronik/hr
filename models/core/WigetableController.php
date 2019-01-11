@@ -46,7 +46,7 @@ class WigetableController extends Controller {
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetControllersList($path):array {
+	public static function GetControllersList(string $path):array {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
