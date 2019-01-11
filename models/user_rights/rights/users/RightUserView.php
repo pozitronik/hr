@@ -3,20 +3,21 @@ declare(strict_types = 1);
 
 namespace app\models\user_rights\rights\users;
 
+use app\helpers\ArrayHelper;
 use app\models\user_rights\UserRight;
 
 /**
- * Class RightUserAdmin
+ * Class RightUserView
  * @package app\models\user_rights\rights\users
  */
-class RightUserAdmin extends UserRight {
+class RightUserView extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Управление пользователями";
+		return "Просмотр пользователей";
 	}
 
 	/**
@@ -24,14 +25,21 @@ class RightUserAdmin extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Доступ к управлению пользователями в системе";
+		return "Доступ к списку всех пользователей в системе";
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function getAccess(string $controller, string $action):?bool {
-		return 'UsersController' === $controller;
+		$definedRules = [
+			'UsersController' => [
+				'actions' => [
+					'index' => self::ACCESS_ALLOW
+				]
+			]
+		];
+		return ArrayHelper::getValue($definedRules, "{$controller}.actions.{$action}", parent::getAccess($controller, $action));
 
 	}
 }
