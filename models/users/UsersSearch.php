@@ -71,6 +71,9 @@ class UsersSearch extends Users {
 		if (!$this->validate()) return $dataProvider;
 
 		$query->joinWith(['relGroups', 'relRefUserRoles', 'relPrivileges']);
+
+		$query->distinct();
+
 		$query->andFilterWhere(['sys_users.id' => $this->id])
 			->andFilterWhere(['group_id' => $allowedGroups])
 			->andFilterWhere(['like', 'sys_users.username', $this->username])
