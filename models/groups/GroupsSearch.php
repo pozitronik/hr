@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\groups;
 
+use app\models\user_rights\UserAccess;
 use Yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 
@@ -34,7 +35,7 @@ class GroupsSearch extends Groups {
 	 * @throws InvalidArgumentException
 	 */
 	public function search(array $params):ActiveDataProvider {
-		$query = Groups::find()->active();
+		$query = UserAccess::GetGroupsScope();
 
 		$this->load($params);
 

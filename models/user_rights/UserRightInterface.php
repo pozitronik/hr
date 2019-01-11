@@ -56,7 +56,7 @@ interface UserRightInterface {
 	 * @param string $action Имя экшена
 	 * @return bool|null Одна из констант доступа
 	 */
-	public function getAccess(string $controller, string $action):?bool;
+	public function getAccess(string $controller, string $action):?bool;//todo static
 
 	/**
 	 * Набор действий, предоставляемых правом. Пока прототипирую

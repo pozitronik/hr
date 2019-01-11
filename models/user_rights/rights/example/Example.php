@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\user_rights\rights\example;
 
 use app\models\user_rights\UserRight;
+use yii\db\ActiveQuery;
 
 /**
  * Class Example
@@ -32,6 +33,14 @@ class Example extends UserRight {
 	 */
 	public function getAccess(string $controller, string $action):?bool {
 		return 'UsersController' === $controller;
+	}
+
+	/**
+	 * @param ActiveQuery $query
+	 */
+	public static function SetGroupsScope(ActiveQuery $query):void {
+		$query->active();
+		$query->where('sys_groups.id<10');
 	}
 
 	/**

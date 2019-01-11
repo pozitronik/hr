@@ -4,10 +4,13 @@ declare(strict_types = 1);
 namespace app\models\user_rights;
 
 use app\models\core\Magic;
+use app\models\groups\Groups;
 use app\models\user\CurrentUser;
+use app\models\user_rights\rights\example\Example;
 use ReflectionException;
 use Throwable;
 use yii\base\Model;
+use yii\db\ActiveQuery;
 use yii\web\Controller;
 
 /**
@@ -55,9 +58,16 @@ class UserAccess extends Model {
 				];
 			}
 		}
-
 		return $rules;
+	}
 
+	/**
+	 * @return ActiveQuery
+	 */
+	public static function GetGroupsScope():ActiveQuery {
+		$query = Groups::find();
+		Example::SetGroupsScope($query);
+		return $query;
 	}
 
 }
