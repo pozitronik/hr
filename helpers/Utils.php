@@ -23,17 +23,17 @@ class Utils {
 	 * @param string $filename - имя файла
 	 * @return string
 	 */
-	public static function CypherFileName($filename):string {
+	public static function CypherFileName(string $filename):string {
 		$name = pathinfo($filename, PATHINFO_FILENAME);
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
 		return (trim(str_replace('#', '-', $name)).'_'.md5($name.microtime()).'.'.$ext);
 	}
 
 	/**
-	 * @param $some
+	 * @param mixed $some
 	 * @param string $title
 	 */
-	public static function log($some, $title = ''):void {
+	public static function log($some, string $title = ''):void {
 
 		print "<pre>$title\n";
 		if (is_bool($some)) {
@@ -47,7 +47,7 @@ class Utils {
 	}
 
 	/**
-	 * @param $data - данные для логирования
+	 * @param mixed $data - данные для логирования
 	 * @param bool|false|string $title - заголовок логируемых данных
 	 * @param string $logName - файл вывода
 	 * @param integer $format - формат вывода данных
@@ -80,10 +80,10 @@ class Utils {
 	}
 
 	/**
-	 * @param $path
+	 * @param string $path
 	 * @return string
 	 */
-	public static function process_path($path):string {
+	public static function process_path(string $path):string {
 		$pathinfo = pathinfo($path);
 		$dir = $pathinfo['dirname'];
 		if ('..' === $pathinfo['basename']) {
@@ -122,12 +122,12 @@ class Utils {
 
 	/**
 	 * Генерирует псевдослучайную строку заданной длины на заданном алфавите
-	 * @param $length
+	 * @param int $length
 	 * @param string $keyspace
 	 * @return string
 	 * @throws Exception
 	 */
-	public static function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'):string {
+	public static function random_str(int $length, string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'):string {
 		$pieces = [];
 		$max = mb_strlen($keyspace, '8bit') - 1;
 		for ($i = 0; $i < $length; ++$i) {
@@ -137,10 +137,10 @@ class Utils {
 	}
 
 	/**
-	 * @param $data
+	 * @param string $data
 	 * @return bool
 	 */
-	public static function is_json($data):bool {
+	public static function is_json(string $data):bool {
 		json_decode($data);
 		return (JSON_ERROR_NONE === json_last_error());
 	}
@@ -151,7 +151,7 @@ class Utils {
 	 * @param int $significance
 	 * @return bool|float
 	 */
-	public static function ceiling($number, $significance = 1000) {
+	public static function ceiling(int $number, int $significance = 1000) {
 		return (is_numeric($number) && is_numeric($significance))?(ceil($number / $significance) * $significance):false;
 	}
 
@@ -161,7 +161,7 @@ class Utils {
 	 * @param string $alphabet - позиционный алфавит
 	 * @return string - строка с числом в указанном алфавите.
 	 */
-	public static function DecToPos($N, $alphabet):string {
+	public static function DecToPos(int $N, string $alphabet):string {
 		$q = strlen($alphabet);
 		$ret = '';
 		while (true) {
@@ -180,7 +180,7 @@ class Utils {
 	 * @return string
 	 * @throws Throwable
 	 */
-	public static function MakeLike($param):string {
+	public static function MakeLike(string $param):string {
 		if (empty($param)) return '';
 		return ArrayHelper::getValue(Yii::$app->params, 'LikeContainMode', false)?"%$param%":"$param%";
 	}
