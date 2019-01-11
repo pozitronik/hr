@@ -132,7 +132,7 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @param array $relGroupsUsers
+	 * @param ActiveQuery|Users[] $relGroupsUsers
 	 * @throws Throwable
 	 */
 	public function setRelUsers($relGroupsUsers):void {
@@ -177,7 +177,7 @@ class Groups extends ActiveRecord {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function createGroup($paramsArray):bool {
+	public function createGroup(array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
@@ -204,7 +204,7 @@ class Groups extends ActiveRecord {
 	 * @param array $paramsArray
 	 * @return bool
 	 */
-	public function updateGroup($paramsArray):bool {
+	public function updateGroup(array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
@@ -232,7 +232,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Внесёт группу в релейшен дочерних к текущей
-	 * @param $childGroups
+	 * @param ActiveQuery|Groups[] $childGroups
 	 * @throws Throwable
 	 */
 	public function setRelChildGroups($childGroups):void {
@@ -267,7 +267,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Внесёт группу в релейшен дочерних к текущей
-	 * @param $parentGroups
+	 * @param ActiveQuery|Groups[] $parentGroups
 	 * @throws Throwable
 	 */
 	public function setRelParentGroups($parentGroups):void {
@@ -277,7 +277,6 @@ class Groups extends ActiveRecord {
 				self::findModel($group)->dropCaches();
 			}
 		}
-
 	}
 
 	/**

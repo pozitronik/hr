@@ -33,7 +33,7 @@ class GroupsSearch extends Groups {
 	 * @return ActiveDataProvider
 	 * @throws InvalidArgumentException
 	 */
-	public function search($params):ActiveDataProvider {
+	public function search(array $params):ActiveDataProvider {
 		$query = Groups::find()->active();
 
 		$this->load($params);
