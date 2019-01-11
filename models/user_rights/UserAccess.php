@@ -27,6 +27,7 @@ class UserAccess extends Model {
 		$user = CurrentUser::User();
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
+		if ($user->is('sysadmin')) $defaultAllow = true;
 		$actions = Magic::GetControllerActions($controller);
 
 		foreach ($actions as $action) {//Пытаемся подобрать правила для всех экшенов в контроллере

@@ -307,7 +307,15 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 */
 	public function is($access):bool {
-		return null !== $access;
+		switch ($access) {
+			case 'sysadmin':
+				return 1 === CurrentUser::Id();
+			break;
+			default:
+				return null !== $access;
+			break;
+		}
+
 	}
 
 	/**
