@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ReturnTypeCanBeDeclaredInspection */
 declare(strict_types = 1);
 
 namespace app\models\core\traits;
@@ -34,6 +34,7 @@ trait MethodsAccess {
 
 	/**
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public function beforeDelete() {
 		/** @var Model $this */
