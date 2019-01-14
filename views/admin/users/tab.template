@@ -1,0 +1,24 @@
+<?= Tabs::widget([
+			'items' => [
+				[
+					'label' => 'Профиль',
+					'content' => $this->render(UserAccess::canAccess($model, AccessMethods::update)?'profile/edit':'profile/view', ['model' => $model, 'form' => $form]),
+					'active' => true
+				],
+				[
+					'label' => 'Группы',
+					'content' => $this->render('groups/index', [
+						'model' => $model,
+						'provider' => new ActiveDataProvider(['query' => $model->getRelGroups()->orderBy('name')->active()])
+					]),
+				],
+				[
+					'label' => 'Атрибуты',
+					'content' => $this->render('attributes/index', [
+						'user' => $model,
+						'data' => $attributesData,
+						'provider' => new ActiveDataProvider(['query' => $model->getRelDynamicAttributes()->orderBy('name')->active()])
+					])
+				]
+			]
+		]) ?>
