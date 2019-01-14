@@ -115,6 +115,13 @@ class AlertModel extends Model {
 		]);
 	}
 
+	public static function AccessNotify():void {
+		self::Notify([
+			'type' => Growl::TYPE_WARNING,
+			'body' => "Нет доступа"
+		]);
+	}
+
 	/**
 	 * @return string
 	 */
