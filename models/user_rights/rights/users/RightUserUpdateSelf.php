@@ -4,21 +4,21 @@ declare(strict_types = 1);
 namespace app\models\user_rights\rights\users;
 
 use app\helpers\ArrayHelper;
+use app\models\user\CurrentUser;
 use app\models\user_rights\UserRight;
 
 /**
- * Class RightUserCreate
- * @package app\models\user_rights\rights
+ * Class RightUserUpdateSelf
+ * @package app\models\user_rights\rights\users
  */
-class RightUserCreate extends UserRight {
-
+class RightUserUpdateSelf extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Создание пользователя";
+		return "Редактирование своего профиля";
 	}
 
 	/**
@@ -26,7 +26,7 @@ class RightUserCreate extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Разрешает создать нового пользователя в системе";
+		return "Пользователь может вносить любые изменения в собственный профиль";
 	}
 
 	/**
@@ -36,10 +36,11 @@ class RightUserCreate extends UserRight {
 		$definedRules = [
 			'UsersController' => [
 				'actions' => [
-					'create' => self::ACCESS_ALLOW
+					'update' => CurrentUser::Id() === ArrayHelper::getValue($actionParams, 'id')?self::ACCESS_ALLOW:self::ACCESS_DENY
 				]
 			]
 		];
+
 		return ArrayHelper::getValue($definedRules, "{$controller}.actions.{$action}", parent::getAccess($controller, $action));
 
 	}

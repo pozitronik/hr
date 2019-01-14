@@ -31,7 +31,7 @@ class RightUserView extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(string $controller, string $action):?bool {
+	public function getAccess(string $controller, string $action, array $actionParams = []):?bool {
 		$definedRules = [
 			'UsersController' => [
 				'actions' => [
