@@ -322,6 +322,7 @@ class Users extends ActiveRecord implements AccessibleInterface {
 	 * @return bool
 	 */
 	public function is($access):bool {
+		/** @noinspection DegradedSwitchInspection */
 		switch ($access) {
 			case 'sysadmin':
 				return 1 === CurrentUser::Id();
@@ -330,7 +331,6 @@ class Users extends ActiveRecord implements AccessibleInterface {
 				return null !== $access;
 			break;
 		}
-
 	}
 
 	/**

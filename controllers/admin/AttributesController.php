@@ -130,7 +130,7 @@ class AttributesController extends WigetableController {
 	 * @param int $attribute_id
 	 * @param int|null $property_id
 	 */
-	public function actionPropertyDelete(int $attribute_id, ?int $property_id = null) {
+	public function actionPropertyDelete(int $attribute_id, ?int $property_id = null):void {
 		//todo
 		//Пока не дошли руки
 	}

@@ -6,6 +6,8 @@ namespace app\models\user_rights\rights\users;
 use app\helpers\ArrayHelper;
 use app\models\user_rights\AccessMethods;
 use app\models\user_rights\UserRight;
+use Throwable;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 
 /**
@@ -50,6 +52,8 @@ class RightUserUpdate extends UserRight {
 	 * @param int|null $method Метод доступа (см. AccessMethods)
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		$definedRules = [

@@ -62,7 +62,7 @@ class UserRight extends Model implements UserRightInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(string $controller, string $action, array $actionParams = []):?bool {
+	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
 

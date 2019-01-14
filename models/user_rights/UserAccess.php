@@ -68,7 +68,10 @@ class UserAccess extends Model {
 	 * Вычисляет, имется ли у текущего пользователя доступ к выполнению метода у модели
 	 * @param Model $model
 	 * @param null|int $method
+	 * @param array|null $actionParameters
+	 * @param bool $defaultAllow
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = true):bool {
 		$user = CurrentUser::User();
