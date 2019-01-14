@@ -106,8 +106,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					},
 					'format' => 'raw'
 				],
-				'usersCount'
-
+				[
+					'attribute' => 'usersCount',
+					'value' => function($model) {
+						/** @var Privileges $model */
+						return $model->default?"Все пользователи":$model->usersCount;
+					}
+				]
 			]
 		]); ?>
 	</div>

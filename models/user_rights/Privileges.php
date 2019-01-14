@@ -255,4 +255,12 @@ class Privileges extends ActiveRecord {
 		return (int)$this->getRelUsers()->count();
 	}
 
+	/**
+	 * Возвращает список привилегий с флагом "по умолчанию" => они обязательны для ВСЕХ пользователей
+	 * @return self[]
+	 */
+	public static function GetDefaultPrivileges():array {
+		return self::find()->where(['default' => true])->all();
+	}
+
 }

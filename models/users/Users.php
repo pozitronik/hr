@@ -428,8 +428,7 @@ class Users extends ActiveRecord {
 	 * @prototype todo
 	 */
 	public function getRights():array {
-		$rights = [[]];
-		$rights[] = ArrayHelper::getColumn($this->relPrivileges, 'userRights');
+		$rights = array_merge(ArrayHelper::getColumn($this->relPrivileges, 'userRights'), ArrayHelper::getColumn(Privileges::GetDefaultPrivileges(), 'userRights'));
 		return array_unique(array_merge(...$rights));
 	}
 
