@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ArrayDataProvider $userRights
  */
 
+use kartik\switchinput\SwitchInput;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\web\View;
@@ -29,8 +30,11 @@ use yii\data\ArrayDataProvider;
 
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-10">
 						<?= $form->field($model, 'name') ?>
+					</div>
+					<div class="col-md-2">
+						<?= $form->field($model, 'default')->widget(SwitchInput::class) ?>
 					</div>
 				</div>
 
