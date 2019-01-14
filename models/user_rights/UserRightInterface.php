@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\user_rights;
 
+use yii\base\Model;
+
 /**
  * Interface UserRight
  * @package app\models\user_rights
@@ -54,9 +56,18 @@ interface UserRightInterface {
 	/**
 	 * @param string $controller Имя класса контроллера
 	 * @param string $action Имя экшена
+	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null Одна из констант доступа
 	 */
 	public function getAccess(string $controller, string $action, array $actionParams = []):?bool;//todo static
+
+	/**
+	 * @param Model $model Модель, к которой проверяется доступ
+	 * @param int|null $method Метод доступа (см. AccessMethods)
+	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
+	 * @return bool|null
+	 */
+	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool;
 
 	/**
 	 * Набор действий, предоставляемых правом. Пока прототипирую

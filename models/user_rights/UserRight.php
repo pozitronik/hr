@@ -83,4 +83,14 @@ class UserRight extends Model implements UserRightInterface {
 	public function getHidden():bool {
 		return false;
 	}
+
+	/**
+	 * @param Model $model Модель, к которой проверяется доступ
+	 * @param int|null $method Метод доступа (см. AccessMethods)
+	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
+	 * @return bool|null
+	 */
+	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+		return self::ACCESS_UNDEFINED;
+	}
 }

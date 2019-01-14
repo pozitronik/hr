@@ -21,13 +21,15 @@ use yii\web\Controller;
 class UserAccess extends Model {
 
 	/**
+	 * Формирует массив правил доступа к контроллерам и экшенам (с учётом параметров), применимый в правилах AccessControl
 	 * @param Controller $controller
+	 * @param array|null $actionParameters
 	 * @param bool $defaultAllow
 	 * @return array
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 */
-	public static function getUserAccessRules(Controller $controller, bool $defaultAllow = true, ?array $actionParameters = null):array {
+	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = true):array {
 		$user = CurrentUser::User();
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
@@ -60,6 +62,25 @@ class UserAccess extends Model {
 			}
 		}
 		return $rules;
+	}
+
+	/**
+	 * Вычисляет, имется ли у текущего пользователя доступ к выполнению метода у модели
+	 * @param Model $model
+	 * @param null|int $method
+	 * @return bool
+	 */
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = true):bool {
+		$user = CurrentUser::User();
+		$rights = $user->rights;//Все права, присвоенные пользователю
+		if ($user->is('sysadmin')) $defaultAllow = true;
+		foreach ($rights as $right) {//перебираем все права, пока не найдём право, определяющее доступ (или не переберём все права; в этом случае присвоим доступ по умолчанию)
+			if (null !== $access = $right->canAccess($model, $method, $actionParameters??Yii::$app->request->get())) {
+				return $access;
+			}
+
+		}
+		return $defaultAllow;
 	}
 
 	/**
