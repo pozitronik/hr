@@ -191,7 +191,7 @@ class Privileges extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public function setDropUserRights(array $dropUserRights):void {
-		$dropUserRights = array_intersect_key($this->userRights, $dropUserRights);
+		$dropUserRights = array_intersect_key($this->userRights, array_flip($dropUserRights));
 		RelPrivilegesRights::unlinkModels($this, $dropUserRights);
 		$this->dropCaches();
 	}
