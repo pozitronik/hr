@@ -5,15 +5,14 @@ namespace app\models\users;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\core\traits\MethodsAccess;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersPrivileges;
 use app\models\user_rights\AccessibleInterface;
-use app\models\user_rights\AccessMethods;
 use app\models\user_rights\Privileges;
-use app\models\user_rights\UserAccess;
 use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
@@ -82,6 +81,7 @@ use yii\web\UploadedFile;
  */
 class Users extends ActiveRecord implements AccessibleInterface {
 	use ARExtended;
+	use MethodsAccess;
 	/*Переменная для инстанса заливки аватарок*/
 	public $upload_image;
 
@@ -166,11 +166,6 @@ class Users extends ActiveRecord implements AccessibleInterface {
 	 * @throws Throwable
 	 */
 	public function createModel(array $paramsArray):bool {
-		if (!UserAccess::canAccess($this, AccessMethods::create)) {
-			AlertModel::AccessNotify();
-			return false;
-		}
-
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
@@ -196,17 +191,13 @@ class Users extends ActiveRecord implements AccessibleInterface {
 		return false;
 	}
 
+
 	/**
 	 * @param array $paramsArray
 	 * @return bool
 	 * @throws Throwable
 	 */
 	public function updateModel(array $paramsArray):bool {
-		if (!UserAccess::canAccess($this, AccessMethods::update)) {
-			AlertModel::AccessNotify();
-			return false;
-		}
-
 		if ($this->loadArray($paramsArray)) {
 			if (!empty($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
 				$this->password = $newPassword;
