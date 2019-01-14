@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					},
 					'format' => 'raw'
 				],
-
+				'default:boolean',
 				[
 					'attribute' => 'userRights',
 					'value' => function($model) {
