@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\helpers\Icons;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use yii\data\BaseDataProvider;
@@ -37,12 +38,39 @@ use app\helpers\ArrayHelper;
 	'responsive' => true,
 	'columns' => [
 		[
-			'attribute' => 'id',
-			'label' => 'id'
+			'class' => ActionColumn::class,
+			'header' => Icons::menu(),
+			'dropdown' => true,
+			'dropdownButton' => [
+				'label' => Icons::menu(),
+				'caret' => ''
+			],
+			'template' => '{update} {delete}',
+			'buttons' => [
+				'update' => function($url, $model) use ($attribute) {
+					/** @var DynamicAttributeProperty $model */
+
+					return Html::tag('li', Html::a(Icons::update().'Изменение', ['admin/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]));
+				},
+				'delete' => function($url, $model) use ($attribute) {
+					/** @var DynamicAttributeProperty $model */
+					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['admin/attributes/property-delete', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')], [
+						'title' => 'Удалить запись',
+						'data' => [
+							'confirm' => 'Вы действительно хотите удалить запись?',
+							'method' => 'post'
+						]
+					]));
+				}
+			]
 		],
 		[
 			'attribute' => 'name',
-			'label' => 'Название'
+			'label' => 'Название',
+			'value' => function($model) use ($attribute) {
+				return Html::a(ArrayHelper::getValue($model, 'name'), ['admin/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'attribute' => 'type',
@@ -52,16 +80,6 @@ use app\helpers\ArrayHelper;
 			'attribute' => 'required',
 			'label' => 'Обязательное свойство',
 			'format' => 'boolean'
-		],
-		[
-			'class' => ActionColumn::class,
-			'template' => '{update} {delete}',
-			'buttons' => [
-				'update' => function($url, $model) use ($attribute) {
-					/** @var DynamicAttributeProperty $model */
-					return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['admin/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]);
-				}
-			]
 		]
 	]
 
