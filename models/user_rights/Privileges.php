@@ -32,6 +32,7 @@ use yii\db\Exception;
  * @property int $daddy
  * @property string $create_date
  * @property bool $deleted
+ * @property bool $default
  *
  * @property ActiveQuery|LCQuery|RelPrivilegesRights[] $relPrivilegesRights
  * @property string[] $userRightsNames
@@ -66,7 +67,7 @@ class Privileges extends ActiveRecord {
 		return [
 			[['id', 'daddy'], 'integer'],
 			[['create_date'], 'safe'],
-			[['deleted'], 'boolean'],
+			[['deleted', 'default'], 'boolean'],
 			[['name'], 'string', 'max' => 256],
 			[['name'], 'required'],
 			[['userRightsNames', 'dropUserRights'], 'safe']
@@ -83,6 +84,7 @@ class Privileges extends ActiveRecord {
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'deleted' => 'Deleted',
+			'default' => 'Привилегия по умолчанию',
 			'userRights' => 'Права',
 			'usersCount' => 'Пользователей'
 		];
