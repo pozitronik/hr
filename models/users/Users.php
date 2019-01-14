@@ -10,7 +10,10 @@ use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersPrivileges;
+use app\models\user_rights\AccessibleInterface;
+use app\models\user_rights\AccessMethods;
 use app\models\user_rights\Privileges;
+use app\models\user_rights\UserAccess;
 use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefUserPositions;
@@ -77,7 +80,7 @@ use yii\web\UploadedFile;
  * @property DynamicAttributes[]|ActiveQuery $relDynamicAttributes Релейшен к атрибутам
  * @property ActiveQuery|Groups[] $relLeadingGroups Группы, в которых пользователь лидер
  */
-class Users extends ActiveRecord {
+class Users extends ActiveRecord implements AccessibleInterface {
 	use ARExtended;
 	/*Переменная для инстанса заливки аватарок*/
 	public $upload_image;
@@ -162,7 +165,12 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function createUser(array $paramsArray):bool {
+	public function createModel(array $paramsArray):bool {
+		if (!UserAccess::canAccess($this, AccessMethods::create)) {
+			AlertModel::AccessNotify();
+			return false;
+		}
+
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
@@ -193,7 +201,12 @@ class Users extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function updateUser(array $paramsArray):bool {
+	public function updateModel(array $paramsArray):bool {
+		if (!UserAccess::canAccess($this, AccessMethods::update)) {
+			AlertModel::AccessNotify();
+			return false;
+		}
+
 		if ($this->loadArray($paramsArray)) {
 			if (!empty($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
 				$this->password = $newPassword;
