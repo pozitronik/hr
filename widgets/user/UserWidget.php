@@ -13,11 +13,12 @@ use yii\base\Widget;
  * Class UserWidget
  * @property Users $user
  * @property Groups $group
- *
+ * @propery string $view default view
  */
 class UserWidget extends Widget {
 	public $user;
 	public $group;
+	public $view = 'user';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -33,7 +34,7 @@ class UserWidget extends Widget {
 	 */
 	public function run():string {
 		if (null === $this->group) {
-			return $this->render('user', [
+			return $this->render($this->view, [
 				'model' => $this->user
 			]);
 		}
