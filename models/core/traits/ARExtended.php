@@ -116,9 +116,9 @@ trait ARExtended {
 	/**
 	 * Работает аналогично saveAttributes, но сразу сохраняет данные
 	 * Отличается от updateAttributes тем, что триггерит onAfterSave
-	 * @param array $values
+	 * @param null|array $values
 	 */
-	public function setAndSaveAttributes(array $values):void {
+	public function setAndSaveAttributes(?array $values):void {
 		$this->setAttributes($values, false);
 		$this->save();
 	}
@@ -136,10 +136,10 @@ trait ARExtended {
 
 	/**
 	 * Грузим объект из массива без учёта формы
-	 * @param array $arrayData
+	 * @param null|array $arrayData
 	 * @return boolean
 	 */
-	public function loadArray(array $arrayData):bool {
+	public function loadArray(?array $arrayData):bool {
 		return $this->load($arrayData, '');
 	}
 
