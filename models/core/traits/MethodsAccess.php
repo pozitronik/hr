@@ -10,6 +10,8 @@ use Throwable;
 use yii\base\Model;
 
 /**
+ * Код, включающий проверки доступов
+ * Алсо, можно добавить проверки на canGetProperty/canSetProperty
  * Trait MethodsAccess
  * @package app\models\prototypes
  */
@@ -19,6 +21,7 @@ trait MethodsAccess {
 	 * @param bool $insert
 	 * @return bool
 	 * @throws Throwable
+	 * @todo: parent::beforeSave
 	 */
 	public function beforeSave($insert) {
 		/** @var Model $this */
