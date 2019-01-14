@@ -333,9 +333,9 @@ class Groups extends ActiveRecord {
 	public function setRolesInGroup(array $userRoles):void {
 		foreach ($userRoles as $user => $roles) {
 			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $this->id, 'user_id' => $user])->select('id')]);
-			/** @var integer[] $roles */
+			/** @var array $roles */
 			foreach ($roles as $role) {
-				RelUsersGroupsRoles::setRoleInGroup($role, $this->id, $user);
+				RelUsersGroupsRoles::setRoleInGroup((int)$role, $this->id, $user);
 			}
 		}
 	}
