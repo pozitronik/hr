@@ -89,7 +89,7 @@ class UsersMassUpdate extends Model {
 
 		foreach ($this->usersIdSelected as $userId) {
 			if (null !== $user = Users::findModel($userId)) {
-				if ($user->updateUser($paramsArray)) {
+				if ($user->updateModel($paramsArray)) {
 					$statistic[] = [
 						'id' => $userId,
 						'username' => $user->username,
