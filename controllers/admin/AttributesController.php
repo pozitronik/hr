@@ -88,7 +88,7 @@ class AttributesController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionDelete(int $id):void {
-		if (null === $model = DynamicAttributes::findModel($id, new NotFoundHttpException())) $model->safeDelete();
+		if (null !== $model = DynamicAttributes::findModel($id, new NotFoundHttpException())) $model->safeDelete();
 		$this->redirect('index');
 	}
 

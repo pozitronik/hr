@@ -114,7 +114,7 @@ class UsersController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionDelete(int $id):Response {
-		if (null === $user = Users::findModel($id, new NotFoundHttpException())) $user->safeDelete();
+		if (null !== $user = Users::findModel($id, new NotFoundHttpException())) $user->safeDelete();
 		return $this->redirect('index');
 	}
 

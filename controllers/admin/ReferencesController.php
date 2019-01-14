@@ -135,7 +135,7 @@ class ReferencesController extends WigetableController {
 	 * @throws ServerErrorHttpException
 	 */
 	public function actionDelete($class, $id) {
-		if (null === $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) $model->safeDelete();
+		if (null !== $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) $model->safeDelete();
 		return $this->redirect(['index', 'class' => $class]);
 	}
 }
