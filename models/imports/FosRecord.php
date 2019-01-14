@@ -276,7 +276,7 @@ class FosRecord extends Model {
 		}
 
 		$user = new Users();
-		$user->createUser([
+		$user->createModel([
 			'username' => $name,
 			'login' => Utils::generateLogin(),
 			'password' => Utils::gen_uuid(5),
