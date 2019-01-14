@@ -5,13 +5,13 @@ namespace app\models\users;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\core\StrictInterface;
 use app\models\core\traits\MethodsAccess;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersPrivileges;
-use app\models\user_rights\AccessibleInterface;
 use app\models\user_rights\Privileges;
 use app\models\user_rights\UserRightInterface;
 use app\widgets\alert\AlertModel;
@@ -79,7 +79,7 @@ use yii\web\UploadedFile;
  * @property DynamicAttributes[]|ActiveQuery $relDynamicAttributes Релейшен к атрибутам
  * @property ActiveQuery|Groups[] $relLeadingGroups Группы, в которых пользователь лидер
  */
-class Users extends ActiveRecord implements AccessibleInterface {
+class Users extends ActiveRecord implements StrictInterface {
 	use ARExtended;
 	use MethodsAccess;
 	/*Переменная для инстанса заливки аватарок*/
