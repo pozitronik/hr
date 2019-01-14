@@ -202,6 +202,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
 				self::flushCache();
+				$this->refresh();
 				return true;
 			}
 			AlertModel::ErrorsNotify($this->errors);
@@ -218,6 +219,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
 				self::flushCache();
+				$this->refresh();
 				return true;
 			}
 			AlertModel::ErrorsNotify($this->errors);

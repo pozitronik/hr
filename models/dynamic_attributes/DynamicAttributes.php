@@ -113,6 +113,7 @@ class DynamicAttributes extends ActiveRecord {
 			if ($this->save()) {
 				$transaction->commit();
 				AlertModel::SuccessNotify();
+				$this->refresh();
 				return true;
 			}
 			AlertModel::ErrorsNotify($this->errors);

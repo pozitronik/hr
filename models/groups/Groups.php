@@ -190,6 +190,7 @@ class Groups extends ActiveRecord {
 				/** @noinspection NotOptimalIfConditionsInspection */
 				if ($this->save()) {
 					$transaction->commit();
+					$this->refresh();
 					AlertModel::SuccessNotify();
 					return true;
 				}
@@ -208,6 +209,7 @@ class Groups extends ActiveRecord {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
+				$this->refresh();
 				return true;
 			}
 			AlertModel::ErrorsNotify($this->errors);
