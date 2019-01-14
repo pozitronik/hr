@@ -197,7 +197,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param array $paramsArray
 	 * @return boolean
 	 */
-	public function createRecord(array $paramsArray):bool {
+	public function createRecord($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
@@ -213,7 +213,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @param array $paramsArray
 	 * @return bool
 	 */
-	public function updateRecord(array $paramsArray):bool {
+	public function updateRecord($paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
