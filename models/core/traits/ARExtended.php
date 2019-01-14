@@ -4,7 +4,11 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use app\models\core\SysExceptions;
+use app\models\user_rights\AccessMethods;
+use app\models\user_rights\UserAccess;
+use app\widgets\alert\AlertModel;
 use RuntimeException;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
 
@@ -127,6 +131,12 @@ trait ARExtended {
 	 * Универсальная функция удаления любой модели
 	 */
 	public function safeDelete():void {
+		/** @var Model $this */
+		if (!UserAccess::canAccess($this, AccessMethods::delete)) {
+			AlertModel::AccessNotify();
+			return;
+		}
+
 		if ($this->hasAttribute('deleted')) {
 			$this->setAndSaveAttribute('deleted', !$this->deleted);
 		} else {
