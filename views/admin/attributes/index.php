@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\helpers\Utils;
+use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\users\UsersSearch;
 use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
@@ -46,14 +47,30 @@ $this->params['breadcrumbs'][] = $this->title;
 			'responsive' => true,
 			'columns' => [
 				[
+					'class' => ActionColumn::class,
 					'header' => Icons::menu(),
 					'dropdown' => true,
 					'dropdownButton' => [
 						'label' => Icons::menu(),
 						'caret' => ''
 					],
-					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
+					'template' => '{update} {delete}',
+					'buttons' => [
+						'update' => function($url, $model) {
+							/** @var DynamicAttributes $model */
+							return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
+						},
+						'delete' => function($url, $model) {
+							/** @var DynamicAttributes $model */
+							return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
+								'title' => 'Удалить запись',
+								'data' => [
+									'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
+									'method' => 'post'
+								]
+							]));
+						}
+					]
 				],
 				[
 					'attribute' => 'id',
@@ -62,7 +79,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 					]
 				],
-				'name',
+				[
+					'attribute' => 'name',
+					'value' => function($model) {
+						/** @var DynamicAttributes $model */
+						return Html::a($model->name, ['update', 'id' => $model->id]);
+					},
+					'format' => 'raw'
+				],
 				'categoryName',
 				[
 					'attribute' => 'usersCount',
