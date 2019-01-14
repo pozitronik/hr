@@ -79,7 +79,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newUser = new Users();
-		if ($newUser->createUser(Yii::$app->request->post($newUser->formName()))) {
+		if ($newUser->createModel(Yii::$app->request->post($newUser->formName()))) {
 			$newUser->uploadAvatar();
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newUser->id]);
@@ -100,7 +100,7 @@ class UsersController extends WigetableController {
 	public function actionUpdate(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
 
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateUser($updateArray)) $user->uploadAvatar();
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
 
 		return $this->render('update', [
 			'model' => $user,
