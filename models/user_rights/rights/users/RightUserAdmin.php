@@ -37,7 +37,7 @@ class RightUserAdmin extends UserRight {
 	 * {@inheritDoc}
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return 'admin/users' === $controller->id;
+		return ('admin/users' === $controller->id)?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
 	}
 
 	/**
@@ -49,6 +49,6 @@ class RightUserAdmin extends UserRight {
 	 * @throws InvalidConfigException
 	 */
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		return $model->formName() === (new Users())->formName();
+		return ($model->formName() === (new Users())->formName())?self::ACCESS_ALLOW:parent::canAccess($model, $method, $actionParameters);
 	}
 }
