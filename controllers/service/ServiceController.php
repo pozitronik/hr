@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\controllers\service;
 
-use app\helpers\ArrayHelper;
+use app\models\core\Service;
 use app\models\core\WigetableController;
-use yii\base\InlineAction;
+use Yii;
 use yii\base\Response;
 
 /**
@@ -13,8 +13,6 @@ use yii\base\Response;
  * @package app\controllers\service
  */
 class ServiceController extends WigetableController {
-
-	private $controllers;
 
 	/**
 	 * @return string|Response
@@ -24,14 +22,13 @@ class ServiceController extends WigetableController {
 	}
 
 	/**
-	 * @inheritdoc
+	 * @return string
 	 */
-	public function createAction($id) {
-		if ((null === $action = parent::createAction($id)) && in_array("admin/$id", ArrayHelper::getColumn($this->controllers, 'id'))) {
-			$this->redirect(["admin/$id/index"]);
-			return new InlineAction($id, $this, 'actionIndex');//Можно вернуть пофиг что, но что-то корректное
-		}
-		return $action;
-	}
+	public function actionReset():string {
+//		Yii::$app->user->logout();
+		return $this->render('reset', [
+			'result' =>  Service::ResetDB()
+		]);
 
+	}
 }
