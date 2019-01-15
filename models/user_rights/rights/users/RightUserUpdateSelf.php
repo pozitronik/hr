@@ -10,6 +10,7 @@ use app\models\user_rights\UserRight;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\web\Controller;
 
 /**
  * Class RightUserUpdateSelf
@@ -36,16 +37,16 @@ class RightUserUpdateSelf extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool {
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		$definedRules = [
-			'UsersController' => [
+			'admin/users' => [
 				'actions' => [
 					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_DENY
 				]
 			]
 		];
 
-		return ArrayHelper::getValue($definedRules, "{$controller}.actions.{$action}", parent::getAccess($controller, $action));
+		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 	}
 
 	/**

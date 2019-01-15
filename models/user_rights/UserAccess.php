@@ -39,11 +39,10 @@ class UserAccess extends Model {
 		foreach ($actions as $action) {//Пытаемся подобрать правила для всех экшенов в контроллере
 			$ruleDefined = false;//Флаг устанавливается, если определение правила найдено
 			$action = Magic::GetActionRequestName($action);
-			$controllerName = basename(get_class($controller));
 			foreach ($rights as $right) {//перебираем все права, пока не найдём право, определяющее доступ (или не переберём все права; в этом случае присвоим доступ по умолчанию)
 				//функция не учитывает коллизии прав (одно разрешает, другое запрещает). Буду дорабатывать с тем, чтобы создать метод получающий список определений прав, на основе которого уже будут высчитываться суммарные правила и коллизии
 				//Пофиг на коллизии, будем определять очерёдность применения прав по порядку, определённому в наборе прав
-				if (null === $access = $right->getAccess($controllerName, $action, $actionParameters??Yii::$app->request->get())) continue;
+				if (null === $access = $right->getAccess($controller, $action, $actionParameters??Yii::$app->request->get())) continue;
 				$rules[] = [
 					'actions' => [$action],
 					'allow' => $access,

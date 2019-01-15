@@ -5,6 +5,7 @@ namespace app\models\user_rights;
 
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\web\Controller;
 
 /**
  * Class UserRight
@@ -62,7 +63,7 @@ class UserRight extends Model implements UserRightInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool {
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
 

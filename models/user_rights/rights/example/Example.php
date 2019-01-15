@@ -5,6 +5,7 @@ namespace app\models\user_rights\rights\example;
 
 use app\models\user_rights\UserRight;
 use yii\db\ActiveQuery;
+use yii\web\Controller;
 
 /**
  * Class Example
@@ -28,10 +29,7 @@ class Example extends UserRight {
 		return "Пример того, что может определять правило";
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool {
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return 'UsersController' === $controller;
 	}
 

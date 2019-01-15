@@ -5,6 +5,7 @@ namespace app\models\user_rights\rights\users;
 
 use app\helpers\ArrayHelper;
 use app\models\user_rights\UserRight;
+use yii\web\Controller;
 
 /**
  * Class RightUserView
@@ -31,15 +32,15 @@ class RightUserView extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool {
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		$definedRules = [
-			'UsersController' => [
+			'admin/users' => [
 				'actions' => [
 					'index' => self::ACCESS_ALLOW
 				]
 			]
 		];
-		return ArrayHelper::getValue($definedRules, "{$controller}.actions.{$action}", parent::getAccess($controller, $action));
+		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 
 	}
 }

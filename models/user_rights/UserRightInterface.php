@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\user_rights;
 
 use yii\base\Model;
+use yii\web\Controller;
 
 /**
  * Interface UserRight
@@ -54,12 +55,12 @@ interface UserRightInterface {
 	public function getDescription():string;
 
 	/**
-	 * @param string $controller Имя класса контроллера
+	 * @param Controller $controller Экземпляр класса контроллера
 	 * @param string $action Имя экшена
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null Одна из констант доступа
 	 */
-	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool;//todo static
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool;//todo static
 
 	/**
 	 * @param Model $model Модель, к которой проверяется доступ

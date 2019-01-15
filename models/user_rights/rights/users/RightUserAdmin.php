@@ -9,6 +9,7 @@ use app\models\users\Users;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\web\Controller;
 
 /**
  * Class RightUserAdmin
@@ -35,8 +36,8 @@ class RightUserAdmin extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(string $controller, string $action, array $actionParameters = []):?bool {
-		return 'UsersController' === $controller;
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return 'admin/users' === $controller->id;
 	}
 
 	/**
