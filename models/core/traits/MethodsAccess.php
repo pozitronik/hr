@@ -21,11 +21,10 @@ trait MethodsAccess {
 	 * @param bool $insert
 	 * @return bool
 	 * @throws Throwable
-	 * @todo: parent::beforeSave
 	 */
 	public function beforeSave($insert) {
 		/** @var Model $this */
-		if (!UserAccess::canAccess($this, $insert?AccessMethods::create:AccessMethods::update)) {
+		if (parent::beforeSave($insert) && !UserAccess::canAccess($this, $insert?AccessMethods::create:AccessMethods::update)) {
 			AlertModel::AccessNotify();
 			return false;
 		}
@@ -38,7 +37,7 @@ trait MethodsAccess {
 	 */
 	public function beforeDelete() {
 		/** @var Model $this */
-		if (!UserAccess::canAccess($this, AccessMethods::delete)) {
+		if (parent::beforeDelete() && !UserAccess::canAccess($this, AccessMethods::delete)) {
 			AlertModel::AccessNotify();
 			return false;
 		}
