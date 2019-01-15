@@ -4,12 +4,16 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
+use app\models\user_rights\UserAccess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionException;
 use Yii;
 use yii\base\UnknownClassException;
+use yii\filters\AccessControl;
+use yii\filters\ContentNegotiator;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Class WigetableController
@@ -23,6 +27,27 @@ use yii\web\Controller;
 class WigetableController extends Controller {
 	public $disabled = false;
 	public $orderWeight = 0;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function behaviors():array {
+		return [
+			[
+				'class' => ContentNegotiator::class,
+				'formats' => [
+					'application/json' => Response::FORMAT_JSON,
+					'application/xml' => Response::FORMAT_XML,
+					'text/html' => Response::FORMAT_HTML
+				]
+			],
+			'access' => [
+				'class' => AccessControl::class,
+				'rules' => UserAccess::getUserAccessRules($this)
+			]
+		];
+	}
+
 	/**
 	 * Возвращает путь к иконке контроллера
 	 * @return false|string

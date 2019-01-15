@@ -6,14 +6,11 @@ namespace app\controllers\admin;
 use app\helpers\ArrayHelper;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\core\WigetableController;
-use app\models\user_rights\UserAccess;
 use app\models\users\UsersSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
 use yii\base\InvalidConfigException;
-use yii\filters\AccessControl;
-use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -26,26 +23,6 @@ class UsersController extends WigetableController {
 	public $menuIcon = "/img/admin/users.png";
 	public $orderWeight = 1;
 
-	/**
-	 * @inheritdoc
-	 */
-	public function behaviors():array {
-		return [
-			[
-				'class' => ContentNegotiator::class,
-				'formats' => [
-					'application/json' => Response::FORMAT_JSON,
-					'application/xml' => Response::FORMAT_XML,
-					'text/html' => Response::FORMAT_HTML
-				]
-			],
-			'access' => [
-				'class' => AccessControl::class,
-				'rules' => UserAccess::getUserAccessRules($this)
-			]
-
-		];
-	}
 
 	/**
 	 * @inheritdoc
