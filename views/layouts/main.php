@@ -13,7 +13,6 @@ use app\widgets\navbar\NavbarWidget;
 use app\models\user\CurrentUser;
 
 AppAsset::register($this);
-if (CurrentUser::isGuest()) return Yii::$app->response->redirect(['site/login']);
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage(); ?>
