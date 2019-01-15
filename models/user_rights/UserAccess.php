@@ -29,7 +29,7 @@ class UserAccess extends Model {
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 */
-	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = true):array {
+	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = false):array {
 		$user = CurrentUser::User();
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
@@ -72,7 +72,7 @@ class UserAccess extends Model {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = true):bool {
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = false):bool {
 		$user = CurrentUser::User();
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		if ($user->is('sysadmin')) $defaultAllow = true;
@@ -92,6 +92,24 @@ class UserAccess extends Model {
 		$query = Groups::find();
 		Example::SetGroupsScope($query);
 		return $query;
+	}
+
+	/**
+	 * @param int $flag
+	 * @param bool $defaultAllow
+	 * @return bool
+	 */
+	public static function GetFlag(int $flag, bool $defaultAllow = false):bool {
+		$user = CurrentUser::User();
+		$rights = $user->rights;//Все права, присвоенные пользователю
+		if ($user->is('sysadmin')) $defaultAllow = true;
+		foreach ($rights as $right) {//перебираем все права, пока не найдём право, определяющее доступ (или не переберём все права; в этом случае присвоим доступ по умолчанию)
+			if (null !== $access = $right->getFlag($flag)) {
+				return $access;
+			}
+
+		}
+		return $defaultAllow;
 	}
 
 }
