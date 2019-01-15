@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\models\users\Users;
 use Throwable;
 use Yii;
 use yii\base\Model;
+use yii\db\Transaction;
 
 /**
  * Class Service
@@ -23,10 +23,10 @@ class Service extends Model {
 	 */
 	public static function ResetDB():bool {
 		$connection = Yii::$app->db;
-//		$transaction = new Transaction([
-//			'db' => $connection
-//		]);
-//		$transaction->begin();
+		$transaction = new Transaction([
+			'db' => $connection
+		]);
+		$transaction->begin();
 		$tables = [
 			'ref_group_relation_types',
 			'ref_group_types',
@@ -59,20 +59,12 @@ class Service extends Model {
 				$connection->createCommand("TRUNCATE TABLE $table")->execute();
 				$connection->createCommand("ALTER TABLE $table AUTO_INCREMENT = 0")->execute();
 			}
-			$admin = new Users();
-			$admin->createModel([
-				'username' => 'admin',
-				'login' => 'admin',
-				'password' => 'admin',
-				'email' => 'admin@localhost',
-				'salt' => null,
-				'deleted' => false
-			]);
+			$connection->createCommand("INSERT INTO sys_users (id, username, login, password, salt, email, comment, create_date, deleted) VALUES (1, 'admin', 'admin', 'admin', NULL, 'admin@localhost', 'Системный администратор', CURRENT_DATE(), 0)");
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
-//			$transaction->rollBack();
+			$transaction->rollBack();
 			return false;
 		}
-//		$transaction->commit();
+		$transaction->commit();
 		return true;
 	}
 
