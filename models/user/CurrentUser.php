@@ -35,14 +35,14 @@ class CurrentUser extends User {
 	 * @return bool
 	 */
 	public static function isGuest():bool {
-		return Yii::$app->user->isGuest;
+		return Yii::$app->user->isGuest;// || null === Yii::$app->user->id;
 	}
 
 	/**
-	 * @return Users
+	 * @return Users|null
 	 * @throws Throwable
 	 */
-	public static function User():Users {
-		return Users::findModel(self::Id(), new UnauthorizedHttpException('Пользователь не авторизован'));
+	public static function User():?Users {
+		return Users::findModel(self::Id()/*, new UnauthorizedHttpException('Пользователь не авторизован')*/);
 	}
 }
