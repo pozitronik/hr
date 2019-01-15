@@ -23,12 +23,13 @@ class BookmarksWidget extends Widget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета
-	 * @return string
+	 * @return string|null
 	 * @throws Throwable
 	 */
-	public function run():string {
+	public function run():?string {
+		if (null === $user = CurrentUser::User()) return null;
 		return $this->render('bookmarks',[
-			'user' => CurrentUser::User()
+			'user' => $user
 		]);
 	}
 }

@@ -154,6 +154,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 */
 	private function applySearchScope(ActiveQuery $query):ActiveQuery {
 		$groups = [[]];
+		if (null === $user = CurrentUser::User()) return $query;
 		foreach ($this->searchScope as $groupId) {
 			switch ($groupId) {
 				case self::SCOPE_ALL_GROUPS://все группы - это все группы
@@ -163,10 +164,10 @@ class DynamicAttributesSearchCollection extends Model {
 					$groups[] = Groups::findModels($this->searchScope);
 				break;
 				case self::SCOPE_MY_GROUPS:
-					$groups[] = CurrentUser::User()->relGroups;
+					$groups[] = $user->relGroups;
 				break;
 				case self::SCOPE_BOSS_GROUPS:
-					$groups[] = CurrentUser::User()->relLeadingGroups;
+					$groups[] = $user->relLeadingGroups;
 				break;
 			}
 		}

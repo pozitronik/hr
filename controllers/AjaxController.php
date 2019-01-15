@@ -102,6 +102,7 @@ class AjaxController extends Controller {
 				]
 			];
 		}
+		if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
 		$nodes = [];
 		$edges = [];
 		$group->getGraph($nodes, $edges);
@@ -109,12 +110,12 @@ class AjaxController extends Controller {
 		switch ($restorePositions) {
 			default:
 			case 0:
-				$group->applyNodesPositions($nodes, ArrayHelper::getValue(CurrentUser::User()->options->nodePositions, $id, []));
+				$group->applyNodesPositions($nodes, ArrayHelper::getValue($user->options->nodePositions, $id, []));
 			break;
 			case 1:
-				$newPositions = CurrentUser::User()->options->nodePositions;
+				$newPositions = $user->options->nodePositions;
 				unset($newPositions[$id]);
-				CurrentUser::User()->options->nodePositions = $newPositions;
+				$user->options->nodePositions = $newPositions;
 			break;
 			case 2:
 				//do nothing

@@ -321,10 +321,11 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Простая функция проверки, является ли пользователь лидером в этой группе
-	 * @param Users $user
+	 * @param Users|null $user
 	 * @return bool
 	 */
-	public function isLeader(Users $user):bool {
+	public function isLeader(?Users $user):bool {
+		if (null === $user) return false;
 		return self::find()->joinWith(['relRefUserRoles'])->where(['ref_user_roles.boss_flag' => true, 'rel_users_groups.group_id' => $this->id, 'rel_users_groups.user_id' => $user->id])->count() > 0;
 	}
 
