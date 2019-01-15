@@ -96,10 +96,9 @@ class UserRight extends Model implements UserRightInterface {
 	}
 
 	/**
-	 * Для возможностей, которые можно и нужно включать только флагамм + прототипирование
-	 * @return bool
+	 * {@inheritDoc}
 	 */
-	public function getFlag(int $flag):bool {
-		return false;
+	public function getFlag(int $flag):?bool {
+		return self::ACCESS_UNDEFINED;
 	}
 }
