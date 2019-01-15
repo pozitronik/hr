@@ -134,8 +134,7 @@ class AjaxController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$nodeData = new PrototypeNodeData();
 		if ($nodeData->load(Yii::$app->request->post(), '')) {
-			$user = CurrentUser::User();
-
+			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
 			$user->options->nodePositions = ArrayHelper::merge_recursive($user->options->nodePositions, [
 				$nodeData->groupId => [
 					$nodeData->nodeId => [
@@ -163,7 +162,7 @@ class AjaxController extends Controller {
 
 		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false)))) {
 			$nodes = json_decode($nodes, true);
-			$user = CurrentUser::User();
+			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
 			$currentNodesPositions = $user->options->nodePositions;
 
 			/** @var array $nodes */
@@ -363,7 +362,7 @@ class AjaxController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$bookmark = new Bookmarks();
 		if ($bookmark->load(Yii::$app->request->post(), '')) {
-			$user = CurrentUser::User();
+			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
 			$bookmarks = $user->options->bookmarks;
 			$bookmarks[] = $bookmark;
 			$user->options->bookmarks = $bookmarks;
@@ -383,7 +382,7 @@ class AjaxController extends Controller {
 	public function actionUserRemoveBookmark():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		if (false !== $route = Yii::$app->request->post('route', false)) {
-			$user = CurrentUser::User();
+			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
 			$bookmarks = $user->options->bookmarks;
 			foreach ($bookmarks as $key => $value) {
 				if ($route === $value->route) unset($bookmarks[$key]);
