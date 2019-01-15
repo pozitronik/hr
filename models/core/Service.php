@@ -59,7 +59,7 @@ class Service extends Model {
 				$connection->createCommand("TRUNCATE TABLE $table")->execute();
 				$connection->createCommand("ALTER TABLE $table AUTO_INCREMENT = 0")->execute();
 			}
-			$connection->createCommand("INSERT INTO sys_users (id, username, login, password, salt, email, comment, create_date, deleted) VALUES (1, 'admin', 'admin', 'admin', NULL, 'admin@localhost', 'Системный администратор', CURRENT_DATE(), 0)");
+			$connection->createCommand("INSERT INTO sys_users (id, username, login, password, salt, email, comment, create_date, deleted) VALUES (1, 'admin', 'admin', 'admin', NULL, 'admin@localhost', 'Системный администратор', CURRENT_DATE(), 0)")->execute();
 		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
 			$transaction->rollBack();
 			return false;
