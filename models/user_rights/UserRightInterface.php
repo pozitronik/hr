@@ -23,6 +23,9 @@ interface UserRightInterface {
 	public const ACCESS_ALLOW = true;
 	public const ACCESS_UNDEFINED = null;
 
+	/*Флаговые константы*/
+	public const FLAG_SERVICE = 1;
+
 	/**
 	 * Магическое свойство, необходимое для сравнения классов, например
 	 * Предполагается, что будет использоваться имя класса
@@ -77,4 +80,9 @@ interface UserRightInterface {
 	 */
 	public function getActions():array;
 
+	/**
+	 * Для возможностей, которые можно и нужно включать только флагамм + прототипирование
+	 * @return bool
+	 */
+	public function getFlag(int $flag):bool;
 }

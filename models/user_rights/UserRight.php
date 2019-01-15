@@ -94,4 +94,12 @@ class UserRight extends Model implements UserRightInterface {
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
+
+	/**
+	 * Для возможностей, которые можно и нужно включать только флагамм + прототипирование
+	 * @return bool
+	 */
+	public function getFlag(int $flag):bool {
+		return false;
+	}
 }
