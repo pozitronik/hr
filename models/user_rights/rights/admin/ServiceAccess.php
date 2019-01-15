@@ -1,0 +1,44 @@
+<?php
+declare(strict_types = 1);
+
+namespace app\models\user_rights\rights\admin;
+
+use app\models\user_rights\UserRight;
+use yii\web\Controller;
+
+/**
+ * Class ServiceAccess
+ * @package app\models\user_rights\rights\admin
+ */
+class ServiceAccess extends UserRight {
+
+	/**
+	 * Имя права
+	 * @return string
+	 */
+	public function getName():string {
+		return "Доступ к сервисному меню";
+	}
+
+	/**
+	 * Подробное описание возможностей, предоставляемых правом
+	 * @return string
+	 */
+	public function getDescription():string {
+		return '<i class="fa fa-radiation-alt"></i> Доступ к сервисной странице';
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return ('service/service' === $controller->id)?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getFlag(int $flag):?bool {
+		return (self::FLAG_SERVICE === $flag)?self::ACCESS_ALLOW:parent::getFlag($flag);
+	}
+}
