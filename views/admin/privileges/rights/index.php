@@ -43,8 +43,14 @@ use kartik\grid\CheckboxColumn;
 			'showFooter' => true,
 			'footerRowOptions' => [],
 			'columns' => [
-				'name',
-				'description',
+				[
+					'attribute' => 'name',
+					'format' => 'raw'
+				],
+				[
+					'attribute' => 'description',
+					'format' => 'raw'
+				],
 				[
 					'class' => CheckboxColumn::class,
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
