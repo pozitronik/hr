@@ -98,6 +98,7 @@ class UserAccess extends Model {
 	 * @param int $flag
 	 * @param bool $defaultAllow
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public static function GetFlag(int $flag, bool $defaultAllow = false):bool {
 		if (null === $user = CurrentUser::User()) return false;

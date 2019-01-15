@@ -82,6 +82,7 @@ interface UserRightInterface {
 
 	/**
 	 * Для возможностей, которые можно и нужно включать только флагамм + прототипирование
+	 * @param int $flag
 	 * @return null|bool
 	 */
 	public function getFlag(int $flag):?bool;

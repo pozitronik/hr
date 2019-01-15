@@ -7,7 +7,6 @@ use app\models\users\Users;
 use Throwable;
 use Yii;
 use yii\web\Response;
-use yii\web\UnauthorizedHttpException;
 
 /**
  * Class CurrentUser

@@ -3,12 +3,10 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\helpers\Utils;
 use app\models\users\Users;
 use Throwable;
 use Yii;
 use yii\base\Model;
-use yii\db\Transaction;
 
 /**
  * Class Service

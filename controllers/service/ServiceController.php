@@ -5,7 +5,6 @@ namespace app\controllers\service;
 
 use app\models\core\Service;
 use app\models\core\WigetableController;
-use Yii;
 use yii\base\Response;
 
 /**
