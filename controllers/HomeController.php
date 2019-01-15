@@ -19,8 +19,9 @@ class HomeController extends Controller {
 	 * @throws Throwable
 	 */
 	public function actionIndex() {
+		if (null === $user = CurrentUser::User()) return $this->redirect(['site/login']);
 		return $this->render('index',[
-			'model' => CurrentUser::User()
+			'model' => $user
 		]);
 	}
 
