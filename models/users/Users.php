@@ -161,11 +161,11 @@ class Users extends ActiveRecord implements StrictInterface {
 	}
 
 	/**
-	 * @param array $paramsArray
+	 * @param array|null $paramsArray
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function createModel(array $paramsArray):bool {
+	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			if (null === $this->salt) $this->applySalt();
@@ -193,11 +193,11 @@ class Users extends ActiveRecord implements StrictInterface {
 
 
 	/**
-	 * @param array $paramsArray
+	 * @param array|null $paramsArray
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function updateModel(array $paramsArray):bool {
+	public function updateModel(?array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if (!empty($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
 				$this->password = $newPassword;

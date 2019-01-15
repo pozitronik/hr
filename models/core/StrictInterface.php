@@ -11,16 +11,16 @@ declare(strict_types = 1);
  interface StrictInterface {
 
 	/**
-	 * @param array $paramsArray
+	 * @param array|null $paramsArray
 	 * @return bool
 	 */
-	public function createModel(array $paramsArray):bool;
+	public function createModel(?array $paramsArray):bool;
 
 	/**
-	 * @param array $paramsArray
+	 * @param array|null $paramsArray
 	 * @return bool
 	 */
-	public function updateModel(array $paramsArray):bool;
+	public function updateModel(?array $paramsArray):bool;
 
 
 }
