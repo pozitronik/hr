@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace app\models\imports;
 
 use app\helpers\Utils;
+use app\models\core\traits\Upload;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_fos".
@@ -56,7 +57,9 @@ use Yii;
  * @property string $email_alpha Адрес электронной почты (внутренний
  * @property int $domain Служеная метка очереди импорта
  */
-class ImportFos extends \yii\db\ActiveRecord {
+class ImportFos extends ActiveRecord {
+	use Upload;
+
 	/**
 	 * {@inheritdoc}
 	 */
