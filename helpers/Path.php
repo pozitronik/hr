@@ -23,7 +23,7 @@ class Path {
 			if (is_dir($path)) return true;
 			throw new RuntimeException(sprintf('Имя "%s" занято', $path));
 		}
-		if (!mkdir($path, $mode) && !is_dir($path)) {
+		if (!mkdir($path, $mode, true) && !is_dir($path)) {
 			throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
 		}
 		return true;
