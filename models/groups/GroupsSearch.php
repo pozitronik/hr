@@ -67,7 +67,6 @@ class GroupsSearch extends Groups {
 			$query->joinWith(['relRefUserRoles'])->where(['boss_flag' => true, 'rel_users_groups.user_id' => $this->leaders]);
 		}
 
-//		Utils::log($query->createCommand()->rawSql);
 		return $dataProvider;
 	}
 }
