@@ -17,29 +17,26 @@ use kartik\grid\ActionColumn;
 
 ?>
 
-<div class="row">
-	<div class="col-xs-12">
-		<?= GridView::widget([
-			'dataProvider' => $dataProvider,
-			'filterModel' => $searchModel,
-			'panel' => [
-				'heading' => $this->title
-			],
-			'toolbar' => [
-				[
-					'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
-				]
-			],
-			'export' => false,
-			'resizableColumns' => true,
-			'responsive' => true,
-			'columns' => [
-				'id',
-				[
-					'class' => ActionColumn::class,
-					'template' => '{update} {delete}'
-				]
-			]
-		]); ?>
-	</div>
-</div>
+
+<?= GridView::widget([
+	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
+	'panel' => [
+		'heading' => $this->title
+	],
+	'toolbar' => [
+		[
+			'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
+		]
+	],
+	'export' => false,
+	'resizableColumns' => true,
+	'responsive' => true,
+	'columns' => [
+		'id',
+		[
+			'class' => ActionColumn::class,
+			'template' => '{update} {delete}'
+		]
+	]
+]); ?>
