@@ -2,31 +2,34 @@
 declare(strict_types = 1);
 
 /**
+ * Шаблон главной страницы списка всех пользователей
  * @var View $this
- * @var ImportFos $model
- *
+ * @var ActiveRecord $searchModel
+ * @var ActiveDataProvider $dataProvider
  */
 
-use app\models\imports\ImportFos;
-use yii\helpers\Html;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
 use yii\web\View;
-use yii\widgets\ActiveForm;
+use kartik\grid\GridView;
+use yii\bootstrap\Html;
 
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
-	<div class="panel">
-
-	<div class="panel-body">
-		<div class="row">
-			<div class="col-md-12">
-				<?= $form->field($model, 'uploadFileInstance')->fileInput()->label('Выберите файл'); ?>
-			</div>
-		</div>
-		<div class="panel-footer">
-			<div class="btn-group">
-				<?= Html::submitButton('Загрузить', ['class' => 'btn btn-success']); ?>
-			</div>
-		</div>
-	</div>
-<?php ActiveForm::end(); ?>
+<?= GridView::widget([
+	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
+	'panel' => [
+		'heading' => $this->title
+	],
+	'toolbar' => [
+		[
+			'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
+		]
+	],
+	'export' => false,
+	'resizableColumns' => true,
+	'responsive' => true,
+	'columns' => [
+	]
+]); ?>

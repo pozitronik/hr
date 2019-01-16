@@ -5,8 +5,10 @@ namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
 use app\models\imports\ImportFos;
+use app\models\imports\ImportFosSearch;
 use Yii;
 use yii\web\ErrorAction;
+use yii\web\Response;
 
 /**
  * Class ImportController
@@ -32,17 +34,35 @@ class ImportController extends WigetableController {
 	/**
 	 * @return string
 	 */
-	public function actionIndex():string {
+	public function actionImport():string {
 		$model = new ImportFos();
 		if (Yii::$app->request->isPost) {
 			if (null !== $fileName = $model->uploadFile()) {
-				$model::Import($fileName, time());
+				$domain = time();
+				$model::Import($fileName, $domain);
+				$this->redirect(['index', 'domain' => $domain]);
 			}
 		}
 
-		return $this->render('index',[
+		return $this->render('upload', [
 			'model' => $model
 		]);
+	}
+
+	/**
+	 * @param int|null $domain
+	 * @return string|Response
+	 */
+	public function actionIndex(?int $domain = null) {
+		if (null === $domain) return $this->redirect(['import']);
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new ImportFosSearch();
+
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params, $domain)
+		]);
+
 	}
 
 }
