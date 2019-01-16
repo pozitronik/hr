@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
+use app\models\imports\ImportFos;
+use Yii;
 use yii\web\ErrorAction;
 
 /**
@@ -31,6 +33,16 @@ class ImportController extends WigetableController {
 	 * @return string
 	 */
 	public function actionIndex():string {
-		return $this->render('index');
+		$model = new ImportFos();
+		if (Yii::$app->request->isPost) {
+			if (null !== $fileName = $model->uploadFile()) {
+				$model::Import($fileName, time());
+			}
+		}
+
+		return $this->render('index',[
+			'model' => $model
+		]);
 	}
+
 }
