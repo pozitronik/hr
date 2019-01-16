@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\imports;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -82,7 +83,6 @@ class ImportFos extends ActiveRecord {
 	 */
 	public function attributeLabels() {
 		return [
-			'id' => 'ID',
 			'num' => '№ п/п',
 			'position_id' => 'ШД ID',
 			'position_name' => 'Должность',
@@ -125,24 +125,32 @@ class ImportFos extends ActiveRecord {
 			'chapter_leader_couch_id' => 'Agile-коуч ТН',
 			'chapter_leader_couch_name' => 'Agile-коуч',
 			'email_sigma' => 'Адрес электронной почты (sigma)',
-			'email_alpha' => 'Адрес электронной почты (внутренний',
-			'domain' => 'Служеная метка очереди импорта'
+			'email_alpha' => 'Адрес электронной почты (внутренний)'
 		];
 	}
 
 	/**
 	 * @param string $filename
-	 * @param int $domain
+	 * @param int|null $domain
 	 * @return bool
 	 */
-	public static function Import(string $filename, int $domain):bool {
+	public static function Import(string $filename, ?int $domain = null):bool {
 		$reader = new Xlsx();
 		$reader->setReadDataOnly(true);
 		$spreadsheet = $reader->load($filename);
 		$spreadsheet->setActiveSheetIndex(0);
 		$dataArray = $spreadsheet->getActiveSheet()->toArray();
-		Utils::log($dataArray);
+		$domain = $domain??time();
+		$keys = array_keys((new self())->attributeLabels());
+		foreach ($dataArray as $importRow) {
+			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
+			$data = array_combine($keys, $importRow);
+
+			$row = new self($data);
+			$row->domain = $domain;
+			$row->save(false);//пока сохраняем без строгой валидации
+		}
 		return true;
-		
+
 	}
 }
