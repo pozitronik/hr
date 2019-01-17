@@ -193,7 +193,7 @@ class ImportFos extends ActiveRecord {
 		try {
 			foreach ($data as $row) {
 
-				$position = ImportFosPositions::addInstance(['position_id' => $row->position_id], [
+				$position = ImportFosPositions::addInstance(['id' => $row->position_id], [
 					'id' => $row->position_id,
 					'name' => $row->position_name
 				]);
@@ -211,7 +211,7 @@ class ImportFos extends ActiveRecord {
 					'email_sigma' => $row->email_sigma,
 					'email_alpha' => $row->email_alpha,
 					'position_id' => $position->id,
-					'town' => $town->id
+					'town_id' => $town->id
 				]);
 
 			}
