@@ -53,13 +53,13 @@ trait ARExtended {
 	/**
 	 * Возвращает существующую запись в ActiveRecord-модели, найденную по условию, если же такой записи нет - возвращает новую модель
 	 * @param array|string $searchCondition
-	 * @return array|null|ActiveRecord|self
+	 * @return ActiveRecord|self
 	 * @todo: не работает с наследуемыми моделями, вроде референсов, разобраться.
 	 */
-	public static function getInstance($searchCondition) {
+	public static function getInstance($searchCondition):self {
 		/** @noinspection PhpUndefinedMethodInspection */
 		$instance = self::find()->where($searchCondition)->one();
-		return $instance?:new self;
+		return $instance??new self;
 	}
 
 	/**
