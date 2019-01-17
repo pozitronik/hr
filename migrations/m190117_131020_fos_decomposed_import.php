@@ -12,7 +12,6 @@ class m190117_131020_fos_decomposed_import extends Migration {
 	public function safeUp() {
 		$this->createTable('import_fos_decomposed', [
 			'id' => $this->primaryKey(),
-			'num' => $this->string()->comment('№ п/п'),
 			'position_id' => $this->integer()->null(),
 			'user_id' => $this->integer()->null(),
 			'functional_block' => $this->integer()->null(),
