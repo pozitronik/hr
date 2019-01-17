@@ -51,8 +51,8 @@ class m190116_075224_fos_import_table extends Migration {
 			'chapter_name' => $this->string()->comment('Чаптер'),
 			'chapter_leader_id' => $this->string()->comment('Лидер чаптера ТН'),
 			'chapter_leader_name' => $this->string()->comment('Лидер чаптера'),
-			'chapter_leader_couch_id' => $this->string()->comment('Agile-коуч ТН'),
-			'chapter_leader_couch_name' => $this->string()->comment('Agile-коуч'),
+			'chapter_couch_id' => $this->string()->comment('Agile-коуч ТН'),
+			'chapter_couch_name' => $this->string()->comment('Agile-коуч'),
 			'email_sigma' => $this->string()->comment('Адрес электронной почты (sigma)'),
 			'email_alpha' => $this->string()->comment('Адрес электронной почты (внутренний'),
 			'domain' => $this->integer()->comment('Служеная метка очереди импорта')
@@ -69,7 +69,7 @@ class m190116_075224_fos_import_table extends Migration {
 		$this->createIndex('command_position_id', 'import_fos', 'command_position_id');
 		$this->createIndex('chapter_id', 'import_fos', 'chapter_id');
 		$this->createIndex('chapter_leader_id', 'import_fos', 'chapter_leader_id');
-		$this->createIndex('chapter_leader_couch_id', 'import_fos', 'chapter_leader_couch_id');
+		$this->createIndex('chapter_couch_id', 'import_fos', 'chapter_couch_id');
 		$this->createIndex('domain', 'import_fos', 'domain');
 	}
 

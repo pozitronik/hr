@@ -161,7 +161,7 @@ class m190117_075947_import_helpers extends Migration {
 
 		$this->dropTable('import_fos_chapter');
 		$this->dropTable('import_fos_chapter_leader');
-		$this->dropTable('import_fos_command_couch');
+		$this->dropTable('import_fos_chapter_couch');
 
 		$this->dropTable('import_fos_town');
 	}
