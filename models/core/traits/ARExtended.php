@@ -77,7 +77,9 @@ trait ARExtended {
 			$fields = $fields??$searchCondition;
 			/** @noinspection PhpMethodParametersCountMismatchInspection */
 			$instance = new self($fields);
-			if (!$instance->save()) throw new ImportException($instance, $instance->errors);
+			if (!$instance->save()) {
+				throw new ImportException($instance, $instance->errors);
+			}
 			return $instance;
 		}
 		return $instance;
