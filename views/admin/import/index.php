@@ -2,12 +2,13 @@
 declare(strict_types = 1);
 
 /**
- * Шаблон главной страницы списка всех пользователей
  * @var View $this
  * @var ActiveRecord $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var int $domain
  */
 
+use app\helpers\Utils;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
@@ -20,11 +21,11 @@ use yii\bootstrap\Html;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title
+		'heading' => 'Импортировано '.Utils::pluralForm($dataProvider->totalCount, ['строка', 'строки', 'строк'])
 	],
 	'toolbar' => [
 		[
-			'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
+			'content' => Html::a('Декомпозиция', ['decompose', 'domain' => $domain], ['class' => 'btn btn-success'])
 		]
 	],
 	'export' => false,
