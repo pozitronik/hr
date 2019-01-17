@@ -76,15 +76,27 @@ class ImportController extends WigetableController {
 	 * @param int|null $domain
 	 * @return string|Response
 	 */
-	public function actionDecompose(?int $domain = null) {
+	public function actionDecompose(?int $domain = null, int $step = 0) {
 		if (null === $domain) return $this->redirect(['import']);
-		$messages = ImportFos::Decompose($domain);
+		$messages = ImportFos::Decompose($domain, $step);
+		return $this->render('decompose', [
+			'step' => $step,
+			'messages' => $messages,
+			'domain' => $domain
+		]);
+	}
+
+	/**
+	 * @param int|null $domain
+	 * @return string|Response
+	 */
+	public function actionResult(?int $domain = null) {
+		if (null === $domain) return $this->redirect(['import']);
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new ImportFosDecomposedSearch();
-		return $this->render('decompose', [
+		return $this->render('result', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $searchModel->search($params, $domain),
-			'messages' => $messages
 		]);
 	}
 }

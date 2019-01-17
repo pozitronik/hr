@@ -3,30 +3,16 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var ActiveRecord $searchModel
- * @var ActiveDataProvider $dataProvider
+ * @var int $step
+ * @var int $domain
  * @var $messages array
  */
 
 use app\helpers\Utils;
-use yii\data\ActiveDataProvider;
-use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\web\View;
-use kartik\grid\GridView;
 
 Utils::log($messages);
 ?>
 
-
-<?= GridView::widget([
-	'dataProvider' => $dataProvider,
-	'filterModel' => $searchModel,
-	'panel' => [
-		'heading' => $this->title
-	],
-	'toolbar' => false,
-	'export' => false,
-	'resizableColumns' => true,
-	'responsive' => true,
-	'columns' => []
-]); ?>
+<?= (3 !== $step)?Html::a('Следующий шаг', ['decompose', 'step' => $step+1, 'domain' => $domain], ['class' => 'btn btn-default']):Html::a('К результату', ['result', 'domain' => $domain], ['class' => 'btn btn-success']); ?>
