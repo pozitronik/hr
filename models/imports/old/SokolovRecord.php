@@ -2,7 +2,7 @@
 /** @noinspection BadExceptionsProcessingInspection */
 declare(strict_types = 1);
 
-namespace app\models\imports;
+namespace app\models\imports\old;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Csv;

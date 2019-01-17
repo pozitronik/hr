@@ -13,6 +13,7 @@ class ImportFosSearch extends ImportFos {
 
 	/**
 	 * @param array $params
+	 * @param int|null $domain
 	 * @return ActiveDataProvider
 	 */
 	public function search(array $params, ?int $domain = null):ActiveDataProvider {
@@ -25,7 +26,7 @@ class ImportFosSearch extends ImportFos {
 		]);
 
 		$MainAttributes = [
-			'defaultOrder' => ['id' => SORT_ASC],
+			'defaultOrder' => ['id' => SORT_ASC]
 		];
 
 		$dataProvider->setSort($MainAttributes);

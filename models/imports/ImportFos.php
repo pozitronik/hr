@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace app\models\imports;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Utils;
 use app\models\core\traits\Upload;
+use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use Throwable;
 use yii\db\ActiveRecord;
 
 /**
@@ -64,24 +66,24 @@ class ImportFos extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'import_fos';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['domain'], 'integer'],
-			[['num', 'position_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_leader_couch_id', 'chapter_leader_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255],
+			[['num', 'position_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_leader_couch_id', 'chapter_leader_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'num' => '№ п/п',
 			'position_id' => 'ШД ID',
@@ -133,6 +135,9 @@ class ImportFos extends ActiveRecord {
 	 * @param string $filename
 	 * @param int|null $domain
 	 * @return bool
+	 * @throws PhpSpreadsheetException
+	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public static function Import(string $filename, ?int $domain = null):bool {
 		$reader = new Xlsx();

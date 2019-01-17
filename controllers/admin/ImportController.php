@@ -6,7 +6,11 @@ namespace app\controllers\admin;
 use app\models\core\WigetableController;
 use app\models\imports\ImportFos;
 use app\models\imports\ImportFosSearch;
+use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use Throwable;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\web\ErrorAction;
 use yii\web\Response;
 
@@ -33,15 +37,17 @@ class ImportController extends WigetableController {
 
 	/**
 	 * @return string
+	 * @throws InvalidConfigException
+	 * @throws PhpSpreadsheetException
+	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function actionImport():string {
 		$model = new ImportFos();
-		if (Yii::$app->request->isPost) {
-			if (null !== $fileName = $model->uploadFile()) {
-				$domain = time();
-				$model::Import($fileName, $domain);
-				$this->redirect(['index', 'domain' => $domain]);
-			}
+		if (Yii::$app->request->isPost && null !== $fileName = $model->uploadFile()) {
+			$domain = time();
+			$model::Import($fileName, $domain);
+			$this->redirect(['index', 'domain' => $domain]);
 		}
 
 		return $this->render('upload', [

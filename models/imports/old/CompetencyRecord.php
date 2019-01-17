@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports;
+namespace app\models\imports\old;
 
 use app\helpers\Csv;
 use app\models\dynamic_attributes\DynamicAttributes;
