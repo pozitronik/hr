@@ -8,11 +8,13 @@ declare(strict_types = 1);
  * @var $messages array
  */
 
+use app\helpers\Utils;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 use kartik\grid\GridView;
 
+Utils::log($messages);
 ?>
 
 
