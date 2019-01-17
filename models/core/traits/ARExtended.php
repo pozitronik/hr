@@ -4,10 +4,12 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use app\models\core\SysExceptions;
+use app\models\imports\ImportException;
 use app\models\user_rights\AccessMethods;
 use app\models\user_rights\UserAccess;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
@@ -60,6 +62,25 @@ trait ARExtended {
 		/** @noinspection PhpUndefinedMethodInspection */
 		$instance = self::find()->where($searchCondition)->one();
 		return $instance??new self;
+	}
+
+	/**
+	 * @param $searchCondition
+	 * @param null|array $fields
+	 * @return ActiveRecord|self
+	 */
+	public static function addInstance($searchCondition, ?array $fields = null):self {
+
+		/** @var ActiveRecord $instance */
+		$instance = self::find()->where($searchCondition)->one();
+		if (null === $instance) {
+			$fields = $fields??$searchCondition;
+			/** @noinspection PhpMethodParametersCountMismatchInspection */
+			$instance = new self($fields);
+			if (!$instance->save()) throw new ImportException($instance, $instance->errors);
+			return $instance;
+		}
+		return $instance;
 	}
 
 	/**
