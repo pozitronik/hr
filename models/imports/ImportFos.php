@@ -5,6 +5,27 @@ namespace app\models\imports;
 
 use app\helpers\ArrayHelper;
 use app\models\core\traits\Upload;
+use app\models\imports\fos\ImportFosChapter;
+use app\models\imports\fos\ImportFosChapterCouch;
+use app\models\imports\fos\ImportFosChapterLeader;
+use app\models\imports\fos\ImportFosClusterProduct;
+use app\models\imports\fos\ImportFosClusterProductLeader;
+use app\models\imports\fos\ImportFosCommand;
+use app\models\imports\fos\ImportFosCommandPosition;
+use app\models\imports\fos\ImportFosDivisionLevel1;
+use app\models\imports\fos\ImportFosDivisionLevel2;
+use app\models\imports\fos\ImportFosDivisionLevel3;
+use app\models\imports\fos\ImportFosDivisionLevel4;
+use app\models\imports\fos\ImportFosDivisionLevel5;
+use app\models\imports\fos\ImportFosFunctionalBlock;
+use app\models\imports\fos\ImportFosFunctionalBlockTribe;
+use app\models\imports\fos\ImportFosPositions;
+use app\models\imports\fos\ImportFosProductOwner;
+use app\models\imports\fos\ImportFosTown;
+use app\models\imports\fos\ImportFosTribe;
+use app\models\imports\fos\ImportFosTribeLeader;
+use app\models\imports\fos\ImportFosTribeLeaderIt;
+use app\models\imports\fos\ImportFosUsers;
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
@@ -54,8 +75,8 @@ use yii\db\ActiveRecord;
  * @property string $chapter_name Чаптер
  * @property string $chapter_leader_id Лидер чаптера ТН
  * @property string $chapter_leader_name Лидер чаптера
- * @property string $chapter_leader_couch_id Agile-коуч ТН
- * @property string $chapter_leader_couch_name Agile-коуч
+ * @property string $chapter_couch_id Agile-коуч ТН
+ * @property string $chapter_couch_name Agile-коуч
  * @property string $email_sigma Адрес электронной почты (sigma)
  * @property string $email_alpha Адрес электронной почты (внутренний
  * @property int $domain Служеная метка очереди импорта
@@ -76,7 +97,7 @@ class ImportFos extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['domain'], 'integer'],
-			[['num', 'position_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_leader_couch_id', 'chapter_leader_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
+			[['num', 'position_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_couch_id', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
 		];
 	}
 
@@ -84,7 +105,7 @@ class ImportFos extends ActiveRecord {
 	 * {@inheritdoc}
 	 */
 	public function attributeLabels():array {
-		return [
+		return [/*Не модифицировать, а то поедет импорт!*/
 			'num' => '№ п/п',
 			'position_id' => 'ШД ID',
 			'position_name' => 'Должность',
@@ -124,8 +145,8 @@ class ImportFos extends ActiveRecord {
 			'chapter_name' => 'Чаптер',
 			'chapter_leader_id' => 'Лидер чаптера ТН',
 			'chapter_leader_name' => 'Лидер чаптера',
-			'chapter_leader_couch_id' => 'Agile-коуч ТН',
-			'chapter_leader_couch_name' => 'Agile-коуч',
+			'chapter_couch_id' => 'Agile-коуч ТН',
+			'chapter_couch_name' => 'Agile-коуч',
 			'email_sigma' => 'Адрес электронной почты (sigma)',
 			'email_alpha' => 'Адрес электронной почты (внутренний)'
 		];
@@ -156,6 +177,129 @@ class ImportFos extends ActiveRecord {
 			$row->save(false);//пока сохраняем без строгой валидации
 		}
 		return true;
+	}
 
+	/**
+	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
+	 * @param int $domain
+	 * @return array Массив сообщений
+	 */
+	public static function Decompose(int $domain):array {
+		/** @var self[] $data */
+		$data = self::find()->where(['domain' => $domain])->all();
+		/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
+		foreach ($data as $row) {//todo: try...catch block with result logging
+
+			$position = ImportFosPositions::addInstance(['position_id' => $row->position_id], [
+				'id' => $row->position_id,
+				'name' => $row->position_name
+			]);
+			$town = ImportFosTown::addInstance(['name' => $row->town]);
+			ImportFosCommandPosition::addInstance(['id' => $row->command_position_id], [
+				'id' => $row->command_position_id,
+				'code' => $row->command_position_code,
+				'name' => $row->command_position_name
+			]);
+			/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
+			ImportFosUsers::addInstance(['id' => $row->user_id], [
+				'id' => $row->user_id,
+				'name' => $row->user_name,
+				'remote' => !empty($row->remote_flag),
+				'email_sigma' => $row->email_sigma,
+				'email_alpha' => $row->email_alpha,
+				'position_id' => $position->id,
+				'town' => $town->id
+			]);
+
+		}
+		/*
+		 * Декомпозируем сущности остальных пользователей: лидер трайба, ИТ-лидер трайба, лидер кластера, владелец продукта (команды), лидер чаптера, коуч чаптера
+		 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
+		*/
+		foreach ($data as $row) {
+
+			ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_id], [
+				'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_id], [
+					'id' => $row->tribe_leader_id,
+					'name' => $row->tribe_leader_name,
+					'remote' => false
+				])->id
+			]);
+
+			ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
+				'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_it_id], [
+					'id' => $row->tribe_leader_it_id,
+					'name' => $row->tribe_leader_it_name,
+					'remote' => false
+				])->id
+			]);
+
+			ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
+				'user_id' => ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_id], [
+					'id' => $row->cluster_product_leader_id,
+					'name' => $row->cluster_product_leader_name,
+					'remote' => false
+				])->id
+			]);
+
+			/*Для владельцев продукта приведены только имена; их может не быть*/
+			if (null !== $product_owner = ImportFosUsers::find()->where(['name' => $row->owner_name])->one()) {
+				ImportFosProductOwner::addInstance(['user_id' => $product_owner->id]);
+			}
+
+			ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_id], [
+				'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_leader_id], [
+					'id' => $row->chapter_leader_id,
+					'name' => $row->chapter_leader_name,
+					'remote' => false
+				])->id
+			]);
+			/*can be null instance, add handlers*/
+			ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_id], [
+				'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_couch_id], [
+					'id' => $row->chapter_couch_id,
+					'name' => $row->chapter_couch_name,
+					'remote' => false
+				])->id
+			]);
+
+		}
+		foreach ($data as $row) {
+			/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
+			ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block])->id;
+			ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1])->id;
+
+			ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2]);
+			ImportFosDivisionLevel3::addInstance(['name' => $row->division_level_3]);
+			ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4]);
+			ImportFosDivisionLevel5::addInstance(['name' => $row->division_level_5]);
+			ImportFosFunctionalBlockTribe::addInstance(['name' => $row->functional_block_tribe]);
+			ImportFosTribe::addInstance(['id' => $row->tribe_id], [
+				'id' => $row->tribe_id,
+				'code' => $row->tribe_code,
+				'name' => $row->tribe_name,
+				'leader_id' => (ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one())->id,
+				'leader_it_id' => (ImportFosTribeLeaderIt::find()->where(['user_id' => $row->tribe_leader_it_id])->one())->id
+			]);
+			ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
+				'id' => $row->cluster_product_id,
+				'name' => $row->cluster_product_name,
+				'leader_id' => (ImportFosClusterProductLeader::find()->where(['id' => $row->cluster_product_leader_id])->one())->id()
+			]);
+			ImportFosCommand::addInstance(['id' => $row->command_id], [
+				'id' => $row->command_id,
+				'name' => $row->command_name,
+				'type' => $row->command_type,
+				'owner' => (ImportFosProductOwner::find()->where(['id' => (ImportFosUsers::find()->where(['name' => $row->owner_name])->one())->id])->one())->id
+			]);
+			ImportFosChapter::addInstance(['id' => $row->chapter_id], [
+				'id' => $row->chapter_id,
+				'name' => $row->chapter_name,
+				'code' => $row->chapter_code,
+				'leader' => (ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one())->id(),
+				'couch' => (ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one())->id()
+			]);
+
+		}
 	}
 }
