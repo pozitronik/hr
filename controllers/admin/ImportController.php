@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
 use app\models\imports\ImportFos;
+use app\models\imports\ImportFosDecomposedSearch;
 use app\models\imports\ImportFosSearch;
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -66,9 +67,24 @@ class ImportController extends WigetableController {
 
 		return $this->render('index', [
 			'searchModel' => $searchModel,
-			'dataProvider' => $searchModel->search($params, $domain)
+			'dataProvider' => $searchModel->search($params, $domain),
+			'domain' => $domain
 		]);
-
 	}
 
+	/**
+	 * @param int|null $domain
+	 * @return string|Response
+	 */
+	public function actionDecompose(?int $domain = null) {
+		if (null === $domain) return $this->redirect(['import']);
+		$messages = ImportFos::Decompose($domain);
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new ImportFosDecomposedSearch();
+		return $this->render('decompose', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params, $domain),
+			'messages' => $messages
+		]);
+	}
 }
