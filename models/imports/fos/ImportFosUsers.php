@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\imports\fos;
 
+use app\models\core\traits\ARExtended;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "import_fos_users".
  *
@@ -20,7 +23,8 @@ namespace app\models\imports\fos;
  * @property int $division_level5_id key to division_level5 id
  * @property int $town_id key to town id
  */
-class ImportFosUsers extends \yii\db\ActiveRecord {
+class ImportFosUsers extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */

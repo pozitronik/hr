@@ -3,13 +3,17 @@ declare(strict_types = 1);
 
 namespace app\models\imports\fos;
 
+use app\models\core\traits\ARExtended;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "import_fos_functional_block_tribe".
  *
  * @property int $id
  * @property string $name
  */
-class ImportFosFunctionalBlockTribe extends \yii\db\ActiveRecord {
+class ImportFosFunctionalBlockTribe extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */

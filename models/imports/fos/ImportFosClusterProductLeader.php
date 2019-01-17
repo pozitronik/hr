@@ -3,13 +3,17 @@ declare(strict_types = 1);
 
 namespace app\models\imports\fos;
 
+use app\models\core\traits\ARExtended;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "import_fos_cluster_product_leader".
  *
  * @property int $id
  * @property int $user_id key to user id
  */
-class ImportFosClusterProductLeader extends \yii\db\ActiveRecord {
+class ImportFosClusterProductLeader extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */

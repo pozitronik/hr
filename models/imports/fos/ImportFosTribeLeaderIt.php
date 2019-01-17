@@ -3,13 +3,17 @@ declare(strict_types = 1);
 
 namespace app\models\imports\fos;
 
+use app\models\core\traits\ARExtended;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "import_fos_tribe_leader_it".
  *
  * @property int $id
  * @property int $user_id key to user id
  */
-class ImportFosTribeLeaderIt extends \yii\db\ActiveRecord {
+class ImportFosTribeLeaderIt extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */

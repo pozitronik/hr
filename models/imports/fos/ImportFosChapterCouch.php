@@ -3,13 +3,17 @@ declare(strict_types = 1);
 
 namespace app\models\imports\fos;
 
+use app\models\core\traits\ARExtended;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "import_fos_chapter_couch".
  *
  * @property int $id
  * @property int $user_id key to user id
  */
-class ImportFosChapterCouch extends \yii\db\ActiveRecord {
+class ImportFosChapterCouch extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */

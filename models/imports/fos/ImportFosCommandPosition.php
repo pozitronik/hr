@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\imports\fos;
 
+use app\models\core\traits\ARExtended;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "import_fos_command_position".
  *
@@ -10,7 +13,8 @@ namespace app\models\imports\fos;
  * @property string $code
  * @property string $name
  */
-class ImportFosCommandPosition extends \yii\db\ActiveRecord {
+class ImportFosCommandPosition extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */
