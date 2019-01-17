@@ -63,7 +63,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			'command_id' => 'Command ID',
 			'command_position_id' => 'Command Position ID',
 			'chapter_id' => 'Chapter ID',
-			'domain' => 'Служеная метка очереди импорта',
+			'domain' => 'Служебная метка очереди импорта',
 		];
 	}
 }
