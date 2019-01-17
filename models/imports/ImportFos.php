@@ -185,121 +185,129 @@ class ImportFos extends ActiveRecord {
 	 * @return array Массив сообщений
 	 */
 	public static function Decompose(int $domain):array {
+		$errors = [];
 		/** @var self[] $data */
 		$data = self::find()->where(['domain' => $domain])->all();
 		/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
-		foreach ($data as $row) {//todo: try...catch block with result logging
+		try {
+			foreach ($data as $row) {
 
-			$position = ImportFosPositions::addInstance(['position_id' => $row->position_id], [
-				'id' => $row->position_id,
-				'name' => $row->position_name
-			]);
-			$town = ImportFosTown::addInstance(['name' => $row->town]);
-			ImportFosCommandPosition::addInstance(['id' => $row->command_position_id], [
-				'id' => $row->command_position_id,
-				'code' => $row->command_position_code,
-				'name' => $row->command_position_name
-			]);
-			/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
-			ImportFosUsers::addInstance(['id' => $row->user_id], [
-				'id' => $row->user_id,
-				'name' => $row->user_name,
-				'remote' => !empty($row->remote_flag),
-				'email_sigma' => $row->email_sigma,
-				'email_alpha' => $row->email_alpha,
-				'position_id' => $position->id,
-				'town' => $town->id
-			]);
+				$position = ImportFosPositions::addInstance(['position_id' => $row->position_id], [
+					'id' => $row->position_id,
+					'name' => $row->position_name
+				]);
+				$town = ImportFosTown::addInstance(['name' => $row->town]);
+				ImportFosCommandPosition::addInstance(['id' => $row->command_position_id], [
+					'id' => $row->command_position_id,
+					'code' => $row->command_position_code,
+					'name' => $row->command_position_name
+				]);
+				/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
+				ImportFosUsers::addInstance(['id' => $row->user_id], [
+					'id' => $row->user_id,
+					'name' => $row->user_name,
+					'remote' => !empty($row->remote_flag),
+					'email_sigma' => $row->email_sigma,
+					'email_alpha' => $row->email_alpha,
+					'position_id' => $position->id,
+					'town' => $town->id
+				]);
 
-		}
-		/*
-		 * Декомпозируем сущности остальных пользователей: лидер трайба, ИТ-лидер трайба, лидер кластера, владелец продукта (команды), лидер чаптера, коуч чаптера
-		 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
-		*/
-		foreach ($data as $row) {
-
-			ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_id], [
-				'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_id], [
-					'id' => $row->tribe_leader_id,
-					'name' => $row->tribe_leader_name,
-					'remote' => false
-				])->id
-			]);
-
-			ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
-				'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_it_id], [
-					'id' => $row->tribe_leader_it_id,
-					'name' => $row->tribe_leader_it_name,
-					'remote' => false
-				])->id
-			]);
-
-			ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
-				'user_id' => ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_id], [
-					'id' => $row->cluster_product_leader_id,
-					'name' => $row->cluster_product_leader_name,
-					'remote' => false
-				])->id
-			]);
-
-			/*Для владельцев продукта приведены только имена; их может не быть*/
-			if (null !== $product_owner = ImportFosUsers::find()->where(['name' => $row->owner_name])->one()) {
-				ImportFosProductOwner::addInstance(['user_id' => $product_owner->id]);
 			}
+			/*
+			 * Декомпозируем сущности остальных пользователей: лидер трайба, ИТ-лидер трайба, лидер кластера, владелец продукта (команды), лидер чаптера, коуч чаптера
+			 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
+			*/
+			foreach ($data as $row) {
 
-			ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_id], [
-				'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_leader_id], [
-					'id' => $row->chapter_leader_id,
-					'name' => $row->chapter_leader_name,
-					'remote' => false
-				])->id
-			]);
-			/*can be null instance, add handlers*/
-			ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_id], [
-				'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_couch_id], [
-					'id' => $row->chapter_couch_id,
-					'name' => $row->chapter_couch_name,
-					'remote' => false
-				])->id
-			]);
+				ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_id], [
+					'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_id], [
+						'id' => $row->tribe_leader_id,
+						'name' => $row->tribe_leader_name,
+						'remote' => false
+					])->id
+				]);
 
+				ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
+					'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_it_id], [
+						'id' => $row->tribe_leader_it_id,
+						'name' => $row->tribe_leader_it_name,
+						'remote' => false
+					])->id
+				]);
+
+				ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
+					'user_id' => ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_id], [
+						'id' => $row->cluster_product_leader_id,
+						'name' => $row->cluster_product_leader_name,
+						'remote' => false
+					])->id
+				]);
+
+				/*Для владельцев продукта приведены только имена; их может не быть*/
+				if (null !== $product_owner = ImportFosUsers::find()->where(['name' => $row->owner_name])->one()) {
+					ImportFosProductOwner::addInstance(['user_id' => $product_owner->id]);
+				}
+
+				ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_id], [
+					'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_leader_id], [
+						'id' => $row->chapter_leader_id,
+						'name' => $row->chapter_leader_name,
+						'remote' => false
+					])->id
+				]);
+				/*can be null instance, add handlers*/
+				ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_id], [
+					'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_couch_id], [
+						'id' => $row->chapter_couch_id,
+						'name' => $row->chapter_couch_name,
+						'remote' => false
+					])->id
+				]);
+
+			}
+			foreach ($data as $row) {
+				/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
+				ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block])->id;
+				ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1])->id;
+
+				ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2]);
+				ImportFosDivisionLevel3::addInstance(['name' => $row->division_level_3]);
+				ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4]);
+				ImportFosDivisionLevel5::addInstance(['name' => $row->division_level_5]);
+				ImportFosFunctionalBlockTribe::addInstance(['name' => $row->functional_block_tribe]);
+				ImportFosTribe::addInstance(['id' => $row->tribe_id], [
+					'id' => $row->tribe_id,
+					'code' => $row->tribe_code,
+					'name' => $row->tribe_name,
+					'leader_id' => (ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one())->id,
+					'leader_it_id' => (ImportFosTribeLeaderIt::find()->where(['user_id' => $row->tribe_leader_it_id])->one())->id
+				]);
+				ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
+					'id' => $row->cluster_product_id,
+					'name' => $row->cluster_product_name,
+					'leader_id' => (ImportFosClusterProductLeader::find()->where(['id' => $row->cluster_product_leader_id])->one())->id()
+				]);
+				ImportFosCommand::addInstance(['id' => $row->command_id], [
+					'id' => $row->command_id,
+					'name' => $row->command_name,
+					'type' => $row->command_type,
+					'owner' => (ImportFosProductOwner::find()->where(['id' => (ImportFosUsers::find()->where(['name' => $row->owner_name])->one())->id])->one())->id
+				]);
+				ImportFosChapter::addInstance(['id' => $row->chapter_id], [
+					'id' => $row->chapter_id,
+					'name' => $row->chapter_name,
+					'code' => $row->chapter_code,
+					'leader' => (ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one())->id(),
+					'couch' => (ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one())->id()
+				]);
+
+			}
+		} catch (ImportException $importException) {
+			$errors[] = $importException->getName();
+		} catch (Throwable $throwable) {
+			$errors[] = $throwable->getMessage();
 		}
-		foreach ($data as $row) {
-			/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
-			ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block])->id;
-			ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1])->id;
-
-			ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2]);
-			ImportFosDivisionLevel3::addInstance(['name' => $row->division_level_3]);
-			ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4]);
-			ImportFosDivisionLevel5::addInstance(['name' => $row->division_level_5]);
-			ImportFosFunctionalBlockTribe::addInstance(['name' => $row->functional_block_tribe]);
-			ImportFosTribe::addInstance(['id' => $row->tribe_id], [
-				'id' => $row->tribe_id,
-				'code' => $row->tribe_code,
-				'name' => $row->tribe_name,
-				'leader_id' => (ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one())->id,
-				'leader_it_id' => (ImportFosTribeLeaderIt::find()->where(['user_id' => $row->tribe_leader_it_id])->one())->id
-			]);
-			ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
-				'id' => $row->cluster_product_id,
-				'name' => $row->cluster_product_name,
-				'leader_id' => (ImportFosClusterProductLeader::find()->where(['id' => $row->cluster_product_leader_id])->one())->id()
-			]);
-			ImportFosCommand::addInstance(['id' => $row->command_id], [
-				'id' => $row->command_id,
-				'name' => $row->command_name,
-				'type' => $row->command_type,
-				'owner' => (ImportFosProductOwner::find()->where(['id' => (ImportFosUsers::find()->where(['name' => $row->owner_name])->one())->id])->one())->id
-			]);
-			ImportFosChapter::addInstance(['id' => $row->chapter_id], [
-				'id' => $row->chapter_id,
-				'name' => $row->chapter_name,
-				'code' => $row->chapter_code,
-				'leader' => (ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one())->id(),
-				'couch' => (ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one())->id()
-			]);
-
-		}
+		return $errors;
 	}
 }
