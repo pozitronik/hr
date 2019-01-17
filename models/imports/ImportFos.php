@@ -189,6 +189,7 @@ class ImportFos extends ActiveRecord {
 		/** @var self[] $data */
 		$data = self::find()->where(['domain' => $domain])->all();
 		/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
+		/** @noinspection BadExceptionsProcessingInspection */
 		try {
 			foreach ($data as $row) {
 
@@ -268,9 +269,8 @@ class ImportFos extends ActiveRecord {
 			}
 			foreach ($data as $row) {
 				/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
-				ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block])->id;
-				ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1])->id;
-
+				ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block]);
+				ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1]);
 				ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2]);
 				ImportFosDivisionLevel3::addInstance(['name' => $row->division_level_3]);
 				ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4]);
@@ -280,28 +280,49 @@ class ImportFos extends ActiveRecord {
 					'id' => $row->tribe_id,
 					'code' => $row->tribe_code,
 					'name' => $row->tribe_name,
-					'leader_id' => (ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one())->id,
-					'leader_it_id' => (ImportFosTribeLeaderIt::find()->where(['user_id' => $row->tribe_leader_it_id])->one())->id
+					'leader_id' => ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one()->id,
+					'leader_it_id' => ImportFosTribeLeaderIt::find()->where(['user_id' => $row->tribe_leader_it_id])->one()->id
 				]);
 				ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
 					'id' => $row->cluster_product_id,
 					'name' => $row->cluster_product_name,
-					'leader_id' => (ImportFosClusterProductLeader::find()->where(['id' => $row->cluster_product_leader_id])->one())->id()
+					'leader_id' => ImportFosClusterProductLeader::findModel($row->cluster_product_leader_id)->id()
 				]);
 				ImportFosCommand::addInstance(['id' => $row->command_id], [
 					'id' => $row->command_id,
 					'name' => $row->command_name,
 					'type' => $row->command_type,
-					'owner' => (ImportFosProductOwner::find()->where(['id' => (ImportFosUsers::find()->where(['name' => $row->owner_name])->one())->id])->one())->id
+					'owner' => ImportFosProductOwner::findModel(ImportFosUsers::find()->where(['name' => $row->owner_name])->one()->id)->id
 				]);
 				ImportFosChapter::addInstance(['id' => $row->chapter_id], [
 					'id' => $row->chapter_id,
 					'name' => $row->chapter_name,
 					'code' => $row->chapter_code,
-					'leader' => (ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one())->id(),
-					'couch' => (ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one())->id()
+					'leader' => ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one()->id(),
+					'couch' => ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one()->id()
 				]);
 
+			}
+			/* Подставляем айдишники декомпозированных сущностей в соответствующую таблицу */
+			foreach ($data as $row) {
+				$decomposedRow = new ImportFosDecomposed([
+					'domain' => $row->domain,
+					'position_id' => ImportFosPositions::findModel($row->position_id)->id,
+					'user_id' => ImportFosUsers::findModel($row->user_id)->id,
+					'functional_block' => ImportFosFunctionalBlock::find()->where(['name' => $row->functional_block])->one()->id,
+					'division_level_1' => ImportFosDivisionLevel1::find()->where(['name' => $row->division_level_1])->one()->id,
+					'division_level_2' => ImportFosDivisionLevel2::find()->where(['name' => $row->division_level_2])->one()->id,
+					'division_level_3' => ImportFosDivisionLevel3::find()->where(['name' => $row->division_level_3])->one()->id,
+					'division_level_4' => ImportFosDivisionLevel4::find()->where(['name' => $row->division_level_4])->one()->id,
+					'division_level_5' => ImportFosDivisionLevel5::find()->where(['name' => $row->division_level_5])->one()->id,
+					'functional_block_tribe' => ImportFosFunctionalBlockTribe::find()->where(['name' => $row->functional_block_tribe])->one()->id,
+					'tribe_id' => ImportFosTribe::findModel($row->tribe_id)->id,
+					'cluster_product_id' => ImportFosClusterProduct::findModel($row->cluster_product_id)->id,
+					'command_id' => ImportFosCommand::findModel($row->command_id)->id,
+					'command_position_id' => ImportFosCommandPosition::findModel($row->command_position_id)->id,
+					'chapter_id' => ImportFosChapter::findModel($row->chapter_id)->id
+				]);
+				$decomposedRow->save();
 			}
 		} catch (ImportException $importException) {
 			$errors[] = $importException->getName();
