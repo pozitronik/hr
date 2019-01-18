@@ -39,6 +39,26 @@ trait ARExtended {
 	}
 
 	/**
+	 * Ищет по указанному условию, возвращая указанный атрибут модели или $default, если модель не найдена
+	 * @param mixed $condition Поисковое условие
+	 * @param string|null $attribute Возвращаемый атрибут (если не задан, то вернётся первичный ключ)
+	 * @param null|mixed $default
+	 * @return mixed
+	 * @throws InvalidConfigException
+	 */
+	public static function findModelAttribute($condition, ?string $attribute = null, $default = null) {
+		if (null === $model = self::findOne($condition)) return $default;
+
+		if (null === $attribute) {
+			$primaryKeys = self::primaryKey();
+			if (!isset($primaryKeys[0])) throw new InvalidConfigException('"'.static::class.'" must have a primary key.');
+
+			$attribute = $primaryKeys[0];
+		}
+		return $model->$attribute;
+	}
+
+	/**
 	 * По итерируемому списку ключей вернёт список подходящих моделей
 	 * @param int[] $keys Итерируемый список ключей
 	 * @return self[]
@@ -68,6 +88,7 @@ trait ARExtended {
 	 * @param $searchCondition
 	 * @param null|array $fields
 	 * @return ActiveRecord|self
+	 * @throws ImportException
 	 */
 	public static function addInstance($searchCondition, ?array $fields = null):self {
 
