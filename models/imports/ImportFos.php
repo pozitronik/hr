@@ -37,7 +37,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $num № п/п
- * @property string $position_id ШД ID
+ * @property string $sd_id ШД ID
  * @property string $position_name Должность
  * @property string $user_id ТН
  * @property string $user_name Ф.И.О. сотрудника
@@ -102,7 +102,7 @@ class ImportFos extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['domain'], 'integer'],
-			[['num', 'position_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_couch_id', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
+			[['num', 'sd_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_couch_id', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
 		];
 	}
 
@@ -112,7 +112,7 @@ class ImportFos extends ActiveRecord {
 	public function attributeLabels():array {
 		return [/*Не модифицировать, а то поедет импорт!*/
 			'num' => '№ п/п',
-			'position_id' => 'ШД ID',
+			'sd_id' => 'ШД ID',//!Это не ID должности! Это какойто внутренний идентификатор
 			'position_name' => 'Должность',
 			'user_id' => 'ТН',
 			'user_name' => 'Ф.И.О. сотрудника',
@@ -200,8 +200,7 @@ class ImportFos extends ActiveRecord {
 				try {
 					foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
 
-						$position = ImportFosPositions::addInstance($row->position_id, [
-							'id' => $row->position_id,
+						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
 							'name' => $row->position_name
 						]);
 						$town = ImportFosTown::addInstance(['name' => $row->town]);
@@ -217,7 +216,7 @@ class ImportFos extends ActiveRecord {
 							'remote' => !empty($row->remote_flag),
 							'email_sigma' => $row->email_sigma,
 							'email_alpha' => $row->email_alpha,
-							'position_id' => ArrayHelper::getValue($position, 'id'),
+							'sd_id' => ArrayHelper::getValue($position, 'id'),
 							'town_id' => ArrayHelper::getValue($town, 'id')
 						]);
 
@@ -276,7 +275,7 @@ class ImportFos extends ActiveRecord {
 								'id' => $row->chapter_couch_id,
 								'name' => $row->chapter_couch_name,
 								'remote' => false
-							]),'id')
+							]), 'id')
 						]);
 
 					}
@@ -339,7 +338,7 @@ class ImportFos extends ActiveRecord {
 					foreach ($data as $row) {
 						$decomposedRow = new ImportFosDecomposed([
 							'domain' => $row->domain,
-							'position_id' => ImportFosPositions::findModelAttribute($row->position_id),
+							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name]),
 							'user_id' => ImportFosUsers::findModelAttribute($row->user_id),
 							'functional_block' => ImportFosFunctionalBlock::findModelAttribute(['name' => $row->functional_block]),
 							'division_level_1' => ImportFosDivisionLevel1::findModelAttribute(['name' => $row->division_level_1]),

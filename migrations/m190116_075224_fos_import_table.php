@@ -13,7 +13,7 @@ class m190116_075224_fos_import_table extends Migration {
 		$this->createTable('import_fos', [
 			'id' => $this->primaryKey(),
 			'num' => $this->string()->comment('№ п/п'),
-			'position_id' => $this->string()->comment('ШД ID'),
+			'sd_id' => $this->string()->comment('ШД ID'),
 			'position_name' => $this->string()->comment('Должность'),
 			'user_id' => $this->string()->comment('ТН'),
 			'user_name' => $this->string()->comment('Ф.И.О. сотрудника'),
@@ -58,7 +58,7 @@ class m190116_075224_fos_import_table extends Migration {
 			'domain' => $this->integer()->comment('Служеная метка очереди импорта')
 		]);
 
-		$this->createIndex('position_id', 'import_fos', 'position_id');
+		$this->createIndex('sd_id', 'import_fos', 'sd_id');
 		$this->createIndex('user_id', 'import_fos', 'user_id');
 		$this->createIndex('tribe_id', 'import_fos', 'tribe_id');
 		$this->createIndex('tribe_leader_id', 'import_fos', 'tribe_leader_id');

@@ -26,7 +26,7 @@ class m190117_131020_fos_decomposed_import extends Migration {
 			'command_id' => $this->integer()->null(),
 			'command_position_id' => $this->integer()->null(),
 			'chapter_id' => $this->integer()->null(),
-			'domain' => $this->integer()->comment('Служеная метка очереди импорта')
+			'domain' => $this->integer()->comment('Служебная метка очереди импорта')
 		]);
 	}
 
