@@ -24,7 +24,7 @@ use app\models\imports\fos\ImportFosProductOwner;
 use app\models\imports\fos\ImportFosTown;
 use app\models\imports\fos\ImportFosTribe;
 use app\models\imports\fos\ImportFosTribeLeader;
-use app\models\imports\fos\ImportFosTribeLeaderIt as ImportFosTribeLeaderItAlias;
+use app\models\imports\fos\ImportFosTribeLeaderIt;
 use app\models\imports\fos\ImportFosUsers;
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -242,7 +242,7 @@ class ImportFos extends ActiveRecord {
 							])->id
 						]);
 
-						ImportFosTribeLeaderItAlias::addInstance(['user_id' => $row->tribe_leader_it_id], [
+						ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
 							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->tribe_leader_it_id, [
 								'id' => $row->tribe_leader_it_id,
 								'name' => $row->tribe_leader_it_name,
@@ -250,7 +250,7 @@ class ImportFos extends ActiveRecord {
 							]), 'id')
 						]);
 
-						ImportFosTribeLeaderItAlias::addInstance(['user_id' => $row->tribe_leader_it_id], [
+						ImportFosClusterProductLeader::addInstance(['user_id' => $row->cluster_product_leader_id], [
 							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->cluster_product_leader_id, [
 								'id' => $row->cluster_product_leader_id,
 								'name' => $row->cluster_product_leader_name,
@@ -303,12 +303,12 @@ class ImportFos extends ActiveRecord {
 							'code' => $row->tribe_code,
 							'name' => $row->tribe_name,
 							'leader_id' => ImportFosTribeLeader::findModelAttribute(['user_id' => $row->tribe_leader_id]),
-							'leader_it_id' => ImportFosTribeLeaderItAlias::findModelAttribute(['user_id' => $row->tribe_leader_it_id])
+							'leader_it_id' => ImportFosTribeLeaderIt::findModelAttribute(['user_id' => $row->tribe_leader_it_id])
 						]);
 						ImportFosClusterProduct::addInstance($row->cluster_product_id, [
 							'id' => $row->cluster_product_id,
 							'name' => $row->cluster_product_name,
-							'leader_id' => ImportFosClusterProductLeader::findModelAttribute($row->cluster_product_leader_id)
+							'leader_id' => ImportFosClusterProductLeader::findModelAttribute(['user_id' => $row->cluster_product_leader_id])
 						]);
 						ImportFosCommand::addInstance($row->command_id, [
 							'id' => $row->command_id,
