@@ -31,7 +31,7 @@ class ImportFosCommand extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['cluster_id'], 'required'],
-			[['cluster_id', 'owner_id'], 'integer'],
+			[['cluster_id'], 'integer'],
 			[['code', 'name', 'type'], 'string', 'max' => 255]
 		];
 	}
