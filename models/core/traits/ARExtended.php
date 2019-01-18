@@ -85,16 +85,16 @@ trait ARExtended {
 	}
 
 	/**
-	 * @param $searchCondition
+	 * @param null|mixed $searchCondition
 	 * @param null|array $fields
-	 * @return ActiveRecord|self
+	 * @param bool $ignoreEmptyCondition Игнорировать пустое поисковое значение
+	 * @return ActiveRecord|self|null
 	 * @throws ImportException
 	 */
-	public static function addInstance($searchCondition, ?array $fields = null):self {
-
+	public static function addInstance($searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {
+		if ($ignoreEmptyCondition && empty($searchCondition)) return null;
 		/** @var ActiveRecord $instance */
-		$instance = self::find()->where($searchCondition)->one();
-		if (null === $instance) {
+		if (null === $instance = self::findOne($searchCondition)) {
 			$fields = $fields??$searchCondition;
 			/** @noinspection PhpMethodParametersCountMismatchInspection */
 			$instance = new self($fields);

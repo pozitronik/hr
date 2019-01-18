@@ -195,44 +195,47 @@ class ImportFos extends ActiveRecord {
 		/** @var self[] $data */
 		$data = self::find()->where(['domain' => $domain])->all();
 
-		/** @noinspection BadExceptionsProcessingInspection */
-		try {
-
-			switch ($step) {
-				case self::STEP_REFERENCES:
+		switch ($step) {
+			case self::STEP_REFERENCES:
+				try {
 					foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
 
-						$position = ImportFosPositions::addInstance(['id' => $row->position_id], [
+						$position = ImportFosPositions::addInstance($row->position_id, [
 							'id' => $row->position_id,
 							'name' => $row->position_name
 						]);
 						$town = ImportFosTown::addInstance(['name' => $row->town]);
-						ImportFosCommandPosition::addInstance(['id' => $row->command_position_id], [
+						ImportFosCommandPosition::addInstance($row->command_position_id, [
 							'id' => $row->command_position_id,
 							'code' => $row->command_position_code,
 							'name' => $row->command_position_name
 						]);
 						/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
-						ImportFosUsers::addInstance(['id' => $row->user_id], [
+						ImportFosUsers::addInstance($row->user_id, [
 							'id' => $row->user_id,
 							'name' => $row->user_name,
 							'remote' => !empty($row->remote_flag),
 							'email_sigma' => $row->email_sigma,
 							'email_alpha' => $row->email_alpha,
-							'position_id' => $position->id,
-							'town_id' => $town->id
+							'position_id' => ArrayHelper::getValue($position, 'id'),
+							'town_id' => ArrayHelper::getValue($town, 'id')
 						]);
 
 					}
-				break;
-				case self::STEP_USERS:
+				} catch (ImportException $importException) {
+					$errors[] = ['row' => $row, 'error' => $importException->getName()];
+				} catch (Throwable $throwable) {
+					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+				}
+			break;
+			case self::STEP_USERS:
+				try {
 					/* Декомпозируем сущности остальных пользователей: лидер трайба, ИТ-лидер трайба, лидер кластера, владелец продукта (команды), лидер чаптера, коуч чаптера
-			 		* Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
-					*/
+				 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
+				*/
 					foreach ($data as $row) {
-
 						ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_id], [
-							'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_id], [
+							'user_id' => ImportFosUsers::addInstance($row->tribe_leader_id, [
 								'id' => $row->tribe_leader_id,
 								'name' => $row->tribe_leader_name,
 								'remote' => false
@@ -240,19 +243,19 @@ class ImportFos extends ActiveRecord {
 						]);
 
 						ImportFosTribeLeaderItAlias::addInstance(['user_id' => $row->tribe_leader_it_id], [
-							'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_it_id], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->tribe_leader_it_id, [
 								'id' => $row->tribe_leader_it_id,
 								'name' => $row->tribe_leader_it_name,
 								'remote' => false
-							])->id
+							]), 'id')
 						]);
 
 						ImportFosTribeLeaderItAlias::addInstance(['user_id' => $row->tribe_leader_it_id], [
-							'user_id' => ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_id], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->cluster_product_leader_id, [
 								'id' => $row->cluster_product_leader_id,
 								'name' => $row->cluster_product_leader_name,
 								'remote' => false
-							])->id
+							]), 'id')
 						]);
 
 						/*Для владельцев продукта приведены только имена; их может не быть*/
@@ -261,24 +264,31 @@ class ImportFos extends ActiveRecord {
 						}
 
 						ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_id], [
-							'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_leader_id], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->chapter_leader_id, [
 								'id' => $row->chapter_leader_id,
 								'name' => $row->chapter_leader_name,
 								'remote' => false
-							])->id
+							]), 'id')
 						]);
 						/*can be null instance, add handlers*/
 						ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_id], [
-							'user_id' => ImportFosUsers::addInstance(['id' => $row->chapter_couch_id], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->chapter_couch_id, [
 								'id' => $row->chapter_couch_id,
 								'name' => $row->chapter_couch_name,
 								'remote' => false
-							])->id
+							]),'id')
 						]);
 
 					}
-				break;
-				case self::STEP_GROUPS:
+				} catch (ImportException $importException) {
+					$errors[] = ['row' => $row, 'error' => $importException->getName()];
+				} catch (Throwable $throwable) {
+					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+				}
+
+			break;
+			case self::STEP_GROUPS:
+				try {
 					foreach ($data as $row) {
 						/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
 						ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block]);
@@ -288,36 +298,42 @@ class ImportFos extends ActiveRecord {
 						ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4]);
 						ImportFosDivisionLevel5::addInstance(['name' => $row->division_level_5]);
 						ImportFosFunctionalBlockTribe::addInstance(['name' => $row->functional_block_tribe]);
-						ImportFosTribe::addInstance(['id' => $row->tribe_id], [
+						ImportFosTribe::addInstance($row->tribe_id, [
 							'id' => $row->tribe_id,
 							'code' => $row->tribe_code,
 							'name' => $row->tribe_name,
 							'leader_id' => ImportFosTribeLeader::findModelAttribute(['user_id' => $row->tribe_leader_id]),
 							'leader_it_id' => ImportFosTribeLeaderItAlias::findModelAttribute(['user_id' => $row->tribe_leader_it_id])
 						]);
-						ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
+						ImportFosClusterProduct::addInstance($row->cluster_product_id, [
 							'id' => $row->cluster_product_id,
 							'name' => $row->cluster_product_name,
 							'leader_id' => ImportFosClusterProductLeader::findModelAttribute($row->cluster_product_leader_id)
 						]);
-						ImportFosCommand::addInstance(['id' => $row->command_id], [
+						ImportFosCommand::addInstance($row->command_id, [
 							'id' => $row->command_id,
 							'name' => $row->command_name,
 							'type' => $row->command_type,
 							'cluster_id' => ImportFosClusterProduct::findModelAttribute($row->cluster_product_id),
 							'owner_id' => ImportFosProductOwner::findModelAttribute(ImportFosUsers::findModelAttribute(['name' => $row->owner_name]))
 						]);
-						ImportFosChapter::addInstance(['id' => $row->chapter_id], [
+						ImportFosChapter::addInstance($row->chapter_id, [
 							'id' => $row->chapter_id,
 							'name' => $row->chapter_name,
 							'code' => $row->chapter_code,
 							'leader_id' => ImportFosChapterLeader::findModelAttribute(['user_id' => $row->chapter_leader_id]),
 							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_id])
 						]);
-
 					}
-				break;
-				case self::STEP_FINISH:
+				} catch (ImportException $importException) {
+					$errors[] = ['row' => $row, 'error' => $importException->getName()];
+				} catch (Throwable $throwable) {
+					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+				}
+
+			break;
+			case self::STEP_FINISH:
+				try {
 					/* Подставляем айдишники декомпозированных сущностей в соответствующую таблицу */
 					foreach ($data as $row) {
 						$decomposedRow = new ImportFosDecomposed([
@@ -339,13 +355,11 @@ class ImportFos extends ActiveRecord {
 						]);
 						$decomposedRow->save();
 					}
-				break;
-			}
+				} catch (Throwable $throwable) {
+					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+				}
 
-		} catch (ImportException $importException) {
-			$errors[] = $importException->getName();
-		} catch (Throwable $throwable) {
-			$errors[] = $throwable->getMessage();
+			break;
 		}
 		return $errors;
 	}
