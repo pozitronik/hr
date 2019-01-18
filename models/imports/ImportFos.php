@@ -314,6 +314,7 @@ class ImportFos extends ActiveRecord {
 							'id' => $row->command_id,
 							'name' => $row->command_name,
 							'type' => $row->command_type,
+							'code' => $row->command_code,
 							'cluster_id' => ImportFosClusterProduct::findModelAttribute($row->cluster_product_id),
 							'owner_id' => ImportFosProductOwner::findModelAttribute(ImportFosUsers::findModelAttribute(['name' => $row->owner_name]))
 						]);
