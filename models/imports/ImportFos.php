@@ -297,20 +297,20 @@ class ImportFos extends ActiveRecord {
 						ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
 							'id' => $row->cluster_product_id,
 							'name' => $row->cluster_product_name,
-							'leader_id' => ImportFosClusterProductLeader::findModel($row->cluster_product_leader_id)->id()
+							'leader_id' => (null === $item = ImportFosClusterProductLeader::findModel($row->cluster_product_leader_id))?null:$item->id,
 						]);
 						ImportFosCommand::addInstance(['id' => $row->command_id], [
 							'id' => $row->command_id,
 							'name' => $row->command_name,
 							'type' => $row->command_type,
-							'owner' => ImportFosProductOwner::findModel(ImportFosUsers::find()->where(['name' => $row->owner_name])->one()->id)->id
+							'owner' => (null === $item = ImportFosProductOwner::findModel((null === $item = ImportFosUsers::find()->where(['name' => $row->owner_name])->one())?null:$item->id))?null:$item->id,
 						]);
 						ImportFosChapter::addInstance(['id' => $row->chapter_id], [
 							'id' => $row->chapter_id,
 							'name' => $row->chapter_name,
 							'code' => $row->chapter_code,
-							'leader' => ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one()->id(),
-							'couch' => ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one()->id()
+							'leader' => (null === $item = ImportFosChapterLeader::find()->where(['user_id' => $row->chapter_leader_id])->one())?null:$item->id,
+							'couch' => (null === $item = ImportFosChapterCouch::find()->where(['user_id' => $row->chapter_couch_id])->one())?null:$item->id,
 						]);
 
 					}
