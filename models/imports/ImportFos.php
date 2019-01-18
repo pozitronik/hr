@@ -24,7 +24,7 @@ use app\models\imports\fos\ImportFosProductOwner;
 use app\models\imports\fos\ImportFosTown;
 use app\models\imports\fos\ImportFosTribe;
 use app\models\imports\fos\ImportFosTribeLeader;
-use app\models\imports\fos\ImportFosTribeLeaderIt;
+use app\models\imports\fos\ImportFosTribeLeaderIt as ImportFosTribeLeaderItAlias;
 use app\models\imports\fos\ImportFosUsers;
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -185,19 +185,6 @@ class ImportFos extends ActiveRecord {
 	}
 
 	/**
-	 * a lil' helper, yo
-	 * @param ActiveRecord $model
-	 * @param array $findCondition
-	 * @return int|null
-	 */
-	private static function KeyOrNull(ActiveRecord $model, array $findCondition):?int {
-		if (null === $item = $model::find()->where($findCondition)->one()) {
-			return null;
-		}
-		return $item->id;
-	}
-
-	/**
 	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
 	 * @param int $domain
 	 * @return array Массив сообщений
@@ -251,7 +238,7 @@ class ImportFos extends ActiveRecord {
 							])->id
 						]);
 
-						ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
+						ImportFosTribeLeaderItAlias::addInstance(['user_id' => $row->tribe_leader_it_id], [
 							'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_it_id], [
 								'id' => $row->tribe_leader_it_id,
 								'name' => $row->tribe_leader_it_name,
@@ -259,7 +246,7 @@ class ImportFos extends ActiveRecord {
 							])->id
 						]);
 
-						ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
+						ImportFosTribeLeaderItAlias::addInstance(['user_id' => $row->tribe_leader_it_id], [
 							'user_id' => ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_id], [
 								'id' => $row->cluster_product_leader_id,
 								'name' => $row->cluster_product_leader_name,
@@ -304,8 +291,8 @@ class ImportFos extends ActiveRecord {
 							'id' => $row->tribe_id,
 							'code' => $row->tribe_code,
 							'name' => $row->tribe_name,
-							'leader_id' => ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one()->id,
-							'leader_it_id' => ImportFosTribeLeaderIt::find()->where(['user_id' => $row->tribe_leader_it_id])->one()->id
+							'leader_id' => (null === $item = ImportFosTribeLeader::find()->where(['user_id' => $row->tribe_leader_id])->one())?null:$item->id,
+							'leader_it_id' => (null === $item = ImportFosTribeLeaderItAlias::find()->where(['user_id' => $row->tribe_leader_it_id])->one())?null:$item->id
 						]);
 						ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
 							'id' => $row->cluster_product_id,
