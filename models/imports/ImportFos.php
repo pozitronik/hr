@@ -185,6 +185,19 @@ class ImportFos extends ActiveRecord {
 	}
 
 	/**
+	 * a lil' helper, yo
+	 * @param ActiveRecord $model
+	 * @param array $findCondition
+	 * @return int|null
+	 */
+	private static function KeyOrNull(ActiveRecord $model, array $findCondition):?int {
+		if (null === $item = $model::find()->where($findCondition)->one()) {
+			return null;
+		}
+		return $item->id;
+	}
+
+	/**
 	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
 	 * @param int $domain
 	 * @return array Массив сообщений
