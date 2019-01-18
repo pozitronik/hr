@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
+use app\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\models\imports\ImportException;
 use app\models\user_rights\AccessMethods;
@@ -92,7 +93,8 @@ trait ARExtended {
 	 * @throws ImportException
 	 */
 	public static function addInstance($searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {
-		if ($ignoreEmptyCondition && empty($searchCondition)) return null;
+		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
+
 		/** @var ActiveRecord $instance */
 		if (null === $instance = self::findOne($searchCondition)) {
 			$fields = $fields??$searchCondition;
