@@ -216,7 +216,8 @@ class ImportFos extends ActiveRecord {
 							'remote' => !empty($row->remote_flag),
 							'email_sigma' => $row->email_sigma,
 							'email_alpha' => $row->email_alpha,
-							'sd_id' => ArrayHelper::getValue($position, 'id'),
+							'sd_id' => $row->sd_id,
+							'position_id' => ArrayHelper::getValue($position, 'id'),
 							'town_id' => ArrayHelper::getValue($town, 'id')
 						]);
 

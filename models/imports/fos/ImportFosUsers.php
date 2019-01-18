@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name
+ * @property string $sd_id
  * @property int $remote
  * @property string $email_sigma
  * @property string $email_alpha
@@ -38,7 +39,7 @@ class ImportFosUsers extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['position_id', 'functional_block_id', 'division_level1_id', 'division_level2_id', 'division_level3_id', 'division_level4_id', 'division_level5_id', 'town_id'], 'integer'],
-			[['name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255],
+			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
 			['remote', 'boolean']
 		];
 	}
@@ -49,6 +50,7 @@ class ImportFosUsers extends ActiveRecord {
 	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
+			'sd_id' => 'ШД ID',
 			'name' => 'Name',
 			'remote' => 'Remote',
 			'email_sigma' => 'Email Sigma',

@@ -14,6 +14,7 @@ class m190117_075947_import_helpers extends Migration {
 
 		$this->createTable('import_fos_users', [
 			'id' => $this->primaryKey(),
+			'sd_id' => $this->string()->comment('ШД ID'),
 			'name' => $this->string(),
 			'remote' => $this->boolean()->defaultValue(false)->notNull(),
 			'email_sigma' => $this->string(),
