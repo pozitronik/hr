@@ -98,7 +98,7 @@ class m190117_075947_import_helpers extends Migration {
 			'code' => $this->string(),
 			'name' => $this->string(),
 			'type' => $this->string(),
-			'cluster_id' => $this->integer()->notNull()->comment('key to cluster product id'),
+			'cluster_id' => $this->integer()->comment('key to cluster product id'),
 			'owner_id' => $this->integer()->comment('key to product owner id')
 
 		]);
