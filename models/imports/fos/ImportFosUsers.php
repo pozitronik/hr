@@ -30,6 +30,7 @@ use yii\db\ActiveRecord;
  * @property-read ImportFosDivisionLevel3 $relDivision_level3
  * @property-read ImportFosDivisionLevel4 $relDivision_level4
  * @property-read ImportFosDivisionLevel5 $relDivision_level5
+ * @property-read ImportFosCommand $relCommand
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;
@@ -124,6 +125,13 @@ class ImportFosUsers extends ActiveRecord {
 	 */
 	public function getRelDivisionLevel5() {
 		return $this->hasOne(ImportFosDivisionLevel5::class, ['id' => 'division_level_5'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosCommand|ActiveQuery
+	 */
+	public function getRelCommand() {
+		return $this->hasOne(ImportFosCommand::class, ['id' => 'command_id'])->via('relDecomposed');
 	}
 
 }

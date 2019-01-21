@@ -14,6 +14,7 @@ use app\models\imports\fos\ImportFosChapterLeader;
 use app\models\imports\fos\ImportFosClusterProduct;
 use app\models\imports\fos\ImportFosClusterProductLeader;
 use app\models\imports\fos\ImportFosCommand;
+use app\models\imports\fos\ImportFosCommandPosition;
 use app\models\imports\fos\ImportFosDivisionLevel1;
 use app\models\imports\fos\ImportFosDivisionLevel2;
 use app\models\imports\fos\ImportFosDivisionLevel3;
@@ -197,6 +198,10 @@ class ImportFosDecomposed extends ActiveRecord {
 //			self::linkRole(ArrayHelper::getValue($row->division_level5, 'id'), $row->hr_user);
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
+			$command = $row->relCommand;
+			if (null !== $command) {
+				self::linkRole($command->hr_group_id, $row->hr_user_id, self::findUserCommandPosition($row->user_id, $command->id));
+			}
 
 		}
 		/** @var ImportFosChapterCouch[] $data */
@@ -383,5 +388,19 @@ class ImportFosDecomposed extends ActiveRecord {
 			$role->save();
 		}
 		return $role->id;
+	}
+
+	/**
+	 * @param int $userId
+	 * @param int $commandId
+	 * @return ImportFosCommandPosition|null
+	 * @throws Throwable
+	 */
+	public static function findUserCommandPosition(int $userId, int $commandId):?ImportFosCommandPosition {
+		if (null !== $positionId = ImportFosDecomposed::find()->where(['user_id' => $userId, 'command_id' => $commandId])->one()) {
+			return ImportFosCommandPosition::findModel($positionId);
+		}
+		return null;
+
 	}
 }
