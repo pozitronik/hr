@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 
 use app\models\core\WigetableController;
 use app\models\imports\ImportFos;
+use app\models\imports\ImportFosDecomposed;
 use app\models\imports\ImportFosDecomposedSearch;
 use app\models\imports\ImportFosSearch;
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
@@ -97,7 +98,20 @@ class ImportController extends WigetableController {
 		$searchModel = new ImportFosDecomposedSearch();
 		return $this->render('result', [
 			'searchModel' => $searchModel,
-			'dataProvider' => $searchModel->search($params, $domain)
+			'dataProvider' => $searchModel->search($params, $domain),
+			'domain' => $domain
+		]);
+	}
+
+	/**
+	 * @param int|null $domain
+	 * @return string|Response
+	 */
+	public function actionImport(?int $domain = null) {
+		if (null === $domain) return $this->redirect(['upload']);
+		ImportFosDecomposed::Import($domain);
+		return $this->render('import', [
+			'domain' => $domain
 		]);
 	}
 }

@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $leader_id key to tribe leader id
  * @property int $leader_it_id key to tribe leader it id
  * @property int $domain
+ * @property null|int $hr_group_id
  */
 class ImportFosTribe extends ActiveRecord {
 	use ARExtended;
@@ -33,7 +34,8 @@ class ImportFosTribe extends ActiveRecord {
 		return [
 			[['leader_id', 'leader_it_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 

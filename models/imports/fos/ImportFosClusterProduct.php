@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property int $leader_id key to cluster product leader id
  * @property int $domain
+ * @property null|int $hr_group_id
  */
 class ImportFosClusterProduct extends ActiveRecord {
 	use ARExtended;
@@ -31,7 +32,8 @@ class ImportFosClusterProduct extends ActiveRecord {
 		return [
 			[['leader_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 

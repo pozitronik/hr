@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property int $cluster_id key to cluster product id
  * @property int $owner_id key to product owner id
  * @property int $domain
+ * @property null|int $hr_group_id
  */
 class ImportFosCommand extends ActiveRecord {
 	use ARExtended;
@@ -34,7 +35,8 @@ class ImportFosCommand extends ActiveRecord {
 		return [
 			[['cluster_id'], 'integer'],
 			[['code', 'name', 'type'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 

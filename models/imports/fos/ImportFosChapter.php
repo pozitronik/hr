@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $leader_id key to chapter leader id
  * @property int $couch_id key to couch id
  * @property int $domain
+ * @property null|int $hr_group_id
  */
 class ImportFosChapter extends ActiveRecord {
 	use ARExtended;
@@ -33,7 +34,8 @@ class ImportFosChapter extends ActiveRecord {
 		return [
 			[['leader_id', 'couch_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 

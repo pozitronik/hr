@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name
  * @property int $domain
+ * @property null|int $hr_group_id
  */
 class ImportFosFunctionalBlockTribe extends ActiveRecord {
 	use ARExtended;
@@ -29,7 +30,8 @@ class ImportFosFunctionalBlockTribe extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 
