@@ -9,8 +9,10 @@ use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\groups\Groups;
 use app\models\imports\fos\ImportFosChapter;
+use app\models\imports\fos\ImportFosChapterCouch;
 use app\models\imports\fos\ImportFosChapterLeader;
 use app\models\imports\fos\ImportFosClusterProduct;
+use app\models\imports\fos\ImportFosClusterProductLeader;
 use app\models\imports\fos\ImportFosCommand;
 use app\models\imports\fos\ImportFosDivisionLevel1;
 use app\models\imports\fos\ImportFosDivisionLevel2;
@@ -19,7 +21,10 @@ use app\models\imports\fos\ImportFosDivisionLevel4;
 use app\models\imports\fos\ImportFosDivisionLevel5;
 use app\models\imports\fos\ImportFosFunctionalBlock;
 use app\models\imports\fos\ImportFosFunctionalBlockTribe;
+use app\models\imports\fos\ImportFosProductOwner;
 use app\models\imports\fos\ImportFosTribe;
+use app\models\imports\fos\ImportFosTribeLeader;
+use app\models\imports\fos\ImportFosTribeLeaderIt;
 use app\models\imports\fos\ImportFosUsers;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
@@ -181,17 +186,72 @@ class ImportFosDecomposed extends ActiveRecord {
 					"value" => $row->email_sigma
 				]
 			]));
-		}
+			//В функциональный блок не включаем, это только для групп
 
+			/*Включение в подразделения без ролей*/
+			//Пока игнорим: непонятно, нужно или нет, а если нужно - то как. Можно добавлять пользователя в каждую группу, а можно добавить в нижний уровень, связав группы по иерархии Спросить у Рога
+//			self::linkRole(ArrayHelper::getValue($row->division_level1, 'id'), $row->hr_user);
+//			self::linkRole(ArrayHelper::getValue($row->division_level2, 'id'), $row->hr_user);
+//			self::linkRole(ArrayHelper::getValue($row->division_level3, 'id'), $row->hr_user);
+//			self::linkRole(ArrayHelper::getValue($row->division_level4, 'id'), $row->hr_user);
+//			self::linkRole(ArrayHelper::getValue($row->division_level5, 'id'), $row->hr_user);
+
+			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
+
+		}
+		/** @var ImportFosChapterCouch[] $data */
+		$data = ImportFosChapterCouch::find()->where(['domain' => $domain])->all();
+		foreach ($data as $row) {
+			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->user_id])->all();
+			foreach ($chapters as $chapter) {
+				/** @var ImportFosChapter $chapter */
+				self::linkRole($chapter->hr_group_id, $row->hr_user_id, 'Agile-коуч');
+			}
+		}
+		/** @var ImportFosChapterLeader[] $data */
 		$data = ImportFosChapterLeader::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			/** @var ImportFosChapterLeader $row */
 			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->user_id])->all();
 			foreach ($chapters as $chapter) {
 				/** @var ImportFosChapter $chapter */
 				self::linkRole($chapter->hr_group_id, $row->hr_user_id, 'Лидер чаптера');
 			}
 		}
+		/** @var ImportFosClusterProductLeader[] $data */
+		$data = ImportFosClusterProductLeader::find()->where(['domain' => $domain])->all();
+		foreach ($data as $row) {
+			$clusters = ImportFosClusterProduct::find()->where(['leader_id' => $row->user_id])->all();
+			foreach ($clusters as $cluster) {
+				/** @var ImportFosClusterProduct $cluster */
+				self::linkRole($cluster->hr_group_id, $row->hr_user_id, 'Лидер кластера');
+			}
+		}
+		/** @var ImportFosProductOwner[] $data */
+		$data = ImportFosProductOwner::find()->where(['domain' => $domain])->all();
+		foreach ($data as $row) {
+			$commands = ImportFosCommand::find()->where(['owner_id' => $row->user_id])->all();
+			foreach ($commands as $command) {
+				/** @var ImportFosCommand $command */
+				self::linkRole($command->hr_group_id, $row->hr_user_id, 'Владелец продукта');
+			}
+		}
+		$data = ImportFosTribeLeader::find()->where(['domain' => $domain])->all();
+		foreach ($data as $row) {
+			$tribes = ImportFosTribe::find()->where(['leader_id' => $row->user_id])->all();
+			foreach ($tribes as $tribe) {
+				/** @var ImportFosTribe $tribe */
+				self::linkRole($tribe->hr_group_id, $row->hr_user_id, 'Лидер трайба');
+			}
+		}
+		$data = ImportFosTribeLeaderIt::find()->where(['domain' => $domain])->all();
+		foreach ($data as $row) {
+			$tribes = ImportFosTribe::find()->where(['leader_it_id' => $row->user_id])->all();
+			foreach ($tribes as $tribe) {
+				/** @var ImportFosTribe $tribe */
+				self::linkRole($tribe->hr_group_id, $row->hr_user_id, 'IT-Лидер трайба');
+			}
+		}
+
 	}
 
 	/**
