@@ -197,11 +197,11 @@ class ImportFosDecomposed extends ActiveRecord {
 			level5 игнорим
 			*/
 			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null])) {
-				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'id'), $importFosUser->hr_user_id);
+				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'hr_group_id'), $importFosUser->hr_user_id);
 			} else {
-				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'id'), $importFosUser->hr_user_id);
-				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'id'), $importFosUser->hr_user_id);
-				RelGroupsGroups::linkModels($importFosUser->relDivisionLevel3, $importFosUser->relDivisionLevel4);
+				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'hr_group_id'), $importFosUser->hr_user_id);
+				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'hr_group_id'), $importFosUser->hr_user_id);
+				RelGroupsGroups::linkModels(ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'hr_group_id'), ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'hr_group_id'));
 			}
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
