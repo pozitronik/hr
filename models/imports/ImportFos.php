@@ -209,13 +209,18 @@ class ImportFos extends ActiveRecord {
 				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
 					try {
 						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
-							'name' => $row->position_name
+							'name' => $row->position_name,
+							'domain' => $row->domain
 						]);
-						$town = ImportFosTown::addInstance(['name' => $row->town]);
+						$town = ImportFosTown::addInstance([
+							'name' => $row->town,
+							'domain' => $row->domain
+						]);
 						ImportFosCommandPosition::addInstance($row->command_position_id, [
 							'id' => $row->command_position_id,
 							'code' => $row->command_position_code,
-							'name' => $row->command_position_name
+							'name' => $row->command_position_name,
+							'domain' => $row->domain
 						]);
 						/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
 						ImportFosUsers::addInstance($row->user_id, [
@@ -226,7 +231,8 @@ class ImportFos extends ActiveRecord {
 							'email_alpha' => $row->email_alpha,
 							'sd_id' => $row->sd_id,
 							'position_id' => ArrayHelper::getValue($position, 'id'),
-							'town_id' => ArrayHelper::getValue($town, 'id')
+							'town_id' => ArrayHelper::getValue($town, 'id'),
+							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
 						$errors[] = ['row' => $row, 'error' => $importException->getName()];
@@ -247,45 +253,58 @@ class ImportFos extends ActiveRecord {
 							'user_id' => ImportFosUsers::addInstance($row->tribe_leader_id, [
 								'id' => $row->tribe_leader_id,
 								'name' => $row->tribe_leader_name,
-								'remote' => false
-							])->id
+								'remote' => false,
+								'domain' => $row->domain
+							])->id,
+							'domain' => $row->domain
 						]);
 
 						ImportFosTribeLeaderIt::addInstance(['user_id' => $row->tribe_leader_it_id], [
 							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->tribe_leader_it_id, [
 								'id' => $row->tribe_leader_it_id,
 								'name' => $row->tribe_leader_it_name,
-								'remote' => false
-							]), 'id')
+								'remote' => false,
+								'domain' => $row->domain
+							]), 'id'),
+							'domain' => $row->domain
 						]);
 
 						ImportFosClusterProductLeader::addInstance(['user_id' => $row->cluster_product_leader_id], [
 							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->cluster_product_leader_id, [
 								'id' => $row->cluster_product_leader_id,
 								'name' => $row->cluster_product_leader_name,
-								'remote' => false
-							]), 'id')
+								'remote' => false,
+								'domain' => $row->domain
+							]), 'id'),
+							'domain' => $row->domain
 						]);
 
 						/*Для владельцев продукта приведены только имена; их может не быть*/
 						if (null !== $product_owner = ImportFosUsers::find()->where(['name' => $row->owner_name])->one()) {
-							ImportFosProductOwner::addInstance(['user_id' => $product_owner->id]);
+							ImportFosProductOwner::addInstance(['user_id' => $product_owner->id], [
+								'user_id' => $product_owner->id,
+								'domain' => $row->domain
+							]);
 						}
 
 						ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_id], [
 							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->chapter_leader_id, [
 								'id' => $row->chapter_leader_id,
 								'name' => $row->chapter_leader_name,
-								'remote' => false
-							]), 'id')
+								'remote' => false,
+								'domain' => $row->domain
+							]), 'id'),
+							'domain' => $row->domain
 						]);
 						/*can be null instance, add handlers*/
 						ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_id], [
 							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance($row->chapter_couch_id, [
 								'id' => $row->chapter_couch_id,
 								'name' => $row->chapter_couch_name,
-								'remote' => false
-							]), 'id')
+								'remote' => false,
+								'domain' => $row->domain
+							]), 'id'),
+							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
 						$errors[] = ['row' => $row, 'error' => $importException->getName()];
@@ -300,24 +319,47 @@ class ImportFos extends ActiveRecord {
 				foreach ($data as $row) {
 					try {
 
-						ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block]);
-						ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1]);
-						ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2]);
-						ImportFosDivisionLevel3::addInstance(['name' => $row->division_level_3]);
-						ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4]);
-						ImportFosDivisionLevel5::addInstance(['name' => $row->division_level_5]);
-						ImportFosFunctionalBlockTribe::addInstance(['name' => $row->functional_block_tribe]);
+						ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block], [
+							'name' => $row->functional_block,
+							'domain' => $row->domain
+						]);
+						ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1], [
+							'name' => $row->division_level_1,
+							'domain' => $row->domain
+						]);
+						ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2], [
+							'name' => $row->division_level_2,
+							'domain' => $row->domain
+						]);
+						ImportFosDivisionLevel3::addInstance(['name' => $row->division_level_3], [
+							'name' => $row->division_level_3,
+							'domain' => $row->domain
+						]);
+						ImportFosDivisionLevel4::addInstance(['name' => $row->division_level_4], [
+							'name' => $row->division_level_4,
+							'domain' => $row->domain
+						]);
+						ImportFosDivisionLevel5::addInstance(['name' => $row->division_level_5], [
+							'name' => $row->division_level_5,
+							'domain' => $row->domain
+						]);
+						ImportFosFunctionalBlockTribe::addInstance(['name' => $row->functional_block_tribe],[
+							'name' => $row->functional_block_tribe,
+							'domain' => $row->domain
+						]);
 						ImportFosTribe::addInstance($row->tribe_id, [
 							'id' => $row->tribe_id,
 							'code' => $row->tribe_code,
 							'name' => $row->tribe_name,
 							'leader_id' => ImportFosTribeLeader::findModelAttribute(['user_id' => $row->tribe_leader_id]),
-							'leader_it_id' => ImportFosTribeLeaderIt::findModelAttribute(['user_id' => $row->tribe_leader_it_id])
+							'leader_it_id' => ImportFosTribeLeaderIt::findModelAttribute(['user_id' => $row->tribe_leader_it_id]),
+							'domain' => $row->domain
 						]);
 						ImportFosClusterProduct::addInstance($row->cluster_product_id, [
 							'id' => $row->cluster_product_id,
 							'name' => $row->cluster_product_name,
-							'leader_id' => ImportFosClusterProductLeader::findModelAttribute(['user_id' => $row->cluster_product_leader_id])
+							'leader_id' => ImportFosClusterProductLeader::findModelAttribute(['user_id' => $row->cluster_product_leader_id]),
+							'domain' => $row->domain
 						]);
 						ImportFosCommand::addInstance($row->command_id, [
 							'id' => $row->command_id,
@@ -325,14 +367,16 @@ class ImportFos extends ActiveRecord {
 							'type' => $row->command_type,
 							'code' => $row->command_code,
 							'cluster_id' => ImportFosClusterProduct::findModelAttribute($row->cluster_product_id),
-							'owner_id' => ImportFosProductOwner::findModelAttribute(['user_id' => ImportFosUsers::findModelAttribute(['name' => $row->owner_name])])
+							'owner_id' => ImportFosProductOwner::findModelAttribute(['user_id' => ImportFosUsers::findModelAttribute(['name' => $row->owner_name])]),
+							'domain' => $row->domain
 						]);
 						ImportFosChapter::addInstance($row->chapter_id, [
 							'id' => $row->chapter_id,
 							'name' => $row->chapter_name,
 							'code' => $row->chapter_code,
 							'leader_id' => ImportFosChapterLeader::findModelAttribute(['user_id' => $row->chapter_leader_id]),
-							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_id])
+							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_id]),
+							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
 						$errors[] = ['row' => $row, 'error' => $importException->getName()];
