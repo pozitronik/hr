@@ -28,7 +28,8 @@ class ImportFosClusterProduct extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['leader_id'], 'integer'],
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			['domain', 'integer']
 		];
 	}
 

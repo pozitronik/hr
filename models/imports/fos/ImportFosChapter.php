@@ -30,7 +30,8 @@ class ImportFosChapter extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['leader_id', 'couch_id'], 'integer'],
-			[['code', 'name'], 'string', 'max' => 255]
+			[['code', 'name'], 'string', 'max' => 255],
+			['domain', 'integer']
 		];
 	}
 

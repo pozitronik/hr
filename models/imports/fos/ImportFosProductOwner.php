@@ -27,7 +27,8 @@ class ImportFosProductOwner extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['user_id'], 'required'],
-			[['user_id'], 'integer']
+			[['user_id'], 'integer'],
+			['domain', 'integer']
 		];
 	}
 

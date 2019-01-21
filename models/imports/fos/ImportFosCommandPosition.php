@@ -27,7 +27,8 @@ class ImportFosCommandPosition extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['code', 'name'], 'string', 'max' => 255]
+			[['code', 'name'], 'string', 'max' => 255],
+			['domain', 'integer']
 		];
 	}
 

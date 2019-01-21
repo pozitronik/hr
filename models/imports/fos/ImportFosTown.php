@@ -26,7 +26,8 @@ class ImportFosTown extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			['domain', 'integer']
 		];
 	}
 
