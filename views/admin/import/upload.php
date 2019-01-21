@@ -17,11 +17,13 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin(); ?>
 	<div class="panel">
 
-	<div class="panel-body">
-		<div class="row">
-			<div class="col-md-12">
-				<?= $form->field($model, 'uploadFileInstance')->fileInput()->label('Выберите файл'); ?>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'uploadFileInstance')->fileInput()->label('Выберите файл'); ?>
+				</div>
 			</div>
+
 		</div>
 		<div class="panel-footer">
 			<div class="btn-group">
