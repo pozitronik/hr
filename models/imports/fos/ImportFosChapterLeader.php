@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $user_id key to user id
+ * @property int $domain
  */
 class ImportFosChapterLeader extends ActiveRecord {
 	use ARExtended;

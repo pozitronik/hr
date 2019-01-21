@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property int $leader_id key to chapter leader id
  * @property int $couch_id key to couch id
+ * @property int $domain
  */
 class ImportFosChapter extends ActiveRecord {
 	use ARExtended;

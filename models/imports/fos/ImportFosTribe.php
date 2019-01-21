@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property int $leader_id key to tribe leader id
  * @property int $leader_it_id key to tribe leader it id
+ * @property int $domain
  */
 class ImportFosTribe extends ActiveRecord {
 	use ARExtended;

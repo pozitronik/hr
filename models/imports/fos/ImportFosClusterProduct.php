@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name
  * @property int $leader_id key to cluster product leader id
+ * @property int $domain
  */
 class ImportFosClusterProduct extends ActiveRecord {
 	use ARExtended;

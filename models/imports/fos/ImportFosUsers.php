@@ -23,6 +23,7 @@ use yii\db\ActiveRecord;
  * @property int $division_level4_id key to division_level4 id
  * @property int $division_level5_id key to division_level5 id
  * @property int $town_id key to town id
+ * @property int $domain
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;

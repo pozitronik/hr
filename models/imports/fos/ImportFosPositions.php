@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name
+ * @property int $domain
  */
 class ImportFosPositions extends ActiveRecord {
 	use ARExtended;

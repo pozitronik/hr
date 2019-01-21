@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property string $type
  * @property int $cluster_id key to cluster product id
  * @property int $owner_id key to product owner id
+ * @property int $domain
  */
 class ImportFosCommand extends ActiveRecord {
 	use ARExtended;
