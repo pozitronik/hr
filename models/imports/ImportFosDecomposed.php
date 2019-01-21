@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\imports;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Path;
 use app\helpers\Utils;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
@@ -37,6 +36,7 @@ use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use Exception;
 use Throwable;
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -104,9 +104,10 @@ class ImportFosDecomposed extends ActiveRecord {
 	/**
 	 * Разбираем декомпозированные данные и вносим в боевую таблицу
 	 * @param null|int $domain
+	 * @throws Throwable
 	 */
-	public static function Import(?int $domain = null) {
-		$result = [];//Сюда складируем сообщения
+	public static function Import(?int $domain = null):void {
+		//$result = [];//Сюда складируем сообщения
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 		/*Группы. Добавляем группу и её тип*/
 		$data = ImportFosChapter::find()->where(['domain' => $domain])->all();/*todo: only NOT IMPORTED GROUPS*/
@@ -352,7 +353,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
 		if (null === $user->id) {
-			\Yii::debug($user, 'debug');
+			Yii::debug($user, 'debug');
 		}
 
 		foreach ($attributes as $attribute) {
@@ -388,7 +389,8 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * Добавляет пользователя в группу с линковкой роли
 	 * @param int $groupId
 	 * @param int $userId
-	 * @param ?string $roleName
+	 * @param null|string $roleName
+	 * @throws Throwable
 	 */
 	public static function linkRole(int $groupId, int $userId, ?string $roleName = null):void {
 		/** @var Users $user */
@@ -427,7 +429,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function findUserCommandPosition(int $userId, int $commandId):?ImportFosCommandPosition {
-		if (null !== $positionId = ImportFosDecomposed::find()->where(['user_id' => $userId, 'command_id' => $commandId])->one()) {
+		if (null !== $positionId = self::find()->where(['user_id' => $userId, 'command_id' => $commandId])->one()) {
 			return ImportFosCommandPosition::findModel($positionId);
 		}
 		return null;

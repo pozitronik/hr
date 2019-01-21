@@ -42,6 +42,7 @@ use yii\db\Exception;
  * @property Users|ActiveQuery $relUsers Пользователи с этим атрибутом
  * @property-read string $categoryName Строковое имя категории
  * @property-read bool $hasIntegerProperties
+ * @property int $userProperties
  * @property-read int $usersCount
  */
 class DynamicAttributes extends ActiveRecord {

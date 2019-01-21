@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
-use app\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\models\imports\ImportException;
 use app\models\user_rights\AccessMethods;

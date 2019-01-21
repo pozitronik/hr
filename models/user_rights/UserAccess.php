@@ -6,7 +6,6 @@ namespace app\models\user_rights;
 use app\models\core\Magic;
 use app\models\groups\Groups;
 use app\models\user\CurrentUser;
-use app\models\user_rights\rights\example\Example;
 use ReflectionException;
 use Throwable;
 use Yii;
