@@ -26,9 +26,8 @@ use yii\widgets\ActiveForm;
 
 		</div>
 		<div class="panel-footer">
-			<div class="btn-group">
-				<?= Html::submitButton('Загрузить', ['class' => 'btn btn-success']); ?>
-			</div>
+			<?= Html::submitButton('Загрузить', ['class' => 'btn btn-success pull-right']); ?>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 <?php ActiveForm::end(); ?>

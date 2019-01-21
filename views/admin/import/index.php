@@ -21,7 +21,7 @@ use yii\bootstrap\Html;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => 'Импортировано '.Utils::pluralForm($dataProvider->totalCount, ['строка', 'строки', 'строк'])
+		'heading' => 'Загружено '.Utils::pluralForm($dataProvider->totalCount, ['строка', 'строки', 'строк'])
 	],
 	'toolbar' => [
 		[

@@ -89,6 +89,13 @@ class ImportFos extends ActiveRecord {
 	public const STEP_GROUPS = 2;
 	public const STEP_FINISH = 3;
 
+	public const step_labels = [
+		self::STEP_REFERENCES => 'Декомпозиция справочных данных',
+		self::STEP_USERS => 'Декомпозиция пользователей',
+		self::STEP_GROUPS => 'Декомпозиция групп',
+		self::STEP_FINISH => 'Итоговая сверка',
+	];
+
 	/**
 	 * {@inheritdoc}
 	 */
