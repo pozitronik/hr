@@ -256,7 +256,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	public static function addAttributeProperty(array $dynamic_attribute, int $user_id):void {
 		if (null === $attribute = DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
 			$attribute = new DynamicAttributes();
-			$attribute->createCompetency(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
+			$attribute->createAttribute(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
 		}
 		if (null === $field = $attribute->getPropertyByName($dynamic_attribute['field'])) {
 			$field = new DynamicAttributeProperty([
