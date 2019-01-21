@@ -90,7 +90,7 @@ class UserAccess extends Model {
 	 */
 	public static function GetGroupsScope():ActiveQuery {
 		$query = Groups::find();
-		Example::SetGroupsScope($query);
+//		Example::SetGroupsScope($query);
 		return $query;
 	}
 
