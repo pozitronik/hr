@@ -55,7 +55,7 @@ class m190116_075224_fos_import_table extends Migration {
 			'chapter_couch_name' => $this->string()->comment('Agile-коуч'),
 			'email_sigma' => $this->string()->comment('Адрес электронной почты (sigma)'),
 			'email_alpha' => $this->string()->comment('Адрес электронной почты (внутренний'),
-			'domain' => $this->integer()->comment('Служеная метка очереди импорта')
+			'domain' => $this->integer()->comment('Служебная метка очереди импорта')
 		]);
 
 		$this->createIndex('sd_id', 'import_fos', 'sd_id');
