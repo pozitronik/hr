@@ -74,6 +74,7 @@ class ImportController extends WigetableController {
 
 	/**
 	 * @param int|null $domain
+	 * @param int $step
 	 * @return string|Response
 	 */
 	public function actionDecompose(?int $domain = null, int $step = 0) {
