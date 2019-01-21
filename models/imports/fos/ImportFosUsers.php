@@ -25,11 +25,12 @@ use yii\db\ActiveRecord;
  * @property-read ImportFosDecomposed $relDecomposed
  * @property-read ImportFosPositions $relPosition
  * @property-read ImportFosTown $relTown
- * @property-read ImportFosDivisionLevel1 $relDivision_level1
- * @property-read ImportFosDivisionLevel2 $relDivision_level2
- * @property-read ImportFosDivisionLevel3 $relDivision_level3
- * @property-read ImportFosDivisionLevel4 $relDivision_level4
- * @property-read ImportFosDivisionLevel5 $relDivision_level5
+ * @property-read ImportFosFunctionalBlock $relFunctionalBlock
+ * @property-read ImportFosDivisionLevel1 $relDivisionLevel1
+ * @property-read ImportFosDivisionLevel2 $relDivisionLevel2
+ * @property-read ImportFosDivisionLevel3 $relDivisionLevel3
+ * @property-read ImportFosDivisionLevel4 $relDivisionLevel4
+ * @property-read ImportFosDivisionLevel5 $relDivisionLevel5
  * @property-read ImportFosCommand $relCommand
  */
 class ImportFosUsers extends ActiveRecord {
@@ -132,6 +133,13 @@ class ImportFosUsers extends ActiveRecord {
 	 */
 	public function getRelCommand() {
 		return $this->hasOne(ImportFosCommand::class, ['id' => 'command_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosFunctionalBlock|ActiveQuery
+	 */
+	public function getRelFunctionalBlock() {
+		return $this->hasOne(ImportFosFunctionalBlock::class, ['id' => 'command_id'])->via('relDecomposed');
 	}
 
 }
