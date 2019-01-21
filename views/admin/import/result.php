@@ -5,12 +5,15 @@ declare(strict_types = 1);
  * @var View $this
  * @var ActiveRecord $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var int $domain
  */
 
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 use kartik\grid\GridView;
+use app\helpers\Utils;
+use yii\helpers\Html;
 
 
 ?>
@@ -20,9 +23,13 @@ use kartik\grid\GridView;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title
+		'heading' => 'Обработано '.Utils::pluralForm($dataProvider->totalCount, ['строка', 'строки', 'строк'])
 	],
-	'toolbar' => false,
+	'toolbar' => [
+		[
+			'content' => Html::a('Импорт в базу', ['import', 'domain' => $domain], ['class' => 'btn btn-success'])
+		]
+	],
 	'export' => false,
 	'resizableColumns' => true,
 	'responsive' => true,
