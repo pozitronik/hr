@@ -1,4 +1,5 @@
 <?php
+/** @noinspection BadExceptionsProcessingInspection */
 declare(strict_types = 1);
 
 namespace app\models\imports;
@@ -93,7 +94,7 @@ class ImportFos extends ActiveRecord {
 		self::STEP_REFERENCES => 'Декомпозиция справочных данных',
 		self::STEP_USERS => 'Декомпозиция пользователей',
 		self::STEP_GROUPS => 'Декомпозиция групп',
-		self::STEP_FINISH => 'Итоговая сверка',
+		self::STEP_FINISH => 'Итоговая сверка'
 	];
 
 	/**
