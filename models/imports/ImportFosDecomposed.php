@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\imports;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
@@ -96,71 +97,68 @@ class ImportFosDecomposed extends ActiveRecord {
 	public static function Import(?int $domain = null) {
 		$result = [];//Сюда складируем сообщения
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
-		/*Должности
-		*/
-		//todo: в таблицы декомпозиции писать соответствия имеющимся данным
 		/*Группы. Добавляем группу и её тип*/
-		$data = ImportFosChapter::find()->where(['domain' => $domain])->all();
+		$data = ImportFosChapter::find()->where(['domain' => $domain])->all();/*todo: only NOT IMPORTED GROUPS*/
 		foreach ($data as $row) {
 			/** @var ImportFosChapter $row */
-			self::addGroup($row->name, 'Чаптер');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Чаптер'));
 		}
 		$data = ImportFosClusterProduct::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosClusterProduct $row */
-			self::addGroup($row->name, 'Кластер');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Кластер'));
 		}
 		$data = ImportFosCommand::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosCommand $row */
-			self::addGroup($row->name, 'Команда');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Команда'));
 		}
 		$data = ImportFosDivisionLevel1::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosDivisionLevel1 $row */
-			self::addGroup($row->name, 'Подразделение первого уровня');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение первого уровня'));
 		}
 		$data = ImportFosDivisionLevel2::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosDivisionLevel2 $row */
-			self::addGroup($row->name, 'Подразделение второго уровня');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение второго уровня'));
 		}
 		$data = ImportFosDivisionLevel3::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosDivisionLevel3 $row */
-			self::addGroup($row->name, 'Подразделение третьего уровня');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение третьего уровня'));
 		}
 		$data = ImportFosDivisionLevel4::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosDivisionLevel4 $row */
-			self::addGroup($row->name, 'Подразделение четвёртого уровня');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение четвёртого уровня'));
 		}
 		$data = ImportFosDivisionLevel5::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosDivisionLevel5 $row */
-			self::addGroup($row->name, 'Подразделение пятого уровня');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение пятого уровня'));
 		}
 		$data = ImportFosFunctionalBlock::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosFunctionalBlock $row */
-			self::addGroup($row->name, 'Функциональный блок');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Функциональный блок'));
 		}
 		$data = ImportFosFunctionalBlockTribe::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosFunctionalBlockTribe $row */
-			self::addGroup($row->name, 'Функциональный блок трайба');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Функциональный блок трайба'));
 		}
 		$data = ImportFosTribe::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 			/** @var ImportFosTribe $row */
-			self::addGroup($row->name, 'Трайб');
+			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Трайб'));
 		}
 		/*Пользователи, с должностями, емайлами и атрибутами*/
 		$data = ImportFosUsers::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
 
 			/** @var ImportFosUsers $row */
-			self::addUser($row->name, $row->position_name, $row->email_alpha, [
+			$row->setAndSaveAttribute('hr_user_id', self::addUser($row->name, ArrayHelper::getValue($row->relPosition, 'name'), $row->email_alpha, [
 				[
 					'attribute' => 'Адрес',
 					'type' => 'boolean',
@@ -171,7 +169,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					'attribute' => 'Адрес',
 					'type' => 'string',
 					'field' => 'Населённый пункт',
-					"value" => $row->town
+					"value" => ArrayHelper::getValue($row->relTown, 'name')
 				],
 				[
 					'attribute' => 'Адрес',
@@ -179,8 +177,36 @@ class ImportFosDecomposed extends ActiveRecord {
 					'field' => 'Внешний почтовый адрес',
 					"value" => $row->email_sigma
 				]
-			]);
+			]));
 		}
+	}
+
+	/**
+	 * @param string $name
+	 * @param string $type
+	 * @return int
+	 * @throws Exception
+	 */
+	public static function addGroup(string $name, string $type):int {
+		if (empty($name)) return -1;
+		/** @var null|Groups $group */
+		$group = Groups::find()->where(['name' => $name])->one();
+		if ($group) return $group->id;
+		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
+		if (!$groupType) {
+			$groupType = new RefGroupTypes([
+				'name' => $type
+			]);
+			$groupType->save();
+		}
+
+		$group = new Groups();
+		$group->createGroup([
+			'name' => $name,
+			'type' => $groupType->id,
+			'deleted' => false
+		]);
+		return $group->id;
 	}
 
 	/**
@@ -219,34 +245,6 @@ class ImportFosDecomposed extends ActiveRecord {
 			self::addAttributeProperty($attribute, $user->id);
 		}
 		return $user->id;
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $type
-	 * @return int
-	 * @throws Exception
-	 */
-	public static function addGroup(string $name, string $type):int {
-		if (empty($name)) return -1;
-		/** @var null|Groups $group */
-		$group = Groups::find()->where(['name' => $name])->one();
-		if ($group) return $group->id;
-		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
-		if (!$groupType) {
-			$groupType = new RefGroupTypes([
-				'name' => $type
-			]);
-			$groupType->save();
-		}
-
-		$group = new Groups();
-		$group->createGroup([
-			'name' => $name,
-			'type' => $groupType->id,
-			'deleted' => false
-		]);
-		return $group->id;
 	}
 
 	/**
