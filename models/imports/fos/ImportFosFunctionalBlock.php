@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\models\imports\fos;
 
 use app\models\core\traits\ARExtended;
+use app\models\imports\ImportFosDecomposed;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,6 +15,9 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property int $domain
  * @property null|int $hr_group_id
+ *
+ * @property-read ImportFosDecomposed[] $relDecomposed
+ * @property-read ImportFosTribe[] $relTribe
  */
 class ImportFosFunctionalBlock extends ActiveRecord {
 	use ARExtended;
@@ -43,5 +48,19 @@ class ImportFosFunctionalBlock extends ActiveRecord {
 			'id' => 'ID',
 			'name' => 'Name'
 		];
+	}
+
+	/**
+	 * @return ImportFosDecomposed[]|ActiveQuery
+	 */
+	public function getRelDecomposed() {
+		return $this->hasMany(ImportFosDecomposed::class, ['functional_block' => 'id']);
+	}
+
+	/**
+	 * @return ImportFosTribe[]|ActiveQuery
+	 */
+	public function getRelTribe() {
+		return $this->hasMany(ImportFosTribe::class, ['id' => 'tribe_id'])->via('relDecomposed');
 	}
 }

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\models\imports\fos;
 
 use app\models\core\traits\ARExtended;
+use app\models\imports\ImportFosDecomposed;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,6 +18,10 @@ use yii\db\ActiveRecord;
  * @property int $leader_it_id key to tribe leader it id
  * @property int $domain
  * @property null|int $hr_group_id
+ *
+ * @property-read ImportFosDecomposed[] $relDecomposed
+ * @property-read ImportFosClusterProduct[] $relCluster
+ * @property-read ImportFosChapter[] $relChapter
  */
 class ImportFosTribe extends ActiveRecord {
 	use ARExtended;
@@ -50,5 +56,26 @@ class ImportFosTribe extends ActiveRecord {
 			'leader_id' => 'key to tribe leader id',
 			'leader_it_id' => 'key to tribe leader it id'
 		];
+	}
+
+	/**
+	 * @return ImportFosDecomposed[]|ActiveQuery
+	 */
+	public function getRelDecomposed() {
+		return $this->hasMany(ImportFosDecomposed::class, ['tribe_id' => 'id']);
+	}
+
+	/**
+	 * @return ImportFosClusterProduct[]|ActiveQuery
+	 */
+	public function getRelCluster() {
+		return $this->hasMany(ImportFosClusterProduct::class, ['id' => 'cluster_product_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosChapter[]|ActiveQuery
+	 */
+	public function getRelChapter() {
+		return $this->hasMany(ImportFosChapter::class, ['id' => 'chapter_id'])->via('relDecomposed');
 	}
 }

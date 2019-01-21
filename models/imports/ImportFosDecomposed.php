@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\imports;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Path;
 use app\helpers\Utils;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
@@ -30,6 +31,7 @@ use app\models\imports\fos\ImportFosUsers;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
 use app\models\references\refs\RefUserRoles;
+use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
@@ -163,47 +165,48 @@ class ImportFosDecomposed extends ActiveRecord {
 			$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Трайб'));
 		}
 		/*Пользователи, с должностями, емайлами и атрибутами*/
-		$data = ImportFosUsers::find()->where(['domain' => $domain])->all();
-		foreach ($data as $row) {
+		/** @var ImportFosUsers[] $importFosUsers */
+		$importFosUsers = ImportFosUsers::find()->where(['domain' => $domain])->all();
+		foreach ($importFosUsers as $importFosUser) {
 
-			/** @var ImportFosUsers $row */
-			$row->setAndSaveAttribute('hr_user_id', self::addUser($row->name, ArrayHelper::getValue($row->relPosition, 'name'), $row->email_alpha, [
+			$importFosUser->setAndSaveAttribute('hr_user_id', self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
 				[
 					'attribute' => 'Адрес',
 					'type' => 'boolean',
 					'field' => 'Удалённое рабочее место',
-					"value" => $row->remote
+					"value" => $importFosUser->remote
 				],
 				[
 					'attribute' => 'Адрес',
 					'type' => 'string',
 					'field' => 'Населённый пункт',
-					"value" => ArrayHelper::getValue($row->relTown, 'name')
+					"value" => ArrayHelper::getValue($importFosUser->relTown, 'name')
 				],
 				[
 					'attribute' => 'Адрес',
 					'type' => 'string',
 					'field' => 'Внешний почтовый адрес',
-					"value" => $row->email_sigma
+					"value" => $importFosUser->email_sigma
 				]
 			]));
-			//В функциональный блок не включаем, это только для групп
-
-			/*Включение в подразделения без ролей*/
-			//Пока игнорим: непонятно, нужно или нет, а если нужно - то как. Можно добавлять пользователя в каждую группу, а можно добавить в нижний уровень, связав группы по иерархии Спросить у Рога
-//			self::linkRole(ArrayHelper::getValue($row->division_level1, 'id'), $row->hr_user);
-//			self::linkRole(ArrayHelper::getValue($row->division_level2, 'id'), $row->hr_user);
-//			self::linkRole(ArrayHelper::getValue($row->division_level3, 'id'), $row->hr_user);
-//			self::linkRole(ArrayHelper::getValue($row->division_level4, 'id'), $row->hr_user);
-//			self::linkRole(ArrayHelper::getValue($row->division_level5, 'id'), $row->hr_user);
-
-			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
-			if (null !== $command = $row->relCommand) {//Пользователь может быть вне команды
-				self::linkRole($command->hr_group_id, $row->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($row->id, $command->id), 'name'));
+			/*Логика декомпозиции подразделений:
+			Если функциональный блок = Розничный бизнес, то делаем группу из level2
+			Если функциональный блок = Пуст, то делаем группу из level2
+			В остальных случаях делаем группы level3 && level4 (если есть данные), level4 входит в level3,
+			level5 игнорим
+			*/
+			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null])) {
+				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'id'), $importFosUser->hr_user_id);
 			} else {
-//				\Yii::debug($row,'debug');
+				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'id'), $importFosUser->hr_user_id);
+				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'id'), $importFosUser->hr_user_id);
+				RelGroupsGroups::linkModels($importFosUser->relDivisionLevel3, $importFosUser->relDivisionLevel4);
 			}
 
+			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
+			if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
+				self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->id, $command->id), 'name'));
+			}
 		}
 		/** @var ImportFosChapterCouch[] $data */
 		$data = ImportFosChapterCouch::find()->where(['domain' => $domain])->all();
@@ -257,12 +260,35 @@ class ImportFosDecomposed extends ActiveRecord {
 				self::linkRole($tribe->hr_group_id, $row->hr_user_id, 'IT-Лидер трайба');
 			}
 		}
+		/*Строим связи между группами
+		1) (Бизнес-связи) Функциональный блок => трайб => кластер => команда
+		2) (IT-связь) Трайб => Чаптер
+		*/
+		foreach (ImportFosFunctionalBlock::find()->where(['domain' => $domain])->all() as $fBlock) {
+			/** @var ImportFosFunctionalBlock $fBlock */
+			foreach ($fBlock->relTribe as $tribe) {
+				RelGroupsGroups::linkModels($fBlock->hr_group_id, $tribe->hr_group_id);
+			}
 
-
+		}
+		foreach (ImportFosTribe::find()->where(['domain' => $domain])->all() as $tribe) {
+			foreach ($tribe->relCluster as $cluster) {
+				RelGroupsGroups::linkModels($tribe->hr_group_id, $cluster->hr_group_id);
+			}
+			foreach ($tribe->relChapter as $chapter) {
+				RelGroupsGroups::linkModels($tribe->hr_group_id, $chapter->hr_group_id);//it-relation
+			}
+		}
+		foreach (ImportFosClusterProduct::find()->where(['domain' => $domain])->all() as $cluster) {
+			foreach ($cluster->relCommand as $command) {
+				RelGroupsGroups::linkModels($cluster->hr_group_id, $command->hr_group_id);
+			}
+		}
 
 	}
 
 	/**
+	 * todo: проверять уникальность не только по имени, но и по типу
 	 * @param string $name
 	 * @param string $type
 	 * @return int

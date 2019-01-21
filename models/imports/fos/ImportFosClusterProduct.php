@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\models\imports\fos;
 
 use app\models\core\traits\ARExtended;
+use app\models\imports\ImportFosDecomposed;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -14,6 +16,9 @@ use yii\db\ActiveRecord;
  * @property int $leader_id key to cluster product leader id
  * @property int $domain
  * @property null|int $hr_group_id
+ *
+ * @property-read ImportFosDecomposed[] $relDecomposed
+ * @property-read ImportFosCommand[] $relCommand
  */
 class ImportFosClusterProduct extends ActiveRecord {
 	use ARExtended;
@@ -46,5 +51,20 @@ class ImportFosClusterProduct extends ActiveRecord {
 			'name' => 'Name',
 			'leader_id' => 'key to cluster product leader id'
 		];
+	}
+
+
+	/**
+	 * @return ImportFosDecomposed[]|ActiveQuery
+	 */
+	public function getRelDecomposed() {
+		return $this->hasMany(ImportFosDecomposed::class, ['cluster_product_id' => 'id']);
+	}
+
+	/**
+	 * @return ImportFosCommand[]|ActiveQuery
+	 */
+	public function getRelCommand() {
+		return $this->hasMany(ImportFosCommand::class, ['id' => 'command_id'])->via('relDecomposed');
 	}
 }
