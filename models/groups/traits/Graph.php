@@ -46,10 +46,10 @@ trait Graph {
 	}
 
 	/**
-	 * @param Graph $to
+	 * @param Groups $to
 	 * @return array
 	 */
-	private function Edge(Graph $to):array {
+	private function Edge(Groups $to):array {
 //		if (false === $color = RelGroupsGroups::getRelationColor($this->id, $to->id)) {
 //			 //todo: цвет вычисляется, как средний между цветом исходящей группы и входящей группы
 //		}
