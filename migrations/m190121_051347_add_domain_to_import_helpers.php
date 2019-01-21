@@ -17,7 +17,6 @@ class m190121_051347_add_domain_to_import_helpers extends Migration {
 		$this->addColumn('import_fos_cluster_product_leader', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
 		$this->addColumn('import_fos_command', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
 		$this->addColumn('import_fos_command_position', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
-		$this->addColumn('import_fos_decomposed', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
 		$this->addColumn('import_fos_division_level1', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
 		$this->addColumn('import_fos_division_level2', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
 		$this->addColumn('import_fos_division_level3', 'domain', $this->integer()->comment('Служебная метка домена импорта'));
@@ -45,7 +44,6 @@ class m190121_051347_add_domain_to_import_helpers extends Migration {
 		$this->dropColumn('import_fos_cluster_product_leader', 'domain');
 		$this->dropColumn('import_fos_command', 'domain');
 		$this->dropColumn('import_fos_command_position', 'domain');
-		$this->dropColumn('import_fos_decomposed', 'domain');
 		$this->dropColumn('import_fos_division_level1', 'domain');
 		$this->dropColumn('import_fos_division_level2', 'domain');
 		$this->dropColumn('import_fos_division_level3', 'domain');
