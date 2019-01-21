@@ -9,6 +9,7 @@ use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\groups\Groups;
 use app\models\imports\fos\ImportFosChapter;
+use app\models\imports\fos\ImportFosChapterLeader;
 use app\models\imports\fos\ImportFosClusterProduct;
 use app\models\imports\fos\ImportFosCommand;
 use app\models\imports\fos\ImportFosDivisionLevel1;
@@ -22,7 +23,9 @@ use app\models\imports\fos\ImportFosTribe;
 use app\models\imports\fos\ImportFosUsers;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserPositions;
+use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersAttributes;
+use app\models\relations\RelUsersGroupsRoles;
 use app\models\users\Users;
 use Exception;
 use Throwable;
@@ -179,6 +182,16 @@ class ImportFosDecomposed extends ActiveRecord {
 				]
 			]));
 		}
+
+		$data = ImportFosChapterLeader::find()->where(['domain' => $domain])->all();
+		foreach ($data as $row) {
+			/** @var ImportFosChapterLeader $row */
+			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->user_id])->all();
+			foreach ($chapters as $chapter) {
+				/** @var ImportFosChapter $chapter */
+				self::linkRole($chapter->hr_group_id, $row->hr_user_id, 'Лидер чаптера');
+			}
+		}
 	}
 
 	/**
@@ -211,17 +224,18 @@ class ImportFosDecomposed extends ActiveRecord {
 
 	/**
 	 * @param string $name
-	 * @param string $position
-	 * @param string $email
+	 * @param string|null $position
+	 * @param string|null $email
 	 * @param array<array> $attributes
 	 * @return int
 	 * @throws Throwable
 	 */
-	public static function addUser(string $name, string $position, string $email, array $attributes = []):int {
+	public static function addUser(string $name, ?string $position, ?string $email, array $attributes = []):int {
 		if (empty($name)) return -1;
 		/** @var null|Users $user */
 		$user = Users::find()->where(['username' => $name])->one();
 		if ($user) return $user->id;
+
 		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
 		if (!$userPosition) {
 			$userPosition = new RefUserPositions([
@@ -231,15 +245,20 @@ class ImportFosDecomposed extends ActiveRecord {
 		}
 
 		$user = new Users();
+		/** @noinspection IsEmptyFunctionUsageInspection */
 		$user->createModel([
 			'username' => $name,
 			'login' => Utils::generateLogin(),
 			'password' => Utils::gen_uuid(5),
 			'salt' => null,
-			'email' => ('' === $email)?Utils::generateLogin()."@localhost":$email,
+			'email' => empty($email)?Utils::generateLogin()."@localhost":$email,
 			'deleted' => false
 		]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
+
+		if (null === $user->id) {
+			\Yii::debug($user, 'debug');
+		}
 
 		foreach ($attributes as $attribute) {
 			self::addAttributeProperty($attribute, $user->id);
@@ -268,5 +287,41 @@ class ImportFosDecomposed extends ActiveRecord {
 		}
 		RelUsersAttributes::linkModels($user_id, $attribute);
 		$attribute->setUserProperty($user_id, $field->id, $dynamic_attribute['value']);
+	}
+
+	/**
+	 * Добавляет пользователя в группу с линковкой роли
+	 * @param int $groupId
+	 * @param int $userId
+	 * @param ?string $roleName
+	 */
+	public static function linkRole(int $groupId, int $userId, ?string $roleName = null):void {
+		/** @var Users $user */
+		if (null === $user = Users::findModel($userId)) return;
+		/** @var null|Groups $group */
+		if (null === $group = Groups::findModel($groupId)) return;
+		$group = Groups::findModel($groupId);
+		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
+			$user->relGroups = $group;
+		}
+		/** @noinspection IsEmptyFunctionUsageInspection */
+		if (!empty($roleName)) {
+			RelUsersGroupsRoles::setRoleInGroup(self::addUserRole($roleName), $groupId, $userId);
+		}
+
+	}
+
+	/**
+	 * Добавляет роль пользователя в группе (или возвращает существующую) по её имени
+	 * @param string $roleName
+	 * @return int|null
+	 */
+	public static function addUserRole(string $roleName):?int {
+		if (empty($roleName)) return null;
+		if (null === $role = RefUserRoles::find()->where(['name' => $roleName])->one()) {
+			$role = new RefUserRoles(['name' => $roleName]);
+			$role->save();
+		}
+		return $role->id;
 	}
 }
