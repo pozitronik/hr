@@ -95,6 +95,6 @@ class ImportFosUsers extends ActiveRecord {
 	 * @return ImportFosTown|ActiveQuery
 	 */
 	public function getRelTown() {
-		return $this->hasOne(ImportFosTown::class, ['id' => 'town_id'])->via('relDecomposed');
+		return $this->hasOne(ImportFosTown::class, ['id' => 'town_id']);
 	}
 }
