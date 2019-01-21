@@ -288,7 +288,6 @@ class ImportFosDecomposed extends ActiveRecord {
 	}
 
 	/**
-	 * todo: проверять уникальность не только по имени, но и по типу
 	 * @param string $name
 	 * @param string $type
 	 * @return int
@@ -296,9 +295,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 */
 	public static function addGroup(string $name, string $type):int {
 		if (empty($name)) return -1;
-		/** @var null|Groups $group */
-		$group = Groups::find()->where(['name' => $name])->one();
-		if ($group) return $group->id;
+
 		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
 		if (!$groupType) {
 			$groupType = new RefGroupTypes([
@@ -306,6 +303,10 @@ class ImportFosDecomposed extends ActiveRecord {
 			]);
 			$groupType->save();
 		}
+
+		/** @var null|Groups $group */
+		$group = Groups::find()->where(['name' => $name, 'type' => $groupType->id])->one();
+		if ($group) return $group->id;
 
 		$group = new Groups();
 		$group->createGroup([
