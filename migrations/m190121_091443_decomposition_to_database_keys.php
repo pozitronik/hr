@@ -19,6 +19,7 @@ class m190121_091443_decomposition_to_database_keys extends Migration {
 		$this->addColumn('import_fos_division_level4', 'hr_group_id', $this->integer()->null()->comment('id группы в рабочей базе (соответствие, установленное при импорте)'));
 		$this->addColumn('import_fos_division_level5', 'hr_group_id', $this->integer()->null()->comment('id группы в рабочей базе (соответствие, установленное при импорте)'));
 		$this->addColumn('import_fos_functional_block_tribe', 'hr_group_id', $this->integer()->null()->comment('id группы в рабочей базе (соответствие, установленное при импорте)'));
+		$this->addColumn('import_fos_functional_block', 'hr_group_id', $this->integer()->null()->comment('id группы в рабочей базе (соответствие, установленное при импорте)'));
 		$this->addColumn('import_fos_tribe', 'hr_group_id', $this->integer()->null()->comment('id группы в рабочей базе (соответствие, установленное при импорте)'));
 
 		$this->addColumn('import_fos_chapter_couch', 'hr_user_id', $this->integer()->null()->comment('id пользователя в рабочей базе (соответствие, установленное при импорте)'));
@@ -43,6 +44,7 @@ class m190121_091443_decomposition_to_database_keys extends Migration {
 		$this->dropColumn('import_fos_division_level4', 'hr_group_id');
 		$this->dropColumn('import_fos_division_level5', 'hr_group_id');
 		$this->dropColumn('import_fos_functional_block_tribe', 'hr_group_id');
+		$this->dropColumn('import_fos_functional_block', 'hr_group_id');
 		$this->dropColumn('import_fos_tribe', 'hr_group_id');
 		$this->dropColumn('import_fos_chapter_couch', 'hr_user_id');
 		$this->dropColumn('import_fos_chapter_leader', 'hr_user_id');
