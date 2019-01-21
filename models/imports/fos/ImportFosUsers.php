@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\models\imports\fos;
 
 use app\models\core\traits\ARExtended;
+use app\models\imports\ImportFosDecomposed;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -25,6 +27,10 @@ use yii\db\ActiveRecord;
  * @property int $town_id key to town id
  * @property int $domain
  * @property null|int $hr_user_id
+ *
+ * @property-read ImportFosDecomposed $relDecomposed
+ * @property-read ImportFosPositions $relPosition
+ * @property-read ImportFosTown $relTown
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;
@@ -69,5 +75,26 @@ class ImportFosUsers extends ActiveRecord {
 			'division_level5_id' => 'key to division_level5 id',
 			'town_id' => 'key to town id'
 		];
+	}
+
+	/**
+	 * @return ImportFosDecomposed|ActiveQuery
+	 */
+	public function getRelDecomposed() {
+		return $this->hasOne(ImportFosDecomposed::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * @return ImportFosPositions|ActiveQuery
+	 */
+	public function getRelPosition():ImportFosPositions {
+		return $this->hasOne(ImportFosPositions::class, ['id' => 'position_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosTown|ActiveQuery
+	 */
+	public function getRelTown():ImportFosTown {
+		return $this->hasOne(ImportFosTown::class, ['id' => 'town_id'])->via('relDecomposed');
 	}
 }
