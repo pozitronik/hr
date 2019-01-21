@@ -43,7 +43,7 @@ class ImportController extends WigetableController {
 	 * @throws Exception
 	 * @throws Throwable
 	 */
-	public function actionImport():string {
+	public function actionUpload():string {
 		$model = new ImportFos();
 		if (Yii::$app->request->isPost && null !== $fileName = $model->uploadFile()) {
 			$domain = time();
@@ -61,7 +61,7 @@ class ImportController extends WigetableController {
 	 * @return string|Response
 	 */
 	public function actionIndex(?int $domain = null) {
-		if (null === $domain) return $this->redirect(['import']);
+		if (null === $domain) return $this->redirect(['upload']);
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new ImportFosSearch();
 
@@ -78,7 +78,7 @@ class ImportController extends WigetableController {
 	 * @return string|Response
 	 */
 	public function actionDecompose(?int $domain = null, int $step = 0) {
-		if (null === $domain) return $this->redirect(['import']);
+		if (null === $domain) return $this->redirect(['upload']);
 		$messages = ImportFos::Decompose($domain, $step);
 		return $this->render('decompose', [
 			'step' => $step,
@@ -92,7 +92,7 @@ class ImportController extends WigetableController {
 	 * @return string|Response
 	 */
 	public function actionResult(?int $domain = null) {
-		if (null === $domain) return $this->redirect(['import']);
+		if (null === $domain) return $this->redirect(['upload']);
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new ImportFosDecomposedSearch();
 		return $this->render('result', [
