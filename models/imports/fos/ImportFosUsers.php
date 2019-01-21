@@ -87,14 +87,14 @@ class ImportFosUsers extends ActiveRecord {
 	/**
 	 * @return ImportFosPositions|ActiveQuery
 	 */
-	public function getRelPosition():ImportFosPositions {
+	public function getRelPosition() {
 		return $this->hasOne(ImportFosPositions::class, ['id' => 'position_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ImportFosTown|ActiveQuery
 	 */
-	public function getRelTown():ImportFosTown {
+	public function getRelTown() {
 		return $this->hasOne(ImportFosTown::class, ['id' => 'town_id'])->via('relDecomposed');
 	}
 }
