@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $user_id key to user id
  * @property int $domain
+ * @property null|int $hr_user_id
  */
 class ImportFosChapterLeader extends ActiveRecord {
 	use ARExtended;
@@ -30,7 +31,8 @@ class ImportFosChapterLeader extends ActiveRecord {
 		return [
 			[['user_id'], 'required'],
 			[['user_id'], 'integer'],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_user_id', 'integer']
 		];
 	}
 

@@ -24,6 +24,7 @@ use yii\db\ActiveRecord;
  * @property int $division_level5_id key to division_level5 id
  * @property int $town_id key to town id
  * @property int $domain
+ * @property null|int $hr_user_id
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;
@@ -43,7 +44,8 @@ class ImportFosUsers extends ActiveRecord {
 			[['position_id', 'functional_block_id', 'division_level1_id', 'division_level2_id', 'division_level3_id', 'division_level4_id', 'division_level5_id', 'town_id'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
 			['remote', 'boolean'],
-			['domain', 'integer'], ['domain', 'required']
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_user_id', 'integer']
 		];
 	}
 
