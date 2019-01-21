@@ -198,9 +198,10 @@ class ImportFosDecomposed extends ActiveRecord {
 //			self::linkRole(ArrayHelper::getValue($row->division_level5, 'id'), $row->hr_user);
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
-			$command = $row->relCommand;
-			if (null !== $command) {
-				self::linkRole($command->hr_group_id, $row->hr_user_id, self::findUserCommandPosition($row->user_id, $command->id));
+			if (null !== $command = $row->relCommand) {//Пользователь может быть вне команды
+				self::linkRole($command->hr_group_id, $row->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($row->id, $command->id), 'name'));
+			} else {
+//				\Yii::debug($row,'debug');
 			}
 
 		}
@@ -256,6 +257,8 @@ class ImportFosDecomposed extends ActiveRecord {
 				self::linkRole($tribe->hr_group_id, $row->hr_user_id, 'IT-Лидер трайба');
 			}
 		}
+
+
 
 	}
 
