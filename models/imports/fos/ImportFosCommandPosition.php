@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosCommandPosition extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -29,7 +30,7 @@ class ImportFosCommandPosition extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['code', 'name'], 'string', 'max' => 255],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

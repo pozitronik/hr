@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosDivisionLevel1 extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -28,7 +29,7 @@ class ImportFosDivisionLevel1 extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

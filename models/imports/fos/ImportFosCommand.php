@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosCommand extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -33,7 +34,7 @@ class ImportFosCommand extends ActiveRecord {
 		return [
 			[['cluster_id'], 'integer'],
 			[['code', 'name', 'type'], 'string', 'max' => 255],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

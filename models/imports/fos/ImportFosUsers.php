@@ -27,6 +27,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -42,7 +43,7 @@ class ImportFosUsers extends ActiveRecord {
 			[['position_id', 'functional_block_id', 'division_level1_id', 'division_level2_id', 'division_level3_id', 'division_level4_id', 'division_level5_id', 'town_id'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
 			['remote', 'boolean'],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosChapter extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -32,7 +33,7 @@ class ImportFosChapter extends ActiveRecord {
 		return [
 			[['leader_id', 'couch_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

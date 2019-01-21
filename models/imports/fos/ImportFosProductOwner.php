@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosProductOwner extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -29,7 +30,7 @@ class ImportFosProductOwner extends ActiveRecord {
 		return [
 			[['user_id'], 'required'],
 			[['user_id'], 'integer'],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

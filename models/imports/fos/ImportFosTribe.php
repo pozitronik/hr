@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosTribe extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -32,7 +33,7 @@ class ImportFosTribe extends ActiveRecord {
 		return [
 			[['leader_id', 'leader_it_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

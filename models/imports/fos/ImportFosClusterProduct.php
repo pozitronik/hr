@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  */
 class ImportFosClusterProduct extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -30,7 +31,7 @@ class ImportFosClusterProduct extends ActiveRecord {
 		return [
 			[['leader_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 
