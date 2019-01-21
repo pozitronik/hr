@@ -5,7 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var int $step
  * @var int $domain
- * @var $messages array
+ * @var array $messages
  */
 
 use app\helpers\Utils;
