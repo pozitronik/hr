@@ -204,9 +204,9 @@ class ImportFos extends ActiveRecord {
 
 		switch ($step) {
 			case self::STEP_REFERENCES:
-				try {
-					foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
 
+				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
+					try {
 						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
 							'name' => $row->position_name
 						]);
@@ -227,20 +227,21 @@ class ImportFos extends ActiveRecord {
 							'position_id' => ArrayHelper::getValue($position, 'id'),
 							'town_id' => ArrayHelper::getValue($town, 'id')
 						]);
-
+					} catch (ImportException $importException) {
+						$errors[] = ['row' => $row, 'error' => $importException->getName()];
+					} catch (Throwable $throwable) {
+						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
-				} catch (ImportException $importException) {
-					$errors[] = ['row' => $row, 'error' => $importException->getName()];
-				} catch (Throwable $throwable) {
-					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 				}
+
 			break;
 			case self::STEP_USERS:
-				try {
-					/* Декомпозируем сущности остальных пользователей: лидер трайба, ИТ-лидер трайба, лидер кластера, владелец продукта (команды), лидер чаптера, коуч чаптера
-				 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
-				*/
-					foreach ($data as $row) {
+
+				/* Декомпозируем сущности остальных пользователей: лидер трайба, ИТ-лидер трайба, лидер кластера, владелец продукта (команды), лидер чаптера, коуч чаптера
+			 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
+			*/
+				foreach ($data as $row) {
+					try {
 						ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_id], [
 							'user_id' => ImportFosUsers::addInstance($row->tribe_leader_id, [
 								'id' => $row->tribe_leader_id,
@@ -285,19 +286,19 @@ class ImportFos extends ActiveRecord {
 								'remote' => false
 							]), 'id')
 						]);
-
+					} catch (ImportException $importException) {
+						$errors[] = ['row' => $row, 'error' => $importException->getName()];
+					} catch (Throwable $throwable) {
+						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
-				} catch (ImportException $importException) {
-					$errors[] = ['row' => $row, 'error' => $importException->getName()];
-				} catch (Throwable $throwable) {
-					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 				}
 
 			break;
 			case self::STEP_GROUPS:
-				try {
-					foreach ($data as $row) {
-						/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
+				/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
+				foreach ($data as $row) {
+					try {
+
 						ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block]);
 						ImportFosDivisionLevel1::addInstance(['name' => $row->division_level_1]);
 						ImportFosDivisionLevel2::addInstance(['name' => $row->division_level_2]);
@@ -332,18 +333,19 @@ class ImportFos extends ActiveRecord {
 							'leader_id' => ImportFosChapterLeader::findModelAttribute(['user_id' => $row->chapter_leader_id]),
 							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_id])
 						]);
+					} catch (ImportException $importException) {
+						$errors[] = ['row' => $row, 'error' => $importException->getName()];
+					} catch (Throwable $throwable) {
+						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
-				} catch (ImportException $importException) {
-					$errors[] = ['row' => $row, 'error' => $importException->getName()];
-				} catch (Throwable $throwable) {
-					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 				}
 
 			break;
 			case self::STEP_FINISH:
-				try {
-					/* Подставляем айдишники декомпозированных сущностей в соответствующую таблицу */
-					foreach ($data as $row) {
+
+				/* Подставляем айдишники декомпозированных сущностей в соответствующую таблицу */
+				foreach ($data as $row) {
+					try {
 						$decomposedRow = new ImportFosDecomposed([
 							'domain' => $row->domain,
 							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name]),
@@ -362,9 +364,9 @@ class ImportFos extends ActiveRecord {
 							'chapter_id' => ImportFosChapter::findModelAttribute($row->chapter_id)
 						]);
 						$decomposedRow->save();
+					} catch (Throwable $throwable) {
+						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
-				} catch (Throwable $throwable) {
-					$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 				}
 
 			break;
