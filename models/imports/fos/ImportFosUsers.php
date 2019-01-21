@@ -18,12 +18,6 @@ use yii\db\ActiveRecord;
  * @property string $email_sigma
  * @property string $email_alpha
  * @property int $position_id key to position id
- * @property int $functional_block_id key to functional block id
- * @property int $division_level1_id key to division_level1 id
- * @property int $division_level2_id key to division_level2 id
- * @property int $division_level3_id key to division_level3 id
- * @property int $division_level4_id key to division_level4 id
- * @property int $division_level5_id key to division_level5 id
  * @property int $town_id key to town id
  * @property int $domain
  * @property null|int $hr_user_id
@@ -31,6 +25,11 @@ use yii\db\ActiveRecord;
  * @property-read ImportFosDecomposed $relDecomposed
  * @property-read ImportFosPositions $relPosition
  * @property-read ImportFosTown $relTown
+ * @property-read ImportFosDivisionLevel1 $relDivision_level1
+ * @property-read ImportFosDivisionLevel2 $relDivision_level2
+ * @property-read ImportFosDivisionLevel3 $relDivision_level3
+ * @property-read ImportFosDivisionLevel4 $relDivision_level4
+ * @property-read ImportFosDivisionLevel5 $relDivision_level5
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;
@@ -47,7 +46,7 @@ class ImportFosUsers extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['position_id', 'functional_block_id', 'division_level1_id', 'division_level2_id', 'division_level3_id', 'division_level4_id', 'division_level5_id', 'town_id'], 'integer'],
+			[['position_id', 'town_id'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
 			['remote', 'boolean'],
 			['domain', 'integer'], ['domain', 'required'],
@@ -67,12 +66,6 @@ class ImportFosUsers extends ActiveRecord {
 			'email_sigma' => 'Email Sigma',
 			'email_alpha' => 'Email Alpha',
 			'position_id' => 'key to position id',
-			'functional_block_id' => 'key to functional block id',
-			'division_level1_id' => 'key to division_level1 id',
-			'division_level2_id' => 'key to division_level2 id',
-			'division_level3_id' => 'key to division_level3 id',
-			'division_level4_id' => 'key to division_level4 id',
-			'division_level5_id' => 'key to division_level5 id',
 			'town_id' => 'key to town id'
 		];
 	}
@@ -92,9 +85,45 @@ class ImportFosUsers extends ActiveRecord {
 	}
 
 	/**
+	 * @return ImportFosDivisionLevel1|ActiveQuery
+	 */
+	public function getRelDivisionLevel1() {
+		return $this->hasOne(ImportFosDivisionLevel1::class, ['id' => 'division_level_1'])->via('relDecomposed');
+	}
+
+	/**
 	 * @return ImportFosTown|ActiveQuery
 	 */
 	public function getRelTown() {
 		return $this->hasOne(ImportFosTown::class, ['id' => 'town_id']);
 	}
+
+	/**
+	 * @return ImportFosDivisionLevel2|ActiveQuery
+	 */
+	public function getRelDivisionLevel2() {
+		return $this->hasOne(ImportFosDivisionLevel2::class, ['id' => 'division_level_2'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosDivisionLevel3|ActiveQuery
+	 */
+	public function getRelDivisionLevel3() {
+		return $this->hasOne(ImportFosDivisionLevel3::class, ['id' => 'division_level_3'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosDivisionLevel4|ActiveQuery
+	 */
+	public function getRelDivisionLevel4() {
+		return $this->hasOne(ImportFosDivisionLevel4::class, ['id' => 'division_level_4'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosDivisionLevel5|ActiveQuery
+	 */
+	public function getRelDivisionLevel5() {
+		return $this->hasOne(ImportFosDivisionLevel5::class, ['id' => 'division_level_5'])->via('relDecomposed');
+	}
+
 }
