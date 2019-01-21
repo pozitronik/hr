@@ -38,8 +38,6 @@ use yii\db\Exception;
  *
  * @property-read DynamicAttributeProperty[] $properties
  *
- * @property int $userProperties
- *
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
  * @property Users|ActiveQuery $relUsers Пользователи с этим атрибутом
  * @property-read string $categoryName Строковое имя категории
