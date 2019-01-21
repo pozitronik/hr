@@ -39,7 +39,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['position_id', 'user_id', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'functional_block_tribe', 'tribe_id', 'cluster_product_id', 'command_id', 'command_position_id', 'chapter_id', 'domain'], 'integer'],
+			[['position_id', 'user_id', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'functional_block_tribe', 'tribe_id', 'cluster_product_id', 'command_id', 'command_position_id', 'chapter_id', 'domain'], 'integer']
 		];
 	}
 
@@ -63,7 +63,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			'command_id' => 'Command ID',
 			'command_position_id' => 'Command Position ID',
 			'chapter_id' => 'Chapter ID',
-			'domain' => 'Служебная метка очереди импорта',
+			'domain' => 'Служебная метка очереди импорта'
 		];
 	}
 }

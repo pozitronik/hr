@@ -96,7 +96,7 @@ class ImportController extends WigetableController {
 		$searchModel = new ImportFosDecomposedSearch();
 		return $this->render('result', [
 			'searchModel' => $searchModel,
-			'dataProvider' => $searchModel->search($params, $domain),
+			'dataProvider' => $searchModel->search($params, $domain)
 		]);
 	}
 }
