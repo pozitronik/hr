@@ -139,7 +139,7 @@ class ImportFosUsers extends ActiveRecord {
 	 * @return ImportFosFunctionalBlock|ActiveQuery
 	 */
 	public function getRelFunctionalBlock() {
-		return $this->hasOne(ImportFosFunctionalBlock::class, ['id' => 'command_id'])->via('relDecomposed');
+		return $this->hasOne(ImportFosFunctionalBlock::class, ['id' => 'functional_block'])->via('relDecomposed');
 	}
 
 }
