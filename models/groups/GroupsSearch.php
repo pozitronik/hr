@@ -59,7 +59,7 @@ class GroupsSearch extends Groups {
 
 		$query->joinWith(['relGroupTypes']);
 
-		$query->andFilterWhere(['id' => $this->id])
+		$query->andFilterWhere(['sys_groups.id' => $this->id])
 			->andFilterWhere(['like', 'sys_groups.name', $this->name])
 			->andFilterWhere(['=', 'sys_groups.type', $this->type])
 			->andFilterWhere(['=', 'sys_groups.daddy', $this->daddy]);
