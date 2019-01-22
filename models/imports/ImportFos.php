@@ -308,7 +308,6 @@ class ImportFos extends ActiveRecord {
 						]);
 					} catch (ImportException $importException) {
 						$errors[] = ['row' => $row, 'error' => $importException->getName()];
-						$errors[] = ['row' => $row, 'error' => $importException->getMessage()];
 					} catch (Throwable $throwable) {
 						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
