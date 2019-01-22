@@ -229,7 +229,7 @@ class ImportFosDecomposed extends ActiveRecord {
 
 					/*Позиции в командах всех пользователей через ImportFosCommandPosition */
 					if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
-						self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->pkey, $command->pkey), 'name'));
+						self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->pkey, $command->pkey, $domain), 'name'));
 					}
 				}
 			break;
@@ -458,12 +458,13 @@ class ImportFosDecomposed extends ActiveRecord {
 	/**
 	 * @param int $userId
 	 * @param int $commandId
+	 * @param int $domain
 	 * @return ImportFosCommandPosition|null
 	 * @throws Throwable
 	 */
-	public static function findUserCommandPosition(int $userId, int $commandId):?ImportFosCommandPosition {
-		if (null !== $positionId = self::find()->where(['user_id' => $userId, 'command_id' => $commandId])->one()) {
-			return ImportFosCommandPosition::findModel($positionId);
+	public static function findUserCommandPosition(int $userId, int $commandId, int $domain):?ImportFosCommandPosition {
+		if (null !== $position = self::find()->where(['user_id' => $userId, 'command_id' => $commandId, 'domain' => $domain])->one()) {
+			return ImportFosCommandPosition::findModel($position->command_position_id);
 		}
 		return null;
 
