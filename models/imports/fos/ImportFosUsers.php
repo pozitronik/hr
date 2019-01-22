@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "import_fos_users".
  *
+ * @property int $pkey
  * @property int $id
  * @property string $name
  * @property string $sd_id
@@ -78,7 +79,7 @@ class ImportFosUsers extends ActiveRecord {
 	 * @return ImportFosDecomposed|ActiveQuery
 	 */
 	public function getRelDecomposed() {
-		return $this->hasOne(ImportFosDecomposed::class, ['user_id' => 'id']);
+		return $this->hasOne(ImportFosDecomposed::class, ['user_id' => 'pkey']);
 	}
 
 	/**
