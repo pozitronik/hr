@@ -48,6 +48,8 @@ class ImportFosUsers extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
+			['id', 'integer'],
+			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
 			[['position_id', 'town_id'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
 			['remote', 'boolean'],

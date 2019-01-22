@@ -33,6 +33,8 @@ class ImportFosCommand extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
+			['id', 'integer'],
+			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
 			[['cluster_id'], 'integer'],
 			[['code', 'name', 'type'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],

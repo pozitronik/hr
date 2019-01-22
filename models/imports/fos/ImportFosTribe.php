@@ -38,6 +38,8 @@ class ImportFosTribe extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
+			['id', 'integer'],
+			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
 			[['leader_id', 'leader_it_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
