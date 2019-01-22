@@ -53,7 +53,6 @@ class ImportFosClusterProduct extends ActiveRecord {
 		];
 	}
 
-
 	/**
 	 * @return ImportFosDecomposed[]|ActiveQuery
 	 */
