@@ -33,7 +33,7 @@ class ImportFosTribeLeader extends ActiveRecord {
 		return [
 			[['user_id'], 'required'],
 			[['user_id'], 'integer'],
-			['domain', 'integer'], ['domain', 'required'],
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 
