@@ -197,11 +197,16 @@ class ImportFosDecomposed extends ActiveRecord {
 			level5 игнорим
 			*/
 			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null])) {
-				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'hr_group_id'), $importFosUser->hr_user_id);
+				if (null !== $id = ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'hr_group_id')) {
+					self::linkRole($id, $importFosUser->hr_user_id);
+				}
 			} else {
-				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'hr_group_id'), $importFosUser->hr_user_id);
-				self::linkRole(ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'hr_group_id'), $importFosUser->hr_user_id);
-				RelGroupsGroups::linkModels(ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'hr_group_id'), ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'hr_group_id'));
+				$id3 = ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'hr_group_id');
+				$id4 = ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'hr_group_id');
+
+				self::linkRole($id4, $importFosUser->hr_user_id);
+				self::linkRole($id3, $importFosUser->hr_user_id);
+				RelGroupsGroups::linkModels($id3, $id4);
 			}
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
@@ -387,12 +392,13 @@ class ImportFosDecomposed extends ActiveRecord {
 
 	/**
 	 * Добавляет пользователя в группу с линковкой роли
-	 * @param int $groupId
-	 * @param int $userId
+	 * @param null|int $groupId
+	 * @param null|int $userId
 	 * @param null|string $roleName
 	 * @throws Throwable
 	 */
-	public static function linkRole(int $groupId, int $userId, ?string $roleName = null):void {
+	public static function linkRole(?int $groupId, ?int $userId, ?string $roleName = null):void {
+		if (null === $groupId || null === $userId) return;
 		/** @var Users $user */
 		if (null === $user = Users::findModel($userId)) return;
 		/** @var null|Groups $group */
