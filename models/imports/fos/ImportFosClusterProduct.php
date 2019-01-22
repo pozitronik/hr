@@ -66,6 +66,6 @@ class ImportFosClusterProduct extends ActiveRecord {
 	 * @return ImportFosCommand[]|ActiveQuery
 	 */
 	public function getRelCommand() {
-		return $this->hasMany(ImportFosCommand::class, ['id' => 'command_id'])->via('relDecomposed');
+		return $this->hasMany(ImportFosCommand::class, ['pkey' => 'command_id'])->via('relDecomposed');
 	}
 }
