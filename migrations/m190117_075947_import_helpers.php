@@ -13,7 +13,8 @@ class m190117_075947_import_helpers extends Migration {
 	public function safeUp() {
 
 		$this->createTable('import_fos_users', [
-			'id' => $this->primaryKey(),
+			'pkey' => $this->primaryKey(),
+			'id' => $this->integer()->notNull(),
 			'sd_id' => $this->string()->comment('ШД ID'),
 			'name' => $this->string(),
 			'remote' => $this->boolean()->defaultValue(false)->notNull(),
@@ -66,7 +67,8 @@ class m190117_075947_import_helpers extends Migration {
 		]);
 
 		$this->createTable('import_fos_tribe', [
-			'id' => $this->primaryKey(),
+			'pkey' => $this->primaryKey(),
+			'id' => $this->integer()->notNull(),
 			'code' => $this->string(),
 			'name' => $this->string(),
 			'leader_id' => $this->integer()->comment('key to tribe leader id'),
@@ -84,7 +86,8 @@ class m190117_075947_import_helpers extends Migration {
 		]);
 
 		$this->createTable('import_fos_cluster_product', [
-			'id' => $this->primaryKey(),
+			'pkey' => $this->primaryKey(),
+			'id' => $this->integer()->notNull(),
 			'name' => $this->string(),
 			'leader_id' => $this->integer()->comment('key to cluster product leader id'),
 		]);
@@ -95,7 +98,8 @@ class m190117_075947_import_helpers extends Migration {
 		]);
 
 		$this->createTable('import_fos_command', [
-			'id' => $this->primaryKey(),
+			'pkey' => $this->primaryKey(),
+			'id' => $this->integer()->notNull(),
 			'code' => $this->string(),
 			'name' => $this->string(),
 			'type' => $this->string(),
@@ -109,12 +113,14 @@ class m190117_075947_import_helpers extends Migration {
 		]);
 
 		$this->createTable('import_fos_command_position', [
-			'id' => $this->primaryKey(),
+			'pkey' => $this->primaryKey(),
+			'id' => $this->integer()->notNull(),
 			'code' => $this->string(),
 			'name' => $this->string(),
 		]);
 		$this->createTable('import_fos_chapter', [
-			'id' => $this->primaryKey(),
+			'pkey' => $this->primaryKey(),
+			'id' => $this->integer()->notNull(),
 			'code' => $this->string(),
 			'name' => $this->string(),
 			'leader_id' => $this->integer()->comment('key to chapter leader id'),
