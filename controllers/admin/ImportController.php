@@ -101,12 +101,13 @@ class ImportController extends WigetableController {
 
 	/**
 	 * @param int|null $domain
+	 * @param int $step
 	 * @return string|Response
 	 * @throws Throwable
 	 */
-	public function actionImport(?int $domain = null) {
+	public function actionImport(?int $domain = null, int $step = ImportFosDecomposed::STEP_GROUPS) {
 		if (null === $domain) return $this->redirect(['upload']);
-		ImportFosDecomposed::Import($domain);
-		return $this->render('import');
+		$step = ImportFosDecomposed::Import($domain, $step);
+		return $this->render('import', compact('step', 'domain'));
 	}
 }

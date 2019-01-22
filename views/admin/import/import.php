@@ -2,19 +2,34 @@
 declare(strict_types = 1);
 
 /**
- * @var int|null $domain
  * @var View $this
+ * @var int $step
+ * @var int $domain
  */
 
-use yii\bootstrap\Button;
-use yii\web\View;
+use app\models\imports\ImportFosDecomposed;
 use yii\helpers\Html;
+use yii\web\View;
 
 ?>
 
-<?= Html::a(Button::widget([
-	'label' => '<i class="fa fa-thumbs-up"></i> Готово <i class="fa fa-thumbs-up"></i>',
-	'encodeLabel' => false,
-	'options' => ['class' => 'btn-lg btn btn-danger']
-]), Yii::$app->homeUrl);
-?>
+<div class="panel">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?= ImportFosDecomposed::step_labels[$step]; ?></h3>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12">
+				Импорт разбит на шаги из-за продолжительности, ошибки пока не анализируются
+			</div>
+		</div>
+
+	</div>
+	<div class="panel-footer">
+		<?= Html::a('Повторить', ['import', 'step' => $step, 'domain' => $domain], ['class' => 'btn btn-warning pull-left']); ?>
+		<?= (ImportFosDecomposed::STEP_LINKING_GROUPS !== $step)?Html::a('Следующий шаг', ['import', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']):Html::a('Готово, домой', ['home/index', 'domain' => $domain], ['class' => 'btn btn-success pull-right']); ?>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+
