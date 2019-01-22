@@ -134,7 +134,7 @@ class ImportFosUsers extends ActiveRecord {
 	 * @return ImportFosCommand|ActiveQuery
 	 */
 	public function getRelCommand() {
-		return $this->hasOne(ImportFosCommand::class, ['id' => 'command_id'])->via('relDecomposed');
+		return $this->hasOne(ImportFosCommand::class, ['pkey' => 'command_id'])->via('relDecomposed');
 	}
 
 	/**
