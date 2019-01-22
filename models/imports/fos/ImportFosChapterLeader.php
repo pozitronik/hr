@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\imports\fos;
 
 use app\models\core\traits\ARExtended;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -12,7 +13,8 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $user_id key to user id
  * @property int $domain
- * @property null|int $hr_user_id
+ *
+ * @property-read ImportFosUsers $relUsers
  */
 class ImportFosChapterLeader extends ActiveRecord {
 	use ARExtended;
@@ -44,5 +46,12 @@ class ImportFosChapterLeader extends ActiveRecord {
 			'id' => 'ID',
 			'user_id' => 'key to user id'
 		];
+	}
+
+	/**
+	 * @return ImportFosUsers|ActiveQuery
+	 */
+	public function getRelUsers() {
+		return $this->hasOne(ImportFosUsers::class, ['id'=>'user_id']);
 	}
 }
