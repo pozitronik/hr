@@ -217,53 +217,55 @@ class ImportFosDecomposed extends ActiveRecord {
 		/** @var ImportFosChapterCouch[] $data */
 		$data = ImportFosChapterCouch::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->user_id])->all();
+			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->id])->all();
 			foreach ($chapters as $chapter) {
 				/** @var ImportFosChapter $chapter */
-				self::linkRole($chapter->hr_group_id, $row->hr_user_id, 'Agile-коуч');
+				self::linkRole($chapter->hr_group_id, $row->relUsers->hr_user_id, 'Agile-коуч');
 			}
 		}
 		/** @var ImportFosChapterLeader[] $data */
 		$data = ImportFosChapterLeader::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->user_id])->all();
+			$chapters = ImportFosChapter::find()->where(['leader_id' => $row->id])->all();
 			foreach ($chapters as $chapter) {
 				/** @var ImportFosChapter $chapter */
-				self::linkRole($chapter->hr_group_id, $row->hr_user_id, 'Лидер чаптера');
+				self::linkRole($chapter->hr_group_id, $row->relUsers->hr_user_id, 'Лидер чаптера');
 			}
 		}
 		/** @var ImportFosClusterProductLeader[] $data */
 		$data = ImportFosClusterProductLeader::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			$clusters = ImportFosClusterProduct::find()->where(['leader_id' => $row->user_id])->all();
+			$clusters = ImportFosClusterProduct::find()->where(['leader_id' => $row->id])->all();
 			foreach ($clusters as $cluster) {
 				/** @var ImportFosClusterProduct $cluster */
-				self::linkRole($cluster->hr_group_id, $row->hr_user_id, 'Лидер кластера');
+				self::linkRole($cluster->hr_group_id, $row->relUsers->hr_user_id, 'Лидер кластера');
 			}
 		}
 		/** @var ImportFosProductOwner[] $data */
 		$data = ImportFosProductOwner::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			$commands = ImportFosCommand::find()->where(['owner_id' => $row->user_id])->all();
+			$commands = ImportFosCommand::find()->where(['owner_id' => $row->id])->all();
 			foreach ($commands as $command) {
 				/** @var ImportFosCommand $command */
-				self::linkRole($command->hr_group_id, $row->hr_user_id, 'Владелец продукта');
+				self::linkRole($command->hr_group_id, $row->relUsers->hr_user_id, 'Владелец продукта');
 			}
 		}
+		/** @var ImportFosTribeLeader[] $data */
 		$data = ImportFosTribeLeader::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			$tribes = ImportFosTribe::find()->where(['leader_id' => $row->user_id])->all();
+			$tribes = ImportFosTribe::find()->where(['leader_id' => $row->id])->all();
 			foreach ($tribes as $tribe) {
 				/** @var ImportFosTribe $tribe */
-				self::linkRole($tribe->hr_group_id, $row->hr_user_id, 'Лидер трайба');
+				self::linkRole($tribe->hr_group_id, $row->relUsers->hr_user_id, 'Лидер трайба');
 			}
 		}
+		/** @var ImportFosTribeLeaderIt[] $data */
 		$data = ImportFosTribeLeaderIt::find()->where(['domain' => $domain])->all();
 		foreach ($data as $row) {
-			$tribes = ImportFosTribe::find()->where(['leader_it_id' => $row->user_id])->all();
+			$tribes = ImportFosTribe::find()->where(['leader_it_id' => $row->id])->all();
 			foreach ($tribes as $tribe) {
 				/** @var ImportFosTribe $tribe */
-				self::linkRole($tribe->hr_group_id, $row->hr_user_id, 'IT-Лидер трайба');
+				self::linkRole($tribe->hr_group_id, $row->relUsers->hr_user_id, 'IT-Лидер трайба');
 			}
 		}
 		/*Строим связи между группами
