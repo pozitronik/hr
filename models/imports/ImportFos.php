@@ -394,7 +394,7 @@ class ImportFos extends ActiveRecord {
 						$decomposedRow = new ImportFosDecomposed([
 							'domain' => $row->domain,
 							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name]),
-							'user_id' => ImportFosUsers::findModelAttribute($row->user_id),
+							'user_id' => ImportFosUsers::findModelAttribute(['id'=> $row->user_id]),
 							'functional_block' => ImportFosFunctionalBlock::findModelAttribute(['name' => $row->functional_block]),
 							'division_level_1' => ImportFosDivisionLevel1::findModelAttribute(['name' => $row->division_level_1]),
 							'division_level_2' => ImportFosDivisionLevel2::findModelAttribute(['name' => $row->division_level_2]),
@@ -402,11 +402,11 @@ class ImportFos extends ActiveRecord {
 							'division_level_4' => ImportFosDivisionLevel4::findModelAttribute(['name' => $row->division_level_4]),
 							'division_level_5' => ImportFosDivisionLevel5::findModelAttribute(['name' => $row->division_level_5]),
 							'functional_block_tribe' => ImportFosFunctionalBlockTribe::findModelAttribute(['name' => $row->functional_block_tribe]),
-							'tribe_id' => ImportFosTribe::findModelAttribute($row->tribe_id),
-							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute($row->cluster_product_id),
-							'command_id' => ImportFosCommand::findModelAttribute($row->command_id),
-							'command_position_id' => ImportFosCommandPosition::findModelAttribute($row->command_position_id),
-							'chapter_id' => ImportFosChapter::findModelAttribute($row->chapter_id)
+							'tribe_id' => ImportFosTribe::findModelAttribute(['id' => $row->tribe_id]),
+							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute(['id' => $row->cluster_product_id]),
+							'command_id' => ImportFosCommand::findModelAttribute(['id' => $row->command_id]),
+							'command_position_id' => ImportFosCommandPosition::findModelAttribute(['id' => $row->command_position_id]),
+							'chapter_id' => ImportFosChapter::findModelAttribute(['id' => $row->chapter_id])
 						]);
 						$decomposedRow->save();
 					} catch (Throwable $throwable) {

@@ -64,7 +64,7 @@ class ImportFosTribe extends ActiveRecord {
 	 * @return ImportFosDecomposed[]|ActiveQuery
 	 */
 	public function getRelDecomposed() {
-		return $this->hasMany(ImportFosDecomposed::class, ['tribe_id' => 'id']);
+		return $this->hasMany(ImportFosDecomposed::class, ['tribe_id' => 'pkey']);
 	}
 
 	/**

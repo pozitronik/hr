@@ -51,6 +51,6 @@ class ImportFosTribeLeaderIt extends ActiveRecord {
 	 * @return ImportFosUsers|ActiveQuery
 	 */
 	public function getRelUsers() {
-		return $this->hasOne(ImportFosUsers::class, ['pkey' => 'user_id']);
+		return $this->hasOne(ImportFosUsers::class, ['id' => 'user_id']);
 	}
 }
