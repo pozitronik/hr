@@ -121,7 +121,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function Import(?int $domain = null, int $step = self::STEP_GROUPS):int {
-		$result = [];//Сюда складируем сообщения
+		//$result = [];//Сюда складируем сообщения
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 
 		switch ($step) {

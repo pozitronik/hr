@@ -74,7 +74,7 @@ class Service extends Model {
 			'import_fos_tribe',
 			'import_fos_tribe_leader',
 			'import_fos_tribe_leader_it',
-			'import_fos_users',
+			'import_fos_users'
 		];
 
 		try {
