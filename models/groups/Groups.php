@@ -174,10 +174,10 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * @param array $paramsArray
-	 * @return bool
+	 * @return null|bool
 	 * @throws Exception
 	 */
-	public function createGroup(array $paramsArray):bool {
+	public function createGroup(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
