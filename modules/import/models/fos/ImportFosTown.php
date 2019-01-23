@@ -8,6 +8,7 @@ use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_fos_town".
+ * Справочник городов
  *
  * @property int $id
  * @property string $name
@@ -28,6 +29,7 @@ class ImportFosTown extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
+			['name', 'unique'],
 			[['name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required']
 		];
