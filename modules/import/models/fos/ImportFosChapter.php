@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "import_fos_chapter".
  *
- * @property int $id
+ * @property int $chapter_id
  * @property string $code
  * @property string $name
  * @property int $leader_id key to chapter leader id
@@ -32,8 +32,9 @@ class ImportFosChapter extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			['id', 'integer'],
-			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
+			['chapter_id', 'integer'],
+			['chapter_id', 'unique'],
+			['chapter_id', 'required'],
 			[['leader_id', 'couch_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
@@ -46,7 +47,7 @@ class ImportFosChapter extends ActiveRecord {
 	 */
 	public function attributeLabels():array {
 		return [
-			'id' => 'ID',
+			'chapter_id' => 'ID',
 			'code' => 'Code',
 			'name' => 'Name',
 			'leader_id' => 'key to chapter leader id',
