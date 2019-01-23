@@ -30,6 +30,8 @@ class ImportFosDivisionLevel2 extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name'], 'string', 'max' => 255],
+			[['name'], 'unique'],
+			[['name'], 'required'],
 			['domain', 'integer'], ['domain', 'required'],
 			['hr_group_id', 'integer']
 		];
