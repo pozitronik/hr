@@ -9,6 +9,7 @@ use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_fos_product_owner".
+ * Это больше справочник: продуктовнеры матчатся по имени (TH овнера не укзан в файле).
  *
  * @property int $id
  * @property int $user_id key to user id
@@ -33,6 +34,7 @@ class ImportFosProductOwner extends ActiveRecord {
 		return [
 			[['user_id'], 'required'],
 			[['user_id'], 'integer'],
+			[['user_id'], 'unique'],
 			['domain', 'integer'], ['domain', 'required']
 		];
 	}

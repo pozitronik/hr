@@ -33,6 +33,7 @@ class ImportFosChapterLeader extends ActiveRecord {
 		return [
 			[['user_id'], 'required'],
 			[['user_id'], 'integer'],
+			[['user_id'], 'unique'],
 			['domain', 'integer'], ['domain', 'required']
 		];
 	}

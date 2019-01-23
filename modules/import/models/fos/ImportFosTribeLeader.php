@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "import_fos_tribe_leader".
  *
  * @property int $id
- * @property int $user_id key to user id
+ * @property int $user_id key to user idё
  * @property int $domain
  *
  * @property-read ImportFosUsers $relUsers
@@ -32,6 +32,7 @@ class ImportFosTribeLeader extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['user_id'], 'required'],
+			[['user_id'], 'unique'],
 			[['user_id'], 'integer'],
 			['domain', 'integer'], ['domain', 'required']
 		];
