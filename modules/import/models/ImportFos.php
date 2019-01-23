@@ -170,8 +170,7 @@ class ImportFos extends ActiveRecord {
 	 * @param string $filename
 	 * @param int|null $domain
 	 * @return bool
-	 * @throws PhpSpreadsheetException
-	 * @throws Exception
+	 * @throws BaseException
 	 * @throws Throwable
 	 */
 	public static function Import(string $filename, ?int $domain = null):bool {
