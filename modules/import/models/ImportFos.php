@@ -31,6 +31,7 @@ use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
+use yii\base\Exception as BaseException;
 use yii\db\ActiveRecord;
 
 /**
@@ -174,11 +175,15 @@ class ImportFos extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function Import(string $filename, ?int $domain = null):bool {
-		$reader = new Xlsx();
-		$reader->setReadDataOnly(true);
-		$spreadsheet = $reader->load($filename);
-		$spreadsheet->setActiveSheetIndex(0);
-		$dataArray = $spreadsheet->getActiveSheet()->toArray();
+		try {
+			$reader = new Xlsx();
+			$reader->setReadDataOnly(true);
+			$spreadsheet = $reader->load($filename);
+			$spreadsheet->setActiveSheetIndex(0);
+			$dataArray = $spreadsheet->getActiveSheet()->toArray();
+		} catch (Throwable $t) {
+			throw new BaseException('Формат файла не поддерживается');
+		}
 		$domain = $domain??time();
 		$keys = array_keys((new self())->attributeLabels());
 		foreach ($dataArray as $importRow) {
@@ -394,7 +399,7 @@ class ImportFos extends ActiveRecord {
 						$decomposedRow = new ImportFosDecomposed([
 							'domain' => $row->domain,
 							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name]),
-							'user_id' => ImportFosUsers::findModelAttribute(['id'=> $row->user_id]),
+							'user_id' => ImportFosUsers::findModelAttribute(['id' => $row->user_id]),
 							'functional_block' => ImportFosFunctionalBlock::findModelAttribute(['name' => $row->functional_block]),
 							'division_level_1' => ImportFosDivisionLevel1::findModelAttribute(['name' => $row->division_level_1]),
 							'division_level_2' => ImportFosDivisionLevel2::findModelAttribute(['name' => $row->division_level_2]),
