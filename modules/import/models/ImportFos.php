@@ -27,8 +27,6 @@ use app\modules\import\models\fos\ImportFosTribe;
 use app\modules\import\models\fos\ImportFosTribeLeader;
 use app\modules\import\models\fos\ImportFosTribeLeaderIt;
 use app\modules\import\models\fos\ImportFosUsers;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Exception as BaseException;

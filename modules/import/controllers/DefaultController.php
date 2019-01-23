@@ -8,8 +8,6 @@ use app\modules\import\models\ImportFos;
 use app\modules\import\models\ImportFosDecomposed;
 use app\modules\import\models\ImportFosDecomposedSearch;
 use app\modules\import\models\ImportFosSearch;
-use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -40,8 +38,6 @@ class DefaultController extends WigetableController {
 	/**
 	 * @return string
 	 * @throws InvalidConfigException
-	 * @throws PhpSpreadsheetException
-	 * @throws Exception
 	 * @throws Throwable
 	 */
 	public function actionUpload():string {
