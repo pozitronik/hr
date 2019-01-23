@@ -41,7 +41,7 @@ use yii\db\ActiveRecord;
  * @property string $num № п/п
  * @property string $sd_id ШД ID
  * @property string $position_name Должность
- * @property string $user_id ТН
+ * @property string $user_tn ТН
  * @property string $user_name Ф.И.О. сотрудника
  * @property string $functional_block Функциональный блок
  * @property string $division_level_1 Подразделение 1 уровня
@@ -111,7 +111,7 @@ class ImportFos extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['domain'], 'integer'],
-			[['num', 'sd_id', 'position_name', 'user_id', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_couch_id', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
+			[['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_couch_id', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
 		];
 	}
 
@@ -123,7 +123,7 @@ class ImportFos extends ActiveRecord {
 			'num' => '№ п/п',
 			'sd_id' => 'ШД ID',//!Это не ID должности! Это какойто внутренний идентификатор
 			'position_name' => 'Должность',
-			'user_id' => 'ТН',
+			'user_tn' => 'ТН',
 			'user_name' => 'Ф.И.О. сотрудника',
 			'functional_block' => 'Функциональный блок',
 			'division_level_1' => 'Подразделение 1 уровня',
@@ -211,7 +211,7 @@ class ImportFos extends ActiveRecord {
 		switch ($step) {
 			case self::STEP_REFERENCES:
 
-				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде. Справочники не учитывают домен, наполняясь по мере новых импортов*/
+				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде. Таблицы декомпозиции не учитывают домен, наполняясь по мере новых импортов*/
 					try {
 						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
 							'name' => $row->position_name,
@@ -228,8 +228,8 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 						/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
-						ImportFosUsers::addInstance(['id' => $row->user_id, 'domain' => $domain], [
-							'id' => $row->user_id,
+						ImportFosUsers::addInstance(['user_tn' => $row->user_tn], [
+							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
 							'remote' => !empty($row->remote_flag),
 							'email_sigma' => $row->email_sigma,

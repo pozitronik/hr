@@ -11,10 +11,10 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "import_fos_users".
  *
- * @property int $pkey
  * @property int $id
+ * @property int $user_tn
  * @property string $name
- * @property string $sd_id
+ * @property string $sd_id - какой-то внутренний идентификатор НЕ УНИКАЛЬНЫЙ
  * @property int $remote
  * @property string $email_sigma
  * @property string $email_alpha
@@ -49,8 +49,8 @@ class ImportFosUsers extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			['id', 'integer'],
-			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
+			['user_tn', 'integer'],
+			['user_tn', 'unique'],
 			[['position_id', 'town_id'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
 			['remote', 'boolean'],
@@ -79,7 +79,7 @@ class ImportFosUsers extends ActiveRecord {
 	 * @return ImportFosDecomposed|ActiveQuery
 	 */
 	public function getRelDecomposed() {
-		return $this->hasOne(ImportFosDecomposed::class, ['user_id' => 'pkey']);
+		return $this->hasOne(ImportFosDecomposed::class, ['user_id' => 'id']);
 	}
 
 	/**
