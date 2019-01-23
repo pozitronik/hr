@@ -140,61 +140,39 @@ class ImportFosDecomposed extends ActiveRecord {
 
 		switch ($step) {
 			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
-				$data = ImportFosChapter::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosChapter $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Чаптер'));
+				foreach (ImportFosChapter::findAll(['hr_group_id' => null]) as $chapter) {
+					$chapter->setAndSaveAttribute('hr_group_id', self::addGroup($chapter->name, 'Чаптер'));
 				}
-				$data = ImportFosClusterProduct::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosClusterProduct $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Кластер'));
+				foreach (ImportFosClusterProduct::findAll(['hr_group_id' => null]) as $cluster) {
+					$cluster->setAndSaveAttribute('hr_group_id', self::addGroup($cluster->name, 'Кластер'));
 				}
-				$data = ImportFosCommand::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosCommand $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Команда'));
+				foreach (ImportFosCommand::findAll(['hr_group_id' => null]) as $command) {
+					$command->setAndSaveAttribute('hr_group_id', self::addGroup($command->name, 'Команда'));
 				}
-				$data = ImportFosDivisionLevel1::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosDivisionLevel1 $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение первого уровня'));
-				}
-				$data = ImportFosDivisionLevel2::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosDivisionLevel2 $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение второго уровня'));
-				}
-				$data = ImportFosDivisionLevel3::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosDivisionLevel3 $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение третьего уровня'));
-				}
-				$data = ImportFosDivisionLevel4::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosDivisionLevel4 $row */
 
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение четвёртого уровня'));
+				foreach (ImportFosDivisionLevel1::findAll(['hr_group_id' => null]) as $division) {
+					$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение первого уровня'));
 				}
-				$data = ImportFosDivisionLevel5::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosDivisionLevel5 $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение пятого уровня'));
+				foreach (ImportFosDivisionLevel2::findAll(['hr_group_id' => null]) as $division) {
+					$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение второго уровня'));
 				}
-				$data = ImportFosFunctionalBlock::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosFunctionalBlock $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Функциональный блок'));
+				foreach (ImportFosDivisionLevel3::findAll(['hr_group_id' => null]) as $division) {
+					$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение третьего уровня'));
 				}
-				$data = ImportFosFunctionalBlockTribe::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosFunctionalBlockTribe $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Функциональный блок трайба'));
+				foreach (ImportFosDivisionLevel4::findAll(['hr_group_id' => null]) as $division) {
+					$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение четвёртого уровня'));
 				}
-				$data = ImportFosTribe::find()->where(['hr_group_id' => null])->all();
-				foreach ($data as $row) {
-					/** @var ImportFosTribe $row */
-					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Трайб'));
+				foreach (ImportFosDivisionLevel5::findAll(['hr_group_id' => null]) as $division) {
+					$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение пятого уровня'));
+				}
+				foreach (ImportFosFunctionalBlock::findAll(['hr_group_id' => null]) as $functionalBlock) {
+					$functionalBlock->setAndSaveAttribute('hr_group_id', self::addGroup($functionalBlock->name, 'Функциональный блок'));
+				}
+				foreach (ImportFosFunctionalBlockTribe::findAll(['hr_group_id' => null]) as $functionalBlockTribe) {
+					$functionalBlockTribe->setAndSaveAttribute('hr_group_id', self::addGroup($functionalBlockTribe->name, 'Функциональный блок трайба'));
+				}
+				foreach (ImportFosTribe::findAll(['hr_group_id' => null]) as $tribe) {
+					$tribe->setAndSaveAttribute('hr_group_id', self::addGroup($tribe->name, 'Трайб'));
 				}
 			break;
 			case self::STEP_USERS:
