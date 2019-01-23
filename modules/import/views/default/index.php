@@ -25,6 +25,9 @@ use yii\bootstrap\Html;
 	],
 	'toolbar' => [
 		[
+			'content' => Html::a('Назад', ['upload'], ['class' => 'btn btn-default'])
+		],
+		[
 			'content' => Html::a('Декомпозиция', ['decompose', 'domain' => $domain], ['class' => 'btn btn-success'])
 		]
 	],
