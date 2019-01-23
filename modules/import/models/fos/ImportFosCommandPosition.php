@@ -30,6 +30,7 @@ class ImportFosCommandPosition extends ActiveRecord {
 	public function rules():array {
 		return [
 			['position_id', 'integer'],
+			['position_id', 'unique'],
 			[['code', 'name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required']
 		];
