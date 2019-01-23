@@ -57,7 +57,7 @@ class BadgeWidget extends Widget {
 		foreach ($this->data as $model) {
 			/** @noinspection PhpUndefinedFieldInspection - checked via hasProperty */
 			$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, $this->badgeOptions):$this->badgeOptions;
-			$badgeHtmlOptions = $badgeHtmlOptions??$this->badgeOptions;
+			if (!is_array($badgeHtmlOptions)) $badgeHtmlOptions = $this->badgeOptions;
 			if ($this->linkScheme) {
 				array_walk($this->linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
 					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
