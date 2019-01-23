@@ -28,7 +28,7 @@ class UserAccess extends Model {
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 */
-	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = false):array {
+	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = true):array {
 		if (null === $user = CurrentUser::User()) return [];
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
@@ -71,7 +71,7 @@ class UserAccess extends Model {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = false):bool {
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = true):bool {
 		if (null === $user = CurrentUser::User()) return false;
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		if ($user->is('sysadmin')) $defaultAllow = true;
@@ -90,7 +90,7 @@ class UserAccess extends Model {
 	public static function GetGroupsScope():ActiveQuery {
 //		$query =;
 //		Example::SetGroupsScope($query);
-		return  Groups::find();
+		return  Groups::find()->active();
 	}
 
 	/**
@@ -99,7 +99,7 @@ class UserAccess extends Model {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function GetFlag(int $flag, bool $defaultAllow = false):bool {
+	public static function GetFlag(int $flag, bool $defaultAllow = true):bool {
 		if (null === $user = CurrentUser::User()) return false;
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		if ($user->is('sysadmin')) $defaultAllow = true;

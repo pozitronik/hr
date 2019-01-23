@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'panel' => [
 				'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)")
 			],
-			'summary' => Html::a('Новая группа', 'create', ['class' => 'btn btn-success summary-content']),
+			'summary' => Html::a('Новая группа', 'create', ['class' => 'btn btn-success summary-content']),//todo: heading not shown for empty selections
 			'toolbar' => false,
 			'export' => false,
 			'resizableColumns' => true,
