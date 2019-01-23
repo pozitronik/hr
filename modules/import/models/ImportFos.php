@@ -362,35 +362,36 @@ class ImportFos extends ActiveRecord {
 							'name' => $row->functional_block_tribe,
 							'domain' => $row->domain
 						]);
-						ImportFosTribe::addInstance(['id' => $row->tribe_id], [
-							'id' => $row->tribe_id,
+
+						ImportFosTribe::addInstance(['tribe_id' => $row->tribe_id], [
+							'tribe_id' => $row->tribe_id,
 							'code' => $row->tribe_code,
 							'name' => $row->tribe_name,
-							'leader_id' => ImportFosTribeLeader::findModelAttribute(['user_id' => $row->tribe_leader_tn]),
-							'leader_it_id' => ImportFosTribeLeaderIt::findModelAttribute(['user_id' => $row->tribe_leader_it_tn]),
+							'leader_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->tribe_leader_tn], 'id'),
+							'leader_it_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->tribe_leader_it_tn], 'id'),
 							'domain' => $row->domain
 						]);
-						ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id], [
-							'id' => $row->cluster_product_id,
+						ImportFosClusterProduct::addInstance(['cluster_id' => $row->cluster_product_id], [
+							'cluster_id' => $row->cluster_product_id,
 							'name' => $row->cluster_product_name,
-							'leader_id' => ImportFosClusterProductLeader::findModelAttribute(['user_id' => $row->cluster_product_leader_tn]),
+							'leader_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->cluster_product_leader_tn], 'id'),
 							'domain' => $row->domain
 						]);
-						ImportFosCommand::addInstance(['id' => $row->command_id], [
-							'id' => $row->command_id,
+						ImportFosCommand::addInstance(['command_id' => $row->command_id], [
+							'command_id' => $row->command_id,
 							'name' => $row->command_name,
 							'type' => $row->command_type,
 							'code' => $row->command_code,
-							'cluster_id' => ImportFosClusterProduct::findModelAttribute($row->cluster_product_id),
-							'owner_id' => ImportFosProductOwner::findModelAttribute(['user_id' => ImportFosUsers::findModelAttribute(['name' => $row->owner_name])]),
+							'cluster_id' => ImportFosClusterProduct::findModelAttribute(['cluster_id' => $row->cluster_product_id], 'id'),
+							'owner_id' => ImportFosUsers::findModelAttribute(['name' => $row->owner_name], 'id'),
 							'domain' => $row->domain
 						]);
-						ImportFosChapter::addInstance(['id' => $row->chapter_id], [
-							'id' => $row->chapter_id,
+						ImportFosChapter::addInstance(['chapter_id' => $row->chapter_id], [
+							'chapter_id' => $row->chapter_id,
 							'name' => $row->chapter_name,
 							'code' => $row->chapter_code,
-							'leader_id' => ImportFosChapterLeader::findModelAttribute(['user_id' => $row->chapter_leader_tn]),
-							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_tn]),
+							'leader_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->chapter_leader_tn], 'id'),
+							'couch_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->chapter_couch_tn], 'id'),
 							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
