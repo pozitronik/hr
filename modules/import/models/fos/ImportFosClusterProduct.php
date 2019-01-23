@@ -60,13 +60,13 @@ class ImportFosClusterProduct extends ActiveRecord {
 	 * @return ImportFosDecomposed[]|ActiveQuery
 	 */
 	public function getRelDecomposed() {
-		return $this->hasMany(ImportFosDecomposed::class, ['cluster_product_id' => 'pkey']);
+		return $this->hasMany(ImportFosDecomposed::class, ['cluster_product_id' => 'cluster_id']);
 	}
 
 	/**
 	 * @return ImportFosCommand[]|ActiveQuery
 	 */
 	public function getRelCommand() {
-		return $this->hasMany(ImportFosCommand::class, ['pkey' => 'command_id'])->via('relDecomposed');
+		return $this->hasMany(ImportFosCommand::class, ['cluster_id' => 'command_id'])->via('relDecomposed');
 	}
 }

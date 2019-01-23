@@ -9,7 +9,6 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "import_fos_command".
  *
- * @property int $pkey
  * @property int $id
  * @property string $code
  * @property string $name

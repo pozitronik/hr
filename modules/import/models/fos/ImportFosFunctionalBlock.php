@@ -63,6 +63,6 @@ class ImportFosFunctionalBlock extends ActiveRecord {
 	 * @return ImportFosTribe[]|ActiveQuery
 	 */
 	public function getRelTribe() {
-		return $this->hasMany(ImportFosTribe::class, ['pkey' => 'tribe_id'])->via('relDecomposed');
+		return $this->hasMany(ImportFosTribe::class, ['tribe_id' => 'tribe_id'])->via('relDecomposed');
 	}
 }
