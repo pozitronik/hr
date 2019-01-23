@@ -139,7 +139,7 @@ class ImportFos extends ActiveRecord {
 			'tribe_name' => 'Трайб',
 			'tribe_leader_tn' => 'Лидер трайба ТН',
 			'tribe_leader_name' => 'Лидер трайба',
-			'tribe_leader_it_id' => 'IT-лидер трайба ТН',
+			'tribe_leader_it_tn' => 'IT-лидер трайба ТН',
 			'tribe_leader_it_name' => 'IT-лидер трайба',
 			'cluster_product_id' => 'Кластер/Продукт ID',
 			'cluster_product_code' => 'Код кластера/продукта',
