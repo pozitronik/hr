@@ -1,26 +1,26 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "import_fos_division_level5".
+ * This is the model class for table "import_fos_positions".
  *
  * @property int $id
  * @property string $name
  * @property int $domain
  */
-class ImportFosDivisionLevel5 extends ActiveRecord {
+class ImportFosPositions extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_division_level5';
+		return 'import_fos_positions';
 	}
 
 	/**
@@ -29,8 +29,7 @@ class ImportFosDivisionLevel5 extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required'],
-			['hr_group_id', 'integer']
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

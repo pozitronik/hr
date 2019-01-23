@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveQuery;

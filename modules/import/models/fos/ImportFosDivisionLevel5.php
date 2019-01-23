@@ -1,27 +1,26 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "import_fos_functional_block_tribe".
+ * This is the model class for table "import_fos_division_level5".
  *
  * @property int $id
  * @property string $name
  * @property int $domain
- * @property null|int $hr_group_id
  */
-class ImportFosFunctionalBlockTribe extends ActiveRecord {
+class ImportFosDivisionLevel5 extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_functional_block_tribe';
+		return 'import_fos_division_level5';
 	}
 
 	/**

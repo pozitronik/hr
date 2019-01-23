@@ -1,26 +1,26 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "import_fos_positions".
+ * This is the model class for table "import_fos_town".
  *
  * @property int $id
  * @property string $name
  * @property int $domain
  */
-class ImportFosPositions extends ActiveRecord {
+class ImportFosTown extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_positions';
+		return 'import_fos_town';
 	}
 
 	/**

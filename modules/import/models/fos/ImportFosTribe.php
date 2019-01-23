@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
-use app\models\imports\ImportFosDecomposed;
+use app\modules\import\models\ImportFosDecomposed;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 

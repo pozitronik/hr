@@ -1,27 +1,27 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "import_fos_command_position".
+ * This is the model class for table "import_fos_division_level2".
  *
  * @property int $id
- * @property string $code
  * @property string $name
  * @property int $domain
+ * @property null|int $hr_group_id
  */
-class ImportFosCommandPosition extends ActiveRecord {
+class ImportFosDivisionLevel2 extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_command_position';
+		return 'import_fos_division_level2';
 	}
 
 	/**
@@ -29,10 +29,9 @@ class ImportFosCommandPosition extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			['id', 'integer'],
-			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
-			[['code', 'name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required']
+			[['name'], 'string', 'max' => 255],
+			['domain', 'integer'], ['domain', 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 
@@ -42,7 +41,6 @@ class ImportFosCommandPosition extends ActiveRecord {
 	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
-			'code' => 'Code',
 			'name' => 'Name'
 		];
 	}

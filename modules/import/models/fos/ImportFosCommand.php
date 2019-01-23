@@ -1,30 +1,32 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "import_fos_chapter".
+ * This is the model class for table "import_fos_command".
  *
+ * @property int $pkey
  * @property int $id
  * @property string $code
  * @property string $name
- * @property int $leader_id key to chapter leader id
- * @property int $couch_id key to couch id
+ * @property string $type
+ * @property int $cluster_id key to cluster product id
+ * @property int $owner_id key to product owner id
  * @property int $domain
  * @property null|int $hr_group_id
  */
-class ImportFosChapter extends ActiveRecord {
+class ImportFosCommand extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_chapter';
+		return 'import_fos_command';
 	}
 
 	/**
@@ -34,8 +36,8 @@ class ImportFosChapter extends ActiveRecord {
 		return [
 			['id', 'integer'],
 			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
-			[['leader_id', 'couch_id'], 'integer'],
-			[['code', 'name'], 'string', 'max' => 255],
+			[['cluster_id'], 'integer'],
+			[['code', 'name', 'type'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
 			['hr_group_id', 'integer']
 		];
@@ -49,8 +51,9 @@ class ImportFosChapter extends ActiveRecord {
 			'id' => 'ID',
 			'code' => 'Code',
 			'name' => 'Name',
-			'leader_id' => 'key to chapter leader id',
-			'couch_id' => 'key to couch id'
+			'type' => 'Type',
+			'cluster_id' => 'key to cluster product id',
+			'owner_id' => 'key to product owner id'
 		];
 	}
 }

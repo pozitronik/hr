@@ -1,14 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports\fos;
+namespace app\modules\import\models\fos;
 
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "import_fos_chapter_leader".
+ * This is the model class for table "import_fos_tribe_leader_it".
  *
  * @property int $id
  * @property int $user_id key to user id
@@ -16,14 +16,14 @@ use yii\db\ActiveRecord;
  *
  * @property-read ImportFosUsers $relUsers
  */
-class ImportFosChapterLeader extends ActiveRecord {
+class ImportFosTribeLeaderIt extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_chapter_leader';
+		return 'import_fos_tribe_leader_it';
 	}
 
 	/**

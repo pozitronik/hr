@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\imports;
+namespace app\modules\import\models;
 
 use yii\data\ActiveDataProvider;
 
 /**
- * Class ImportFosSearch
+ * Class ImportFosDecomposedSearch
  * @package app\models\imports
  */
-class ImportFosSearch extends ImportFos {
+class ImportFosDecomposedSearch extends ImportFosDecomposed {
 
 	/**
 	 * @param array $params
