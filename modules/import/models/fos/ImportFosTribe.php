@@ -38,8 +38,9 @@ class ImportFosTribe extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			['id', 'integer'],
-			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
+			['tribe_id', 'integer'],
+			['tribe_id', 'required'],
+			['tribe_id', 'unique'],
 			[['leader_id', 'leader_it_id'], 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
@@ -52,7 +53,7 @@ class ImportFosTribe extends ActiveRecord {
 	 */
 	public function attributeLabels():array {
 		return [
-			'id' => 'ID',
+			'tribe_id' => 'ID',
 			'code' => 'Code',
 			'name' => 'Name',
 			'leader_id' => 'key to tribe leader id',
