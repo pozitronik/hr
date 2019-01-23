@@ -140,57 +140,58 @@ class ImportFosDecomposed extends ActiveRecord {
 
 		switch ($step) {
 			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
-				$data = ImportFosChapter::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosChapter::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosChapter $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Чаптер'));
 				}
-				$data = ImportFosClusterProduct::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosClusterProduct::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosClusterProduct $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Кластер'));
 				}
-				$data = ImportFosCommand::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosCommand::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosCommand $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Команда'));
 				}
-				$data = ImportFosDivisionLevel1::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosDivisionLevel1::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosDivisionLevel1 $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение первого уровня'));
 				}
-				$data = ImportFosDivisionLevel2::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosDivisionLevel2::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosDivisionLevel2 $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение второго уровня'));
 				}
-				$data = ImportFosDivisionLevel3::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosDivisionLevel3::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosDivisionLevel3 $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение третьего уровня'));
 				}
-				$data = ImportFosDivisionLevel4::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosDivisionLevel4::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosDivisionLevel4 $row */
+
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение четвёртого уровня'));
 				}
-				$data = ImportFosDivisionLevel5::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosDivisionLevel5::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosDivisionLevel5 $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Подразделение пятого уровня'));
 				}
-				$data = ImportFosFunctionalBlock::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosFunctionalBlock::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosFunctionalBlock $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Функциональный блок'));
 				}
-				$data = ImportFosFunctionalBlockTribe::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosFunctionalBlockTribe::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosFunctionalBlockTribe $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Функциональный блок трайба'));
 				}
-				$data = ImportFosTribe::find()->where(['domain' => $domain, 'hr_group_id' => null])->all();
+				$data = ImportFosTribe::find()->where(['hr_group_id' => null])->all();
 				foreach ($data as $row) {
 					/** @var ImportFosTribe $row */
 					$row->setAndSaveAttribute('hr_group_id', self::addGroup($row->name, 'Трайб'));
@@ -199,7 +200,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			case self::STEP_USERS:
 				/*Пользователи, с должностями, емайлами и атрибутами*/
 				/** @var ImportFosUsers[] $importFosUsers */
-				$importFosUsers = ImportFosUsers::find()->where(['domain' => $domain, 'hr_user_id' => null])->all();
+				$importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->all();
 				foreach ($importFosUsers as $importFosUser) {
 
 					$importFosUser->setAndSaveAttribute('hr_user_id', self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
@@ -249,7 +250,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			break;
 			case self::STEP_LINKING_USERS:
 				/** @var ImportFosChapterCouch[] $data */
-				$data = ImportFosChapterCouch::find()->where(['domain' => $domain])->all();
+				$data = ImportFosChapterCouch::find()->all();
 				foreach ($data as $row) {
 					$chapters = ImportFosChapter::find()->where(['leader_id' => $row->id])->all();
 					foreach ($chapters as $chapter) {
@@ -258,7 +259,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 				}
 				/** @var ImportFosChapterLeader[] $data */
-				$data = ImportFosChapterLeader::find()->where(['domain' => $domain])->all();
+				$data = ImportFosChapterLeader::find()->all();
 				foreach ($data as $row) {
 					$chapters = ImportFosChapter::find()->where(['leader_id' => $row->id])->all();
 					foreach ($chapters as $chapter) {
@@ -267,7 +268,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 				}
 				/** @var ImportFosClusterProductLeader[] $data */
-				$data = ImportFosClusterProductLeader::find()->where(['domain' => $domain])->all();
+				$data = ImportFosClusterProductLeader::find()->all();
 				foreach ($data as $row) {
 					$clusters = ImportFosClusterProduct::find()->where(['leader_id' => $row->id])->all();
 					foreach ($clusters as $cluster) {
@@ -276,7 +277,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 				}
 				/** @var ImportFosProductOwner[] $data */
-				$data = ImportFosProductOwner::find()->where(['domain' => $domain])->all();
+				$data = ImportFosProductOwner::find()->all();
 				foreach ($data as $row) {
 					$commands = ImportFosCommand::find()->where(['owner_id' => $row->id])->all();
 					foreach ($commands as $command) {
@@ -285,7 +286,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 				}
 				/** @var ImportFosTribeLeader[] $data */
-				$data = ImportFosTribeLeader::find()->where(['domain' => $domain])->all();
+				$data = ImportFosTribeLeader::find()->all();
 				foreach ($data as $row) {
 					$tribes = ImportFosTribe::find()->where(['leader_id' => $row->id])->all();
 					foreach ($tribes as $tribe) {
@@ -294,7 +295,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 				}
 				/** @var ImportFosTribeLeaderIt[] $data */
-				$data = ImportFosTribeLeaderIt::find()->where(['domain' => $domain])->all();
+				$data = ImportFosTribeLeaderIt::find()->all();
 				foreach ($data as $row) {
 					$tribes = ImportFosTribe::find()->where(['leader_it_id' => $row->id])->all();
 					foreach ($tribes as $tribe) {
@@ -308,7 +309,7 @@ class ImportFosDecomposed extends ActiveRecord {
 				1) (Бизнес-связи) Функциональный блок => трайб => кластер => команда
 				2) (IT-связь) Трайб => Чаптер
 				*/
-				foreach (ImportFosFunctionalBlock::find()->where(['domain' => $domain])->all() as $fBlock) {
+				foreach (ImportFosFunctionalBlock::find()->all() as $fBlock) {
 					foreach ($fBlock->relTribe as $tribe) {
 						/** @var ImportFosFunctionalBlock $fBlock */
 						RelGroupsGroups::linkModels($fBlock->hr_group_id, $tribe->hr_group_id);
@@ -317,7 +318,7 @@ class ImportFosDecomposed extends ActiveRecord {
 				}
 
 				/** @var ImportFosTribe $tribe */
-				foreach (ImportFosTribe::find()->where(['domain' => $domain])->all() as $tribe) {
+				foreach (ImportFosTribe::find()->all() as $tribe) {
 					foreach ($tribe->relCluster as $cluster) {
 						/** @var ImportFosTribe $tribe */
 						RelGroupsGroups::linkModels($tribe->hr_group_id, $cluster->hr_group_id);
@@ -328,7 +329,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 				}
 				/** @var ImportFosClusterProduct $cluster */
-				foreach (ImportFosClusterProduct::find()->where(['domain' => $domain])->all() as $cluster) {
+				foreach (ImportFosClusterProduct::find()->all() as $cluster) {
 					/** @var ImportFosClusterProduct $cluster */
 					foreach ($cluster->relCommand as $command) {
 						/** @var ImportFosClusterProduct $cluster */
@@ -485,7 +486,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 */
 	public static function findUserCommandPosition(int $userId, int $commandId, int $domain):?ImportFosCommandPosition {
 		if (null !== $position = self::find()->where(['user_id' => $userId, 'command_id' => $commandId, 'domain' => $domain])->one()) {
-			return ImportFosCommandPosition::findModel(['position_id'=>$position->command_position_id]);
+			return ImportFosCommandPosition::findModel(['position_id' => $position->command_position_id]);
 		}
 		return null;
 
