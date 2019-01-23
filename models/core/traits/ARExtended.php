@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use app\models\core\SysExceptions;
-use app\models\imports\ImportException;
 use app\models\user_rights\AccessMethods;
 use app\models\user_rights\UserAccess;
+use app\modules\import\models\ImportException;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
 use yii\base\InvalidConfigException;

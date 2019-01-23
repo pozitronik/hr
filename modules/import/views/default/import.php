@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var int $domain
  */
 
-use app\models\imports\ImportFosDecomposed;
+use app\modules\import\models\ImportFosDecomposed;
 use yii\helpers\Html;
 use yii\web\View;
 

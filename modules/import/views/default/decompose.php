@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Utils;
-use app\models\imports\ImportFos;
+use app\modules\import\models\ImportFos;
 use yii\helpers\Html;
 use yii\web\View;
 

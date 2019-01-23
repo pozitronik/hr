@@ -1,16 +1,36 @@
 <?php
+declare(strict_types = 1);
 
-/* @var $this \yii\web\View */
+/**
+ * @var View $this
+ * @var ActiveRecord $searchModel
+ * @var ActiveDataProvider $dataProvider
+ * @var int $domain
+ */
+
+use app\helpers\Utils;
+use yii\data\ActiveDataProvider;
+use yii\db\ActiveRecord;
+use yii\web\View;
+use kartik\grid\GridView;
+use yii\bootstrap\Html;
+
 ?>
-<div class="ImportFos-default-index">
-	<h1><?= $this->context->action->uniqueId ?></h1>
-	<p>
-		This is the view content for action "<?= $this->context->action->id ?>".
-		The action belongs to the controller "<?= get_class($this->context) ?>"
-		in the "<?= $this->context->module->id ?>" module.
-	</p>
-	<p>
-		You may customize this page by editing the following file:<br>
-		<code><?= __FILE__ ?></code>
-	</p>
-</div>
+
+<?= GridView::widget([
+	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
+	'panel' => [
+		'heading' => 'Загружено '.Utils::pluralForm($dataProvider->totalCount, ['строка', 'строки', 'строк'])
+	],
+	'toolbar' => [
+		[
+			'content' => Html::a('Декомпозиция', ['decompose', 'domain' => $domain], ['class' => 'btn btn-success'])
+		]
+	],
+	'export' => false,
+	'resizableColumns' => true,
+	'responsive' => true,
+	'columns' => [
+	]
+]); ?>
