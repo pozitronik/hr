@@ -211,9 +211,9 @@ class ImportFos extends ActiveRecord {
 		switch ($step) {
 			case self::STEP_REFERENCES:
 
-				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде*/
+				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде. Справочники не учитывают домен, наполняясь по мере новых импортов*/
 					try {
-						$position = ImportFosPositions::addInstance(['name' => $row->position_name, 'domain' => $domain], [
+						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
 							'name' => $row->position_name,
 							'domain' => $row->domain
 						]);
@@ -221,8 +221,8 @@ class ImportFos extends ActiveRecord {
 							'name' => $row->town,
 							'domain' => $row->domain
 						]);
-						ImportFosCommandPosition::addInstance(['id' => $row->command_position_id, 'domain' => $domain], [
-							'id' => $row->command_position_id,
+						ImportFosCommandPosition::addInstance(['position_id' => $row->command_position_id], [
+							'position_id' => $row->command_position_id,
 							'code' => $row->command_position_code,
 							'name' => $row->command_position_name,
 							'domain' => $row->domain
@@ -410,7 +410,7 @@ class ImportFos extends ActiveRecord {
 							'tribe_id' => ImportFosTribe::findModelAttribute(['id' => $row->tribe_id]),
 							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute(['id' => $row->cluster_product_id]),
 							'command_id' => ImportFosCommand::findModelAttribute(['id' => $row->command_id]),
-							'command_position_id' => ImportFosCommandPosition::findModelAttribute(['id' => $row->command_position_id]),
+							'command_position_id' => ImportFosCommandPosition::findModelAttribute(['position_id' => $row->command_position_id]),
 							'chapter_id' => ImportFosChapter::findModelAttribute(['id' => $row->chapter_id])
 						]);
 						$decomposedRow->save();

@@ -471,7 +471,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 */
 	public static function findUserCommandPosition(int $userId, int $commandId, int $domain):?ImportFosCommandPosition {
 		if (null !== $position = self::find()->where(['user_id' => $userId, 'command_id' => $commandId, 'domain' => $domain])->one()) {
-			return ImportFosCommandPosition::findModel($position->command_position_id);
+			return ImportFosCommandPosition::findModel(['position_id'=>$position->command_position_id]);
 		}
 		return null;
 

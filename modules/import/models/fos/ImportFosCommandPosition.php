@@ -29,8 +29,7 @@ class ImportFosCommandPosition extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			['id', 'integer'],
-			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
+			['position_id', 'integer'],
 			[['code', 'name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required']
 		];
@@ -41,7 +40,7 @@ class ImportFosCommandPosition extends ActiveRecord {
 	 */
 	public function attributeLabels():array {
 		return [
-			'id' => 'ID',
+			'position_id' => 'ID',
 			'code' => 'Code',
 			'name' => 'Name'
 		];
