@@ -46,13 +46,13 @@ use yii\db\ActiveRecord;
  * @property string $num № п/п
  * @property int $position_id
  * @property int $user_id
- * @property int $functional_block
- * @property int $division_level_1
- * @property int $division_level_2
- * @property int $division_level_3
- * @property int $division_level_4
- * @property int $division_level_5
- * @property int $functional_block_tribe
+ * @property int $functional_block_id
+ * @property int $division_level_1_id
+ * @property int $division_level_2_id
+ * @property int $division_level_3_id
+ * @property int $division_level_4_id
+ * @property int $division_level_5_id
+ * @property int $functional_block_tribe_id
  * @property int $tribe_id
  * @property int $cluster_product_id
  * @property int $command_id
@@ -84,8 +84,22 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * {@inheritdoc}
 	 */
 	public function rules():array {
-		return [
-			[['position_id', 'user_id', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'functional_block_tribe', 'tribe_id', 'cluster_product_id', 'command_id', 'command_position_id', 'chapter_id', 'domain'], 'integer']
+		return [[
+			['position_id', 'user_id',
+				'functional_block_id',
+				'division_level_1_id',
+				'division_level_2_id',
+				'division_level_3_id',
+				'division_level_4_id',
+				'division_level_5_id',
+				'functional_block_tribe_id',
+				'tribe_id',
+				'cluster_product_id',
+				'command_id',
+				'command_position_id',
+				'chapter_id',
+				'domain'
+			], 'integer']
 		];
 	}
 
@@ -97,13 +111,13 @@ class ImportFosDecomposed extends ActiveRecord {
 			'id' => 'ID',
 			'position_id' => 'Position ID',
 			'user_id' => 'User ID',
-			'functional_block' => 'Functional Block',
-			'division_level_1' => 'Division Level 1',
-			'division_level_2' => 'Division Level 2',
-			'division_level_3' => 'Division Level 3',
-			'division_level_4' => 'Division Level 4',
-			'division_level_5' => 'Division Level 5',
-			'functional_block_tribe' => 'Functional Block Tribe',
+			'functional_block_id' => 'Functional Block',
+			'division_level_1_id' => 'Division Level 1',
+			'division_level_2_id' => 'Division Level 2',
+			'division_level_3_id' => 'Division Level 3',
+			'division_level_4_id' => 'Division Level 4',
+			'division_level_5_id' => 'Division Level 5',
+			'functional_block_tribe_id' => 'Functional Block Tribe',
 			'tribe_id' => 'Tribe ID',
 			'cluster_product_id' => 'Cluster Product ID',
 			'command_id' => 'Command ID',

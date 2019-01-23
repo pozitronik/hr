@@ -409,20 +409,20 @@ class ImportFos extends ActiveRecord {
 					try {
 						$decomposedRow = new ImportFosDecomposed([
 							'domain' => $row->domain,
-							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name]),
-							'user_id' => ImportFosUsers::findModelAttribute(['id' => $row->user_id]),
-							'functional_block' => ImportFosFunctionalBlock::findModelAttribute(['name' => $row->functional_block]),
-							'division_level_1' => ImportFosDivisionLevel1::findModelAttribute(['name' => $row->division_level_1]),
-							'division_level_2' => ImportFosDivisionLevel2::findModelAttribute(['name' => $row->division_level_2]),
-							'division_level_3' => ImportFosDivisionLevel3::findModelAttribute(['name' => $row->division_level_3]),
-							'division_level_4' => ImportFosDivisionLevel4::findModelAttribute(['name' => $row->division_level_4]),
-							'division_level_5' => ImportFosDivisionLevel5::findModelAttribute(['name' => $row->division_level_5]),
-							'functional_block_tribe' => ImportFosFunctionalBlockTribe::findModelAttribute(['name' => $row->functional_block_tribe]),
-							'tribe_id' => ImportFosTribe::findModelAttribute(['id' => $row->tribe_id]),
-							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute(['id' => $row->cluster_product_id]),
-							'command_id' => ImportFosCommand::findModelAttribute(['id' => $row->command_id]),
-							'command_position_id' => ImportFosCommandPosition::findModelAttribute(['position_id' => $row->command_position_id]),
-							'chapter_id' => ImportFosChapter::findModelAttribute(['id' => $row->chapter_id])
+							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name], 'id'),
+							'user_id' => ImportFosUsers::findModelAttribute(['id' => $row->user_tn], 'id'),
+							'functional_block_id' => ImportFosFunctionalBlock::findModelAttribute(['name' => $row->functional_block], 'id'),
+							'division_level_1_id' => ImportFosDivisionLevel1::findModelAttribute(['name' => $row->division_level_1], 'id'),
+							'division_level_2_id' => ImportFosDivisionLevel2::findModelAttribute(['name' => $row->division_level_2], 'id'),
+							'division_level_3_id' => ImportFosDivisionLevel3::findModelAttribute(['name' => $row->division_level_3], 'id'),
+							'division_level_4_id' => ImportFosDivisionLevel4::findModelAttribute(['name' => $row->division_level_4], 'id'),
+							'division_level_5_id' => ImportFosDivisionLevel5::findModelAttribute(['name' => $row->division_level_5], 'id'),
+							'functional_block_tribe_id' => ImportFosFunctionalBlockTribe::findModelAttribute(['name' => $row->functional_block_tribe], 'id'),
+							'tribe_id' => ImportFosTribe::findModelAttribute(['tribe_id' => $row->tribe_id], 'id'),
+							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute(['id' => $row->cluster_product_id], 'id'),
+							'command_id' => ImportFosCommand::findModelAttribute(['id' => $row->command_id], 'id'),
+							'command_position_id' => ImportFosCommandPosition::findModelAttribute(['position_id' => $row->command_position_id], 'id'),
+							'chapter_id' => ImportFosChapter::findModelAttribute(['id' => $row->chapter_id], 'id')
 						]);
 						$decomposedRow->save();
 					} catch (Throwable $throwable) {
