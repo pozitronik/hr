@@ -55,14 +55,14 @@ use yii\db\ActiveRecord;
  * @property string $tribe_id Трайб ID
  * @property string $tribe_code Код трайба
  * @property string $tribe_name Трайб
- * @property string $tribe_leader_id Лидер трайба ТН
+ * @property string $tribe_leader_tn Лидер трайба ТН
  * @property string $tribe_leader_name Лидер трайба
  * @property string $tribe_leader_it_id IT-лидер трайба ТН
  * @property string $tribe_leader_it_name IT-лидер трайба
  * @property string $cluster_product_id Кластер/Продукт ID
  * @property string $cluster_product_code Код кластера/продукта
  * @property string $cluster_product_name Кластер/Продукт
- * @property string $cluster_product_leader_id Лидер кластера/продукта ТН
+ * @property string $cluster_product_leader_tn Лидер кластера/продукта ТН
  * @property string $cluster_product_leader_name Лидер кластера/продукта
  * @property string $command_id Команда ID
  * @property string $command_code Код команды
@@ -75,9 +75,9 @@ use yii\db\ActiveRecord;
  * @property string $chapter_id Чаптер ID
  * @property string $chapter_code Код чаптера
  * @property string $chapter_name Чаптер
- * @property string $chapter_leader_id Лидер чаптера ТН
+ * @property string $chapter_leader_tn Лидер чаптера ТН
  * @property string $chapter_leader_name Лидер чаптера
- * @property string $chapter_couch_id Agile-коуч ТН
+ * @property string $chapter_couch_tn Agile-коуч ТН
  * @property string $chapter_couch_name Agile-коуч
  * @property string $email_sigma Адрес электронной почты (sigma)
  * @property string $email_alpha Адрес электронной почты (внутренний
@@ -111,7 +111,7 @@ class ImportFos extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['domain'], 'integer'],
-			[['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_id', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_id', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_id', 'chapter_leader_name', 'chapter_couch_id', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
+			[['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_tn', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_tn', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_tn', 'chapter_leader_name', 'chapter_couch_tn', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
 		];
 	}
 
@@ -137,14 +137,14 @@ class ImportFos extends ActiveRecord {
 			'tribe_id' => 'Трайб ID',
 			'tribe_code' => 'Код трайба',
 			'tribe_name' => 'Трайб',
-			'tribe_leader_id' => 'Лидер трайба ТН',
+			'tribe_leader_tn' => 'Лидер трайба ТН',
 			'tribe_leader_name' => 'Лидер трайба',
 			'tribe_leader_it_id' => 'IT-лидер трайба ТН',
 			'tribe_leader_it_name' => 'IT-лидер трайба',
 			'cluster_product_id' => 'Кластер/Продукт ID',
 			'cluster_product_code' => 'Код кластера/продукта',
 			'cluster_product_name' => 'Кластер/Продукт',
-			'cluster_product_leader_id' => 'Лидер кластера/продукта ТН',
+			'cluster_product_leader_tn' => 'Лидер кластера/продукта ТН',
 			'cluster_product_leader_name' => 'Лидер кластера/продукта',
 			'command_id' => 'Команда ID',
 			'command_code' => 'Код команды',
@@ -157,9 +157,9 @@ class ImportFos extends ActiveRecord {
 			'chapter_id' => 'Чаптер ID',
 			'chapter_code' => 'Код чаптера',
 			'chapter_name' => 'Чаптер',
-			'chapter_leader_id' => 'Лидер чаптера ТН',
+			'chapter_leader_tn' => 'Лидер чаптера ТН',
 			'chapter_leader_name' => 'Лидер чаптера',
-			'chapter_couch_id' => 'Agile-коуч ТН',
+			'chapter_couch_tn' => 'Agile-коуч ТН',
 			'chapter_couch_name' => 'Agile-коуч',
 			'email_sigma' => 'Адрес электронной почты (sigma)',
 			'email_alpha' => 'Адрес электронной почты (внутренний)'
@@ -254,9 +254,9 @@ class ImportFos extends ActiveRecord {
 			*/
 				foreach ($data as $row) {
 					try {
-						ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_id, 'domain' => $domain], [
-							'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_id, 'domain' => $domain], [
-								'id' => $row->tribe_leader_id,
+						ImportFosTribeLeader::addInstance(['user_id' => $row->tribe_leader_tn, 'domain' => $domain], [
+							'user_id' => ImportFosUsers::addInstance(['id' => $row->tribe_leader_tn, 'domain' => $domain], [
+								'id' => $row->tribe_leader_tn,
 								'name' => $row->tribe_leader_name,
 								'remote' => false,
 								'domain' => $row->domain
@@ -274,9 +274,9 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 
-						ImportFosClusterProductLeader::addInstance(['user_id' => $row->cluster_product_leader_id, 'domain' => $domain], [
-							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_id, 'domain' => $domain], [
-								'id' => $row->cluster_product_leader_id,
+						ImportFosClusterProductLeader::addInstance(['user_id' => $row->cluster_product_leader_tn, 'domain' => $domain], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance(['id' => $row->cluster_product_leader_tn, 'domain' => $domain], [
+								'id' => $row->cluster_product_leader_tn,
 								'name' => $row->cluster_product_leader_name,
 								'remote' => false,
 								'domain' => $row->domain
@@ -292,9 +292,9 @@ class ImportFos extends ActiveRecord {
 							]);
 						}
 
-						ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_id, 'domain' => $domain], [
-							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance(['id' => $row->chapter_leader_id, 'domain' => $domain], [
-								'id' => $row->chapter_leader_id,
+						ImportFosChapterLeader::addInstance(['user_id' => $row->chapter_leader_tn, 'domain' => $domain], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance(['id' => $row->chapter_leader_tn, 'domain' => $domain], [
+								'id' => $row->chapter_leader_tn,
 								'name' => $row->chapter_leader_name,
 								'remote' => false,
 								'domain' => $row->domain
@@ -302,9 +302,9 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 						/*can be null instance, add handlers*/
-						ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_id, 'domain' => $domain], [
-							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance(['id' => $row->chapter_couch_id, 'domain' => $domain], [
-								'id' => $row->chapter_couch_id,
+						ImportFosChapterCouch::addInstance(['user_id' => $row->chapter_couch_tn, 'domain' => $domain], [
+							'user_id' => ArrayHelper::getValue(ImportFosUsers::addInstance(['id' => $row->chapter_couch_tn, 'domain' => $domain], [
+								'id' => $row->chapter_couch_tn,
 								'name' => $row->chapter_couch_name,
 								'remote' => false,
 								'domain' => $row->domain
@@ -356,14 +356,14 @@ class ImportFos extends ActiveRecord {
 							'id' => $row->tribe_id,
 							'code' => $row->tribe_code,
 							'name' => $row->tribe_name,
-							'leader_id' => ImportFosTribeLeader::findModelAttribute(['user_id' => $row->tribe_leader_id]),
+							'leader_id' => ImportFosTribeLeader::findModelAttribute(['user_id' => $row->tribe_leader_tn]),
 							'leader_it_id' => ImportFosTribeLeaderIt::findModelAttribute(['user_id' => $row->tribe_leader_it_id]),
 							'domain' => $row->domain
 						]);
 						ImportFosClusterProduct::addInstance(['id' => $row->cluster_product_id, 'domain' => $domain], [
 							'id' => $row->cluster_product_id,
 							'name' => $row->cluster_product_name,
-							'leader_id' => ImportFosClusterProductLeader::findModelAttribute(['user_id' => $row->cluster_product_leader_id]),
+							'leader_id' => ImportFosClusterProductLeader::findModelAttribute(['user_id' => $row->cluster_product_leader_tn]),
 							'domain' => $row->domain
 						]);
 						ImportFosCommand::addInstance(['id' => $row->command_id, 'domain' => $domain], [
@@ -379,8 +379,8 @@ class ImportFos extends ActiveRecord {
 							'id' => $row->chapter_id,
 							'name' => $row->chapter_name,
 							'code' => $row->chapter_code,
-							'leader_id' => ImportFosChapterLeader::findModelAttribute(['user_id' => $row->chapter_leader_id]),
-							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_id]),
+							'leader_id' => ImportFosChapterLeader::findModelAttribute(['user_id' => $row->chapter_leader_tn]),
+							'couch_id' => ImportFosChapterCouch::findModelAttribute(['user_id' => $row->chapter_couch_tn]),
 							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
