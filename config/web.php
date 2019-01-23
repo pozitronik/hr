@@ -1,9 +1,11 @@
 <?php
-/** @noinspection UsingInclusionReturnValueInspection */
 declare(strict_types = 1);
+
+/** @noinspection UsingInclusionReturnValueInspection */
 
 use yii\caching\FileCache;
 use kartik\grid\Module as GridModule;
+use app\modules\import\Module as Import;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
@@ -27,7 +29,7 @@ $config = [
 		'@npm' => '@vendor/npm-asset'
 	],
 	'modules' => [
-		'gridview' =>  [
+		'gridview' => [
 			'class' => GridModule::class,
 			'bsVersion' => 3
 			// enter optional module parameters below - only if you need to
@@ -35,7 +37,10 @@ $config = [
 			// message source
 			// 'downloadAction' => 'gridview/export/download',
 			// 'i18n' => []
-		]
+		],
+		'import' => [
+			'class' => Import::class
+		],
 	],
 	'components' => [
 		'request' => [
