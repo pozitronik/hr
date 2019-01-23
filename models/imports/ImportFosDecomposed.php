@@ -295,22 +295,29 @@ class ImportFosDecomposed extends ActiveRecord {
 				2) (IT-связь) Трайб => Чаптер
 				*/
 				foreach (ImportFosFunctionalBlock::find()->where(['domain' => $domain])->all() as $fBlock) {
-					/** @var ImportFosFunctionalBlock $fBlock */
 					foreach ($fBlock->relTribe as $tribe) {
+						/** @var ImportFosFunctionalBlock $fBlock */
 						RelGroupsGroups::linkModels($fBlock->hr_group_id, $tribe->hr_group_id);
 					}
 
 				}
+
+				/** @var ImportFosTribe $tribe */
 				foreach (ImportFosTribe::find()->where(['domain' => $domain])->all() as $tribe) {
 					foreach ($tribe->relCluster as $cluster) {
+						/** @var ImportFosTribe $tribe */
 						RelGroupsGroups::linkModels($tribe->hr_group_id, $cluster->hr_group_id);
 					}
 					foreach ($tribe->relChapter as $chapter) {
+						/** @var ImportFosChapter $tribe */
 						RelGroupsGroups::linkModels($tribe->hr_group_id, $chapter->hr_group_id);//it-relation
 					}
 				}
+				/** @var ImportFosClusterProduct $cluster */
 				foreach (ImportFosClusterProduct::find()->where(['domain' => $domain])->all() as $cluster) {
+					/** @var ImportFosClusterProduct $cluster */
 					foreach ($cluster->relCommand as $command) {
+						/** @var ImportFosClusterProduct $cluster */
 						RelGroupsGroups::linkModels($cluster->hr_group_id, $command->hr_group_id);
 					}
 				}
