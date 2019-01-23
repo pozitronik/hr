@@ -85,13 +85,14 @@ trait ARExtended {
 	}
 
 	/**
-	 * @param null|mixed $searchCondition
+	 * Первый параметр пока что специально принудительно указываю массивом, это позволяет не накосячить при задании параметров. Потом возможно будет убрать
+	 * @param array $searchCondition
 	 * @param null|array $fields
 	 * @param bool $ignoreEmptyCondition Игнорировать пустое поисковое значение
 	 * @return ActiveRecord|self|null
 	 * @throws ImportException
 	 */
-	public static function addInstance($searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {
+	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {
 		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
 
 		/** @var ActiveRecord $instance */
