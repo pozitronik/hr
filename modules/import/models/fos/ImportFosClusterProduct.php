@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "import_fos_cluster_product".
  *
- * @property int $id
+ * @property int $cluster_id
  * @property string $name
  * @property int $leader_id key to cluster product leader id
  * @property int $domain
@@ -35,8 +35,9 @@ class ImportFosClusterProduct extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			['id', 'integer'],
-			[['id', 'domain'], 'unique', 'targetAttribute' => ['id', 'domain']],
+			['cluster_id', 'integer'],
+			['cluster_id', 'required'],
+			['cluster_id', 'unique'],
 			[['leader_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
@@ -49,7 +50,7 @@ class ImportFosClusterProduct extends ActiveRecord {
 	 */
 	public function attributeLabels():array {
 		return [
-			'id' => 'ID',
+			'cluster_id' => 'ID',
 			'name' => 'Name',
 			'leader_id' => 'key to cluster product leader id'
 		];
