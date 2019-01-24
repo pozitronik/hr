@@ -74,9 +74,18 @@ class DefaultController extends WigetableController {
 	 * @param int $step
 	 * @return string|Response
 	 */
-	public function actionDecompose(?int $domain = null, int $step = 0) {
+	public function actionDecompose(?int $domain = null, int $step = ImportFos::STEP_REFERENCES) {
 		if (null === $domain) return $this->redirect(['upload']);
-		$messages = ImportFos::Decompose($domain, $step);
+
+		$messages = [];
+		$step = ImportFos::Decompose($domain, $step, $messages);
+		if ([] === $messages && $step !== ImportFos::LAST_STEP) {//если нет ошибок, сразу переходим к следующему шагу
+			return $this->redirect(['decompose',
+				'domain' => $domain,
+				'messages' => $messages,
+				'step' => $step + 1
+			]);
+		}
 		return $this->render('decompose', compact('step', 'messages', 'domain'));
 	}
 
@@ -103,7 +112,13 @@ class DefaultController extends WigetableController {
 	 */
 	public function actionImport(?int $domain = null, int $step = ImportFosDecomposed::STEP_GROUPS) {
 		if (null === $domain) return $this->redirect(['upload']);
-		$step = ImportFosDecomposed::Import($step);
-		return $this->render('import', compact('step', 'domain'));
+		if (ImportFosDecomposed::LAST_STEP === $step) {
+			return $this->render('import', compact('step', 'domain'));
+		}
+		return $this->redirect(['import',
+			'domain' => $domain,
+			'step' => ImportFosDecomposed::Import($step)?$step + 1:$step
+		]);
+
 	}
 }

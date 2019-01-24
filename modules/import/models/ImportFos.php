@@ -88,12 +88,14 @@ class ImportFos extends ActiveRecord {
 	public const STEP_USERS = 1;
 	public const STEP_GROUPS = 2;
 	public const STEP_FINISH = 3;
+	public const LAST_STEP = self::STEP_FINISH + 1;
 
 	public const step_labels = [
 		self::STEP_REFERENCES => 'Декомпозиция справочных данных',
 		self::STEP_USERS => 'Декомпозиция пользователей',
 		self::STEP_GROUPS => 'Декомпозиция групп',
-		self::STEP_FINISH => 'Итоговая сверка'
+		self::STEP_FINISH => 'Итоговая сверка',
+		self::LAST_STEP => 'Готово!'
 	];
 
 	/**
@@ -198,10 +200,10 @@ class ImportFos extends ActiveRecord {
 	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
 	 * @param int $domain
 	 * @param int $step
-	 * @return array Массив сообщений
+	 * @param array $messages Массив сообщений
+	 * @return int текущий исполненный шаг
 	 */
-	public static function Decompose(int $domain, int $step = 0):array {
-		$errors = [];
+	public static function Decompose(int $domain, int $step = self::STEP_REFERENCES, array &$messages = []):int {
 		/** @var self[] $data */
 		$data = self::find()->where(['domain' => $domain])->all();
 
@@ -237,9 +239,9 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
-						$errors[] = ['row' => $row, 'error' => $importException->getName()];
+						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
-						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
 				}
 
@@ -322,9 +324,9 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
-						$errors[] = ['row' => $row, 'error' => $importException->getName()];
+						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
-						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
 				}
 
@@ -395,9 +397,9 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
-						$errors[] = ['row' => $row, 'error' => $importException->getName()];
+						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
-						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
 				}
 
@@ -426,13 +428,13 @@ class ImportFos extends ActiveRecord {
 						]);
 						$decomposedRow->save();
 					} catch (Throwable $throwable) {
-						$errors[] = ['row' => $row, 'error' => $throwable->getMessage()];
+						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
 				}
 
 			break;
 		}
-		return $errors;
+		return $step;
 	}
 
 }
