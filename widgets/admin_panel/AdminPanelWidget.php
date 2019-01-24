@@ -14,15 +14,17 @@ use yii\base\Widget;
  * @package app\components\admin_panel
  *
  * @property integer $mode
- * @property string $controllers_directory
+ * @property string[]|string $controllers_directory
  */
 class AdminPanelWidget extends Widget {
 	public const MODE_PANEL = 0;//Представление в виде панельки с иконками
 	public const MODE_MENU = 1;//Представление в виде дропдаун-меню
 	public const MODE_LIST = 2;//Представление в виде списка без иконок
 
+	public const DEFAULT_DIRECTORY = '@app/controllers/admin/';
+
 	public $mode;
-	public $controllers_directory = '@app/controllers/admin/';
+	public $controllers_directory = self::DEFAULT_DIRECTORY;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -39,8 +41,20 @@ class AdminPanelWidget extends Widget {
 	 * @throws UnknownClassException
 	 */
 	public function run():string {
-		return $this->render('admin_panel',[
-			'controllers' => WigetableController::GetControllersList($this->controllers_directory),
+		if (is_array($this->controllers_directory)) {
+			$controllersList = [[]];
+			/** @noinspection ForeachSourceInspection */
+			foreach ($this->controllers_directory as $directory) {
+				$controllersList[] = WigetableController::GetControllersList($directory);
+			}
+			$controllers = array_merge(...$controllersList);
+
+		} else {
+			$controllers = WigetableController::GetControllersList($this->controllers_directory);
+		}
+
+		return $this->render('admin_panel', [
+			'controllers' => $controllers,
 			'mode' => $this->mode
 		]);
 	}
