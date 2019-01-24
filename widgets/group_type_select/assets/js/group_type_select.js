@@ -12,7 +12,7 @@ function set_group_type(groupId, type) {
 	});
 }
 
-function formatItem(item) {
+function formatGroupType(item) {
 	if (item.loading) {
 		return item.text;
 	}
@@ -28,7 +28,7 @@ function formatItem(item) {
 	return '<div class="select-item" ' + color + '"><div class="row"><div class="col-sm-11">' + item.text + '</div></div></div>';
 }
 
-function formatSelectedItem(item) {
+function formatSelectedGroupType(item) {
 	var color = $(item.element).data('color');
 	if (color) {
 		color = 'style = "padding: 0px 5px;background: ' + color + ';"';

@@ -29,8 +29,8 @@ use yii\web\JsExpression;
 	'pluginOptions' => [
 		'allowClear' => true,
 		'multiple' => false,
-		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
-		'templateSelection' => new JsExpression('function(item) {return formatSelectedItem(item)}'),
+		'templateResult' => new JsExpression('function(item) {return formatGroupRelation(item)}'),
+		'templateSelection' => new JsExpression('function(item) {return formatSelectedGroupRelation(item)}'),
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
 	],
 	'pluginEvents' => [

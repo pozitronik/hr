@@ -29,7 +29,7 @@ use kartik\select2\Select2;
 	'pluginOptions' => [
 		'allowClear' => true,
 		'multiple' => $multiple,
-		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
+		'templateResult' => new JsExpression('function(item) {return formatUserRight(item)}'),
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
 	]
 ]); ?>

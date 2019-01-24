@@ -1,4 +1,4 @@
-function formatItem(item) {
+function formatUserRight(item) {
 	if (item.loading) {
 		return item.text;
 	}

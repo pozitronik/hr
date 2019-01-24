@@ -387,6 +387,25 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
+	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
+	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
+	 * @return array
+	 */
+	public static function dataOptions():array {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+			$items = self::find()->active()->all();
+			$result = [];
+			foreach ($items as $key => $item) {
+				$result[$item->id] = [
+					'data-logo' => $item->logo,
+					'data-typename' => $item->relGroupTypes->name
+				];
+			}
+			return $result;
+		});
+	}
+
+	/**
 	 * Прототипируемая функция: обходим всю иерархию групп вниз по дереву, возвращаем всех пользователей групп в иерархии.
 	 * Голым запросом не сделано, потому что в MySQL рекурсивные вызовы (а без них придётся задавать глубину обхода вручную) появились только в 8.0, и с ними я просто не знаком.
 	 * К тому же непонятно, как это делать средствами фреймворка. В общем, прототипирую идею, дальше как получится.
@@ -414,6 +433,7 @@ class Groups extends ActiveRecord {
 	 */
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."CollectRecursiveIds".$this->id);
+		Yii::$app->cache->delete(static::class."DataOptions");
 	}
 
 }

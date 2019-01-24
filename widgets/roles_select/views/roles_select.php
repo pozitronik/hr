@@ -28,8 +28,8 @@ use yii\web\JsExpression;
 	'pluginOptions' => [
 		'allowClear' => true,
 		'multiple' => true,
-		'templateResult' => new JsExpression('function(item) {return formatItem(item)}'),
-		'templateSelection' => new JsExpression('function(item) {return formatSelectedItem(item)}'),
+		'templateResult' => new JsExpression('function(item) {return formatRole(item)}'),
+		'templateSelection' => new JsExpression('function(item) {return formatSelectedRole(item)}'),
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
 	],
 	'pluginEvents' => [
