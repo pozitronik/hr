@@ -419,10 +419,10 @@ class ImportFos extends ActiveRecord {
 							'division_level_5_id' => ImportFosDivisionLevel5::findModelAttribute(['name' => $row->division_level_5], 'id'),
 							'functional_block_tribe_id' => ImportFosFunctionalBlockTribe::findModelAttribute(['name' => $row->functional_block_tribe], 'id'),
 							'tribe_id' => ImportFosTribe::findModelAttribute(['tribe_id' => $row->tribe_id], 'id'),
-							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute(['id' => $row->cluster_product_id], 'id'),
-							'command_id' => ImportFosCommand::findModelAttribute(['id' => $row->command_id], 'id'),
+							'cluster_product_id' => ImportFosClusterProduct::findModelAttribute(['cluster_id' => $row->cluster_product_id], 'id'),
+							'command_id' => ImportFosCommand::findModelAttribute(['command_id' => $row->command_id], 'id'),
 							'command_position_id' => ImportFosCommandPosition::findModelAttribute(['position_id' => $row->command_position_id], 'id'),
-							'chapter_id' => ImportFosChapter::findModelAttribute(['id' => $row->chapter_id], 'id')
+							'chapter_id' => ImportFosChapter::findModelAttribute(['chapter_id' => $row->chapter_id], 'id')
 						]);
 						$decomposedRow->save();
 					} catch (Throwable $throwable) {
