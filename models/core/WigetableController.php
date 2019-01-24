@@ -23,6 +23,7 @@ use yii\web\Response;
  * @property-read false|string $menuCaption
  * @property-read boolean $disabled
  * @property-read integer $orderWeight
+ * @property-read string $defaultRoute
  */
 class WigetableController extends Controller {
 	public $disabled = false;
@@ -83,5 +84,13 @@ class WigetableController extends Controller {
 		}
 		ArrayHelper::multisort($result, ['orderWeight']);
 		return $result;
+	}
+
+	/**
+	 * При необходимости здесь можно переопределить роут контроллера, обрабатываемый виджетом
+	 * @return string
+	 */
+	public function getDefaultRoute():string {
+		return $this->route;
 	}
 }

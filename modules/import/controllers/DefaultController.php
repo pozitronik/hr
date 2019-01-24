@@ -23,6 +23,7 @@ class DefaultController extends WigetableController {
 	public $menuIcon = "/img/admin/import.png";
 	public $disabled = false;
 	public $orderWeight = 6;
+	public $defaultRoute = 'import/default';
 
 	/**
 	 * {@inheritDoc}
