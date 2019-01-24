@@ -46,7 +46,8 @@ class GroupSelectWidget extends Widget {
 			'model' => $this->model,
 			'attribute' => $this->attribute,
 			'data' => ArrayHelper::map($data, 'id', 'name'),
-			'multiple' => $this->multiple
+			'multiple' => $this->multiple,
+			'options' => Groups::dataOptions()
 		]);
 	}
 }

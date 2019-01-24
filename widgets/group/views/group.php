@@ -35,8 +35,8 @@ use app\widgets\user\UserWidget;
 				<?php endif; ?>
 			</ul>
 		</div>
-		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['admin/groups/update', 'id' => $group->id]); ?>
-		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['admin/groups/update', 'id' => $group->id]); ?></h3>
+		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['/admin/groups/update', 'id' => $group->id]); ?>
+		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['/admin/groups/update', 'id' => $group->id]); ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="tab-content">

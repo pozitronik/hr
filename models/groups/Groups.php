@@ -398,7 +398,8 @@ class Groups extends ActiveRecord {
 			foreach ($items as $key => $item) {
 				$result[$item->id] = [
 					'data-logo' => $item->logo,
-					'data-typename' => $item->relGroupTypes->name
+					'data-typename' => $item->relGroupTypes->name,
+					'data-typecolor' => $item->relGroupTypes->color
 				];
 			}
 			return $result;
