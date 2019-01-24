@@ -65,20 +65,20 @@ class ImportFosTribe extends ActiveRecord {
 	 * @return ImportFosDecomposed[]|ActiveQuery
 	 */
 	public function getRelDecomposed() {
-		return $this->hasMany(ImportFosDecomposed::class, ['tribe_id' => 'tribe_id']);
+		return $this->hasMany(ImportFosDecomposed::class, ['tribe_id' => 'id']);
 	}
 
 	/**
 	 * @return ImportFosClusterProduct[]|ActiveQuery
 	 */
 	public function getRelCluster() {
-		return $this->hasMany(ImportFosClusterProduct::class, ['cluster_id' => 'cluster_product_id'])->via('relDecomposed');
+		return $this->hasMany(ImportFosClusterProduct::class, ['id' => 'cluster_product_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ImportFosChapter[]|ActiveQuery
 	 */
 	public function getRelChapter() {
-		return $this->hasMany(ImportFosChapter::class, ['chapter_id' => 'chapter_id'])->via('relDecomposed');
+		return $this->hasMany(ImportFosChapter::class, ['id' => 'chapter_id'])->via('relDecomposed');
 	}
 }
