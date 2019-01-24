@@ -10,16 +10,14 @@ class m190123_140848_refactor_decomosed_table extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		return false;
+		return true;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		echo "m190123_140848_refactor_decomosed_table cannot be reverted.\n";
-
-		return false;
+		return true;
 	}
 
 	/*
