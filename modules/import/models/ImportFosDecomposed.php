@@ -177,8 +177,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			break;
 			case self::STEP_USERS:
 				/*Пользователи, с должностями, емайлами и атрибутами*/
-				/** @var ImportFosUsers[] $importFosUsers */
-				$importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->all();
+				$importFosUsers = ImportFosUsers::findAll((['hr_user_id' => null]));
 				foreach ($importFosUsers as $importFosUser) {
 
 					$importFosUser->setAndSaveAttribute('hr_user_id', self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
@@ -221,64 +220,41 @@ class ImportFosDecomposed extends ActiveRecord {
 					}
 
 					/*Позиции в командах всех пользователей через ImportFosCommandPosition */
+					/** @var ImportFosCommand $command */
 					if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
-						self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->pkey, $command->pkey, $domain), 'name'));
+						self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->id, $command->id), 'name'));
 					}
 				}
 			break;
 			case self::STEP_LINKING_USERS:
-				/** @var ImportFosChapterCouch[] $data */
-				$data = ImportFosChapterCouch::find()->all();
-				foreach ($data as $row) {
-					$chapters = ImportFosChapter::find()->where(['leader_id' => $row->id])->all();
-					foreach ($chapters as $chapter) {
-						/** @var ImportFosChapter $chapter */
-						self::linkRole($chapter->hr_group_id, $row->relUsers->hr_user_id, 'Agile-коуч');
+				foreach (ImportFosChapterCouch::find()->all() as $couch) {
+					foreach (ImportFosChapter::findAll(['leader_id' => $couch->id]) as $chapter) {
+						self::linkRole($chapter->hr_group_id, $couch->relUsers->hr_user_id, 'Agile-коуч');
 					}
 				}
-				/** @var ImportFosChapterLeader[] $data */
-				$data = ImportFosChapterLeader::find()->all();
-				foreach ($data as $row) {
-					$chapters = ImportFosChapter::find()->where(['leader_id' => $row->id])->all();
-					foreach ($chapters as $chapter) {
-						/** @var ImportFosChapter $chapter */
-						self::linkRole($chapter->hr_group_id, $row->relUsers->hr_user_id, 'Лидер чаптера');
+				foreach (ImportFosChapterLeader::find()->all() as $chapterLeader) {
+					foreach (ImportFosChapter::findAll(['leader_id' => $chapterLeader->id]) as $chapter) {
+						self::linkRole($chapter->hr_group_id, $chapterLeader->relUsers->hr_user_id, 'Лидер чаптера');
 					}
 				}
-				/** @var ImportFosClusterProductLeader[] $data */
-				$data = ImportFosClusterProductLeader::find()->all();
-				foreach ($data as $row) {
-					$clusters = ImportFosClusterProduct::find()->where(['leader_id' => $row->id])->all();
-					foreach ($clusters as $cluster) {
-						/** @var ImportFosClusterProduct $cluster */
-						self::linkRole($cluster->hr_group_id, $row->relUsers->hr_user_id, 'Лидер кластера');
+				foreach (ImportFosClusterProductLeader::find()->all() as $clusterLeader) {
+					foreach (ImportFosClusterProduct::findAll(['leader_id' => $clusterLeader->id]) as $cluster) {
+						self::linkRole($cluster->hr_group_id, $clusterLeader->relUsers->hr_user_id, 'Лидер кластера');
 					}
 				}
-				/** @var ImportFosProductOwner[] $data */
-				$data = ImportFosProductOwner::find()->all();
-				foreach ($data as $row) {
-					$commands = ImportFosCommand::find()->where(['owner_id' => $row->id])->all();
-					foreach ($commands as $command) {
-						/** @var ImportFosCommand $command */
-						self::linkRole($command->hr_group_id, $row->relUsers->hr_user_id, 'Владелец продукта');
+				foreach (ImportFosProductOwner::find()->all() as $productOwner) {
+					foreach (ImportFosCommand::findAll(['owner_id' => $productOwner->id]) as $command) {
+						self::linkRole($command->hr_group_id, $productOwner->relUsers->hr_user_id, 'Владелец продукта');
 					}
 				}
-				/** @var ImportFosTribeLeader[] $data */
-				$data = ImportFosTribeLeader::find()->all();
-				foreach ($data as $row) {
-					$tribes = ImportFosTribe::find()->where(['leader_id' => $row->id])->all();
-					foreach ($tribes as $tribe) {
-						/** @var ImportFosTribe $tribe */
-						self::linkRole($tribe->hr_group_id, $row->relUsers->hr_user_id, 'Лидер трайба');
+				foreach (ImportFosTribeLeader::find()->all() as $tribeLeader) {
+					foreach (ImportFosTribe::findAll(['leader_id' => $tribeLeader->id]) as $tribe) {
+						self::linkRole($tribe->hr_group_id, $tribeLeader->relUsers->hr_user_id, 'Лидер трайба');
 					}
 				}
-				/** @var ImportFosTribeLeaderIt[] $data */
-				$data = ImportFosTribeLeaderIt::find()->all();
-				foreach ($data as $row) {
-					$tribes = ImportFosTribe::find()->where(['leader_it_id' => $row->id])->all();
-					foreach ($tribes as $tribe) {
-						/** @var ImportFosTribe $tribe */
-						self::linkRole($tribe->hr_group_id, $row->relUsers->hr_user_id, 'IT-Лидер трайба');
+				foreach (ImportFosTribeLeaderIt::find()->all() as $tribeLeaderIt) {
+					foreach (ImportFosTribe::findAll(['leader_it_id' => $tribeLeaderIt->id]) as $tribe) {
+						self::linkRole($tribe->hr_group_id, $tribeLeaderIt->relUsers->hr_user_id, 'IT-Лидер трайба');
 					}
 				}
 			break;
@@ -458,13 +434,12 @@ class ImportFosDecomposed extends ActiveRecord {
 	/**
 	 * @param int $userId
 	 * @param int $commandId
-	 * @param int $domain
 	 * @return ImportFosCommandPosition|null
 	 * @throws Throwable
 	 */
-	public static function findUserCommandPosition(int $userId, int $commandId, int $domain):?ImportFosCommandPosition {
-		if (null !== $position = self::find()->where(['user_id' => $userId, 'command_id' => $commandId, 'domain' => $domain])->one()) {
-			return ImportFosCommandPosition::findModel(['position_id' => $position->command_position_id]);
+	public static function findUserCommandPosition(int $userId, int $commandId):?ImportFosCommandPosition {
+		if (null !== $position = self::find()->where(['user_id' => $userId, 'command_id' => $commandId])->one()) {
+			return ImportFosCommandPosition::findModel(['id' => $position->command_position_id]);
 		}
 		return null;
 
