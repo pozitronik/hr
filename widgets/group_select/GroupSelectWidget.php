@@ -26,7 +26,7 @@ class GroupSelectWidget extends Widget {
 	public $attribute;
 	public $notData;
 	public $multiple = false;
-	public $groupByType = false;
+	public $groupByType = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
