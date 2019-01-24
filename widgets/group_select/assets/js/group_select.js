@@ -1,5 +1,5 @@
 function formatGroup(item) {
-	if (item.loading) {
+	if (item.loading || item.hasOwnProperty('children')) {
 		return item.text;
 	}
 	var typecolor = $(item.element).data('typecolor');

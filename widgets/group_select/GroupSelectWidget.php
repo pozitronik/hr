@@ -5,11 +5,11 @@ namespace app\widgets\group_select;
 
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
+use app\models\references\refs\RefGroupTypes;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 
 /**
- * @todo не нужно в таком виде, стоит использовать не виджет, а прямое обращение
  * Возможно, стоит переписать в более общий вид, не только для групп
  * Class GroupSelectWidget
  * Виджет списка групп (для добавления пользователя)
@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
  * @property array $notData Группы, исключённые из списка (например те, в которых пользователь уже есть)
+ * @property bool $groupByType Группировка списка по типу группы
  * @property boolean $multiple
  */
 class GroupSelectWidget extends Widget {
@@ -25,6 +26,7 @@ class GroupSelectWidget extends Widget {
 	public $attribute;
 	public $notData;
 	public $multiple = false;
+	public $groupByType = false;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -39,13 +41,20 @@ class GroupSelectWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		$data = Groups::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])
-			->all();
+		$data = [];
+		if ($this->groupByType) {
+			foreach (RefGroupTypes::find()->active()->all() as $groupType) {
+				$data[$groupType->name] = ArrayHelper::map($groups = Groups::find()->active()->where(['type' => $groupType->id])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+			}
+			$data['Тип не указан'] = ArrayHelper::map(Groups::find()->active()->where(['type' => null])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+		} else {
+			$data = ArrayHelper::map(Groups::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+		}
 
 		return $this->render('group_select', [
 			'model' => $this->model,
 			'attribute' => $this->attribute,
-			'data' => ArrayHelper::map($data, 'id', 'name'),
+			'data' => $data,
 			'multiple' => $this->multiple,
 			'options' => Groups::dataOptions()
 		]);
