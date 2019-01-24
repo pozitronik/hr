@@ -216,7 +216,7 @@ class ImportFos extends ActiveRecord {
 							'name' => $row->position_name,
 							'domain' => $row->domain
 						]);
-						$town = ImportFosTown::addInstance([
+						$town = ImportFosTown::addInstance(['name' => $row->town], [
 							'name' => $row->town,
 							'domain' => $row->domain
 						]);
