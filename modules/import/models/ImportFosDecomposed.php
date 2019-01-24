@@ -129,12 +129,11 @@ class ImportFosDecomposed extends ActiveRecord {
 
 	/**
 	 * Разбираем декомпозированные данные и вносим в боевую таблицу
-	 * @param null|int $domain
 	 * @param int $step
 	 * @return int Current step
 	 * @throws Throwable
 	 */
-	public static function Import(?int $domain = null, int $step = self::STEP_GROUPS):int {
+	public static function Import(int $step = self::STEP_GROUPS):int {
 		//$result = [];//Сюда складируем сообщения
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 
@@ -177,7 +176,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			break;
 			case self::STEP_USERS:
 				/*Пользователи, с должностями, емайлами и атрибутами*/
-				$importFosUsers = ImportFosUsers::findAll((['hr_user_id' => null]));
+				$importFosUsers = ImportFosUsers::findAll(['hr_user_id' => null]);
 				foreach ($importFosUsers as $importFosUser) {
 
 					$importFosUser->setAndSaveAttribute('hr_user_id', self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
