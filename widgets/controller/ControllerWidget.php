@@ -38,7 +38,7 @@ class ControllerWidget extends Widget {
 	 */
 	public function run():string {
 
-		$action = ["{$this->model->route}/{$this->model->defaultAction}"];
+		$action = ["/{$this->model->route}/{$this->model->defaultAction}"];
 		$caption = Magic::hasProperty($this->model, 'menuCaption')?$this->model->menuCaption:$this->model->id;
 		switch ($this->mode) {
 			case self::MODE_PANEL:

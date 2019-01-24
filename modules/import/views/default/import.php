@@ -27,7 +27,7 @@ use yii\web\View;
 	</div>
 	<div class="panel-footer">
 		<?= Html::a('Повторить', ['import', 'step' => $step, 'domain' => $domain], ['class' => 'btn btn-warning pull-left']); ?>
-		<?= ($step !== ImportFosDecomposed::LAST_STEP)?Html::a('Следующий шаг', ['import', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']):Html::a('Готово, домой', ['home/index', 'domain' => $domain], ['class' => 'btn btn-success pull-right']); ?>
+		<?= ($step !== ImportFosDecomposed::LAST_STEP)?Html::a('Следующий шаг', ['import', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']):Html::a('Готово, домой', ['/home/index', 'domain' => $domain], ['class' => 'btn btn-success pull-right']); ?>
 		<div class="clearfix"></div>
 	</div>
 </div>

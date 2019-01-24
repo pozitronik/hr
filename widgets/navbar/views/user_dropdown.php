@@ -33,13 +33,13 @@ use yii\web\View;
 		<!-- User dropdown menu -->
 		<ul class="head-list">
 			<li>
-				<?= Html::a("Профиль", ["admin/users/update", "id" => $user->id]); ?>
+				<?= Html::a("Профиль", ["/admin/users/update", "id" => $user->id]); ?>
 			</li>
 		</ul>
 
 		<!-- Dropdown footer -->
 		<div class="pad-all text-right">
-			<?= Html::a("Выйти", ['site/logout'], ['class' => 'btn btn-primary']) ?>
+			<?= Html::a("Выйти", ['/site/logout'], ['class' => 'btn btn-primary']) ?>
 		</div>
 	</div>
 </li>
