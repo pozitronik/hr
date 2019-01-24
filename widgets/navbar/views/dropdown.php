@@ -44,7 +44,11 @@ use app\models\users\Users;
 			</div>
 			<?php if ($user->is('admin')): ?>
 				<?= AdminPanelWidget::widget([
-					'mode' => AdminPanelWidget::MODE_LIST
+					'mode' => AdminPanelWidget::MODE_LIST,
+					'controllers_directory' => [
+						AdminPanelWidget::DEFAULT_DIRECTORY,
+						'@app/modules/import/controllers/'
+					]
 				]) ?>
 			<?php endif; ?>
 		</div>
