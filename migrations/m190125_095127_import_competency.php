@@ -13,31 +13,39 @@ class m190125_095127_import_competency extends Migration {
 		$this->createTable('import_competency_users', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string()->notNull()->comment('Имя сотрудника'),
-			'hr_user_id' => $this->integer()->null()->comment('id в системе')
+			'hr_user_id' => $this->integer()->null()->comment('id в системе'),
+			'domain' => $this->integer()->notNull()
 		]);
 
 		$this->createTable('import_competency_attributes', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string()->notNull()->comment('Название атрибута'),
-			'hr_attribute_id' => $this->integer()->comment('id в системе')
+			'hr_attribute_id' => $this->integer()->comment('id в системе'),
+			'domain' => $this->integer()->notNull()
 		]);
 
 		$this->createTable('import_competency_fields', [
 			'id' => $this->primaryKey(),
 			'attribute_id' => $this->integer()->notNull()->comment('Ключ к атрибуту'),
-			'name' => $this->string()->notNull()
+			'name' => $this->string()->notNull(),
+			'domain' => $this->integer()->notNull()
 		]);
 
 		$this->createTable('import_competency_rel_users_fields', [
 			'id' => $this->primaryKey(),
 			'user_id' => $this->integer()->notNull()->comment('Ключ к пользователю'),
 			'field_id' => $this->integer()->notNull()->comment('Ключ к полю атрибута'),
-			'value' => $this->text()->comment('Значение поля в сыром виде')
+			'value' => $this->text()->comment('Значение поля в сыром виде'),
+			'domain' => $this->integer()->notNull()
 		]);
 
 		$this->createIndex('attribute_id', 'import_competency_fields', 'attribute_id');
 		$this->createIndex('user_id', 'import_competency_rel_users_fields', 'user_id');
 		$this->createIndex('field_id', 'import_competency_rel_users_fields', 'field_id');
+		$this->createIndex('domain', 'import_competency_users', 'domain');
+		$this->createIndex('domain', 'import_competency_attributes', 'domain');
+		$this->createIndex('domain', 'import_competency_fields', 'domain');
+		$this->createIndex('domain', 'import_competency_rel_users_fields', 'domain');
 
 	}
 

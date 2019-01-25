@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $user_id Ключ к пользователю
  * @property int $field_id Ключ к полю атрибута
  * @property string $value Значение поля в сыром виде
+ * @property int $domain
  */
 class ICRelUsersFields extends ActiveRecord {
 	/**
@@ -28,7 +29,8 @@ class ICRelUsersFields extends ActiveRecord {
 		return [
 			[['user_id', 'field_id'], 'required'],
 			[['user_id', 'field_id'], 'integer'],
-			[['value'], 'string']
+			[['value'], 'string'],
+			['domain', 'integer'], ['domain', 'required'],
 		];
 	}
 

@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name Название атрибута
  * @property int $hr_attribute_id id в системе
+ * @property int $domain
  */
 class ICAttributes extends ActiveRecord {
 	/**
@@ -27,7 +28,8 @@ class ICAttributes extends ActiveRecord {
 		return [
 			[['name'], 'required'],
 			[['hr_attribute_id'], 'integer'],
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			['domain', 'integer'], ['domain', 'required'],
 		];
 	}
 

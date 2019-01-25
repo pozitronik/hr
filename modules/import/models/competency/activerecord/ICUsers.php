@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name Имя сотрудника
  * @property int $hr_user_id id в системе
+ * @property int $domain
  */
 class ICUsers extends ActiveRecord {
 	/**
@@ -27,7 +28,8 @@ class ICUsers extends ActiveRecord {
 		return [
 			[['name'], 'required'],
 			[['hr_user_id'], 'integer'],
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			['domain', 'integer'], ['domain', 'required'],
 		];
 	}
 
