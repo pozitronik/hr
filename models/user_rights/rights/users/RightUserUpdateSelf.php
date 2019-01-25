@@ -41,7 +41,7 @@ class RightUserUpdateSelf extends UserRight {
 		$definedRules = [
 			'admin/users' => [
 				'actions' => [
-					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_DENY
+					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 				]
 			]
 		];
@@ -60,7 +60,7 @@ class RightUserUpdateSelf extends UserRight {
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		$definedRules = [
 			'Users' => [
-				AccessMethods::update => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_DENY
+				AccessMethods::update => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 			]
 		];
 
