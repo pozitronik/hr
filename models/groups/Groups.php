@@ -347,7 +347,7 @@ class Groups extends ActiveRecord {
 	 * Пытается подгрузить файл картинки, если он есть
 	 * @return bool
 	 */
-	public function uploadLogotype():bool {
+	public function uploadLogotype():bool {//todo: use upload helper
 		$uploadedFile = UploadedFile::getInstance($this, 'upload_image');
 		if ($uploadedFile && $this->validate('upload_image') && $uploadedFile->saveAs(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
 			$this->setAndSaveAttribute('logotype', "{$this->id}.{$uploadedFile->extension}");
