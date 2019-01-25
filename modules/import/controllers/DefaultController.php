@@ -112,7 +112,6 @@ class DefaultController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionImport(?int $domain = null, int $step = ImportFosDecomposed::STEP_GROUPS) {
-		if (null === $domain) return $this->redirect(['upload']);
 		if (ImportFosDecomposed::LAST_STEP === $step) {
 			return $this->render('import', compact('step', 'domain'));
 		}
