@@ -6,7 +6,7 @@ namespace app\models\core\traits;
 use app\models\core\SysExceptions;
 use app\models\user_rights\AccessMethods;
 use app\models\user_rights\UserAccess;
-use app\modules\import\models\ImportException;
+use app\modules\import\models\fos\ImportException;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
 use yii\base\InvalidConfigException;
