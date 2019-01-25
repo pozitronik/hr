@@ -228,6 +228,11 @@ class ImportFosDecomposed extends ActiveRecord {
 			if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
 				self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->id, $command->id), 'name'));
 			}
+
+			/*Добавление пользователей в чаптер */
+			if (null !== $chapter = $importFosUser->relChapter) {//Пользователь может быть вне чаптера
+				self::linkRole($chapter->hr_group_id, $importFosUser->hr_user_id);
+			}
 		}
 		return false;
 	}
