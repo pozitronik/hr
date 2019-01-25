@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\competency;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\core\traits\Upload;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
@@ -36,7 +37,7 @@ class ImportCompetency extends Model {
 		}
 		$domain = $domain??time();
 		foreach ($dataArray as $importRow) {
-			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
+			Utils::log($importRow);
 		}
 		return true;
 	}
