@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\modules\import\models\competency\activerecord;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_competency_fields".
@@ -11,33 +12,33 @@ use Yii;
  * @property int $attribute_id Ключ к атрибуту
  * @property string $name
  */
-class ICFields extends \yii\db\ActiveRecord {
+class ICFields extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'import_competency_fields';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['attribute_id', 'name'], 'required'],
 			[['attribute_id'], 'integer'],
-			[['name'], 'string', 'max' => 255],
+			[['name'], 'string', 'max' => 255]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'attribute_id' => 'Ключ к атрибуту',
-			'name' => 'Name',
+			'name' => 'Name'
 		];
 	}
 }

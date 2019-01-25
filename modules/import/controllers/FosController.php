@@ -10,7 +10,6 @@ use app\modules\import\models\fos\ImportFosDecomposedSearch;
 use app\modules\import\models\fos\ImportFosSearch;
 use Throwable;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\web\ErrorAction;
 use yii\web\Response;
 

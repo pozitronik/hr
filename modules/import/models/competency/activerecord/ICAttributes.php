@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\modules\import\models\competency\activerecord;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_competency_attributes".
@@ -11,33 +12,33 @@ use Yii;
  * @property string $name Название атрибута
  * @property int $hr_attribute_id id в системе
  */
-class ICAttributes extends \yii\db\ActiveRecord {
+class ICAttributes extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'import_competency_attributes';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['name'], 'required'],
 			[['hr_attribute_id'], 'integer'],
-			[['name'], 'string', 'max' => 255],
+			[['name'], 'string', 'max' => 255]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'name' => 'Название атрибута',
-			'hr_attribute_id' => 'id в системе',
+			'hr_attribute_id' => 'id в системе'
 		];
 	}
 }

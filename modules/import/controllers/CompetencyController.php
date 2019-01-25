@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\import\controllers;
 
 use app\models\core\WigetableController;
+use app\modules\import\models\competency\ImportCompetency;
 use Throwable;
 use Yii;
 use yii\web\ErrorAction;
+use yii\web\Response;
 
 /**
  * Class ImportController
@@ -31,15 +33,25 @@ class CompetencyController extends WigetableController {
 	}
 
 	/**
+	 * @param int|null $domain
+	 * @return string|Response
+	 */
+	public function actionIndex(?int $domain = null) {
+		if (null === $domain) return $this->redirect(['upload']);
+
+		return $this->render('index');
+	}
+
+	/**
 	 * @return string
 	 * @throws Throwable
 	 */
 	public function actionUpload():string {
-//		$model = new ImportFos();
+		$model = new ImportCompetency();
 		if (Yii::$app->request->isPost && null !== $fileName = $model->uploadFile()) {
 			$domain = time();
-//			$model::Import($fileName, $domain);
-//			$this->redirect(['index', 'domain' => $domain]);
+			$model::Import($fileName, $domain);
+			$this->redirect(['index', 'domain' => $domain]);
 		}
 
 		return $this->render('upload', [
