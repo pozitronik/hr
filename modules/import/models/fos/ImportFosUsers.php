@@ -33,6 +33,7 @@ use yii\db\ActiveRecord;
  * @property-read ImportFosDivisionLevel4 $relDivisionLevel4
  * @property-read ImportFosDivisionLevel5 $relDivisionLevel5
  * @property-read ImportFosCommand $relCommand
+ * @property-read ImportFosChapter $relChapter
  */
 class ImportFosUsers extends ActiveRecord {
 	use ARExtended;
@@ -144,6 +145,13 @@ class ImportFosUsers extends ActiveRecord {
 	 */
 	public function getRelFunctionalBlock() {
 		return $this->hasOne(ImportFosFunctionalBlock::class, ['id' => 'functional_block_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ImportFosChapter|ActiveQuery
+	 */
+	public function getRelChapter() {
+		return $this->hasOne(ImportFosChapter::class, ['id' => 'chapter_id'])->via('relDecomposed');
 	}
 
 }
