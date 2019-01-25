@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\competency\activerecord;
 
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**
@@ -14,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $domain
  */
 class ICAttributes extends ActiveRecord {
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */
