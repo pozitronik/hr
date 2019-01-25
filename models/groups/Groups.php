@@ -395,11 +395,12 @@ class Groups extends ActiveRecord {
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
 			$items = self::find()->active()->all();
 			$result = [];
+			/** @var self $item */
 			foreach ($items as $key => $item) {
 				$result[$item->id] = [
 					'data-logo' => $item->logo,
-					'data-typename' => $item->relGroupTypes->name,
-					'data-typecolor' => $item->relGroupTypes->color
+					'data-typename' => ArrayHelper::getValue($item->relGroupTypes, 'name'),
+					'data-typecolor' => ArrayHelper::getValue($item->relGroupTypes, 'color')
 				];
 			}
 			return $result;
