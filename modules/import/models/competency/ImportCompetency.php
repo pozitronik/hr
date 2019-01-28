@@ -6,7 +6,12 @@ namespace app\modules\import\models\competency;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
+use app\modules\import\models\competency\activerecord\ICAttributes;
+use app\modules\import\models\competency\activerecord\ICFields;
+use app\modules\import\models\competency\activerecord\ICRelUsersFields;
 use app\modules\import\models\competency\activerecord\ICUsers;
+use app\modules\import\models\fos\ImportException;
+use http\Exception\RuntimeException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Model;
@@ -94,13 +99,57 @@ class ImportCompetency extends Model {
 	 * Добавляем оценки пользователю, при необходимости созздавая или модифицируя соответствующую компетенцию
 	 * @param int $userId
 	 * @param string $competencyName
-	 * @param string $competencyFiled
+	 * @param string $competencyField
 	 * @param array $scoreNames
 	 * @param array $scoreValues
 	 * @return bool
 	 */
-	private function addScores(int $userId, string $competencyName, string $competencyFiled, array $scoreNames, array $scoreValues):bool {
+	private function addScores(int $userId, string $competencyName, string $competencyField, array $scoreNames, array $scoreValues):bool {
+		if (null !== $competencyFieldId = $this->addCompetencyField($competencyName, $competencyField)) {
+			return $this->addScoreValues($userId, $competencyFieldId, $scoreNames, $scoreValues);
+		}
+		throw new RuntimeException("Сбой добавления оценки {$competencyName}:{$competencyField}");
 
 	}
 
+	/**
+	 * Добавляет/находит компетенцию и поле, возвращая айдишник поля
+	 * @param string $competencyName
+	 * @param string $competencyField
+	 * @return int|null
+	 * @throws Throwable
+	 * @throws ImportException
+	 */
+	private function addCompetencyField(string $competencyName, string $competencyField):?int {
+		$competencyId = ArrayHelper::getValue(ICAttributes::addInstance(['name' => $competencyName], [
+			'name' => $competencyName,
+			'domain' => $this->domain
+		]), 'id');
+
+		return ArrayHelper::getValue(ICFields::addInstance(['attribute_id' => $competencyId, 'name' => $competencyField], [
+			'attribute_id' => $competencyId,
+			'name' => $competencyField,
+			'domain' => $this->domain
+		]), 'id');
+	}
+
+	/**
+	 * Добавляет сериализованный набор оценок пользователю
+	 * @param int $userId
+	 * @param int $fieldId
+	 * @param array $scoreNames
+	 * @param array $scoreValues
+	 * @return bool
+	 * @throws ImportException
+	 */
+	private function addScoreValues(int $userId, int $fieldId, array $scoreNames, array $scoreValues):bool {
+		$scoreData = array_combine($scoreNames, $scoreValues);//todo: если $scoreData === false, то $scoreValues нужно заполнять Null
+		if (null !== ICRelUsersFields::addInstance(['user_id' => $userId, 'field_id' => $fieldId], [
+				'user_id' => $userId,
+				'field_id' => $fieldId,
+				'value' => json_encode($scoreData),
+				'domain' => $this->domain
+			])) return true;
+		return false;
+	}
 }
