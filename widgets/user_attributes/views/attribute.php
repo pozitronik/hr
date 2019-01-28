@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
+use yii\data\ArrayDataProvider;
 use yii\data\DataProviderInterface;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -53,6 +54,25 @@ use kartik\grid\GridView;
 					break;
 					case 'percent':
 						return (null === $model->value)?null:$model->value.'%';
+					break;
+					case 'score':
+						return GridView::widget([
+							'dataProvider' => new ArrayDataProvider([
+								'allModels' => $model->value,
+							]),
+							'panel' => false,
+							'summary' => false,
+							'headerRowOptions' => [
+								'style' => 'display:none'
+							],
+							'toolbar' => false,
+							'export' => false,
+							'resizableColumns' => false,
+							'responsive' => true,
+							'options' => [
+								'class' => 'attribute_table'
+							],
+						]);
 					break;
 					default:
 						return $model->value;

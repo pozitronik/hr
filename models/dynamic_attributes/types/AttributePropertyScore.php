@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes\types;
 
 use app\helpers\ArrayHelper;
+use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 
 /**
@@ -21,8 +22,7 @@ use yii\db\ActiveRecord;
  * @property int $al_score_value [int(11)]  Оценка ареалида (AL)
  * @property string $al_score_comment [varchar(255)]  Комментарий к оценке ареалида
  *
- * @property-read string $valueJSON
- * @property-read string $valueAggregated
+ * @property-read array $valueArray
  */
 class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
 
@@ -54,9 +54,9 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			'self_score_value' => 'Оценка сотрудника (СО)',
 			'tl_score_value' => 'Оценка тимлида (TL)',
 			'al_score_value' => 'Оценка ареалида (AL)',
-			'self_score_comment' => 'Крмментарий к самооценке',
-			'tl_score_comment' => 'Крмментарий к оценке тимлида',
-			'al_score_comment' => 'Крмментарий к оценке ареалида',
+			'self_score_comment' => 'Комментарий к самооценке',
+			'tl_score_comment' => 'Комментарий к оценке тимлида',
+			'al_score_comment' => 'Комментарий к оценке ареалида',
 			'value' => 'Сериализованное значение'
 		];
 	}
@@ -82,7 +82,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->valueJSON:null;
+		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->valueArray:null;
 	}
 
 	/**
@@ -121,24 +121,36 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getValueJSON():string {
-		return json_encode([
-			$this->getAttributeLabel('self_score_value') => $this->getAttribute('self_score_value'),
-			$this->getAttributeLabel('tl_score_value') => $this->getAttribute('tl_score_value'),
-			$this->getAttributeLabel('al_score_value') => $this->getAttribute('al_score_value'),
-			$this->getAttributeLabel('self_score_comment') => $this->getAttribute('self_score_comment'),
-			$this->getAttributeLabel('tl_score_comment') => $this->getAttribute('tl_score_comment'),
-			$this->getAttributeLabel('al_score_comment') => $this->getAttribute('al_score_comment'),
-		], JSON_UNESCAPED_UNICODE);
-	}
+	public function getValueArray():array {
+		return [
+			[
+				'label' => $this->getAttributeLabel('self_score_value'),
+				'value' => $this->self_score_value
+			],
+			[
+				'label' => $this->getAttributeLabel('tl_score_value'),
+				'value' => $this->tl_score_value
+			],
+			[
+				'label' => $this->getAttributeLabel('al_score_value'),
+				'value' => $this->al_score_value
+			],
+			[
+				'label' => $this->getAttributeLabel('self_score_comment'),
+				'value' => $this->self_score_comment
+			],
+			[
+				'label' => $this->getAttributeLabel('tl_score_comment'),
+				'value' => $this->tl_score_comment
+			],
+			[
+				'label' => $this->getAttributeLabel('al_score_comment'),
+				'value' => $this->al_score_comment
+			]
+		];
 
-	/**
-	 * @return string
-	 */
-	public function getValueAggregated():string {
-		return $this->valueAggregated;
 	}
 
 }
