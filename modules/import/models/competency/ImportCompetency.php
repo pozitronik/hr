@@ -6,6 +6,10 @@ namespace app\modules\import\models\competency;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
+use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\models\dynamic_attributes\DynamicAttributes;
+use app\models\relations\RelUsersAttributes;
+use app\models\users\Users;
 use app\modules\import\models\competency\activerecord\ICAttributes;
 use app\modules\import\models\competency\activerecord\ICFields;
 use app\modules\import\models\competency\activerecord\ICRelUsersFields;
@@ -16,6 +20,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Model;
 use yii\base\Exception as BaseException;
+use yii\db\Exception;
 
 /**
  * Class ImportCompetency
@@ -26,13 +31,14 @@ class ImportCompetency extends Model {
 	private $domain;
 
 	/**
+	 * Декомпозирует загруженный файл в таблички
 	 * @param string $filename
 	 * @param int|null $domain
 	 * @return bool
 	 * @throws BaseException
 	 * @throws Throwable
 	 */
-	public function Import(string $filename, ?int $domain = null):bool {
+	public function Decompose(string $filename, ?int $domain = null):bool {
 		try {
 			$reader = new Xlsx();
 			$reader->setReadDataOnly(true);
@@ -92,7 +98,6 @@ class ImportCompetency extends Model {
 			'name' => $name,//name
 			'domain' => $this->domain
 		]), 'id');
-
 	}
 
 	/**
@@ -157,4 +162,57 @@ class ImportCompetency extends Model {
 			])) return true;
 		return false;
 	}
+
+	/**
+	 * Прохдим по декомпозированным таблицам и добавляем данные в боевую БД
+	 */
+	public function Import():array {
+		$result = [];
+		$allUsers = ICUsers::findAll(['hr_user_id' => null]);//Взяли всех необработанных юзеров
+		foreach ($allUsers as $ICUser) {
+			/** @var Users[] $usersFound */
+			$usersFound = Users::find()->where(['name' => $ICUser->name])->all();
+			$countUsersFound = count($usersFound);
+			if (0 === $countUsersFound) {
+				$result[] = "Пользователь {$ICUser->name} не найден в БД, пропускаю";
+			} elseif ($countUsersFound > 1) {
+				$result[] = "Найдено ".Utils::pluralForm($countUsersFound, ['пользователь', 'ползователя', 'пользователей'])."с именем {$ICUser->name}, пропускаю";
+			} else {//сопоставили пользователя
+				$user = $usersFound[0];
+				$allUserScores = ICRelUsersFields::findAll(['user_id' => $ICUser->id]);
+				foreach ($allUserScores as $score) {
+					$this->addUserProperty($user->id, $score->relAttribute->name, $score->relField->name, $score->value);
+				}
+				$ICUser->setAndSaveAttribute('hr_user_id', $user->id);
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * @param int $user_id
+	 * @param string $attributeName
+	 * @param string $attributeFieldName
+	 * @param string $attributeFieldValue
+	 * @param string $fieldType
+	 * @throws Throwable
+	 * @throws Exception
+	 */
+	private function addUserProperty(int $user_id, string $attributeName, string $attributeFieldName, string $attributeFieldValue, string $fieldType = 'score') {
+		if (null === $attribute = DynamicAttributes::find()->where(['name' => $attributeName])->one()) {
+			$attribute = new DynamicAttributes();
+			$attribute->createAttribute(['name' => $attributeName, 'category' => 0]);
+		}
+		if (null === $field = $attribute->getPropertyByName($attributeFieldName)) {
+			$field = new DynamicAttributeProperty([
+				'attributeId' => $attribute->id,
+				'name' => $attributeFieldName,
+				'type' => $fieldType
+			]);
+			$field->id = $attribute->setProperty($field, null);
+		}
+		RelUsersAttributes::linkModels($user_id, $attribute);
+		$attribute->setUserProperty($user_id, $field->id, $attributeFieldValue);
+	}
+
 }

@@ -50,12 +50,23 @@ class CompetencyController extends WigetableController {
 		$model = new ImportCompetency();
 		if (Yii::$app->request->isPost && null !== $fileName = $model->uploadFile()) {
 			$domain = time();
-			$model->Import($fileName, $domain);
-			$this->redirect(['index', 'domain' => $domain]);
+			$model->Decompose($fileName, $domain);//todo: поскольку процесс долгий, предусмотреть таймауты с рефрешем: обработал N записей, остановился, повторил с тем же файлом, пока файл не кончился.
+			$this->redirect(['import', 'domain' => $domain]);
 		}
 
 		return $this->render('upload', [
 			'model' => $model
+		]);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function actionImport():string {
+		$model = new ImportCompetency();
+		$errors = $model->Import();
+		return $this->render('done', [
+			'messages' => $errors
 		]);
 	}
 }
