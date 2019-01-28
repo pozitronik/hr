@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\dynamic_attributes\types;
 
+use app\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 
@@ -13,7 +14,14 @@ use yii\db\Expression;
  * @property int $attribute_id ID атрибута
  * @property int $property_id ID поля
  * @property int $user_id ID пользователя
- * @property int $value Значение
+ *
+ * @property int $self_score_value [int(11)]  Оценка сотрудника (СО)
+ * @property string $self_score_comment [varchar(255)]  Комментарий к самооценке
+ * @property int $tl_score_value [int(11)]  Оценка тимлида (TL)
+ * @property string $tl_score_comment [varchar(255)]  Комментарий к оценке тимлида
+ * @property int $al_score_value [int(11)]  Оценка ареалида (AL)
+ * @property string $al_score_comment [varchar(255)]  Комментарий к оценке ареалида
+ *
  */
 class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
 
@@ -23,30 +31,6 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 */
 	public static function conditionConfig():array {
 		return [
-			['равно', function($tableAlias, $searchValue) {
-				return ['=', "$tableAlias.value", $searchValue];
-			}],
-			['не равно', function($tableAlias, $searchValue) {
-				return ['!=', "$tableAlias.value", $searchValue];
-			}],
-			['больше', function($tableAlias, $searchValue) {
-				return ['>', "$tableAlias.value", $searchValue];
-			}],
-			['меньше', function($tableAlias, $searchValue) {
-				return ['<', "$tableAlias.value", $searchValue];
-			}],
-			['меньше или равно', function($tableAlias, $searchValue) {
-				return ['<=', "$tableAlias.value", $searchValue];
-			}],
-			['больше или равно', function($tableAlias, $searchValue) {
-				return ['>=', "$tableAlias.value", $searchValue];
-			}],
-			['заполнено', function($tableAlias, $searchValue) {
-				return ['not', ["$tableAlias.value" => null]];
-			}],
-			['не заполнено', function($tableAlias, $searchValue) {
-				return ['is', "$tableAlias.value", new Expression('null')];
-			}]
 		];
 	}
 
@@ -66,7 +50,13 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			'attribute_id' => 'ID атрибута',
 			'property_id' => 'ID поля',
 			'user_id' => 'ID пользователя',
-			'value' => 'Значение'
+			'self_score_value' => 'Оценка сотрудника (СО)',
+			'tl_score_value' => 'Оценка тимлида (TL)',
+			'al_score_value' => 'Оценка ареалида (AL)',
+			'self_score_comment' => 'Крмментарий к самооценке',
+			'tl_score_comment' => 'Крмментарий к оценке тимлида',
+			'al_score_comment' => 'Крмментарий к оценке ареалида',
+			'value' => 'Сериализованное значение'
 		];
 	}
 
@@ -77,7 +67,8 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 		return [
 			[['attribute_id', 'property_id', 'user_id'], 'required'],
 			[['attribute_id', 'property_id', 'user_id'], 'integer'],
-			[['value'], 'integer', 'min' => 0, 'max' => 5],
+			[['self_score_value', 'tl_score_value', 'al_score_value'], 'integer', 'min' => 0, 'max' => 5],
+			[['self_score_comment', 'tl_score_comment', 'al_score_comment'], 'string', 'max' => 255],
 			[['attribute_id', 'property_id', 'user_id'], 'unique', 'targetAttribute' => ['attribute_id', 'property_id', 'user_id']]
 		];
 	}
@@ -102,12 +93,18 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return bool
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+		$deserializedValue = json_decode($value, true);
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
-			$record = new self(compact('attribute_id', 'user_id', 'property_id', 'value'));
-		} else {
-			$record->setAttributes(compact('attribute_id', 'user_id', 'property_id', 'value'));
+			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
+		$record->self_score_value = ArrayHelper::getValue($deserializedValue, '0.0');
+		$record->self_score_comment = ArrayHelper::getValue($deserializedValue, '0.1');
 
+		$record->tl_score_value = ArrayHelper::getValue($deserializedValue, '1.0');
+		$record->tl_score_comment = ArrayHelper::getValue($deserializedValue, '1.1');
+
+		$record->al_score_value = ArrayHelper::getValue($deserializedValue, '2.0');
+		$record->al_score_comment = ArrayHelper::getValue($deserializedValue, '2.1');
 		return $record->save();
 	}
 
