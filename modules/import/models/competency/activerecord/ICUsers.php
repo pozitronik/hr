@@ -29,6 +29,7 @@ class ICUsers extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
+			[['name'], 'unique'],
 			[['hr_user_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required']
