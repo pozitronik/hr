@@ -114,10 +114,13 @@ class ImportCompetency extends Model {
 	 * @param string $competencyField
 	 * @param array $scoreValues
 	 * @return bool
-	 * @throws ImportException
 	 * @throws Throwable
 	 */
 	private function addScores(int $userId, string $competencyName, string $competencyField, array $scoreValues):bool {
+		if (empty($competencyName) || empty($competencyField)) {
+			throw new BaseException("Проверьте структуру загружаемого файла");
+		}
+
 		if (null !== $competencyFieldId = $this->addCompetencyField($competencyName, $competencyField)) {
 			return $this->addScoreValues($userId, $competencyFieldId, $scoreValues);
 		}
