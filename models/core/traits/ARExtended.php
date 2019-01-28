@@ -92,7 +92,7 @@ trait ARExtended {
 	 * @return ActiveRecord|self|null
 	 * @throws ImportException
 	 */
-	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {
+	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {//todo: add UPDATE flag for updating fields even for existed rows
 		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
 
 		/** @var ActiveRecord $instance */
