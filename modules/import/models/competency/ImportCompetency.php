@@ -172,7 +172,7 @@ class ImportCompetency extends Model {
 	}
 
 	/**
-	 * Прохдим по декомпозированным таблицам и добавляем данные в боевую БД
+	 * Проходим по декомпозированным таблицам и добавляем данные в боевую БД
 	 */
 	public function Import():array {
 		$result = [];
@@ -182,9 +182,9 @@ class ImportCompetency extends Model {
 			$usersFound = Users::find()->where(['username' => $ICUser->name])->all();
 			$countUsersFound = count($usersFound);
 			if (0 === $countUsersFound) {
-				$result[] = "Пользователь {$ICUser->name} не найден в БД, пропускаю";
+				$result[] = "Пользователь {$ICUser->name} не найден в БД, пропускаю";//todo: создаём юзера с добавлением в неопознанную группу
 			} elseif ($countUsersFound > 1) {
-				$result[] = "Найдено ".Utils::pluralForm($countUsersFound, ['пользователь', 'ползователя', 'пользователей'])."с именем {$ICUser->name}, пропускаю";
+				$result[] = "Найдено ".Utils::pluralForm($countUsersFound, ['пользователь', 'пользователя', 'пользователей'])."с именем {$ICUser->name}, пропускаю";
 			} else {//сопоставили пользователя
 				$user = $usersFound[0];
 				$allUserScores = ICRelUsersFields::findAll(['user_id' => $ICUser->id]);
