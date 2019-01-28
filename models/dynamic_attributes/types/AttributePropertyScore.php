@@ -22,6 +22,7 @@ use yii\db\Expression;
  * @property int $al_score_value [int(11)]  Оценка ареалида (AL)
  * @property string $al_score_comment [varchar(255)]  Комментарий к оценке ареалида
  *
+ * @property-read string $valueJSON
  */
 class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
 
@@ -81,7 +82,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->value:null;
+		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->valueJSON:null;
 	}
 
 	/**
@@ -97,14 +98,14 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
-		$record->self_score_value = ArrayHelper::getValue($deserializedValue, '0.0');
-		$record->self_score_comment = ArrayHelper::getValue($deserializedValue, '0.1');
+		$record->self_score_value = ArrayHelper::getValue($deserializedValue, '0');
+		$record->self_score_comment = ArrayHelper::getValue($deserializedValue, '1');
 
-		$record->tl_score_value = ArrayHelper::getValue($deserializedValue, '1.0');
-		$record->tl_score_comment = ArrayHelper::getValue($deserializedValue, '1.1');
+		$record->tl_score_value = ArrayHelper::getValue($deserializedValue, '2');
+		$record->tl_score_comment = ArrayHelper::getValue($deserializedValue, '3');
 
-		$record->al_score_value = ArrayHelper::getValue($deserializedValue, '2.0');
-		$record->al_score_comment = ArrayHelper::getValue($deserializedValue, '2.1');
+		$record->al_score_value = ArrayHelper::getValue($deserializedValue, '4');
+		$record->al_score_comment = ArrayHelper::getValue($deserializedValue, '5');
 		return $record->save();
 	}
 
@@ -117,6 +118,20 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 */
 	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getValueJSON():string {
+		return json_encode([
+			$this->getAttributeLabel('self_score_value') => $this->getAttribute('self_score_value'),
+			$this->getAttributeLabel('tl_score_value') => $this->getAttribute('tl_score_value'),
+			$this->getAttributeLabel('al_score_value') => $this->getAttribute('al_score_value'),
+			$this->getAttributeLabel('self_score_comment') => $this->getAttribute('self_score_comment'),
+			$this->getAttributeLabel('tl_score_comment') => $this->getAttribute('tl_score_comment'),
+			$this->getAttributeLabel('al_score_comment') => $this->getAttribute('al_score_comment'),
+		], JSON_UNESCAPED_UNICODE);
 	}
 
 }
