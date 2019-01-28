@@ -31,7 +31,7 @@ class ICUsers extends ActiveRecord {
 			[['name'], 'required'],
 			[['hr_user_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required'],
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 

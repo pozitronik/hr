@@ -51,18 +51,21 @@ class ImportCompetency extends Model {
 		$this->domain = $domain??time();
 		$usersProcessed = 0;
 		$userIdIndexes = [];
-		$userScoreCellsIndexes = [];
+		$userScoreNamesIndexes = [];
+		$currentCompetencyFieldName = '';
+		$currentCompetencyName = '';
+		//	$userScoreCellsIndexes = [];
 
+		/** @var array $dataArray */
 		foreach ($dataArray as $rowIndex => $importRow) {
 			if (0 === $rowIndex) {//Строченька с именами
+				/** @var array $importRow */
 				foreach ($importRow as $cellIndex => $cell) {
 					if (0 === $cellIndex) continue;//в первой ячейке заголовок
-					if (null !== $cell) {
-						if (null !== $userId = $this->addICUser($cell)) {
-							$userIdIndexes[] = $userId;//Запоминаем порядковые номера добавленных айдишников
-							$userScoreCellsIndexes[$userId] = $cellIndex;//Запоминаем индексы колонок, в которых НАЧИНАЕТСЯ область оценок этого юзера
-							$usersProcessed++;
-						}
+					if ((null !== $cell) && null !== $userId = $this->addICUser($cell)) {
+						$userIdIndexes[] = $userId;//Запоминаем порядковые номера добавленных айдишников
+						$userScoreCellsIndexes[$userId] = $cellIndex;//Запоминаем индексы колонок, в которых НАЧИНАЕТСЯ область оценок этого юзера
+						$usersProcessed++;
 					}
 				}
 			}
@@ -91,6 +94,8 @@ class ImportCompetency extends Model {
 	/**
 	 * @param string $name
 	 * @return int|null
+	 * @throws ImportException
+	 * @throws Throwable
 	 */
 	private function addICUser(string $name):?int {
 		$name = trim($name);
@@ -108,6 +113,8 @@ class ImportCompetency extends Model {
 	 * @param array $scoreNames
 	 * @param array $scoreValues
 	 * @return bool
+	 * @throws ImportException
+	 * @throws Throwable
 	 */
 	private function addScores(int $userId, string $competencyName, string $competencyField, array $scoreNames, array $scoreValues):bool {
 		if (null !== $competencyFieldId = $this->addCompetencyField($competencyName, $competencyField)) {
@@ -146,6 +153,7 @@ class ImportCompetency extends Model {
 	 * @param array $scoreValues
 	 * @return bool
 	 * @throws ImportException
+	 * @throws Throwable
 	 */
 	private function addScoreValues(int $userId, int $fieldId, array $scoreNames, array $scoreValues):bool {
 
@@ -198,7 +206,7 @@ class ImportCompetency extends Model {
 	 * @throws Throwable
 	 * @throws Exception
 	 */
-	private function addUserProperty(int $user_id, string $attributeName, string $attributeFieldName, string $attributeFieldValue, string $fieldType = 'score') {
+	private function addUserProperty(int $user_id, string $attributeName, string $attributeFieldName, string $attributeFieldValue, string $fieldType = 'score'):void {
 		if (null === $attribute = DynamicAttributes::find()->where(['name' => $attributeName])->one()) {
 			$attribute = new DynamicAttributes();
 			$attribute->createAttribute(['name' => $attributeName, 'category' => 0]);

@@ -31,7 +31,7 @@ class ICFields extends ActiveRecord {
 			[['attribute_id', 'name'], 'required'],
 			[['attribute_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
-			['domain', 'integer'], ['domain', 'required'],
+			['domain', 'integer'], ['domain', 'required']
 		];
 	}
 
