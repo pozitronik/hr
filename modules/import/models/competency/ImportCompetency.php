@@ -81,7 +81,7 @@ class ImportCompetency extends Model {
 				if (null !== $newCompetencyFieldName = ArrayHelper::getValue($importRow, '1')) {//сменилось поле
 					$currentCompetencyFieldName = $newCompetencyFieldName;
 				}
-				for ($usersCount = 0; $usersCount < $usersProcessed; $usersCount++) {
+				foreach ($userIdIndexes as $usersCount => $usersCountValue) {
 					$userScoreSliceBlock = array_slice($importRow, 2 + ($usersCount * 6), 6 + ($usersCount * 6));//вырезаем кусок оценок
 					$this->addScores($userIdIndexes[$usersCount], $currentCompetencyName, $currentCompetencyFieldName, $userScoreNamesIndexes, $userScoreSliceBlock);
 				}
