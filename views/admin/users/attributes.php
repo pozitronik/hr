@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									case 'score':
 										return GridView::widget([
 											'dataProvider' => new ArrayDataProvider([
-												'allModels' => $model->value,
+												'allModels' => $model->value
 											]),
 											'panel' => false,
 											'summary' => "Редактор не подвезли пока",
@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											'responsive' => true,
 											'options' => [
 												'class' => 'attribute_table'
-											],
+											]
 										]);
 //										return $form->field($model, (string)$model->id)->widget(RangeInput::class, [
 //											'html5Options' => [

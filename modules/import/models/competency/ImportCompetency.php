@@ -205,6 +205,8 @@ class ImportCompetency extends Model {
 	 * Добавляет пользователя систему во временную группу
 	 * @param string $userName
 	 * @return Users
+	 * @throws ImportException
+	 * @throws Throwable
 	 */
 	private function addUser(string $userName):Users {
 		$user = new Users();

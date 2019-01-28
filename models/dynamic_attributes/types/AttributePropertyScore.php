@@ -91,6 +91,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @param int $user_id
 	 * @param mixed $value
 	 * @return bool
+	 * @throws \Throwable
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		$deserializedValue = json_decode($value, true);

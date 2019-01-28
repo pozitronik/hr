@@ -58,7 +58,7 @@ use kartik\grid\GridView;
 					case 'score':
 						return GridView::widget([
 							'dataProvider' => new ArrayDataProvider([
-								'allModels' => $model->value,
+								'allModels' => $model->value
 							]),
 							'panel' => false,
 							'summary' => false,
@@ -71,7 +71,7 @@ use kartik\grid\GridView;
 							'responsive' => true,
 							'options' => [
 								'class' => 'attribute_table'
-							],
+							]
 						]);
 					break;
 					default:
