@@ -165,7 +165,7 @@ class ImportCompetency extends Model {
 		if (null !== ICRelUsersFields::addInstance(['user_id' => $userId, 'field_id' => $fieldId], [
 				'user_id' => $userId,
 				'field_id' => $fieldId,
-				'value' => json_encode($scoreData),
+				'value' => json_encode($scoreData, JSON_UNESCAPED_UNICODE),
 				'domain' => $this->domain
 			])) return true;
 		return false;
@@ -179,7 +179,7 @@ class ImportCompetency extends Model {
 		$allUsers = ICUsers::findAll(['hr_user_id' => null]);//Взяли всех необработанных юзеров
 		foreach ($allUsers as $ICUser) {
 			/** @var Users[] $usersFound */
-			$usersFound = Users::find()->where(['name' => $ICUser->name])->all();
+			$usersFound = Users::find()->where(['username' => $ICUser->name])->all();
 			$countUsersFound = count($usersFound);
 			if (0 === $countUsersFound) {
 				$result[] = "Пользователь {$ICUser->name} не найден в БД, пропускаю";
