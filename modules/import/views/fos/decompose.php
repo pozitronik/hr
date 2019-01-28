@@ -39,7 +39,7 @@ use yii\web\View;
 			<?= ($step !== ImportFos::LAST_STEP)?Html::a('Следующий шаг', ['decompose', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']):Html::a('К результату', ['result', 'domain' => $domain], ['class' => 'btn btn-success pull-right']); ?>
 		<?php else: ?>
 			<?= Html::a('Повторить', ['decompose', 'step' => $step, 'domain' => $domain], ['class' => 'btn btn-warning pull-left']); ?>
-			<?= Html::a('К началу', 'import', ['class' => 'btn btn-default pull-left']); ?>
+			<?= Html::a('К началу', 'import', ['class' => 'btn btn-default pull-right']); ?>
 		<?php endif; ?>
 		<div class="clearfix"></div>
 	</div>
