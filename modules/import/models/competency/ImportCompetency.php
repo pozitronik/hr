@@ -157,15 +157,15 @@ class ImportCompetency extends Model {
 	 */
 	private function addScoreValues(int $userId, int $fieldId, array $scoreNames, array $scoreValues):bool {
 
-		$scoreData = [];
+		/*$scoreData = [];
 		foreach ($scoreNames as $index => $name) {//Строим структуру оценки, которую схороним в сериализованном виде. Такой способ позволяет избежать коллизий в именах оценок
 			$scoreData[] = [$name => ArrayHelper::getValue($scoreValues, $index)];
-		}
+		}*/
 
 		if (null !== ICRelUsersFields::addInstance(['user_id' => $userId, 'field_id' => $fieldId], [
 				'user_id' => $userId,
 				'field_id' => $fieldId,
-				'value' => json_encode($scoreData, JSON_UNESCAPED_UNICODE),
+				'value' => json_encode($scoreValues, JSON_UNESCAPED_UNICODE),
 				'domain' => $this->domain
 			])) return true;
 		return false;
