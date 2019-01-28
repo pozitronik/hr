@@ -5,7 +5,6 @@ namespace app\models\dynamic_attributes\types;
 
 use app\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "sys_attributes_score".
@@ -23,6 +22,7 @@ use yii\db\Expression;
  * @property string $al_score_comment [varchar(255)]  Комментарий к оценке ареалида
  *
  * @property-read string $valueJSON
+ * @property-read string $valueAggregated
  */
 class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
 
@@ -132,6 +132,13 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			$this->getAttributeLabel('tl_score_comment') => $this->getAttribute('tl_score_comment'),
 			$this->getAttributeLabel('al_score_comment') => $this->getAttribute('al_score_comment'),
 		], JSON_UNESCAPED_UNICODE);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getValueAggregated():string {
+		return $this->valueAggregated;
 	}
 
 }

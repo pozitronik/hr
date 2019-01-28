@@ -4,11 +4,14 @@ declare(strict_types = 1);
 namespace app\modules\import\models\competency;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Date;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
+use app\models\groups\Groups;
 use app\models\relations\RelUsersAttributes;
+use app\models\user\CurrentUser;
 use app\models\users\Users;
 use app\modules\import\models\competency\activerecord\ICAttributes;
 use app\modules\import\models\competency\activerecord\ICFields;
@@ -182,19 +185,51 @@ class ImportCompetency extends Model {
 			$usersFound = Users::find()->where(['username' => $ICUser->name])->all();
 			$countUsersFound = count($usersFound);
 			if (0 === $countUsersFound) {
-				$result[] = "Пользователь {$ICUser->name} не найден в БД, пропускаю";//todo: создаём юзера с добавлением в неопознанную группу
+				$result[] = "Пользователь {$ICUser->name} не найден в БД, заношу в загон";
+				$user = $this->addUser($ICUser->name);
 			} elseif ($countUsersFound > 1) {
 				$result[] = "Найдено ".Utils::pluralForm($countUsersFound, ['пользователь', 'пользователя', 'пользователей'])."с именем {$ICUser->name}, пропускаю";
+				continue;
 			} else {//сопоставили пользователя
 				$user = $usersFound[0];
-				$allUserScores = ICRelUsersFields::findAll(['user_id' => $ICUser->id]);
-				foreach ($allUserScores as $score) {
-					$this->addUserProperty($user->id, $score->relAttribute->name, $score->relField->name, $score->value);
-				}
-				$ICUser->setAndSaveAttribute('hr_user_id', $user->id);
 			}
+			$allUserScores = ICRelUsersFields::findAll(['user_id' => $ICUser->id]);
+			foreach ($allUserScores as $score) {
+				$this->addUserProperty($user->id, $score->relAttribute->name, $score->relField->name, $score->value);
+			}
+			$ICUser->setAndSaveAttribute('hr_user_id', $user->id);
+
 		}
 		return $result;
+	}
+
+	/**
+	 * Добавляет пользователя систему во временную группу
+	 * @param string $userName
+	 * @return Users
+	 */
+	private function addUser(string $userName):Users {
+		$user = new Users();
+		$user->createModel([
+			'username' => $userName,
+			'login' => Utils::generateLogin(),
+			'password' => Utils::gen_uuid(5),
+			'salt' => null,
+			'email' => Utils::generateLogin()."@import",
+			'deleted' => false
+		]);
+
+		$group = Groups::addInstance(['name' => 'Проблемы импорта компетенций'], [
+			'name' => 'Проблемы импорта',
+			'comment' => 'Сюда при импорте компетенций попадают пользователи, соответствий которым не найдено.',
+			'daddy' => CurrentUser::Id(),
+			'create_date' => Date::lcDate(),
+			'deleted' => false
+		]);
+
+		$user->relGroups = $group;
+
+		return $user;
 	}
 
 	/**
