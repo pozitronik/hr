@@ -143,7 +143,12 @@ class ImportCompetency extends Model {
 	 * @throws ImportException
 	 */
 	private function addScoreValues(int $userId, int $fieldId, array $scoreNames, array $scoreValues):bool {
-		$scoreData = array_combine($scoreNames, $scoreValues);//todo: если $scoreData === false, то $scoreValues нужно заполнять Null
+
+		$scoreData = [];
+		foreach ($scoreNames as $index => $name) {//Строим структуру оценки, которую схороним в сериализованном виде. Такой способ позволяет избежать коллизий в именах оценок
+			$scoreData[] = [$name => ArrayHelper::getValue($scoreValues, $index)];
+		}
+
 		if (null !== ICRelUsersFields::addInstance(['user_id' => $userId, 'field_id' => $fieldId], [
 				'user_id' => $userId,
 				'field_id' => $fieldId,
