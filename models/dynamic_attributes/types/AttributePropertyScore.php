@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes\types;
 
 use app\helpers\ArrayHelper;
-use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 
 /**

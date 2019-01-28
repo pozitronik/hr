@@ -52,9 +52,9 @@ class ImportCompetency extends Model {
 			throw new BaseException('Формат файла не поддерживается');
 		}
 		$this->domain = $domain??time();
-		$usersProcessed = 0;
+//		$usersProcessed = 0;
 		$userIdIndexes = [];
-		$userScoreNamesIndexes = [];
+//		$userScoreNamesIndexes = [];
 		$currentCompetencyFieldName = '';
 		$currentCompetencyName = '';
 		//	$userScoreCellsIndexes = [];
@@ -68,14 +68,14 @@ class ImportCompetency extends Model {
 					if ((null !== $cell) && null !== $userId = $this->addICUser($cell)) {
 						$userIdIndexes[] = $userId;//Запоминаем порядковые номера добавленных айдишников
 						$userScoreCellsIndexes[$userId] = $cellIndex;//Запоминаем индексы колонок, в которых НАЧИНАЕТСЯ область оценок этого юзера
-						$usersProcessed++;
+//						$usersProcessed++;
 					}
 				}
 			}
-			if (4 === $rowIndex) {//строчка с типами оценок
-				/*Можно высчитывать автоматически, пока делаем константой*/
-				$userScoreNamesIndexes = array_slice($importRow, 2, 6);//заголовки оценок, они всегда одинаковы
-			}
+//			if (4 === $rowIndex) {//строчка с типами оценок
+//				/*Можно высчитывать автоматически, пока делаем константой*/
+//				$userScoreNamesIndexes = array_slice($importRow, 2, 6);//заголовки оценок, они всегда одинаковы
+//			}
 
 			if ($rowIndex > 4) {
 				if (null !== $newCompetencyName = ArrayHelper::getValue($importRow, '0')) {//сменилась компетенция
@@ -86,7 +86,7 @@ class ImportCompetency extends Model {
 				}
 				foreach ($userIdIndexes as $usersCount => $usersCountValue) {
 					$userScoreSliceBlock = array_slice($importRow, 2 + ($usersCount * 6), 6);//вырезаем кусок оценок
-					$this->addScores($userIdIndexes[$usersCount], $currentCompetencyName, $currentCompetencyFieldName, $userScoreNamesIndexes, $userScoreSliceBlock);
+					$this->addScores($userIdIndexes[$usersCount], $currentCompetencyName, $currentCompetencyFieldName, $userScoreSliceBlock);
 				}
 
 			}
@@ -113,15 +113,14 @@ class ImportCompetency extends Model {
 	 * @param int $userId
 	 * @param string $competencyName
 	 * @param string $competencyField
-	 * @param array $scoreNames
 	 * @param array $scoreValues
 	 * @return bool
 	 * @throws ImportException
 	 * @throws Throwable
 	 */
-	private function addScores(int $userId, string $competencyName, string $competencyField, array $scoreNames, array $scoreValues):bool {
+	private function addScores(int $userId, string $competencyName, string $competencyField, array $scoreValues):bool {
 		if (null !== $competencyFieldId = $this->addCompetencyField($competencyName, $competencyField)) {
-			return $this->addScoreValues($userId, $competencyFieldId, $scoreNames, $scoreValues);
+			return $this->addScoreValues($userId, $competencyFieldId, $scoreValues);
 		}
 		throw new RuntimeException("Сбой добавления оценки {$competencyName}:{$competencyField}");
 
@@ -152,13 +151,12 @@ class ImportCompetency extends Model {
 	 * Добавляет сериализованный набор оценок пользователю
 	 * @param int $userId
 	 * @param int $fieldId
-	 * @param array $scoreNames
 	 * @param array $scoreValues
 	 * @return bool
 	 * @throws ImportException
 	 * @throws Throwable
 	 */
-	private function addScoreValues(int $userId, int $fieldId, array $scoreNames, array $scoreValues):bool {
+	private function addScoreValues(int $userId, int $fieldId, array $scoreValues):bool {
 
 		/*$scoreData = [];
 		foreach ($scoreNames as $index => $name) {//Строим структуру оценки, которую схороним в сериализованном виде. Такой способ позволяет избежать коллизий в именах оценок
