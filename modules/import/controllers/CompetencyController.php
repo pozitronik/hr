@@ -5,8 +5,10 @@ namespace app\modules\import\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\import\models\competency\ImportCompetency;
+use app\modules\import\models\fos\ImportException;
 use Throwable;
 use Yii;
+use yii\db\Exception;
 use yii\web\ErrorAction;
 use yii\web\Response;
 
@@ -60,13 +62,17 @@ class CompetencyController extends WigetableController {
 	}
 
 	/**
-	 * @return string
+	 * @return string|Response
+	 * @throws Throwable
+	 * @throws ImportException
+	 * @throws Exception
 	 */
-	public function actionImport():string {
+	public function actionImport() {
 		$model = new ImportCompetency();
-		$errors = $model->Import();
-		return $this->render('done', [
+		$errors = [];
+		return $model->Import($errors)?$this->render('done', [
 			'messages' => $errors
-		]);
+		]):$this->refresh();
+
 	}
 }

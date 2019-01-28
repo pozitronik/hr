@@ -30,6 +30,7 @@ use yii\db\Exception;
  */
 class ImportCompetency extends Model {
 	use Upload;
+	public const IMPORT_CHUNK_SIZE = 10;
 	private $domain;
 
 	/**
@@ -176,10 +177,15 @@ class ImportCompetency extends Model {
 
 	/**
 	 * Проходим по декомпозированным таблицам и добавляем данные в боевую БД
+	 * @param array $result
+	 * @return bool true - шаг выполнен, false - нужно повторить запрос (шаг разбит на подшаги)
+	 * @throws Exception
+	 * @throws ImportException
+	 * @throws Throwable
 	 */
-	public function Import():array {
-		$result = [];
-		$allUsers = ICUsers::findAll(['hr_user_id' => null]);//Взяли всех необработанных юзеров
+	public function Import(array &$result):bool {
+		/** @var ICUsers[] $allUsers */
+		if ([] === $allUsers = ICUsers::find()->where(['hr_user_id' => null])->limit(self::IMPORT_CHUNK_SIZE)->all()) return true;
 		foreach ($allUsers as $ICUser) {
 			/** @var Users[] $usersFound */
 			$usersFound = Users::find()->where(['username' => $ICUser->name])->all();
@@ -200,7 +206,7 @@ class ImportCompetency extends Model {
 			$ICUser->setAndSaveAttribute('hr_user_id', $user->id);
 
 		}
-		return $result;
+		return false;
 	}
 
 	/**
