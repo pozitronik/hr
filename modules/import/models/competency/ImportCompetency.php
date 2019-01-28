@@ -18,7 +18,6 @@ use app\modules\import\models\competency\activerecord\ICFields;
 use app\modules\import\models\competency\activerecord\ICRelUsersFields;
 use app\modules\import\models\competency\activerecord\ICUsers;
 use app\modules\import\models\fos\ImportException;
-use http\Exception\RuntimeException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Model;
@@ -122,7 +121,7 @@ class ImportCompetency extends Model {
 		if (null !== $competencyFieldId = $this->addCompetencyField($competencyName, $competencyField)) {
 			return $this->addScoreValues($userId, $competencyFieldId, $scoreValues);
 		}
-		throw new RuntimeException("Сбой добавления оценки {$competencyName}:{$competencyField}");
+		throw new BaseException("Сбой добавления оценки {$competencyName}:{$competencyField}");
 
 	}
 
