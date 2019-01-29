@@ -100,35 +100,12 @@ $this->params['breadcrumbs'][] = $this->title;
 										])->label(false);
 									break;
 									case 'score':
-										return GridView::widget([
-											'dataProvider' => new ArrayDataProvider([
-												'allModels' => $model->value
-											]),
-											'panel' => false,
-											'summary' => "Редактор не подвезли пока",
-											'headerRowOptions' => [
-												'style' => 'display:none'
-											],
-											'toolbar' => false,
-											'export' => false,
-											'resizableColumns' => false,
-											'responsive' => true,
-											'options' => [
-												'class' => 'attribute_table'
-											]
+										return \app\widgets\score\ScoreWidget::widget([
+											'readOnly' => false,
+											'caption' => $model->name,
+											'showEmpty' => true,
+											'score' => $model->value,
 										]);
-//										return $form->field($model, (string)$model->id)->widget(RangeInput::class, [
-//											'html5Options' => [
-//												'min' => 0,
-//												'max' => 5
-//											],
-//											'html5Container' => [
-//												'style' => 'width:50%'
-//											],
-//											'options' => [
-//												'placeholder' => 'Укажите значение'
-//											]
-//										])->label(false);
 									break;
 									case 'string':
 										return $form->field($model, (string)$model->id)->textarea()->label(false);

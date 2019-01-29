@@ -43,7 +43,8 @@
 		"kartik-v/yii2-widget-colorinput": "*",
 		"2amigos/yii2-chartjs-widget": "~2.0",
 		"kartik-v/yii2-checkbox-x": "^1.0@dev",
-		"phpoffice/phpspreadsheet": "dev-master"
+		"phpoffice/phpspreadsheet": "dev-master",
+		"kartik-v/yii2-widget-rating": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",

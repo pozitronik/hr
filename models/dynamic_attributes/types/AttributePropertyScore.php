@@ -165,7 +165,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:null;
+		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
 	}
 
 	/**

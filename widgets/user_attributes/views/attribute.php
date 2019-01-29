@@ -3,14 +3,13 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var array $structure
  * @var DataProviderInterface $widgetDataProvider
  * @var boolean $show_category
  */
 
 use app\helpers\ArrayHelper;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
-use yii\data\ArrayDataProvider;
+use app\widgets\score\ScoreWidget;
 use yii\data\DataProviderInterface;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -43,7 +42,10 @@ use kartik\grid\GridView;
 				'style' => 'width:20%'
 			]
 		],
-		'name',
+		[
+			'attribute' => 'name',
+			'visible' => false //score widget display group name internally
+		],
 		[
 			'attribute' => 'value',
 			'value' => function($model) {
@@ -56,27 +58,11 @@ use kartik\grid\GridView;
 						return (null === $model->value)?null:$model->value.'%';
 					break;
 					case 'score':
-						return GridView::widget([
-							'dataProvider' => new ArrayDataProvider([
-								'allModels' => $model->value
-							]),
-							'panel' => false,
-							'summary' => false,
-							'headerRowOptions' => [
-								'style' => 'display:none'
-							],
-							'toolbar' => false,
-							'export' => false,
-							'resizableColumns' => false,
-							'responsive' => true,
-							'options' => [
-								'class' => 'attribute_table'
-							],
-							'rowOptions' => function($model) {
-								if (null === ArrayHelper::getValue($model, 'value')) return ['class' => 'hidden'];
-								return false;
-							}
-
+						return ScoreWidget::widget([
+							'caption' => $model->name,
+							'score' => $model->value,
+							'readOnly' => true,
+							'showEmpty' => false
 						]);
 					break;
 					default:

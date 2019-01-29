@@ -81,7 +81,7 @@ use yii\helpers\Url;
 					},
 					'format' => 'raw'
 				],
-				'categoryName',
+//				'categoryName',
 				[
 					'label' => 'Данные',
 					'value' => function($model) use ($user) {

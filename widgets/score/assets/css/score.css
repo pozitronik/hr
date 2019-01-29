@@ -1,0 +1,37 @@
+.panel-score {
+	margin: 0px; /* -10px 0px -10px;*/
+	border: none;
+	box-shadow: none;
+}
+
+.panel-score .panel-heading {
+	height: auto;
+}
+
+.panel-score .panel-title {
+	font-size: 1em;
+	padding: 0 5px;
+	line-height: normal;
+}
+
+.panel-score .panel-body {
+	padding: 0 5px;
+}
+
+.panel-score-summary {
+	margin: 0px;
+	border: none;
+
+}
+
+.panel-score-summary .panel-heading {
+	height: auto;
+}
+
+.panel-score-summary > .panel-heading > .panel-title {
+	line-height: 26px;
+}
+
+.panel-score-summary > .panel-body {
+	padding: 0px;
+}
