@@ -23,8 +23,10 @@ use yii\db\Expression;
  * @property string $al_score_comment [varchar(255)]  Комментарий к оценке ареалида
  *
  * @property-read array $valueArray
+ * @property-read ScoreProperty $scoreValue
  */
 class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
+	private $_scoreValue;
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.
@@ -163,7 +165,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->valueArray:[];
+		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:null;
 	}
 
 	/**
@@ -180,6 +182,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
+
 		$record->self_score_value = ArrayHelper::getValue($deserializedValue, '0');
 		$record->self_score_comment = ArrayHelper::getValue($deserializedValue, '1');
 
@@ -233,6 +236,20 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			]
 		];
 
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getScoreValue() {
+		return new ScoreProperty([
+			'selfScoreValue' => $this->self_score_value,
+			'tlScoreValue' => $this->tl_score_value,
+			'alScoreValue' => $this->al_score_value,
+			'selfScoreComment' => $this->self_score_comment,
+			'tlScoreComment' => $this->tl_score_comment,
+			'alScoreComment' => $this->al_score_comment
+		]);
 	}
 
 }
