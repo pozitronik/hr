@@ -155,7 +155,7 @@ class ScoreProperty extends Model {
 	 */
 	public function getEmpty():bool {
 		foreach ($this->attributes as $attribute) {
-			if (!empty($this->$attribute)) return false;
+			if (!empty($attribute)) return false;
 		}
 		return true;
 	}
