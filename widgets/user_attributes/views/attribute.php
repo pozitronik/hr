@@ -71,7 +71,12 @@ use kartik\grid\GridView;
 							'responsive' => true,
 							'options' => [
 								'class' => 'attribute_table'
-							]
+							],
+							'rowOptions' => function($model) {
+								if (null === ArrayHelper::getValue($model, 'value')) return ['class' => 'hidden'];
+								return false;
+							}
+
 						]);
 					break;
 					default:
