@@ -101,9 +101,16 @@ $this->params['breadcrumbs'][] = $this->title;
 										])->label(false);
 									break;
 									case 'score':
-										return $form->field($model, (string)$model->id)->widget(ScoreWidget::class,[
-											'showEmpty' => true
-										])->label(false);
+//										return $form->field($model, (string)$model->id)->widget(ScoreWidget::class, [
+//											'showEmpty' => true
+//										])->label(false);
+
+										return ScoreWidget::widget([
+											'model' => $model,
+											'attribute' => $model->id,
+											'readOnly' => false,
+											'showEmpty' => false
+										]);
 
 									break;
 									case 'string':

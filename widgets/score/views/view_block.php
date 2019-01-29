@@ -23,7 +23,7 @@ use yii\web\View;
 		<div class="row">
 			<div class="col-md-12">
 				<?= StarRating::widget([
-					'name' => '$scoreAttributeName',
+					'name' => "DynamicAttributeProperty[$scoreAttributeName]",
 					'value' => $model->$scoreAttributeName,
 					'pluginOptions' => [
 						'size' => StarRating::SIZE_SMALL,

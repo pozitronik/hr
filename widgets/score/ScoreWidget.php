@@ -36,8 +36,8 @@ class ScoreWidget extends InputWidget {
 			'model' => $this->model->{$this->attribute},
 			'showEmpty' => $this->showEmpty
 		]):$this->render('score_edit', [
-			'caption' => $this->model->name,
-			'model' => $this->model->{$this->attribute}
+			'attribute' => $this->attribute,
+			'model' => $this->model
 		]);
 	}
 }
