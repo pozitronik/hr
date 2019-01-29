@@ -26,7 +26,6 @@ use yii\db\Expression;
  * @property-read ScoreProperty $scoreValue
  */
 class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
-	private $_scoreValue;
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.

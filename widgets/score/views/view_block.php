@@ -39,9 +39,9 @@ use yii\web\View;
 							2 => 'Poor',
 							3 => 'Ok',
 							4 => 'Good',
-							5 => 'Very Good',
-						],
-					],
+							5 => 'Very Good'
+						]
+					]
 				]); ?>
 			</div>
 		</div>
