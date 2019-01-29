@@ -123,7 +123,7 @@ class ScoreProperty extends Model {
 	 * @return int
 	 */
 	public function getAlScoreValue():?int {
-		return $this->_l_score_value;
+		return $this->_al_score_value;
 	}
 
 	/**
