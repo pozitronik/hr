@@ -13,7 +13,7 @@ use yii\web\View;
 
 ?>
 
-<?php if (!$showEmpty && $model->empty) return; ?>
+<?php if (!$showEmpty && $model->empty) return null; ?>
 
 <div class="panel panel-score-summary panel-primary">
 	<div class="panel-heading">

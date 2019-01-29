@@ -192,10 +192,10 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			$record->al_score_comment = ArrayHelper::getValue($value, '5');
 		} elseif (is_array($value)) {
 			$record->self_score_value = ArrayHelper::getValue($value, 'selfScoreValue');
-			$record->self_score_comment = ArrayHelper::getValue($value, 'selfScoreValue');
-			$record->tl_score_value = ArrayHelper::getValue($value, 'alScoreValue');
+			$record->self_score_comment = ArrayHelper::getValue($value, 'selfScoreComment');
+			$record->tl_score_value = ArrayHelper::getValue($value, 'tlScoreValue');
 			$record->tl_score_comment = ArrayHelper::getValue($value, 'tlScoreComment');
-			$record->al_score_value = ArrayHelper::getValue($value, 'alScoreComment');
+			$record->al_score_value = ArrayHelper::getValue($value, 'alScoreValue');
 			$record->al_score_comment = ArrayHelper::getValue($value, 'alScoreComment');
 		}
 
