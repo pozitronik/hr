@@ -228,7 +228,7 @@ class ImportCompetency extends Model {
 		]);
 
 		$group = Groups::addInstance(['name' => 'Проблемы импорта компетенций'], [
-			'name' => 'Проблемы импорта',
+			'name' => 'Проблемы импорта компетенций',
 			'comment' => 'Сюда при импорте компетенций попадают пользователи, соответствий которым не найдено.',
 			'daddy' => CurrentUser::Id(),
 			'create_date' => Date::lcDate(),
