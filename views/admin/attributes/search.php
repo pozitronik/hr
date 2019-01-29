@@ -204,7 +204,6 @@ $this->params['breadcrumbs'][] = $this->title;
 								},
 								'format' => 'raw'
 							],
-							'categoryName',
 							[
 								'label' => 'Данные',
 								'value' => function($model) use ($userModel) {
