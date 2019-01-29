@@ -112,7 +112,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			}],
 			['есть комментарий оценки ареалида', function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.al_score_comment" => null]];
-			}],
+			}]
 		];
 	}
 
