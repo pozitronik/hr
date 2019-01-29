@@ -28,6 +28,20 @@ class ScoreProperty extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
+	public function attributes():array {
+		return [
+			'selfScoreValue',
+			'tlScoreValue',
+			'alScoreValue',
+			'selfScoreComment',
+			'tlScoreComment',
+			'alScoreComment',
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function attributeLabels():array {
 		return [
 			'selfScoreValue' => 'Оценка сотрудника (СО)',
