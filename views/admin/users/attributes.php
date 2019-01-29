@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\users\Users;
+use app\widgets\score\ScoreWidget;
 use kartik\date\DatePicker;
 use kartik\range\RangeInput;
 use kartik\switchinput\SwitchInput;
@@ -100,12 +101,10 @@ $this->params['breadcrumbs'][] = $this->title;
 										])->label(false);
 									break;
 									case 'score':
-										return \app\widgets\score\ScoreWidget::widget([
-											'readOnly' => false,
-											'caption' => $model->name,
-											'showEmpty' => true,
-											'score' => $model->value,
-										]);
+										return $form->field($model, (string)$model->id)->widget(ScoreWidget::class,[
+											'showEmpty' => true
+										])->label(false);
+
 									break;
 									case 'string':
 										return $form->field($model, (string)$model->id)->textarea()->label(false);

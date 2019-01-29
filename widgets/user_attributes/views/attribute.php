@@ -60,6 +60,7 @@ use kartik\grid\GridView;
 					case 'score':
 						return ScoreWidget::widget([
 							'model' => $model,
+							'attribute' => 'value',
 							'readOnly' => true,
 							'showEmpty' => false
 						]);
