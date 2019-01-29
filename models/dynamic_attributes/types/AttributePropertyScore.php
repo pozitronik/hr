@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes\types;
 
 use app\helpers\ArrayHelper;
+use Throwable;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 
@@ -174,22 +175,30 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @param int $user_id
 	 * @param mixed $value
 	 * @return bool
-	 * @throws \Throwable
+	 * @throws Throwable
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
-		$deserializedValue = json_decode($value, true);
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
 
-		$record->self_score_value = ArrayHelper::getValue($deserializedValue, '0');
-		$record->self_score_comment = ArrayHelper::getValue($deserializedValue, '1');
+		if (is_string($value)) {//import way: todo refactoring
+			$value = json_decode($value, true);
+			$record->self_score_value = ArrayHelper::getValue($value, '0');
+			$record->self_score_comment = ArrayHelper::getValue($value, '1');
+			$record->tl_score_value = ArrayHelper::getValue($value, '2');
+			$record->tl_score_comment = ArrayHelper::getValue($value, '3');
+			$record->al_score_value = ArrayHelper::getValue($value, '4');
+			$record->al_score_comment = ArrayHelper::getValue($value, '5');
+		} elseif (is_array($value)) {
+			$record->self_score_value = ArrayHelper::getValue($value, 'selfScoreValue');
+			$record->self_score_comment = ArrayHelper::getValue($value, 'selfScoreValue');
+			$record->tl_score_value = ArrayHelper::getValue($value, 'alScoreValue');
+			$record->tl_score_comment = ArrayHelper::getValue($value, 'tlScoreComment');
+			$record->al_score_value = ArrayHelper::getValue($value, 'alScoreComment');
+			$record->al_score_comment = ArrayHelper::getValue($value, 'alScoreComment');
+		}
 
-		$record->tl_score_value = ArrayHelper::getValue($deserializedValue, '2');
-		$record->tl_score_comment = ArrayHelper::getValue($deserializedValue, '3');
-
-		$record->al_score_value = ArrayHelper::getValue($deserializedValue, '4');
-		$record->al_score_comment = ArrayHelper::getValue($deserializedValue, '5');
 		return $record->save();
 	}
 
