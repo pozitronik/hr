@@ -16,6 +16,8 @@ use yii\base\Model;
  * @property null|string $tlScoreComment [varchar(255)]  Комментарий к оценке тимлида
  * @property null|int $alScoreValue [int(11)]  Оценка ареалида (AL)
  * @property null|string $alScoreComment [varchar(255)]  Комментарий к оценке ареалида
+ *
+ * @property-read bool $empty
  */
 class ScoreProperty extends Model {
 	private $_self_score_value;
@@ -35,7 +37,7 @@ class ScoreProperty extends Model {
 			'alScoreValue',
 			'selfScoreComment',
 			'tlScoreComment',
-			'alScoreComment',
+			'alScoreComment'
 		];
 	}
 
@@ -49,7 +51,7 @@ class ScoreProperty extends Model {
 			'alScoreValue' => 'Оценка ареалида (AL)',
 			'selfScoreComment' => 'Комментарий к самооценке',
 			'tlScoreComment' => 'Комментарий к оценке тимлида',
-			'alScoreComment' => 'Комментарий к оценке ареалида',
+			'alScoreComment' => 'Комментарий к оценке ареалида'
 		];
 	}
 
@@ -145,6 +147,17 @@ class ScoreProperty extends Model {
 	 */
 	public function setAlScoreComment(?string $al_score_comment):void {
 		$this->_al_score_comment = $al_score_comment;
+	}
+
+	/**
+	 * Проверка на заполненность хотя бы одного атрибута
+	 * @return bool
+	 */
+	public function getEmpty():bool {
+		foreach ($this->attributes as $attribute) {
+			if (!empty($this->$attribute)) return false;
+		}
+		return true;
 	}
 
 }
