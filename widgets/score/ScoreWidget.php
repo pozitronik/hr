@@ -4,19 +4,17 @@ declare(strict_types = 1);
 namespace app\widgets\score;
 
 use app\models\dynamic_attributes\DynamicAttributeProperty;
-use yii\base\Widget;
+use yii\widgets\InputWidget;
 
 /**
  * Class ScoreWidget
  * @package app\widgets\score
- * @property DynamicAttributeProperty$model
+ * @property DynamicAttributeProperty $model
  * @property string $attribute
  * @property bool $readOnly
  * @property bool $showEmpty
  */
-class ScoreWidget extends Widget {
-	public $model;
-	public $attribute = 'value';
+class ScoreWidget extends InputWidget {
 	public $readOnly = false;
 	public $showEmpty = false;
 
