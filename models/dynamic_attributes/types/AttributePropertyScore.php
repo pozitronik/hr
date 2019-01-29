@@ -5,6 +5,7 @@ namespace app\models\dynamic_attributes\types;
 
 use app\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "sys_attributes_score".
@@ -31,6 +32,30 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 */
 	public static function conditionConfig():array {
 		return [
+			['самооценка равна', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.self_score_value", $searchValue];
+			}],
+			['самооценка не равна', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.self_score_value", $searchValue];
+			}],
+			['самооценка больше', function($tableAlias, $searchValue) {
+				return ['>', "$tableAlias.self_score_value", $searchValue];
+			}],
+			['самооценка меньше', function($tableAlias, $searchValue) {
+				return ['<', "$tableAlias.self_score_value", $searchValue];
+			}],
+			['самооценка меньше или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.self_score_value", $searchValue];
+			}],
+			['самооценка больше или равно', function($tableAlias, $searchValue) {
+				return ['>=', "$tableAlias.self_score_value", $searchValue];
+			}],
+			['самооценка заполнена', function($tableAlias, $searchValue) {
+				return ['not', ["$tableAlias.self_score_value" => null]];
+			}],
+			['самооценка не заполнена', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.self_score_value", new Expression('null')];
+			}]//todo
 		];
 	}
 
@@ -81,7 +106,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->valueArray:null;
+		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->valueArray:[];
 	}
 
 	/**
