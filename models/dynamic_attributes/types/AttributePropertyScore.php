@@ -54,8 +54,56 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 				return ['not', ["$tableAlias.self_score_value" => null]];
 			}],
 			['самооценка не заполнена', function($tableAlias, $searchValue) {
-				return ['is', "$tableAlias.self_score_value", new Expression('null')];
-			}]//todo
+				return ['is', "$tableAlias.tl_score_value", new Expression('null')];
+			}],/************************************************************/
+			['оценка тимлида равна', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.tl_score_value", $searchValue];
+			}],
+			['оценка тимлида не равна', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.tl_score_value", $searchValue];
+			}],
+			['оценка тимлида больше', function($tableAlias, $searchValue) {
+				return ['>', "$tableAlias.tl_score_value", $searchValue];
+			}],
+			['оценка тимлида меньше', function($tableAlias, $searchValue) {
+				return ['<', "$tableAlias.tl_score_value", $searchValue];
+			}],
+			['оценка тимлида меньше или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.tl_score_value", $searchValue];
+			}],
+			['оценка тимлида больше или равно', function($tableAlias, $searchValue) {
+				return ['>=', "$tableAlias.tl_score_value", $searchValue];
+			}],
+			['оценка тимлида заполнена', function($tableAlias, $searchValue) {
+				return ['not', ["$tableAlias.tl_score_value" => null]];
+			}],
+			['оценка тимлида не заполнена', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.tl_score_value", new Expression('null')];
+			}],/************************************************************/
+			['оценка ареалида равна', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.al_score_value", $searchValue];
+			}],
+			['оценка ареалида не равна', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.al_score_value", $searchValue];
+			}],
+			['оценка ареалида больше', function($tableAlias, $searchValue) {
+				return ['>', "$tableAlias.al_score_value", $searchValue];
+			}],
+			['оценка ареалида меньше', function($tableAlias, $searchValue) {
+				return ['<', "$tableAlias.al_score_value", $searchValue];
+			}],
+			['оценка ареалида меньше или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.al_score_value", $searchValue];
+			}],
+			['оценка ареалида больше или равно', function($tableAlias, $searchValue) {
+				return ['>=', "$tableAlias.al_score_value", $searchValue];
+			}],
+			['оценка ареалида заполнена', function($tableAlias, $searchValue) {
+				return ['not', ["$tableAlias.al_score_value" => null]];
+			}],
+			['оценка ареалида не заполнена', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.al_score_value", new Expression('null')];
+			}],
 		];
 	}
 
