@@ -3,20 +3,21 @@ declare(strict_types = 1);
 
 namespace app\widgets\score;
 
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\types\ScoreProperty;
 use yii\base\Widget;
 
 /**
  * Class ScoreWidget
  * @package app\widgets\score
+ * @property DynamicAttributeProperty$model
  * @property ScoreProperty $score
  * @property string $caption
  * @property bool $readOnly
  * @property bool $showEmpty
  */
 class ScoreWidget extends Widget {
-	public $caption;
-	public $score;
+	public $model;
 	public $readOnly = false;
 	public $showEmpty = false;
 
@@ -34,12 +35,12 @@ class ScoreWidget extends Widget {
 	 */
 	public function run():string {
 		return $this->readOnly?$this->render('score_view', [
-			'caption' => $this->caption,
-			'model' => $this->score,
+			'caption' => $this->model->name,
+			'model' => $this->model->value,
 			'showEmpty' => $this->showEmpty
 		]):$this->render('score_edit', [
-			'model' => $this->score,
-			'caption' => $this->caption
+			'caption' => $this->model->name,
+			'model' => $this->model->value
 		]);
 	}
 }

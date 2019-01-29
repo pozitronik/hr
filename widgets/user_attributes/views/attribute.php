@@ -59,8 +59,7 @@ use kartik\grid\GridView;
 					break;
 					case 'score':
 						return ScoreWidget::widget([
-							'caption' => $model->name,
-							'score' => $model->value,
+							'model' => $model,
 							'readOnly' => true,
 							'showEmpty' => false
 						]);
