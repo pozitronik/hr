@@ -13,10 +13,6 @@ use yii\web\View;
 ?>
 
 <div class="panel panel-score-summary panel-primary">
-	<div class="panel-heading">
-		<div class="panel-title"><?= $model->name ?></div>
-	</div>
-
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-4">
