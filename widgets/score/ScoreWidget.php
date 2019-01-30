@@ -28,13 +28,15 @@ class ScoreWidget extends InputWidget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета
+	 * Виджет не может возвращать null
 	 * @return string
 	 */
 	public function run():string {
+		if ($this->readOnly && !$this->showEmpty && $this->model->{$this->attribute}->empty) return '';
+
 		return $this->readOnly?$this->render('score_view', [
-			'caption' => $this->model->name,
-			'model' => $this->model->{$this->attribute},
-			'showEmpty' => $this->showEmpty
+			'attribute' => $this->attribute,
+			'model' => $this->model
 		]):$this->render('score_edit', [
 			'attribute' => $this->attribute,
 			'model' => $this->model

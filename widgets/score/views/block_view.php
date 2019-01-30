@@ -3,12 +3,14 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var ScoreProperty $model
+ * @var DynamicAttributeProperty $model
  * @var string $scoreAttributeName
  * @var string $commentAttributeName
+ * @var string $attribute
  */
 
-use app\models\dynamic_attributes\types\ScoreProperty;
+use app\helpers\ArrayHelper;
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use kartik\rating\StarRating;
 use yii\web\View;
 
@@ -16,15 +18,15 @@ use yii\web\View;
 
 <div class="panel panel-score panel-info">
 	<div class="panel-heading">
-		<div class="panel-title"><?= $model->getAttributeLabel($scoreAttributeName) ?></div>
+		<div class="panel-title"><?= $model->$attribute->getAttributeLabel($scoreAttributeName) ?></div>
 	</div>
 
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
 				<?= StarRating::widget([
-					'name' => "DynamicAttributeProperty[$scoreAttributeName]",
-					'value' => $model->$scoreAttributeName,
+					'name' => "DynamicAttributeProperty[$model->id][$scoreAttributeName]",
+					'value' => ArrayHelper::getValue($model->$attribute, $scoreAttributeName),
 					'pluginOptions' => [
 						'size' => StarRating::SIZE_SMALL,
 						'displayOnly' => true,
@@ -45,10 +47,10 @@ use yii\web\View;
 				]); ?>
 			</div>
 		</div>
-		<?php if (!empty($model->$commentAttributeName)): ?>
+		<?php if (null !== $comment = ArrayHelper::getValue($model->$attribute, $commentAttributeName)): ?>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $model->$commentAttributeName; ?>
+					<?= $comment; ?>
 				</div>
 			</div>
 		<?php endif; ?>

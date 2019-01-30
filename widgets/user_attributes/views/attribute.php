@@ -58,12 +58,13 @@ use kartik\grid\GridView;
 						return (null === $model->value)?null:$model->value.'%';
 					break;
 					case 'score':
-						return ScoreWidget::widget([
+						$widget = ScoreWidget::widget([
 							'model' => $model,
 							'attribute' => 'value',
 							'readOnly' => true,
 							'showEmpty' => false
 						]);
+						return $widget;
 					break;
 					default:
 						return $model->value;

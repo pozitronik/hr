@@ -16,7 +16,7 @@ use yii\web\View;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-4">
-				<?= $this->render('edit_block', [
+				<?= $this->render('block_edit', [
 					'model' => $model,
 					'scoreAttributeName' => 'selfScoreValue',
 					'commentAttributeName' => 'selfScoreComment',
@@ -24,7 +24,7 @@ use yii\web\View;
 				]) ?>
 			</div>
 			<div class="col-md-4">
-				<?= $this->render('edit_block', [
+				<?= $this->render('block_edit', [
 					'model' => $model,
 					'scoreAttributeName' => 'tlScoreValue',
 					'commentAttributeName' => 'tlScoreComment',
@@ -33,7 +33,7 @@ use yii\web\View;
 
 			</div>
 			<div class="col-md-4">
-				<?= $this->render('edit_block', [
+				<?= $this->render('block_edit', [
 					'model' => $model,
 					'scoreAttributeName' => 'alScoreValue',
 					'commentAttributeName' => 'alScoreComment',

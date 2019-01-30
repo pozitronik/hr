@@ -3,44 +3,45 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var ScoreProperty $model
- * @var string $caption
- * @var bool $showEmpty
+ * @var DynamicAttributeProperty $model
+ * @var string $attribute
  */
 
-use app\models\dynamic_attributes\types\ScoreProperty;
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use yii\web\View;
 
 ?>
 
-<?php if (!$showEmpty && $model->empty) return null; ?>
 
 <div class="panel panel-score-summary panel-primary">
 	<div class="panel-heading">
-		<div class="panel-title"><?= $caption ?></div>
+		<div class="panel-title"><?= $model->name ?></div>
 	</div>
 
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-4">
-				<?= $this->render('view_block', [
+				<?= $this->render('block_view', [
 					'model' => $model,
 					'scoreAttributeName' => 'selfScoreValue',
-					'commentAttributeName' => 'selfScoreComment'
+					'commentAttributeName' => 'selfScoreComment',
+					'attribute' => $attribute
 				]) ?>
 			</div>
 			<div class="col-md-4">
-				<?= $this->render('view_block', [
+				<?= $this->render('block_view', [
 					'model' => $model,
 					'scoreAttributeName' => 'tlScoreValue',
-					'commentAttributeName' => 'tlScoreComment'
+					'commentAttributeName' => 'tlScoreComment',
+					'attribute' => $attribute
 				]) ?>
 			</div>
 			<div class="col-md-4">
-				<?= $this->render('view_block', [
+				<?= $this->render('block_view', [
 					'model' => $model,
 					'scoreAttributeName' => 'alScoreValue',
-					'commentAttributeName' => 'alScoreComment'
+					'commentAttributeName' => 'alScoreComment',
+					'attribute' => $attribute
 				]) ?>
 			</div>
 		</div>
