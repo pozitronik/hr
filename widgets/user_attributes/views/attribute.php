@@ -43,10 +43,6 @@ use kartik\grid\GridView;
 			]
 		],
 		[
-			'attribute' => 'name',
-			'visible' => false //score widget display group name internally
-		],
-		[
 			'attribute' => 'value',
 			'value' => function($model) {
 				/** @var DynamicAttributeProperty $model */
@@ -67,7 +63,7 @@ use kartik\grid\GridView;
 						return $widget;
 					break;
 					default:
-						return $model->value;
+						return $model->name.": ".($model->value??'Не заполнено');
 					break;
 				}
 			},
