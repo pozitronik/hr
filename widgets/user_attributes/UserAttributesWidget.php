@@ -37,13 +37,15 @@ class UserAttributesWidget extends Widget {
 
 		if (empty($attribute->structure)) return "Атрибут не имеет свойств";
 
-		$widgetDataProvider = new ArrayDataProvider();
+//		$widgetDataProvider = new ArrayDataProvider();
+//
+//		$widgetDataProvider->allModels = $attribute->getUserProperties($this->user_id);
 
-		$widgetDataProvider->allModels = $attribute->getUserProperties($this->user_id);
-
-		return $this->render('attribute', [
-			'widgetDataProvider' => $widgetDataProvider,
-			'show_category' => $this->show_category
+		return $this->render('list', [
+			'dynamicAttribute' => $attribute,
+			'userProperties' => $attribute->getUserProperties($this->user_id)
+//			'widgetDataProvider' => $widgetDataProvider,
+//			'show_category' => $this->show_category
 		]);
 	}
 }

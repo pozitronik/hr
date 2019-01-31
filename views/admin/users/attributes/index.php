@@ -74,32 +74,41 @@ use yii\helpers\Url;
 					]
 				],
 				[
-					'attribute' => 'name',
-					'value' => function($model) use ($user) {
-						/** @var DynamicAttributes $model */
-						return Html::a($model->name, Url::to(['admin/users/attributes', 'user_id' => $user->id, 'attribute_id' => $model->id]));
-					},
-					'format' => 'raw'
-				],
-//				'categoryName',
-				[
-					'label' => 'Данные',
 					'value' => function($model) use ($user) {
 						/** @var DynamicAttributes $model */
 						return UserAttributesWidget::widget([
 							'user_id' => $user->id,
 							'attribute_id' => $model->id,
-//							'show_category' => true
 						]);
 					},
 					'format' => 'raw'
 				],
-				[
-					'class' => CheckboxColumn::class,
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => Icons::trash(),
-					'name' => $user->formName().'[dropUsersAttributes]'
-				]
+
+//				[
+//					'attribute' => 'name',
+//					'value' => function($model) use ($user) {
+//						/** @var DynamicAttributes $model */
+//						return Html::a($model->name, Url::to(['admin/users/attributes', 'user_id' => $user->id, 'attribute_id' => $model->id]));
+//					},
+//					'format' => 'raw'
+//				],
+//				[
+//					'label' => 'Данные',
+//					'value' => function($model) use ($user) {
+//						/** @var DynamicAttributes $model */
+//						return UserAttributesWidget::widget([
+//							'user_id' => $user->id,
+//							'attribute_id' => $model->id,
+//						]);
+//					},
+//					'format' => 'raw'
+//				],
+//				[
+//					'class' => CheckboxColumn::class,
+//					'headerOptions' => ['class' => 'kartik-sheet-style'],
+//					'header' => Icons::trash(),
+//					'name' => $user->formName().'[dropUsersAttributes]'
+//				]
 			]
 
 		]); ?>

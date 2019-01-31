@@ -13,6 +13,9 @@ use app\models\dynamic_attributes\types\AttributePropertyString;
 use app\models\dynamic_attributes\types\AttributePropertyText;
 use app\models\dynamic_attributes\types\AttributePropertyTime;
 use app\models\core\SysExceptions;
+use app\widgets\attribute_field\AttributeFieldWidget;
+use app\widgets\score\ScoreWidget;
+use Exception;
 use RuntimeException;
 use Throwable;
 use yii\base\InvalidCallException;
@@ -34,6 +37,7 @@ use yii\base\UnknownPropertyException;
  *
  * @property boolean isNewRecord
  * @property mixed $value
+ * @property DynamicAttributes $dynamicAttribute
  */
 class DynamicAttributeProperty extends Model {
 	private $attribute_id; //Внутреннее поле для связи с атрибутом
@@ -269,6 +273,31 @@ class DynamicAttributeProperty extends Model {
 	 */
 	public function setUserId(int $user_id):void {
 		$this->user_id = $user_id;
+	}
+
+	/**
+	 * @return DynamicAttributes
+	 */
+	public function getDynamicAttribute():DynamicAttributes {
+		return DynamicAttributes::findModel($this->attribute_id);
+	}
+
+	/**
+	 * Функция отдаёт виджет, ассоциированный с этим свойством
+	 * @param array $config
+	 * @return string
+	 * @throws Exception
+	 */
+	public function widget(array $config):string {
+		$config['model'] = $this;
+		switch ($this->type) {
+			case 'score':
+				return ScoreWidget::widget($config);
+			break;
+			default:
+				return AttributeFieldWidget::widget($config);
+			break;
+		}
 	}
 
 }

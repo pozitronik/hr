@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\widgets\attribute_field\AttributeFieldWidget;
 use app\widgets\score\ScoreWidget;
 use yii\data\DataProviderInterface;
 use yii\web\View;
@@ -54,16 +55,20 @@ use kartik\grid\GridView;
 						return (null === $model->value)?null:$model->value.'%';
 					break;
 					case 'score':
-						$widget = ScoreWidget::widget([
+						return ScoreWidget::widget([
 							'model' => $model,
 							'attribute' => 'value',
 							'readOnly' => true,
 							'showEmpty' => false
 						]);
-						return $widget;
 					break;
 					default:
-						return $model->name.": ".($model->value??'Не заполнено');
+						return AttributeFieldWidget::widget([
+							'model' => $model,
+							'attribute' => 'value',
+							'readOnly' => true,
+							'showEmpty' => false
+						]);
 					break;
 				}
 			},
