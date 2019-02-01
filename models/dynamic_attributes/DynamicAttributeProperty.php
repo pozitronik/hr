@@ -38,6 +38,7 @@ use yii\base\UnknownPropertyException;
  * @property boolean isNewRecord
  * @property mixed $value
  * @property DynamicAttributes $dynamicAttribute
+ * @property-read string $categoryName
  */
 class DynamicAttributeProperty extends Model {
 	private $attribute_id; //Внутреннее поле для связи с атрибутом
@@ -298,6 +299,13 @@ class DynamicAttributeProperty extends Model {
 				return AttributeFieldWidget::widget($config);
 			break;
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCategoryName():string {
+		return ArrayHelper::getValue(ArrayHelper::getColumn(DynamicAttributeProperty::PROPERTY_TYPES, 'label'), $this->type);
 	}
 
 }
