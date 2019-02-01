@@ -80,35 +80,13 @@ use yii\helpers\Url;
 							'attribute_id' => $model->id
 						]);
 					},
-					'format' => 'raw'
+					'format' => 'raw',
+					'contentOptions' => function ($model, $key, $index, $column) {
+						return ['style' => 'padding: 0px;'];
+					},
 				],
 
-//				[
-//					'attribute' => 'name',
-//					'value' => function($model) use ($user) {
-//						/** @var DynamicAttributes $model */
-//						return Html::a($model->name, Url::to(['admin/users/attributes', 'user_id' => $user->id, 'attribute_id' => $model->id]));
-//					},
-//					'format' => 'raw'
-//				],
-//				[
-//					'label' => 'Данные',
-//					'value' => function($model) use ($user) {
-//						/** @var DynamicAttributes $model */
-//						return UserAttributesWidget::widget([
-//							'user_id' => $user->id,
-//							'attribute_id' => $model->id,
-//						]);
-//					},
-//					'format' => 'raw'
-//				],
-//				[
-//					'class' => CheckboxColumn::class,
-//					'headerOptions' => ['class' => 'kartik-sheet-style'],
-//					'header' => Icons::trash(),
-//					'name' => $user->formName().'[dropUsersAttributes]'
-//				]
-			]
+			],
 
 		]); ?>
 	</div>
