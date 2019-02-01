@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\user_attributes;
+namespace app\modules\dynamic_attributes\widgets\user_attribute;
 
 use app\models\dynamic_attributes\DynamicAttributes;
 use Throwable;
@@ -14,7 +14,7 @@ use yii\web\ServerErrorHttpException;
  * @property integer $attribute_id
  * @property boolean $show_category
  */
-class UserAttributesWidget extends Widget {
+class UserAttributeWidget extends Widget {
 	public $user_id;
 	public $attribute_id;
 	public $show_category = false;
@@ -24,7 +24,7 @@ class UserAttributesWidget extends Widget {
 	 */
 	public function init() {
 		parent::init();
-		UserAttributesWidgetAssets::register($this->getView());
+		UserAttributeWidgetAssets::register($this->getView());
 	}
 
 	/**
@@ -39,7 +39,7 @@ class UserAttributesWidget extends Widget {
 
 		$userProperties = $attribute->getUserProperties($this->user_id);
 
-		$fieldsCount = (count($userProperties));//В зависимости от количества СВОЙСТВ в атрибуте высчитываем подходящее количество колонок
+		$fieldsCount = count($userProperties);//В зависимости от количества СВОЙСТВ в атрибуте высчитываем подходящее количество колонок
 		$mdClass = "col-md-1";
 		if (1 === $fieldsCount) {
 			$mdClass = "col-md-12";

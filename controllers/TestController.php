@@ -1,4 +1,5 @@
 <?php
+/** @noinspection ALL */
 declare(strict_types = 1);
 
 namespace app\controllers;
@@ -37,13 +38,13 @@ class TestController extends Controller {
 	 * @return string|null
 	 * @throws \Throwable
 	 */
-	public function actionUser() {
+	public function actionUser():?string {
 		if (null === $user = Users::findModel(1)) return null;
 
 
 
 		return $this->render('/admin/users/attributes/test_widgets', [
-			'user' => $user,
+			'user' => $user
 		]);
 	}
 

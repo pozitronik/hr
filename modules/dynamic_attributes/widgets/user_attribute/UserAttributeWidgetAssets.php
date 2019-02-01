@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\user_attributes;
+namespace app\modules\dynamic_attributes\widgets\user_attribute;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -10,8 +10,8 @@ use app\assets\AppAsset;
  * Class UserAttributesWidgetAssets
  * @package app\widgets\attribute
  */
-class UserAttributesWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/user_attributes/assets';
+class UserAttributeWidgetAssets extends AssetBundle {
+	public $sourcePath = '@app/modules/dynamic_attributes/widgets/user_attribute/assets';//todo ссылаться на путь в модуле?
 	public $css = [
 		'css/attribute.css'
 	];

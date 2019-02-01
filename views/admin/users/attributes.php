@@ -10,7 +10,7 @@ declare(strict_types = 1);
 use app\models\dynamic_attributes\DynamicAttributes;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\users\Users;
-use app\widgets\score\ScoreWidget;
+use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use kartik\date\DatePicker;
 use kartik\range\RangeInput;
 use kartik\switchinput\SwitchInput;

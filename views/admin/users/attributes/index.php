@@ -10,14 +10,13 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\models\dynamic_attributes\DynamicAttributes;
-use app\widgets\user_attributes\UserAttributesWidget;
+use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use yii\data\BaseDataProvider;
 use kartik\grid\ActionColumn;
 use yii\web\View;
 use kartik\grid\GridView;
 use app\models\users\Users;
 use kartik\select2\Select2;
-use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -76,9 +75,9 @@ use yii\helpers\Url;
 				[
 					'value' => function($model) use ($user) {
 						/** @var DynamicAttributes $model */
-						return UserAttributesWidget::widget([
+						return UserAttributeWidget::widget([
 							'user_id' => $user->id,
-							'attribute_id' => $model->id,
+							'attribute_id' => $model->id
 						]);
 					},
 					'format' => 'raw'

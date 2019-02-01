@@ -1,24 +1,19 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\attribute_field;
+namespace app\modules\dynamic_attributes\widgets\attribute_field_score;
 
-use app\helpers\Utils;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
-use kartik\base\InputWidget;
+use yii\widgets\InputWidget;
 
 /**
- * Виджет, рисующий блок одного любого поля ползовательского атрибута
- * Class AttributeFieldWidget
- * @package app\widgets\attribute_field
- *
+ * Class ScoreWidget
  * @property DynamicAttributeProperty $model
  * @property string $attribute
  * @property bool $readOnly
  * @property bool $showEmpty
  */
-class AttributeFieldWidget extends InputWidget {
-	public $model;
+class ScoreWidget extends InputWidget {
 	public $readOnly = false;
 	public $showEmpty = false;
 
@@ -27,20 +22,21 @@ class AttributeFieldWidget extends InputWidget {
 	 */
 	public function init() {
 		parent::init();
-		AttributeFieldWidgetAssets::register($this->getView());
+		ScoreWidgetAssets::register($this->getView());
 	}
 
 	/**
 	 * Функция возврата результата рендеринга виджета
+	 * Виджет не может возвращать null
 	 * @return string
 	 */
 	public function run():string {
+		if ($this->readOnly && !$this->showEmpty && $this->model->{$this->attribute}->empty) return '';
 
-
-		return $this->readOnly?$this->render('attribute_field_view', [
+		return $this->readOnly?$this->render('score_view', [
 			'attribute' => $this->attribute,
 			'model' => $this->model
-		]):$this->render('attribute_field_edit', [
+		]):$this->render('score_edit', [
 			'attribute' => $this->attribute,
 			'model' => $this->model
 		]);

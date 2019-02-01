@@ -13,8 +13,8 @@ use app\models\dynamic_attributes\types\AttributePropertyString;
 use app\models\dynamic_attributes\types\AttributePropertyText;
 use app\models\dynamic_attributes\types\AttributePropertyTime;
 use app\models\core\SysExceptions;
-use app\widgets\attribute_field\AttributeFieldWidget;
-use app\widgets\score\ScoreWidget;
+use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Exception;
 use RuntimeException;
 use Throwable;
@@ -278,6 +278,7 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * @return DynamicAttributes
+	 * @throws Throwable
 	 */
 	public function getDynamicAttribute():DynamicAttributes {
 		return DynamicAttributes::findModel($this->attribute_id);
@@ -303,9 +304,10 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function getCategoryName():string {
-		return ArrayHelper::getValue(ArrayHelper::getColumn(DynamicAttributeProperty::PROPERTY_TYPES, 'label'), $this->type);
+		return ArrayHelper::getValue(ArrayHelper::getColumn(self::PROPERTY_TYPES, 'label'), $this->type);
 	}
 
 }

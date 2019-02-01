@@ -11,8 +11,8 @@ declare(strict_types = 1);
 use app\assets\DynamicAttributesSearchAsset;
 use app\models\dynamic_attributes\DynamicAttributesSearchCollection;
 use app\models\users\Users;
+use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use app\widgets\badge\BadgeWidget;
-use app\widgets\user_attributes\UserAttributesWidget;
 use app\widgets\user\UserWidget;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -208,7 +208,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'label' => 'Данные',
 								'value' => function($model) use ($userModel) {
 									/** @var DynamicAttributes $model */
-									return UserAttributesWidget::widget([
+									return UserAttributeWidget::widget([
 										'user_id' => $userModel->id,
 										'attribute_id' => $model->id
 									]);
