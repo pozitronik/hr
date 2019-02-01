@@ -35,7 +35,7 @@ class AttributeFieldWidget extends InputWidget {
 	 * @return string
 	 */
 	public function run():string {
-		//if ($this->readOnly && !$this->showEmpty && (null === $this->model->{$this->attribute})) return '';
+
 
 		return $this->readOnly?$this->render('attribute_field_view', [
 			'attribute' => $this->attribute,

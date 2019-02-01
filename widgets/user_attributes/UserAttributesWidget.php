@@ -6,10 +6,10 @@ namespace app\widgets\user_attributes;
 use app\models\dynamic_attributes\DynamicAttributes;
 use Throwable;
 use yii\base\Widget;
-use yii\data\ArrayDataProvider;
 use yii\web\ServerErrorHttpException;
 
 /**
+ * Виджет рисует панель атрибута со всеми его свойствами, динамически рассчитывая размеры для полей свойств
  * @property integer $user_id
  * @property integer $attribute_id
  * @property boolean $show_category
@@ -37,15 +37,25 @@ class UserAttributesWidget extends Widget {
 
 		if (empty($attribute->structure)) return "Атрибут не имеет свойств";
 
-//		$widgetDataProvider = new ArrayDataProvider();
-//
-//		$widgetDataProvider->allModels = $attribute->getUserProperties($this->user_id);
+		$userProperties = $attribute->getUserProperties($this->user_id);
 
-		return $this->render('list', [
+		$fieldsCount = (count($userProperties));//В зависимости от количества СВОЙСТВ в атрибуте высчитываем подходящее количество колонок
+		$mdClass = "col-md-1";
+		if (1 === $fieldsCount) {
+			$mdClass = "col-md-12";
+		} elseif (2 === $fieldsCount) {
+			$mdClass = "col-md-6";
+		} elseif (3 === $fieldsCount) {
+			$mdClass = "col-md-4";
+		} elseif (4 === $fieldsCount) {
+			$mdClass = "col-md-3";
+		} elseif ($fieldsCount < 8) {
+			$mdClass = "col-md-2";
+		}
+		return $this->render('attribute', [
 			'dynamicAttribute' => $attribute,
-			'userProperties' => $attribute->getUserProperties($this->user_id)
-//			'widgetDataProvider' => $widgetDataProvider,
-//			'show_category' => $this->show_category
+			'userProperties' => $userProperties,
+			'mdClass' => $mdClass
 		]);
 	}
 }
