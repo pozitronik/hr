@@ -1,14 +1,14 @@
-.panel-score {
+.panel.panel-score {
 	margin: 0px;
 	border: none;
 	box-shadow: none;
 }
 
-.panel-score .panel-heading {
+.panel.panel-score .panel-heading {
 	height: auto;
 }
 
-.panel-score .panel-title {
+.panel.panel-score .panel-title {
 	font-size: 1em;
 	padding: 0 5px;
 	line-height: normal;
@@ -17,21 +17,21 @@
 	color: #758697;
 }
 
-.panel-score .panel-body {
+.panel.panel-score .panel-body {
 	padding: 0 5px;
 }
 
-.panel-score-summary {
+.panel.panel-score-summary {
 	margin: 0px;
 	border: none;
 
 }
 
-.panel-score-summary .panel-heading {
+.panel.panel-score-summary .panel-heading {
 	height: auto;
 }
 
-.panel-score-summary > .panel-heading > .panel-title {
+.panel.panel-score-summary > .panel-heading > .panel-title {
 	line-height: 26px;
 	background-color: #00b3ca;
 	border-color: #00bcd4;
@@ -39,6 +39,6 @@
 
 }
 
-.panel-score-summary > .panel-body {
+.panel.panel-score-summary > .panel-body {
 	padding: 0px;
 }

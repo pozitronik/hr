@@ -1,7 +1,15 @@
-.attribute_table table{
-	margin-bottom: 0;
+.panel.panel-attribute > .panel-heading {
+	height:auto;
+
 }
 
-.attribute_table {
-	margin: -8px;
+.panel.panel-attribute > .panel-heading > .panel-title {
+	line-height: 2em;
+	background-color: #fafafa;
+	border-color: #d1d9de;
+	color: #000000;
+}
+
+.panel.panel-attribute > .panel-body {
+	padding: 0;
 }
