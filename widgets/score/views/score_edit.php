@@ -12,7 +12,7 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-score-summary panel-primary">
+<div class="panel panel-score-summary">
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-4">

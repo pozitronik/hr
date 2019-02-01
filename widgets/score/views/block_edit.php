@@ -17,7 +17,7 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-score panel-info">
+<div class="panel panel-score">
 	<div class="panel-heading">
 		<div class="panel-title"><?= $model->$attribute->getAttributeLabel($scoreAttributeName) ?></div>
 	</div>

@@ -13,7 +13,7 @@ use yii\web\View;
 ?>
 
 
-<div class="panel panel-score-summary panel-primary">
+<div class="panel panel-score-summary">
 	<div class="panel-heading">
 		<div class="panel-title"><?= $model->name ?></div>
 	</div>
