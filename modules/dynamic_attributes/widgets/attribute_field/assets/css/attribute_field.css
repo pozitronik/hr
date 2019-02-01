@@ -1,0 +1,21 @@
+.panel-attribute-field {
+	margin: 0px;
+	border: none;
+
+}
+
+.panel-attribute-field .panel-heading {
+	height: auto;
+}
+
+.panel-attribute-field > .panel-heading > .panel-title {
+	line-height: 26px;
+	background-color: #00b3ca;
+	border-color: #00bcd4;
+	color: #fff;
+
+}
+
+.panel-attribute-field > .panel-body {
+	padding: 0px;
+}

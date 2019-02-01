@@ -14,7 +14,7 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-primary panel-attribute">
+<div class="panel panel-attribute">
 	<div class="panel-heading">
 		<div class="panel-title">Атрибут: <?= $dynamicAttribute->name ?> (<?= $dynamicAttribute->categoryName ?>)</div>
 	</div>
