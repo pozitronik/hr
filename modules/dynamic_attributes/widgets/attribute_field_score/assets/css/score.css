@@ -12,6 +12,9 @@
 	font-size: 1em;
 	padding: 0 5px;
 	line-height: normal;
+	background-color: #fafafa;
+	border-color: #d1d9de;
+	color: #758697;
 }
 
 .panel-score .panel-body {
@@ -30,6 +33,10 @@
 
 .panel-score-summary > .panel-heading > .panel-title {
 	line-height: 26px;
+	background-color: #00b3ca;
+	border-color: #00bcd4;
+	color: #fff;
+
 }
 
 .panel-score-summary > .panel-body {
