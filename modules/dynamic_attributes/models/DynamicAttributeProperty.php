@@ -36,7 +36,6 @@ use yii\widgets\ActiveForm;
  * @property integer $userId;
  *
  * @property boolean isNewRecord
- * @property mixed $value
  * @property DynamicAttributes $dynamicAttribute
  * @property-read string $categoryName
  */
@@ -134,7 +133,7 @@ class DynamicAttributeProperty extends Model {
 			throw new InvalidCallException('Getting write-only property: '.get_class($this).'::'.$name);
 		}
 		if ((int)$name === $this->id) {/*Хачим геттер метода для совместимости с ActiveForm::field*/
-			return $this->value;
+			return $this->getValue();
 		}
 
 		throw new UnknownPropertyException('Getting unknown property: '.get_class($this).'::'.$name);
