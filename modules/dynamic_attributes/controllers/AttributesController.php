@@ -154,8 +154,7 @@ class AttributesController extends WigetableController {
 			return $this->render('search', [
 				'model' => $searchSet,
 				'dataProvider' => $searchCondition,
-				'attribute_data' => $attribute_data,
-				'userModel' => null
+				'attribute_data' => $attribute_data
 			]);
 		}
 
@@ -168,8 +167,7 @@ class AttributesController extends WigetableController {
 		return $this->render('search', [
 			'model' => $searchSet,
 			'dataProvider' => null,
-			'attribute_data' => $attribute_data,
-			'userModel' => null
+			'attribute_data' => $attribute_data
 		]);
 
 	}
