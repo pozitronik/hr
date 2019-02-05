@@ -77,7 +77,7 @@ $provider = new ActiveDataProvider([
 					'attribute' => 'username',
 					'value' => function($user) {
 						/** @var Users $user */
-						return Html::a($user->username, ['admin/users/update', 'id' => $user->id]);
+						return Html::a($user->username, ['/admin/users/update', 'id' => $user->id]);
 					}
 				],
 				[

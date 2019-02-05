@@ -87,7 +87,7 @@ GridView::widget([
 			'attribute' => 'username',
 			'value' => function($model) {
 				/** @var UsersSearch $model */
-				return Html::a($model->username, ['admin/users/update', 'id' => $model->id]);
+				return Html::a($model->username, ['/admin/users/update', 'id' => $model->id]);
 			},
 			'format' => 'raw'
 		],
@@ -100,7 +100,7 @@ GridView::widget([
 					'data' => $model->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
-					'linkScheme' => ['admin/groups/update', 'id' => 'id']
+					'linkScheme' => ['/admin/groups/update', 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'

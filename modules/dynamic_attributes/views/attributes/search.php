@@ -169,57 +169,57 @@ $this->params['breadcrumbs'][] = $this->title;
 						'data' => $model->relGroups,
 						'useBadges' => false,
 						'attribute' => 'name',
-						'linkScheme' => ['admin/groups/update', 'id' => 'id']
+						'linkScheme' => ['/admin/groups/update', 'id' => 'id']
 					]);
 				},
 				'format' => 'raw'
 			],
 //			'positionName',
-			[
-				'label' => 'Атрибуты',
-				'format' => 'raw',
-				'value' => function($userModel) {
-					/** @var Users $userModel */
-					return GridView::widget([
-						'dataProvider' => new ActiveDataProvider([
-							'query' => $userModel->getRelDynamicAttributes()->orderBy('name')->active()
-						]),
-						'showFooter' => false,
-						'showPageSummary' => false,
-						'summary' => '',
-						'panel' => false,
-						'toolbar' => false,
-						'export' => false,
-						'resizableColumns' => true,
-						'responsive' => true,
-						'options' => [
-							'class' => 'attribute_table'
-						],
-						'columns' => [
-							[
-								'attribute' => 'name',
-								'value' => function($model) use ($userModel) {
-									/** @var DynamicAttributes $model */
-									return Html::a($model->name, Url::to(['admin/users/attributes', 'user_id' => $userModel->id, 'attribute_id' => $model->id]));
-								},
-								'format' => 'raw'
-							],
-							[
-								'label' => 'Данные',
-								'value' => function($model) use ($userModel) {
-									/** @var DynamicAttributes $model */
-									return UserAttributeWidget::widget([
-										'user_id' => $userModel->id,
-										'attribute_id' => $model->id
-									]);
-								},
-								'format' => 'raw'
-							]
-						]
-
-					]);
-				}
-			]
+//			[
+//				'label' => 'Атрибуты',
+//				'format' => 'raw',
+//				'value' => function($userModel) {
+//					/** @var Users $userModel */
+//					return GridView::widget([
+//						'dataProvider' => new ActiveDataProvider([
+//							'query' => $userModel->getRelDynamicAttributes()->orderBy('name')->active()
+//						]),
+//						'showFooter' => false,
+//						'showPageSummary' => false,
+//						'summary' => '',
+//						'panel' => false,
+//						'toolbar' => false,
+//						'export' => false,
+//						'resizableColumns' => true,
+//						'responsive' => true,
+//						'options' => [
+//							'class' => 'attribute_table'
+//						],
+//						'columns' => [
+//							[
+//								'attribute' => 'name',
+//								'value' => function($model) use ($userModel) {
+//									/** @var DynamicAttributes $model */
+//									return Html::a($model->name, Url::to(['admin/users/attributes', 'user_id' => $userModel->id, 'attribute_id' => $model->id]));
+//								},
+//								'format' => 'raw'
+//							],
+//							[
+//								'label' => 'Данные',
+//								'value' => function($model) use ($userModel) {
+//									/** @var DynamicAttributes $model */
+//									return UserAttributeWidget::widget([
+//										'user_id' => $userModel->id,
+//										'attribute_id' => $model->id
+//									]);
+//								},
+//								'format' => 'raw'
+//							]
+//						]
+//
+//					]);
+//				}
+//			]
 		]
 	]); ?>
 <?php endif; ?>

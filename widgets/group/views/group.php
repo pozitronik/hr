@@ -65,9 +65,9 @@ use app\widgets\user\UserWidget;
 				'unbadgedCount' => 3,
 				'moreBadgeOptions' => ['class' => 'badge'],
 				'itemsSeparator' => false,
-				'linkScheme' => ['admin/groups/update', 'id' => 'id']
+				'linkScheme' => ['/admin/groups/update', 'id' => 'id']
 			]); ?>
-			<?= Html::a('Визуализация иерархии', ['admin/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
+			<?= Html::a('Визуализация иерархии', ['/admin/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
 		<?php endif; ?>
 
 	</div>

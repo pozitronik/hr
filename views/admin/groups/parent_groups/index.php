@@ -65,7 +65,7 @@ $provider = new ActiveDataProvider([
 						},
 						'bunch' => function($url, $model) {
 							/** @var Groups $model */
-							return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['admin/bunch/index', 'group_id' => $model->id]));
+							return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/admin/bunch/index', 'group_id' => $model->id]));
 						}
 					]
 				],
@@ -74,7 +74,7 @@ $provider = new ActiveDataProvider([
 					'attribute' => 'name',
 					'value' => function($group) {
 						/** @var Groups $group */
-						return Html::a($group->name, Url::to(['admin/groups/update', 'id' => $group->id]));
+						return Html::a($group->name, Url::to(['/admin/groups/update', 'id' => $group->id]));
 					}
 				],
 				[

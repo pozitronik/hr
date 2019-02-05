@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'name',
 					'value' => function($model) {
 						/** @var Privileges $model */
-						return Html::a($model->name, ['admin/privileges/update', 'id' => $model->id]);
+						return Html::a($model->name, ['/admin/privileges/update', 'id' => $model->id]);
 					},
 					'format' => 'raw'
 				],

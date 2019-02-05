@@ -19,17 +19,17 @@ use yii\web\View;
 $items = [
 	[
 		'label' => Icons::attributes().'Открыть для изменения',
-		'url' => ['attributes/user/edit', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
+		'url' => ['/attributes/user/edit', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
 	],
 	[
 		'label' => Icons::clear().'Сбросить все значения',
-		'url' => ['attributes/user/clear', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
+		'url' => ['/attributes/user/clear', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
 	]
 ];
 
 if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 	'label' => Icons::chart().'Диаграмма',
-	'url' => ['attributes/user/graph', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
+	'url' => ['/attributes/user/graph', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
 ];
 
 ?>

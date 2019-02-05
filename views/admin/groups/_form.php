@@ -46,11 +46,11 @@ use kartik\file\FileInput;
 									],
 									[
 										'label' => Icons::users_edit().'Редактировать пользователей',
-										'url' => ['admin/bunch/index', 'group_id' => $model->id]
+										'url' => ['/admin/bunch/index', 'group_id' => $model->id]
 									],
 									[
 										'label' => Icons::users_edit_red().'Редактировать пользователей (всех)',
-										'url' => ['admin/bunch/index', 'group_id' => $model->id, 'hierarchy' => true]
+										'url' => ['/admin/bunch/index', 'group_id' => $model->id, 'hierarchy' => true]
 									]
 								]
 							]

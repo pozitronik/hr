@@ -50,11 +50,11 @@ use app\helpers\ArrayHelper;
 				'update' => function($url, $model) use ($attribute) {
 					/** @var DynamicAttributeProperty $model */
 
-					return Html::tag('li', Html::a(Icons::update().'Изменение', ['admin/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]));
+					return Html::tag('li', Html::a(Icons::update().'Изменение', ['/attributes/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]));
 				},
 				'delete' => function($url, $model) use ($attribute) {
 					/** @var DynamicAttributeProperty $model */
-					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['admin/attributes/property-delete', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')], [
+					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['/attributes/attributes/property-delete', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')], [
 						'title' => 'Удалить запись',
 						'data' => [
 							'confirm' => 'Вы действительно хотите удалить запись?',
@@ -68,7 +68,7 @@ use app\helpers\ArrayHelper;
 			'attribute' => 'name',
 			'label' => 'Название',
 			'value' => function($model) use ($attribute) {
-				return Html::a(ArrayHelper::getValue($model, 'name'), ['admin/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]);
+				return Html::a(ArrayHelper::getValue($model, 'name'), ['/attributes/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]);
 			},
 			'format' => 'raw'
 		],
