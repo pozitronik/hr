@@ -5,6 +5,7 @@ namespace app\models\references\refs;
 
 use app\models\references\Reference;
 use app\models\relations\RelUsersAttributesTypes;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "ref_attributes_types".
@@ -31,6 +32,7 @@ class RefAttributesTypes extends Reference {
 	 */
 	public function rules():array {
 		return [
+			[['id'], 'integer'],
 			[['name'], 'required'],
 			[['deleted'], 'integer'],
 			[['name', 'color'], 'string', 'max' => 255],
@@ -47,6 +49,37 @@ class RefAttributesTypes extends Reference {
 			'deleted' => 'Deleted',
 			'color' => 'Цвет',
 			'usedCount' => 'Использований'
+		];
+	}
+
+	/**
+	 * Набор колонок для отображения на главной
+	 * @return array
+	 */
+	public function getColumns():array {
+		return [
+			[
+				'attribute' => 'id',
+				'options' => [
+					'style' => 'width:36px;'
+				]
+			],
+			[
+				'attribute' => 'name',
+				'value' => function($model) {
+					/** @var self $model */
+					return $model->deleted?Html::tag('span', "Удалено:", [
+							'class' => 'label label-danger'
+						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), [
+						'style' => "background: {$model->color}"
+					]);
+				},
+				'format' => 'raw'
+			],
+			[
+				'attribute' => 'usedCount'
+			]
+
 		];
 	}
 
