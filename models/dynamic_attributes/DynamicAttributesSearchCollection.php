@@ -111,7 +111,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 */
 	public function propertiesConditions(?int $attributeIndex, ?int $propertyIndex):array {
 		if ((null !== $attribute = DynamicAttributes::findModel($attributeIndex)) && null !== $property = ArrayHelper::getValue($attribute->structure, $propertyIndex)) {
-			$className = DynamicAttributeProperty::getTypeClass($type = $property['type']);
+			$className = DynamicAttributeProperty::getTypeClass($property['type']);
 			return ArrayHelper::keymap($className::conditionConfig(), 0);
 		}
 		return [];
