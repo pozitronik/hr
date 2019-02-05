@@ -34,7 +34,7 @@ use yii\web\View;
 						'min' => 0,
 						'max' => 5,
 						'step' => 1,
-
+						'clearCaption' => 'N/A',
 						'starCaptions' => [
 							0 => 'N/A',
 							1 => '1/5',
