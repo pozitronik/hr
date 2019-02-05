@@ -6,6 +6,7 @@ namespace app\modules\dynamic_attributes\models\types;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use kartik\range\RangeInput;
+use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
@@ -93,7 +94,7 @@ class AttributePropertyPercent extends ActiveRecord implements AttributeProperty
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->value:null;
+		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?Yii::$app->formatter->asPercent($record->value/100):null;
 	}
 
 	/**
