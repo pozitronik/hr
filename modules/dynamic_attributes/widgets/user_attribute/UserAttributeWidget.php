@@ -10,14 +10,16 @@ use yii\web\ServerErrorHttpException;
 
 /**
  * Виджет рисует панель атрибута со всеми его свойствами, динамически рассчитывая размеры для полей свойств
- * @property integer $user_id
- * @property integer $attribute_id
- * @property boolean $show_category
+ * @property int $user_id
+ * @property int $attribute_id
+ * @property bool $show_category
+ * @property bool $read_only
  */
 class UserAttributeWidget extends Widget {
 	public $user_id;
 	public $attribute_id;
 	public $show_category = false;
+	public $read_only = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -55,7 +57,9 @@ class UserAttributeWidget extends Widget {
 		return $this->render('attribute', [
 			'dynamicAttribute' => $attribute,
 			'userProperties' => $userProperties,
-			'mdClass' => $mdClass
+			'mdClass' => $mdClass,
+			'user_id' => $this->user_id,
+			'read_only' => $this->read_only
 		]);
 	}
 }

@@ -110,8 +110,16 @@ use kartik\file\FileInput;
 				<div class="col-md-12">
 					<?= $this->render('attributes/index', [
 						'user' => $model,
-						'data' => $attributesData,
-						'provider' => new ActiveDataProvider(['query' => $model->getRelDynamicAttributes()->orderBy('name')->active()])
+						'before' => Select2::widget([
+							'model' => $model,
+							'attribute' => 'relDynamicAttributes',
+							'name' => 'attribute_id',
+							'data' => $attributesData,
+							'options' => [
+								'multiple' => true,
+								'placeholder' => 'Добавить атрибут'
+							]
+						])
 					]); ?>
 				</div>
 			</div>

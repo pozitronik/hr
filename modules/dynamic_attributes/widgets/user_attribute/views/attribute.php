@@ -6,16 +6,54 @@ declare(strict_types = 1);
  * @var DynamicAttributes $dynamicAttribute
  * @var DynamicAttributeProperty[] $userProperties
  * @var string $mdClass
+ * @var int $user_id
+ * @var bool $read_only
  */
 
+use app\helpers\Icons;
 use app\models\dynamic_attributes\DynamicAttributeProperty;
 use app\models\dynamic_attributes\DynamicAttributes;
+use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
+
+$items = [
+	[
+		'label' => Icons::attributes().'Открыть для изменения',
+		'url' => ['admin/users/attributes', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
+	],
+	[
+		'label' => Icons::clear().'Сбросить все значения',
+		'url' => ['admin/users/attributes-clear', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
+	]
+];
+
+if ($dynamicAttribute->hasIntegerProperties) $items[] = [
+	'label' => Icons::chart().'Диаграмма',
+	'url' => ['attribute-graph', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id]
+];
 
 ?>
 
 <div class="panel panel-attribute">
 	<div class="panel-heading">
+		<?php if ($read_only): ?>
+			<div class="panel-control">
+				<?= ButtonDropdown::widget([
+					'label' => Icons::menu(),
+					'encodeLabel' => false,
+					'options' => [
+						'class' => 'attribute-dropdown'
+					],
+					'dropdown' => [
+						'options' => [
+							'class' => 'pull-right'
+						],
+						'encodeLabels' => false,
+						'items' => $items
+					]
+				]) ?>
+			</div>
+		<?php endif; ?>
 		<div class="panel-title">Атрибут: <?= $dynamicAttribute->name ?> (<?= $dynamicAttribute->categoryName ?>)</div>
 	</div>
 
@@ -23,9 +61,9 @@ use yii\web\View;
 		<div class="row">
 			<?php foreach ($userProperties as $userProperty): ?>
 				<div class="<?= $mdClass ?>">
-					<?= $userProperty->widget([//Каждое свойство атрибута может само определять, каким виджетом его выводить
+					<?= $userProperty->viewField([//Каждое свойство атрибута может само определять, каким виджетом его выводить
 						'attribute' => 'value',
-						'readOnly' => false,
+						'readOnly' => $read_only,
 						'showEmpty' => false
 					]); ?>
 				</div>

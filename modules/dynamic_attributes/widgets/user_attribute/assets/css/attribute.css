@@ -17,3 +17,10 @@
 .panel.panel-attribute > .panel-body {
 	padding: 0;
 }
+
+.panel.panel-attribute > .panel-heading > .panel-control {
+}
+
+.attribute-dropdown {
+
+}
