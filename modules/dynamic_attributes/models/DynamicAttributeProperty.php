@@ -219,6 +219,7 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * Вернёт значение атрибута свойства для указанного пользователя
+	 * @param bool $formatted
 	 * @return mixed
 	 * @throws Throwable
 	 */

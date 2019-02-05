@@ -166,6 +166,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
+	 * @param bool $formatted
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {

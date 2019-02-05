@@ -89,7 +89,9 @@ class AttributePropertyString extends ActiveRecord implements AttributePropertyI
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
+	 * @param bool $formatted
 	 * @return mixed
+	 * @throws \Throwable
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');

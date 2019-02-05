@@ -6,6 +6,7 @@ namespace app\modules\dynamic_attributes\models\types;
 use app\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use Throwable;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -92,7 +93,9 @@ class AttributePropertyInteger extends ActiveRecord implements AttributeProperty
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
+	 * @param bool $formatted
 	 * @return mixed
+	 * @throws Throwable
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');

@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models\types;
 
-use app\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use kartik\range\RangeInput;
@@ -92,6 +91,7 @@ class AttributePropertyPercent extends ActiveRecord implements AttributeProperty
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
+	 * @param bool $formatted
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
