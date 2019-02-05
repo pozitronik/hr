@@ -42,18 +42,13 @@ class UserAttributeWidget extends Widget {
 		$userProperties = $attribute->getUserProperties($this->user_id);
 
 		$fieldsCount = count($userProperties);//В зависимости от количества СВОЙСТВ в атрибуте высчитываем подходящее количество колонок
-		$mdClass = "col-md-1";
 		if (1 === $fieldsCount) {
 			$mdClass = "col-md-12";
 		} elseif (2 === $fieldsCount) {
 			$mdClass = "col-md-6";
-		} elseif (3 === $fieldsCount) {
-			$mdClass = "col-md-4";
-		} elseif (4 === $fieldsCount) {
-			$mdClass = "col-md-3";
-		} elseif ($fieldsCount < 8) {
-			$mdClass = "col-md-2";
-		}
+		} else $mdClass = "col-md-4";
+
+
 		return $this->render('attribute', [
 			'dynamicAttribute' => $attribute,
 			'userProperties' => $userProperties,

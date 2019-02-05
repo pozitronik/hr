@@ -64,7 +64,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 					<?= $userProperty->viewField([//Каждое свойство атрибута может само определять, каким виджетом его выводить
 						'attribute' => 'value',
 						'readOnly' => $read_only,
-						'showEmpty' => false
+						'showEmpty' => true
 					]); ?>
 				</div>
 			<?php endforeach; ?>
