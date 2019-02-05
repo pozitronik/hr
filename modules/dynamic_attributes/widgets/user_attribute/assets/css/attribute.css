@@ -3,8 +3,8 @@
 }
 
 .panel.panel-attribute > .panel-heading {
-	height:auto;
-
+	height: auto;
+	background-color: #fafafa;
 }
 
 .panel.panel-attribute > .panel-heading > .panel-title {
@@ -22,5 +22,5 @@
 }
 
 .attribute-dropdown {
-
+	color: #726e6e;
 }

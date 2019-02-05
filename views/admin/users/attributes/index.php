@@ -13,7 +13,7 @@ use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use kartik\select2\Select2;
 use yii\web\View; ?>
 
-<div class="panel panel-default">
+<div class="panel panel-attribute">
 	<div class="kv-panel-before">
 		<?= Select2::widget([
 			'model' => $user,
