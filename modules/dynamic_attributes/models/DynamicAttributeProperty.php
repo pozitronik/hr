@@ -37,6 +37,7 @@ use yii\widgets\ActiveForm;
  *
  * @property boolean isNewRecord
  * @property DynamicAttributes $dynamicAttribute
+ * @property-write mixed $value
  * @property-read string $categoryName
  */
 class DynamicAttributeProperty extends Model {
