@@ -23,7 +23,6 @@ class UsersController extends WigetableController {
 	public $menuIcon = "/img/admin/users.png";
 	public $orderWeight = 1;
 
-
 	/**
 	 * @inheritdoc
 	 */
@@ -63,8 +62,7 @@ class UsersController extends WigetableController {
 		}
 
 		return $this->render('create', [
-			'model' => $newUser,
-			'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->all(), 'id', 'name')
+			'model' => $newUser
 		]);
 	}
 
@@ -80,8 +78,7 @@ class UsersController extends WigetableController {
 		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
 
 		return $this->render('update', [
-			'model' => $user,
-			'attributesData' => ArrayHelper::map(DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($user->relDynamicAttributes, 'id')])->all(), 'id', 'name')
+			'model' => $user
 		]);
 	}
 

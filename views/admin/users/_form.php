@@ -6,7 +6,6 @@ declare(strict_types = 1);
  *
  * @var View $this
  * @var Users $model
- * @var array $attributesData
  */
 
 use app\helpers\ArrayHelper;
@@ -109,17 +108,7 @@ use kartik\file\FileInput;
 			<div class="row">
 				<div class="col-md-12">
 					<?= $this->render('attributes/index', [
-						'user' => $model,
-						'before' => Select2::widget([
-							'model' => $model,
-							'attribute' => 'relDynamicAttributes',
-							'name' => 'attribute_id',
-							'data' => $attributesData,
-							'options' => [
-								'multiple' => true,
-								'placeholder' => 'Добавить атрибут'
-							]
-						])
+						'user' => $model
 					]); ?>
 				</div>
 			</div>

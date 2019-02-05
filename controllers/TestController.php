@@ -43,7 +43,7 @@ class TestController extends Controller {
 
 
 
-		return $this->render('/admin/users/attributes/test_widgets', [
+		return $this->render('/admin/users/attributes/index', [
 			'user' => $user
 		]);
 	}
