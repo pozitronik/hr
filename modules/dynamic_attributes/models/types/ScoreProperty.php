@@ -46,9 +46,9 @@ class ScoreProperty extends Model {
 	 */
 	public function attributeLabels():array {
 		return [
-			'selfScoreValue' => 'Оценка сотрудника (СО)',
-			'tlScoreValue' => 'Оценка тимлида (TL)',
-			'alScoreValue' => 'Оценка ареалида (AL)',
+			'selfScoreValue' => 'Оценка сотрудника',
+			'tlScoreValue' => 'Оценка тимлида',
+			'alScoreValue' => 'Оценка ареалида',
 			'selfScoreComment' => 'Комментарий к самооценке',
 			'tlScoreComment' => 'Комментарий к оценке тимлида',
 			'alScoreComment' => 'Комментарий к оценке ареалида'
