@@ -6,6 +6,7 @@ namespace app\widgets\radar;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\users\Users;
 use Exception;
+use Throwable;
 use yii\base\Widget;
 
 /**
@@ -33,6 +34,7 @@ class RadarWidget extends Widget {
 	 * Преобразует данные атрибута в набор данных для радарного графа
 	 * @return array
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	private function GetGraphMap():array {
 		$labels = [];
@@ -66,6 +68,7 @@ class RadarWidget extends Widget {
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$data = $this->GetGraphMap();
