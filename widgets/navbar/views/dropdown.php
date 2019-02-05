@@ -47,7 +47,8 @@ use app\models\users\Users;
 					'mode' => AdminPanelWidget::MODE_LIST,
 					'controllers_directory' => [
 						AdminPanelWidget::DEFAULT_DIRECTORY,
-						'@app/modules/import/controllers/'
+						'@app/modules/import/controllers/',
+						'@app/modules/dynamic_attributes/controllers/'
 					]
 				]) ?>
 			<?php endif; ?>
