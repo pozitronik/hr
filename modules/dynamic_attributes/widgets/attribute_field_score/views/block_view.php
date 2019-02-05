@@ -37,11 +37,11 @@ use yii\web\View;
 
 						'starCaptions' => [
 							0 => 'N/A',
-							1 => 'Very Poor',
-							2 => 'Poor',
-							3 => 'Ok',
-							4 => 'Good',
-							5 => 'Very Good'
+							1 => '1/5',
+							2 => '2/5',
+							3 => '3/5',
+							4 => '4/5',
+							5 => '5/5'
 						]
 					]
 				]); ?>
