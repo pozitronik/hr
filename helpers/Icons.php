@@ -56,7 +56,7 @@ class Icons {
 	 * @return string
 	 */
 	public static function attributes():string {
-		return "<i class='fa fa-address-card' title='Подгруппы'></i>";
+		return "<i class='fa fa-address-card' title='Атрибуты'></i>";
 	}
 
 	/**
