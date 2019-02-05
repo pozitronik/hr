@@ -107,7 +107,7 @@ use kartik\file\FileInput;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $this->render('attributes/index', [
+					<?= $this->render('@app/modules/dynamic_attributes/views/user/index', [
 						'user' => $model
 					]); ?>
 				</div>
