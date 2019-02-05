@@ -54,7 +54,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 				]) ?>
 			</div>
 		<?php endif; ?>
-		<div class="panel-title">Атрибут: <?= $dynamicAttribute->name ?> (<?= $dynamicAttribute->categoryName ?>)</div>
+		<div class="panel-title"><?= $dynamicAttribute->name ?> (<?= $dynamicAttribute->categoryName ?>)</div>
 	</div>
 
 	<div class="panel-body">

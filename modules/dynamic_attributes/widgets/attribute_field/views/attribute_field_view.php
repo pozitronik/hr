@@ -9,17 +9,16 @@ declare(strict_types = 1);
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\web\View;
+
+$value = empty($model->$attribute)?'<i>Не задано</i>':$model->$attribute
 ?>
 
 
 <div class="panel panel-attribute-field">
-	<div class="panel-heading">
-		<div class="panel-title">Панель поля <?= $model->name ?></div>
-	</div>
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				<?= $model->$attribute ?>
+				<?= $model->name ?>: <?= $value ?>
 			</div>
 		</div>
 	</div>

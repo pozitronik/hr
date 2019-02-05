@@ -1,10 +1,11 @@
 .panel.panel-attribute {
-	margin-bottom: 0;
+	margin-bottom: 5px;
 }
 
 .panel.panel-attribute > .panel-heading {
 	height: auto;
 	background-color: #fafafa;
+	border-color: white;
 }
 
 .panel.panel-attribute > .panel-heading > .panel-title {
