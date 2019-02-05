@@ -25,7 +25,7 @@ use yii\web\View;
 				<div class="<?= $mdClass ?>">
 					<?= $userProperty->widget([//Каждое свойство атрибута может само определять, каким виджетом его выводить
 						'attribute' => 'value',
-						'readOnly' => true,
+						'readOnly' => false,
 						'showEmpty' => false
 					]); ?>
 				</div>

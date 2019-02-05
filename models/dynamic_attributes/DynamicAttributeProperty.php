@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\dynamic_attributes\types\AttributePropertyBoolean;
 use app\models\dynamic_attributes\types\AttributePropertyDate;
 use app\models\dynamic_attributes\types\AttributePropertyInteger;
+use app\models\dynamic_attributes\types\AttributePropertyInterface;
 use app\models\dynamic_attributes\types\AttributePropertyPercent;
 use app\models\dynamic_attributes\types\AttributePropertyScore;
 use app\models\dynamic_attributes\types\AttributePropertyString;
@@ -16,12 +17,18 @@ use app\models\core\SysExceptions;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Exception;
+use kartik\date\DatePicker;
+use kartik\range\RangeInput;
+use kartik\switchinput\SwitchInput;
+use kartik\time\TimePicker;
 use RuntimeException;
 use Throwable;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\UnknownPropertyException;
+use yii\widgets\ActiveField;
+use yii\widgets\ActiveForm;
 
 /**
  * Описание структуры свойства атрибута
@@ -224,7 +231,7 @@ class DynamicAttributeProperty extends Model {
 	 * @return mixed
 	 * @throws Throwable
 	 */
-	public function getValue() {
+	public function getValue() {//todo: определяться через self::PROPERTY_TYPES
 		switch ($this->type) {
 			case 'boolean':
 				return AttributePropertyBoolean::getValue($this->attribute_id, $this->id, $this->user_id);
@@ -290,7 +297,7 @@ class DynamicAttributeProperty extends Model {
 	 * @return string
 	 * @throws Exception
 	 */
-	public function widget(array $config):string {
+	public function widget(array $config):string {//todo: определяться через self::PROPERTY_TYPES
 		$config['model'] = $this;
 		switch ($this->type) {
 			case 'score':
@@ -300,6 +307,89 @@ class DynamicAttributeProperty extends Model {
 				return AttributeFieldWidget::widget($config);
 			break;
 		}
+	}
+
+	/**
+	 * Функция отдаёт форму поля для редактирования значения свойства
+	 * @param ActiveForm $form
+	 * @return ActiveField
+	 */
+	public function editField(ActiveForm $form):ActiveField {
+
+//		$this = ArrayHelper::getValue(static::PROPERTY_TYPES, "{$this->type}.model");
+
+		switch ($this->type) {
+			case 'boolean':
+				return $form->field($this, (string)$this->id)->widget(SwitchInput::class)->label(false);
+			break;
+			case 'date':
+				return $form->field($this, (string)$this->id)->widget(DatePicker::class, [
+					'pluginOptions' => [
+						'autoclose' => true,
+						'format' => 'yyyy-mm-dd'
+					],
+					'options' => [
+						'placeholder' => 'Укажите дату'
+					]
+				])->label(false);
+			break;
+			case 'integer':
+				return $form->field($this, (string)$this->id)->textInput(['type' => 'number'])->label(false);
+			break;
+			case 'percent':
+				return $form->field($this, (string)$this->id)->widget(RangeInput::class, [
+					'html5Options' => [
+						'min' => 0,
+						'max' => 100
+					],
+					'html5Container' => [
+						'style' => 'width:50%'
+					],
+					'addon' => [
+						'append' => [
+							'content' => '%'
+						],
+						'prepend' => [
+							'content' => '<span class="text-danger">0%</span>'
+						],
+						'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
+					],
+					'options' => [
+						'placeholder' => 'Укажите значение'
+					]
+				])->label(false);
+			break;
+			case 'score':
+				return $form->field($this, (string)$this->id)->widget(ScoreWidget::class, [
+					'model' => $this,
+					'attribute' => $this->id,
+					'readOnly' => false,
+					'showEmpty' => false
+				]);
+			break;
+			case 'string':
+				return $form->field($this, (string)$this->id)->textarea()->label(false);
+			break;
+			case 'time':
+				return $form->field($this, (string)$this->id)->widget(TimePicker::class, [
+					'pluginOptions' => [
+						'showSeconds' => true,
+						'showMeridian' => false,
+						'minuteStep' => 1,
+						'secondStep' => 5,
+						'defaultTime' => false
+					],
+					'options' => [
+						'placeholder' => 'Укажите время'
+					]
+				])->label(false);
+			break;
+			default:
+				return $form->field($this, (string)$this->id)->textInput()->label(false);
+			break;
+
+		}
+
 	}
 
 	/**
