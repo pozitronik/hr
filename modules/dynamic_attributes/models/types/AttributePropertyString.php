@@ -1,18 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes\types;
+namespace app\modules\dynamic_attributes\models\types;
 
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
-use kartik\date\DatePicker;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
 /**
- * This is the model class for table "sys_attributes_date".
+ * This is the model class for table "sys_attributes_string".
  *
  * @property int $id
  * @property int $attribute_id ID атрибута
@@ -20,45 +19,12 @@ use yii\widgets\ActiveForm;
  * @property int $user_id ID пользователя
  * @property string $value Значение
  */
-class AttributePropertyDate extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyString extends ActiveRecord implements AttributePropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_attributes_date';
-	}
-
-	/**
-	 * Конфигурация поддерживаемых типом поисковых условий.
-	 * @return array
-	 */
-	public static function conditionConfig():array {
-		return [
-			['равно', function($tableAlias, $searchValue) {
-				return ['=', "$tableAlias.value", $searchValue];
-			}],
-			['не равно', function($tableAlias, $searchValue) {
-				return ['!=', "$tableAlias.value", $searchValue];
-			}],
-			['раньше', function($tableAlias, $searchValue) {
-				return ['<', "$tableAlias.value", $searchValue];
-			}],
-			['позже', function($tableAlias, $searchValue) {
-				return ['>', "$tableAlias.value", $searchValue];
-			}],
-			['раньше или равно', function($tableAlias, $searchValue) {
-				return ['<=', "$tableAlias.value", $searchValue];
-			}],
-			['позже или равно', function($tableAlias, $searchValue) {
-				return ['<=', "$tableAlias.value", $searchValue];
-			}],
-			['заполнено', function($tableAlias, $searchValue) {
-				return ['not', ["$tableAlias.value" => null]];
-			}],
-			['не заполнено', function($tableAlias, $searchValue) {
-				return ['is', "$tableAlias.value", new Expression('null')];
-			}]
-		];
+		return 'sys_attributes_string';
 	}
 
 	/**
@@ -81,8 +47,38 @@ class AttributePropertyDate extends ActiveRecord implements AttributePropertyInt
 		return [
 			[['attribute_id', 'property_id', 'user_id'], 'required'],
 			[['attribute_id', 'property_id', 'user_id'], 'integer'],
-			[['value'], 'safe'],
+			[['value'], 'string', 'max' => 255],
 			[['attribute_id', 'property_id', 'user_id'], 'unique', 'targetAttribute' => ['attribute_id', 'property_id', 'user_id']]
+		];
+	}
+
+	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [
+			['равно', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", $searchValue];
+			}],
+			['не равно', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.value", $searchValue];
+			}],
+			['начинается с', function($tableAlias, $searchValue) {
+				return ['like', "$tableAlias.value", "%$searchValue", false];
+			}],
+			['содержит', function($tableAlias, $searchValue) {
+				return ['like', "$tableAlias.value", "%$searchValue%", false];
+			}],
+			['не содержит', function($tableAlias, $searchValue) {
+				return ['not like', "$tableAlias.value", "%$searchValue", false];
+			}],
+			['заполнено', function($tableAlias, $searchValue) {
+				return ['not', ["$tableAlias.value" => null]];
+			}],
+			['не заполнено', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.value", new Expression('null')];//todo: пустые строки не равны Null
+			}]
 		];
 	}
 
@@ -133,15 +129,8 @@ class AttributePropertyDate extends ActiveRecord implements AttributePropertyInt
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
-		return $form->field($property, (string)$property->id)->widget(DatePicker::class, [
-			'pluginOptions' => [
-				'autoclose' => true,
-				'format' => 'yyyy-mm-dd'
-			],
-			'options' => [
-				'placeholder' => 'Укажите дату'
-			]
-		])->label(false);
+		return $form->field($property, (string)$property->id)->textInput(['style' => 'resize: none;'])->label(false);
+
 	}
 
 	/**

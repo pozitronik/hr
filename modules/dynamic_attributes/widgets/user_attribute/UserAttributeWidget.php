@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\user_attribute;
 
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use yii\base\Widget;
 use yii\web\ServerErrorHttpException;

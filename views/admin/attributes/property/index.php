@@ -2,8 +2,8 @@
 declare(strict_types = 1);
 
 use app\helpers\Icons;
-use app\models\dynamic_attributes\DynamicAttributes;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\data\BaseDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;

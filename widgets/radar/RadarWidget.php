@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\radar;
 
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\users\Users;
 use Exception;
 use yii\base\Widget;

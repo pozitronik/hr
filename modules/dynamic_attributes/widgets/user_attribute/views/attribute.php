@@ -11,8 +11,8 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
 

@@ -1,64 +1,31 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes\types;
+namespace app\modules\dynamic_attributes\models\types;
 
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
-use kartik\range\RangeInput;
+use kartik\time\TimePicker;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
 /**
- * This is the model class for table "sys_attributes_percent".
+ * This is the model class for table "sys_attributes_time".
  *
  * @property int $id
  * @property int $attribute_id ID атрибута
  * @property int $property_id ID поля
  * @property int $user_id ID пользователя
- * @property int $value Значение
+ * @property string $value Значение
  */
-class AttributePropertyPercent extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyTime extends ActiveRecord implements AttributePropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_attributes_percent';
-	}
-
-	/**
-	 * Конфигурация поддерживаемых типом поисковых условий.
-	 * @return array
-	 */
-	public static function conditionConfig():array {
-		return [
-			['равно', function($tableAlias, $searchValue) {
-				return ['=', "$tableAlias.value", $searchValue];
-			}],
-			['не равно', function($tableAlias, $searchValue) {
-				return ['!=', "$tableAlias.value", $searchValue];
-			}],
-			['больше', function($tableAlias, $searchValue) {
-				return ['>', "$tableAlias.value", $searchValue];
-			}],
-			['меньше', function($tableAlias, $searchValue) {
-				return ['<', "$tableAlias.value", $searchValue];
-			}],
-			['меньше или равно', function($tableAlias, $searchValue) {
-				return ['<=', "$tableAlias.value", $searchValue];
-			}],
-			['больше или равно', function($tableAlias, $searchValue) {
-				return ['>=', "$tableAlias.value", $searchValue];
-			}],
-			['заполнено', function($tableAlias, $searchValue) {
-				return ['not', ["$tableAlias.value" => null]];
-			}],
-			['не заполнено', function($tableAlias, $searchValue) {
-				return ['is', "$tableAlias.value", new Expression('null')];
-			}]
-		];
+		return 'sys_attributes_time';
 	}
 
 	/**
@@ -75,12 +42,46 @@ class AttributePropertyPercent extends ActiveRecord implements AttributeProperty
 	}
 
 	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [
+			['равно', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", $searchValue];
+			}],
+			['не равно', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.value", $searchValue];
+			}],
+			['раньше', function($tableAlias, $searchValue) {
+				return ['<', "$tableAlias.value", $searchValue];
+			}],
+			['позже', function($tableAlias, $searchValue) {
+				return ['>', "$tableAlias.value", $searchValue];
+			}],
+			['раньше или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.value", $searchValue];
+			}],
+			['позже или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.value", $searchValue];
+			}],
+			['заполнено', function($tableAlias, $searchValue) {
+				return ['not', ["$tableAlias.value" => null]];
+			}],
+			['не заполнено', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.value", new Expression('null')];
+			}]
+		];
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function rules():array {
 		return [
 			[['attribute_id', 'property_id', 'user_id'], 'required'],
-			[['attribute_id', 'property_id', 'user_id', 'value'], 'integer'],
+			[['attribute_id', 'property_id', 'user_id'], 'integer'],
+			[['value'], 'safe'],
 			[['attribute_id', 'property_id', 'user_id'], 'unique', 'targetAttribute' => ['attribute_id', 'property_id', 'user_id']]
 		];
 	}
@@ -132,25 +133,16 @@ class AttributePropertyPercent extends ActiveRecord implements AttributeProperty
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
-		return $form->field($property, (string)$property->id)->widget(RangeInput::class, [
-			'html5Options' => [
-				'min' => 0,
-				'max' => 100
-			],
-			'html5Container' => [
-				'style' => 'width:50%'
-			],
-			'addon' => [
-				'append' => [
-					'content' => '%'
-				],
-				'prepend' => [
-					'content' => '<span class="text-danger">0%</span>'
-				],
-				'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
+		return $form->field($property, (string)$property->id)->widget(TimePicker::class, [
+			'pluginOptions' => [
+				'showSeconds' => true,
+				'showMeridian' => false,
+				'minuteStep' => 1,
+				'secondStep' => 5,
+				'defaultTime' => false
 			],
 			'options' => [
-				'placeholder' => 'Укажите значение'
+				'placeholder' => 'Укажите время'
 			]
 		])->label(false);
 	}

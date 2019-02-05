@@ -7,8 +7,8 @@ declare(strict_types = 1);
  * @var DynamicAttributes $attribute
  */
 
-use app\models\dynamic_attributes\DynamicAttributes;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\models\users\Users;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use kartik\date\DatePicker;

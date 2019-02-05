@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var DynamicAttributes $model
  */
 
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\web\View;

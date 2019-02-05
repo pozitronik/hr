@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace app\models\imports\old;
 
 use app\helpers\Csv;
-use app\models\dynamic_attributes\DynamicAttributes;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use Throwable;
 use Yii;
 use yii\base\Model;

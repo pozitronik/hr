@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\web\View;
 use yii\helpers\Html;
 use kartik\form\ActiveForm;

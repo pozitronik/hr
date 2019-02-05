@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes\types;
+namespace app\modules\dynamic_attributes\models\types;
 
 use app\helpers\ArrayHelper;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Throwable;
 use yii\db\ActiveRecord;

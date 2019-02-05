@@ -7,7 +7,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\StrictInterface;
 use app\models\core\traits\MethodsAccess;
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\references\refs\RefUserRoles;

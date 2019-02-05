@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin;
 
-use app\models\dynamic_attributes\DynamicAttributes;
-use app\models\dynamic_attributes\DynamicAttributesSearch;
-use app\models\dynamic_attributes\DynamicAttributesSearchItem;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributesSearch;
+use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\models\core\WigetableController;
-use app\models\dynamic_attributes\DynamicAttributesSearchCollection;
+use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\Exception;

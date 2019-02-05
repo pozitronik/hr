@@ -1,18 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes\types;
+namespace app\modules\dynamic_attributes\models\types;
 
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
-use kartik\switchinput\SwitchInput;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
 /**
- * This is the model class for table "sys_attributes_boolean".
+ * This is the model class for table "sys_attributes_integer".
  *
  * @property int $id
  * @property int $attribute_id ID атрибута
@@ -20,7 +19,7 @@ use yii\widgets\ActiveForm;
  * @property int $user_id ID пользователя
  * @property int $value Значение
  */
-class AttributePropertyBoolean extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyInteger extends ActiveRecord implements AttributePropertyInterface {
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.
@@ -28,11 +27,23 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	 */
 	public static function conditionConfig():array {
 		return [
-			['да', function($tableAlias, $searchValue) {
-				return ['=', "$tableAlias.value", true];
+			['равно', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", $searchValue];
 			}],
-			['нет', function($tableAlias, $searchValue) {
-				return ['=', "$tableAlias.value", false];
+			['не равно', function($tableAlias, $searchValue) {
+				return ['!=', "$tableAlias.value", $searchValue];
+			}],
+			['больше', function($tableAlias, $searchValue) {
+				return ['>', "$tableAlias.value", $searchValue];
+			}],
+			['меньше', function($tableAlias, $searchValue) {
+				return ['<', "$tableAlias.value", $searchValue];
+			}],
+			['меньше или равно', function($tableAlias, $searchValue) {
+				return ['<=', "$tableAlias.value", $searchValue];
+			}],
+			['больше или равно', function($tableAlias, $searchValue) {
+				return ['>=', "$tableAlias.value", $searchValue];
 			}],
 			['заполнено', function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.value" => null]];
@@ -47,7 +58,7 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_attributes_boolean';
+		return 'sys_attributes_integer';
 	}
 
 	/**
@@ -69,8 +80,7 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	public function rules():array {
 		return [
 			[['attribute_id', 'property_id', 'user_id'], 'required'],
-			[['attribute_id', 'property_id', 'user_id'], 'integer'],
-			[['value'], 'boolean'],
+			[['attribute_id', 'property_id', 'user_id', 'value'], 'integer'],
 			[['attribute_id', 'property_id', 'user_id'], 'unique', 'targetAttribute' => ['attribute_id', 'property_id', 'user_id']]
 		];
 	}
@@ -92,7 +102,7 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	 * @param int $property_id
 	 * @param int $user_id
 	 * @param mixed $value
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
@@ -122,7 +132,7 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
-		return $form->field($property, (string)$property->id)->widget(SwitchInput::class)->label(false);
+		return $form->field($property, (string)$property->id)->textInput(['type' => 'number'])->label(false);
 	}
 
 	/**

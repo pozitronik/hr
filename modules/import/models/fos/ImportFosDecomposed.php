@@ -5,8 +5,8 @@ namespace app\modules\import\models\fos;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\groups\Groups;
 use app\modules\import\models\fos\activerecord\ImportFosChapter;
 use app\modules\import\models\fos\activerecord\ImportFosChapterCouch;
@@ -421,7 +421,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * Добавляет атрибуту свойство
 	 */
 	public static function addAttributeProperty(array $dynamic_attribute, int $user_id):void {
-		if (null === $attribute = DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
+		if (null === $attribute = \app\modules\dynamic_attributes\models\DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
 			$attribute = new DynamicAttributes();
 			$attribute->createAttribute(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
 		}

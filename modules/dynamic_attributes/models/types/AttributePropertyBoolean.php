@@ -1,31 +1,53 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes\types;
+namespace app\modules\dynamic_attributes\models\types;
 
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
-use kartik\time\TimePicker;
+use kartik\switchinput\SwitchInput;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
 /**
- * This is the model class for table "sys_attributes_time".
+ * This is the model class for table "sys_attributes_boolean".
  *
  * @property int $id
  * @property int $attribute_id ID атрибута
  * @property int $property_id ID поля
  * @property int $user_id ID пользователя
- * @property string $value Значение
+ * @property int $value Значение
  */
-class AttributePropertyTime extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyBoolean extends ActiveRecord implements AttributePropertyInterface {
+
+	/**
+	 * Конфигурация поддерживаемых типом поисковых условий.
+	 * @return array
+	 */
+	public static function conditionConfig():array {
+		return [
+			['да', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", true];
+			}],
+			['нет', function($tableAlias, $searchValue) {
+				return ['=', "$tableAlias.value", false];
+			}],
+			['заполнено', function($tableAlias, $searchValue) {
+				return ['not', ["$tableAlias.value" => null]];
+			}],
+			['не заполнено', function($tableAlias, $searchValue) {
+				return ['is', "$tableAlias.value", new Expression('null')];
+			}]
+		];
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'sys_attributes_time';
+		return 'sys_attributes_boolean';
 	}
 
 	/**
@@ -42,46 +64,13 @@ class AttributePropertyTime extends ActiveRecord implements AttributePropertyInt
 	}
 
 	/**
-	 * Конфигурация поддерживаемых типом поисковых условий.
-	 * @return array
-	 */
-	public static function conditionConfig():array {
-		return [
-			['равно', function($tableAlias, $searchValue) {
-				return ['=', "$tableAlias.value", $searchValue];
-			}],
-			['не равно', function($tableAlias, $searchValue) {
-				return ['!=', "$tableAlias.value", $searchValue];
-			}],
-			['раньше', function($tableAlias, $searchValue) {
-				return ['<', "$tableAlias.value", $searchValue];
-			}],
-			['позже', function($tableAlias, $searchValue) {
-				return ['>', "$tableAlias.value", $searchValue];
-			}],
-			['раньше или равно', function($tableAlias, $searchValue) {
-				return ['<=', "$tableAlias.value", $searchValue];
-			}],
-			['позже или равно', function($tableAlias, $searchValue) {
-				return ['<=', "$tableAlias.value", $searchValue];
-			}],
-			['заполнено', function($tableAlias, $searchValue) {
-				return ['not', ["$tableAlias.value" => null]];
-			}],
-			['не заполнено', function($tableAlias, $searchValue) {
-				return ['is', "$tableAlias.value", new Expression('null')];
-			}]
-		];
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function rules():array {
 		return [
 			[['attribute_id', 'property_id', 'user_id'], 'required'],
 			[['attribute_id', 'property_id', 'user_id'], 'integer'],
-			[['value'], 'safe'],
+			[['value'], 'boolean'],
 			[['attribute_id', 'property_id', 'user_id'], 'unique', 'targetAttribute' => ['attribute_id', 'property_id', 'user_id']]
 		];
 	}
@@ -103,7 +92,7 @@ class AttributePropertyTime extends ActiveRecord implements AttributePropertyInt
 	 * @param int $property_id
 	 * @param int $user_id
 	 * @param mixed $value
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
@@ -133,18 +122,7 @@ class AttributePropertyTime extends ActiveRecord implements AttributePropertyInt
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
-		return $form->field($property, (string)$property->id)->widget(TimePicker::class, [
-			'pluginOptions' => [
-				'showSeconds' => true,
-				'showMeridian' => false,
-				'minuteStep' => 1,
-				'secondStep' => 5,
-				'defaultTime' => false
-			],
-			'options' => [
-				'placeholder' => 'Укажите время'
-			]
-		])->label(false);
+		return $form->field($property, (string)$property->id)->widget(SwitchInput::class)->label(false);
 	}
 
 	/**

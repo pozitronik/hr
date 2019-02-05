@@ -1,27 +1,20 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes;
+namespace app\modules\dynamic_attributes\models;
 
 use app\helpers\ArrayHelper;
-use app\models\dynamic_attributes\types\AttributePropertyBoolean;
-use app\models\dynamic_attributes\types\AttributePropertyDate;
-use app\models\dynamic_attributes\types\AttributePropertyInteger;
-use app\models\dynamic_attributes\types\AttributePropertyInterface;
-use app\models\dynamic_attributes\types\AttributePropertyPercent;
-use app\models\dynamic_attributes\types\AttributePropertyScore;
-use app\models\dynamic_attributes\types\AttributePropertyString;
-use app\models\dynamic_attributes\types\AttributePropertyText;
-use app\models\dynamic_attributes\types\AttributePropertyTime;
+use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
+use app\modules\dynamic_attributes\models\types\AttributePropertyDate;
+use app\modules\dynamic_attributes\models\types\AttributePropertyInteger;
+use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
+use app\modules\dynamic_attributes\models\types\AttributePropertyPercent;
+use app\modules\dynamic_attributes\models\types\AttributePropertyScore;
+use app\modules\dynamic_attributes\models\types\AttributePropertyString;
+use app\modules\dynamic_attributes\models\types\AttributePropertyText;
+use app\modules\dynamic_attributes\models\types\AttributePropertyTime;
 use app\models\core\SysExceptions;
-use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
-use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Exception;
-use kartik\date\DatePicker;
-use kartik\range\RangeInput;
-use kartik\switchinput\SwitchInput;
-use kartik\time\TimePicker;
-use RuntimeException;
 use Throwable;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;

@@ -10,7 +10,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use kartik\rating\StarRating;
 use yii\web\View;
 

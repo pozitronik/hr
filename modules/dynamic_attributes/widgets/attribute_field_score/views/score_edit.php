@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var string $attribute
  */
 
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\web\View;
 
 ?>

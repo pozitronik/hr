@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use yii\web\View;
 
 $this->title = 'Редактирование атрибута '.$model->name;

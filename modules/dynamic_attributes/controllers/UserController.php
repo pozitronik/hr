@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use Yii;
 use app\models\users\Users;

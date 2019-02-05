@@ -1,17 +1,18 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes\types;
+namespace app\modules\dynamic_attributes\models\types;
 
-use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use kartik\range\RangeInput;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
 /**
- * This is the model class for table "sys_attributes_integer".
+ * This is the model class for table "sys_attributes_percent".
  *
  * @property int $id
  * @property int $attribute_id ID атрибута
@@ -19,7 +20,13 @@ use yii\widgets\ActiveForm;
  * @property int $user_id ID пользователя
  * @property int $value Значение
  */
-class AttributePropertyInteger extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyPercent extends ActiveRecord implements AttributePropertyInterface {
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tableName():string {
+		return 'sys_attributes_percent';
+	}
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.
@@ -52,13 +59,6 @@ class AttributePropertyInteger extends ActiveRecord implements AttributeProperty
 				return ['is', "$tableAlias.value", new Expression('null')];
 			}]
 		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function tableName():string {
-		return 'sys_attributes_integer';
 	}
 
 	/**
@@ -132,7 +132,27 @@ class AttributePropertyInteger extends ActiveRecord implements AttributeProperty
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
-		return $form->field($property, (string)$property->id)->textInput(['type' => 'number'])->label(false);
+		return $form->field($property, (string)$property->id)->widget(RangeInput::class, [
+			'html5Options' => [
+				'min' => 0,
+				'max' => 100
+			],
+			'html5Container' => [
+				'style' => 'width:50%'
+			],
+			'addon' => [
+				'append' => [
+					'content' => '%'
+				],
+				'prepend' => [
+					'content' => '<span class="text-danger">0%</span>'
+				],
+				'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
+			],
+			'options' => [
+				'placeholder' => 'Укажите значение'
+			]
+		])->label(false);
 	}
 
 	/**

@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var DynamicAttributes $attribute
  */
 
-use app\models\dynamic_attributes\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\users\Users;
 use app\widgets\radar\RadarWidget;
 use yii\web\View;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\dynamic_attributes;
+namespace app\modules\dynamic_attributes\models;
 
 use yii\base\Model;
 
