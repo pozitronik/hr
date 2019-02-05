@@ -39,33 +39,6 @@ class Magic {
 	}
 
 	/**
-	 * @param string $className
-	 * @return string
-	 * @todo: функция не умеет преобразовывать имена классов по той же схеме, что Yii. Реализован простейший вариант, а вот что-то вроде MassUpdateController к mass-update эта регулярка уже не вернёт.
-	 */
-	private static function ExtractControllerId(string $className):string {
-		$id = mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
-		return "admin/{$id}";
-	}
-
-	/**
-	 * Загружает динамически класс веб-контроллера Yii2 по его пути
-	 * @param string $fileName
-	 * @return Controller|null
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
-	 */
-	public static function GetController(string $fileName):?object {
-		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
-		if (!class_exists($className)) Yii::autoload($className);
-		$class = new ReflectionClass($className);
-		if ($class->isSubclassOf(Controller::class)) {
-			return new $className(self::ExtractControllerId($className), Yii::$app);
-		}
-		return null;
-	}
-
-	/**
 	 * Возвращает все экшены контроллера
 	 * @param Controller $controllerClass
 	 * @return string[]
