@@ -278,4 +278,13 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			'showEmpty' => false
 		]);
 	}
+
+	/**
+	 * Рендер поля просмотра значения свойства
+	 * @param array $config Опциональные параметры виджета/поля
+	 * @return string
+	 */
+	public static function viewField(array $config = []):string {
+		return ScoreWidget::widget($config);
+	}
 }

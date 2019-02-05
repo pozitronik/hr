@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes\types;
 
 use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
@@ -130,5 +131,14 @@ class AttributePropertyString extends ActiveRecord implements AttributePropertyI
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
 		return $form->field($property, (string)$property->id)->textInput(['style' => 'resize: none;'])->label(false);
 
+	}
+
+	/**
+	 * Рендер поля просмотра значения свойства
+	 * @param array $config Опциональные параметры виджета/поля
+	 * @return string
+	 */
+	public static function viewField(array $config = []):string {
+		return AttributeFieldWidget::widget($config);
 	}
 }

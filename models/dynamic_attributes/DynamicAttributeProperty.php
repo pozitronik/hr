@@ -263,21 +263,14 @@ class DynamicAttributeProperty extends Model {
 	}
 
 	/**
-	 * Функция отдаёт виджет, ассоциированный с этим свойством
+	 * Функция отдаёт поле/виджет просмотра, ассоциированный с этим свойством
 	 * @param array $config
 	 * @return string
 	 * @throws Exception
 	 */
-	public function widget(array $config):string {//todo: определяться через self::PROPERTY_TYPES
+	public function viewField(array $config):string {
 		$config['model'] = $this;
-		switch ($this->type) {
-			case 'score':
-				return ScoreWidget::widget($config);
-			break;
-			default:
-				return AttributeFieldWidget::widget($config);
-			break;
-		}
+		return self::getTypeClass($this->type)::viewField($config);
 	}
 
 	/**

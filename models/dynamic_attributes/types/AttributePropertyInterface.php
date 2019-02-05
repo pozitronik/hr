@@ -48,6 +48,13 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
 
 	/**
+	 * Рендер поля просмотра значения свойства
+	 * @param array $config Опциональные параметры виджета/поля
+	 * @return string
+	 */
+	public static function viewField(array $config = []):string;
+
+	/**
 	 * Функция отдаёт форму поля для редактирования значения свойства
 	 * @param ActiveForm $form
 	 * @param DynamicAttributeProperty $property

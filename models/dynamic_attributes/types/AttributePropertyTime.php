@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes\types;
 
 use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use kartik\time\TimePicker;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -144,5 +145,14 @@ class AttributePropertyTime extends ActiveRecord implements AttributePropertyInt
 				'placeholder' => 'Укажите время'
 			]
 		])->label(false);
+	}
+
+	/**
+	 * Рендер поля просмотра значения свойства
+	 * @param array $config Опциональные параметры виджета/поля
+	 * @return string
+	 */
+	public static function viewField(array $config = []):string {
+		return AttributeFieldWidget::widget($config);
 	}
 }
