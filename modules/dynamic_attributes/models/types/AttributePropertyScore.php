@@ -277,7 +277,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			'attribute' => $property->id,
 			'readOnly' => false,
 			'showEmpty' => false
-		]);
+		])->label(false);
 	}
 
 	/**
