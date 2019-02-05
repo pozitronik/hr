@@ -33,9 +33,10 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
+	 * @param bool $formatted true возвращает форматированное значение, false - как есть
 	 * @return mixed
 	 */
-	public static function getValue(int $attribute_id, int $property_id, int $user_id);
+	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false);
 
 	/**
 	 * Записать в соответствующую таблицу значение свойства этого атрибута этого юзера

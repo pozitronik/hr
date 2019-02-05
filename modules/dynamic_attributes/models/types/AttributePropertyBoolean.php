@@ -84,8 +84,9 @@ class AttributePropertyBoolean extends ActiveRecord implements AttributeProperty
 	 * @param int $user_id
 	 * @return mixed
 	 */
-	public static function getValue(int $attribute_id, int $property_id, int $user_id) {
-		return Yii::$app->formatter->asBoolean(ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value'));
+	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
+		$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
+		return $formatted?Yii::$app->formatter->asBoolean($value):$value;
 	}
 
 	/**

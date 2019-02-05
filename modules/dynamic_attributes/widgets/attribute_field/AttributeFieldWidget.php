@@ -36,7 +36,6 @@ class AttributeFieldWidget extends InputWidget {
 
 
 		return $this->readOnly?$this->render('attribute_field_view', [
-			'attribute' => $this->attribute,
 			'model' => $this->model
 		]):$this->render('attribute_field_edit', [
 			'model' => $this->model

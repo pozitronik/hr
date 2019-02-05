@@ -222,8 +222,8 @@ class DynamicAttributeProperty extends Model {
 	 * @return mixed
 	 * @throws Throwable
 	 */
-	public function getValue() {
-		return self::getTypeClass($this->type)::getValue($this->attribute_id, $this->id, $this->user_id);
+	public function getValue(bool $formatted = false) {
+		return self::getTypeClass($this->type)::getValue($this->attribute_id, $this->id, $this->user_id, $formatted);
 	}
 
 	/**
