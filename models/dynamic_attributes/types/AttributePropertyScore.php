@@ -4,9 +4,13 @@ declare(strict_types = 1);
 namespace app\models\dynamic_attributes\types;
 
 use app\helpers\ArrayHelper;
+use app\models\dynamic_attributes\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Throwable;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\widgets\ActiveField;
+use yii\widgets\ActiveForm;
 
 /**
  * This is the model class for table "sys_attributes_score".
@@ -260,4 +264,18 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 		]);
 	}
 
+	/**
+	 * Функция отдаёт форму поля для редактирования значения свойства
+	 * @param ActiveForm $form
+	 * @param DynamicAttributeProperty $property
+	 * @return ActiveField
+	 */
+	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
+		return $form->field($property, (string)$property->id)->widget(ScoreWidget::class, [
+			'model' => $property,
+			'attribute' => $property->id,
+			'readOnly' => false,
+			'showEmpty' => false
+		]);
+	}
 }

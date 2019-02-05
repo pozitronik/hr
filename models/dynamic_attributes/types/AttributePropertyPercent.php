@@ -3,8 +3,12 @@ declare(strict_types = 1);
 
 namespace app\models\dynamic_attributes\types;
 
+use app\models\dynamic_attributes\DynamicAttributeProperty;
+use kartik\range\RangeInput;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\widgets\ActiveField;
+use yii\widgets\ActiveForm;
 
 /**
  * This is the model class for table "sys_attributes_percent".
@@ -118,5 +122,35 @@ class AttributePropertyPercent extends ActiveRecord implements AttributeProperty
 	 */
 	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
+	}
+
+	/**
+	 * Функция отдаёт форму поля для редактирования значения свойства
+	 * @param ActiveForm $form
+	 * @param DynamicAttributeProperty $property
+	 * @return ActiveField
+	 */
+	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
+		return $form->field($property, (string)$property->id)->widget(RangeInput::class, [
+			'html5Options' => [
+				'min' => 0,
+				'max' => 100
+			],
+			'html5Container' => [
+				'style' => 'width:50%'
+			],
+			'addon' => [
+				'append' => [
+					'content' => '%'
+				],
+				'prepend' => [
+					'content' => '<span class="text-danger">0%</span>'
+				],
+				'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
+			],
+			'options' => [
+				'placeholder' => 'Укажите значение'
+			]
+		])->label(false);
 	}
 }

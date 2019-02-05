@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace app\models\dynamic_attributes\types;
 
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use yii\db\ActiveRecordInterface;
+use yii\widgets\ActiveField;
+use yii\widgets\ActiveForm;
 
 /**
  * Interface AttributePropertyInterface
@@ -43,4 +46,12 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @return bool
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
+
+	/**
+	 * Функция отдаёт форму поля для редактирования значения свойства
+	 * @param ActiveForm $form
+	 * @param DynamicAttributeProperty $property
+	 * @return ActiveField
+	 */
+	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField;
 }

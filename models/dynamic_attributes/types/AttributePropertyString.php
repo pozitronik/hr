@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 namespace app\models\dynamic_attributes\types;
 
+use app\models\dynamic_attributes\DynamicAttributeProperty;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\widgets\ActiveField;
+use yii\widgets\ActiveForm;
 
 /**
  * This is the model class for table "sys_attributes_string".
@@ -118,4 +121,14 @@ class AttributePropertyString extends ActiveRecord implements AttributePropertyI
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
 	}
 
+	/**
+	 * Функция отдаёт форму поля для редактирования значения свойства
+	 * @param ActiveForm $form
+	 * @param DynamicAttributeProperty $property
+	 * @return ActiveField
+	 */
+	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
+		return $form->field($property, (string)$property->id)->textInput(['style' => 'resize: none;'])->label(false);
+
+	}
 }
