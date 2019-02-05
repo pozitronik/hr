@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = ['label' => $user->username, 'url' => ['/admin/
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="panel panel-primary">
+<div class="panel panel-default">
 	<?php $form = ActiveForm::begin(); ?>
 	<div class="panel-heading">
 		<div class="panel-control">

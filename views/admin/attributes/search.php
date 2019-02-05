@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
-	<div class="panel panel-primary">
+	<div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= Html::button("", ['class' => 'hidden', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>

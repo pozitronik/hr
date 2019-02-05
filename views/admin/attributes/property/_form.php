@@ -17,7 +17,7 @@ use kartik\switchinput\SwitchInput;
 <div class="row">
 	<div class="col-xs-12">
 		<?php $form = ActiveForm::begin(); ?>
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-control">
 					<?php if (!$model->isNewRecord): ?>

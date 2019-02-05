@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => $user->username, 'url' => ['/admin/
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="panel panel-primary">
+<div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
 		</div>
