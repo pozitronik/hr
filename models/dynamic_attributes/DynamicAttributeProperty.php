@@ -93,16 +93,14 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * @param string $type
-	 * @return string
+	 * @return AttributePropertyInterface|string
 	 * @throws Throwable
 	 */
 	public static function getTypeClass(string $type):string {
 		if (null === $value = ArrayHelper::getValue(self::PROPERTY_TYPES, "$type.model")) {
-			$t = new InvalidConfigException("$type.model AttributePropertyInterface not set or not properly configured");
-			SysExceptions::log($t, true);
+			SysExceptions::log(new InvalidConfigException("$type.model AttributePropertyInterface not set or not properly configured"), true);
 		}
 		return $value;
-
 	}
 
 	/**
@@ -231,35 +229,8 @@ class DynamicAttributeProperty extends Model {
 	 * @return mixed
 	 * @throws Throwable
 	 */
-	public function getValue() {//todo: определяться через self::PROPERTY_TYPES
-		switch ($this->type) {
-			case 'boolean':
-				return AttributePropertyBoolean::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			case 'date':
-				return AttributePropertyDate::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			case 'integer':
-				return AttributePropertyInteger::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			case 'score':
-				return AttributePropertyScore::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			case 'percent':
-				return AttributePropertyPercent::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			case 'string':
-				return AttributePropertyString::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			case 'time':
-				return AttributePropertyTime::getValue($this->attribute_id, $this->id, $this->user_id);
-			break;
-			default:
-				SysExceptions::log(new RuntimeException("Property type not implemented: {$this->type}"), false, true);
-				return AttributePropertyString::getValue($this->attribute_id, $this->id, $this->user_id);
-
-			break;
-		}
+	public function getValue() {
+		return self::getTypeClass($this->type)::getValue($this->attribute_id, $this->id, $this->user_id);
 	}
 
 	/**
@@ -315,81 +286,7 @@ class DynamicAttributeProperty extends Model {
 	 * @return ActiveField
 	 */
 	public function editField(ActiveForm $form):ActiveField {
-
-//		$this = ArrayHelper::getValue(static::PROPERTY_TYPES, "{$this->type}.model");
-
-		switch ($this->type) {
-			case 'boolean':
-				return $form->field($this, (string)$this->id)->widget(SwitchInput::class)->label(false);
-			break;
-			case 'date':
-				return $form->field($this, (string)$this->id)->widget(DatePicker::class, [
-					'pluginOptions' => [
-						'autoclose' => true,
-						'format' => 'yyyy-mm-dd'
-					],
-					'options' => [
-						'placeholder' => 'Укажите дату'
-					]
-				])->label(false);
-			break;
-			case 'integer':
-				return $form->field($this, (string)$this->id)->textInput(['type' => 'number'])->label(false);
-			break;
-			case 'percent':
-				return $form->field($this, (string)$this->id)->widget(RangeInput::class, [
-					'html5Options' => [
-						'min' => 0,
-						'max' => 100
-					],
-					'html5Container' => [
-						'style' => 'width:50%'
-					],
-					'addon' => [
-						'append' => [
-							'content' => '%'
-						],
-						'prepend' => [
-							'content' => '<span class="text-danger">0%</span>'
-						],
-						'preCaption' => '<span class="input-group-addon"><span class="text-success">100%</span></span>'
-					],
-					'options' => [
-						'placeholder' => 'Укажите значение'
-					]
-				])->label(false);
-			break;
-			case 'score':
-				return $form->field($this, (string)$this->id)->widget(ScoreWidget::class, [
-					'model' => $this,
-					'attribute' => $this->id,
-					'readOnly' => false,
-					'showEmpty' => false
-				]);
-			break;
-			case 'string':
-				return $form->field($this, (string)$this->id)->textarea()->label(false);
-			break;
-			case 'time':
-				return $form->field($this, (string)$this->id)->widget(TimePicker::class, [
-					'pluginOptions' => [
-						'showSeconds' => true,
-						'showMeridian' => false,
-						'minuteStep' => 1,
-						'secondStep' => 5,
-						'defaultTime' => false
-					],
-					'options' => [
-						'placeholder' => 'Укажите время'
-					]
-				])->label(false);
-			break;
-			default:
-				return $form->field($this, (string)$this->id)->textInput()->label(false);
-			break;
-
-		}
-
+		return self::getTypeClass($this->type)::editField($form, $this);
 	}
 
 	/**
