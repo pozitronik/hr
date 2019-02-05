@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin;
 
-use app\helpers\ArrayHelper;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
 use Throwable;

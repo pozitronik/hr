@@ -137,6 +137,7 @@ class AttributePropertyString extends ActiveRecord implements AttributePropertyI
 	 * Рендер поля просмотра значения свойства
 	 * @param array $config Опциональные параметры виджета/поля
 	 * @return string
+	 * @throws \Exception
 	 */
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);

@@ -260,6 +260,7 @@ class DynamicAttributeProperty extends Model {
 	 * @param array $config
 	 * @return string
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function viewField(array $config):string {
 		$config['model'] = $this;
@@ -270,6 +271,7 @@ class DynamicAttributeProperty extends Model {
 	 * Функция отдаёт форму поля для редактирования значения свойства
 	 * @param ActiveForm $form
 	 * @return ActiveField
+	 * @throws Throwable
 	 */
 	public function editField(ActiveForm $form):ActiveField {
 		return self::getTypeClass($this->type)::editField($form, $this);

@@ -421,7 +421,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * Добавляет атрибуту свойство
 	 */
 	public static function addAttributeProperty(array $dynamic_attribute, int $user_id):void {
-		if (null === $attribute = \app\modules\dynamic_attributes\models\DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
+		if (null === $attribute = DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
 			$attribute = new DynamicAttributes();
 			$attribute->createAttribute(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
 		}
