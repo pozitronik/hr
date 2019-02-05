@@ -21,9 +21,12 @@ use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use kartik\grid\ActionColumn;
 
-$this->title = 'Люди';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = $this->title;
+if (null !== $searchModel) {//Учитываем вызов из поиска по атрибутам, пока используется одна вьюха на всё.
+	$this->title = 'Люди';
+	$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+	$this->params['breadcrumbs'][] = $this->title;
+}
+
 ?>
 
 <?= /** @noinspection MissedFieldInspection */
@@ -33,7 +36,7 @@ GridView::widget([
 	'panel' => [
 		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)")
 	],
-	'summary' => Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success summary-content']),
+	'summary' => null !== $searchModel?Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success summary-content']):null,
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
