@@ -6,6 +6,7 @@ declare(strict_types = 1);
 use yii\caching\FileCache;
 use kartik\grid\Module as GridModule;
 use app\modules\import\Module as Import;
+use app\modules\dynamic_attributes\Module as Attributes;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
@@ -40,6 +41,9 @@ $config = [
 		],
 		'import' => [
 			'class' => Import::class
+		],
+		'attributes' => [
+			'class' => Attributes::class
 		],
 	],
 	'components' => [
