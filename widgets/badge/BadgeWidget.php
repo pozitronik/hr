@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Model;
 use yii\base\Widget;
+use yii\db\ActiveRecord;
 use yii\helpers\Html;
 
 /**
@@ -20,7 +21,7 @@ use yii\helpers\Html;
  * @property array|false $linkScheme
  * @property string $itemsSeparator
  * @property integer|false $unbadgedCount
- * @property array $optionsMap
+ * @property array|callable $optionsMap
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
  */
@@ -53,10 +54,18 @@ class BadgeWidget extends Widget {
 	public function run():string {
 		$result = [];
 		$moreBadge = '';
-		/** @var Model $model */
+
+		if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap);
+
+		/** @var Model|ActiveRecord $model */
 		foreach ($this->data as $model) {
-			/** @noinspection PhpUndefinedFieldInspection - checked via hasProperty */
-			$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, $this->badgeOptions):$this->badgeOptions;
+			if ($model->hasProperty('primaryKey')) {
+				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
+			} else {
+				/** @noinspection PhpUndefinedFieldInspection */
+				$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, $this->badgeOptions):$this->badgeOptions;
+			}
+
 			if (!is_array($badgeHtmlOptions)) $badgeHtmlOptions = $this->badgeOptions;
 			if ($this->linkScheme) {
 				array_walk($this->linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
