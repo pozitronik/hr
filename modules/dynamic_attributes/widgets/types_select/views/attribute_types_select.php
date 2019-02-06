@@ -23,7 +23,7 @@ use yii\web\JsExpression;
 	'name' => "AttributeTypes[$userId]",
 	'value' => $value,
 	'options' => [
-		'placeholder' => 'Укажите тип атрибута',
+		'placeholder' => 'Укажите тип связи атрибута',
 		'options' => $options
 	],
 	'pluginOptions' => [
