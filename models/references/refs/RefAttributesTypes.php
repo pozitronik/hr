@@ -18,7 +18,7 @@ use yii\helpers\Html;
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
 class RefAttributesTypes extends Reference {
-	public $menuCaption = 'Типы атрибутов';
+	public $menuCaption = 'Типы отношений атрибутов';
 	public $menuIcon = false;
 
 	/**

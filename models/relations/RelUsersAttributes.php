@@ -64,4 +64,13 @@ class RelUsersAttributes extends ActiveRecord {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
 
+	/**
+	 * Вернёт отсортированный по типу набор отношений пользователя к атрибутам. Функция достаточно временная, дальше будет придумано, как выводить список пользовательских атрибутов, скажем, через DataProvider
+	 * @param int $userId
+	 * @return self[]
+	 */
+	public static function getUserAttributes(int $userId):array {
+		return self::find()->where(['user_id' => $userId])->joinWith('relUsersAttributesTypes')->orderBy('ISNULL(rel_users_attributes_types.type), rel_users_attributes_types.type ASC')->all();
+	}
+
 }
