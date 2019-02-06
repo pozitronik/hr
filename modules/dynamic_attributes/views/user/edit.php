@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
 	<?php $form = ActiveForm::begin(); ?>
 	<div class="panel-heading">
-		<div class="panel-control">
-			<div style="width: 500px; float: right">
+		<div class="panel-control col-md-4">
+			<div class="pull-right" style="padding-top: 8px">
 				<?= AttributeTypesSelectWidget::widget([
 					'userId' => $user->id,
 					'attributeId' => $attribute->id
