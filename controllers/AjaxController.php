@@ -28,7 +28,7 @@ use yii\web\Controller;
  *
  * @package app\controllers
  */
-class AjaxController extends Controller {
+class AjaxController extends Controller {//todo вынести экшены, относящиеся к модульному коду, в модули
 
 	public const RESULT_OK = 0;/*Отработано*/
 	public const RESULT_ERROR = 1;/*Ошибка*/
