@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\helpers\ArrayHelper;
+use app\models\references\refs\RefAttributesTypes;
+use app\models\references\refs\RefGroupRelationTypes;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -14,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property int $type
  *
  * @property ActiveQuery|RelUsersAttributes[] $relUsersAttributes
+ * @property ActiveQuery|RefGroupRelationTypes refGroupsRelationType Типы связей (справочник)
  */
 class RelUsersAttributesTypes extends ActiveRecord {
 	/**
@@ -61,5 +64,11 @@ class RelUsersAttributesTypes extends ActiveRecord {
 		return ArrayHelper::getColumn(self::find()->joinWith('relUsersAttributes')->where(['rel_users_attributes.user_id' => $user, 'rel_users_attributes.attribute_id' => $attribute])->select('rel_users_attributes_types.type')->all(), 'type');
 	}
 
+	/**
+	 * @return RefGroupRelationTypes|ActiveQuery
+	 */
+	public function getRefGroupsRelationTypes() {
+		return $this->hasOne(RefAttributesTypes::class, ['id' => 'type']);
+	}
 
 }
