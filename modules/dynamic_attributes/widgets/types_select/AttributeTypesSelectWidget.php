@@ -8,8 +8,8 @@ use app\models\relations\RelUsersAttributesTypes;
 use yii\base\Widget;
 
 /**
- * @package app\components\attribute_types_select
- *
+ * Class AttributeTypesSelectWidget
+ * @package app\modules\dynamic_attributes\widgets\types_select
  * @property array $data
  * @property array $value
  * @property int $attributeId
