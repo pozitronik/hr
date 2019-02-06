@@ -10,9 +10,13 @@ declare(strict_types = 1);
  * @var bool $read_only
  */
 
+use app\helpers\ArrayHelper;
 use app\helpers\Icons;
+use app\models\references\refs\RefAttributesTypes;
+use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\widgets\badge\BadgeWidget;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
 
@@ -54,7 +58,27 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 				]) ?>
 			</div>
 		<?php endif; ?>
-		<div class="panel-title"><?= $dynamicAttribute->name ?> (<?= $dynamicAttribute->categoryName ?>)</div>
+		<div class="panel-title">
+			<?= $dynamicAttribute->name ?>
+
+			<?= BadgeWidget::widget([
+				'data' => RelUsersAttributesTypes::getRefAttributesTypes($user_id, $dynamicAttribute->id),
+				'attribute' => 'name',
+				'unbadgedCount' => 3,
+				'itemsSeparator' => false,
+				'optionsMap' => function() {
+					$options = ArrayHelper::map(RefAttributesTypes::find()->active()->all(), 'id', 'color');
+					array_walk($options, function(&$value, $key) {
+						if (!empty($value)) {
+							$value = [
+								'style' => "background: $value;"
+							];
+						}
+					});
+					return $options;
+				}
+			]); ?>
+		</div>
 	</div>
 
 	<div class="panel-body">
