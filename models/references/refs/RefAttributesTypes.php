@@ -36,7 +36,7 @@ class RefAttributesTypes extends Reference {
 			[['id'], 'integer'],
 			[['name'], 'required'],
 			[['deleted'], 'integer'],
-			[['name', 'color'], 'string', 'max' => 255],
+			[['name', 'color'], 'string', 'max' => 255]
 		];
 	}
 

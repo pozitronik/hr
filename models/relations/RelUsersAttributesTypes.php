@@ -22,28 +22,28 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'rel_users_attributes_types';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['user_attribute_id', 'type'], 'required'],
 			[['user_attribute_id', 'type'], 'integer'],
-			[['user_attribute_id', 'type'], 'unique', 'targetAttribute' => ['user_attribute_id', 'type']],
+			[['user_attribute_id', 'type'], 'unique', 'targetAttribute' => ['user_attribute_id', 'type']]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'user_attribute_id' => 'ID связки пользователь/атрибут',
-			'type' => 'Тип',
+			'type' => 'Тип'
 		];
 	}
 

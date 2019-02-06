@@ -6,8 +6,6 @@ namespace app\modules\dynamic_attributes\controllers;
 use app\models\core\BaseAjaxController;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;
-use app\models\users\Users;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use Yii;
 use yii\filters\AccessControl;
@@ -61,7 +59,7 @@ class AjaxController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionSetAttributeTypesForUser() {
+	public function actionSetAttributeTypesForUser():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$attributeId = Yii::$app->request->post('attributeId', false);
 		$userId = Yii::$app->request->post('userId', false);
