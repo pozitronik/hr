@@ -9,6 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\assets\DynamicAttributesSearchAsset;
+use app\models\references\refs\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -77,6 +78,17 @@ $this->params['breadcrumbs'][] = $this->title;
 								]
 							])->label('Объединение'); ?>
 						</div>
+						<div class="col-md-2">
+							<?= $form->field($model, "searchItems[$index][type]")->widget(Select2::class, [
+								'data' => RefAttributesTypes::mapData(),
+								'options' => array_merge([
+									'multiple' => true,
+									'placeholder' => 'Выбрать тип',
+									'data-tag' => "search-type",
+									'data-index' => $index
+								])
+							])->label('Тип атрибута'); ?>
+						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][attribute]")->widget(Select2::class, [
 								'data' => $attribute_data,
@@ -90,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							])->label('Атрибут'); ?>
 						</div>
 
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<?= $form->field($model, "searchItems[$index][property]")->widget(Select2::class, [
 								'data' => $model->attributeProperties($condition->attribute),
 								'options' => [
@@ -114,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								]
 							])->label('Условие'); ?>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<?= $form->field($model, "searchItems[$index][value]")->textInput()->label('Значение'); ?>
 						</div>
 					</div>
@@ -132,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php ActiveForm::end(); ?>
 
 <?php if (null !== $dataProvider): ?>
-	<?= $this->render('search_result',[
+	<?= $this->render('search_result', [
 		'dataProvider' => $dataProvider
 	]) ?>
 <?php endif; ?>
