@@ -38,7 +38,7 @@ class AttributeTypesSelectWidget extends Widget {
 	public function run():string {
 		return $this->render('attribute_types_select', [
 			'data' => $this->data??RefAttributesTypes::mapData(),
-			'value' => $this->value??RelUsersAttributesTypes::getAttributeTypes($this->userId, $this->attributeId),
+			'value' => $this->value??RelUsersAttributesTypes::getAttributeTypesId($this->userId, $this->attributeId),
 			'userId' => $this->userId,
 			'attributeId' => $this->attributeId,
 			'options' => RefAttributesTypes::dataOptions(),

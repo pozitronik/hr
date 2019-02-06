@@ -16,7 +16,7 @@ use yii\db\ActiveRecord;
  * @property int $type
  *
  * @property ActiveQuery|RelUsersAttributes[] $relUsersAttributes
- * @property ActiveQuery|RefGroupRelationTypes refGroupsRelationType Типы связей (справочник)
+ * @property ActiveQuery|RefAttributesTypes $refAttributesType Типы связей (справочник)
  */
 class RelUsersAttributesTypes extends ActiveRecord {
 	/**
@@ -60,14 +60,24 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	 * @param int $attribute
 	 * @return int[]
 	 */
-	public static function getAttributeTypes(int $user, int $attribute):array {
-		return ArrayHelper::getColumn(self::find()->joinWith('relUsersAttributes')->where(['rel_users_attributes.user_id' => $user, 'rel_users_attributes.attribute_id' => $attribute])->select('rel_users_attributes_types.type')->all(), 'type');
+	public static function getAttributeTypesId(int $user, int $attribute):array {
+		return ArrayHelper::getColumn(self::getAttributeTypes($user, $attribute), 'type');
 	}
 
 	/**
-	 * @return RefGroupRelationTypes|ActiveQuery
+	 * Возвращает массив релейшенов типов аттрибута для пользователя
+	 * @param int $user
+	 * @param int $attribute
+	 * @return self[]
 	 */
-	public function getRefGroupsRelationTypes() {
+	public static function getAttributeTypes(int $user, int $attribute):array {
+		return self::find()->joinWith('relUsersAttributes')->where(['rel_users_attributes.user_id' => $user, 'rel_users_attributes.attribute_id' => $attribute])->select('rel_users_attributes_types.type')->all();
+	}
+
+	/**
+	 * @return RefAttributesTypes|ActiveQuery
+	 */
+	public function getRefAttributesType() {
 		return $this->hasOne(RefAttributesTypes::class, ['id' => 'type']);
 	}
 
