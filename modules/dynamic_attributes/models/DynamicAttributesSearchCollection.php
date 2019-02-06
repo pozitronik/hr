@@ -193,7 +193,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 * @throws Throwable
 	 */
 	public function searchCondition():ActiveDataProvider {
-		$query = Users::find()->active();
+		$query = Users::find()->active()->joinWith(['relUsersAttributesTypes']);
 		$query = $this->applySearchScope($query);
 
 		$dataProvider = new ActiveDataProvider([
@@ -230,6 +230,8 @@ class DynamicAttributesSearchCollection extends Model {
 							$usedAliases[] = $typeAlias;
 						}
 						$conditionResult = $condition($typeAlias, $searchItem->value);
+						$query->andFilterWhere(['rel_users_attributes_types.type' => $searchItem->type]);
+
 						if ($searchItem->union) {
 							$query->andWhere($conditionResult);
 						} else {

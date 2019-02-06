@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
+use app\models\references\refs\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearch;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
@@ -145,7 +146,7 @@ class AttributesController extends WigetableController {
 		/** @var DynamicAttributes[] $attributes */
 		$attributes = DynamicAttributes::find()->active()->all();
 		$attribute_data = [];
-		foreach ($attributes as $attribute) {
+		foreach ($attributes as $attribute) {//todo: перенести в условный блок
 			$attribute_data[$attribute->categoryName][$attribute->id] = $attribute->name;
 		}
 		$searchSet->load(Yii::$app->request->post());

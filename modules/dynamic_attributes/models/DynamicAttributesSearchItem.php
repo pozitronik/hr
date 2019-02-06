@@ -7,13 +7,15 @@ use yii\base\Model;
 
 /**
  * @property boolean $union Режим объединения поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
- * @property integer|null $attribute Искомый атрибут (id)
- * @property integer|null $property Свойство атрибута (id)
+ * @property int[]|null $type Массив типов отношений атрибута (id)
+ * @property int|null $attribute Искомый атрибут (id)
+ * @property int|null $property Свойство атрибута (id)
  * @property string|null $condition Условие поиска
  * @property mixed|null $value Искомое значение
  */
 class DynamicAttributesSearchItem extends Model {
 	private $union = true;
+	private $type;
 	private $attribute;
 	private $property;
 	private $condition;
@@ -26,7 +28,7 @@ class DynamicAttributesSearchItem extends Model {
 		return [
 			[['union'], 'boolean'],
 			[['attribute', 'property'], 'integer'],
-			[['condition', 'value'], 'safe']
+			[['condition', 'value', 'type'], 'safe']
 		];
 	}
 
@@ -36,6 +38,7 @@ class DynamicAttributesSearchItem extends Model {
 	public function attributeLabels():array {
 		return [
 			'union' => 'Объединение',
+			'type' => 'Тип',
 			'attribute' => 'Атрибут',
 			'property' => 'Свойство',
 			'condition' => 'Условие',
@@ -56,7 +59,6 @@ class DynamicAttributesSearchItem extends Model {
 	public function setUnion(bool $union):void {
 		$this->union = $union;
 	}
-
 
 	/**
 	 * @return int|null
@@ -112,6 +114,20 @@ class DynamicAttributesSearchItem extends Model {
 	 */
 	public function setValue($value):void {
 		$this->value = $value;
+	}
+
+	/**
+	 * @return int[]|null
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+	 * @param int[]|null $type
+	 */
+	public function setType($type):void {
+		$this->type = $type;
 	}
 
 }
