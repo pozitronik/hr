@@ -83,11 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
 								'data' => RefAttributesTypes::mapData(),
 								'options' => array_merge([
 									'multiple' => true,
-									'placeholder' => 'Выбрать тип',
+									'placeholder' => 'Выбрать тип отношения',
 									'data-tag' => "search-type",
 									'data-index' => $index
 								])
-							])->label('Тип атрибута'); ?>
+							])->label('Тип отношения атрибута'); ?>
 						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][attribute]")->widget(Select2::class, [

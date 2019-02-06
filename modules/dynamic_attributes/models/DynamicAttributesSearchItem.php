@@ -38,7 +38,7 @@ class DynamicAttributesSearchItem extends Model {
 	public function attributeLabels():array {
 		return [
 			'union' => 'Объединение',
-			'type' => 'Тип',
+			'type' => 'Тип отношения атрибута',
 			'attribute' => 'Атрибут',
 			'property' => 'Свойство',
 			'condition' => 'Условие',
