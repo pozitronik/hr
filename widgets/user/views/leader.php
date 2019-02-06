@@ -5,7 +5,7 @@ declare(strict_types = 1);
  * @var Users $model
  * @var Groups $group
  * @var boolean $boss
- * @var array $options
+ * @var array|callable $options
  */
 
 use app\models\groups\Groups;

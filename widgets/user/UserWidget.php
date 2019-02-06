@@ -39,18 +39,21 @@ class UserWidget extends Widget {
 			]);
 		}
 
-		$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-		array_walk($options, function(&$value, $key) {
-			if (!empty($value)) {
-				$value = [
-					'style' => "background: $value;"
-				];
-			}
-		});
+
 		return $this->render('leader', [//todo: сокращёная форма имени?
 			'model' => $this->user,
 			'group' => $this->group,
-			'options' => $options
+			'options' => function() {
+				$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
+				array_walk($options, function(&$value, $key) {
+					if (!empty($value)) {
+						$value = [
+							'style' => "background: $value;"
+						];
+					}
+				});
+				return $options;
+			}
 		]);
 
 	}
