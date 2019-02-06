@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\models\users\Users;
+use app\modules\dynamic_attributes\widgets\types_select\AttributeTypesSelectWidget;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\data\ArrayDataProvider;
@@ -27,6 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php $form = ActiveForm::begin(); ?>
 	<div class="panel-heading">
 		<div class="panel-control">
+			<div style="width: 500px; float: right">
+				<?= AttributeTypesSelectWidget::widget([
+					'userId' => $user->id,
+					'attributeId' => $attribute->id
+				]) ?>
+			</div>
 		</div>
 		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
 	</div>
@@ -53,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'label' => 'Значение',
 							'value' => function($model) use ($form) {
 								/** @var DynamicAttributeProperty $model */
-									return $model->editField($form);
+								return $model->editField($form);
 							}
 						]
 					]

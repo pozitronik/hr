@@ -1,4 +1,4 @@
-function set_roles(userId, attributeId, roles) {
+function set_types(userId, attributeId, roles) {
 	jQuery('#' + userId + '-' + attributeId + '-types-progress').show();
 	jQuery.ajax({
 		url: '/ajax/set-attribute-types-for-user',

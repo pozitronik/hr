@@ -20,10 +20,10 @@ use yii\web\JsExpression;
 
 <?= Select2::widget([
 	'data' => $data,
-	'name' => "UserRoles[$userId]",
+	'name' => "AttributeTypes[$userId]",
 	'value' => $value,
 	'options' => [
-		'placeholder' => 'Укажите роль в группе',
+		'placeholder' => 'Укажите тип атрибута',
 		'options' => $options
 	],
 	'pluginOptions' => [

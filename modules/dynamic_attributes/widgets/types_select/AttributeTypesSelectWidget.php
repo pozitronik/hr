@@ -40,7 +40,7 @@ class AttributeTypesSelectWidget extends Widget {
 			'data' => $this->data??RefAttributesTypes::mapData(),
 			'value' => $this->value??RelUsersAttributesTypes::getAttributeTypes($this->userId, $this->attributeId),
 			'userId' => $this->userId,
-			'attributeId' => $this-attributeId,
+			'attributeId' => $this->attributeId,
 			'options' => RefAttributesTypes::dataOptions(),
 			'showStatus' => $this->showStatus
 		]);
