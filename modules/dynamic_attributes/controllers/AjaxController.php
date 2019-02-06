@@ -75,7 +75,7 @@ class AjaxController extends BaseAjaxController {
 			];
 		}
 
-		if (false === ($userAttributeRelation = RelUsersAttributes::find()->where(['attribute_id' => $attributeId, 'user_id' => $attributeId])->one())) {
+		if (null === RelUsersAttributes::find()->where(['attribute_id' => $attributeId, 'user_id' => $userId])->one()) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -83,8 +83,7 @@ class AjaxController extends BaseAjaxController {
 				]
 			];
 		}
-		/** @var RelUsersAttributes $userAttributeRelation */
-		$userAttributeRelation->setAndSaveAttribute('types', $types);
+		RelUsersAttributesTypes::setAttributeTypeForUser($types, (int)$userId, (int)$attributeId);
 		return [
 			'result' => self::RESULT_OK
 		];

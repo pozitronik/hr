@@ -1,7 +1,7 @@
 function set_types(userId, attributeId, types) {
 	jQuery('#' + userId + '-' + attributeId + '-types-progress').show();
 	jQuery.ajax({
-		url: 'attributes/ajax/set-attribute-types-for-user',
+		url: '/attributes/ajax/set-attribute-types-for-user',
 		data: {
 			userId: userId,
 			attributeId: attributeId,
