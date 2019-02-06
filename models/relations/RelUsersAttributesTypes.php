@@ -3,13 +3,19 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\helpers\ArrayHelper;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "rel_users_attributes_types".
  *
  * @property int $user_attribute_id
  * @property int $type
+ *
+ * @property ActiveQuery|RelUsersAttributes[] $relUsersAttributes
  */
-class RelUsersAttributesTypes extends \yii\db\ActiveRecord {
+class RelUsersAttributesTypes extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
@@ -37,4 +43,23 @@ class RelUsersAttributesTypes extends \yii\db\ActiveRecord {
 			'type' => 'Тип',
 		];
 	}
+
+	/**
+	 * @return RelUsersAttributes[]|ActiveQuery
+	 */
+	public function getRelUsersAttributes() {
+		return $this->hasMany(RelUsersAttributes::class, ['id' => 'user_attribute_id']);
+	}
+
+	/**
+	 * Возвращает id типов аттрибута для пользователя
+	 * @param int $user
+	 * @param int $attribute
+	 * @return int[]
+	 */
+	public static function getAttributeTypes(int $user, int $attribute):array {
+		return ArrayHelper::getColumn(self::find()->joinWith('relUsersAttributes')->where(['rel_users_attributes.user_id' => $user, 'rel_users_attributes.attribute_id' => $attribute])->select('rel_users_attributes_types.type')->all(), 'type');
+	}
+
+
 }
