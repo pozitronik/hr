@@ -117,22 +117,24 @@ GridView::widget([
 
 			'label' => 'Роли',
 			'value' => function($model) {
-				/** @var UsersSearch $model */
-				$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-				array_walk($options, function(&$value, $key) {
-					if (!empty($value)) {
-						$value = [
-							'style' => "background: $value;"
-						];
-					}
-				});
 				return BadgeWidget::widget([
 					'data' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => $options
+					"optionsMap" => function() {
+						/** @var UsersSearch $model */
+						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
+						array_walk($options, function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
 				]);
 			},
 			'format' => 'raw'
