@@ -7,6 +7,8 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\StrictInterface;
 use app\models\core\traits\MethodsAccess;
+use app\models\references\refs\RefAttributesTypes;
+use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
@@ -78,6 +80,8 @@ use yii\web\UploadedFile;
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader Релейшен к ролям пользователей с флагом босса
  * @property DynamicAttributes[]|ActiveQuery $relDynamicAttributes Релейшен к атрибутам
  * @property ActiveQuery|Groups[] $relLeadingGroups Группы, в которых пользователь лидер
+ * @property RelUsersAttributesTypes[]|ActiveQuery $relUsersAttributesTypes Релейшен к таблице связей с типами атрибутов
+ * @property RefAttributesTypes[]|ActiveQuery $refAttributesTypes Типы атрибутов, присвоенных пользователю
  */
 class Users extends ActiveRecord implements StrictInterface {
 	use ARExtended;
@@ -190,7 +194,6 @@ class Users extends ActiveRecord implements StrictInterface {
 		$transaction->rollBack();
 		return false;
 	}
-
 
 	/**
 	 * @param array|null $paramsArray
@@ -476,5 +479,19 @@ class Users extends ActiveRecord implements StrictInterface {
 	 */
 	public function getDropUsersPrivileges():array {
 		return [];
+	}
+
+	/**
+	 * @return RelUsersAttributesTypes[]|ActiveQuery
+	 */
+	public function getRelUsersAttributesTypes() {
+		return $this->hasMany(RelUsersAttributesTypes::class, ['user_attribute_id' => 'id'])->via('relUsersAttributes');
+	}
+
+	/**
+	 * @return RefAttributesTypes[]|ActiveQuery
+	 */
+	public function getRefAttributesTypes() {
+		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
 }
