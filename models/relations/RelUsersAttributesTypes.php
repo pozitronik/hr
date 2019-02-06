@@ -5,7 +5,7 @@ namespace app\models\relations;
 
 use app\helpers\ArrayHelper;
 use app\models\references\refs\RefAttributesTypes;
-use app\models\references\refs\RefGroupRelationTypes;
+use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -72,6 +72,17 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	 */
 	public static function getAttributeTypes(int $user, int $attribute):array {
 		return self::find()->joinWith('relUsersAttributes')->where(['rel_users_attributes.user_id' => $user, 'rel_users_attributes.attribute_id' => $attribute])->select('rel_users_attributes_types.type')->all();
+	}
+
+	/**
+	 * Возвращает непосредственно значения справочника типов аттрибутов, ассоциированных к связи между пользователем и аттрибутом
+	 * @param int $user
+	 * @param int $attribute
+	 * @return array
+	 * @throws Throwable
+	 */
+	public static function getRefAttributesTypes(int $user, int $attribute):array {
+		return RefAttributesTypes::findModels(self::getAttributeTypesId($user, $attribute));
 	}
 
 	/**
