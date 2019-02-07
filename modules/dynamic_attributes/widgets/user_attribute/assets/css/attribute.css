@@ -20,6 +20,8 @@
 }
 
 .panel.panel-attribute > .panel-heading > .panel-control {
+	font-size: 1.2em;
+	line-height: 2em;
 }
 
 .attribute-dropdown {
