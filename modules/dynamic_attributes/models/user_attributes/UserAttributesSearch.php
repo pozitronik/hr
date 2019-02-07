@@ -35,7 +35,7 @@ class UserAttributesSearch extends RelUsersAttributes {
 		]);
 
 		$dataProvider->setSort([
-			'defaultOrder' => ['id' => SORT_ASC],
+			'defaultOrder' => ['type' => SORT_ASC],
 			'attributes' => [
 				'id',
 				'user_id',
