@@ -105,14 +105,6 @@ use kartik\file\FileInput;
 					]); ?>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<?= $this->render('@app/modules/dynamic_attributes/views/user/index', [
-						'user' => $model
-					]); ?>
-				</div>
-			</div>
-
 		</div>
 
 		<div class="panel-footer">
