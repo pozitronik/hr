@@ -19,7 +19,7 @@ class UserAttributesSearch extends RelUsersAttributes {
 	 */
 	public function rules():array {
 		return [
-			[['id', 'type', 'user_id', 'attribute_id'], 'integer'],
+			[['id', 'type', 'user_id', 'attribute_id'], 'safe'],
 		];
 	}
 
@@ -54,7 +54,7 @@ class UserAttributesSearch extends RelUsersAttributes {
 //
 //		$query->distinct();
 //
-//		$query->andFilterWhere(['sys_users.id' => $this->id])
+		$query->andFilterWhere(['rel_users_attributes_types.type' => $this->type]);
 //			->andFilterWhere(['group_id' => $allowedGroups])
 //			->andFilterWhere(['like', 'sys_users.username', $this->username])
 //			->andFilterWhere(['like', 'login', $this->login])

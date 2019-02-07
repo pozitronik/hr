@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\controllers;
 
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
@@ -36,8 +37,14 @@ class UserController extends Controller {
 	 * @throws Throwable
 	 */
 	public function actionIndex(int $user_id):?string {
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new UserAttributesSearch(['user_id' => $user_id]);
+
 		return $this->render('index', [
-			'user' => Users::findModel($user_id, new NotFoundHttpException())
+			'user' => Users::findModel($user_id, new NotFoundHttpException()),
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params)
+
 		]);
 	}
 
