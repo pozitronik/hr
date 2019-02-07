@@ -73,4 +73,11 @@ class RelUsersAttributes extends ActiveRecord {
 		return self::find()->where(['user_id' => $userId])->joinWith('relUsersAttributesTypes')->orderBy('ISNULL(rel_users_attributes_types.type), rel_users_attributes_types.type ASC')->all();
 	}
 
+	/**
+	 * @param int $userId
+	 */
+	public static function getUserAttributesScope(int $userId):ActiveQuery {
+		return self::find()->where(['user_id' => $userId])->joinWith('relUsersAttributesTypes')->orderBy('ISNULL(rel_users_attributes_types.type), rel_users_attributes_types.type ASC');
+	}
+
 }
