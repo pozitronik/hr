@@ -25,6 +25,9 @@ use kartik\grid\GridView;
 <div class="panel panel-attribute">
 	<div class="panel-body">
 		<?= GridView::widget([
+			'containerOptions' => [
+				'style' => 'overflow-x:inherit'//убираем скроллбар нахер
+			],
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'showFooter' => false,
@@ -60,7 +63,8 @@ use kartik\grid\GridView;
 						'style' => 'width: 50%',
 					],
 					'contentOptions' => [
-						'colspan' => 2
+						'colspan' => 2,
+						'style' => 'padding:0'
 					],
 					'filterOptions' => [
 						'style' => 'padding: 0px; vertical-align: middle; width: 50%',
