@@ -11,6 +11,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\models\user_rights\Privileges;
 use app\models\users\Users;
+use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -105,6 +106,18 @@ use kartik\file\FileInput;
 					]); ?>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?php $searchModel = new UserAttributesSearch(['user_id' => $model->id]); ?>
+
+					<?= $this->render('@app/modules/dynamic_attributes/views/user/index', [
+						'user' => $model,
+						'searchModel' => $searchModel,
+						'dataProvider' => $searchModel->search(Yii::$app->request->queryParams)
+					]); ?>
+				</div>
+			</div>
+
 		</div>
 
 		<div class="panel-footer">
