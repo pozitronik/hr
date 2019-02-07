@@ -31,7 +31,7 @@ class UserAttributesSearch extends RelUsersAttributes {
 			'id' => 'ID',
 			'user_id' => 'User ID',
 			'attribute_id' => 'Attribute ID',
-			'type' => 'Тип'
+			'type' => 'Тип',
 		];
 	}
 
@@ -52,7 +52,10 @@ class UserAttributesSearch extends RelUsersAttributes {
 				'id',
 				'user_id',
 				'attribute_id',
-				'type'
+				'type' => [
+					'asc' => ['ISNULL(rel_users_attributes_types.type), rel_users_attributes_types.type' => SORT_ASC],
+					'desc' => ['ISNULL(rel_users_attributes_types.type), rel_users_attributes_types.type' => SORT_DESC]
+				], 1
 			]
 		]);
 
@@ -71,6 +74,8 @@ class UserAttributesSearch extends RelUsersAttributes {
 //			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
 //			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 //			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges]);
+
+		\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }
