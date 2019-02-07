@@ -26,33 +26,32 @@ $searchModel = new UserAttributesSearch(['user_id' => $user->id]);
 		<?= GridView::widget([
 			'dataProvider' => $searchModel->search([]),
 			'filterModel' => $searchModel,
-			'showFooter' => true,
+			'showFooter' => false,
 			'showPageSummary' => true,
-//			'panel' => [
-//				'type' => GridView::TYPE_DEFAULT,
-//				'after' => false,
-//				'before' => Select2::widget([
-//					'model' => $user,
-//					'attribute' => 'relDynamicAttributes',
-//					'name' => 'attribute_id',
-//					'data' => ArrayHelper::map($user->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($user->relDynamicAttributes, 'id')])->all(), 'id', 'name'),
-//					'options' => [
-//						'multiple' => true,
-//						'placeholder' => 'Добавить атрибут'
-//					]
-//				]),
-//				'heading' => false,
-//				'footer' => false
-//			],
-//			'toolbar' => false,
-//			'export' => false,
-//			'resizableColumns' => true,
-//			'responsive' => true,
+			'panel' => [
+				'type' => GridView::TYPE_DEFAULT,
+				'after' => false,
+				'before' => Select2::widget([
+					'model' => $user,
+					'attribute' => 'relDynamicAttributes',
+					'name' => 'attribute_id',
+					'data' => ArrayHelper::map($user->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($user->relDynamicAttributes, 'id')])->all(), 'id', 'name'),
+					'options' => [
+						'multiple' => true,
+						'placeholder' => 'Добавить атрибут'
+					]
+				]),
+				'heading' => false,
+				'footer' => false
+			],
+			'toolbar' => false,
+			'export' => false,
+			'resizableColumns' => false,
+			'responsive' => true,
 			'columns' => [
-				'user_id',
-				'attribute_id',
 				[
 					'attribute' => 'type',
+					'label' => 'Сортировать по типу',
 					'value' => function($model) use ($user) {
 						/** @var DynamicAttributes $model */
 						return UserAttributeWidget::widget([

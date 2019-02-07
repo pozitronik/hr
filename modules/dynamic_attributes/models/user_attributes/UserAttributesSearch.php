@@ -24,18 +24,6 @@ class UserAttributesSearch extends RelUsersAttributes {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'user_id' => 'User ID',
-			'attribute_id' => 'Attribute ID',
-			'type' => 'Тип',
-		];
-	}
-
-	/**
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
