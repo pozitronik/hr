@@ -28,7 +28,10 @@ use kartik\grid\GridView;
 			'dataProvider' => $dataProvider,
 			'filterModel' => $searchModel,
 			'showFooter' => false,
-			'showPageSummary' => true,
+			'showPageSummary' => false,
+			'summaryOptions' => [
+				'colspan' => 2
+			],
 			'panel' => [
 				'type' => GridView::TYPE_DEFAULT,
 				'after' => false,
@@ -49,14 +52,25 @@ use kartik\grid\GridView;
 			'export' => false,
 			'resizableColumns' => false,
 			'responsive' => true,
+			'filterPosition' => GridView::FILTER_POS_BODY,
 			'columns' => [
 				[
+					'headerOptions' => [/*Фактический хак: таким образом объединяем ячейки заголовка и фильтра без необходимости патчить код фреймворка*/
+						'rowspan' => 2,
+						'style' => 'width: 50%',
+					],
+					'contentOptions' => [
+						'colspan' => 2
+					],
+					'filterOptions' => [
+						'style' => 'padding: 0px; vertical-align: middle; width: 50%',
+					],
 					'attribute' => 'type',
+					'label' => 'Сортировать по типу отношения атрибута',
 					'filterType' => GridView::FILTER_SELECT2,//todo создаём виджет AttributesSelect, который будет наследоваться от Select2, но поддерживать выбор моделей атрибутов
 					'filter' => RefAttributesTypes::mapData(),
 					'filterInputOptions' => ['placeholder' => 'Выберите типы атрибутов'],
 					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
-					'label' => 'Сортировать по типу атрибута',
 					'value' => function($model) use ($user) {
 						/** @var RelUsersAttributes $model */
 						return UserAttributeWidget::widget([
@@ -65,8 +79,7 @@ use kartik\grid\GridView;
 						]);
 					},
 					'format' => 'raw'
-
-				]
+				],
 			]
 
 		]); ?>
