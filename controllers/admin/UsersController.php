@@ -20,6 +20,7 @@ class UsersController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-user'></i>Люди";
 	public $menuIcon = "/img/admin/users.png";
 	public $orderWeight = 1;
+	public $disabled = true;
 
 	/**
 	 * @inheritdoc
@@ -33,6 +34,7 @@ class UsersController extends WigetableController {
 	}
 
 	/**
+	 * Главный список пользователей
 	 * @return string
 	 */
 	public function actionIndex():string {
