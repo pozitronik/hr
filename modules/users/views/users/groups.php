@@ -51,7 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							'model' => $model,
 							'attribute' => 'relGroups',
 							'notData' => $model->relGroups,
-							'multiple' => true
+							'multiple' => true,
+							'mode' => GroupSelectWidget::MODE_FORM
 						]),
 						'heading' => false,
 						'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
