@@ -401,7 +401,7 @@ class Users extends ActiveRecord implements StrictInterface {
 	 * @param integer[] $dropUsersAttributes
 	 * @throws Throwable
 	 */
-	public function setDropUsersAttributes(array $dropUsersAttributes):void {
+	public function setDropUsersAttributes($dropUsersAttributes):void {
 		/*Сами значения атрибутов сохранятся в базе и должны будут восстановиться, если атрибут присвоить пользователю обратно*/
 		RelUsersAttributes::unlinkModels($this, $dropUsersAttributes);
 	}
