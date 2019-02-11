@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\group_select;
 
 use app\helpers\ArrayHelper;
-use app\models\core\SelectionWidget;
+use app\models\core\SelectionWidgetInterface;
 use app\modules\groups\models\Groups;
 use app\models\references\refs\RefGroupTypes;
 use kartik\base\InputWidget;
@@ -25,7 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
  */
-class GroupSelectWidget extends InputWidget implements SelectionWidget {
+class GroupSelectWidgetInterface extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
 	public $notData;
 	public $multiple = false;

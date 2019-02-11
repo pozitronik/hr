@@ -4,7 +4,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
-use app\widgets\group_select\GroupSelectWidget;
+use app\widgets\group_select\GroupSelectWidgetInterface;
 
 /**
  * @var View $this
@@ -35,7 +35,7 @@ $provider = new ActiveDataProvider([
 				'after' => false,
 				'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)"),
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-				'before' => GroupSelectWidget::widget([
+				'before' => GroupSelectWidgetInterface::widget([
 					'model' => $model,
 					'attribute' => 'relParentGroups',
 					'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),

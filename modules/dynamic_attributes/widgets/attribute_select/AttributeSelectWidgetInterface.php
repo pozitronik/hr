@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\widgets\attribute_select;
 
 use app\helpers\ArrayHelper;
-use app\models\core\SelectionWidget;
+use app\models\core\SelectionWidgetInterface;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use kartik\base\InputWidget;
 use yii\db\ActiveRecord;
@@ -20,7 +20,7 @@ use yii\db\ActiveRecord;
  * @property boolean $multiple
  * @property string|array $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  */
-class AttributeSelectWidget extends InputWidget implements SelectionWidget {
+class AttributeSelectWidgetInterface extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
 	public $notData;
 	public $multiple = false;
