@@ -110,7 +110,7 @@ class Users extends ActiveRecord implements StrictInterface {
 	 */
 	public function rules():array {
 		return [
-			[['username', 'login', 'password', 'salt', 'email', 'create_date'], 'required'],
+			[['username', 'login', 'password', 'email', 'create_date'], 'required'],
 			[['comment'], 'string'],
 			[['create_date'], 'safe'],
 			[['daddy', 'position'], 'integer'],

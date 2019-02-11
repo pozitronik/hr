@@ -10,6 +10,7 @@ use yii\base\Widget;
 use yii\db\ActiveRecord;
 
 /**
+ * //todo: переименовать/отрефакторить, пора.
  * Возможно, стоит переписать в более общий вид, не только для групп
  * Class GroupSelectWidget
  * Виджет списка групп (для добавления пользователя)
@@ -56,7 +57,8 @@ class GroupSelectWidget extends Widget {
 			'attribute' => $this->attribute,
 			'data' => $data,
 			'multiple' => $this->multiple,
-			'options' => Groups::dataOptions()
+			'options' => Groups::dataOptions(),
+			'action' => ''
 		]);
 	}
 }

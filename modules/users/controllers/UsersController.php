@@ -58,7 +58,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
 		return $this->render('profile', [
 			'model' => $user
 		]);
@@ -71,6 +71,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionGroups(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
 		return $this->render('groups', [
 			'model' => $user,
 			'provider' => new ActiveDataProvider(['query' => $user->getRelGroups()->orderBy('name')->active()])
@@ -99,22 +100,6 @@ class UsersController extends WigetableController {
 
 		return $this->render('create', [
 			'model' => $newUser
-		]);
-	}
-
-	/**
-	 * @param integer $id
-	 * @return string|null
-	 * @throws Throwable
-	 * @throws InvalidConfigException
-	 */
-	public function actionUpdate(int $id):?string {
-		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
-
-		return $this->render('update', [
-			'model' => $user
 		]);
 	}
 
