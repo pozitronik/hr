@@ -14,14 +14,11 @@ use yii\db\ActiveRecord;
 use yii\web\JsExpression;
 use yii\web\View;
 use kartik\select2\Select2;
-
 ?>
-
 
 <?= Select2::widget([
 	'model' => $model,
 	'attribute' => $attribute,
-	'name' => "group_selection[{$model->primaryKey}]",
 	'data' => $data,
 	'options' => [
 		'placeholder' => 'Добавить группу',

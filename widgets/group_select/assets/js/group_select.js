@@ -3,9 +3,7 @@ function formatGroup(item) {
 		return item.text;
 	}
 	var typecolor = $(item.element).data('typecolor');
-	if (typecolor) {
-		typecolor = 'style="background: ' + typecolor + ';"';
-	}
+	if (typecolor) typecolor = 'style="background: ' + typecolor + ';"';
 	var logo = $(item.element).data('logo');
 	var typename = $(item.element).data('typename');
 	if (!typename) typename = '';

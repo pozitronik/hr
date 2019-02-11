@@ -32,7 +32,6 @@ use kartik\select2\Select2;
 	],
 	'model' => $model,
 	'attribute' => $attribute,
-	'name' => "group_selection[{$model->primaryKey}]",
 	'data' => $data,
 	'options' => [
 		'placeholder' => 'Добавить группу',
