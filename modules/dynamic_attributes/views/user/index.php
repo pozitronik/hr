@@ -25,7 +25,6 @@ use yii\helpers\Html;
 use yii\web\View;
 use kartik\grid\GridView;
 
-
 $this->title = "Атрибуты пользователя {$user->username}";
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
@@ -88,14 +87,19 @@ $this->params['breadcrumbs'][] = $this->title;
 									'style' => 'padding:0'
 								],
 								'filterOptions' => [
-									'style' => 'padding: 0px; vertical-align: middle; width: 50%',
+									'style' => 'padding:0px 10px 0px 0px; vertical-align: middle; width: 50%;',
 								],
 								'attribute' => 'type',
 								'label' => 'Сортировать по типу отношения атрибута',
-								'filterType' => GridView::FILTER_SELECT2,//todo создаём виджет AttributesSelect, который будет наследоваться от Select2, но поддерживать выбор моделей атрибутов
+								'filterType' => GridView::FILTER_SELECT2,
 								'filter' => RefAttributesTypes::mapData(),
-								'filterInputOptions' => ['placeholder' => 'Выберите типы атрибутов'],
-								'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
+								'filterInputOptions' => ['placeholder' => 'Фильтр по типу'],
+								'filterWidgetOptions' => [
+									'size' => Select2::SMALL,
+									'pluginOptions' => [
+										'allowClear' => true, 'multiple' => true
+									]
+								],
 								'value' => function($model) use ($user) {
 									/** @var RelUsersAttributes $model */
 									return UserAttributeWidget::widget([
