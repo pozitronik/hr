@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Users $user
  * @var Model $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var string|array $updateAttributeAction
  */
 
 use app\helpers\ArrayHelper;
@@ -65,7 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
 								'model' => $user,
 								'attribute' => 'relDynamicAttributes',
 								'mode' => AttributeSelectWidget::MODE_FORM,
-								'multiple' => true
+								'multiple' => true,
+								'formAction' => $updateAttributeAction
 							]),
 							'heading' => false,
 							'footer' => false

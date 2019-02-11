@@ -8,6 +8,7 @@ use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
+use yii\base\InvalidConfigException;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -43,9 +44,23 @@ class UserController extends Controller {
 		return $this->render('index', [
 			'user' => Users::findModel($user_id, new NotFoundHttpException()),
 			'searchModel' => $searchModel,
-			'dataProvider' => $searchModel->search($params)
-
+			'dataProvider' => $searchModel->search($params),
+			'updateAttributeAction' => ['add-attribute', 'user_id' => $user_id]
 		]);
+	}
+
+	/**
+	 * @param int $user_id
+	 * @return Response
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 */
+	public function actionAddAttribute(int $user_id):Response {
+		if (null !== $user = Users::findModel($user_id)) {
+			if (null !== ($updateArray = Yii::$app->request->post($user->formName()))) $user->updateModel($updateArray);
+		}
+		return $this->redirect(['index', 'user_id' => $user_id]);
+
 	}
 
 	/**
