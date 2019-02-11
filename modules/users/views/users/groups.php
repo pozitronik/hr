@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\models\groups\Groups;
+use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\widgets\group_select\GroupSelectWidget;
 use app\models\users\Users;
 use app\widgets\roles_select\RolesSelectWidget;
+use kartik\form\ActiveForm;
 use kartik\grid\ActionColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -19,78 +21,105 @@ use kartik\grid\CheckboxColumn;
  * @var Users $model
  * @var ActiveDataProvider $provider
  */
-
+$this->title = "Группы пользователя {$model->username}";
+$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<?= GridView::widget([
-			'dataProvider' => $provider,
-			'showFooter' => false,
-			'showPageSummary' => false,
-			'summary' => '',
-			'panel' => [
-				'type' => GridView::TYPE_DEFAULT,
-				'after' => false,
-				'before' => GroupSelectWidget::widget([
-					'model' => $model,
-					'attribute' => 'relGroups',
-					'notData' => $model->relGroups,
-					'multiple' => true
-				]),
-				'heading' => false,
-				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
-			],
-			'toolbar' => false,
-			'export' => false,
-			'resizableColumns' => true,
-			'responsive' => true,
-			'columns' => [
-				[
-					'header' => Icons::menu(),
-					'dropdown' => true,
-					'dropdownButton' => [
-						'label' => Icons::menu(),
-						'caret' => ''
-					],
-					'class' => ActionColumn::class,
-					'template' => '{tree}{bunch}',
-					'buttons' => [
-						'tree' => function($url, $model) {
-							/** @var Groups $model */
-							return Html::tag('li', Html::a(Icons::network().'Граф структуры',['/admin/groups/tree', 'id' => $model->id]));
-						},
-						'bunch' => function($url, $model) {
-							/** @var Groups $model */
-							return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/admin/bunch/index', 'group_id' => $model->id]));
-						}
-					]
-				],
-				[
-					'format' => 'raw',
-					'attribute' => 'name',
-					'value' => function($group) {
-						/** @var Groups $group */
-						return Html::a($group->name, Url::to(['/admin/groups/update', 'id' => $group->id]));
-					}
-				],
-				[
-					'label' => 'Роли в группе',
-					'value' => function($group) use ($model) {
-						return RolesSelectWidget::widget([
-							'userId' => $model->id,
-							'groupId' => $group->id
-						]);
-					},
-					'format' => 'raw'
-				],
-				[
-					'class' => CheckboxColumn::class,
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => Icons::trash(),
-					'name' => $model->formName().'[dropGroups]'
-				]
-			]
+<?php $form = ActiveForm::begin(); ?>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-control">
+				<?= NavigationMenuWidget::widget([
+					'model' => $model
+				]); ?>
+			</div>
+			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		</div>
 
-		]); ?>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12">
+					<?= GridView::widget([
+						'dataProvider' => $provider,
+						'showFooter' => false,
+						'showPageSummary' => false,
+						'summary' => '',
+						'panel' => [
+							'type' => GridView::TYPE_DEFAULT,
+							'after' => false,
+							'before' => GroupSelectWidget::widget([
+								'model' => $model,
+								'attribute' => 'relGroups',
+								'notData' => $model->relGroups,
+								'multiple' => true
+							]),
+							'heading' => false,
+							'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
+						],
+						'toolbar' => false,
+						'export' => false,
+						'resizableColumns' => true,
+						'responsive' => true,
+						'columns' => [
+							[
+								'header' => Icons::menu(),
+								'dropdown' => true,
+								'dropdownButton' => [
+									'label' => Icons::menu(),
+									'caret' => ''
+								],
+								'class' => ActionColumn::class,
+								'template' => '{tree}{bunch}',
+								'buttons' => [
+									'tree' => function($url, $model) {
+										/** @var Groups $model */
+										return Html::tag('li', Html::a(Icons::network().'Граф структуры', ['/admin/groups/tree', 'id' => $model->id]));
+									},
+									'bunch' => function($url, $model) {
+										/** @var Groups $model */
+										return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/admin/bunch/index', 'group_id' => $model->id]));
+									}
+								]
+							],
+							[
+								'format' => 'raw',
+								'attribute' => 'name',
+								'value' => function($group) {
+									/** @var Groups $group */
+									return Html::a($group->name, Url::to(['/admin/groups/update', 'id' => $group->id]));
+								}
+							],
+							[
+								'label' => 'Роли в группе',
+								'value' => function($group) use ($model) {
+									return RolesSelectWidget::widget([
+										'userId' => $model->id,
+										'groupId' => $group->id
+									]);
+								},
+								'format' => 'raw'
+							],
+							[
+								'class' => CheckboxColumn::class,
+								'headerOptions' => ['class' => 'kartik-sheet-style'],
+								'header' => Icons::trash(),
+								'name' => $model->formName().'[dropGroups]'
+							]
+						]
+
+					]); ?>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel-footer">
+			<div class="btn-group">
+				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+				<?php if ($model->isNewRecord): ?>
+					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+				<?php endif ?>
+			</div>
+		</div>
 	</div>
-</div>
+<?php ActiveForm::end(); ?>

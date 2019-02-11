@@ -17,10 +17,10 @@ use yii\data\ArrayDataProvider;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = "{$user->username}: {$attribute->name} ";
+$this->title = "Изменение атрибута {$attribute->name} ";
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
-$this->params['breadcrumbs'][] = ['label' => $user->username, 'url' => ['/admin/users/update', 'id' => $user->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
+$this->params['breadcrumbs'][] = ['label' => "Атрибуты пользователя {$user->username}", 'url' => ['/attributes/user', 'user_id' => $user->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

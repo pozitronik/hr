@@ -23,15 +23,20 @@ use yii\web\View;
 		'encodeLabels' => false,
 		'items' => [
 			[
-				'label' => 'Группы пользователя',
-				'url' => ['groups', 'id' => $model->id]
+				'label' => Icons::user().'Профиль пользователя',
+				'url' => ['/users/users/profile', 'id' => $model->id]
 			],
 			[
-				'label' => 'Атрибуты пользователя',
-				'url' => ['attributes', 'id' => $model->id]],
+				'label' => Icons::group().'Группы пользователя',
+				'url' => ['/users/users/groups', 'id' => $model->id]
+			],
 			[
-				'label' => 'Новый пользователь',
-				'url' => 'create'
+				'label' => Icons::attributes().'Атрибуты пользователя',
+				'url' => ['/users/users/attributes', 'id' => $model->id]
+			],
+			[
+				'label' => Icons::user_add().'Новый пользователь',
+				'url' => '/users/users/create'
 			]
 		]
 	]

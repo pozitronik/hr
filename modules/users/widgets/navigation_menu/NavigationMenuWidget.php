@@ -3,14 +3,16 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\navigation_menu;
 
+use app\models\users\Users;
 use yii\base\Widget;
 
 /**
- * Class GroupSelectWidget
- * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *NavigationMenu* на нужное нам имя, и работаем
- * @package app\components\navigation_menu
+ * Class NavigationMenuWidget
+ * @package app\modules\users\widgets\navigation_menu
+ * @property Users $model
  */
 class NavigationMenuWidget extends Widget {
+	public $model;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -25,6 +27,8 @@ class NavigationMenuWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('navigation_menu');
+		return $this->render('navigation_menu', [
+			'model' => $this->model
+		]);
 	}
 }
