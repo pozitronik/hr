@@ -93,10 +93,10 @@ class UsersController extends WigetableController {
 		if ($newUser->createModel(Yii::$app->request->post($newUser->formName()))) {
 			$newUser->uploadAvatar();
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
-			return $this->redirect(['update', 'id' => $newUser->id]);
+			return $this->redirect(['profile', 'id' => $newUser->id]);
 		}
 
-		return $this->render('create', [
+		return $this->render('profile', [
 			'model' => $newUser
 		]);
 	}
