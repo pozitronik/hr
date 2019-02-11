@@ -27,8 +27,8 @@ class NavigationMenuWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('navigation_menu', [
+		return !$this->model->isNewRecord?$this->render('navigation_menu', [
 			'model' => $this->model
-		]);
+		]):'';
 	}
 }
