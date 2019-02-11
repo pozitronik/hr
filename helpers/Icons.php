@@ -97,6 +97,19 @@ class Icons {
 	/**
 	 * @return string
 	 */
+	public static function user():string {
+		return "<i class='fa fa-user'></i>";
+	}
+	/**
+	 * @return string
+	 */
+	public static function user_add():string {
+		return "<i class='fa fa-plus'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function users_edit():string {
 		return "<i class='fa fa-user-edit'></i>";
 	}
