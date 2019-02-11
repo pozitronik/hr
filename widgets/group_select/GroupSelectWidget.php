@@ -6,28 +6,34 @@ namespace app\widgets\group_select;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
-use yii\base\Widget;
+use kartik\base\InputWidget;
 use yii\db\ActiveRecord;
 
 /**
- * //todo: переименовать/отрефакторить, пора.
- * Возможно, стоит переписать в более общий вид, не только для групп
+ * Виджет выбора группы (общий, для тех моделей, которые имеют нужные атрибуты).
+ * Может работать в двух режимах. MODE_FIELD - как поле ActiveForm. В этом случае виджет является просто выбиралкой.
+ * MODE_FORM- самостоятельная форма, в этом случае виджет сам отрендерит форму с указанным экшоном.
+ *
  * Class GroupSelectWidget
- * Виджет списка групп (для добавления пользователя)
  * @package app\components\group_select
  *
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
  * @property array $notData Группы, исключённые из списка (например те, в которых пользователь уже есть)
- * @property bool $groupByType Группировка списка по типу группы
+ * @property bool $groupByType Группировка списка по типам групп (двухуровневый список)
+ * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
  */
-class GroupSelectWidget extends Widget {
-	public $model;
-	public $attribute;
+class GroupSelectWidget extends InputWidget {
+	public const MODE_FIELD = 0;
+	public const MODE_FORM = 1;
+	public const MODE_AJAX = 2;//заготовка на будущее
+
+	public $mode = self::MODE_FIELD;
 	public $notData;
 	public $multiple = false;
 	public $groupByType = true;
+	public $formAction = '';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -52,13 +58,27 @@ class GroupSelectWidget extends Widget {
 			$data = ArrayHelper::map(Groups::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
 		}
 
-		return $this->render('group_select', [
-			'model' => $this->model,
-			'attribute' => $this->attribute,
-			'data' => $data,
-			'multiple' => $this->multiple,
-			'options' => Groups::dataOptions(),
-			'action' => ''
-		]);
+		switch ($this->mode) {
+			case self::MODE_FIELD:
+				return $this->render('group_select_field', [
+					'model' => $this->model,
+					'attribute' => $this->attribute,
+					'data' => $data,
+					'multiple' => $this->multiple,
+					'options' => Groups::dataOptions(),
+				]);
+			break;
+			case self::MODE_FORM:
+				return $this->render('group_select_form', [
+					'model' => $this->model,
+					'attribute' => $this->attribute,
+					'data' => $data,
+					'multiple' => $this->multiple,
+					'options' => Groups::dataOptions(),
+					'formAction' => $this->formAction
+				]);
+			break;
+		}
+
 	}
 }
