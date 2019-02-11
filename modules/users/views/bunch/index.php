@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'attribute' => 'id',
 								'label' => 'id пользователя',
 								'value' => function($array) {
-									return Html::a(ArrayHelper::getValue($array, 'username'), ['/admin/users/update', 'id' => ArrayHelper::getValue($array, 'id')]);
+									return Html::a(ArrayHelper::getValue($array, 'username'), ['/users/users/profile', 'id' => ArrayHelper::getValue($array, 'id')]);
 								},
 								'format' => 'raw'
 							],

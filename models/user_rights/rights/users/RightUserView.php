@@ -34,7 +34,7 @@ class RightUserView extends UserRight {
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		$definedRules = [
-			'admin/users' => [
+			'users/users' => [
 				'actions' => [
 					'index' => self::ACCESS_ALLOW
 				]

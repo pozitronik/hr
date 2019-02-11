@@ -39,7 +39,7 @@ class RightUserUpdateSelf extends UserRight {
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		$definedRules = [
-			'admin/users' => [
+			'users/users' => [
 				'actions' => [
 					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 				]

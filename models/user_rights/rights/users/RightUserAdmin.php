@@ -37,7 +37,7 @@ class RightUserAdmin extends UserRight {
 	 * {@inheritDoc}
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return ('admin/users' === $controller->id)?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
+		return ('users/users' === $controller->id)?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
 	}
 
 	/**

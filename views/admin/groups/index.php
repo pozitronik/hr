@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						/** @var Groups $model */
 						$users = [];
 						foreach ($model->leaders as $leader) {
-							$users[] = Html::a($leader->username, ['/admin/users/update', 'id' => $leader->id]);
+							$users[] = Html::a($leader->username, ['/users/users/profile', 'id' => $leader->id]);
 						}
 						return implode(", ", $users);
 					},

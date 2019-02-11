@@ -34,18 +34,5 @@ class TestController extends Controller {
 
 	}
 
-	/**
-	 * @return string|null
-	 * @throws \Throwable
-	 */
-	public function actionUser():?string {
-		if (null === $user = Users::findModel(1)) return null;
-
-
-
-		return $this->render('/admin/users/attributes/index', [
-			'user' => $user
-		]);
-	}
 
 }

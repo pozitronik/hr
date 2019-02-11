@@ -33,7 +33,7 @@ use yii\web\View;
 		<!-- User dropdown menu -->
 		<ul class="head-list">
 			<li>
-				<?= Html::a("Профиль", ["/admin/users/update", "id" => $user->id]); ?>
+				<?= Html::a("Профиль", ["/users/users/profile", "id" => $user->id]); ?>
 			</li>
 		</ul>
 
