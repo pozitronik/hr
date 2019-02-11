@@ -5,7 +5,7 @@ use app\helpers\Icons;
 use app\models\groups\Groups;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\widgets\group_select\GroupSelectWidget;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\widgets\roles_select\RolesSelectWidget;
 use kartik\form\ActiveForm;
 use kartik\grid\ActionColumn;

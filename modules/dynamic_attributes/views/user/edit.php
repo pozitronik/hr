@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\types_select\AttributeTypesSelectWidget;
 use yii\web\View;
 use kartik\grid\GridView;

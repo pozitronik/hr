@@ -10,7 +10,7 @@ use app\models\core\traits\Upload;
 use app\models\groups\Groups;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\import\models\competency\activerecord\ICAttributes;

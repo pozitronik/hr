@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\users\controllers;
 
 use app\models\core\WigetableController;
-use app\models\users\UsersSearch;
+use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\data\ActiveDataProvider;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;

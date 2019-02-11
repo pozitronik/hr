@@ -13,7 +13,7 @@ use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\models\groups\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;

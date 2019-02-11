@@ -11,7 +11,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\models\users\UsersSearch;
+use app\modules\users\models\UsersSearch;
 use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
 use yii\web\View;

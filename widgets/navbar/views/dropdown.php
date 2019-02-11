@@ -12,7 +12,7 @@ use yii\base\View;
 use yii\helpers\Html;
 use app\widgets\bookmarks\BookmarksWidget;
 use app\widgets\admin_panel\AdminPanelWidget;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 
 ?>
 

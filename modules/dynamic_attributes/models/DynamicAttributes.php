@@ -15,7 +15,7 @@ use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
 use Throwable;

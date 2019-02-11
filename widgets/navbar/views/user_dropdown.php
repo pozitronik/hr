@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var Users $user
  */
 
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\helpers\Html;
 use yii\web\View;
 

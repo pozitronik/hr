@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\models\users\Bookmarks;
+use app\modules\users\models\Bookmarks;
 use yii\web\View;
 use yii\helpers\Html;
 

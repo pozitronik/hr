@@ -5,7 +5,7 @@ namespace app\models\user_rights\rights\users;
 
 use app\models\user_rights\AccessMethods;
 use app\models\user_rights\UserRight;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;

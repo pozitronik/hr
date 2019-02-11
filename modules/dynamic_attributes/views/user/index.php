@@ -14,7 +14,7 @@ use app\helpers\Icons;
 use app\models\references\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;

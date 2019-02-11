@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\references\refs;
 
 use app\models\references\Reference;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 
 /**
  * This is the model class for table "ref_user_positions".

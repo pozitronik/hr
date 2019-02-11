@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\navigation_menu;
 
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\base\Widget;
 
 /**

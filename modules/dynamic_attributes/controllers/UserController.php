@@ -7,7 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use Throwable;
 use Yii;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\base\InvalidConfigException;
 use yii\web\Controller;
 use yii\web\ErrorAction;

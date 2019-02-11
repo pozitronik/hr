@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\radar;
 
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use Exception;
 use Throwable;
 use yii\base\Widget;

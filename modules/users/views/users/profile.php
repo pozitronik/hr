@@ -9,7 +9,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\models\references\refs\RefUserPositions;
 use app\models\user_rights\Privileges;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use kartik\select2\Select2;
 use yii\web\View;

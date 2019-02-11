@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\user_select;
 
 use app\helpers\ArrayHelper;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 

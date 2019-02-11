@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\user;
 
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use Throwable;
 use Yii;
 use yii\web\Response;

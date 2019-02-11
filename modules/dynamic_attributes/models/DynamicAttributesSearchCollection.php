@@ -7,7 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\models\groups\Groups;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use Throwable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

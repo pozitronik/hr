@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
 

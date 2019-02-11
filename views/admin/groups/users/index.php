@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\helpers\Utils;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\models\groups\Groups;
 use app\widgets\roles_select\RolesSelectWidget;
 use yii\bootstrap\ButtonDropdown;

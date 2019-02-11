@@ -7,8 +7,8 @@ declare(strict_types = 1);
  * @var Users $user
  */
 
-use app\models\users\Bookmarks;
-use app\models\users\Users;
+use app\modules\users\models\Bookmarks;
+use app\modules\users\models\Users;
 use yii\web\View;
 use yii\bootstrap\Modal;
 use kartik\form\ActiveForm;

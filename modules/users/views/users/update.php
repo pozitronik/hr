@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\web\View;
 
 $this->title = 'Профиль пользователя '.$model->username;

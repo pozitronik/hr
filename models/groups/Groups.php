@@ -15,7 +15,7 @@ use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use Throwable;
 use Yii;
 use yii\db\ActiveQuery;

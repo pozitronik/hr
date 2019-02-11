@@ -1,8 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\users;
-
+namespace app\modules\users\models;
 use yii\data\ActiveDataProvider;
 
 /**

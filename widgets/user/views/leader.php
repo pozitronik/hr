@@ -12,7 +12,7 @@ use app\models\groups\Groups;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;

@@ -9,7 +9,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use kartik\select2\Select2;
 use yii\web\View;

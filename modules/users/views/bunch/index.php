@@ -11,7 +11,7 @@ declare(strict_types = 1);
  */
 
 use app\models\groups\Groups;
-use app\models\users\UsersMassUpdate;
+use app\modules\users\models\UsersMassUpdate;
 use kartik\select2\Select2;
 use app\helpers\ArrayHelper;
 use yii\data\ArrayDataProvider;

@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\models\user\CurrentUser;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\web\View;
 use yii\helpers\Html;
 $borderStyle = (CurrentUser::Id() === $model->id)?'img-border-current':'img-border';

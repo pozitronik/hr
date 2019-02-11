@@ -16,7 +16,7 @@ use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroupsRoles;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use Throwable;
 use Yii;
 use yii\base\Model;

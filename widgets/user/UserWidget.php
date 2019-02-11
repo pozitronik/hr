@@ -6,7 +6,7 @@ namespace app\widgets\user;
 use app\helpers\ArrayHelper;
 use app\models\groups\Groups;
 use app\models\references\refs\RefUserRoles;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\base\Widget;
 
 /**

@@ -9,7 +9,7 @@ use app\models\groups\Groups;
 use app\models\references\Reference;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
-use app\models\users\Users;
+use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 
