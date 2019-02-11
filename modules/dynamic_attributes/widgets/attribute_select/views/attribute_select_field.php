@@ -4,10 +4,10 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var ActiveRecord $model
- * @var $data array
- * @var $multiple bool
- * @var $formAction string
- * @var $attribute null|string
+ * @var array $data
+ * @var bool $multiple
+ * @var string $formAction
+ * @var null|string $attribute
  */
 
 use kartik\select2\Select2;
