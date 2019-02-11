@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\group_select;
 
 use app\helpers\ArrayHelper;
+use app\models\core\SelectionWidget;
 use app\models\groups\Groups;
 use app\models\references\refs\RefGroupTypes;
 use kartik\base\InputWidget;
@@ -24,11 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
  */
-class GroupSelectWidget extends InputWidget {
-	public const MODE_FIELD = 0;
-	public const MODE_FORM = 1;
-	public const MODE_AJAX = 2;//заготовка на будущее
-
+class GroupSelectWidget extends InputWidget implements SelectionWidget {
 	public $mode = self::MODE_FIELD;
 	public $notData;
 	public $multiple = false;
@@ -59,6 +56,7 @@ class GroupSelectWidget extends InputWidget {
 		}
 
 		switch ($this->mode) {
+			default:
 			case self::MODE_FIELD:
 				return $this->render('group_select_field', [
 					'model' => $this->model,
