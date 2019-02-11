@@ -305,7 +305,7 @@ class Users extends ActiveRecord implements StrictInterface {
 	 * @param integer[] $dropGroups
 	 * @throws Throwable
 	 */
-	public function setDropGroups(array $dropGroups):void {
+	public function setDropGroups($dropGroups):void {
 		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
