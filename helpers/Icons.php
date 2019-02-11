@@ -141,4 +141,12 @@ class Icons {
 	public static function group():string {
 		return "<i class='fa fa-users'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function add():string {
+		return "<i class='fa fa-plus'></i>";
+	}
+
+
 }
