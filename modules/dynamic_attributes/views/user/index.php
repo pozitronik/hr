@@ -9,10 +9,12 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
 use app\models\references\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\users\Users;
+use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use kartik\select2\Select2;
@@ -59,15 +61,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						'panel' => [
 							'type' => GridView::TYPE_DEFAULT,
 							'after' => false,
-							'before' => Select2::widget([
+							'before' => AttributeSelectWidget::widget([
 								'model' => $user,
 								'attribute' => 'relDynamicAttributes',
-								'name' => 'attribute_id',
-								'data' => ArrayHelper::map($user->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($user->relDynamicAttributes, 'id')])->all(), 'id', 'name'),
-								'options' => [
-									'multiple' => true,
-									'placeholder' => 'Добавить атрибут'
-								]
+								'mode' => AttributeSelectWidget::MODE_FORM,
+								'multiple' => true
 							]),
 							'heading' => false,
 							'footer' => false
