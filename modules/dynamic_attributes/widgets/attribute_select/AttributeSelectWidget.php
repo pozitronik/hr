@@ -41,7 +41,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidget {
 	 */
 	public function run():string {
 
-		$data = ArrayHelper::map($this->model->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->model->relDynamicAttributes, 'id')])->all(), 'id', 'name');
+		$data = ArrayHelper::map($this->model->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->model->{$this->attribute}, 'id')])->all(), 'id', 'name');
 
 		switch ($this->mode) {
 			default:
