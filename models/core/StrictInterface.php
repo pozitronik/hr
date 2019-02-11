@@ -5,6 +5,7 @@ declare(strict_types = 1);
 
  /**
   * Интерфейс, строго описывающий общие моменты во внутренних моделях (чтобы не сбиться)
+  * todo: имплементировать
   * Interface StrictInterface
   * @package app\models\core
   */
