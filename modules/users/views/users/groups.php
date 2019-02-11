@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								},
 								'bunch' => function($url, $model) {
 									/** @var Groups $model */
-									return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/admin/bunch/index', 'group_id' => $model->id]));
+									return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/users/bunch/index', 'group_id' => $model->id]));
 								}
 							]
 						],
