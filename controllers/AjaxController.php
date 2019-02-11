@@ -6,7 +6,7 @@ namespace app\controllers;
 use app\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\relations\RelGroupsGroups;
 use app\models\user\CurrentUser;

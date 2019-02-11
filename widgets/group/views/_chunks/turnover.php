@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var Groups $group
  */
 
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use yii\web\View;
 
 

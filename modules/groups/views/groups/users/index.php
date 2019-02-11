@@ -4,7 +4,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\users\models\Users;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\widgets\roles_select\RolesSelectWidget;
 use yii\bootstrap\ButtonDropdown;
 use yii\data\ActiveDataProvider;

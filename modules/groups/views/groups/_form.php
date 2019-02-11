@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use yii\web\View;

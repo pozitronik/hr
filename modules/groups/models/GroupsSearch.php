@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\groups;
+namespace app\modules\groups\models;
 
 use app\models\user_rights\UserAccess;
 use Yii\base\InvalidArgumentException;

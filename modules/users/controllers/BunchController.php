@@ -6,7 +6,7 @@ namespace app\modules\users\controllers;
 use app\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\WigetableController;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\modules\users\models\UsersMassUpdate;
 use Throwable;
 use Yii;

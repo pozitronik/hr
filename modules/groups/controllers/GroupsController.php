@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin;
+namespace app\modules\groups\controllers;
 
 use app\helpers\Utils;
-use app\models\groups\Groups;
-use app\models\groups\GroupsSearch;
+use app\modules\groups\models\Groups;
+use app\modules\groups\models\GroupsSearch;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
@@ -21,6 +21,7 @@ class GroupsController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-users'></i>Группы";
 	public $menuIcon = "/img/admin/groups.png";
 	public $orderWeight = 2;
+	public $defaultRoute = 'groups/groups';
 
 	/**
 	 * @inheritdoc

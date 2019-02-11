@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\group_type_select;
 
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\references\refs\RefGroupTypes;
 use Throwable;
 use yii\base\Widget;

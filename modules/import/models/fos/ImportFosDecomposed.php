@@ -7,7 +7,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\modules\import\models\fos\activerecord\ImportFosChapter;
 use app\modules\import\models\fos\activerecord\ImportFosChapterCouch;
 use app\modules\import\models\fos\activerecord\ImportFosChapterLeader;

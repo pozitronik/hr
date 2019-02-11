@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\users\models;
 
 use app\helpers\ArrayHelper;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\base\Model;

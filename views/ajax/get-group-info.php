@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use yii\web\View;
 use kartik\detail\DetailView;
 use app\helpers\ArrayHelper;

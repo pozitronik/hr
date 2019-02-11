@@ -10,8 +10,8 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\helpers\Utils;
-use app\models\groups\Groups;
-use app\models\groups\GroupsSearch;
+use app\modules\groups\models\Groups;
+use app\modules\groups\models\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
 use app\modules\users\models\Users;
 use kartik\grid\GridView;

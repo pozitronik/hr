@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\groups\traits;
+namespace app\modules\groups\models\traits;
 
 use app\helpers\ArrayHelper;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\relations\RelGroupsGroups;
 use Exception;
 use Throwable;

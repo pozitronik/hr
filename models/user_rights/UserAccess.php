@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\user_rights;
 
 use app\models\core\Magic;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use ReflectionException;
 use Throwable;

@@ -7,7 +7,7 @@ namespace app\controllers;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersGroups;

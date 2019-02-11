@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
 

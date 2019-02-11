@@ -1,17 +1,16 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\Icons;
-use app\helpers\Utils;
-use app\models\groups\Groups;
-use app\widgets\group_select\GroupSelectWidget;
-
 /**
  * @var View $this
  * @var Groups $model
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
+use app\helpers\Icons;
+use app\helpers\Utils;
+use app\modules\groups\models\Groups;
+use app\widgets\group_select\GroupSelectWidget;
 use app\widgets\group_type_select\GroupTypeSelectWidget;
 use app\widgets\relation_type_select\RelationTypeSelectWidget;
 use yii\data\ActiveDataProvider;
@@ -23,8 +22,9 @@ use yii\helpers\Url;
 use kartik\grid\ActionColumn;
 
 $provider = new ActiveDataProvider([
-	'query' => $model->getRelParentGroups()->orderBy('name')->active()
+	'query' => $model->getRelChildGroups()->orderBy('name')->active()
 ]);
+
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -37,8 +37,8 @@ $provider = new ActiveDataProvider([
 				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 				'before' => GroupSelectWidget::widget([
 					'model' => $model,
-					'attribute' => 'relParentGroups',
-					'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
+					'attribute' => 'relChildGroups',
+					'notData' => $model->isNewRecord?[]:array_merge($model->relChildGroups, [$model]),
 					'multiple' => true
 				])
 			],
@@ -94,8 +94,8 @@ $provider = new ActiveDataProvider([
 					'value' => function($group) use ($model) {
 						/** @var Groups $model */
 						return RelationTypeSelectWidget::widget([
-							'parentGroupId' => $group->id,
-							'childGroupId' => $model->id,
+							'parentGroupId' => $model->id,
+							'childGroupId' => $group->id,
 							'showStatus' => false
 						]);
 					},
@@ -104,21 +104,22 @@ $provider = new ActiveDataProvider([
 				[
 					'attribute' => 'usersCount',
 					'header' => Icons::users(),
-					'footer' => Utils::pageTotal($provider, 'usersCount')
+					'footer' => Utils::pageTotal($provider, 'usersCount'),
+					'headerOptions' => ['class' => 'text-center']
 				],
 				[
 					'attribute' => 'childGroupsCount',
 					'header' => Icons::subgroups(),
-					'footer' => Utils::pageTotal($provider, 'childGroupsCount')
+					'footer' => Utils::pageTotal($provider, 'childGroupsCount'),
+					'headerOptions' => ['class' => 'text-center']
 				],
 				[
 					'class' => CheckboxColumn::class,
 					'headerOptions' => ['class' => 'kartik-sheet-style'],
 					'header' => Icons::trash(),
-					'name' => $model->formName().'[dropParentGroups]'
+					'name' => $model->formName().'[dropChildGroups]'
 				]
 			]
-
 		]); ?>
 	</div>
 </div>

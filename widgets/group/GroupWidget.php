@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\group;
 
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use yii\base\Widget;
 
 /**

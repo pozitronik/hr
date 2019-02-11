@@ -6,10 +6,10 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\models\groups\Groups;
 use yii\web\View;
+use app\modules\groups\models\Groups;
 
-$this->title = 'Создать группу';
+$this->title = 'Изменить группу '.$model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
 $this->params['breadcrumbs'][] = $this->title;

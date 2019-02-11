@@ -5,7 +5,7 @@ namespace app\models\references\refs;
 
 use kartik\grid\GridView;
 use Yii;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\references\Reference;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;

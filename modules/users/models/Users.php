@@ -22,7 +22,7 @@ use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;

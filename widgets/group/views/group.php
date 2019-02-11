@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;

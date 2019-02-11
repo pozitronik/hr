@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use app\helpers\Icons;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;

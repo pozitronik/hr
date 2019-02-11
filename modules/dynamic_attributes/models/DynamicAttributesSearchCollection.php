@@ -5,7 +5,7 @@ namespace app\modules\dynamic_attributes\models;
 
 use app\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use Throwable;

@@ -7,7 +7,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;

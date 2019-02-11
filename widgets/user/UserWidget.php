@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\user;
 
 use app\helpers\ArrayHelper;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\references\refs\RefUserRoles;
 use app\modules\users\models\Users;
 use yii\base\Widget;

@@ -8,6 +8,7 @@ use kartik\grid\Module as GridModule;
 use app\modules\import\Module as Import;
 use app\modules\dynamic_attributes\Module as Attributes;
 use app\modules\users\Module as Users;
+use app\modules\groups\Module as Groups;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
@@ -49,6 +50,9 @@ $config = [
 		'users' => [
 			'class' => Users::class
 		],
+		'groups' => [
+			'class' => Groups::class
+		]
 	],
 	'components' => [
 		'request' => [

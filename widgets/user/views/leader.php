@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array|callable $options
  */
 
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\references\refs\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;

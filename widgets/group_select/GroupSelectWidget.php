@@ -5,7 +5,7 @@ namespace app\widgets\group_select;
 
 use app\helpers\ArrayHelper;
 use app\models\core\SelectionWidget;
-use app\models\groups\Groups;
+use app\modules\groups\models\Groups;
 use app\models\references\refs\RefGroupTypes;
 use kartik\base\InputWidget;
 use yii\db\ActiveRecord;

@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\groups;
+namespace app\modules\groups\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
-use app\models\groups\traits\Graph;
+use app\modules\groups\models\traits\Graph;
 use app\widgets\alert\AlertModel;
 use app\models\references\refs\RefGroupTypes;
 use app\models\references\refs\RefUserRoles;
