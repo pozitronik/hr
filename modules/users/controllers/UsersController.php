@@ -5,11 +5,9 @@ namespace app\modules\users\controllers;
 
 use app\models\core\WigetableController;
 use app\models\users\UsersSearch;
-use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use Throwable;
 use Yii;
 use app\models\users\Users;
-use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
