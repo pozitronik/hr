@@ -13,6 +13,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\models\references\refs\RefUserRoles;
 use app\models\user_rights\Privileges;
+use app\models\users\Users;
 use app\models\users\UsersSearch;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
@@ -50,14 +51,19 @@ GridView::widget([
 				'label' => Icons::menu(),
 				'caret' => ''
 			],
-			'template' => '{update} {delete}',
+			'template' => '{profile} {groups} {attributes} {delete}',
 			'buttons' => [
-				'update' => function($url, $model) {
-					/** @var UsersSearch $model */
-					return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
+
+				'profile' => function(string $url, Users $model) {
+					return Html::tag('li', Html::a(Icons::user().'Профиль', ['/users/users/profile', 'id' => $model->id]));
 				},
-				'delete' => function($url, $model) {
-					/** @var UsersSearch $model */
+				'groups' => function(string $url, Users $model) {
+					return Html::tag('li', Html::a(Icons::group().'Группы', ['/users/users/groups', 'id' => $model->id]));
+				},
+				'attributes' => function(string $url, Users $model) {
+					return Html::tag('li', Html::a(Icons::attributes().'Атрибуты', ['/users/users/attributes', 'id' => $model->id]));
+				},
+				'delete' => function(string $url, Users $model) {
 					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
 						'title' => 'Удалить запись',
 						'data' => [
@@ -75,8 +81,7 @@ GridView::widget([
 			]
 		],
 		[
-			'value' => function($model) {
-				/** @var UsersSearch $model */
+			'value' => function(Users $model) {
 				return Html::img($model->avatar, ['class' => 'img-circle img-xs']);
 			},
 			'label' => 'Аватар',
@@ -88,17 +93,15 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'username',
-			'value' => function($model) {
-				/** @var UsersSearch $model */
-				return Html::a($model->username, ['update', 'id' => $model->id]);
+			'value' => function(Users $model) {
+				return Html::a($model->username, ['/users/users/profile', 'id' => $model->id]);
 			},
 			'format' => 'raw'
 		],
 		[
 			'attribute' => 'groupName',
 			'label' => 'Группы',
-			'value' => function($model) {
-				/** @var UsersSearch $model */
+			'value' => function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->relGroups,
 					'useBadges' => false,
@@ -116,7 +119,7 @@ GridView::widget([
 			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
 
 			'label' => 'Роли',
-			'value' => function($model) {
+			'value' => function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
@@ -124,7 +127,6 @@ GridView::widget([
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					"optionsMap" => function() {
-						/** @var UsersSearch $model */
 						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
 						array_walk($options, function(&$value, $key) {
 							if (!empty($value)) {
@@ -147,8 +149,7 @@ GridView::widget([
 			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
 
 			'label' => 'Привилегии',
-			'value' => function($model) {
-				/** @var UsersSearch $model */
+			'value' => function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->getRelPrivileges()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
@@ -158,8 +159,7 @@ GridView::widget([
 				]);
 			},
 			'format' => 'raw'
-		],
+		]
 
-		'email:email'
 	]
 ]); ?>
