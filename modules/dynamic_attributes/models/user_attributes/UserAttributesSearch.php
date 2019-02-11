@@ -19,7 +19,7 @@ class UserAttributesSearch extends RelUsersAttributes {
 	 */
 	public function rules():array {
 		return [
-			[['id', 'type', 'user_id', 'attribute_id'], 'safe'],
+			[['id', 'type', 'user_id', 'attribute_id'], 'safe']
 		];
 	}
 
@@ -50,20 +50,8 @@ class UserAttributesSearch extends RelUsersAttributes {
 		$this->load($params);
 
 		if (!$this->validate()) return $dataProvider;
-//
-//
-//		$query->distinct();
-//
 		$query->andFilterWhere(['rel_users_attributes_types.type' => $this->type]);
-//			->andFilterWhere(['group_id' => $allowedGroups])
-//			->andFilterWhere(['like', 'sys_users.username', $this->username])
-//			->andFilterWhere(['like', 'login', $this->login])
-//			->andFilterWhere(['like', 'email', $this->email])
-//			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
-//			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
-//			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges]);
 
-		\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }

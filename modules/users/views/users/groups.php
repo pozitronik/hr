@@ -7,7 +7,6 @@ use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
 use app\widgets\roles_select\RolesSelectWidget;
-use kartik\form\ActiveForm;
 use kartik\grid\ActionColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;

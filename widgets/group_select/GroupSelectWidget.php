@@ -63,7 +63,7 @@ class GroupSelectWidget extends InputWidget implements SelectionWidget {
 					'attribute' => $this->attribute,
 					'data' => $data,
 					'multiple' => $this->multiple,
-					'options' => Groups::dataOptions(),
+					'options' => Groups::dataOptions()
 				]);
 			break;
 			case self::MODE_FORM:

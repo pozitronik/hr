@@ -56,9 +56,7 @@ class UserController extends Controller {
 	 * @throws InvalidConfigException
 	 */
 	public function actionAddAttribute(int $user_id):Response {
-		if (null !== $user = Users::findModel($user_id)) {
-			if (null !== ($updateArray = Yii::$app->request->post($user->formName()))) $user->updateModel($updateArray);
-		}
+		if ((null !== $user = Users::findModel($user_id)) && null !== ($updateArray = Yii::$app->request->post($user->formName()))) $user->updateModel($updateArray);
 		return $this->redirect(['index', 'user_id' => $user_id]);
 
 	}

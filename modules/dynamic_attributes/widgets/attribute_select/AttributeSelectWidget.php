@@ -50,7 +50,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidget {
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
-					'multiple' => $this->multiple,
+					'multiple' => $this->multiple
 				]);
 			break;
 			case self::MODE_FORM:

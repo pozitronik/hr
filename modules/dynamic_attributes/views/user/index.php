@@ -9,11 +9,8 @@ declare(strict_types = 1);
  * @var string|array $updateAttributeAction
  */
 
-use app\helpers\ArrayHelper;
-use app\helpers\Icons;
 use app\models\references\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributes;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
@@ -80,14 +77,14 @@ $this->params['breadcrumbs'][] = $this->title;
 							[
 								'headerOptions' => [/*Фактический хак: таким образом объединяем ячейки заголовка и фильтра без необходимости патчить код фреймворка*/
 									'rowspan' => 2,
-									'style' => 'width: 50%',
+									'style' => 'width: 50%'
 								],
 								'contentOptions' => [
 									'colspan' => 2,
 									'style' => 'padding:0'
 								],
 								'filterOptions' => [
-									'style' => 'padding:0px 10px 0px 0px; vertical-align: middle; width: 50%;',
+									'style' => 'padding:0px 10px 0px 0px; vertical-align: middle; width: 50%;'
 								],
 								'attribute' => 'type',
 								'label' => 'Сортировать по типу отношения атрибута',
@@ -108,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									]);
 								},
 								'format' => 'raw'
-							],
+							]
 						]
 
 					]); ?>
