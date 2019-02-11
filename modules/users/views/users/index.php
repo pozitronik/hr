@@ -106,7 +106,11 @@ GridView::widget([
 					'data' => $model->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
-					'linkScheme' => ['update', 'id' => 'id']
+					'linkScheme' => ['/groups/groups/update', 'id' => 'id']
+					/*todo: сделать определение урлов через модуль, чтобы вместо /groups/groups/update писать что-то вроде
+					 * use app\modules\groups\Module as Groups;
+					 * Groups::Route('groups','update, ['id' => 'id'])
+					*/
 				]);
 			},
 			'format' => 'raw'
