@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'buttons' => [
 								'tree' => function($url, $model) {
 									/** @var Groups $model */
-									return Html::tag('li', Html::a(Icons::network().'Граф структуры', ['/admin/groups/tree', 'id' => $model->id]));
+									return Html::tag('li', Html::a(Icons::network().'Граф структуры', ['/groups/groups/tree', 'id' => $model->id]));
 								},
 								'bunch' => function($url, $model) {
 									/** @var Groups $model */
@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'attribute' => 'name',
 							'value' => function($group) {
 								/** @var Groups $group */
-								return Html::a($group->name, Url::to(['/admin/groups/update', 'id' => $group->id]));
+								return Html::a($group->name, Url::to(['/groups/groups/update', 'id' => $group->id]));
 							}
 						],
 						[

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['
 
 if ($group) {
 	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/users/users']];
-	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
+	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/groups/groups/update', 'id' => $group->id]];
 	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
 	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];

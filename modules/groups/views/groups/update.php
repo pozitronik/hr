@@ -11,7 +11,7 @@ use app\modules\groups\models\Groups;
 
 $this->title = 'Изменить группу '.$model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

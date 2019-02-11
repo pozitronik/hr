@@ -32,7 +32,7 @@ class BadgeWidget extends Widget {
 	public $useBadges = true;//использовать бейджи для основного списка.
 
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
-	public $linkScheme = false;//Url-схема, например ['/admin/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
+	public $linkScheme = false;//Url-схема, например ['/groups/groups/update', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
 	public $itemsSeparator = ', ';//Разделитель объектов
 	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([id => options])"
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа

@@ -74,7 +74,7 @@ $provider = new ActiveDataProvider([
 					'attribute' => 'name',
 					'value' => function($group) {
 						/** @var Groups $group */
-						return Html::a($group->name, Url::to(['/admin/groups/update', 'id' => $group->id]));
+						return Html::a($group->name, Url::to(['/groups/groups/update', 'id' => $group->id]));
 					}
 				],
 				[

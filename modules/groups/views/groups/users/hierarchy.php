@@ -12,8 +12,8 @@ use yii\web\View;
 
 $this->title = 'Иерархия пользователей';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
-$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
+$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/groups/groups/update', 'id' => $group->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= $this->render('index_tree', [
 					'group' => $group,
 					'showRolesSelector' => $showRolesSelector,
-					'hierarchy' => [['label' => null === $group->type?$group->name:"{$group->relGroupTypes->name}: $group->name", 'url' => ['/admin/groups/update', 'id' => $group->id]]]
+					'hierarchy' => [['label' => null === $group->type?$group->name:"{$group->relGroupTypes->name}: $group->name", 'url' => ['/groups/groups/update', 'id' => $group->id]]]
 				]); ?>
 			</div>
 		</div>

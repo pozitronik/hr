@@ -11,7 +11,7 @@ use yii\web\View;
 
 $this->title = 'Создать группу';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
+$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

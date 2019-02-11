@@ -35,8 +35,8 @@ use app\widgets\user\UserWidget;
 				<?php endif; ?>
 			</ul>
 		</div>
-		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['/admin/groups/update', 'id' => $group->id]); ?>
-		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['/admin/groups/update', 'id' => $group->id]); ?></h3>
+		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['/groups/groups/update', 'id' => $group->id]); ?>
+		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['/groups/groups/update', 'id' => $group->id]); ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="tab-content">
@@ -65,9 +65,9 @@ use app\widgets\user\UserWidget;
 				'unbadgedCount' => 3,
 				'moreBadgeOptions' => ['class' => 'badge'],
 				'itemsSeparator' => false,
-				'linkScheme' => ['/admin/groups/update', 'id' => 'id']
+				'linkScheme' => ['/groups/groups/update', 'id' => 'id']
 			]); ?>
-			<?= Html::a('Визуализация иерархии', ['/admin/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
+			<?= Html::a('Визуализация иерархии', ['/groups/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
 		<?php endif; ?>
 
 	</div>

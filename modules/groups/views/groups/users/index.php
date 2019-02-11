@@ -58,11 +58,11 @@ $provider = new ActiveDataProvider([
 					'items' => [
 						[
 							'label' => Icons::hierarchy().'Иерархия',
-							'url' => ['/admin/groups/users-hierarchy', 'id' => $model->id]
+							'url' => ['/groups/groups/users-hierarchy', 'id' => $model->id]
 						],
 						[
 							'label' => Icons::hierarchy_red().'Иерархия (с ролями)',
-							'url' => ['/admin/groups/users-hierarchy', 'id' => $model->id, 'showRolesSelector' => true]
+							'url' => ['/groups/groups/users-hierarchy', 'id' => $model->id, 'showRolesSelector' => true]
 						]
 					]
 				]
