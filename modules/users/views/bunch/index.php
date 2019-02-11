@@ -24,11 +24,11 @@ $this->title = 'Групповое изменение пользователей
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 
 if ($group) {
-	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/admin/groups']];
+	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/users/users']];
 	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/admin/groups/update', 'id' => $group->id]];
 	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
-	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/admin/users']];
+	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
 	$usersLabel = "Пользователи: ".count($massUpdateModel->users). " всего";
 }
 $this->params['breadcrumbs'][] = $this->title;

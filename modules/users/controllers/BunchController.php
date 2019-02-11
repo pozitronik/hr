@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin;
+namespace app\modules\users\controllers;
 
 use app\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
@@ -24,6 +24,7 @@ class BunchController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-user-edit'></i>Редактор пользователей";
 //	public $menuIcon = "/img/admin/users.png";
 	public $orderWeight = 5;
+	public $defaultRoute = 'users/bunch';
 
 	/**
 	 * @inheritdoc
