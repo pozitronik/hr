@@ -3,16 +3,12 @@ declare(strict_types = 1);
 
 namespace app\modules\groups;
 
-use yii\base\Module as BaseModule;
+use app\models\core\core_module\CoreModule;
 
 /**
  * Class Module
  * @package app\modules\import
  */
-class Module extends BaseModule {
+class Module extends CoreModule {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public $controllerNamespace = 'app\modules\groups\controllers';
 }

@@ -10,8 +10,5 @@ use app\models\core\core_module\CoreModule;
  * @package app\modules\import
  */
 class Module extends CoreModule {
-	/**
-	 * {@inheritdoc}
-	 */
-	public $controllerNamespace = 'app\modules\users\controllers';
+
 }

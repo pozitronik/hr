@@ -13,6 +13,15 @@ use yii\base\Module as BaseModule;
 class CoreModule extends BaseModule implements CoreModuleInterface {
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public function __construct(string $id, $parent = null, array $config = []) {
+		parent::__construct($id, $parent, $config);
+		$this->controllerNamespace = "app\modules\\{$this->id}\\controllers";
+		$this->defaultRoute = $this->id;
+	}
+
+	/**
 	 * Функция должна вернуть корневой путь модуля (ровно тот же, что указан в web.php)
 	 * @return string
 	 * @throws InvalidConfigException
