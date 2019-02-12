@@ -23,36 +23,40 @@ use yii\web\View;
 		'encodeLabels' => false,
 		'items' => [
 			[
-				'label' => Icons::user().'Профиль группы',
+				'label' => Icons::group().'Профиль группы',
 				'url' => ['/groups/groups/profile', 'id' => $model->id]
 			],
 			[
-				'label' => Icons::group().'Иерархия группы',
+				'label' => Icons::subgroups().'Иерархия группы',
 				'url' => ['/groups/groups/groups', 'id' => $model->id]
 			],
 			[
-				'label' => Icons::user_add().'Граф иерархии',
+				'label' => Icons::network().'Граф иерархии',
 				'url' => ['/groups/groups/tree', 'id' => $model->id]
 			],
 			[
-				'label' => Icons::attributes().'Пользователи в группе',
+				'label' => Icons::users().'Пользователи в группе',
 				'url' => ['/groups/groups/users', 'id' => $model->id]
 			],
 			[
-				'label' => Icons::user_add().'Иерархия пользователей',
+				'label' => Icons::hierarchy().'Иерархия пользователей',
 				'url' => ['/groups/groups/users-hierarchy', 'id' => $model->id]
 			],
 			[
-				'label' => Icons::user_add().'Иерархия пользователей (с ролями)',
+				'label' => Icons::hierarchy_red().'Иерархия пользователей (с ролями)',
 				'url' => ['/groups/groups/users-hierarchy', 'showRolesSelector' => true, 'id' => $model->id]
 			],
 			[
-				'label' => Icons::user_add().'Редактировать пользователей',
+				'label' => Icons::users_edit().'Редактировать пользователей',
 				'url' => ['/users/bunch/index', 'group_id' => $model->id]
 			],
 			[
-				'label' => Icons::user_add().'Редактировать пользователей (с учётом иерархии)',
+				'label' => Icons::users_edit_red().'Редактировать пользователей (с учётом иерархии)',
 				'url' => ['/users/bunch/index', 'group_id' => $model->id, 'hierarchy' => true]
+			],
+			[
+				'label' => Icons::add().'Новая группа',
+				'url' => ['/groups/groups/create']
 			]
 		]
 	]
