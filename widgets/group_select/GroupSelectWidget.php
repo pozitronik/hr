@@ -25,7 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
  */
-class GroupSelectWidgetInterface extends InputWidget implements SelectionWidgetInterface {
+class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
 	public $notData;
 	public $multiple = false;

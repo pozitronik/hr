@@ -4,7 +4,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
-use app\widgets\group_select\GroupSelectWidgetInterface;
+use app\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
 use app\widgets\roles_select\RolesSelectWidget;
 use kartik\grid\ActionColumn;
@@ -46,12 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
 					'panel' => [
 						'type' => GridView::TYPE_DEFAULT,
 						'after' => false,
-						'before' => GroupSelectWidgetInterface::widget([
+						'before' => GroupSelectWidget::widget([
 							'model' => $model,
 							'attribute' => 'relGroups',
 							'notData' => $model->relGroups,
 							'multiple' => true,
-							'mode' => GroupSelectWidgetInterface::MODE_FORM
+							'mode' => GroupSelectWidget::MODE_FORM
 						]),
 						'heading' => false,
 						'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false

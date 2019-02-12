@@ -11,7 +11,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
-use app\widgets\group_select\GroupSelectWidgetInterface;
+use app\widgets\group_select\GroupSelectWidget;
 use app\widgets\group_type_select\GroupTypeSelectWidget;
 use app\widgets\relation_type_select\RelationTypeSelectWidget;
 use yii\data\ActiveDataProvider;
@@ -30,7 +30,7 @@ use kartik\grid\ActionColumn;
 		'after' => false,
 		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)"),
 		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-		'before' => GroupSelectWidgetInterface::widget([
+		'before' => GroupSelectWidget::widget([
 			'model' => $model,
 			'attribute' => 'relChildGroups',
 			'notData' => $model->isNewRecord?[]:array_merge($model->relChildGroups, [$model]),
