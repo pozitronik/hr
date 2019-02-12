@@ -95,7 +95,7 @@ GridView::widget([
 		[
 			'attribute' => 'username',
 			'value' => function(Users $model) {
-				return Html::a($model->username, $x);
+				return Html::a($model->username, ['/users/users/profile', 'id' => $model->id]);
 			},
 			'format' => 'raw'
 		],
