@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property array $notData Данные, исключаемые из списка
  * @property boolean $multiple
  * @property string|array $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
+ * @property int $mode
  */
 class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;

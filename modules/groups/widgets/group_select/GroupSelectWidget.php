@@ -13,17 +13,18 @@ use yii\db\ActiveRecord;
 /**
  * Виджет выбора группы (общий, для тех моделей, которые имеют нужные атрибуты).
  * Может работать в двух режимах. MODE_FIELD - как поле ActiveForm. В этом случае виджет является просто выбиралкой.
- * MODE_FORM- самостоятельная форма, в этом случае виджет сам отрендерит форму с указанным экшоном.
+ * MODE_FORM - самостоятельная форма, в этом случае виджет сам отрендерит форму с указанным экшоном.
  *
  * Class GroupSelectWidget
  * @package app\components\group_select
- *-
+ *
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
  * @property array $notData Группы, исключённые из списка (например те, в которых пользователь уже есть)
  * @property bool $groupByType Группировка списка по типам групп (двухуровневый список)
  * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
+ * @property int $mode
  */
 class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
