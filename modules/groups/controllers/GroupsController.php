@@ -9,6 +9,7 @@ use app\modules\groups\models\GroupsSearch;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
+use yii\data\ActiveDataProvider;
 use yii\filters\ContentNegotiator;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -88,6 +89,12 @@ class GroupsController extends WigetableController {
 		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateGroup($updateArray);
 		return $this->render('groups', [
 			'model' => $group,
+			'parentProvider' => new ActiveDataProvider([
+				'query' => $group->getRelParentGroups()->orderBy('name')->active()
+			]),
+			'childProvider' => new ActiveDataProvider([
+				'query' => $group->getRelChildGroups()->orderBy('name')->active()
+			])
 		]);
 	}
 

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $model
+ * @var ActiveDataProvider $provider
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
@@ -20,10 +21,6 @@ use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\grid\ActionColumn;
-
-$provider = new ActiveDataProvider([
-	'query' => $model->getRelChildGroups()->orderBy('name')->active()
-]);
 
 ?>
 <?= GridView::widget([
