@@ -26,100 +26,96 @@ $provider = new ActiveDataProvider([
 ]);
 
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<?= GridView::widget([
-			'dataProvider' => $provider,
-			'panel' => [
-				'type' => GridView::TYPE_DEFAULT,
-				'after' => false,
-				'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)"),
-				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-				'before' => GroupSelectWidgetInterface::widget([
-					'model' => $model,
-					'attribute' => 'relChildGroups',
-					'notData' => $model->isNewRecord?[]:array_merge($model->relChildGroups, [$model]),
-					'multiple' => true
-				])
+<?= GridView::widget([
+	'dataProvider' => $provider,
+	'panel' => [
+		'type' => GridView::TYPE_INFO,
+		'after' => false,
+		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)"),
+		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
+		'before' => GroupSelectWidgetInterface::widget([
+			'model' => $model,
+			'attribute' => 'relChildGroups',
+			'notData' => $model->isNewRecord?[]:array_merge($model->relChildGroups, [$model]),
+			'multiple' => true
+		])
+	],
+	'toolbar' => false,
+	'export' => false,
+	'summary' => false,
+	'resizableColumns' => true,
+	'responsive' => true,
+	'showFooter' => true,
+	'footerRowOptions' => [],
+	'columns' => [
+		[
+			'header' => Icons::menu(),
+			'dropdown' => true,
+			'dropdownButton' => [
+				'label' => Icons::menu(),
+				'caret' => ''
 			],
-			'toolbar' => false,
-			'export' => false,
-			'summary' => false,
-			'resizableColumns' => true,
-			'responsive' => true,
-			'showFooter' => true,
-			'footerRowOptions' => [],
-			'columns' => [
-				[
-					'header' => Icons::menu(),
-					'dropdown' => true,
-					'dropdownButton' => [
-						'label' => Icons::menu(),
-						'caret' => ''
-					],
-					'class' => ActionColumn::class,
-					'template' => '{tree}{bunch}',
-					'buttons' => [
-						'tree' => function($url, $model) {
-							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
-						},
-						'bunch' => function($url, $model) {
-							/** @var Groups $model */
-							return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/users/bunch/index', 'group_id' => $model->id]));
-						}
-					]
-				],
-				[
-					'format' => 'raw',
-					'attribute' => 'name',
-					'value' => function($group) {
-						/** @var Groups $group */
-						return Html::a($group->name, Url::to(['/groups/groups/update', 'id' => $group->id]));
-					}
-				],
-				[
-					'attribute' => 'type',
-					'value' => function($group) {
-						/** @var Groups $model */
-						return GroupTypeSelectWidget::widget([
-							'groupId' => $group->id,
-							'showStatus' => false
-						]);
-					},
-					'format' => 'raw'
-				],
-				[
-					'attribute' => 'relGroupsGroupsChild.refGroupsRelationTypes.name',
-					'label' => 'Тип связи',
-					'value' => function($group) use ($model) {
-						/** @var Groups $model */
-						return RelationTypeSelectWidget::widget([
-							'parentGroupId' => $model->id,
-							'childGroupId' => $group->id,
-							'showStatus' => false
-						]);
-					},
-					'format' => 'raw'
-				],
-				[
-					'attribute' => 'usersCount',
-					'header' => Icons::users(),
-					'footer' => Utils::pageTotal($provider, 'usersCount'),
-					'headerOptions' => ['class' => 'text-center']
-				],
-				[
-					'attribute' => 'childGroupsCount',
-					'header' => Icons::subgroups(),
-					'footer' => Utils::pageTotal($provider, 'childGroupsCount'),
-					'headerOptions' => ['class' => 'text-center']
-				],
-				[
-					'class' => CheckboxColumn::class,
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => Icons::trash(),
-					'name' => $model->formName().'[dropChildGroups]'
-				]
+			'class' => ActionColumn::class,
+			'template' => '{tree}{bunch}',
+			'buttons' => [
+				'tree' => function($url, $model) {
+					return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
+				},
+				'bunch' => function($url, $model) {
+					/** @var Groups $model */
+					return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/users/bunch/index', 'group_id' => $model->id]));
+				}
 			]
-		]); ?>
-	</div>
-</div>
+		],
+		[
+			'format' => 'raw',
+			'attribute' => 'name',
+			'value' => function($group) {
+				/** @var Groups $group */
+				return Html::a($group->name, Url::to(['/groups/groups/update', 'id' => $group->id]));
+			}
+		],
+		[
+			'attribute' => 'type',
+			'value' => function($group) {
+				/** @var Groups $model */
+				return GroupTypeSelectWidget::widget([
+					'groupId' => $group->id,
+					'showStatus' => false
+				]);
+			},
+			'format' => 'raw'
+		],
+		[
+			'attribute' => 'relGroupsGroupsChild.refGroupsRelationTypes.name',
+			'label' => 'Тип связи',
+			'value' => function($group) use ($model) {
+				/** @var Groups $model */
+				return RelationTypeSelectWidget::widget([
+					'parentGroupId' => $model->id,
+					'childGroupId' => $group->id,
+					'showStatus' => false
+				]);
+			},
+			'format' => 'raw'
+		],
+		[
+			'attribute' => 'usersCount',
+			'header' => Icons::users(),
+			'footer' => Utils::pageTotal($provider, 'usersCount'),
+			'headerOptions' => ['class' => 'text-center']
+		],
+		[
+			'attribute' => 'childGroupsCount',
+			'header' => Icons::subgroups(),
+			'footer' => Utils::pageTotal($provider, 'childGroupsCount'),
+			'headerOptions' => ['class' => 'text-center']
+		],
+		[
+			'class' => CheckboxColumn::class,
+			'headerOptions' => ['class' => 'kartik-sheet-style'],
+			'header' => Icons::trash(),
+			'name' => $model->formName().'[dropChildGroups]'
+		]
+	]
+]); ?>
