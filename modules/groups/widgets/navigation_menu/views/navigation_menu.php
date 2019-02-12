@@ -51,7 +51,7 @@ use yii\web\View;
 				'url' => ['/users/bunch/index', 'group_id' => $model->id]
 			],
 			[
-				'label' => Icons::user_add().'Редактировать пользователей (с учётом иерархии))',
+				'label' => Icons::user_add().'Редактировать пользователей (с учётом иерархии)',
 				'url' => ['/users/bunch/index', 'group_id' => $model->id, 'hierarchy' => true]
 			]
 		]
