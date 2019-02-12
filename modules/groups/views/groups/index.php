@@ -50,15 +50,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 					'template' => '{tree} {update} {delete} ',
 					'buttons' => [
-						'tree' => function($url, $model) {
+						'tree' => function(string $url, Groups $model) {
 							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
 						},
-						'update' => function($url, $model) {
-							/** @var GroupsSearch $model */
-							return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
+						'update' => function(string $url, Groups $model) {
+							return Html::tag('li', Html::a(Icons::update().'Изменение', ['profile', 'id' => $model->id]));
 						},
-						'delete' => function($url, $model) {
-							/** @var GroupsSearch $model */
+						'delete' => function(string $url, Groups $model) {
 							return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
 								'title' => 'Удалить запись',
 								'data' => [
@@ -79,9 +77,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				[
 					'attribute' => 'name',
-					'value' => function($model) {
-						/** @var GroupsSearch $model */
-						return Html::a($model->name, ['update', 'id' => $model->id]);
+					'value' => function(Groups $model) {
+						return Html::a($model->name, ['profile', 'id' => $model->id]);
 					},
 					'format' => 'raw'
 				],
@@ -95,8 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				[
 					'attribute' => 'leaders',
-					'value' => function($model) {
-						/** @var Groups $model */
+					'value' => function(Groups $model) {
 						$users = [];
 						foreach ($model->leaders as $leader) {
 							$users[] = Html::a($leader->username, ['/users/users/profile', 'id' => $leader->id]);

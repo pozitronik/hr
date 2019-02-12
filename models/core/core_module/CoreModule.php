@@ -15,6 +15,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	/**
 	 * Функция должна вернуть корневой путь модуля (ровно тот же, что указан в web.php)
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public static function Root():string {
 		throw new InvalidConfigException('Модуль не имеет определения корневого пути!');

@@ -124,10 +124,10 @@ class GroupsController extends WigetableController {
 		if ($newGroup->createGroup(Yii::$app->request->post($newGroup->formName()))) {
 			$newGroup->uploadLogotype();
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
-			return $this->redirect(['update', 'id' => $newGroup->id]);
+			return $this->redirect(['profile', 'id' => $newGroup->id]);
 		}
 
-		return $this->render('create', [
+		return $this->render('profile', [
 			'model' => $newGroup
 		]);
 	}

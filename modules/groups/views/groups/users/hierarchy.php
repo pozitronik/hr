@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $model
- * @var $showRolesSelector bool
+ * @var bool $showRolesSelector
  * @var array $hierarchy
  */
 
