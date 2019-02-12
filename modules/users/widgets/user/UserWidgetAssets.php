@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\user;
+namespace app\modules\users\widgets\user;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\user
  */
 class UserWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/user/assets';
+	public $sourcePath = '@app/modules/users/widgets/user/assets';
 	public $css = [
 		'css/user.css'
 	];

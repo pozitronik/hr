@@ -15,8 +15,7 @@ use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
-use app\widgets\user\UserWidget;
-
+use app\modules\users\widgets\user\UserWidget;
 
 ?>
 

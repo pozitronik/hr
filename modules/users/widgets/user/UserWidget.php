@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\user;
+namespace app\modules\users\widgets\user;
 
 use app\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
