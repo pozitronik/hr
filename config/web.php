@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 /** @noinspection UsingInclusionReturnValueInspection */
 
-use yii\caching\FileCache;
 use kartik\grid\Module as GridModule;
 use app\modules\import\Module as Import;
 use app\modules\dynamic_attributes\Module as Attributes;
@@ -16,6 +15,8 @@ use yii\swiftmailer\Mailer;
 use yii\log\FileTarget;
 use /** @noinspection PhpUnusedAliasInspection */
 	yii\caching\DummyCache;
+use /** @noinspection PhpUnusedAliasInspection */
+	yii\caching\FileCache;
 use yii\web\UrlManager;
 
 $params = require __DIR__.'/params.php';
