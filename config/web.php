@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 /** @noinspection UsingInclusionReturnValueInspection */
 
+use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
 use app\modules\import\Module as Import;
 use app\modules\dynamic_attributes\Module as Attributes;
-use app\modules\users\Module as Users;
 use app\modules\groups\Module as Groups;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
@@ -49,7 +49,7 @@ $config = [
 			'class' => Attributes::class
 		],
 		'users' => [
-			'class' => Users::class
+			'class' => UsersModule::class
 		],
 		'groups' => [
 			'class' => Groups::class
