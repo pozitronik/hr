@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\group;
+namespace app\modules\groups\widgets\group;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\group
  */
 class GroupWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/group/assets';
+	public $sourcePath = '@app/modules/groups/widgets/group/assets';
 	public $css = [
 		'css/group.css'
 	];

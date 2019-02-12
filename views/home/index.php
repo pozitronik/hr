@@ -9,7 +9,8 @@ declare(strict_types = 1);
 
 use app\modules\users\models\Users;
 use yii\web\View;
-use app\widgets\group\GroupWidget;
+use app\modules\groups\widgets\group\GroupWidget;
+
 $this->title = 'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -18,4 +19,4 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?= GroupWidget::widget([
 		'group' => $group
 	]); ?>
-<?php endforeach;?>
+<?php endforeach; ?>
