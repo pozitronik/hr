@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\helpers\ArrayHelper;
 use app\helpers\Path;
 use app\models\user_rights\UserAccess;
 use RecursiveDirectoryIterator;
@@ -111,7 +110,7 @@ class WigetableController extends Controller {
 				$result[] = $controller;
 			}
 		}
-		ArrayHelper::multisort($result, ['orderWeight']);
+//		ArrayHelper::multisort($result, ['orderWeight']);
 		return $result;
 	}
 

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\admin_panel;
 
+use app\helpers\ArrayHelper;
 use app\models\core\WigetableController;
 use ReflectionException;
 use yii\base\UnknownClassException;
@@ -52,7 +53,7 @@ class AdminPanelWidget extends Widget {
 		} else {
 			$controllers = WigetableController::GetControllersList($this->controllers_directory);
 		}
-
+		ArrayHelper::multisort($controllers, ['orderWeight']);
 		return $this->render('admin_panel', [
 			'controllers' => $controllers,
 			'mode' => $this->mode
