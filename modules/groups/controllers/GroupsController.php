@@ -87,7 +87,7 @@ class GroupsController extends WigetableController {
 	public function actionGroups(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateGroup($updateArray);
-		return $this->render('groups', [
+		return $this->render('groups/index', [
 			'model' => $group,
 			'parentProvider' => new ActiveDataProvider([
 				'query' => $group->getRelParentGroups()->orderBy('name')->active()
@@ -107,8 +107,11 @@ class GroupsController extends WigetableController {
 	public function actionUsers(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateGroup($updateArray);
-		return $this->render('users', [
-			'model' => $group
+		return $this->render('users/index', [
+			'model' => $group,
+			'provider' => new ActiveDataProvider([
+				'query' => $group->getRelUsers()->active()
+			])
 		]);
 	}
 
@@ -130,20 +133,6 @@ class GroupsController extends WigetableController {
 	}
 
 	/**
-	 * @param integer $id
-	 * @return null|string
-	 * @throws Throwable
-	 */
-	public function actionUpdate(int $id):?string {
-		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
-		if ((null !== ($updateArray = Yii::$app->request->post($group->formName()))) && $group->updateGroup($updateArray)) $group->uploadLogotype();
-
-		return $this->render('update', [
-			'model' => $group
-		]);
-	}
-
-	/**
 	 * @param int $id
 	 * @return Response|null
 	 * @throws Throwable
@@ -157,12 +146,21 @@ class GroupsController extends WigetableController {
 	 * Страница иерархичного отображения пользователей для группы
 	 * @param int $id
 	 * @param bool $showRolesSelector
-	 * @return string
+	 * @return string|null
 	 * @throws Throwable
 	 */
-	public function actionUsersHierarchy(int $id, bool $showRolesSelector = false):string {
-		$group = Groups::findModel($id, new NotFoundHttpException());
-		return $this->render('users/hierarchy', compact('group', 'showRolesSelector'));
+	public function actionUsersHierarchy(int $id, bool $showRolesSelector = false):?string {
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
+		return $this->render('users/hierarchy', [
+			'model' => $group,
+			'showRolesSelector' => $showRolesSelector,
+			'hierarchy' => [
+				[
+					'label' => null === $group->type?$group->name:"{$group->relGroupTypes->name}: $group->name",
+					'url' => ['/groups/groups/profile', 'id' => $group->id]
+				]
+			]
+		]);
 	}
 
 	/**

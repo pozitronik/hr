@@ -12,7 +12,7 @@ declare(strict_types = 1);
 use app\models\references\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributes;
 use app\modules\users\models\Users;
-use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidgetInterface;
+use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use kartik\select2\Select2;
@@ -58,10 +58,10 @@ $this->params['breadcrumbs'][] = $this->title;
 						'panel' => [
 							'type' => GridView::TYPE_DEFAULT,
 							'after' => false,
-							'before' => AttributeSelectWidgetInterface::widget([
+							'before' => AttributeSelectWidget::widget([
 								'model' => $user,
 								'attribute' => 'relDynamicAttributes',
-								'mode' => AttributeSelectWidgetInterface::MODE_FORM,
+								'mode' => AttributeSelectWidget::MODE_FORM,
 								'multiple' => true,
 								'formAction' => $updateAttributeAction
 							]),
