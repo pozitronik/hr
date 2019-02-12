@@ -11,6 +11,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
+use app\models\core\core_module\CoreModule;
 use app\models\references\refs\RefUserRoles;
 use app\models\user_rights\Privileges;
 use app\modules\users\models\Users;
@@ -94,7 +95,7 @@ GridView::widget([
 		[
 			'attribute' => 'username',
 			'value' => function(Users $model) {
-				return Html::a($model->username, ['/users/users/profile', 'id' => $model->id]);
+				return Html::a($model->username, $x);
 			},
 			'format' => 'raw'
 		],
@@ -107,10 +108,6 @@ GridView::widget([
 					'useBadges' => false,
 					'attribute' => 'name',
 					'linkScheme' => ['/groups/groups/update', 'id' => 'id']
-					/*todo: сделать определение урлов через модуль, чтобы вместо /groups/groups/update писать что-то вроде
-					 * use app\modules\groups\Module as Groups;
-					 * Groups::Route('groups','update, ['id' => 'id'])
-					*/
 				]);
 			},
 			'format' => 'raw'
