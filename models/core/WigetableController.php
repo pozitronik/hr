@@ -110,7 +110,6 @@ class WigetableController extends Controller {
 				$result[] = $controller;
 			}
 		}
-//		ArrayHelper::multisort($result, ['orderWeight']);
 		return $result;
 	}
 

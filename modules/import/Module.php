@@ -5,6 +5,8 @@ namespace app\modules\import;
 
 use app\models\core\core_module\CoreModule;
 
+/** @noinspection EmptyClassInspection */
+
 /**
  * Class Module
  * @package app\modules\import
