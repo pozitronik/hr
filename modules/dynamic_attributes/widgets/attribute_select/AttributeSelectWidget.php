@@ -20,7 +20,7 @@ use yii\db\ActiveRecord;
  * @property boolean $multiple
  * @property string|array $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  */
-class AttributeSelectWidgetInterface extends InputWidget implements SelectionWidgetInterface {
+class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
 	public $notData;
 	public $multiple = false;
