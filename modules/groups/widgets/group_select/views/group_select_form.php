@@ -26,7 +26,7 @@ use kartik\select2\Select2;
 <?= Select2::widget([
 	'addon' => [
 		'append' => [
-			'content' => Html::submitButton(Icons::add(), ['class' => 'btn btn-primary']),
+			'content' => Html::submitButton(Icons::add(), ['class' => 'btn btn-primary', 'disabled' => 'disabled']),
 			'asButton' => true
 		]
 	],
@@ -42,6 +42,9 @@ use kartik\select2\Select2;
 		'multiple' => $multiple,
 		'templateResult' => new JsExpression('function(item) {return formatGroup(item)}'),
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
+	],
+	'pluginEvents' => [
+		"change.select2" => "function(e) {submit_toggle(e)}"
 	]
 ]); ?>
 

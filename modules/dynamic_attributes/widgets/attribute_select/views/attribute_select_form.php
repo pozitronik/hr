@@ -25,7 +25,7 @@ use yii\web\View;
 <?= Select2::widget([
 	'addon' => [
 		'append' => [
-			'content' => Html::submitButton(Icons::add(), ['class' => 'btn btn-primary']),
+			'content' => Html::submitButton(Icons::add(), ['class' => 'btn btn-primary', 'disabled' => 'disabled']),
 			'asButton' => true
 		]
 	],
@@ -36,6 +36,9 @@ use yii\web\View;
 		'multiple' => $multiple,
 		'allowClear' => true,
 		'placeholder' => 'Добавить атрибут'
+	],
+	'pluginEvents' => [
+		"change.select2" => "function(e) {submit_toggle(e)}"
 	]
 ]);
 
