@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\core\core_module;
 
+use app\helpers\ArrayHelper;
+use Throwable;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Module as BaseModule;
 
@@ -22,20 +25,16 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	}
 
 	/**
-	 * Функция должна вернуть корневой путь модуля (ровно тот же, что указан в web.php)
-	 * @return string
+	 * @param string $id
+	 * @return CoreModule
 	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
-	public static function Root():string {
-		throw new InvalidConfigException('Модуль не имеет определения корневого пути!');
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getRoute(?string $controller = null, ?string $action = '', array $parameters = []):array {
-		$controller = $controller??$this->defaultRoute;
-		return array_merge(["{$this->id}/{$controller}/{$action}"], $parameters);
+	public static function getModuleById(string $id):self {
+		if (null === $module = ArrayHelper::getValue(Yii::$app->modules, $id)) {
+			throw new InvalidConfigException("Модуль $id не подключён");
+		}
+		return $module;
 	}
 
 }
