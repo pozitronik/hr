@@ -14,7 +14,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 
-$this->title = "Иерархия группы";
+$this->title = "Иерархия группы {$model->name}";
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/groups/groups/profile', 'id' => $model->id]];
@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-6">
-				<?= $this->render('parent_groups/index', [
+				<?= $this->render('parent', [
 					'model' => $model,
 					'provider' => $parentProvider,
 					'heading' => '<label class="control-label">Родительские группы</label>'
 				]); ?>
 			</div>
 			<div class="col-md-6">
-				<?= $this->render('child_groups/index', [
+				<?= $this->render('child', [
 					'model' => $model,
 					'provider' => $childProvider,
 					'heading' => '<label class="control-label">Дочерние группы</label>'

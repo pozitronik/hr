@@ -20,7 +20,6 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\grid\ActionColumn;
 
 ?>
 <?= GridView::widget([
@@ -32,9 +31,10 @@ use kartik\grid\ActionColumn;
 		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 		'before' => GroupSelectWidget::widget([
 			'model' => $model,
-			'attribute' => 'relChildGroups',
-			'notData' => $model->isNewRecord?[]:array_merge($model->relChildGroups, [$model]),
-			'multiple' => true
+			'attribute' => 'relParentGroups',
+			'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
+			'multiple' => true,
+			'mode' => GroupSelectWidget::MODE_FORM
 		])
 	],
 	'toolbar' => false,
@@ -46,36 +46,15 @@ use kartik\grid\ActionColumn;
 	'footerRowOptions' => [],
 	'columns' => [
 		[
-			'header' => Icons::menu(),
-			'dropdown' => true,
-			'dropdownButton' => [
-				'label' => Icons::menu(),
-				'caret' => ''
-			],
-			'class' => ActionColumn::class,
-			'template' => '{tree}{bunch}',
-			'buttons' => [
-				'tree' => function($url, $model) {
-					return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
-				},
-				'bunch' => function($url, $model) {
-					/** @var Groups $model */
-					return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/users/bunch/index', 'group_id' => $model->id]));
-				}
-			]
-		],
-		[
 			'format' => 'raw',
 			'attribute' => 'name',
-			'value' => function($group) {
-				/** @var Groups $group */
-				return Html::a($group->name, Url::to(['/groups/groups/update', 'id' => $group->id]));
+			'value' => function(Groups $group) {
+				return Html::a($group->name, Url::to(['/groups/groups/profile', 'id' => $group->id]));
 			}
 		],
 		[
 			'attribute' => 'type',
-			'value' => function($group) {
-				/** @var Groups $model */
+			'value' => function(Groups $group) {
 				return GroupTypeSelectWidget::widget([
 					'groupId' => $group->id,
 					'showStatus' => false
@@ -86,11 +65,10 @@ use kartik\grid\ActionColumn;
 		[
 			'attribute' => 'relGroupsGroupsChild.refGroupsRelationTypes.name',
 			'label' => 'Тип связи',
-			'value' => function($group) use ($model) {
-				/** @var Groups $model */
+			'value' => function(Groups $group) use ($model) {
 				return RelationTypeSelectWidget::widget([
-					'parentGroupId' => $model->id,
-					'childGroupId' => $group->id,
+					'parentGroupId' => $group->id,
+					'childGroupId' => $model->id,
 					'showStatus' => false
 				]);
 			},
@@ -99,20 +77,19 @@ use kartik\grid\ActionColumn;
 		[
 			'attribute' => 'usersCount',
 			'header' => Icons::users(),
-			'footer' => Utils::pageTotal($provider, 'usersCount'),
-			'headerOptions' => ['class' => 'text-center']
+			'footer' => Utils::pageTotal($provider, 'usersCount')
 		],
 		[
 			'attribute' => 'childGroupsCount',
 			'header' => Icons::subgroups(),
-			'footer' => Utils::pageTotal($provider, 'childGroupsCount'),
-			'headerOptions' => ['class' => 'text-center']
+			'footer' => Utils::pageTotal($provider, 'childGroupsCount')
 		],
 		[
 			'class' => CheckboxColumn::class,
 			'headerOptions' => ['class' => 'kartik-sheet-style'],
 			'header' => Icons::trash(),
-			'name' => $model->formName().'[dropChildGroups]'
+			'name' => $model->formName().'[dropParentGroups]'
 		]
 	]
+
 ]); ?>
