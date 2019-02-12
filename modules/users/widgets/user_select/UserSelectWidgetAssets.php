@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\user_select;
+namespace app\modules\users\widgets\user_select;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\user_select
  */
 class UserSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/user_select/assets';
+	public $sourcePath = '@app/modules/users/widgets/user_select/assets';
 	public $css = [
 		'css/user_select.css'
 	];
