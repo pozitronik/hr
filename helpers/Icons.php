@@ -49,7 +49,7 @@ class Icons {
 	 * @return string
 	 */
 	public static function subgroups():string {
-		return "<i class='fa fa-users' title='Подгруппы'></i>";
+		return "<i class='fa fa-users' style='color: Tomato;' title='Подгруппы'></i>";
 	}
 
 	/**
