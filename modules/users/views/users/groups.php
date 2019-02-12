@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'attribute' => 'name',
 							'value' => function($group) {
 								/** @var Groups $group */
-								return Html::a($group->name, Url::to(['/groups/groups/update', 'id' => $group->id]));
+								return Html::a($group->name, Url::to(['/groups/groups/profile', 'id' => $group->id]));
 							}
 						],
 						[

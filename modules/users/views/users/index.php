@@ -107,7 +107,7 @@ GridView::widget([
 					'data' => $model->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
-					'linkScheme' => ['/groups/groups/update', 'id' => 'id']
+					'linkScheme' => ['/groups/groups/profile', 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'

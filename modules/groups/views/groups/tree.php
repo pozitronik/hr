@@ -13,7 +13,7 @@ use yii\web\View;
 $this->title = 'Граф связей: '.Groups::findModel($id)->name;
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
-$this->params['breadcrumbs'][] = ['label' => Groups::findModel($id)->name, 'url' => ['/groups/groups/update', 'id' => $id]];
+$this->params['breadcrumbs'][] = ['label' => Groups::findModel($id)->name, 'url' => ['/groups/groups/profile', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
