@@ -11,7 +11,7 @@ use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
 use yii\helpers\Html;
 use yii\web\View;
 
-$this->title = "Иерархия группы {$model->name}";
+$this->title = "Иерархия группы";
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/groups/groups/profile', 'id' => $model->id]];
@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-6">
-
 				<?= $this->render('parent_groups/index', [
 					'model' => $model,
 					'heading' => '<label class="control-label">Родительские группы</label>'
