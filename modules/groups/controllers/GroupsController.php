@@ -108,7 +108,7 @@ class GroupsController extends WigetableController {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateGroup($updateArray);
 		return $this->render('users', [
-			'model' => $group,
+			'model' => $group
 		]);
 	}
 

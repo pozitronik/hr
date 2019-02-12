@@ -4,7 +4,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
-use app\widgets\group_select\GroupSelectWidget;
+use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
 use app\widgets\roles_select\RolesSelectWidget;
 use kartik\grid\ActionColumn;

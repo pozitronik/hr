@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\group_select;
+namespace app\modules\groups\widgets\group_select;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\group_select
  */
 class GroupSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/group_select/assets';
+	public $sourcePath = '@app/modules/groups/widgets/group_select/assets';
 	public $css = [
 		'css/group_select.css'
 	];

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\group_select;
+namespace app\modules\groups\widgets\group_select;
 
 use app\helpers\ArrayHelper;
 use app\models\core\SelectionWidgetInterface;
@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  *
  * Class GroupSelectWidget
  * @package app\components\group_select
- *
+ *-
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
  * @property array $notData Группы, исключённые из списка (например те, в которых пользователь уже есть)
