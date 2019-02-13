@@ -13,12 +13,12 @@ use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\models\references\refs\RefGroupTypes;
+use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
 use app\modules\users\models\Users;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use yii\bootstrap\Html;
-use kartik\grid\ActionColumn;
 
 $this->title = 'Группы';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
@@ -41,32 +41,23 @@ $this->params['breadcrumbs'][] = $this->title;
 			'responsive' => true,
 			'columns' => [
 				[
-					'class' => ActionColumn::class,
+					'filter' => false,
 					'header' => Icons::menu(),
-					'dropdown' => true,
-					'dropdownButton' => [
-						'label' => Icons::menu(),
-						'caret' => ''
+					'mergeHeader' => true,
+					'headerOptions' => [
+						'class' => 'skip-export kv-align-center kv-align-middle'
 					],
-					'template' => '{tree} {update} {delete} ',
-					'buttons' => [
-						'tree' => function(string $url, Groups $model) {
-							return Html::tag('li', Html::a(Icons::network().'Граф структуры', $url));
-						},
-						'update' => function(string $url, Groups $model) {
-							return Html::tag('li', Html::a(Icons::update().'Изменение', ['profile', 'id' => $model->id]));
-						},
-						'delete' => function(string $url, Groups $model) {
-							return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
-								'title' => 'Удалить запись',
-								'data' => [
-									'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
-									'method' => 'post'
-								]
-							]));
-						}
-					]
-
+					'contentOptions' => [
+						'style' => 'width:50px',
+						'class' => 'skip-export kv-align-center kv-align-middle'
+					],
+					'value' => function(Groups $model) {
+						return NavigationMenuWidget::widget([
+							'model' => $model,
+							'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+						]);
+					},
+					'format' => 'raw'
 				],
 				[
 					'attribute' => 'id',

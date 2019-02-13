@@ -59,6 +59,18 @@ class NavigationMenuWidget extends BaseNavigationMenuWidget {
 				'menu' => true,
 				'label' => Icons::add().'Новая группа',
 				'url' => ['/groups/groups/create']
+			],
+			[
+				'menu' => true,
+				'label' => Icons::delete().'Удаление',
+				'url' => ['/groups/groups/delete', 'id' => $this->model->id],
+				'linkOptions' => [
+					'title' => 'Удалить запись',
+					'data' => [
+						'confirm' => $this->model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
+						'method' => 'post'
+					]
+				]
 			]
 		];
 
