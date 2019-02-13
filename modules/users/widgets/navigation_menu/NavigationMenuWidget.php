@@ -15,13 +15,6 @@ use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 class NavigationMenuWidget extends BaseNavigationMenuWidget {
 
 	/**
-	 * Функция инициализации и нормализации свойств виджета
-	 */
-	public function init() {
-		parent::init();
-	}
-
-	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 */
