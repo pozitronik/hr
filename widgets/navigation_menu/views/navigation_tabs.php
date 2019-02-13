@@ -3,12 +3,10 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var Users $model
  * @var array $items
  */
 
 use app\helpers\Utils;
-use app\modules\users\models\Users;
 use yii\helpers\Html;
 use yii\web\View;
 
