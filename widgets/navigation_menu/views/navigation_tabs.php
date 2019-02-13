@@ -13,7 +13,6 @@ use yii\web\View;
 ?>
 
 <ul class="nav nav-tabs">
-
 	<?php foreach ($items as $item): ?>
 		<?= Html::tag('li', Html::a($item['label'], $item['url']), ['class' => Utils::isSameUrlPath($item['url'])?'active':'inactive']); ?>
 	<?php endforeach; ?>
