@@ -7,6 +7,7 @@ use Exception;
 use Yii;
 use Throwable;
 use yii\data\BaseDataProvider;
+use yii\helpers\Url;
 
 /**
  * Class Utils
@@ -17,6 +18,7 @@ class Utils {
 	public const AS_IS = 0;
 	public const PRINT_R = 1;
 	public const VAR_DUMP = 2;
+	public const URL_SEPARATOR = '/';
 
 	/**
 	 * Возвращает единообразно кодированное имя файла (применяется во всех загрузках)
@@ -216,5 +218,21 @@ class Utils {
 	 */
 	public static function pluralForm(int $number, array $titles):string {
 		return $number." ".$titles[($number % 100 > 4 && $number % 100 < 20)?2:[2, 0, 1, 1, 1, 2][min($number % 10, 5)]];
+	}
+
+	/**
+	 * Сравнивает два относительных/абсолютных url (без учёта get-параметров), выясняя, ведут ли они на один и тот же путь.
+	 *
+	 * @param string|array $firstUrl url в виде строки или массива для Url::to
+	 * @param string|array|null $secondUrl аналогично. Если не задан, то используется текущий URL
+	 * @return bool
+	 */
+	public static function isSameUrlPath($firstUrl, $secondUrl = null):bool {
+		$secondUrl = $secondUrl??Yii::$app->request->pathInfo;
+		$firstUrl = parse_url(Url::to($firstUrl), PHP_URL_PATH);
+		if (self::URL_SEPARATOR !== $firstUrl[0]) $firstUrl = self::URL_SEPARATOR.$firstUrl;
+		$secondUrl = parse_url(Url::to($secondUrl), PHP_URL_PATH);
+		if (self::URL_SEPARATOR !== $secondUrl[0]) $secondUrl = self::URL_SEPARATOR.$secondUrl;
+		return (mb_strtolower($firstUrl) === mb_strtolower($secondUrl));
 	}
 }
