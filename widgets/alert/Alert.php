@@ -24,6 +24,10 @@ class Alert extends Widget {
 	 */
 	public function run() {
 		$session = Yii::$app->session;
+		/*
+		 * fixme: имеем тут проблему: getAllFlashes помечает ВСЕ флеши к удалению при следующем обращении к сессии (в том числе - и к AJAX)
+		 * Т.о. передача алертов через флеши некорректна, нужно реализовать собственную очередь уведомлений (либо собственный механизм флешек, либо серверная очередь)
+		*/
 		$flashes = $session->getAllFlashes();
 
 		foreach ($flashes as $type => $flash) {
