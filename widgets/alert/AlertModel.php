@@ -23,6 +23,7 @@ use yii\base\Model;
 class AlertModel extends Model {
 	public const IDENTIFY_MARKER = 'alert_flash';
 
+	private $identify = self::IDENTIFY_MARKER;
 	private $type = Growl::TYPE_INFO;
 	private $body;
 	private $icon = false;
@@ -375,6 +376,20 @@ class AlertModel extends Model {
 	 */
 	public function setOptions(array $options):void {
 		$this->options = $options;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getIdentify():string {
+		return $this->identify;
+	}
+
+	/**
+	 * @param string $identify
+	 */
+	public function setIdentify(string $identify):void {
+		$this->identify = $identify;
 	}
 
 }
