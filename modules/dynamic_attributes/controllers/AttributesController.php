@@ -145,7 +145,7 @@ class AttributesController extends WigetableController {
 		/** @var DynamicAttributes[] $attributes */
 		$attributes = DynamicAttributes::find()->active()->all();
 		$attribute_data = [];
-		foreach ($attributes as $attribute) {//todo: перенести в условный блок
+		foreach ($attributes as $attribute) {
 			$attribute_data[$attribute->categoryName][$attribute->id] = $attribute->name;
 		}
 		$searchSet->load(Yii::$app->request->post());
