@@ -42,7 +42,7 @@ class NavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
-				'url' => ['delete', 'id' => $this->model->id],
+				'url' => ['/users/users/delete', 'id' => $this->model->id],
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [
