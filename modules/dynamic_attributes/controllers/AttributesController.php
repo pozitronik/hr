@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
+use app\helpers\ArrayHelper;
+use app\models\user\CurrentUser;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearch;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
@@ -148,8 +150,14 @@ class AttributesController extends WigetableController {
 		foreach ($attributes as $attribute) {
 			$attribute_data[$attribute->categoryName][$attribute->id] = $attribute->name;
 		}
-		$searchSet->load(Yii::$app->request->post());
+		$search = Yii::$app->request->post();
+		if (null !== $user = CurrentUser::User()) {
+			$previousSearchData = $user->options->get('previous_attribute_search');
+			$search[$searchSet->formName()] = (ArrayHelper::getValue($search, $searchSet->formName(), []) + $previousSearchData);
+			$user->options->set('previous_attribute_search', ArrayHelper::getValue($search, $searchSet->formName(), []));
 
+		}
+		$searchSet->load($search);
 		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
 			$searchSet->addItem(new DynamicAttributesSearchItem());
 		}
@@ -157,7 +165,7 @@ class AttributesController extends WigetableController {
 			$searchSet->removeItem();
 		}
 
-		if (null !== Yii::$app->request->post('search')) {/*Нажали поиск, нужно сгенерировать запрос, поискать, отдать результат*/
+		if (null !== ArrayHelper::getValue($search, 'search')) {/*Нажали поиск, нужно сгенерировать запрос, поискать, отдать результат*/
 			$searchCondition = $searchSet->searchCondition();
 			return $this->render('search', [
 				'model' => $searchSet,
@@ -166,10 +174,9 @@ class AttributesController extends WigetableController {
 			]);
 		}
 
-
 		return $this->render('search', [
 			'model' => $searchSet,
-			'dataProvider' => null,
+			'dataProvider' => empty($search[$searchSet->formName()])?null:$searchSet->searchCondition(),
 			'attribute_data' => $attribute_data
 		]);
 
