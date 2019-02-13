@@ -149,6 +149,14 @@ class AttributesController extends WigetableController {
 			$attribute_data[$attribute->categoryName][$attribute->id] = $attribute->name;
 		}
 		$searchSet->load(Yii::$app->request->post());
+
+		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
+			$searchSet->addItem(new DynamicAttributesSearchItem());
+		}
+		if (null !== Yii::$app->request->post('remove')) {/*Нажали кнопку "убрать поле", догенерируем набор условий*/
+			$searchSet->removeItem();
+		}
+
 		if (null !== Yii::$app->request->post('search')) {/*Нажали поиск, нужно сгенерировать запрос, поискать, отдать результат*/
 			$searchCondition = $searchSet->searchCondition();
 			return $this->render('search', [
@@ -158,12 +166,7 @@ class AttributesController extends WigetableController {
 			]);
 		}
 
-		if (null !== Yii::$app->request->post('add')) {/*Нажали кнопку "добавить поле", догенерируем набор условий*/
-			$searchSet->addItem(new DynamicAttributesSearchItem());
-		}
-		if (null !== Yii::$app->request->post('remove')) {/*Нажали кнопку "убрать поле", догенерируем набор условий*/
-			$searchSet->removeItem();
-		}
+
 		return $this->render('search', [
 			'model' => $searchSet,
 			'dataProvider' => null,
