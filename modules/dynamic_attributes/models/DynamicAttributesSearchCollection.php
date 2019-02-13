@@ -193,7 +193,7 @@ class DynamicAttributesSearchCollection extends Model {
 	 * @throws Throwable
 	 */
 	public function searchCondition():ActiveDataProvider {
-		$query = Users::find()->active()->joinWith(['relUsersAttributesTypes']);
+		$query = Users::find()->distinct()->active()->joinWith(['relUsersAttributesTypes']);
 		$query = $this->applySearchScope($query);
 
 		$dataProvider = new ActiveDataProvider([
