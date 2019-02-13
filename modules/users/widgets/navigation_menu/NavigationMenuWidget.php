@@ -38,6 +38,18 @@ class NavigationMenuWidget extends BaseNavigationMenuWidget {
 				'menu' => true,
 				'label' => Icons::user_add().'Новый пользователь',
 				'url' => '/users/users/create'
+			],
+			[
+				'menu' => true,
+				'label' => Icons::delete().'Удаление',
+				'url' => ['delete', 'id' => $this->model->id],
+				'linkOptions' => [
+					'title' => 'Удалить запись',
+					'data' => [
+						'confirm' => $this->model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
+						'method' => 'post'
+					]
+				]
 			]
 		];
 
