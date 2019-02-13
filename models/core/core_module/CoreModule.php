@@ -20,7 +20,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	 */
 	public function __construct(string $id, $parent = null, array $config = []) {
 		parent::__construct($id, $parent, $config);
-		$this->controllerNamespace = "app\modules\\{$this->id}\\controllers";
+//		$this->controllerNamespace = "app\modules\\{$this->id}\\controllers";
 		$this->defaultRoute = $this->id;
 	}
 
