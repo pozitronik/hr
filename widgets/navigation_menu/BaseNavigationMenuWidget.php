@@ -4,14 +4,9 @@ declare(strict_types = 1);
 namespace app\widgets\navigation_menu;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Icons;
-use kartik\grid\ActionColumn;
 use ReflectionClass;
-use yii\base\Model;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 /**
  * Class NavigationMenuWidget
