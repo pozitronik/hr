@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\alert;
 
+use app\helpers\ArrayHelper;
 use kartik\growl\Growl;
 use Yii;
 use yii\bootstrap\Widget;
@@ -26,18 +27,19 @@ class Alert extends Widget {
 		$flashes = $session->getAllFlashes();
 
 		foreach ($flashes as $type => $flash) {
-			$alert = new AlertModel($flash);
-			echo Growl::widget([
-				'type' => $alert->type,
-				'title' => $alert->title,
-				'icon' => $alert->icon,//'glyphicon glyphicon-ok-sign',
-				'body' => $alert->body,
-				'showSeparator' => $alert->showSeparator,
-				'delay' => $alert->delay,
-				'pluginOptions' => $alert->pluginOptions
-			]);
-
-			$session->removeFlash($type);
+			if (AlertModel::IDENTIFY_MARKER === ArrayHelper::getValue($flash, 'identify')) {
+				$alert = new AlertModel($flash);
+				echo Growl::widget([
+					'type' => $alert->type,
+					'title' => $alert->title,
+					'icon' => $alert->icon,//'glyphicon glyphicon-ok-sign',
+					'body' => $alert->body,
+					'showSeparator' => $alert->showSeparator,
+					'delay' => $alert->delay,
+					'pluginOptions' => $alert->pluginOptions
+				]);
+				$session->removeFlash($type);
+			}
 		}
 	}
 }

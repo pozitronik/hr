@@ -21,6 +21,8 @@ use yii\base\Model;
  * @property array $pluginOptions
  */
 class AlertModel extends Model {
+	public const IDENTIFY_MARKER = 'alert_flash';
+
 	private $type = Growl::TYPE_INFO;
 	private $body;
 	private $icon = false;
@@ -83,6 +85,7 @@ class AlertModel extends Model {
 	 */
 	public function push():void {
 		Yii::$app->session->setFlash($this->type, [
+			'identify' => self::IDENTIFY_MARKER,
 			'type' => $this->type,
 			'title' => $this->title,
 			'icon' => $this->icon,
