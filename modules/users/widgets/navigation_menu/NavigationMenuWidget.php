@@ -5,29 +5,28 @@ namespace app\modules\users\widgets\navigation_menu;
 
 use app\helpers\Icons;
 use app\modules\users\models\Users;
-use yii\base\Widget;
+use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 
 /**
  * Class NavigationMenuWidget
  * @package app\modules\users\widgets\navigation_menu
  * @property Users $model
- * @property int $mode
  */
-class NavigationMenuWidget extends Widget {
-	public const MODE_MENU = 0;
-	public const MODE_TABS = 1;
-
-	public $model;
-	public $mode = self::MODE_TABS;
-
-	private $_navigationItems = [];
+class NavigationMenuWidget extends BaseNavigationMenuWidget {
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
 	 */
 	public function init() {
 		parent::init();
-		NavigationMenuWidgetAssets::register($this->getView());
+	}
+
+	/**
+	 * Функция возврата результата рендеринга виджета
+	 * @return string
+	 */
+	public function run():string {
+		if ($this->model->isNewRecord) return '';
 
 		$this->_navigationItems = [
 			[
@@ -48,27 +47,6 @@ class NavigationMenuWidget extends Widget {
 			]
 		];
 
-	}
-
-	/**
-	 * Функция возврата результата рендеринга виджета
-	 * @return string
-	 */
-	public function run():string {
-		if ($this->model->isNewRecord) return '';
-		switch ($this->mode) {
-			case self::MODE_MENU:
-				return $this->render('navigation_menu', [
-					'items' => $this->_navigationItems
-				]);
-			break;
-			default:
-			case self::MODE_TABS:
-				return $this->render('navigation_tabs', [
-					'items' => $this->_navigationItems
-				]);
-			break;
-		}
-
+		return parent::run();
 	}
 }
