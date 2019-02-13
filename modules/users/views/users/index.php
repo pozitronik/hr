@@ -15,12 +15,12 @@ use app\models\references\refs\RefUserRoles;
 use app\models\user_rights\Privileges;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
+use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
-use kartik\grid\ActionColumn;
 
 if (null !== $searchModel) {//Учитываем вызов из поиска по атрибутам, пока используется одна вьюха на всё.
 	$this->title = 'Люди';
@@ -44,35 +44,23 @@ GridView::widget([
 	'responsive' => true,
 	'columns' => [
 		[
-			'class' => ActionColumn::class,
+			'filter' => false,
 			'header' => Icons::menu(),
-			'dropdown' => true,
-			'dropdownButton' => [
-				'label' => Icons::menu(),
-				'caret' => ''
+			'mergeHeader' => true,
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'template' => '{profile} {groups} {attributes} {delete}',
-			'buttons' => [
-
-				'profile' => function(string $url, Users $model) {
-					return Html::tag('li', Html::a(Icons::user().'Профиль', ['/users/users/profile', 'id' => $model->id]));
-				},
-				'groups' => function(string $url, Users $model) {
-					return Html::tag('li', Html::a(Icons::group().'Группы', ['/users/users/groups', 'id' => $model->id]));
-				},
-				'attributes' => function(string $url, Users $model) {
-					return Html::tag('li', Html::a(Icons::attributes().'Атрибуты', ['/users/users/attributes', 'id' => $model->id]));
-				},
-				'delete' => function(string $url, Users $model) {
-					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
-						'title' => 'Удалить запись',
-						'data' => [
-							'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
-							'method' => 'post'
-						]
-					]));
-				}
-			]
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => function(Users $model) {
+				return NavigationMenuWidget::widget([
+					'model' => $model,
+					'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'attribute' => 'id',
