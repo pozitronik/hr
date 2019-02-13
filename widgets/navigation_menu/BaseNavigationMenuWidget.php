@@ -64,11 +64,11 @@ class BaseNavigationMenuWidget extends Widget {
 				});
 				$tabItems = array_diff_key($this->_navigationItems, $menuItems);
 
-				return $this->render('navigation_tabs', [
+				return (([] === $tabItems)?'':$this->render('navigation_tabs', [
 						'items' => $tabItems
-					]).$this->render('navigation_menu', [
+					])).(([] === $menuItems)?'':$this->render('navigation_menu', [
 						'items' => $menuItems
-					]);
+					]));
 
 			break;
 		}
