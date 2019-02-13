@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Users $model
+ * @var array $items
  */
 
 use app\helpers\Icons;
@@ -21,24 +22,7 @@ use yii\web\View;
 			'class' => 'pull-right'
 		],
 		'encodeLabels' => false,
-		'items' => [
-			[
-				'label' => Icons::user().'Профиль пользователя',
-				'url' => ['/users/users/profile', 'id' => $model->id]
-			],
-			[
-				'label' => Icons::group().'Группы пользователя',
-				'url' => ['/users/users/groups', 'id' => $model->id]
-			],
-			[
-				'label' => Icons::attributes().'Атрибуты пользователя',
-				'url' => ['/users/users/attributes', 'id' => $model->id]
-			],
-			[
-				'label' => Icons::user_add().'Новый пользователь',
-				'url' => '/users/users/create'
-			]
-		]
+		'items' => $items
 	]
 ]) ?>
 
