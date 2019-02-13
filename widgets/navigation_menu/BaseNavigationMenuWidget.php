@@ -4,9 +4,14 @@ declare(strict_types = 1);
 namespace app\widgets\navigation_menu;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
+use kartik\grid\ActionColumn;
 use ReflectionClass;
+use yii\base\Model;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * Class NavigationMenuWidget
@@ -17,6 +22,7 @@ class BaseNavigationMenuWidget extends Widget {
 	public const MODE_MENU = 0;
 	public const MODE_TABS = 1;
 	public const MODE_BOTH = 2;//Будут отрендерены вкладки, элементы, помеченные, как menu=>true будут отрендерены в меню
+	public const MODE_ACTION_COLUMN_MENU = 3;//Меню в колонке GridView
 
 	public $model;
 	public $mode = self::MODE_BOTH;
@@ -42,7 +48,7 @@ class BaseNavigationMenuWidget extends Widget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета
-	 * @return string
+	 * @return string|array
 	 */
 	public function run():string {
 		if ($this->model->isNewRecord) return '';
@@ -69,7 +75,11 @@ class BaseNavigationMenuWidget extends Widget {
 					])).(([] === $menuItems)?'':$this->render('navigation_menu', [
 						'items' => $menuItems
 					]));
-
+			break;
+			case self::MODE_ACTION_COLUMN_MENU:
+				return $this->render('navigation_column_menu', [
+					'items' => $this->_navigationItems
+				]);
 			break;
 		}
 
