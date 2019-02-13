@@ -197,7 +197,7 @@ function bindEvents(s) {
 	});
 
 	s.bind("doubleClickNode", function (object) {
-		window.open('update?id=' + object.data.node.id);
+		window.open('profile?id=' + object.data.node.id);
 
 	});
 	s.bind("overNode", function (object) {
