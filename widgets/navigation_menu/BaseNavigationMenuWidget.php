@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\navigation_menu;
 
+use app\helpers\ArrayHelper;
 use ReflectionClass;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
@@ -15,9 +16,10 @@ use yii\db\ActiveRecord;
 class BaseNavigationMenuWidget extends Widget {
 	public const MODE_MENU = 0;
 	public const MODE_TABS = 1;
+	public const MODE_BOTH = 2;//Будут отрендерены вкладки, элементы, помеченные, как menu=>true будут отрендерены в меню
 
 	public $model;
-	public $mode = self::MODE_TABS;
+	public $mode = self::MODE_BOTH;
 
 	protected $_navigationItems = [];
 
@@ -50,11 +52,24 @@ class BaseNavigationMenuWidget extends Widget {
 					'items' => $this->_navigationItems
 				]);
 			break;
-			default:
 			case self::MODE_TABS:
 				return $this->render('navigation_tabs', [
 					'items' => $this->_navigationItems
 				]);
+			break;
+			default:
+			case self::MODE_BOTH:
+				$menuItems = array_filter($this->_navigationItems, function($element) {
+					return true === ArrayHelper::getValue($element, 'menu');
+				});
+				$tabItems = array_diff_key($this->_navigationItems, $menuItems);
+
+				return $this->render('navigation_tabs', [
+						'items' => $tabItems
+					]).$this->render('navigation_menu', [
+						'items' => $menuItems
+					]);
+
 			break;
 		}
 

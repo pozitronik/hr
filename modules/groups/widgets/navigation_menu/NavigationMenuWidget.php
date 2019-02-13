@@ -35,30 +35,35 @@ class NavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => ['/groups/groups/groups', 'id' => $this->model->id]
 			],
 			[
-				'label' => Icons::network().'Граф',
-				'url' => ['/groups/groups/tree', 'id' => $this->model->id]
-			],
-			[
 				'label' => Icons::users().'Пользователи',
 				'url' => ['/groups/groups/users', 'id' => $this->model->id]
 			],
 			[
+				'label' => Icons::network().'Граф',
+				'url' => ['/groups/groups/tree', 'id' => $this->model->id]
+			],
+			[
+				'menu' => true,
 				'label' => Icons::hierarchy().'Иерархия пользователей',
 				'url' => ['/groups/groups/users-hierarchy', 'id' => $this->model->id]
 			],
 			[
+				'menu' => true,
 				'label' => Icons::hierarchy_red().'Иерархия пользователей (с ролями)',
 				'url' => ['/groups/groups/users-hierarchy', 'showRolesSelector' => true, 'id' => $this->model->id]
 			],
 			[
+				'menu' => true,
 				'label' => Icons::users_edit().'Редактировать пользователей',
 				'url' => ['/users/bunch/index', 'group_id' => $this->model->id]
 			],
 			[
+				'menu' => true,
 				'label' => Icons::users_edit_red().'Редактировать пользователей (с учётом иерархии)',
 				'url' => ['/users/bunch/index', 'group_id' => $this->model->id, 'hierarchy' => true]
 			],
 			[
+				'menu' => true,
 				'label' => Icons::add().'Новая группа',
 				'url' => ['/groups/groups/create']
 			]
