@@ -35,6 +35,7 @@ class NavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => ['/attributes/user', 'user_id' => $this->model->id]
 			],
 			[
+				'menu' => true,
 				'label' => Icons::user_add().'Новый пользователь',
 				'url' => '/users/users/create'
 			]
