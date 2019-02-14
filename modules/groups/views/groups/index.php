@@ -13,7 +13,7 @@ use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\references\models\refs\RefGroupTypes;
-use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\users\models\Users;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -52,9 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
 						'class' => 'skip-export kv-align-center kv-align-middle'
 					],
 					'value' => function(Groups $model) {
-						return NavigationMenuWidget::widget([
+						return GroupNavigationMenuWidget::widget([
 							'model' => $model,
-							'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+							'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 						]);
 					},
 					'format' => 'raw'

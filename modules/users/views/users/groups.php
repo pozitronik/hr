@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
-use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\references\widgets\roles_select\RolesSelectWidget;
-use kartik\grid\ActionColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<?= NavigationMenuWidget::widget([
+			<?= UserNavigationMenuWidget::widget([
 				'model' => $model
 			]); ?>
 		</div>
@@ -62,24 +62,23 @@ $this->params['breadcrumbs'][] = $this->title;
 					'responsive' => true,
 					'columns' => [
 						[
+							'filter' => false,
 							'header' => Icons::menu(),
-							'dropdown' => true,
-							'dropdownButton' => [
-								'label' => Icons::menu(),
-								'caret' => ''
+//							'mergeHeader' => true,
+							'headerOptions' => [
+								'class' => 'skip-export kv-align-center kv-align-middle'
 							],
-							'class' => ActionColumn::class,
-							'template' => '{tree}{bunch}',
-							'buttons' => [
-								'tree' => function($url, $model) {
-									/** @var Groups $model */
-									return Html::tag('li', Html::a(Icons::network().'Граф структуры', ['/groups/groups/tree', 'id' => $model->id]));
-								},
-								'bunch' => function($url, $model) {
-									/** @var Groups $model */
-									return Html::tag('li', Html::a(Icons::users_edit().'Редактирование пользователей', ['/users/bunch/index', 'group_id' => $model->id]));
-								}
-							]
+							'contentOptions' => [
+								'style' => 'width:50px',
+								'class' => 'skip-export kv-align-center kv-align-middle'
+							],
+							'value' => function(Groups $model) {
+								return GroupNavigationMenuWidget::widget([
+									'model' => $model,
+									'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+								]);
+							},
+							'format' => 'raw'
 						],
 						[
 							'format' => 'raw',

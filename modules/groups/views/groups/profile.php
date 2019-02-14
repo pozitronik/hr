@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
-use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<?= NavigationMenuWidget::widget([
+			<?= GroupNavigationMenuWidget::widget([
 				'model' => $model
 			]); ?>
 		</div>

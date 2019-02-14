@@ -15,7 +15,7 @@ use app\modules\references\models\refs\RefUserRoles;
 use app\models\user_rights\Privileges;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
-use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -55,9 +55,9 @@ GridView::widget([
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
 			'value' => function(Users $model) {
-				return NavigationMenuWidget::widget([
+				return UserNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

@@ -10,7 +10,7 @@ use app\helpers\ArrayHelper;
 use app\modules\references\models\refs\RefUserPositions;
 use app\models\user_rights\Privileges;
 use app\modules\users\models\Users;
-use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\select2\Select2;
 use yii\web\View;
 use kartik\form\ActiveForm;
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="panel-control">
-				<?= NavigationMenuWidget::widget([
+				<?= UserNavigationMenuWidget::widget([
 					'model' => $model
 				]); ?>
 			</div>

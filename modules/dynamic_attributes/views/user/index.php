@@ -14,7 +14,7 @@ use app\models\relations\RelUsersAttributes;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
-use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\select2\Select2;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<?= NavigationMenuWidget::widget([
+			<?= UserNavigationMenuWidget::widget([
 				'model' => $user
 			]); ?>
 		</div>

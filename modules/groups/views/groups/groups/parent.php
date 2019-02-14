@@ -12,7 +12,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
-use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
+use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\references\widgets\relation_type_select\RelationTypeSelectWidget;
 use yii\data\ActiveDataProvider;
@@ -59,9 +59,9 @@ GridView::widget([
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
 			'value' => function(Groups $model) {
-				return NavigationMenuWidget::widget([
+				return GroupNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'
