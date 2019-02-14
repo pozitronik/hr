@@ -12,7 +12,6 @@ use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
-use yii\web\Response;
 
 /**
  * Class AjaxController
@@ -30,8 +29,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionGroupsTree(int $id, int $restorePositions = 0):array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if (null === $group = Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');
@@ -66,8 +63,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionGroupsTreeSaveNodePosition():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		$nodeData = new PrototypeNodeData();
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if ($nodeData->load(Yii::$app->request->post(), '')) {
@@ -90,8 +85,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionGroupsTreeSaveNodesPositions():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');//это должно разруливаться в behaviors()
 		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false)))) {
 			$nodes = json_decode($nodes, true);
@@ -128,8 +121,6 @@ class AjaxController extends BaseAjaxController {
 	 * Генерит и отдаёт вьюшеньку с инфой о группе
 	 */
 	public function actionGetGroupInfo():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		if (null === ($group = Groups::findModel(Yii::$app->request->post('groupid')))) {
 			return $this->answer->addError('group', 'Not found');
 		}
@@ -144,8 +135,6 @@ class AjaxController extends BaseAjaxController {
 	 * @return array
 	 */
 	public function actionUsersSearch():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		$searchModel = new UsersSearch();
 		$allowedGroups = [];
 		//Проверяем доступы к списку юзеров

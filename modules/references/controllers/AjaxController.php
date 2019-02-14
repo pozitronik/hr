@@ -8,7 +8,6 @@ use app\models\relations\RelGroupsGroups;
 use app\modules\groups\models\Groups;
 use Throwable;
 use Yii;
-use yii\web\Response;
 
 /**
  * Class AjaxController
@@ -22,8 +21,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionSetUserRolesInGroup():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		$groupId = Yii::$app->request->post('groupId', false);
 		$userId = Yii::$app->request->post('userId', false);
 		if (!($groupId && $userId)) {
@@ -46,8 +43,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionSetGroupRelationType():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		$parentGroupId = Yii::$app->request->post('parentGroupId', false);
 		$childGroupId = Yii::$app->request->post('childGroupId', false);
 		$relation = Yii::$app->request->post('relation', false);
@@ -70,8 +65,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionSetGroupType():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		
 		$groupId = Yii::$app->request->post('groupId', false);
 		$type = Yii::$app->request->post('type', false);
 		if (!$groupId) {

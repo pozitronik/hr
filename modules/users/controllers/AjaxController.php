@@ -8,7 +8,6 @@ use app\models\user\CurrentUser;
 use app\modules\users\models\Bookmarks;
 use Throwable;
 use Yii;
-use yii\web\Response;
 
 /**
  * Class AjaxController
@@ -22,8 +21,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionUserAddBookmark():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-
 		$bookmark = new Bookmarks();
 		if ($bookmark->load(Yii::$app->request->post(), '')) {
 			if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
@@ -41,8 +38,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionUserRemoveBookmark():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-
 		if (false !== $route = Yii::$app->request->post('route', false)) {
 			if (null === $user = CurrentUser::User()) $this->answer->addError('user', 'Unauthorized');
 			$user->options->bookmarks = array_filter($user->options->bookmarks, function(Bookmarks $bookmark) use ($route) {/*PHP не модифицирует результирующий массив при каждом вызове замыкания, поэтому можно не вводить временную переменную*/

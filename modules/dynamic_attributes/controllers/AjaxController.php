@@ -11,7 +11,6 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use Yii;
-use yii\web\Response;
 
 /**
  * Class AjaxController
@@ -25,8 +24,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionSetAttributeTypesForUser():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-
 		$attributeId = Yii::$app->request->post('attributeId', false);
 		$userId = Yii::$app->request->post('userId', false);
 		$types = Yii::$app->request->post('types', []);
@@ -49,8 +46,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionAttributeGetProperties():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-
 		if (null !== $attribute_id = Yii::$app->request->post('attribute')) {
 			if (null !== $attribute = DynamicAttributes::findModel($attribute_id)) {
 				$this->answer->items = $attribute->structure;
@@ -67,8 +62,6 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionAttributeGetPropertyCondition():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-
 		if (false !== $type = Yii::$app->request->post('type', false)) {
 			/** @var string $type */
 			if (null !== $className = DynamicAttributeProperty::getTypeClass($type)) {
