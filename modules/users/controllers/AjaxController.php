@@ -46,12 +46,10 @@ class AjaxController extends BaseAjaxController {
 		$answer = new AjaxAnswer();
 		if (false !== $route = Yii::$app->request->post('route', false)) {
 			if (null === $user = CurrentUser::User()) $answer->addError('user', 'Unauthorized');
-			$bookmarks = $user->options->bookmarks;
-			//todo: just filter array
-			foreach ($bookmarks as $key => $value) {
-				if ($route === $value->route) unset($bookmarks[$key]);
-			}
-			$user->options->bookmarks = $bookmarks;
+			$user->options->bookmarks = array_filter($user->options->bookmarks, function(Bookmarks $bookmark) use ($route) {/*PHP не модифицирует результирующий массив при каждом вызове замыкания, поэтому можно не вводить временную переменную*/
+				return $route !== $bookmark->route;
+			});
+
 			return $answer->answer;
 		}
 		return $answer->addError('route', 'Not found');
