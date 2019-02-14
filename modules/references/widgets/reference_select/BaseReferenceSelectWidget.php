@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\reference_select;
+namespace app\modules\references\widgets\reference_select;
 
 use yii\base\Widget;
 
@@ -10,7 +10,7 @@ use yii\base\Widget;
  * TODO на реализацию: виджет (либо самостоятельный, либо расширяющий select2) с контролами быстрого едитинга связанного справочника
  * @package app\components\reference_select
  */
-class ReferenceSelectWidget extends Widget {
+class BaseReferenceSelectWidget extends Widget {
 
 
 	/**
