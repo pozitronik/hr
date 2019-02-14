@@ -131,7 +131,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 					RelUsersAttributesTypes::deleteAll(['user_attribute_id' => $rel->id, 'type' => $type]);
 				}
 			} else {
-				RelUsersAttributesTypes::deleteAll(['user_attribute_id' => $rel->id, 'type' => $type]);
+				RelUsersAttributesTypes::deleteAll(['user_attribute_id' => $rel->id, 'type' => $typeId]);
 			}
 			return true;//Результат дальше особо не анализируется, что плохо
 		}
