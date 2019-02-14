@@ -12,8 +12,7 @@ use yii\web\View;
  * @package app\components\structure
  */
 class StructureWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/groups/
-	widgets/structure/assets';
+	public $sourcePath = '@app/modules/groups/widgets/structure/assets';
 	public $css = [
 		'css/structure.css'
 	];
