@@ -12,7 +12,9 @@ use yii\base\Model;
  *
  * @property int $resultCode Числовой код результата операции
  * @property null|int $count Количество возвращаемых реззультатов (если не установлено, то не используется)
- * @property array $items Массив результатов
+ * @property null|array $items Массив результатов (если не установлен, то не используется
+ *
+ * @property-read array $answer Массив с ответом
  */
 class AjaxAnswer extends Model {
 	public const RESULT_OK = 0;/*Отработано*/
@@ -21,7 +23,7 @@ class AjaxAnswer extends Model {
 
 	private $_resultCode = self::RESULT_OK;
 	private $_count;
-	private $_items = [];
+	private $_items;
 
 	/**
 	 * @inheritdoc
@@ -64,15 +66,42 @@ class AjaxAnswer extends Model {
 	/**
 	 * @return array
 	 */
-	public function getItems():array {
+	public function getItems():?array {
 		return $this->_items;
 	}
 
 	/**
 	 * @param array $items
 	 */
-	public function setItems(array $items):void {
+	public function setItems(?array $items):void {
 		$this->_items = $items;
+	}
+
+	/**
+	 * Добавляет ошибку и возвращает ответ (для случая, когда ajax-контроллер должен ответить при обнаружении ошибки)
+	 * @param string $attribute
+	 * @param string $error
+	 * @return array
+	 */
+	public function addError($attribute, $error = ''):array {
+		parent::addError($attribute, $error);
+		$this->resultCode = self::RESULT_ERROR;
+		return $this->answer;
+	}
+
+	/**
+	 * Возврат ответа
+	 * @return array
+	 */
+	public function getAnswer():array {
+		$result = [
+			'result' => $this->resultCode,
+			'errors' => ([] === $this->errors)?null:$this->errors,
+			'count' => $this->count,
+			'items' => $this->items
+		];
+		return $result;
+
 	}
 
 }
