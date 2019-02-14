@@ -9,9 +9,7 @@ use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;
 use Throwable;
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Response;
-use yii\filters\ContentNegotiator;
 
 /**
  * Class AjaxController
@@ -22,37 +20,6 @@ use yii\filters\ContentNegotiator;
  * @package app\controllers
  */
 class AjaxController extends BaseAjaxController {
-
-	/**
-	 * @inheritdoc
-	 */
-	public function behaviors():array {
-		return [
-			[
-				'class' => ContentNegotiator::class,
-				'formats' => [
-					'application/json' => Response::FORMAT_JSON,
-					'application/xml' => Response::FORMAT_XML,
-					'text/html' => Response::FORMAT_HTML
-				]
-			],
-			'access' => [
-				'class' => AccessControl::class,
-				'denyCallback' => function() {
-					return null;
-				},
-				'rules' => [
-					[
-						'allow' => Yii::$app->user->identity,
-						'actions' => [
-							'set-attribute-types-for-user'
-						],
-						'roles' => ['@', '?']
-					]
-				]
-			]
-		];
-	}
 
 	/**
 	 * Устанавливает тип связи между пользователем и атрибутом
