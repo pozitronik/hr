@@ -13,6 +13,7 @@ use yii\base\Model;
  * @property int $resultCode Числовой код результата операции
  * @property null|int $count Количество возвращаемых реззультатов (если не установлено, то не используется)
  * @property null|array $items Массив результатов (если не установлен, то не используется
+ * @property null|string $content Возвращаемый результат рендеринга (если необходим)
  *
  * @property-read array $answer Массив с ответом
  */
@@ -24,6 +25,7 @@ class AjaxAnswer extends Model {
 	private $_resultCode = self::RESULT_OK;
 	private $_count;
 	private $_items;
+	private $_content;
 
 	/**
 	 * @inheritdoc
@@ -78,6 +80,20 @@ class AjaxAnswer extends Model {
 	}
 
 	/**
+	 * @return null|string
+	 */
+	public function getContent():?string {
+		return $this->_content;
+	}
+
+	/**
+	 * @param null|string $content
+	 */
+	public function setContent(?string $content):void {
+		$this->_content = $content;
+	}
+
+	/**
 	 * Добавляет ошибку и возвращает ответ (для случая, когда ajax-контроллер должен ответить при обнаружении ошибки)
 	 * @param string $attribute
 	 * @param string $error
@@ -109,10 +125,11 @@ class AjaxAnswer extends Model {
 			'result' => $this->resultCode,
 			'errors' => ([] === $this->errors)?null:$this->errors,
 			'count' => $this->count,
-			'items' => $this->items
+			'items' => $this->items,
+			'content' => $this->content
 		];
 		return $result;
-
 	}
+
 
 }
