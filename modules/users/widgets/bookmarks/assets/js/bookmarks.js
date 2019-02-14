@@ -1,6 +1,6 @@
 function add_bookmark(route, name, type) {
 	jQuery.ajax({
-		url: '/ajax/user-add-bookmark',
+		url: '/users/ajax/user-add-bookmark',
 		data: {
 			route: route,
 			name: name,
@@ -18,7 +18,7 @@ function add_bookmark(route, name, type) {
 
 function remove_bookmark(route) {
 	jQuery.ajax({
-		url: '/ajax/user-remove-bookmark',
+		url: '/users/ajax/user-remove-bookmark',
 		data: {
 			route: route,
 		},

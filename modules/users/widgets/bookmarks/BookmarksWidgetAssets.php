@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\bookmarks;
+namespace app\modules\users\widgets\bookmarks;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\bookmarks
  */
 class BookmarksWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/bookmarks/assets';
+	public $sourcePath = '@app/modules/users/widgets/bookmarks/assets';
 	public $css = [
 		'css/bookmarks.css'
 	];

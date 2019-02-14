@@ -1,11 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\bookmarks;
+namespace app\modules\users\widgets\bookmarks;
 
 use app\models\user\CurrentUser;
+use app\modules\users\models\Bookmarks;
 use Throwable;
+use Yii;
 use yii\base\Widget;
+use yii\helpers\Url;
 
 /**
  * Class BookmarksWidget
@@ -29,7 +32,12 @@ class BookmarksWidget extends Widget {
 	public function run():?string {
 		if (null === $user = CurrentUser::User()) return null;
 		return $this->render('bookmarks',[
-			'user' => $user
+			'bookmarks' => $user->options->bookmarks,
+			'currentBookmark' => new Bookmarks([
+				'route' => Url::current(),
+				'name' => $this->view->title?:Yii::$app->requestedRoute,
+				'type' => Bookmarks::TYPE_DEFAULT
+			])
 		]);
 	}
 }
