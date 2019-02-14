@@ -14,9 +14,16 @@ use yii\web\Response;
  * Дефолтные методы аяксовых контроллеров (они у нас могут быть в разных модулях), для унификации API
  * Class AjaxController
  * @package app\models\core
+ *
+ * @property AjaxAnswer $answer
  */
 class BaseAjaxController extends Controller {
-	//todo: инициировать ответ прямо тут
+	private $_answer;
+
+	public function init():void {
+		parent::init();
+		$this->_answer = new AjaxAnswer();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -58,6 +65,20 @@ class BaseAjaxController extends Controller {
 	public function beforeAction($action):bool {
 		$this->enableCsrfValidation = false;//todo
 		return parent::beforeAction($action);
+	}
+
+	/**
+	 * @return AjaxAnswer
+	 */
+	public function getAnswer():AjaxAnswer {
+		return $this->_answer;
+	}
+
+	/**
+	 * @param AjaxAnswer $answer
+	 */
+	public function setAnswer($answer):void {
+		$this->_answer = $answer;
 	}
 
 }

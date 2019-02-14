@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\groups\controllers;
 
 use app\helpers\ArrayHelper;
-use app\models\core\ajax\AjaxAnswer;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\user\CurrentUser;
@@ -32,10 +31,10 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGroupsTree(int $id, int $restorePositions = 0):array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$answer = new AjaxAnswer();
-		if (null === $user = CurrentUser::User()) return $answer->addError('user', 'Unauthorized');
+		
+		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if (null === $group = Groups::findModel($id)) {
-			return $answer->addError('group', 'Not found');
+			return $this->answer->addError('group', 'Not found');
 		}
 
 		$nodes = [];
@@ -68,9 +67,9 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGroupsTreeSaveNodePosition():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$answer = new AjaxAnswer();
+		
 		$nodeData = new PrototypeNodeData();
-		if (null === $user = CurrentUser::User()) return $answer->addError('user', 'Unauthorized');
+		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if ($nodeData->load(Yii::$app->request->post(), '')) {
 			$user->options->nodePositions = ArrayHelper::merge_recursive($user->options->nodePositions, [
 				$nodeData->groupId => [
@@ -80,9 +79,9 @@ class AjaxController extends BaseAjaxController {
 					]
 				]
 			]);
-			return $answer->answer;
+			return $this->answer->answer;
 		}
-		return $answer->addErrors($nodeData->errors);
+		return $this->answer->addErrors($nodeData->errors);
 	}
 
 	/**
@@ -92,8 +91,8 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGroupsTreeSaveNodesPositions():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$answer = new AjaxAnswer();
-		if (null === $user = CurrentUser::User()) return $answer->addError('user', 'Unauthorized');//это должно разруливаться в behaviors()
+		
+		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');//это должно разруливаться в behaviors()
 		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false)))) {
 			$nodes = json_decode($nodes, true);
 			$currentNodesPositions = $user->options->nodePositions;
@@ -116,13 +115,13 @@ class AjaxController extends BaseAjaxController {
 					]);
 
 				} else {
-					return $answer->addErrors($nodeData->errors);
+					return $this->answer->addErrors($nodeData->errors);
 				}
 			}
 			$user->options->nodePositions = $currentNodesPositions;
-			return $answer->answer;
+			return $this->answer->answer;
 		}
-		return $answer->addError('nodes', 'Can\'t load data');
+		return $this->answer->addError('nodes', 'Can\'t load data');
 	}
 
 	/**
@@ -130,14 +129,14 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGetGroupInfo():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$answer = new AjaxAnswer();
+		
 		if (null === ($group = Groups::findModel(Yii::$app->request->post('groupid')))) {
-			return $answer->addError('group', 'Not found');
+			return $this->answer->addError('group', 'Not found');
 		}
-		$answer->content = $this->renderPartial('get-group-info', [
+		$this->answer->content = $this->renderPartial('get-group-info', [
 			'group' => $group
 		]);
-		return $answer->answer;
+		return $this->answer->answer;
 	}
 
 	/**
@@ -146,7 +145,7 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionUsersSearch():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
-		$answer = new AjaxAnswer();
+		
 		$searchModel = new UsersSearch();
 		$allowedGroups = [];
 		//Проверяем доступы к списку юзеров
@@ -162,9 +161,9 @@ class AjaxController extends BaseAjaxController {
 				'groups' => ArrayHelper::getColumn($model->relGroups, 'id')
 			];
 		}
-		$answer->count = $dataProvider->totalCount;
-		$answer->items = $result;
-		return $answer->answer;
+		$this->answer->count = $dataProvider->totalCount;
+		$this->answer->items = $result;
+		return $this->answer->answer;
 
 	}
 }
