@@ -1,7 +1,7 @@
 function set_roles(userId, groupId, roles) {
 	jQuery('#' + userId + '-' + groupId + '-roles-progress').show();
 	jQuery.ajax({
-		url: '/ajax/set-user-roles-in-group',
+		url: '/references/ajax/set-user-roles-in-group',
 		data: {
 			userId: userId,
 			groupId: groupId,

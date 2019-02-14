@@ -1,7 +1,7 @@
 function set_group_relation_type(parentGroupId, childGroupId, relation) {
 	jQuery('#' + parentGroupId + '-' + childGroupId + '-relation-progress').show();
 	jQuery.ajax({
-		url: '/ajax/set-group-relation-type',
+		url: '/references/ajax/set-group-relation-type',
 		data: {
 			parentGroupId: parentGroupId,
 			childGroupId: childGroupId,

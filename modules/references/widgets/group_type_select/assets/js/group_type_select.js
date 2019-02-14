@@ -1,7 +1,7 @@
 function set_group_type(groupId, type) {
 	jQuery('#' + groupId + '-type-progress').show();
 	jQuery.ajax({
-		url: '/ajax/set-group-type',
+		url: '/references/ajax/set-group-type',
 		data: {
 			groupId: groupId,
 			type: type

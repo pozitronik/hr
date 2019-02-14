@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\group_type_select;
+namespace app\modules\references\widgets\group_type_select;
 
 use app\modules\groups\models\Groups;
 use app\modules\references\models\refs\RefGroupTypes;
