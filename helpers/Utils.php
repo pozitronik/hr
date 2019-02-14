@@ -229,10 +229,17 @@ class Utils {
 	 */
 	public static function isSameUrlPath($firstUrl, $secondUrl = null):bool {
 		$secondUrl = $secondUrl??Yii::$app->request->pathInfo;
-		$firstUrl = parse_url(Url::to($firstUrl), PHP_URL_PATH);
-		if (self::URL_SEPARATOR !== $firstUrl[0]) $firstUrl = self::URL_SEPARATOR.$firstUrl;
-		$secondUrl = parse_url(Url::to($secondUrl), PHP_URL_PATH);
-		if (self::URL_SEPARATOR !== $secondUrl[0]) $secondUrl = self::URL_SEPARATOR.$secondUrl;
+		$firstUrl = self::setAbsoluteUrl(parse_url(Url::to($firstUrl), PHP_URL_PATH));
+		$secondUrl = self::setAbsoluteUrl(parse_url(Url::to($secondUrl), PHP_URL_PATH));
 		return (mb_strtolower($firstUrl) === mb_strtolower($secondUrl));
+	}
+
+	/**
+	 * Превращает любой url в абсолютный (самым тупым способом)
+	 * @param string $url
+	 * @return string
+	 */
+	public static function setAbsoluteUrl(string $url):string {
+		return (self::URL_SEPARATOR === $url[0])?$url:self::URL_SEPARATOR.$url;
 	}
 }
