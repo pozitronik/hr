@@ -12,7 +12,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
-use app\widgets\group_type_select\GroupTypeSelectWidget;
+use app\modules\references\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\references\widgets\relation_type_select\RelationTypeSelectWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
