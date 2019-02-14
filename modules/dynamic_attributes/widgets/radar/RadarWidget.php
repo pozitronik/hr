@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\radar;
+namespace app\modules\dynamic_attributes\widgets\radar;
 
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\users\models\Users;
@@ -12,7 +12,6 @@ use yii\base\Widget;
 /**
  * Class RadarWidget
  * Рисует радарную схему
- * @package app\widgets\radar
  * @property Users $user
  * @property DynamicAttributes $attribute
  * @property array|null $reference

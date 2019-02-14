@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\radar;
+namespace app\modules\dynamic_attributes\widgets\radar;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\radar
  */
 class RadarWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/radar/assets';
+	public $sourcePath = '@app/modules/dynamic_attributes/widgets/radar/assets';
 	public $css = [
 		'css/radar.css'
 	];

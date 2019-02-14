@@ -8,8 +8,8 @@ declare(strict_types = 1);
  */
 
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\widgets\radar\RadarWidget;
 use app\modules\users\models\Users;
-use app\widgets\radar\RadarWidget;
 use yii\web\View;
 use yii\helpers\Html;
 
