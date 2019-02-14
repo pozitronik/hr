@@ -231,7 +231,7 @@ class AjaxController extends Controller {//todo вынести экшены, о�
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$groupId = Yii::$app->request->post('groupId', false);
 		$userId = Yii::$app->request->post('userId', false);
-		if (!($groupId || $userId)) {
+		if (!($groupId && $userId)) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
@@ -267,7 +267,7 @@ class AjaxController extends Controller {//todo вынести экшены, о�
 		$parentGroupId = Yii::$app->request->post('parentGroupId', false);
 		$childGroupId = Yii::$app->request->post('childGroupId', false);
 		$relation = Yii::$app->request->post('relation', false);
-		if (!($parentGroupId || $childGroupId)) {
+		if (!($parentGroupId && $childGroupId)) {
 			return [
 				'result' => self::RESULT_ERROR,
 				'errors' => [
