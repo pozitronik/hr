@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
+use app\models\core\ajax\AjaxAnswer;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;
@@ -38,12 +39,11 @@ class AjaxController extends BaseAjaxController {
 			'access' => [
 				'class' => AccessControl::class,
 				'denyCallback' => function() {
-					return ['success' => false];
+					return null;
 				},
 				'rules' => [
 					[
-						'allow' => /*Yii::$app->request->isAjax, */
-							Yii::$app->user->identity,
+						'allow' => Yii::$app->user->identity,
 						'actions' => [
 							'set-attribute-types-for-user'
 						],
@@ -61,30 +61,22 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionSetAttributeTypesForUser():array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
+		$answer = new AjaxAnswer();
+
 		$attributeId = Yii::$app->request->post('attributeId', false);
 		$userId = Yii::$app->request->post('userId', false);
 		$types = Yii::$app->request->post('types', []);
-		if (!($attributeId || $userId)) {
-			return [
-				'result' => self::RESULT_ERROR,
-				'errors' => [
-					'parameters' => 'Not enough parameters'
-				]
-			];
+		if (!($attributeId && $userId)) {
+			return $answer->addError('parameters', 'Not enough parameters');
 		}
 
 		if (null === RelUsersAttributes::find()->where(['attribute_id' => $attributeId, 'user_id' => $userId])->one()) {
-			return [
-				'result' => self::RESULT_ERROR,
-				'errors' => [
-					'userAttributeRelation' => 'Not found'
-				]
-			];
+			return $answer->addError('userAttributeRelation', 'Not found');
 		}
-		RelUsersAttributesTypes::setAttributeTypeForUser($types, (int)$userId, (int)$attributeId);
-		return [
-			'result' => self::RESULT_OK
-		];
+		if (!(RelUsersAttributesTypes::clearAllAttributeTypesForUser((int)$userId, (int)$attributeId) && RelUsersAttributesTypes::setAttributeTypeForUser($types, (int)$userId, (int)$attributeId))) {
+			return $answer->addError('setAttributeTypeForUser', 'Error');
+		}
+		return $answer->answer;
 	}
 
 }
