@@ -8,11 +8,11 @@ use app\modules\users\models\Users;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 
 /**
- * Class NavigationMenuWidget
+ * Class UserNavigationMenuWidget
  * @package app\modules\users\widgets\navigation_menu
  * @property Users $model
  */
-class NavigationMenuWidget extends BaseNavigationMenuWidget {
+class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета

@@ -8,10 +8,10 @@ use app\modules\groups\models\Groups;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 
 /**
- * Class NavigationMenuWidget
+ * Class GroupNavigationMenuWidget
  * @property Groups $model
  */
-class NavigationMenuWidget extends BaseNavigationMenuWidget {
+class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета
