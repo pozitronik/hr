@@ -3,13 +3,8 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use app\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
-use app\models\prototypes\PrototypeNodeData;
 use app\models\relations\RelGroupsGroups;
-use app\models\user\CurrentUser;
-use app\modules\users\models\Users;
-use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
 use yii\filters\AccessControl;
@@ -82,142 +77,13 @@ class AjaxController extends Controller {//todo вынести экшены, о�
 		return parent::beforeAction($action);
 	}
 
-	/**
-	 * Отдаёт JSON с деревом графа для группы $is
-	 * @param int $id
-	 * @param int $restorePositions 0: use saved nodes positions, 1 - use original positions and reset saved positions, 2 - just use original
-	 * @return array
-	 * @throws Throwable
-	 */
-	public function actionGroupsTree(int $id, int $restorePositions = 0):array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (null === $group = Groups::findModel($id)) {
-			return [
-				'result' => self::RESULT_ERROR,
-				'errors' => [
-					'group' => 'Not found'
-				]
-			];
-		}
-		if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
-		$nodes = [];
-		$edges = [];
-		$group->getGraph($nodes, $edges);
-		$group->roundGraph($nodes);
-		switch ($restorePositions) {
-			default:
-			case 0:
-				$group->applyNodesPositions($nodes, ArrayHelper::getValue($user->options->nodePositions, $id, []));
-			break;
-			case 1:
-				$newPositions = $user->options->nodePositions;
-				unset($newPositions[$id]);
-				$user->options->nodePositions = $newPositions;
-			break;
-			case 2:
-				//do nothing
-			break;
-		}
-		//todo: стандартизировать ответ
-		return compact('nodes', 'edges');
-	}
-
-	/**
-	 * Сохраняет позицию ноды в координатной сетке
-	 * Сохранение производится для текущего пользователя, если он залогинен. Если нет - для браузерного юзер-фингерпринта.
-	 * @return array
-	 * @throws Throwable
-	 */
-	public function actionGroupsTreeSaveNodePosition():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		$nodeData = new PrototypeNodeData();
-		if ($nodeData->load(Yii::$app->request->post(), '')) {
-			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
-			$user->options->nodePositions = ArrayHelper::merge_recursive($user->options->nodePositions, [
-				$nodeData->groupId => [
-					$nodeData->nodeId => [
-						'x' => $nodeData->x,
-						'y' => $nodeData->y
-					]
-				]
-			]);
-			return ['result' => self::RESULT_OK];
-		}
-
-		return [
-			'result' => self::RESULT_ERROR,
-			'errors' => $nodeData->errors
-		];
-	}
-
-	/**
-	 * Сохраянет позиции нод переданных массивом
-	 * @return array
-	 * @throws Throwable
-	 */
-	public function actionGroupsTreeSaveNodesPositions():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-
-		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false)))) {
-			$nodes = json_decode($nodes, true);
-			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
-			$currentNodesPositions = $user->options->nodePositions;
-
-			/** @var array $nodes */
-			foreach ($nodes as $node) {
-				$nodeData = new PrototypeNodeData([
-					'groupId' => $groupId
-				]);
-				if ($nodeData->load($node, '')) {
 
 
-					$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, [
-						$nodeData->groupId => [
-							$nodeData->nodeId => [
-								'x' => $nodeData->x,
-								'y' => $nodeData->y
-							]
-						]
-					]);
 
-				} else {
-					return [
-						'result' => self::RESULT_ERROR,
-						'errors' => $nodeData->errors
-					];
-				}
-			}
-			$user->options->nodePositions = $currentNodesPositions;
-			return ['result' => self::RESULT_OK];
-		}
-		return [
-			'result' => self::RESULT_ERROR,
-			'errors' => [
-				'nodes' => 'Cant load data'
-			]
-		];
-	}
 
-	/**
-	 * Генерит и отдаёт вьюшеньку с инфой о группе
-	 */
-	public function actionGetGroupInfo():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (null === ($group = Groups::findModel(Yii::$app->request->post('groupid')))) {
-			return [
-				'result' => self::RESULT_ERROR,
-				'errors' => [
-					'group' => 'Not found'
-				]
-			];
-		}
-		return [
-			'result' => self::RESULT_OK,
-			'content' => $this->renderPartial('get-group-info', [
-				'group' => $group
-			])
-		];
-	}
+
+
+
 
 	/**
 	 * Принимает массив ролей пользователя, применяя их
@@ -322,34 +188,7 @@ class AjaxController extends Controller {//todo вынести экшены, о�
 		];
 	}
 
-	/**
-	 * AJAX user search
-	 * @return array
-	 */
-	public function actionUsersSearch():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		$searchModel = new UsersSearch();
-		$allowedGroups = [];
-		//Проверяем доступы к списку юзеров
-		$searchArray = [//Быстрый костыль для демо
-			'UsersSearch' => Yii::$app->request->post()
-		];
-		$dataProvider = $searchModel->search($searchArray, $allowedGroups, false);
-		$result = [];
-		/** @var Users $model */
-		foreach ($dataProvider->models as $model) {
-			$result[] = [
-				'username' => $model->username,
-				'groups' => ArrayHelper::getColumn($model->relGroups, 'id')
-			];
-		}
-		return [
-			'result' => self::RESULT_OK,
-			'count' => $dataProvider->totalCount,
-			'items' => $result
-		];
 
-	}
 
 
 
