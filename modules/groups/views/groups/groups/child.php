@@ -12,6 +12,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
+use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
 use app\modules\references\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\references\widgets\relation_type_select\RelationTypeSelectWidget;
 use yii\data\ActiveDataProvider;
@@ -22,7 +23,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<?= GridView::widget([
+<?= /** @noinspection MissedFieldInspection */
+GridView::widget([
 	'dataProvider' => $provider,
 	'panel' => [
 		'type' => GridView::TYPE_INFO,
@@ -45,6 +47,25 @@ use yii\helpers\Url;
 	'showFooter' => true,
 	'footerRowOptions' => [],
 	'columns' => [
+		[
+			'filter' => false,
+			'header' => Icons::menu(),
+			'mergeHeader' => true,
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => function(Groups $model) {
+				return NavigationMenuWidget::widget([
+					'model' => $model,
+					'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				]);
+			},
+			'format' => 'raw'
+		],
 		[
 			'format' => 'raw',
 			'attribute' => 'name',
