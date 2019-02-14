@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references;
+namespace app\modules\references\models;
 
 use app\models\core\LCQuery;
 use app\models\core\Magic;
@@ -46,7 +46,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
-	public const REFERENCES_DIRECTORY = '@app/models/references/refs';
+	public const REFERENCES_DIRECTORY = '@app/modules/references/models/refs';
 
 	/**
 	 * @return string
@@ -113,8 +113,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	 * @throws Throwable
 	 */
 	public static function getReferenceClass(string $class_name):Reference {
-		$class = 'app\models\references\refs\\'.$class_name;
-
+		$class = 'app\modules\references\models\refs\\'.$class_name;
 		if (!class_exists($class)) {
 			throw new ServerErrorHttpException("Отсутствует класс $class");
 		}

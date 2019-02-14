@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 use app\models\user_rights\UserRightInterface;
 use ReflectionClass;
 use ReflectionException;

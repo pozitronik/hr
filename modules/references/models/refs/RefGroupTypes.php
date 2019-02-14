@@ -1,31 +1,31 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references\refs;
+namespace app\modules\references\models\refs;
 
-use app\models\references\Reference;
-use app\models\relations\RelUsersAttributesTypes;
+use app\modules\groups\models\Groups;
+use app\modules\references\models\Reference;
 use Yii;
 use yii\helpers\Html;
 
 /**
- * This is the model class for table "ref_attributes_types".
+ * This is the model class for table "ref_group_types".
  *
  * @property int $id
- * @property string $name
- * @property string $color
+ * @property string $name Название
  * @property int $deleted
+ * @property string $color
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
-class RefAttributesTypes extends Reference {
-	public $menuCaption = 'Типы отношений атрибутов';
+class RefGroupTypes extends Reference {
+	public $menuCaption = 'Типы групп';
 	public $menuIcon = false;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_attributes_types';
+		return 'ref_group_types';
 	}
 
 	/**
@@ -33,10 +33,10 @@ class RefAttributesTypes extends Reference {
 	 */
 	public function rules():array {
 		return [
-			[['id'], 'integer'],
 			[['name'], 'required'],
-			[['deleted'], 'integer'],
-			[['name', 'color'], 'string', 'max' => 255]
+			[['id', 'deleted'], 'integer'],
+			[['name', 'color'], 'string', 'max' => 256],
+			[['color'], 'safe']
 		];
 	}
 
@@ -51,6 +51,17 @@ class RefAttributesTypes extends Reference {
 			'color' => 'Цвет',
 			'usedCount' => 'Использований'
 		];
+	}
+
+	/**
+	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
+	 * @param int $fromId
+	 * @param int $toId
+	 */
+	public static function merge(int $fromId, int $toId):void {
+		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
+		self::flushCache();
 	}
 
 	/**
@@ -88,15 +99,16 @@ class RefAttributesTypes extends Reference {
 	 * @return int
 	 */
 	public function getUsedCount():int {
-		return (int)RelUsersAttributesTypes::find()->where(['type' => $this->id])->count();
+		return (int)Groups::find()->where(['type' => $this->id])->count();
 	}
+
 
 	/**
 	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
 	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
 	 * @return array
 	 */
-	public static function dataOptions():array {//todo: в дефолтную модель
+	public static function dataOptions():array {//todo: вынести в интерфейс?
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
 			/** @var self[] $items */
 			$items = self::find()->active()->all();

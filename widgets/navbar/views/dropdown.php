@@ -50,7 +50,8 @@ use app\modules\users\models\Users;
 						'@app/modules/import/controllers/',
 						'@app/modules/dynamic_attributes/controllers/',
 						'@app/modules/users/controllers/',
-						'@app/modules/groups/controllers/'
+						'@app/modules/groups/controllers/',
+						'@app/modules/references/controllers/'
 					]
 				]) ?>
 			<?php endif; ?>

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\relation_type_select;
 
-use app\models\references\refs\RefGroupRelationTypes;
+use app\modules\references\models\refs\RefGroupRelationTypes;
 use app\models\relations\RelGroupsGroups;
 use Throwable;
 use yii\base\Widget;

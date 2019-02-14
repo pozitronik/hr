@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 
 /**
  * @var View $this ;
@@ -28,7 +28,7 @@ $columns[] = [
 		'label' => Icons::menu(),
 		'caret' => ''
 	],
-	'class' => ActionColumn::class,
+	'class' => ActionColumn::class,//todo: implement navigation widget
 	'buttons' => [
 		'view' => function($url, $model) use ($class) {
 			/** @var Reference $model */

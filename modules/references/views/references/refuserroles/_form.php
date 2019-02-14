@@ -3,12 +3,13 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var RefGroupTypes $model
+ * @var RefUserRoles $model
  * @var ActiveForm $form
  */
 
-use app\models\references\refs\RefGroupTypes;
+use app\modules\references\models\refs\RefUserRoles;
 use kartik\color\ColorInput;
+use kartik\switchinput\SwitchInput;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -42,6 +43,17 @@ use yii\widgets\ActiveForm;
 								'preferredFormat' => 'rgb'
 							]
 						]) ?>
+					</div>
+					<div class="col-md-2">
+						<?= $form->field($model, 'boss_flag')->widget(SwitchInput::class, [
+							'pluginOptions' => [
+								'size' => 'mini',
+								'onText' => 'ДА',
+								'offText' => 'НЕТ',
+								'onColor' => 'primary',
+								'offColor' => 'default'
+							]
+						]); ?>
 					</div>
 				</div>
 

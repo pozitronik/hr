@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references\refs;
+namespace app\modules\references\models\refs;
 
 use kartik\grid\GridView;
 use Yii;
 use app\modules\groups\models\Groups;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\modules\users\models\Users;

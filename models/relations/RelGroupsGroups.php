@@ -5,7 +5,7 @@ namespace app\models\relations;
 
 use app\helpers\ArrayHelper;
 use app\models\core\traits\ARExtended;
-use app\models\references\refs\RefGroupRelationTypes;
+use app\modules\references\models\refs\RefGroupRelationTypes;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;

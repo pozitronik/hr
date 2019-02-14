@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\types_select;
 
-use app\models\references\refs\RefAttributesTypes;
+use app\modules\references\models\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use yii\base\Widget;
 

@@ -5,7 +5,7 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ArrayDataProvider;
 use yii\web\View;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 
 /**
  * @var View $this ;

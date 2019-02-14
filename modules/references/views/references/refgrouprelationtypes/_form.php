@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveForm $form
  */
 
-use app\models\references\refs\RefGroupRelationTypes;
+use app\modules\references\models\refs\RefGroupRelationTypes;
 use kartik\color\ColorInput;
 use yii\web\View;
 use yii\helpers\Html;

@@ -12,7 +12,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
-use app\models\references\refs\RefGroupTypes;
+use app\modules\references\models\refs\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\NavigationMenuWidget;
 use app\modules\users\models\Users;
 use kartik\grid\GridView;

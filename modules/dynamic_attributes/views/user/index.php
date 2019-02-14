@@ -9,7 +9,7 @@ declare(strict_types = 1);
  * @var string|array $updateAttributeAction
  */
 
-use app\models\references\refs\RefAttributesTypes;
+use app\modules\references\models\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributes;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;

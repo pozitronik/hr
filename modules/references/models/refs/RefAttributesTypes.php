@@ -1,31 +1,31 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references\refs;
+namespace app\modules\references\models\refs;
 
-use app\models\references\Reference;
-use app\models\relations\RelGroupsGroups;
+use app\modules\references\models\Reference;
+use app\models\relations\RelUsersAttributesTypes;
 use Yii;
 use yii\helpers\Html;
 
 /**
- * This is the model class for table "ref_group_relation_types".
+ * This is the model class for table "ref_attributes_types".
  *
  * @property int $id
- * @property string $name Название
- * @property int $deleted
+ * @property string $name
  * @property string $color
+ * @property int $deleted
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
-class RefGroupRelationTypes extends Reference {
-	public $menuCaption = 'Типы соединений групп';
+class RefAttributesTypes extends Reference {
+	public $menuCaption = 'Типы отношений атрибутов';
 	public $menuIcon = false;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_group_relation_types';
+		return 'ref_attributes_types';
 	}
 
 	/**
@@ -33,10 +33,10 @@ class RefGroupRelationTypes extends Reference {
 	 */
 	public function rules():array {
 		return [
+			[['id'], 'integer'],
 			[['name'], 'required'],
-			[['id', 'deleted'], 'integer'],
-			[['name', 'color'], 'string', 'max' => 256],
-			[['color'], 'safe']
+			[['deleted'], 'integer'],
+			[['name', 'color'], 'string', 'max' => 255]
 		];
 	}
 
@@ -51,17 +51,6 @@ class RefGroupRelationTypes extends Reference {
 			'color' => 'Цвет',
 			'usedCount' => 'Использований'
 		];
-	}
-
-	/**
-	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
-	 * @param int $fromId
-	 * @param int $toId
-	 */
-	public static function merge(int $fromId, int $toId):void {
-		RelGroupsGroups::updateAll(['relation' => $toId], ['relation' => $fromId]);
-		self::deleteAll(['id' => $fromId]);
-		self::flushCache();
 	}
 
 	/**
@@ -99,7 +88,7 @@ class RefGroupRelationTypes extends Reference {
 	 * @return int
 	 */
 	public function getUsedCount():int {
-		return (int)RelGroupsGroups::find()->where(['relation' => $this->id])->count();
+		return (int)RelUsersAttributesTypes::find()->where(['type' => $this->id])->count();
 	}
 
 	/**
@@ -107,7 +96,7 @@ class RefGroupRelationTypes extends Reference {
 	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
 	 * @return array
 	 */
-	public static function dataOptions():array {
+	public static function dataOptions():array {//todo: в дефолтную модель
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
 			/** @var self[] $items */
 			$items = self::find()->active()->all();

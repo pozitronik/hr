@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references\refs;
+namespace app\modules\references\models\refs;
 
-use app\modules\groups\models\Groups;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
+use app\models\relations\RelGroupsGroups;
 use Yii;
 use yii\helpers\Html;
 
 /**
- * This is the model class for table "ref_group_types".
+ * This is the model class for table "ref_group_relation_types".
  *
  * @property int $id
  * @property string $name Название
@@ -17,15 +17,15 @@ use yii\helpers\Html;
  * @property string $color
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
-class RefGroupTypes extends Reference {
-	public $menuCaption = 'Типы групп';
+class RefGroupRelationTypes extends Reference {
+	public $menuCaption = 'Типы соединений групп';
 	public $menuIcon = false;
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_group_types';
+		return 'ref_group_relation_types';
 	}
 
 	/**
@@ -59,7 +59,7 @@ class RefGroupTypes extends Reference {
 	 * @param int $toId
 	 */
 	public static function merge(int $fromId, int $toId):void {
-		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
+		RelGroupsGroups::updateAll(['relation' => $toId], ['relation' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
 	}
@@ -99,16 +99,15 @@ class RefGroupTypes extends Reference {
 	 * @return int
 	 */
 	public function getUsedCount():int {
-		return (int)Groups::find()->where(['type' => $this->id])->count();
+		return (int)RelGroupsGroups::find()->where(['relation' => $this->id])->count();
 	}
-
 
 	/**
 	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
 	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
 	 * @return array
 	 */
-	public static function dataOptions():array {//todo: вынести в интерфейс?
+	public static function dataOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
 			/** @var self[] $items */
 			$items = self::find()->active()->all();

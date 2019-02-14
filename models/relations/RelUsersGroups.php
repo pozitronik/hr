@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\models\references\refs\RefUserRoles;
+use app\modules\references\models\refs\RefUserRoles;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 

@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 $this->title = "Просмотр записи в справочнике ".$model->menuCaption;
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['/admin/references']];

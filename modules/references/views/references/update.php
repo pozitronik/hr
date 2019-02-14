@@ -5,7 +5,7 @@ declare(strict_types = 1);
  * @var Reference $model
  */
 
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 use yii\web\View;
 
 $this->title = "Изменить запись в справочнике ".$model->menuCaption;

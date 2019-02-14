@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $attribute_data
  */
 
-use app\models\references\refs\RefAttributesTypes;
+use app\modules\references\models\refs\RefAttributesTypes;
 use app\modules\dynamic_attributes\assets\SearchAsset;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use yii\data\ActiveDataProvider;

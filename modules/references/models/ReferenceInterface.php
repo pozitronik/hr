@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references;
+namespace app\modules\references\models;
 
 use yii\db\ActiveQuery;
 

@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use yii\web\View;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 
 /**
  * @var View $this

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\references\refs;
+namespace app\modules\references\models\refs;
 
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 use app\modules\users\models\Users;
 
 /**

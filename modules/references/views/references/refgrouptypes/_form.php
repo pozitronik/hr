@@ -3,14 +3,16 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var Reference $model
+ * @var RefGroupTypes $model
  * @var ActiveForm $form
  */
 
-use app\models\references\Reference;
+use app\modules\references\models\refs\RefGroupTypes;
+use kartik\color\ColorInput;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -21,11 +23,28 @@ use yii\widgets\ActiveForm;
 			</div>
 			<?php $form = ActiveForm::begin(); ?>
 			<div class="panel-body">
-				<?= $form->field($model, 'name')->textInput([
-					'maxlength' => true,
-					'autofocus' => 'autofocus',
-					'spellcheck' => 'true'
-				]); ?>
+				<div class="row">
+					<div class="col-md-7">
+						<?= $form->field($model, 'name')->textInput([
+							'maxlength' => true,
+							'autofocus' => 'autofocus',
+							'spellcheck' => 'true'
+						]); ?>
+					</div>
+
+					<div class="col-md-3">
+						<?= $form->field($model, 'color')->widget(ColorInput::class, [
+							'options' => [
+								'placeholder' => 'Выбрать цвет'
+							],
+							'pluginOptions' => [
+								'showAlpha' => false,
+								'preferredFormat' => 'rgb'
+							]
+						]) ?>
+					</div>
+				</div>
+
 			</div>
 			<div class="panel-footer">
 				<?= Html::submitButton($model->isNewRecord?'Создать':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>

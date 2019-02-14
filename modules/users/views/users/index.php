@@ -11,7 +11,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
-use app\models\references\refs\RefUserRoles;
+use app\modules\references\models\refs\RefUserRoles;
 use app\models\user_rights\Privileges;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;

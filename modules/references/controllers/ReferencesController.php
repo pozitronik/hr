@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin;
+namespace app\modules\references\controllers;
 
 use app\models\core\WigetableController;
-use app\models\references\Reference;
+use app\modules\references\models\Reference;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
@@ -22,6 +22,7 @@ class ReferencesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-book'></i>Справочники";
 	public $menuIcon = "/img/admin/references.png";
 	public $orderWeight = 3;
+	public $defaultRoute = 'references/references';
 
 	/**
 	 * @inheritdoc

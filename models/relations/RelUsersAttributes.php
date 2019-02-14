@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\models\core\traits\ARExtended;
-use app\models\references\refs\RefAttributesTypes;
+use app\modules\references\models\refs\RefAttributesTypes;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
