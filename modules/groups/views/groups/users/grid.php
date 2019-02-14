@@ -16,7 +16,7 @@ use app\helpers\Icons;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\user_select\UserSelectWidget;
-use app\widgets\roles_select\RolesSelectWidget;
+use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use kartik\grid\CheckboxColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;

@@ -6,7 +6,7 @@ use app\modules\groups\models\Groups;
 use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
-use app\widgets\roles_select\RolesSelectWidget;
+use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use kartik\grid\ActionColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;

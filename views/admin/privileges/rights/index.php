@@ -12,7 +12,7 @@ use app\helpers\Utils;
  */
 
 use app\models\user_rights\Privileges;
-use app\widgets\user_right_select\UserRightSelectWidget;
+use app\modules\references\widgets\user_right_select\UserRightSelectWidget;
 use yii\data\ArrayDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;

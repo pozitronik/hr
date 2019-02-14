@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\relation_type_select;
+namespace app\modules\references\widgets\relation_type_select;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\relation_type_select
  */
 class RelationTypeSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/relation_type_select/assets';
+	public $sourcePath = '@app/modules/references/widgets/relation_type_select/assets';
 	public $css = [
 		'css/relation_type_select.css'
 	];

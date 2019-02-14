@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\roles_select;
+namespace app\modules\references\widgets\roles_select;
 
 use app\modules\references\models\refs\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\roles_select;
+namespace app\modules\references\widgets\roles_select;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\roles_select
  */
 class RolesSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/roles_select/assets';
+	public $sourcePath = '@app/modules/references/widgets/roles_select/assets';
 	public $css = [
 		'css/roles_select.css'
 	];

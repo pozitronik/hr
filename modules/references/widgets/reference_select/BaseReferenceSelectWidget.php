@@ -18,7 +18,7 @@ class BaseReferenceSelectWidget extends Widget {
 	 */
 	public function init() {
 		parent::init();
-		ReferenceSelectWidgetAssets::register($this->getView());
+		BaseReferenceSelectWidgetAssets::register($this->getView());
 	}
 
 	/**

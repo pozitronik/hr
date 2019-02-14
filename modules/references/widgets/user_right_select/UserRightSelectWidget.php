@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\user_right_select;
+namespace app\modules\references\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
 use app\models\user_rights\Privileges;
