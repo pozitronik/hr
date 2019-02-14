@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\structure;
+namespace app\modules\groups\widgets\structure;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -12,7 +12,8 @@ use yii\web\View;
  * @package app\components\structure
  */
 class StructureWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/structure/assets';
+	public $sourcePath = '@app/modules/groups/
+	widgets/structure/assets';
 	public $css = [
 		'css/structure.css'
 	];

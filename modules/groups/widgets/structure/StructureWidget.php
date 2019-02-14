@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\structure;
+namespace app\modules\groups\widgets\structure;
 
 use yii\base\Widget;
 

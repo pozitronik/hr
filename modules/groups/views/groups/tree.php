@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
-use app\widgets\structure\StructureWidget;
+use app\modules\groups\widgets\structure\StructureWidget;
 use yii\web\View;
 
 $this->title = 'Граф связей: '.Groups::findModel($id)->name;

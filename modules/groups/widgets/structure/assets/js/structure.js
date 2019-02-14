@@ -148,7 +148,7 @@ function init_sigma(id, mode) {
 	CustomShapes.init(s);
 	s.refresh();
 
-	sigma.parsers.json('/ajax/groups-tree?id=' + id + '&restorePositions=' + mode, s, function () {
+	sigma.parsers.json('/groups/ajax/groups-tree?id=' + id + '&restorePositions=' + mode, s, function () {
 		bindFilter(s);//must be before bind events
 		bindEvents(s);
 		bindDragging(s);
@@ -228,7 +228,7 @@ function save_node_position(node_id, x, y) {
 		'&nodeId=' + encodeURIComponent(node_id)
 		+ '&x=' + encodeURIComponent(x)
 		+ '&y=' + encodeURIComponent(y);
-	xhr.open('POST', '/ajax/groups-tree-save-node-position', true);
+	xhr.open('POST', '/groups/ajax/groups-tree-save-node-position', true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 
@@ -256,7 +256,7 @@ function save_nodes_positions(nodes) {
 	var request_body = 'groupId=' + encodeURIComponent(_.get('id')) +
 		'&nodes=' + encodeURIComponent(JSON.stringify(data));
 
-	xhr.open('POST', '/ajax/groups-tree-save-nodes-positions', true);
+	xhr.open('POST', '/groups/ajax/groups-tree-save-nodes-positions', true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 
@@ -275,7 +275,7 @@ function show_group_info(group_id) {
 	if (!xhr) throw 'XMLHttpRequest not supported.';
 
 	var request_body = 'groupid=' + encodeURIComponent(group_id);
-	xhr.open('POST', '/ajax/get-group-info', true);
+	xhr.open('POST', '/groups/ajax/get-group-info', true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 	xhr.onreadystatechange = function () {
@@ -302,7 +302,7 @@ function search_users(name) {
 	if (!xhr) throw 'XMLHttpRequest not supported.';
 
 	var request_body = 'username=' + encodeURIComponent(name);
-	xhr.open('POST', '/ajax/users-search', true);
+	xhr.open('POST', '/groups/ajax/users-search', true);
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 	xhr.onreadystatechange = function () {
