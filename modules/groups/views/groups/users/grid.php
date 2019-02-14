@@ -15,6 +15,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
+use app\modules\users\widgets\navigation_menu\NavigationMenuWidget;
 use app\modules\users\widgets\user_select\UserSelectWidget;
 use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use kartik\grid\CheckboxColumn;
@@ -24,7 +25,8 @@ use yii\helpers\Html;
 use yii\web\View;
 ?>
 
-<?= GridView::widget([
+<?= /** @noinspection MissedFieldInspection */
+GridView::widget([
 	'dataProvider' => $provider,
 	'panel' => [
 		'after' => false,
@@ -43,6 +45,25 @@ use yii\web\View;
 	'resizableColumns' => true,
 	'responsive' => true,
 	'columns' => [
+		[
+			'filter' => false,
+			'header' => Icons::menu(),
+			'mergeHeader' => true,
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => function(Users $model) {
+				return NavigationMenuWidget::widget([
+					'model' => $model,
+					'mode' => NavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				]);
+			},
+			'format' => 'raw'
+		],
 		[
 			'format' => 'raw',
 			'attribute' => 'username',
