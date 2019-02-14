@@ -16,6 +16,7 @@ use yii\web\Response;
  * @package app\models\core
  */
 class BaseAjaxController extends Controller {
+	//todo: инициировать ответ прямо тут
 
 	/**
 	 * {@inheritDoc}
