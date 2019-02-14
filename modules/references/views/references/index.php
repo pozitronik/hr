@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use app\helpers\Icons;
-use kartik\grid\ActionColumn;
+use app\modules\references\widgets\navigation_menu\ReferenceNavigationMenuWidget;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
@@ -22,34 +22,24 @@ $this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 
 $columns[] = [
+	'filter' => false,
 	'header' => Icons::menu(),
-	'dropdown' => true,
-	'dropdownButton' => [
-		'label' => Icons::menu(),
-		'caret' => ''
+	'mergeHeader' => true,
+	'headerOptions' => [
+		'class' => 'skip-export kv-align-center kv-align-middle'
 	],
-	'class' => ActionColumn::class,//todo: implement navigation widget
-	'buttons' => [
-		'view' => function($url, $model) use ($class) {
-			/** @var Reference $model */
-			return Html::tag('li', Html::a(Icons::view().'Просмотр', ['view', 'class' => $class->formName(), 'id' => $model->id]));
-
-		},
-		'update' => function($url, $model) use ($class) {
-			/** @var Reference $model */
-			return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'class' => $class->formName(), 'id' => $model->id]));
-		},
-		'delete' => function($url, $model) use ($class) {
-			/** @var Reference $model */
-			return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'class' => $class->formName(), 'id' => $model->id], [
-				'title' => 'Удалить запись',
-				'data' => [
-					'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
-					'method' => 'post'
-				]
-			]));
-		}
-	]
+	'contentOptions' => [
+		'style' => 'width:50px',
+		'class' => 'skip-export kv-align-center kv-align-middle'
+	],
+	'value' => function(Reference $model) use ($class) {
+		return ReferenceNavigationMenuWidget::widget([
+			'model' => $model,
+			'className' => $class->formName(),
+			'mode' => ReferenceNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+		]);
+	},
+	'format' => 'raw'
 ];
 
 $columns = array_merge($columns, $class->columns);
