@@ -90,6 +90,17 @@ class AjaxAnswer extends Model {
 	}
 
 	/**
+	 * Добавляет массив ошибок и возвращает ответ (для случая, когда ajax-контроллер должен ответить при обнаружении ошибки)
+	 * @param array $items
+	 * @return array
+	 */
+	public function addErrors(array $items):array {
+		parent::addErrors($items);
+		$this->resultCode = self::RESULT_ERROR;
+		return $this->answer;
+	}
+
+	/**
 	 * Возврат ответа
 	 * @return array
 	 */
