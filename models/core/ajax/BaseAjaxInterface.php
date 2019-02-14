@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\core;
+namespace app\models\core\ajax;
 
 /**
  * Объявления всяких аякосвых сущностей-общностей

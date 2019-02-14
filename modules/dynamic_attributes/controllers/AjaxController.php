@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
-use app\models\core\BaseAjaxController;
+use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;
 use Throwable;
