@@ -15,7 +15,7 @@ use yii\web\Response;
  * Class AjaxController
  * @package app\models\core
  */
-class BaseAjaxController extends Controller implements BaseAjaxInterface {
+class BaseAjaxController extends Controller {
 
 	/**
 	 * {@inheritDoc}
