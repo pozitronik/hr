@@ -8,8 +8,8 @@ declare(strict_types = 1);
  * @var array $attribute_data
  */
 
-use app\assets\DynamicAttributesSearchAsset;
 use app\models\references\refs\RefAttributesTypes;
+use app\modules\dynamic_attributes\assets\SearchAsset;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -18,7 +18,7 @@ use yii\helpers\Html;
 use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
 
-DynamicAttributesSearchAsset::register($this);
+SearchAsset::register($this);
 
 $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
