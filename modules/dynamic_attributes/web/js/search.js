@@ -1,7 +1,7 @@
 function attribute_changed(element) {
 	$.ajax({
 		type: 'POST',
-		url: '/ajax/attribute-get-properties',
+		url: '/attributes/ajax/attribute-get-properties',
 		data: {
 			attribute: element.val()
 		},
@@ -28,7 +28,7 @@ function attribute_changed(element) {
 function property_changed(element) {
 	$.ajax({
 		type: 'POST',
-		url: '/ajax/attribute-get-property-condition',
+		url: '/attributes/ajax/attribute-get-property-condition',
 		data: {
 			type: element.find(':selected').data('type')
 		},
