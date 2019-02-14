@@ -8,8 +8,8 @@ use app\models\core\core_module\CoreModule;
 /** @noinspection EmptyClassInspection */
 
 /**
- * Class Module
- * @package app\modules\import
+ * Class UsersModule
+ * @package app\modules\users
  */
 class UsersModule extends CoreModule {
 

@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 /** @noinspection UsingInclusionReturnValueInspection */
 
+use app\modules\dynamic_attributes\DynamicAttributesModule;
+use app\modules\groups\GroupsModule;
+use app\modules\import\ImportModule;
+use app\modules\references\ReferencesModule;
 use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
-use app\modules\import\Module as Import;
-use app\modules\dynamic_attributes\Module as Attributes;
-use app\modules\groups\Module as Groups;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
@@ -43,16 +44,19 @@ $config = [
 			// 'i18n' => []
 		],
 		'import' => [
-			'class' => Import::class
+			'class' => ImportModule::class
 		],
 		'attributes' => [
-			'class' => Attributes::class
+			'class' => DynamicAttributesModule::class
 		],
 		'users' => [
 			'class' => UsersModule::class
 		],
 		'groups' => [
-			'class' => Groups::class
+			'class' => GroupsModule::class
+		],
+		'references' => [
+			'class' => ReferencesModule::class
 		]
 	],
 	'components' => [

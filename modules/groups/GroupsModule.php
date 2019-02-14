@@ -8,9 +8,9 @@ use app\models\core\core_module\CoreModule;
 /** @noinspection EmptyClassInspection */
 
 /**
- * Class Module
- * @package app\modules\import
+ * Class GroupsModule
+ * @package app\modules\groups
  */
-class Module extends CoreModule {
+class GroupsModule extends CoreModule {
 
 }
