@@ -4,13 +4,10 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\ArrayHelper;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\groups\models\Groups;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\relations\RelGroupsGroups;
 use app\models\user\CurrentUser;
-use app\modules\users\models\Bookmarks;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use Throwable;
@@ -354,50 +351,6 @@ class AjaxController extends Controller {//todo вынести экшены, о�
 
 	}
 
-	/**
-	 * Добавляет закладку текущему пользователю
-	 * @return array
-	 * @throws Throwable
-	 */
-	public function actionUserAddBookmark():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		$bookmark = new Bookmarks();
-		if ($bookmark->load(Yii::$app->request->post(), '')) {
-			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
-			$bookmarks = $user->options->bookmarks;
-			$bookmarks[] = $bookmark;
-			$user->options->bookmarks = $bookmarks;
-			return ['result' => self::RESULT_OK];
-		}
-		return [
-			'result' => self::RESULT_ERROR,
-			'errors' => $bookmark->errors
-		];
-	}
 
-	/**
-	 * Удаляет закладку
-	 * @return array
-	 * @throws Throwable
-	 */
-	public function actionUserRemoveBookmark():array {
-		Yii::$app->response->format = Response::FORMAT_JSON;
-		if (false !== $route = Yii::$app->request->post('route', false)) {
-			if (null === $user = CurrentUser::User()) return ['result' => self::RESULT_ERROR, 'errors' => 'Unauthorized'];
-			$bookmarks = $user->options->bookmarks;
-			foreach ($bookmarks as $key => $value) {
-				if ($route === $value->route) unset($bookmarks[$key]);
-			}
-			$user->options->bookmarks = $bookmarks;
-			return ['result' => self::RESULT_OK];
-		}
-		return [
-			'result' => self::RESULT_ERROR,
-			'errors' => [
-				'route' => 'not found'
-			]
-		];
-
-	}
 
 }
