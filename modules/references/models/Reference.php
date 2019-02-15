@@ -47,6 +47,11 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
 	public const REFERENCES_DIRECTORY = '@app/modules/references/models/refs';
+	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions
+		Имя может быть строковое (если название атрибута совпадает с именем data-атрибута, либо массивом
+		формата ['имя data-атрибута' => 'атрибут модели']
+	*/
+	protected $_dataAttributes = [];
 
 	/**
 	 * @return string
@@ -286,10 +291,19 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 			/** @var self[] $items */
 			$items = self::find()->active()->all();
 			$result = [];
-			foreach ($items as $key => $item) {
-				$result[$item->id] = [
-					'data-color' => $item->color
-				];
+			$dataAttributes = (new static)->_dataAttributes;//Получаем аттрибуты единожды, чтобы не дёргать $item->_dataAttributes в цикле
+			foreach ($dataAttributes as $attribute) {
+				if (is_array($attribute)) {
+					$dataKey = array_keys($attribute)[0];//array_key_first не работает =(
+					$attributeName = $attribute[$dataKey];
+				} else {
+					$dataKey = $attribute;
+					$attributeName = $attribute;
+				}
+				foreach ($items as $key => $item) {
+					$result[$item->id]["data-{$dataKey}"] = $item->$attributeName;
+				}
+
 			}
 			return $result;
 		});

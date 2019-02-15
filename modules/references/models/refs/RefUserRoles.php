@@ -35,6 +35,8 @@ class RefUserRoles extends Reference {
 	public $menuCaption = 'Роли пользователей внутри групп';
 	public $menuIcon = false;
 
+	protected $_dataAttributes = ['color', ['boss' => 'boss_flag']];
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -118,26 +120,6 @@ class RefUserRoles extends Reference {
 		RelUsersGroupsRoles::updateAll(['role' => $toId], ['role' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
-	}
-
-	/**
-	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
-	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
-	 * @return array
-	 */
-	public static function dataOptions():array {
-		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
-			/** @var self[] $items */
-			$items = self::find()->active()->all();
-			$result = [];
-			foreach ($items as $key => $item) {
-				$result[$item->id] = [
-					'data-color' => $item->color,
-					'data-boss' => $item->boss_flag
-				];
-			}
-			return $result;
-		});
 	}
 
 	/**

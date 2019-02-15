@@ -21,6 +21,8 @@ class RefGroupTypes extends Reference {
 	public $menuCaption = 'Типы групп';
 	public $menuIcon = false;
 
+	protected $_dataAttributes = ['color'];
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -100,24 +102,5 @@ class RefGroupTypes extends Reference {
 	 */
 	public function getUsedCount():int {
 		return (int)Groups::find()->where(['type' => $this->id])->count();
-	}
-
-	/**
-	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
-	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
-	 * @return array
-	 */
-	public static function dataOptions():array {
-		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
-			/** @var self[] $items */
-			$items = self::find()->active()->all();
-			$result = [];
-			foreach ($items as $key => $item) {
-				$result[$item->id] = [
-					'data-color' => $item->color
-				];
-			}
-			return $result;
-		});
 	}
 }

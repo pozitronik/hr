@@ -20,6 +20,8 @@ class RefAttributesTypes extends Reference {
 	public $menuCaption = 'Типы отношений атрибутов';
 	public $menuIcon = false;
 
+	protected $_dataAttributes = ['color'];
+
 	/**
 	 * {@inheritdoc}
 	 */

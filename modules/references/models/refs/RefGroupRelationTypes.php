@@ -20,6 +20,8 @@ class RefGroupRelationTypes extends Reference {
 	public $menuCaption = 'Типы соединений групп';
 	public $menuIcon = false;
 
+	protected $_dataAttributes = ['color'];
+
 	/**
 	 * {@inheritdoc}
 	 */
