@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights;
+namespace app\modules\privileges\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
@@ -44,7 +44,7 @@ use yii\db\Exception;
  */
 class Privileges extends ActiveRecord {
 	use ARExtended;
-	public const RIGHTS_DIRECTORY = '@app/models/user_rights/rights';
+	public const RIGHTS_DIRECTORY = '@app/modules/privileges/models/rights';
 
 	/**
 	 * @return LCQuery

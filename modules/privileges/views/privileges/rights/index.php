@@ -11,7 +11,7 @@ use app\helpers\Utils;
  * @var Privileges $model
  */
 
-use app\models\user_rights\Privileges;
+use app\modules\privileges\models\Privileges;
 use app\modules\references\widgets\user_right_select\UserRightSelectWidget;
 use yii\data\ArrayDataProvider;
 use yii\web\View;

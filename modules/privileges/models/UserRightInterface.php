@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights;
+namespace app\modules\privileges\models;
 
 use yii\base\Model;
 use yii\web\Controller;

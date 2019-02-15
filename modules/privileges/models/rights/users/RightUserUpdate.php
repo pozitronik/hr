@@ -1,29 +1,28 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights\rights\users;
+namespace app\modules\privileges\models\rights\users;
 
 use app\helpers\ArrayHelper;
-use app\models\user\CurrentUser;
-use app\models\user_rights\AccessMethods;
-use app\models\user_rights\UserRight;
+use app\modules\privileges\models\AccessMethods;
+use app\modules\privileges\models\UserRight;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\web\Controller;
 
 /**
- * Class RightUserUpdateSelf
+ * Class RightUserUpdate
  * @package app\models\user_rights\rights\users
  */
-class RightUserUpdateSelf extends UserRight {
+class RightUserUpdate extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Редактирование своего профиля";
+		return "Редактирование профиля";
 	}
 
 	/**
@@ -31,7 +30,7 @@ class RightUserUpdateSelf extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Пользователь может вносить любые изменения в собственный профиль";
+		return "Пользователь может вносить любые изменения в профили всех пользователей";
 	}
 
 	/**
@@ -41,7 +40,7 @@ class RightUserUpdateSelf extends UserRight {
 		$definedRules = [
 			'users/users' => [
 				'actions' => [
-					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
+					'update' => self::ACCESS_ALLOW
 				]
 			]
 		];
@@ -59,8 +58,8 @@ class RightUserUpdateSelf extends UserRight {
 	 */
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		$definedRules = [
-			'Users' => [
-				AccessMethods::update => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
+			'users' => [
+				AccessMethods::update => self::ACCESS_ALLOW
 			]
 		];
 

@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
-use app\models\user_rights\Privileges;
+use app\modules\privileges\models\Privileges;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;

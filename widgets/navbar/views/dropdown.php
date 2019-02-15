@@ -6,8 +6,8 @@ declare(strict_types = 1);
  * @var Users $user
  */
 
-use app\models\user_rights\rights\admin\ServiceAccess;
-use app\models\user_rights\UserAccess;
+use app\modules\privileges\models\rights\admin\ServiceAccess;
+use app\modules\privileges\models\UserAccess;
 use yii\base\View;
 use yii\helpers\Html;
 use app\modules\users\widgets\bookmarks\BookmarksWidget;
@@ -46,12 +46,14 @@ use app\modules\users\models\Users;
 				<?= AdminPanelWidget::widget([
 					'mode' => AdminPanelWidget::MODE_LIST,
 					'controllers_directory' => [
+						/*todo: CoreModule::GetModuleDirectories*/
 						AdminPanelWidget::DEFAULT_DIRECTORY,
 						'@app/modules/import/controllers/',
 						'@app/modules/dynamic_attributes/controllers/',
 						'@app/modules/users/controllers/',
 						'@app/modules/groups/controllers/',
-						'@app/modules/references/controllers/'
+						'@app/modules/references/controllers/',
+						'@app/modules/privileges/controllers/'
 					]
 				]) ?>
 			<?php endif; ?>

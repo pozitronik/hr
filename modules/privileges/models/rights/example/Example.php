@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights\rights\example;
+namespace app\modules\privileges\models\rights\example;
 
-use app\models\user_rights\UserRight;
+use app\modules\privileges\models\UserRight;
 use yii\db\ActiveQuery;
 use yii\web\Controller;
 

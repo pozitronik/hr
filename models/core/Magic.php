@@ -5,7 +5,7 @@ namespace app\models\core;
 
 use app\helpers\ArrayHelper;
 use app\modules\references\models\Reference;
-use app\models\user_rights\UserRightInterface;
+use app\modules\privileges\models\UserRightInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;

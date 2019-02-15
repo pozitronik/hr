@@ -8,7 +8,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\modules\references\models\refs\RefUserPositions;
-use app\models\user_rights\Privileges;
+use app\modules\privileges\models\Privileges;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;

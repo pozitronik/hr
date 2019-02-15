@@ -1,25 +1,24 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights\rights\users;
+namespace app\modules\privileges\models\rights\users;
 
 use app\helpers\ArrayHelper;
-use app\models\user_rights\UserRight;
+use app\modules\privileges\models\UserRight;
 use yii\web\Controller;
 
 /**
- * Class RightUserCreate
- * @package app\models\user_rights\rights
+ * Class RightUserView
+ * @package app\models\user_rights\rights\users
  */
-class RightUserCreate extends UserRight {
-
+class RightUserView extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Создание пользователя";
+		return "Просмотр пользователей";
 	}
 
 	/**
@@ -27,7 +26,7 @@ class RightUserCreate extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Разрешает создать нового пользователя в системе";
+		return "Доступ к списку всех пользователей в системе";
 	}
 
 	/**
@@ -37,10 +36,11 @@ class RightUserCreate extends UserRight {
 		$definedRules = [
 			'users/users' => [
 				'actions' => [
-					'create' => self::ACCESS_ALLOW
+					'index' => self::ACCESS_ALLOW
 				]
 			]
 		];
 		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+
 	}
 }

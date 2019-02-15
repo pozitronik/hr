@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights\rights\admin;
+namespace app\modules\privileges\models\rights\admin;
 
-use app\models\user_rights\UserRight;
+use app\modules\privileges\models\UserRight;
 use yii\web\Controller;
 
 /**

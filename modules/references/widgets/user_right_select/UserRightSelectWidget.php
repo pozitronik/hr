@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
-use app\models\user_rights\Privileges;
+use app\modules\privileges\models\Privileges;
 use ReflectionException;
 use yii\base\UnknownClassException;
 use yii\base\Widget;

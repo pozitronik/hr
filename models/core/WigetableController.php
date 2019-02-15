@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\Path;
-use app\models\user_rights\UserAccess;
+use app\modules\privileges\models\UserAccess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;

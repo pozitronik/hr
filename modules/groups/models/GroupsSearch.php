@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
-use app\models\user_rights\UserAccess;
+use app\modules\privileges\models\UserAccess;
 use Yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 

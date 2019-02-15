@@ -12,7 +12,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\references\models\refs\RefUserRoles;
-use app\models\user_rights\Privileges;
+use app\modules\privileges\models\Privileges;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;

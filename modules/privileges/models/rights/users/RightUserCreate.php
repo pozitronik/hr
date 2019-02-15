@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\user_rights\rights\users;
+namespace app\modules\privileges\models\rights\users;
 
 use app\helpers\ArrayHelper;
-use app\models\user_rights\UserRight;
+use app\modules\privileges\models\UserRight;
 use yii\web\Controller;
 
 /**
- * Class RightUserDelete
+ * Class RightUserCreate
  * @package app\models\user_rights\rights
  */
-class RightUserDelete extends UserRight {
+class RightUserCreate extends UserRight {
 
 
 	/**
@@ -19,7 +19,7 @@ class RightUserDelete extends UserRight {
 	 * @return string
 	 */
 	public function getName():string {
-		return "Удаление пользователя";
+		return "Создание пользователя";
 	}
 
 	/**
@@ -27,7 +27,7 @@ class RightUserDelete extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Разрешает удалить пользователя из системы";
+		return "Разрешает создать нового пользователя в системе";
 	}
 
 	/**
@@ -37,11 +37,10 @@ class RightUserDelete extends UserRight {
 		$definedRules = [
 			'users/users' => [
 				'actions' => [
-					'delete' => self::ACCESS_ALLOW
+					'create' => self::ACCESS_ALLOW
 				]
 			]
 		];
 		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
-
 	}
 }

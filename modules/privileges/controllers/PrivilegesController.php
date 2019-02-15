@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers\admin;
+namespace app\modules\privileges\controllers;
 
 use app\models\core\WigetableController;
-use app\models\user_rights\Privileges;
+use app\modules\privileges\models\Privileges;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -23,6 +23,7 @@ class PrivilegesController extends WigetableController {
 	public $menuIcon = "/img/admin/privileges.png";
 	public $disabled = false;
 	public $orderWeight = 5;
+	public $defaultRoute = 'privileges/privileges';
 
 	/**
 	 * @inheritdoc
