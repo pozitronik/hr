@@ -7,9 +7,15 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
+use app\widgets\navigation_menu\ColumnMenuWidgetAssets;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
 
+/*
+ * Не получается подписаться на события *.bs.dropdown, т.к. тут они триггерятся для контейнера. Возможно, я чего-то не понял сам, но проще оказалось вынести подписку на события в отдельный JS
+ * Скрипт пытается позиционировать всплывающее меню так, чтобы оно не "тонуло" в таблице.
+ */
+ColumnMenuWidgetAssets::register($this);
 ?>
 
 <?= ButtonDropdown::widget([

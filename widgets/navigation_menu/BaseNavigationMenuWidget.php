@@ -13,7 +13,6 @@ use yii\db\ActiveRecord;
  * @property ActiveRecord $model
  * @property int $mode
  *
- * todo: написать скрипт, позиционирующий меню на экране так, чтобы оно не "тонуло" внутри блоков.
  * Брать его текущую абсолютную позицию, менять position на fixed, возвращать позициюю
  */
 class BaseNavigationMenuWidget extends Widget {
