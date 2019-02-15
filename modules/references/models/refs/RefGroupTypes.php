@@ -5,7 +5,6 @@ namespace app\modules\references\models\refs;
 
 use app\modules\groups\models\Groups;
 use app\modules\references\models\Reference;
-use Yii;
 use yii\helpers\Html;
 
 /**

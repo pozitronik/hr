@@ -291,7 +291,7 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 			/** @var self[] $items */
 			$items = self::find()->active()->all();
 			$result = [];
-			$dataAttributes = (new static)->_dataAttributes;//Получаем аттрибуты единожды, чтобы не дёргать $item->_dataAttributes в цикле
+			$dataAttributes = (array)(new static)->_dataAttributes;//Получаем аттрибуты единожды, чтобы не дёргать $item->_dataAttributes в цикле
 			foreach ($dataAttributes as $attribute) {
 				if (is_array($attribute)) {
 					$dataKey = array_keys($attribute)[0];//array_key_first не работает =(

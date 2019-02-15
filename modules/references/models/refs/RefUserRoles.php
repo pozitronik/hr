@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\references\models\refs;
 
 use kartik\grid\GridView;
-use Yii;
 use app\modules\groups\models\Groups;
 use app\modules\references\models\Reference;
 use app\models\relations\RelUsersGroups;
