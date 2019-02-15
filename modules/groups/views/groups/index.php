@@ -14,6 +14,7 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\references\models\refs\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -76,10 +77,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'attribute' => 'type',
 					'value' => 'relGroupTypes.name',
-					'filterType' => GridView::FILTER_SELECT2,
-					'filter' => RefGroupTypes::mapData(),
+					'filterType' => ReferenceSelectWidget::class,
 					'filterInputOptions' => ['placeholder' => 'Тип'],
-					'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]]
+					'filterWidgetOptions' => [
+						/*В картиковском гриде захардкожено взаимодействие с собственными фильтрами, в частности использование filter. В нашем виджете обходимся так*/
+						'referenceClass' => RefGroupTypes::class,
+						'pluginOptions' => ['allowClear' => true]
+					]
 				],
 				[
 					'attribute' => 'leaders',

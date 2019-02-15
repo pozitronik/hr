@@ -10,7 +10,7 @@ use app\assets\AppAsset;
  * Class BaseReferenceSelectWidgetAssets
  * @package app\modules\references\widgets\reference_select
  */
-class BaseReferenceSelectWidgetAssets extends AssetBundle {
+class ReferenceSelectWidgetAssets extends AssetBundle {
 	public $sourcePath = '@app/modules/references/widgets/reference_select/assets';
 	public $css = [
 		'css/reference_select.css'
