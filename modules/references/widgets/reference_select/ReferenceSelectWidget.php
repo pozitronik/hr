@@ -3,10 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\reference_select;
 
+use app\helpers\Icons;
+use app\modules\references\models\Reference;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
 use ReflectionException;
 use yii\base\InvalidConfigException;
+use yii\helpers\Html;
 use yii\web\JsExpression;
 
 /**
@@ -15,10 +18,12 @@ use yii\web\JsExpression;
  * Class GroupSelectWidget
  * @package app\components\reference_select
  *
- * @property ReferenceInterface $referenceClass
+ * @property ReferenceInterface $referenceClass Модель справочника, к которой интегрируется виджет
+ * @property bool $showEditAddon Включает кнпоку перехода к редактированию справочника
  */
 class ReferenceSelectWidget extends Select2 {
 	public $referenceClass;
+	public $showEditAddon = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -42,6 +47,15 @@ class ReferenceSelectWidget extends Select2 {
 			$this->pluginOptions['escapeMarkup'] = new JsExpression('function (markup) { return markup; }');
 			$this->data = $this->referenceClass::mapData();
 			$this->options['options'] = $this->referenceClass::dataOptions();
+			if ($this->showEditAddon) {
+				$className = pathinfo($this->referenceClass, PATHINFO_FILENAME);
+				$this->addon = [
+					'append' => [
+						'content' => Html::a(Icons::update(), "/references/references/index?class=$className", ['class' => 'btn btn-default']),
+						'asButton' => true
+					]
+				];
+			}
 		}
 		return parent::run();
 	}
