@@ -76,4 +76,11 @@ interface ReferenceInterface {
 	 * @return int
 	 */
 	public function getUsedCount():int;
+
+	/**
+	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
+	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
+	 * @return array
+	 */
+	public static function dataOptions():array;
 }
