@@ -52,7 +52,7 @@ class AjaxController extends BaseAjaxController {
 				//do nothing
 			break;
 		}
-		//todo: стандартизировать ответ
+		/*sigma.js требует выдачи данных в таком формате, пожтому answer не используем*/
 		return compact('nodes', 'edges');
 	}
 
