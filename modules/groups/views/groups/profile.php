@@ -8,10 +8,10 @@ declare(strict_types = 1);
 
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-use kartik\select2\Select2;
 use app\modules\references\models\refs\RefGroupTypes;
 use kartik\file\FileInput;
 
@@ -62,8 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 
 					<div class="col-md-12">
-						<?= $form->field($model, 'type')->widget(Select2::class, [
-							'data' => RefGroupTypes::mapData(),
+						<?= $form->field($model, 'type')->widget(ReferenceSelectWidget::class, [
+							'referenceClass' => RefGroupTypes::class,
 							'options' => ['placeholder' => 'Выберите тип'],
 							'pluginOptions' => [
 								'allowClear' => true

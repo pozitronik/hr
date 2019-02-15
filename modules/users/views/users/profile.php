@@ -9,6 +9,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\modules\references\models\refs\RefUserPositions;
 use app\models\user_rights\Privileges;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\select2\Select2;
@@ -78,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						</div>
 
 						<div class="col-md-6">
-							<?= $form->field($model, 'position')->widget(Select2::class, [
-								'data' => RefUserPositions::mapData(),
+							<?= $form->field($model, 'position')->widget(ReferenceSelectWidget::class, [
+								'referenceClass' => RefUserPositions::class,
 								'options' => ['placeholder' => 'Выберите роль'],
 								'pluginOptions' => [
 									'allowClear' => true

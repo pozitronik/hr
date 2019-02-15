@@ -11,6 +11,7 @@ declare(strict_types = 1);
 use app\modules\references\models\refs\RefAttributesTypes;
 use app\modules\dynamic_attributes\assets\SearchAsset;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\form\ActiveForm;
@@ -79,8 +80,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							])->label('Объединение'); ?>
 						</div>
 						<div class="col-md-2">
-							<?= $form->field($model, "searchItems[$index][type]")->widget(Select2::class, [
-								'data' => RefAttributesTypes::mapData(),
+							<?= $form->field($model, "searchItems[$index][type]")->widget(ReferenceSelectWidget::class, [
+								'referenceClass' => RefAttributesTypes::class,
 								'options' => array_merge([
 									'multiple' => true,
 									'placeholder' => 'Выбрать тип отношения',

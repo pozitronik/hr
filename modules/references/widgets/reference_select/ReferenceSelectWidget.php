@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\reference_select;
 
 use app\helpers\Icons;
-use app\modules\references\models\Reference;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
 use ReflectionException;
@@ -40,7 +39,6 @@ class ReferenceSelectWidget extends Select2 {
 	 * @throws InvalidConfigException
 	 */
 	public function run():?string {
-
 		if (null !== $this->referenceClass) {
 			$this->pluginOptions['templateResult'] = new JsExpression('function(item) {return formatReferenceItem(item)}');
 			$this->pluginOptions['templateSelection'] = new JsExpression('function(item) {return formatSelectedReferenceItem(item)}');

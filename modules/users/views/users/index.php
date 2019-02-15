@@ -13,6 +13,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\references\models\refs\RefUserRoles;
 use app\models\user_rights\Privileges;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
@@ -101,10 +102,12 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'roles',
-			'filterType' => GridView::FILTER_SELECT2,
-			'filter' => RefUserRoles::mapData(),
+			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите роль'],
-			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefUserRoles::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			],
 
 			'label' => 'Роли',
 			'value' => function(Users $model) {

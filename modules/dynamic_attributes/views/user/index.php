@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 use app\modules\references\models\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributes;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
@@ -88,10 +89,10 @@ $this->params['breadcrumbs'][] = $this->title;
 								],
 								'attribute' => 'type',
 								'label' => 'Сортировать по типу отношения атрибута',
-								'filterType' => GridView::FILTER_SELECT2,
-								'filter' => RefAttributesTypes::mapData(),
+								'filterType' => ReferenceSelectWidget::class,
 								'filterInputOptions' => ['placeholder' => 'Фильтр по типу'],
 								'filterWidgetOptions' => [
+									'referenceClass' => RefAttributesTypes::class,
 									'size' => Select2::SMALL,
 									'pluginOptions' => [
 										'allowClear' => true, 'multiple' => true
