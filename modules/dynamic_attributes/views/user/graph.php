@@ -14,7 +14,7 @@ use yii\web\View;
 use yii\helpers\Html;
 
 $this->title = "{$user->username}: Диаграмма атрибутов {$attribute->name}";
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+
 $this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
 $this->params['breadcrumbs'][] = ['label' => $user->username, 'url' => ['/users/users/profile', 'id' => $user->id]];
 $this->params['breadcrumbs'][] = $this->title;

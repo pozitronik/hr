@@ -22,7 +22,6 @@ use yii\web\View;
 use yii\bootstrap\Html;
 
 $this->title = 'Группы';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

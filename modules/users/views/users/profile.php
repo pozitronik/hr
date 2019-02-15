@@ -7,6 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
+use app\models\core\core_module\CoreModule;
 use app\modules\references\models\refs\RefUserPositions;
 use app\modules\privileges\models\Privileges;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
@@ -19,8 +20,7 @@ use yii\helpers\Html;
 Use kartik\file\FileInput;
 
 $this->title = $model->isNewRecord?'Добавление пользователя':"Профиль пользователя {$model->username}";
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

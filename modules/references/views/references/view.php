@@ -8,15 +8,16 @@ declare(strict_types = 1);
  * @var Reference $model
  */
 
+use app\models\core\core_module\CoreModule;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\modules\references\models\Reference;
 $this->title = "Просмотр записи в справочнике ".$model->menuCaption;
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Справочники', 'url' => ['/references/references']];
-$this->params['breadcrumbs'][] = ['label' => $model->menuCaption, 'url' => ['/references/references/index', 'class' => $model->formName()]];
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Справочники');
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($model->menuCaption, 'references/index', ['class' => $model->formName()]);
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

@@ -13,7 +13,6 @@ use app\modules\references\models\Reference;
  */
 
 $this->title = 'Справочники';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var DynamicAttributes $attribute
  */
 
+use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\users\models\Users;
@@ -18,9 +19,9 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
 $this->title = "Изменение атрибута {$attribute->name} ";
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
+
 $this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
-$this->params['breadcrumbs'][] = ['label' => "Атрибуты пользователя {$user->username}", 'url' => ['/attributes/user', 'user_id' => $user->id]];
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem("Атрибуты пользователя {$user->username}", 'attributes/user', ['user_id' => $user->id]);
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

@@ -8,15 +8,16 @@
 declare(strict_types = 1);
 
 use app\helpers\Utils;
+use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 
 $this->title = "Пользователи в группе {$model->name}";
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/groups/groups']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/groups/groups/profile', 'id' => $model->id]];
+
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы');
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($model->name, 'groups/profile', ['id' => $model->id]);
 $this->params['breadcrumbs'][] = $this->title;
 $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)");
 ?>

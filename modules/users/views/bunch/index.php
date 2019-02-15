@@ -10,6 +10,7 @@ declare(strict_types = 1);
  * @var false|Groups $group
  */
 
+use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\UsersMassUpdate;
 use kartik\select2\Select2;
@@ -21,14 +22,13 @@ use yii\widgets\ActiveForm;
 use kartik\grid\GridView;
 
 $this->title = 'Групповое изменение пользователей';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 
 if ($group) {
 	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/users/users']];
 	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/groups/groups/profile', 'id' => $group->id]];
 	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
-	$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
+	$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
 	$usersLabel = "Пользователи: ".count($massUpdateModel->users). " всего";
 }
 $this->params['breadcrumbs'][] = $this->title;

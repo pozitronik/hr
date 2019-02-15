@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var array $attribute_data
  */
 
+use app\models\core\core_module\CoreModule;
 use app\modules\references\models\refs\RefAttributesTypes;
 use app\modules\dynamic_attributes\assets\SearchAsset;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
@@ -22,8 +23,7 @@ use kartik\select2\Select2;
 SearchAsset::register($this);
 
 $this->title = 'Поиск';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Атрибуты', 'url' => ['/admin/attributes']];
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Атрибуты');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

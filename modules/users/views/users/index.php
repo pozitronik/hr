@@ -25,7 +25,6 @@ use yii\bootstrap\Html;
 
 if (null !== $searchModel) {//Учитываем вызов из поиска по атрибутам, пока используется одна вьюха на всё.
 	$this->title = 'Люди';
-	$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 	$this->params['breadcrumbs'][] = $this->title;
 }
 
