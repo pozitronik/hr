@@ -6,6 +6,7 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\groups\GroupsModule;
 use app\modules\import\ImportModule;
+use app\modules\privileges\PrivilegesModule;
 use app\modules\references\ReferencesModule;
 use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
@@ -57,6 +58,9 @@ $config = [
 		],
 		'references' => [
 			'class' => ReferencesModule::class
+		],
+		'privileges' => [
+			'class' => PrivilegesModule::class
 		]
 	],
 	'components' => [
