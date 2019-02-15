@@ -20,7 +20,6 @@ use yii\bootstrap\Html;
 use kartik\grid\ActionColumn;
 
 $this->title = 'Атрибуты';
-$this->params['breadcrumbs'][] = ['label' => 'Управление', 'url' => ['/admin']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
