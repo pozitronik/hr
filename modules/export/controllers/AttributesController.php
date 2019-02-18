@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\export\controllers;
 
 use app\models\core\WigetableController;
+use app\modules\export\models\attributes\ExportAttributes;
 use Throwable;
 use Yii;
 use yii\db\Exception;
@@ -36,7 +37,8 @@ class AttributesController extends WigetableController {
 	 * @param int|null $domain
 	 * @return string|Response
 	 */
-	public function actionIndex(int $userId) {
+	public function actionUser(int $id) {
+		ExportAttributes::UserExport($id);
 		return $this->render('index');
 	}
 }
