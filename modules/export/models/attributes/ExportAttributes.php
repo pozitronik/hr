@@ -72,6 +72,6 @@ class ExportAttributes extends Model {
 		}
 		$spreadsheet->getActiveSheet()->getPageSetup()->setFitToWidth(1);
 		$spreadsheet->getActiveSheet()->getPageSetup()->setFitToHeight(1);
-		$writer->save("$id.xlsx");
+		$writer->save('php://output');
 	}
 }

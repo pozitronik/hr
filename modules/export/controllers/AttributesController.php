@@ -5,10 +5,9 @@ namespace app\modules\export\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\export\models\attributes\ExportAttributes;
-use Throwable;
-use Yii;
-use yii\db\Exception;
+use app\modules\users\models\Users;
 use yii\web\ErrorAction;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -18,7 +17,7 @@ use yii\web\Response;
 class AttributesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-file-export'></i>Экспорт атрибутов";
 //	public $menuIcon = "/img/admin/import.png";
-	public $disabled = false;
+	public $disabled = true;
 	public $orderWeight = 7;
 	public $defaultRoute = 'export/competency';
 
@@ -38,7 +37,14 @@ class AttributesController extends WigetableController {
 	 * @return string|Response
 	 */
 	public function actionUser(int $id) {
+		$this->layout = false;
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$user->username.'.xlsx"');
+		header('Cache-Control: max-age=0');
 		ExportAttributes::UserExport($id);
-		return $this->render('index');
+//		readfile($filename);
+		die;
+//		return $this->render('index');
 	}
 }
