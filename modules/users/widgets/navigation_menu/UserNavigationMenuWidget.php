@@ -36,6 +36,11 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'menu' => true,
+				'label' => Icons::export().'Экспорт атрибутов',
+				'url' => ['/export/attributes/user', 'id' => $this->model->id]
+			],
+			[
+				'menu' => true,
 				'label' => Icons::user_add().'Новый пользователь',
 				'url' => '/users/users/create'
 			],
