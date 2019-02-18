@@ -160,4 +160,15 @@ class ScoreProperty extends Model {
 		return true;
 	}
 
+	/**
+	 * return string
+	 */
+	public function __toString():string {
+		$data = [];
+		foreach ($this->attributes() as $attribute) {
+			$label = $this->attributeLabels()[$attribute];
+			$data[$label] = $label.': '.((empty ($this->$attribute))?'N/A':$this->$attribute);
+		}
+		return implode(",\n", $data);
+	}
 }
