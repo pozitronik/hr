@@ -51,7 +51,8 @@ class DynamicAttributes extends ActiveRecord {
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',
 		1 => 'Обучение',
-		2 => 'Навык'
+		2 => 'Навык',
+		3 => 'Область экспертизы'
 	];
 
 	/**
