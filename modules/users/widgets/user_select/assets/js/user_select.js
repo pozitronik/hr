@@ -8,6 +8,16 @@ function submit_toggle(select) {
 		input.removeAttr('disabled');
 	} else {
 		input.attr('disabled', 'disabled');
-
 	}
+}
+
+function ajax_post(postUrl, postValue, progressId) {
+	jQuery(progressId).show();
+	jQuery.ajax({
+		url: postUrl,
+		data: postValue,
+		method: 'POST'
+	}).done(function (data) {
+		jQuery(progressId).hide();
+	});
 }

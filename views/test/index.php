@@ -24,17 +24,11 @@ $model2 = Groups::findModel(19);
 					'attribute' => 'relUsers',
 					'notData' => $model->relUsers,
 					'multiple' => true,
-					'mode' => UserSelectWidget::MODE_FORM
+					'mode' => UserSelectWidget::MODE_AJAX,
+					'formAction' => ['/groups/groups/profile', 'id' => $model->primaryKey]
 				]) ?>
 			</div>
 			<div class="col-md-6">
-				<?= UserSelectWidget::widget([
-					'model' => $model2,
-					'attribute' => 'relUsers',
-					'notData' => $model2->relUsers,
-					'multiple' => true,
-					'mode' => UserSelectWidget::MODE_FORM
-				]) ?>
 			</div>
 		</div>
 

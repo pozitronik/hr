@@ -47,6 +47,14 @@ class AjaxController extends BaseAjaxController {
 			return $this->answer->answer;
 		}
 		return $this->answer->addError('route', 'Not found');
-
 	}
+
+//	public function actionAddUserToGroup() {
+//		if ((false !== $userId = Yii::$app->request->post('userId', false)) && (false !== $groupId = Yii::$app->request->post('groupId', false))) {
+//			$user = Users::findModel($userId);
+//			$group = Groups::findModel($groupId);
+//
+//			$user->setRelGroups([$group->id]);
+//		}
+//	}
 }
