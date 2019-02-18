@@ -49,11 +49,12 @@ use app\modules\users\models\Users;
 						/*todo: CoreModule::GetModuleDirectories*/
 						AdminPanelWidget::DEFAULT_DIRECTORY,
 						'@app/modules/import/controllers/',
+						'@app/modules/export/controllers/',
 						'@app/modules/dynamic_attributes/controllers/',
 						'@app/modules/users/controllers/',
 						'@app/modules/groups/controllers/',
 						'@app/modules/references/controllers/',
-						'@app/modules/privileges/controllers/'
+						'@app/modules/privileges/controllers/',
 					]
 				]) ?>
 			<?php endif; ?>
