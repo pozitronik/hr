@@ -62,6 +62,13 @@ class Icons {
 	/**
 	 * @return string
 	 */
+	public static function export():string {
+		return "<i class='fa fa-file-export' title='Атрибуты'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function network():string {
 		return "<i class='fa fa-chart-network'></i>";
 	}
@@ -100,6 +107,7 @@ class Icons {
 	public static function user():string {
 		return "<i class='fa fa-user'></i>";
 	}
+
 	/**
 	 * @return string
 	 */
@@ -141,12 +149,12 @@ class Icons {
 	public static function group():string {
 		return "<i class='fa fa-users'></i>";
 	}
+
 	/**
 	 * @return string
 	 */
 	public static function add():string {
 		return "<i class='fa fa-plus'></i>";
 	}
-
 
 }
