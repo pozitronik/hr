@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\models\core\traits\ARExtended;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\references\models\refs\RefAttributesTypes;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -16,6 +17,8 @@ use yii\db\ActiveRecord;
  * @property int $attribute_id
  * @property ActiveQuery|RelUsersAttributesTypes[] $relUsersAttributesTypes соответствия в таблице типов аттрибута, ассоциированные к этой связке
  * @property ActiveQuery|RefAttributesTypes[] $refAttributesTypes Значения из справочника аттрибутов, ассоциированные с этой связкой
+ *
+ * @property ActiveQuery|DynamicAttributes $relDynamicAttribute Атрибут связки
  */
 class RelUsersAttributes extends ActiveRecord {
 	use Relations;
@@ -81,4 +84,11 @@ class RelUsersAttributes extends ActiveRecord {
 		return self::find()->where(['user_id' => $userId])->joinWith(['relUsersAttributesTypes', 'refAttributesTypes']);//->orderBy('ISNULL(rel_users_attributes_types.type), rel_users_attributes_types.type ASC');
 	}
 
+	/**
+	 * @return DynamicAttributes|ActiveQuery
+	 */
+	public function getRelDynamicAttribute() {
+		return $this->hasOne(DynamicAttributes::class, ['id' => 'attribute_id']);
+	}
 }
+
