@@ -22,9 +22,8 @@ use kartik\select2\Select2;
 	'attribute' => $attribute,
 	'data' => $data,
 	'options' => [
-		'placeholder' => 'Добавить пользователя',
-		'options' => $options
-	],
+			'placeholder' => 'Добавить пользователя',
+		] + $options,
 	'pluginOptions' => [
 		'allowClear' => true,
 		'multiple' => $multiple,
