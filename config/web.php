@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /** @noinspection UsingInclusionReturnValueInspection */
 
 use app\modules\dynamic_attributes\DynamicAttributesModule;
+use app\modules\export\ExportModule;
 use app\modules\groups\GroupsModule;
 use app\modules\import\ImportModule;
 use app\modules\privileges\PrivilegesModule;
@@ -61,6 +62,9 @@ $config = [
 		],
 		'privileges' => [
 			'class' => PrivilegesModule::class
+		],
+		'export' => [
+			'class' => ExportModule::class
 		]
 	],
 	'components' => [
