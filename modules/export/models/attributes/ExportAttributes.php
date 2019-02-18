@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\export\models\attributes;
 
 use app\models\relations\RelUsersAttributes;
+use app\modules\references\models\refs\RefAttributesTypes;
 use app\modules\users\models\Users;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -61,8 +62,14 @@ class ExportAttributes extends Model {
 		foreach ($relAttributes as $relAttribute) {
 			$row++;
 			$attribute = $relAttribute->relDynamicAttribute;
+			$attributeTypeNames = [];
+			/** @var RefAttributesTypes $refAttributeType */
+			foreach ($relAttribute->refAttributesTypes as $refAttributeType) {
+				$attributeTypeNames[] = $refAttributeType->name;
+			}
+			$attributeTypeNames = implode('/', $attributeTypeNames);
 			$col = 1;
-			$worksheet->setCellValueByColumnAndRow($col, $row, $attribute->name);
+			$worksheet->setCellValueByColumnAndRow($col, $row, $attribute->name.(empty($attributeTypeNames)?'':" ($attributeTypeNames)"));
 			$properties = $attribute->properties;
 
 			$row++;
@@ -78,9 +85,9 @@ class ExportAttributes extends Model {
 			$spreadsheet->getActiveSheet()->mergeCellsByColumnAndRow(1, $row - 1, $col, $row - 1);
 			$spreadsheet->getActiveSheet()->getStyleByColumnAndRow(1, $row - 1)->applyFromArray($AttributeNameStyleArray);
 			$row++;
+			$spreadsheet->getActiveSheet()->getColumnDimensionByColumn($col)->setAutoSize(true);
 		}
-		$spreadsheet->getActiveSheet()->getPageSetup()->setFitToWidth(1);
-		$spreadsheet->getActiveSheet()->getPageSetup()->setFitToHeight(1);
+
 		$writer->save('php://output');
 	}
 }
