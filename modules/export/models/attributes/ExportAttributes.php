@@ -31,6 +31,7 @@ class ExportAttributes extends Model {
 		$AttributeNameStyleArray = [
 			'font' => [
 				'bold' => true,
+				'size' => 18
 			],
 			'alignment' => [
 				'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -46,9 +47,17 @@ class ExportAttributes extends Model {
 				],
 			],
 		];
+		$AttributeFieldStyleArray = [
+			'font' => [
+				'bold' => true,
+			],
+			'alignment' => [
+				'horizontal' => Alignment::HORIZONTAL_CENTER,
+			],
+		];
 		$row = 1;
 		$col = 1;
-		$worksheet->setCellValueByColumnAndRow($col, $row, $user->username);
+		$worksheet->setCellValueByColumnAndRow($col, $row, "Атрибуты пользователя {$user->username}");
 		foreach ($relAttributes as $relAttribute) {
 			$row++;
 			$attribute = $relAttribute->relDynamicAttribute;
@@ -62,13 +71,13 @@ class ExportAttributes extends Model {
 				$col++;
 				$property->userId = $id;
 				$value = $property->getValue();
-				$worksheet->setCellValueByColumnAndRow($col, $row, $property->name);
-				$col++;
-				$worksheet->setCellValueByColumnAndRow($col, $row, $value);
-				$worksheet->getCellByColumnAndRow($col, $row)->getStyle()->getAlignment()->setWrapText(true);
+				$worksheet->setCellValueByColumnAndRow($col, $row, $property->name)->getStyleByColumnAndRow($col, $row)->applyFromArray($AttributeFieldStyleArray);
+				$worksheet->setCellValueByColumnAndRow($col, $row + 1, $value);
+				$worksheet->getCellByColumnAndRow($col, $row + 1)->getStyle()->getAlignment()->setWrapText(true);
 			}
 			$spreadsheet->getActiveSheet()->mergeCellsByColumnAndRow(1, $row - 1, $col, $row - 1);
 			$spreadsheet->getActiveSheet()->getStyleByColumnAndRow(1, $row - 1)->applyFromArray($AttributeNameStyleArray);
+			$row++;
 		}
 		$spreadsheet->getActiveSheet()->getPageSetup()->setFitToWidth(1);
 		$spreadsheet->getActiveSheet()->getPageSetup()->setFitToHeight(1);
