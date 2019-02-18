@@ -3,8 +3,12 @@ declare(strict_types = 1);
 
 /* @var View $this */
 
+use app\modules\groups\models\Groups;
+use app\modules\users\widgets\user_select\UserSelectWidget;
 use yii\web\View;
 
+$model = Groups::findModel(12);
+$model2 = Groups::findModel(19);
 ?>
 
 <div class="panel panel-primary">
@@ -15,53 +19,24 @@ use yii\web\View;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="panel panel-warning">
-					<div class="panel-heading">
-						<h3 class="panel-title">Заголовок</h3>
-					</div>
-
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-6">
-								раз
-							</div>
-							<div class="col-md-6">
-								два
-							</div>
-						</div>
-					</div>
-				</div>
+				<?= UserSelectWidget::widget([
+					'model' => $model,
+					'attribute' => 'relUsers',
+					'notData' => $model->relUsers,
+					'multiple' => true,
+					'mode' => UserSelectWidget::MODE_FORM
+				]) ?>
 			</div>
 			<div class="col-md-6">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">Заголовок</h3>
-					</div>
-
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-6">
-								раз
-							</div>
-							<div class="col-md-6">
-								<div class="panel panel-mint panel-score">
-									<div class="panel-heading">
-										<div class="panel-title">пук</div>
-									</div>
-
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												жепка
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?= UserSelectWidget::widget([
+					'model' => $model2,
+					'attribute' => 'relUsers',
+					'notData' => $model2->relUsers,
+					'multiple' => true,
+					'mode' => UserSelectWidget::MODE_FORM
+				]) ?>
 			</div>
 		</div>
+
 	</div>
 </div>

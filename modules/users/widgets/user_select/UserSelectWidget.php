@@ -8,12 +8,11 @@ use app\models\core\SelectionWidgetInterface;
 use app\modules\users\models\Users;
 use kartik\base\InputWidget;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * Class UserSelectWidget
  * Виджет списка пользователей (для добавления в группу)
- *
- * fixme: вероятно, некорректно работает отображение двух выбиралок на одной странице (коллизия по id)?
  *
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
@@ -36,6 +35,7 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public function init() {
 		parent::init();
 		UserSelectWidgetAssets::register($this->getView());
+		$this->options['id'] = isset($this->options['id'])?$this->options['id'].$this->model->primaryKey:Html::getInputId($this->model, $this->attribute).$this->model->primaryKey;
 	}
 
 	/**
@@ -54,7 +54,7 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 					'attribute' => $this->attribute,
 					'data' => $data,
 					'multiple' => $this->multiple,
-					'options' => []
+					'options' => $this->options
 				]);
 			break;
 			case self::MODE_FORM:
@@ -64,7 +64,7 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 					'data' => $data,
 					'multiple' => $this->multiple,
 					'formAction' => $this->formAction,
-					'options' => []
+					'options' => $this->options
 				]);
 			break;
 		}
