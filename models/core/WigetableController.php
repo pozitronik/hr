@@ -70,10 +70,11 @@ class WigetableController extends Controller {
 	 * @param string $className
 	 * @return string
 	 * @todo: функция не умеет преобразовывать имена классов по той же схеме, что Yii. Реализован простейший вариант, а вот что-то вроде MassUpdateController к mass-update эта регулярка уже не вернёт.
+	 * Переделывать нет смысла: нужно писать функцию, которая будет обходить все зарегистрированные модули и собирать из них данные, по которым и строить меню
 	 */
 	private static function ExtractControllerId(string $className):string {
-		$id = mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
-		return "admin/{$id}";
+		return mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
+//		return "admin/{$id}";
 	}
 
 	/**
