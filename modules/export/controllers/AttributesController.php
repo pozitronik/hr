@@ -5,6 +5,7 @@ namespace app\modules\export\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\export\models\attributes\ExportAttributes;
+use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use Throwable;
 use yii\web\ErrorAction;
@@ -35,16 +36,30 @@ class AttributesController extends WigetableController {
 	/**
 	 * Выдать экспорт атрибутов пользователя
 	 * @param int $id
-	 * @return string|Response
 	 * @throws Throwable
 	 */
-	public function actionUser(int $id) {
+	public function actionUser(int $id):void {
 		$this->layout = false;
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$user->username.'.xlsx"');
 		header('Cache-Control: max-age=0');
 		ExportAttributes::UserExport($id);
+		die;
+	}
+
+	/**
+	 * Выдать экспорт атрибутов всех пользователей группы
+	 * @param int $id
+	 * @throws Throwable
+	 */
+	public function actionGroup(int $id):void {
+		$this->layout = false;
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$group->name.'.xlsx"');
+		header('Cache-Control: max-age=0');
+		ExportAttributes::GroupExport($id);
 		die;
 	}
 }

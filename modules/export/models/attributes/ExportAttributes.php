@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\export\models\attributes;
 
 use app\models\relations\RelUsersAttributes;
+use app\modules\groups\models\Groups;
 use app\modules\references\models\refs\RefAttributesTypes;
 use app\modules\users\models\Users;
 use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
@@ -29,8 +30,9 @@ class ExportAttributes extends Model {
 	 * @param RelUsersAttributes[] $relAttributes - массив релейшенов атрибутов
 	 * @param int|null $colOffset - смещение в таблице от начала (по колонкам), null - игнорировать смещение
 	 * @param int|null $rowOffset - смещение в таблице от начала (по строкам), null - игнорировать смещение
+	 * @return array<int, int> - итоговое смещение в таблице по колонке и строке
 	 */
-	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, ?int $colOffset = null, ?int $rowOffset = null):void {
+	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, ?int $colOffset = null, ?int $rowOffset = null):array {
 		$AttributeNameStyleArray = [
 			'font' => [
 				'bold' => true,
@@ -90,6 +92,10 @@ class ExportAttributes extends Model {
 			$row++;
 			$worksheet->getColumnDimensionByColumn($col)->setAutoSize(true);
 		}
+		return [
+			'col' => $col,
+			'row' => $row
+		];
 	}
 
 	/**
@@ -106,6 +112,28 @@ class ExportAttributes extends Model {
 		$spreadsheet->setActiveSheetIndex(0);
 
 		self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $relAttributes);
+
+		$writer->save('php://output');
+	}
+
+	/**
+	 * @param $id
+	 * @throws SpreadsheetException
+	 * @throws Throwable
+	 */
+	public static function GroupExport($id):void {
+		if (null === $group = Groups::findModel($id)) return;
+		$spreadsheet = new Spreadsheet();
+		$writer = new Xlsx($spreadsheet);
+		$spreadsheet->setActiveSheetIndex(0);
+		$offset = [
+			'col' => 1,
+			'row' => 1
+		];
+		/** @var Users $user */
+		foreach ($group->relUsers as $user) {
+			$offset = self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $user->relUsersAttributes, $offset['col'], $offset['row']);
+		}
 
 		$writer->save('php://output');
 	}
