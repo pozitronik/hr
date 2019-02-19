@@ -6,6 +6,7 @@ namespace app\modules\groups\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
+use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\traits\Graph;
@@ -59,7 +60,7 @@ use yii\db\Exception;
  * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
-class Groups extends ActiveRecord {
+class Groups extends ActiveRecord implements StrictInterface {
 	use ARExtended;
 	use Graph;
 	use Upload;
@@ -179,7 +180,7 @@ class Groups extends ActiveRecord {
 	 * @return null|bool
 	 * @throws Exception
 	 */
-	public function createGroup(?array $paramsArray):bool {
+	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
@@ -207,7 +208,7 @@ class Groups extends ActiveRecord {
 	 * @param array $paramsArray
 	 * @return bool
 	 */
-	public function updateGroup(array $paramsArray):bool {
+	public function updateModel(?array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();

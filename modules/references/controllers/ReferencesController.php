@@ -99,7 +99,7 @@ class ReferencesController extends WigetableController {
 	 */
 	public function actionCreate($class) {
 		if (null === $model = Reference::getReferenceClass($class)) return null;
-		if ($model->createRecord(Yii::$app->request->post($model->formName()))) {
+		if ($model->createModel(Yii::$app->request->post($model->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect(['create', 'class' => $class]);//Создали и создаём ещё
 			return $this->redirect(['index', 'class' => $class]);
 		}
@@ -119,7 +119,7 @@ class ReferencesController extends WigetableController {
 	public function actionUpdate($class, $id) {
 		if (null === $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) return null;
 
-		if ($model->updateRecord(Yii::$app->request->post($model->formName()))) {
+		if ($model->updateModel(Yii::$app->request->post($model->formName()))) {
 			return $this->redirect(['update', 'id' => $model->id, 'class' => $class]);
 		}
 

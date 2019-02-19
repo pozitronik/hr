@@ -50,7 +50,7 @@ class CompetencyRecord extends Model {
 	public function addCompetency(string $attributeName, string $fieldName, string $typeName):void {
 		if (null === $attribute = DynamicAttributes::find()->where(['name' => $attributeName])->one()) {
 			$attribute = new DynamicAttributes();
-			$attribute->createAttribute(['name' => $attributeName, 'category' => 0]);
+			$attribute->createModel(['name' => $attributeName, 'category' => 0]);
 		}
 		if (null === $property = $attribute->getPropertyByName($fieldName)) {
 			$property = new DynamicAttributeProperty([

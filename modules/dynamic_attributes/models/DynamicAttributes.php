@@ -11,6 +11,7 @@ namespace app\modules\dynamic_attributes\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
+use app\models\core\StrictInterface;
 use app\models\core\SysExceptions;
 use app\models\core\traits\ARExtended;
 use app\models\relations\RelUsersAttributes;
@@ -45,7 +46,7 @@ use yii\db\Exception;
  * @property int $userProperties
  * @property-read int $usersCount
  */
-class DynamicAttributes extends ActiveRecord {
+class DynamicAttributes extends ActiveRecord implements StrictInterface {
 	use ARExtended;
 
 	public const CATEGORIES = [/*Ну хер знает*/
@@ -100,11 +101,11 @@ class DynamicAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @param $paramsArray
+	 * @param array|null $paramsArray
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function createAttribute($paramsArray):bool {
+	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			$this->create_date = Date::lcDate();
@@ -123,10 +124,10 @@ class DynamicAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @param $paramsArray
+	 * @param null|array $paramsArray
 	 * @return bool
 	 */
-	public function updateAttribute($paramsArray):bool {
+	public function updateModel(?array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			return $this->save();
 		}

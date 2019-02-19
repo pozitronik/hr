@@ -5,6 +5,7 @@ namespace app\modules\references\models;
 
 use app\models\core\LCQuery;
 use app\models\core\Magic;
+use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
 use app\widgets\alert\AlertModel;
 use RecursiveDirectoryIterator;
@@ -41,7 +42,7 @@ use RuntimeException;
  *
  * @property int $usedCount Количество объектов, использующих это значение справочника
  */
-class Reference extends ActiveRecord implements ReferenceInterface {
+class Reference extends ActiveRecord implements ReferenceInterface, StrictInterface {
 	use ARExtended;
 
 	public $menuCaption = "Справочник";
@@ -198,10 +199,10 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	}
 
 	/**
-	 * @param array $paramsArray
+	 * @param null|array $paramsArray
 	 * @return boolean
 	 */
-	public function createRecord($paramsArray):bool {
+	public function createModel(?array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
@@ -215,10 +216,10 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 	}
 
 	/**
-	 * @param array $paramsArray
+	 * @param null|array $paramsArray
 	 * @return bool
 	 */
-	public function updateRecord($paramsArray):bool {
+	public function updateModel(?array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();

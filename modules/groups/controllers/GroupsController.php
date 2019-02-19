@@ -72,7 +72,7 @@ class GroupsController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
-		if ((null !== ($updateArray = Yii::$app->request->post($group->formName()))) && $group->updateGroup($updateArray)) $group->uploadLogotype();
+		if ((null !== ($updateArray = Yii::$app->request->post($group->formName()))) && $group->updateModel($updateArray)) $group->uploadLogotype();
 		return $this->render('profile', [
 			'model' => $group
 		]);
@@ -86,7 +86,7 @@ class GroupsController extends WigetableController {
 	 */
 	public function actionGroups(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
-		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateGroup($updateArray);
+		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateModel($updateArray);
 		return $this->render('groups/index', [
 			'model' => $group,
 			'parentProvider' => new ActiveDataProvider([
@@ -106,7 +106,7 @@ class GroupsController extends WigetableController {
 	 */
 	public function actionUsers(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
-		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateGroup($updateArray);
+		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateModel($updateArray);
 		return $this->render('users/index', [
 			'model' => $group,
 			'provider' => new ActiveDataProvider([
@@ -121,7 +121,7 @@ class GroupsController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newGroup = new Groups();
-		if ($newGroup->createGroup(Yii::$app->request->post($newGroup->formName()))) {
+		if ($newGroup->createModel(Yii::$app->request->post($newGroup->formName()))) {
 			$newGroup->uploadLogotype();
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['profile', 'id' => $newGroup->id]);

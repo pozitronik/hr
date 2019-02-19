@@ -252,7 +252,7 @@ class ImportCompetency extends Model {
 	private function addUserProperty(int $user_id, string $attributeName, string $attributeFieldName, string $attributeFieldValue, string $fieldType = 'score'):void {
 		if (null === $attribute = DynamicAttributes::find()->where(['name' => $attributeName])->one()) {
 			$attribute = new DynamicAttributes();
-			$attribute->createAttribute(['name' => $attributeName, 'category' => 0]);
+			$attribute->createModel(['name' => $attributeName, 'category' => 0]);
 		}
 		if (null === $field = $attribute->getPropertyByName($attributeFieldName)) {
 			$field = new DynamicAttributeProperty([

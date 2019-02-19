@@ -60,7 +60,7 @@ class AttributesController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newAttribute = new DynamicAttributes();
-		if ($newAttribute->createAttribute(Yii::$app->request->post($newAttribute->formName()))) {
+		if ($newAttribute->createModel(Yii::$app->request->post($newAttribute->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newAttribute->id]);
 		}

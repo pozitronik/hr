@@ -362,7 +362,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		if ($group) return $group->id;
 
 		$group = new Groups();
-		$group->createGroup([
+		$group->createModel([
 			'name' => $name,
 			'type' => $groupType->id,
 			'deleted' => false
@@ -423,7 +423,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	public static function addAttributeProperty(array $dynamic_attribute, int $user_id):void {
 		if (null === $attribute = DynamicAttributes::find()->where(['name' => $dynamic_attribute['attribute']])->one()) {
 			$attribute = new DynamicAttributes();
-			$attribute->createAttribute(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
+			$attribute->createModel(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
 		}
 		if (null === $field = $attribute->getPropertyByName($dynamic_attribute['field'])) {
 			$field = new DynamicAttributeProperty([

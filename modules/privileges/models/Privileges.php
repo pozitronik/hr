@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
+use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
 use app\models\relations\RelPrivilegesRights;
 use app\models\relations\RelUsersPrivileges;
@@ -42,7 +43,7 @@ use yii\db\Exception;
  * @property ActiveQuery|Users $relUsers
  * @property-read UserRightInterface[] $userRights
  */
-class Privileges extends ActiveRecord {
+class Privileges extends ActiveRecord implements StrictInterface {
 	use ARExtended;
 	public const RIGHTS_DIRECTORY = '@app/modules/privileges/models/rights';
 
@@ -95,7 +96,7 @@ class Privileges extends ActiveRecord {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function createPrivilege(?array $paramsArray):bool {
+	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
@@ -123,7 +124,7 @@ class Privileges extends ActiveRecord {
 	 * @param array|null $paramsArray
 	 * @return bool
 	 */
-	public function updatePrivilege(?array $paramsArray):bool {
+	public function updateModel(?array $paramsArray):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
