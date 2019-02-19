@@ -69,6 +69,13 @@ class Icons {
 	/**
 	 * @return string
 	 */
+	public static function export_red():string {
+		return "<i class='fa fa-file-export' style='color: Tomato;' title='Атрибуты'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function network():string {
 		return "<i class='fa fa-chart-network'></i>";
 	}
