@@ -23,10 +23,11 @@ trait Upload {
 	 * @param string|null $newFileName Параметр для переименования загруженного файла (без расширения)
 	 * @param string|null $newFileExtension Параметр для изменения расширения загруженного файла
 	 * @param string $instanceName Параметр для переопределения имени инпута при необходимости
+	 * @param int|null $returnPart Возвращаемый элемент имени (как в pathinfo)
 	 * @return string|null
 	 * @throws InvalidConfigException
 	 */
-	public function uploadFile(?string $saveDirAlias = null, ?string $newFileName = null, ?string $newFileExtension = null, string $instanceName = 'uploadFileInstance'):?string {
+	public function uploadFile(?string $saveDirAlias = null, ?string $newFileName = null, ?string $newFileExtension = null, string $instanceName = 'uploadFileInstance', ?int $returnPart = null):?string {
 		/** @var Model $this */
 		$saveDir = Yii::getAlias($saveDirAlias??"@app/web/uploads/{$this->formName()}");
 		/** @var Model $this */
@@ -36,7 +37,7 @@ trait Upload {
 			$fileName = (null === $newFileExtension)?$fileName:Path::ChangeFileExtension($fileName, $newFileExtension);
 			$fileName = $saveDir.DIRECTORY_SEPARATOR.$fileName;
 			$uploadFileInstance->saveAs($fileName);
-			return $fileName;
+			return null === $returnPart?$fileName:pathinfo($fileName, $returnPart);
 		}
 		return null;
 	}
