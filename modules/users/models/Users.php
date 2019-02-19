@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\StrictInterface;
 use app\models\core\traits\MethodsAccess;
+use app\models\core\traits\Upload;
 use app\modules\references\models\refs\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
@@ -27,7 +28,6 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
 use Yii;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "sys_users".
@@ -85,7 +85,9 @@ use yii\web\UploadedFile;
  */
 class Users extends ActiveRecord implements StrictInterface {
 	use ARExtended;
+	use Upload;
 	use MethodsAccess;
+
 	/*Переменная для инстанса заливки аватарок*/
 	public $upload_image;
 
@@ -119,7 +121,7 @@ class Users extends ActiveRecord implements StrictInterface {
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique'],
-			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
+			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],//Это только клиенсткая валидация, на сервере атрибут всегда будет валидироваться успешно
 			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges'], 'safe']
 		];
 	}
@@ -367,9 +369,8 @@ class Users extends ActiveRecord implements StrictInterface {
 	 * @return bool
 	 */
 	public function uploadAvatar():bool {
-		$uploadedFile = UploadedFile::getInstance($this, 'upload_image');
-		if ($uploadedFile && $this->validate('upload_image') && $uploadedFile->saveAs(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
-			$this->setAndSaveAttribute('profile_image', "{$this->id}.{$uploadedFile->extension}");
+		if (null !== $imageFile = $this->uploadFile(self::PROFILE_IMAGE_DIRECTORY, (string)$this->id, null, 'upload_image', PATHINFO_BASENAME)) {
+			$this->setAndSaveAttribute('profile_image', $imageFile);
 			return true;
 		}
 		return false;
