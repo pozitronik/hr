@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use app\models\core\traits\Upload;
 use app\modules\groups\models\traits\Graph;
 use app\widgets\alert\AlertModel;
 use app\modules\references\models\refs\RefGroupTypes;
@@ -21,7 +22,6 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "groups".
@@ -61,6 +61,7 @@ use yii\web\UploadedFile;
 class Groups extends ActiveRecord {
 	use ARExtended;
 	use Graph;
+	use Upload;
 
 	public const LOGO_IMAGE_DIRECTORY = '@app/web/group_logotypes/';
 
@@ -347,10 +348,9 @@ class Groups extends ActiveRecord {
 	 * Пытается подгрузить файл картинки, если он есть
 	 * @return bool
 	 */
-	public function uploadLogotype():bool {//todo: use upload helper
-		$uploadedFile = UploadedFile::getInstance($this, 'upload_image');
-		if ($uploadedFile && $this->validate('upload_image') && $uploadedFile->saveAs(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY."/{$this->id}.{$uploadedFile->extension}"), false)) {
-			$this->setAndSaveAttribute('logotype', "{$this->id}.{$uploadedFile->extension}");
+	public function uploadLogotype():bool {
+		if (null !== $imageFile = $this->uploadFile(self::LOGO_IMAGE_DIRECTORY, (string)$this->id, null, 'upload_image', PATHINFO_BASENAME)) {
+			$this->setAndSaveAttribute('logotype', $imageFile);
 			return true;
 		}
 		return false;
