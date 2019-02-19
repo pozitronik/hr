@@ -31,8 +31,12 @@ class TestController extends Controller {
 	 */
 	public function actionIndex() {
 		return $this->render('index');
-
 	}
 
+	public function actionTree() {
+		$h = [];
+		Utils::log(Groups::findModel(231)->buildHierarchyTree($h));
+		Utils::log($h);
+	}
 
 }

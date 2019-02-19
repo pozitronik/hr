@@ -49,16 +49,23 @@ class AttributesController extends WigetableController {
 
 	/**
 	 * Выдать экспорт атрибутов всех пользователей группы
-	 * @param int $id
+	 * @param int $id id группы
+	 * @param bool $hierarchy Строим с учётом иерархии
 	 * @throws Throwable
 	 */
-	public function actionGroup(int $id):void {
+	public function actionGroup(int $id, bool $hierarchy = false):void {
 		$this->layout = false;
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return;
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$group->name.'.xlsx"');
 		header('Cache-Control: max-age=0');
-		ExportAttributes::GroupExport($id);
+		if ($hierarchy) {
+			$stack = [];
+			$group->buildHierarchyTree($stack);
+			ExportAttributes::GroupsExport($stack);
+		} else {
+			ExportAttributes::GroupExport($id);
+		}
 		die;
 	}
 }

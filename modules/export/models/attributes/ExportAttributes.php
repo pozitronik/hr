@@ -188,4 +188,27 @@ class ExportAttributes extends Model {
 
 		$writer->save('php://output');
 	}
+
+	/**
+	 * @param array<int> $ids
+	 * @throws Exception
+	 * @throws SpreadsheetException
+	 * @throws Throwable
+	 */
+	public static function GroupsExport(array $ids):void {
+		$spreadsheet = new Spreadsheet();
+		$writer = new Xlsx($spreadsheet);
+		$spreadsheet->setActiveSheetIndex(0);
+		$offset = [
+			'col' => 0,
+			'row' => 0
+		];
+		$users = Users::find()->distinct()->joinWith('relGroups')->where(['sys_groups.id' => $ids])->all();
+		/** @var Users $user */
+		foreach ($users as $user) {
+			$offset = self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $user->relUsersAttributes, $offset['col']);
+		}
+
+		$writer->save('php://output');
+	}
 }
