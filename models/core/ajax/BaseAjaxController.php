@@ -63,7 +63,6 @@ class BaseAjaxController extends Controller {
 	 * {@inheritDoc}
 	 */
 	public function beforeAction($action):bool {
-		$this->enableCsrfValidation = false;//todo
 		return parent::beforeAction($action);
 	}
 
