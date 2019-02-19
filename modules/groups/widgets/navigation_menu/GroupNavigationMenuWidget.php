@@ -67,6 +67,11 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'menu' => true,
+				'label' => Icons::export_red().'Экспорт атрибутов пользователей (с учётом иерархии)',
+				'url' => ['/export/attributes/group', 'id' => $this->model->id, 'hierarchy' => true]
+			],
+			[
+				'menu' => true,
 				'label' => Icons::delete().'Удаление',
 				'url' => ['/groups/groups/delete', 'id' => $this->model->id],
 				'linkOptions' => [
