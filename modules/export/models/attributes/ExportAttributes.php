@@ -32,6 +32,8 @@ class ExportAttributes extends Model {
 	 * @param int $colOffset - смещение в таблице от начала (по колонкам), null - игнорировать смещение
 	 * @param int $rowOffset - смещение в таблице от начала (по строкам), null - игнорировать смещение
 	 * @return array<int, int> - итоговое смещение в таблице по колонке и строке
+	 * @throws SpreadsheetException
+	 * @throws Throwable
 	 */
 	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, int $colOffset = 0, int $rowOffset = 0):array {
 		$AttributeNameStyleArray = [
@@ -75,18 +77,18 @@ class ExportAttributes extends Model {
 		$UserAttributesColumnStyleArray = [
 			'borders' => [
 				'left' => [
-					'borderStyle' => Border::BORDER_THIN,
+					'borderStyle' => Border::BORDER_THIN
 				],
 				'right' => [
-					'borderStyle' => Border::BORDER_THIN,
+					'borderStyle' => Border::BORDER_THIN
 				],
 				'top' => [
-					'borderStyle' => Border::BORDER_THIN,
+					'borderStyle' => Border::BORDER_THIN
 				],
 				'bottom' => [
-					'borderStyle' => Border::BORDER_THIN,
+					'borderStyle' => Border::BORDER_THIN
 				]
-			],
+			]
 		];
 		$AttributeFieldStyleArray = [
 			'font' => [
@@ -181,7 +183,7 @@ class ExportAttributes extends Model {
 		];
 		/** @var Users $user */
 		foreach ($group->relUsers as $user) {
-			$offset = self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $user->relUsersAttributes, $offset['col'], 0);
+			$offset = self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $user->relUsersAttributes, $offset['col']);
 		}
 
 		$writer->save('php://output');

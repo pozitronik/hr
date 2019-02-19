@@ -10,7 +10,6 @@ use app\modules\users\models\Users;
 use Throwable;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 /**
  * Class ImportController
@@ -38,9 +37,9 @@ class AttributesController extends WigetableController {
 	 * @param int $id
 	 * @throws Throwable
 	 */
-	public function actionUser(int $id) {
+	public function actionUser(int $id):void {
 		$this->layout = false;
-		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return;
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$user->username.'.xlsx"');
 		header('Cache-Control: max-age=0');
@@ -53,9 +52,9 @@ class AttributesController extends WigetableController {
 	 * @param int $id
 	 * @throws Throwable
 	 */
-	public function actionGroup(int $id) {
+	public function actionGroup(int $id):void {
 		$this->layout = false;
-		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return;
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$group->name.'.xlsx"');
 		header('Cache-Control: max-age=0');
