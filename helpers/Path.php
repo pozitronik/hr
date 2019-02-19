@@ -35,6 +35,23 @@ class Path {
 	 * @return string
 	 */
 	public static function ChangeFileExtension(string $filename, string $new_extension = ''):string {
-		return pathinfo($filename, PATHINFO_FILENAME).$new_extension;
+		return '' === $new_extension?pathinfo($filename, PATHINFO_FILENAME):pathinfo($filename, PATHINFO_FILENAME).".$new_extension";
+	}
+
+	/**
+	 * @param string $filename
+	 * @param string $new_name
+	 * @return string
+	 */
+	public static function ChangeFileName(string $filename, string $new_name = ''):string {
+		return '' === $new_name?pathinfo($filename, PATHINFO_EXTENSION):"$new_name.".pathinfo($filename, PATHINFO_EXTENSION);
+	}
+
+	/**
+	 * @param string $filename
+	 * @return string
+	 */
+	public static function ExtractFileName(string $filename):string {
+		return pathinfo($filename, PATHINFO_BASENAME);
 	}
 }
