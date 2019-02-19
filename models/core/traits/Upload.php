@@ -19,15 +19,22 @@ trait Upload {
 
 	/**
 	 * Загружает файл в соответствующий модели каталог, возвращает полный путь или null в случае ошибки
+	 * @param string|null $saveDirAlias Параметр для переопределения пути загрузки
+	 * @param string|null $newFileName Параметр для переименования загруженного файла (без расширения)
+	 * @param string|null $newFileExtension Параметр для изменения расширения загруженного файла
+	 * @param string $instanceName Параметр для переопределения имени инпута при необходимости
 	 * @return string|null
 	 * @throws InvalidConfigException
 	 */
-	public function uploadFile():?string {
+	public function uploadFile(?string $saveDirAlias = null, ?string $newFileName = null, ?string $newFileExtension = null, string $instanceName = 'uploadFileInstance'):?string {
 		/** @var Model $this */
-		$saveDir = Yii::getAlias("@app/web/uploads/{$this->formName()}");
+		$saveDir = Yii::getAlias($saveDirAlias??"@app/web/uploads/{$this->formName()}");
 		/** @var Model $this */
-		if ((null !== $uploadFileInstance = UploadedFile::getInstance($this, 'uploadFileInstance')) && Path::CreateDirIfNotExisted($saveDir)) {
-			$fileName = "$saveDir/{$uploadFileInstance->name}";
+		if ((null !== $uploadFileInstance = UploadedFile::getInstance($this, $instanceName)) && Path::CreateDirIfNotExisted($saveDir)) {
+			$fileName = $uploadFileInstance->name;
+			$fileName = (null === $newFileName)?$fileName:Path::ChangeFileName($fileName, $newFileName);
+			$fileName = (null === $newFileExtension)?$fileName:Path::ChangeFileExtension($fileName, $newFileExtension);
+			$fileName = $saveDir.DIRECTORY_SEPARATOR.$fileName;
 			$uploadFileInstance->saveAs($fileName);
 			return $fileName;
 		}
