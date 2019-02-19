@@ -32,7 +32,7 @@ use kartik\select2\Select2;
 	'attribute' => $attribute,
 	'data' => $data,
 	'options' => [
-			'placeholder' => 'Добавить пользователя',
+			'placeholder' => 'Добавить пользователя'
 		] + $options,
 	'pluginOptions' => [
 		'allowClear' => true,

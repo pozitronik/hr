@@ -167,7 +167,7 @@ class ScoreProperty extends Model {
 		$data = [];
 		foreach ($this->attributes() as $attribute) {
 			$label = $this->attributeLabels()[$attribute];
-			$data[$label] = $label.': '.((empty ($this->$attribute))?'N/A':$this->$attribute);
+			$data[$label] = $label.': '.(empty ($this->$attribute)?'N/A':$this->$attribute);
 		}
 		return implode(",\n", $data);
 	}

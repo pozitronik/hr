@@ -6,6 +6,7 @@ namespace app\modules\export\controllers;
 use app\models\core\WigetableController;
 use app\modules\export\models\attributes\ExportAttributes;
 use app\modules\users\models\Users;
+use Throwable;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -16,7 +17,6 @@ use yii\web\Response;
  */
 class AttributesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-file-export'></i>Экспорт атрибутов";
-//	public $menuIcon = "/img/admin/import.png";
 	public $disabled = true;
 	public $orderWeight = 7;
 	public $defaultRoute = 'export/competency';
@@ -33,8 +33,10 @@ class AttributesController extends WigetableController {
 	}
 
 	/**
-	 * @param int|null $domain
+	 * Выдать экспорт атрибутов пользователя
+	 * @param int $id
 	 * @return string|Response
+	 * @throws Throwable
 	 */
 	public function actionUser(int $id) {
 		$this->layout = false;
@@ -43,8 +45,6 @@ class AttributesController extends WigetableController {
 		header('Content-Disposition: attachment;filename="'.$user->username.'.xlsx"');
 		header('Cache-Control: max-age=0');
 		ExportAttributes::UserExport($id);
-//		readfile($filename);
 		die;
-//		return $this->render('index');
 	}
 }

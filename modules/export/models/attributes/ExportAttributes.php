@@ -6,11 +6,14 @@ namespace app\modules\export\models\attributes;
 use app\models\relations\RelUsersAttributes;
 use app\modules\references\models\refs\RefAttributesTypes;
 use app\modules\users\models\Users;
+use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Throwable;
 use yii\base\Model;
 
 /**
@@ -20,44 +23,43 @@ use yii\base\Model;
 class ExportAttributes extends Model {
 
 	/**
-	 * @param $id
+	 * Заполняет $worksheet данными о атрибутах пользователя $user
+	 * @param Worksheet $worksheet
+	 * @param Users $user
+	 * @param RelUsersAttributes[] $relAttributes - массив релейшенов атрибутов
+	 * @param int|null $colOffset - смещение в таблице от начала (по колонкам), null - игнорировать смещение
+	 * @param int|null $rowOffset - смещение в таблице от начала (по строкам), null - игнорировать смещение
 	 */
-	public static function UserExport($id) {
-		if (null === $user = Users::findModel($id)) return;
-		$relAttributes = RelUsersAttributes::getUserAttributes($id);
-		$spreadsheet = new Spreadsheet();
-		$writer = new Xlsx($spreadsheet);
-		$spreadsheet->setActiveSheetIndex(0);
-		$worksheet = $spreadsheet->getActiveSheet();
+	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, ?int $colOffset = null, ?int $rowOffset = null):void {
 		$AttributeNameStyleArray = [
 			'font' => [
 				'bold' => true,
 				'size' => 18
 			],
 			'alignment' => [
-				'horizontal' => Alignment::HORIZONTAL_CENTER,
+				'horizontal' => Alignment::HORIZONTAL_CENTER
 			],
 			'fill' => [
 				'fillType' => Fill::FILL_GRADIENT_LINEAR,
 				'rotation' => 90,
 				'startColor' => [
-					'argb' => 'FFA0A0A0',
+					'argb' => 'FFA0A0A0'
 				],
 				'endColor' => [
-					'argb' => 'FFFFFFFF',
-				],
-			],
+					'argb' => 'FFFFFFFF'
+				]
+			]
 		];
 		$AttributeFieldStyleArray = [
 			'font' => [
-				'bold' => true,
+				'bold' => true
 			],
 			'alignment' => [
-				'horizontal' => Alignment::HORIZONTAL_CENTER,
-			],
+				'horizontal' => Alignment::HORIZONTAL_CENTER
+			]
 		];
-		$row = 1;
-		$col = 1;
+		$row = (null === $rowOffset)?1:$rowOffset + 1;
+		$col = (null === $colOffset)?1:$colOffset + 1;;
 		$worksheet->setCellValueByColumnAndRow($col, $row, "Атрибуты пользователя {$user->username}");
 		foreach ($relAttributes as $relAttribute) {
 			$row++;
@@ -76,17 +78,34 @@ class ExportAttributes extends Model {
 			$col = 0;
 			foreach ($properties as $property) {
 				$col++;
-				$property->userId = $id;
+				$property->userId = $user->id;
 				$value = $property->getValue();
 				$worksheet->setCellValueByColumnAndRow($col, $row, $property->name)->getStyleByColumnAndRow($col, $row)->applyFromArray($AttributeFieldStyleArray);
 				$worksheet->setCellValueByColumnAndRow($col, $row + 1, $value);
-				$worksheet->getCellByColumnAndRow($col, $row + 1)->getStyle()->getAlignment()->setWrapText(true);
+				/*$cell никогда не будет null, дополнительная проверка просто чтобы не ругалась инспекция*/
+				if (null !== $cell = $worksheet->getCellByColumnAndRow($col, $row + 1)) $cell->getStyle()->getAlignment()->setWrapText(true);
 			}
-			$spreadsheet->getActiveSheet()->mergeCellsByColumnAndRow(1, $row - 1, $col, $row - 1);
-			$spreadsheet->getActiveSheet()->getStyleByColumnAndRow(1, $row - 1)->applyFromArray($AttributeNameStyleArray);
+			$worksheet->mergeCellsByColumnAndRow(1, $row - 1, $col, $row - 1);
+			$worksheet->getStyleByColumnAndRow(1, $row - 1)->applyFromArray($AttributeNameStyleArray);
 			$row++;
-			$spreadsheet->getActiveSheet()->getColumnDimensionByColumn($col)->setAutoSize(true);
+			$worksheet->getColumnDimensionByColumn($col)->setAutoSize(true);
 		}
+	}
+
+	/**
+	 * @param $id
+	 * @throws SpreadsheetException
+	 * @throws Exception
+	 * @throws Throwable
+	 */
+	public static function UserExport($id):void {
+		if (null === $user = Users::findModel($id)) return;
+		$relAttributes = RelUsersAttributes::getUserAttributes($id);
+		$spreadsheet = new Spreadsheet();
+		$writer = new Xlsx($spreadsheet);
+		$spreadsheet->setActiveSheetIndex(0);
+
+		self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $relAttributes);
 
 		$writer->save('php://output');
 	}

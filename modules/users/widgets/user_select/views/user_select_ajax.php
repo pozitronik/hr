@@ -30,7 +30,7 @@ use kartik\select2\Select2;
 	'attribute' => $attribute,
 	'data' => $data,
 	'options' => [
-			'placeholder' => 'Добавить пользователя',
+			'placeholder' => 'Добавить пользователя'
 		] + $options,
 	'pluginOptions' => [
 		'allowClear' => true,
@@ -39,6 +39,6 @@ use kartik\select2\Select2;
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
 	],
 	'pluginEvents' => [
-		"change.select2" => "function(e) {submit_toggle(e)}",
+		"change.select2" => "function(e) {submit_toggle(e)}"
 	]
 ]); ?>
