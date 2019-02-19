@@ -19,6 +19,7 @@ use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use Throwable;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
@@ -347,6 +348,7 @@ class Groups extends ActiveRecord {
 	/**
 	 * Пытается подгрузить файл картинки, если он есть
 	 * @return bool
+	 * @throws InvalidConfigException
 	 */
 	public function uploadLogotype():bool {
 		if (null !== $imageFile = $this->uploadFile(self::LOGO_IMAGE_DIRECTORY, (string)$this->id, null, 'upload_image', PATHINFO_BASENAME)) {

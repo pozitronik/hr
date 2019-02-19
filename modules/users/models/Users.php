@@ -24,6 +24,7 @@ use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
@@ -367,6 +368,7 @@ class Users extends ActiveRecord implements StrictInterface {
 	/**
 	 * Пытается подгрузить файл картинки, если он есть
 	 * @return bool
+	 * @throws InvalidConfigException
 	 */
 	public function uploadAvatar():bool {
 		if (null !== $imageFile = $this->uploadFile(self::PROFILE_IMAGE_DIRECTORY, (string)$this->id, null, 'upload_image', PATHINFO_BASENAME)) {
