@@ -38,7 +38,7 @@ class AttributesController extends WigetableController {
 	 * @param int $id
 	 * @throws Throwable
 	 */
-	public function actionUser(int $id):void {
+	public function actionUser(int $id) {
 		$this->layout = false;
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -53,7 +53,7 @@ class AttributesController extends WigetableController {
 	 * @param int $id
 	 * @throws Throwable
 	 */
-	public function actionGroup(int $id):void {
+	public function actionGroup(int $id) {
 		$this->layout = false;
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
