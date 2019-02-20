@@ -99,8 +99,10 @@ class AttributePropertyDate extends ActiveRecord implements AttributePropertyInt
 	 * @throws \yii\base\InvalidConfigException
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
-		$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
-		return $formatted?Yii::$app->formatter->asDate($value):$value;
+		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id, $formatted) {
+			$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
+			return $formatted?Yii::$app->formatter->asDate($value):$value;
+		});
 	}
 
 	/**
@@ -118,7 +120,11 @@ class AttributePropertyDate extends ActiveRecord implements AttributePropertyInt
 			$record->setAttributes(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		}
 
-		return $record->save();
+		if ($record->save()) {
+			Yii::$app->cache->set(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", $record->value);
+			return true;
+		}
+		return false;
 	}
 
 	/**
