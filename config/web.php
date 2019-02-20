@@ -16,6 +16,7 @@ use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
 use yii\swiftmailer\Mailer;
 use yii\log\FileTarget;
+use yii\redis\Cache as RedisCache;
 use /** @noinspection PhpUnusedAliasInspection */
 	yii\caching\DummyCache;
 use /** @noinspection PhpUnusedAliasInspection */
@@ -87,9 +88,9 @@ $config = [
 			'database' => 0
 		],
 		'cache' => [
-//			'class' => 'yii\redis\Cache',
+			'class' => RedisCache::class,
 //			'class' => FileCache::class,
-			'class' => DummyCache::class
+//			'class' => DummyCache::class
 		],
 		'user' => [
 			'identityClass' => User::class,
