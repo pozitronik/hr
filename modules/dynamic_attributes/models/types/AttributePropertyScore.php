@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Throwable;
+use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
@@ -170,7 +171,11 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
-		return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
+		//todo: кеширование во всех классах
+		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id) {
+			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
+		});
+
 	}
 
 	/**
@@ -204,7 +209,12 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			$record->al_score_comment = ArrayHelper::getValue($value, 'alScoreComment');
 		}
 
-		return $record->save();
+
+		if ($record->save()) {
+			Yii::$app->cache->set(static::class."GetValue{$attribute_id},{$property_id},{$user_id}",$record->scoreValue);
+			return true;
+		}
+		return false;
 	}
 
 	/**

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
+use Yii;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\core\core_module\CoreModule;
@@ -31,10 +32,13 @@ class TestController extends Controller {
 	 * @return string|Response
 	 */
 	public function actionIndex() {
-		return $this->render('index');
+		return Yii::$app->cache->getOrSet('index', function() {
+			return $this->render('index');
+		});
+
 	}
 
-	public function actionList(){
+	public function actionList() {
 		Utils::log(CoreModule::ListModules());
 	}
 

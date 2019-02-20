@@ -88,8 +88,8 @@ $config = [
 			'database' => 0
 		],
 		'cache' => [
-			'class' => RedisCache::class,
-//			'class' => FileCache::class,
+//			'class' => RedisCache::class,
+			'class' => FileCache::class,
 //			'class' => DummyCache::class
 		],
 		'user' => [
