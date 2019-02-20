@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
+use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
 use app\modules\references\models\refs\RefGroupTypes;
@@ -33,10 +34,8 @@ class TestController extends Controller {
 		return $this->render('index');
 	}
 
-	public function actionTree() {
-		$h = [];
-		Utils::log(Groups::findModel(231)->buildHierarchyTree($h));
-		Utils::log($h);
+	public function actionList(){
+		Utils::log(CoreModule::ListModules());
 	}
 
 }
