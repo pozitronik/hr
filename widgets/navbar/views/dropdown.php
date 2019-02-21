@@ -54,7 +54,8 @@ use app\modules\users\models\Users;
 						'@app/modules/users/controllers/',
 						'@app/modules/groups/controllers/',
 						'@app/modules/references/controllers/',
-						'@app/modules/privileges/controllers/'
+						'@app/modules/privileges/controllers/',
+						'@app/modules/grades/controllers/'
 					]
 				]) ?>
 			<?php endif; ?>
