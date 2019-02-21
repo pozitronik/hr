@@ -9,6 +9,7 @@ use app\modules\references\models\relations\RelRefUserPositionsBranches;
 use app\modules\references\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "ref_user_positions".
@@ -29,7 +30,7 @@ use yii\db\ActiveQuery;
  * @property null|int[] $types
  *
  * @property-read null|string $branchName
- * @property-read null|string $typeName
+ * @property-read array $typesNames
  */
 class RefUserPositions extends Reference {
 	public $menuCaption = 'Должности';
@@ -66,9 +67,47 @@ class RefUserPositions extends Reference {
 			'deleted' => 'Deleted',
 			'usedCount' => 'Использований',
 			'branchName' => 'Ветвь',
-			'typeName' => 'Тип',
+			'typesNames' => 'Типы должности',
 			'branch' => 'Ветвь',
-			'types' => 'Тип'
+			'types' => 'Типы'
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getColumns():array {
+		return [
+			[
+				'attribute' => 'id',
+				'options' => [
+					'style' => 'width:36px;'
+				]
+			],
+			[
+				'attribute' => 'name',
+				'value' => function(self $model) {
+					return $model->deleted?Html::tag('span', "Удалено:", [
+							'class' => 'label label-danger'
+						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), [
+						'style' => "background: {$model->color}"
+					]);
+				},
+				'format' => 'raw'
+			],
+			[
+				'attribute' => 'typesNames',
+				'value' => function(self $model) {
+					return implode(', ', $model->typesNames);
+				}
+			],
+			[
+				'attribute' => 'branchName',
+			],
+			[
+				'attribute' => 'usedCount'
+			]
+
 		];
 	}
 
@@ -112,10 +151,10 @@ class RefUserPositions extends Reference {
 	}
 
 	/**
-	 * @return string|null
+	 * @return array
 	 */
-	public function getTypeName():?string {
-		return '<Тип не указан>';
+	public function getTypesNames():array {
+		return ArrayHelper::getColumn($this->relRefUserPositionTypes, 'name');
 	}
 
 	/**
