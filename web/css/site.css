@@ -123,25 +123,29 @@ a.desc:after {
 	top: -100%;
 }
 
-.open > .mega-dropdown-menu, #dropdown-user > .dropdown-menu  {
+.open > .mega-dropdown-menu, #dropdown-user > .dropdown-menu {
 	top: auto;
 }
 
 a > i.fa {
 	margin-right: 5px;
-	width:15px;
+	width: 15px;
 }
 
 /*Таблица GridView, вложенная в другой GridView*/
-.grid_view_cell table{
+.grid_view_cell table {
 	margin-bottom: 0;
 }
 
 .grid_view_cell {
 	margin: -8px;
 }
+
 /*Стиль для иконочной менюшки управления в гридах*/
 .panel * table.kv-grid-table * button.dropdown-toggle {
 	margin: -20px;
+}
 
+div.sp-replacer > div.sp-dd {
+	display: none;
 }
