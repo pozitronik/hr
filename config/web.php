@@ -15,6 +15,7 @@ use kartik\grid\Module as GridModule;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
+use yii\redis\Connection;
 use yii\swiftmailer\Mailer;
 use yii\log\FileTarget;
 use yii\redis\Cache as RedisCache;
@@ -86,7 +87,7 @@ $config = [
 			'forceCopy' => false
 		],
 		'redis' => [
-			'class' => '\yii\redis\Connection',
+			'class' => Connection::class,
 			'hostname' => 'localhost',
 			'port' => 6379,
 			'database' => 0
