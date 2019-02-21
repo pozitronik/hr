@@ -355,7 +355,7 @@ class Users extends ActiveRecord implements StrictInterface {
 	 * @return string|null
 	 */
 	public function getPositionName():?string {
-		return $this->relUserPositions?$this->relUserPositions->name:'<Не назначен на должность>';
+		return ArrayHelper::getValue($this->relUserPositions,'name');
 	}
 
 	/**
