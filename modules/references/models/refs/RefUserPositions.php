@@ -8,6 +8,7 @@ use app\modules\references\models\Reference;
 use app\modules\references\models\relations\RelRefUserPositionsBranches;
 use app\modules\references\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
+use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 
@@ -102,7 +103,7 @@ class RefUserPositions extends Reference {
 				}
 			],
 			[
-				'attribute' => 'branchName',
+				'attribute' => 'branchName'
 			],
 			[
 				'attribute' => 'usedCount'
@@ -145,6 +146,7 @@ class RefUserPositions extends Reference {
 
 	/**
 	 * @return null|string
+	 * @throws Throwable
 	 */
 	public function getBranchName():?string {
 		return ArrayHelper::getValue($this->relRefUserPositionBranch, 'name');
@@ -159,6 +161,7 @@ class RefUserPositions extends Reference {
 
 	/**
 	 * @return int|null
+	 * @throws Throwable
 	 */
 	public function getBranch():?int {
 		return ArrayHelper::getValue($this->relRefUserPositionBranch, 'id');
@@ -167,6 +170,7 @@ class RefUserPositions extends Reference {
 	/**
 	 * @param mixed $branch
 	 * //не можем типизировать null, т.к. может быть передана строка, а делать преобразования бессмысленно
+	 * @throws Throwable
 	 */
 	public function setBranch($branch):void {
 		RelRefUserPositionsBranches::deleteAll(['position_id' => $this->id]);
@@ -182,6 +186,7 @@ class RefUserPositions extends Reference {
 
 	/**
 	 * @param mixed $types
+	 * @throws Throwable
 	 */
 	public function setTypes($types):void {
 		RelRefUserPositionsTypes::deleteAll(['position_id' => $this->id]);

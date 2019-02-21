@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 /* @var View $this */
 
-use app\modules\groups\models\Groups;
 use yii\web\View;
 
 ?>

@@ -53,8 +53,11 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	/**
 	 * Набросок итератора модулей (в дальнейшем через него будет получаться конфигурация плагинов, но это отдельная тема)
 	 * @return array
+	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public static function ListModules():array {
+		$modules = [];
 		foreach (Yii::$app->modules as $module) {
 			if (is_object($module)) {
 				$loadedModule = $module;

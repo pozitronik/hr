@@ -353,6 +353,7 @@ class Users extends ActiveRecord implements StrictInterface {
 
 	/**
 	 * @return string|null
+	 * @throws Throwable
 	 */
 	public function getPositionName():?string {
 		return ArrayHelper::getValue($this->relUserPositions,'name');

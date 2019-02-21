@@ -95,8 +95,6 @@ class AttributePropertyTime extends ActiveRecord implements AttributePropertyInt
 	 * @param int $user_id
 	 * @param bool $formatted
 	 * @return mixed
-	 * @throws \Throwable
-	 * @throws \yii\base\InvalidConfigException
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id, $formatted) {

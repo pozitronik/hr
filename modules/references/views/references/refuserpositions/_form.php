@@ -12,7 +12,6 @@ use app\modules\references\models\refs\RefUserPositionTypes;
 use app\modules\references\models\refs\RefUserRoles;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\color\ColorInput;
-use kartik\switchinput\SwitchInput;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
