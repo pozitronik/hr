@@ -15,7 +15,7 @@ class m190221_123244_grades extends Migration {
 			'name' => $this->string()->notNull()
 		]);
 
-		$this->createIndex('name', 'sys_grades', 'name');
+		$this->createIndex('name', 'grades', 'name');
 	}
 
 	/**
