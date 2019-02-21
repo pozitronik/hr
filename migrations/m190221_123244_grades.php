@@ -10,7 +10,7 @@ class m190221_123244_grades extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->createTable('sys_grades', [
+		$this->createTable('grades', [//Именую так, поскольку придумал именовать модульное именно так
 			'id' => $this->primaryKey(),
 			'name' => $this->string()->notNull()
 		]);
@@ -22,7 +22,7 @@ class m190221_123244_grades extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropTable('sys_grades');
+		$this->dropTable('grades');
 	}
 
 	/*
