@@ -32,7 +32,6 @@ use yii\db\ActiveQuery;
  * @property-read null|string $typeName
  */
 class RefUserPositions extends Reference {
-	public $color = null;
 	public $menuCaption = 'Должности';
 	public $menuIcon = false;
 
@@ -51,7 +50,7 @@ class RefUserPositions extends Reference {
 			[['name'], 'required'],
 			[['name'], 'unique'],
 			[['id', 'deleted'], 'integer'],
-			[['name'], 'string', 'max' => 256],
+			[['name', 'color'], 'string', 'max' => 256],
 			[['branch', 'types'], 'safe'],//relational attributes
 		];
 	}
@@ -63,6 +62,7 @@ class RefUserPositions extends Reference {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
+			'color' => 'Цвет',
 			'deleted' => 'Deleted',
 			'usedCount' => 'Использований',
 			'branchName' => 'Ветвь',
