@@ -31,11 +31,12 @@ class ExportAttributes extends Model {
 	 * @param RelUsersAttributes[] $relAttributes - массив релейшенов атрибутов
 	 * @param int $colOffset - смещение в таблице от начала (по колонкам), null - игнорировать смещение
 	 * @param int $rowOffset - смещение в таблице от начала (по строкам), null - игнорировать смещение
+	 * @param bool $formatting - форматировать таблицу стилями
 	 * @return array<int, int> - итоговое смещение в таблице по колонке и строке
 	 * @throws SpreadsheetException
 	 * @throws Throwable
 	 */
-	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, int $colOffset = 0, int $rowOffset = 0):array {
+	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, int $colOffset = 0, int $rowOffset = 0, bool $formatting = true):array {
 		$AttributeNameStyleArray = [
 			'font' => [
 				'bold' => true,
@@ -125,13 +126,14 @@ class ExportAttributes extends Model {
 				$col++;
 				$property->userId = $user->id;
 				$value = $property->getValue();
-				$worksheet->setCellValueByColumnAndRow($col, $row, $property->name)->getStyleByColumnAndRow($col, $row)->applyFromArray($AttributeFieldStyleArray);
+				$worksheet->setCellValueByColumnAndRow($col, $row, $property->name);
+				if ($formatting) $worksheet->getStyleByColumnAndRow($col, $row)->applyFromArray($AttributeFieldStyleArray);
 				$worksheet->setCellValueByColumnAndRow($col, $row + $startRowIndex, $value);
 				/*$cell никогда не будет null, дополнительная проверка просто чтобы не ругалась инспекция*/
 				if (null !== $cell = $worksheet->getCellByColumnAndRow($col, $row + $startRowIndex)) $cell->getStyle()->getAlignment()->setWrapText(true);
 			}
 			$worksheet->mergeCellsByColumnAndRow($startColIndex, $row - $startRowIndex, $col, $row - $startRowIndex);
-			$worksheet->getStyleByColumnAndRow($startColIndex, $row - $startRowIndex)->applyFromArray($AttributeNameStyleArray);
+			if ($formatting) $worksheet->getStyleByColumnAndRow($startColIndex, $row - $startRowIndex)->applyFromArray($AttributeNameStyleArray);
 			$row++;
 			$worksheet->getColumnDimensionByColumn($col)->setAutoSize(true);
 			if ($col > $maxCol) $maxCol = $col;
@@ -139,9 +141,9 @@ class ExportAttributes extends Model {
 		/*Объединяем и форматируем ячейки заголовка пользователя*/
 
 		$worksheet->mergeCellsByColumnAndRow($startColIndex, $startRowIndex, $maxCol, $startRowIndex);
-		$worksheet->getStyleByColumnAndRow($startColIndex, $startRowIndex, $maxCol, $startRowIndex)->applyFromArray($UsernameStyleArray);
+		if ($formatting) $worksheet->getStyleByColumnAndRow($startColIndex, $startRowIndex, $maxCol, $startRowIndex)->applyFromArray($UsernameStyleArray);
 		/*Выделяем весь участок таблицы с атрибутами пользователя*/
-		$worksheet->getStyleByColumnAndRow($startColIndex, $startRowIndex, $maxCol, $row)->applyFromArray($UserAttributesColumnStyleArray);
+		if ($formatting) $worksheet->getStyleByColumnAndRow($startColIndex, $startRowIndex, $maxCol, $row)->applyFromArray($UserAttributesColumnStyleArray);
 
 		return [
 			'col' => $maxCol,
@@ -207,6 +209,30 @@ class ExportAttributes extends Model {
 		/** @var Users $user */
 		foreach ($users as $user) {
 			$offset = self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $user->relUsersAttributes, $offset['col']);
+		}
+
+		$writer->save('php://output');
+	}
+
+	/**
+	 * @param array<int> $ids
+	 * @throws Exception
+	 * @throws SpreadsheetException
+	 * @throws Throwable
+	 */
+	public static function UsersExport(array $ids):void {
+		$spreadsheet = new Spreadsheet();
+		$writer = new Xlsx($spreadsheet);
+		$spreadsheet->setActiveSheetIndex(0);
+		$offset = [
+			'col' => 0,
+			'row' => 0
+		];
+		foreach ($ids as $id) {
+			if (null !== $user = Users::findModel($id)) {
+				$offset = self::GetUserAttributes($spreadsheet->getActiveSheet(), $user, $user->relUsersAttributes, $offset['col']);
+			}
+
 		}
 
 		$writer->save('php://output');
