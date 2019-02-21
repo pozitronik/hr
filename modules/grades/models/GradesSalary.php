@@ -27,7 +27,7 @@ class GradesSalary extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['min', 'max'], 'number'],
-			[['currency'], 'integer'],
+			[['currency'], 'integer']
 		];
 	}
 
@@ -39,7 +39,7 @@ class GradesSalary extends ActiveRecord {
 			'id' => 'ID',
 			'min' => 'Min',
 			'max' => 'Max',
-			'currency' => 'Currency',
+			'currency' => 'Currency'
 		];
 	}
 }

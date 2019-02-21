@@ -15,7 +15,10 @@ class GradesController extends WigetableController {
 	public $orderWeight = 7;
 	public $defaultRoute = 'grades/grades';
 
-	public function actionIndex() {
+	/**
+	 * @return string
+	 */
+	public function actionIndex():string {
 		return $this->render('index');
 	}
 

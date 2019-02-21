@@ -26,7 +26,7 @@ class GradesPositionsRules extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['grade_id', 'position_id'], 'required'],
-			[['grade_id', 'position_id'], 'integer'],
+			[['grade_id', 'position_id'], 'integer']
 		];
 	}
 
@@ -37,7 +37,7 @@ class GradesPositionsRules extends ActiveRecord {
 		return [
 			'id' => 'ID',
 			'grade_id' => 'Grade ID',
-			'position_id' => 'Position ID',
+			'position_id' => 'Position ID'
 		];
 	}
 }
