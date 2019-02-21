@@ -45,7 +45,7 @@ use Yii;
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property boolean $deleted Флаг удаления
  *
- * @property integer|null $position Должность/позиция
+ * @property int|null $position Должность/позиция
  *
  * @property-read string $authKey
  *
