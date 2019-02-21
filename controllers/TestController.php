@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
+use app\modules\export\models\attributes\ExportAttributes;
+use app\modules\references\models\refs\RefAttributesTypes;
 use Yii;
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
@@ -40,6 +42,38 @@ class TestController extends Controller {
 
 	public function actionList() {
 		Utils::log(CoreModule::ListModules());
+	}
+
+	public function actionSpeed() {
+		$userIds = [335, 341, 365];//, 398, 402, 411, 413, 414, 419, 421, 501, 508, 521, 524, 546, 549, 573, 577, 613, 628, 635, 640, 646, 653, 656, 671, 672, 680, 705, 711, 740, 750, 769, 774, 789, 793, 878];
+		$startTime = microtime(true);
+		foreach ($userIds as $id) {
+			if (null !== $user = Users::findModel($id)) {
+				$relAttributes = $user->relUsersAttributes;
+				foreach ($relAttributes as $relAttribute) {
+					$attribute = $relAttribute->relDynamicAttribute;
+					$attributeTypeNames = [];
+					/** @var RefAttributesTypes $refAttributeType */
+					foreach ($relAttribute->refAttributesTypes as $refAttributeType) {
+						$attributeTypeNames[] = $refAttributeType->name;
+					}
+					$properties = $attribute->properties;
+
+					foreach ($properties as $property) {
+						$property->userId = $id;
+						$value = $property->getValue();
+					}
+				}
+			}
+		}
+		$execTime = $startTime - microtime(true);
+		echo "Property calculation time: $execTime seconds\n";
+		$startTime = microtime(true);
+		ExportAttributes::UsersExport($userIds);
+		$execTime = $startTime - microtime(true);
+		echo "Export time: $execTime seconds";
+
+		//	return $this->render('index');
 	}
 
 }
