@@ -1,14 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\references\models\refs;
+namespace app\modules\groups\models\references;
 
-use app\modules\groups\models\Groups;
 use app\modules\references\models\Reference;
+use app\models\relations\RelGroupsGroups;
 use yii\helpers\Html;
 
 /**
- * This is the model class for table "ref_group_types".
+ * This is the model class for table "ref_group_relation_types".
  *
  * @property int $id
  * @property string $name Название
@@ -16,8 +16,8 @@ use yii\helpers\Html;
  * @property string $color
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
-class RefGroupTypes extends Reference {
-	public $menuCaption = 'Типы групп';
+class RefGroupRelationTypes extends Reference {
+	public $menuCaption = 'Типы соединений групп';
 	public $menuIcon = false;
 
 	protected $_dataAttributes = ['color'];
@@ -26,7 +26,7 @@ class RefGroupTypes extends Reference {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_group_types';
+		return 'ref_group_relation_types';
 	}
 
 	/**
@@ -60,7 +60,7 @@ class RefGroupTypes extends Reference {
 	 * @param int $toId
 	 */
 	public static function merge(int $fromId, int $toId):void {
-		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
+		RelGroupsGroups::updateAll(['relation' => $toId], ['relation' => $fromId]);
 		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
 	}
@@ -100,6 +100,7 @@ class RefGroupTypes extends Reference {
 	 * @return int
 	 */
 	public function getUsedCount():int {
-		return (int)Groups::find()->where(['type' => $this->id])->count();
+		return (int)RelGroupsGroups::find()->where(['relation' => $this->id])->count();
 	}
+
 }
