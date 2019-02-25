@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\helpers;
 
+use function array_keys;
 use Closure;
 use Throwable;
 use yii\helpers\ArrayHelper as YiiArrayHelper;
@@ -183,7 +184,16 @@ class ArrayHelper extends YiiArrayHelper {
 		} else {
 			$array[key($array)] = $value;
 		}
+	}
 
+	/**
+	 * Возвращает первый ключ массива (удобно для парсинга конфигов в тех случаях, когда нельзя полагаться на array_key_first())
+	 * @param array $array
+	 * @return mixed
+	 * @throws Throwable
+	 */
+	public static function key(array $array) {
+		return self::getValue(array_keys($array),0);
 	}
 
 }
