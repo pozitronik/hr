@@ -21,6 +21,7 @@ use yii\db\ActiveQuery;
  * @property-read array|false $searchSort
  */
 interface ReferenceInterface {
+
 	/**
 	 * Справочникам всегда нужно возвращать массив значений для выбиралок, вот эта функция у них универсальная
 	 * @param boolean $sort Сортировка выдачи
@@ -45,6 +46,17 @@ interface ReferenceInterface {
 	 * @return string|false
 	 */
 	public function getForm():string;
+
+	/**
+	 * Возвращает id раширения, добавившего справочник (null, если справочник базовый)
+	 * @return string|null
+	 */
+	public function getPluginId():?string;
+
+	/**
+	 * @param string|null $pluginId
+	 */
+	public function setPluginId(?string $pluginId):void;
 
 	/**
 	 * Поиск по справочнику

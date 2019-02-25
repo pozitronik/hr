@@ -41,6 +41,7 @@ use RuntimeException;
  * @package app\models\references
  *
  * @property int $usedCount Количество объектов, использующих это значение справочника
+ * @property null|string $pluginId Плагин, подключающий расширение
  */
 class Reference extends ActiveRecord implements ReferenceInterface, StrictInterface {
 	use ARExtended;
@@ -53,6 +54,7 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 		формата ['имя data-атрибута' => 'атрибут модели']
 	*/
 	protected $_dataAttributes = [];
+	protected $_pluginId;
 
 	/**
 	 * @return string
@@ -295,7 +297,7 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 			$dataAttributes = (array)(new static)->_dataAttributes;//Получаем аттрибуты единожды, чтобы не дёргать $item->_dataAttributes в цикле
 			foreach ($dataAttributes as $attribute) {
 				if (is_array($attribute)) {
-					$dataKey = array_keys($attribute)[0];//array_key_first не работает =(
+					$dataKey = ArrayHelper::key($attribute);
 					$attributeName = $attribute[$dataKey];
 				} else {
 					$dataKey = $attribute;
@@ -308,5 +310,20 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 			}
 			return $result;
 		});
+	}
+
+	/**
+	 * Возвращает имя раширения, добавившего справочник (null, если справочник базовый)
+	 * @return string|null
+	 */
+	public function getPluginId():?string {
+		return $this->_pluginId;
+	}
+
+	/**
+	 * @param string|null $pluginName
+	 */
+	public function setPluginId(?string $pluginId):void {
+		$this->_pluginId = $pluginId;
 	}
 }
