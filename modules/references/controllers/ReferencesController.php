@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace app\modules\references\controllers;
 
 use app\models\core\WigetableController;
-use app\modules\references\models\Reference;
+use app\modules\references\models\ReferenceLoader;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
@@ -49,32 +50,34 @@ class ReferencesController extends WigetableController {
 	}
 
 	/**
-	 * @param string|false $class
+	 * @param string|null $class имя класса справочника
 	 * @return mixed
 	 * @throws Throwable
-	 * @throws ServerErrorHttpException
 	 */
-	public function actionIndex($class = false) {
-		if (!$class) {//list all reference models
+	public function actionIndex(?string $class = null) {
+		if (null === $class) {//list all reference models
 			$dataProvider = new ArrayDataProvider([
-				'allModels' => Reference::GetReferencesList()
+				'allModels' => ReferenceLoader::getList()
 			]);
 			return $this->render('list', [
 				'dataProvider' => $dataProvider
 			]);
 		}
 
-		$className = Reference::getReferenceClass($class);
+		if (null === $reference = ReferenceLoader::getReferenceByClassName($class)) {
+			throw new InvalidConfigException("$class reference not found in configuration scope");
+		}
 		$dataProvider = new ActiveDataProvider([
-			'query' => $className->search(Yii::$app->request->queryParams),
-			'sort' => $className->searchSort
+			'query' => $reference->search(Yii::$app->request->queryParams),
+			'sort' => $reference->searchSort
 		]);
 
 		return $this->render('index', [
-			'searchModel' => $className,
+			'searchModel' => $reference,
 			'dataProvider' => $dataProvider,
-			'class' => $className
+			'class' => $reference
 		]);
+
 	}
 
 	/**
@@ -87,7 +90,7 @@ class ReferencesController extends WigetableController {
 	 */
 	public function actionView($class, $id) {
 		return $this->render('view', [
-			'model' => Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())
+			'model' => ReferenceLoader::getReferenceByClassName($class)::findModel($id, new NotFoundHttpException())
 		]);
 	}
 
@@ -98,7 +101,7 @@ class ReferencesController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionCreate($class) {
-		if (null === $model = Reference::getReferenceClass($class)) return null;
+		if (null === $model = ReferenceLoader::getReferenceByClassName($class)) return null;
 		if ($model->createModel(Yii::$app->request->post($model->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect(['create', 'class' => $class]);//Создали и создаём ещё
 			return $this->redirect(['index', 'class' => $class]);
@@ -117,7 +120,7 @@ class ReferencesController extends WigetableController {
 	 * @throws ServerErrorHttpException
 	 */
 	public function actionUpdate($class, $id) {
-		if (null === $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) return null;
+		if (null === $model = ReferenceLoader::getReferenceByClassName($class)::findModel($id, new NotFoundHttpException())) return null;
 
 		if ($model->updateModel(Yii::$app->request->post($model->formName()))) {
 			return $this->redirect(['update', 'id' => $model->id, 'class' => $class]);
@@ -136,7 +139,7 @@ class ReferencesController extends WigetableController {
 	 * @throws ServerErrorHttpException
 	 */
 	public function actionDelete($class, $id) {
-		if (null !== $model = Reference::getReferenceClass($class)::findModel($id, new NotFoundHttpException())) $model->safeDelete();
+		if (null !== $model = ReferenceLoader::getReferenceByClassName($class)::findModel($id, new NotFoundHttpException())) $model->safeDelete();
 		return $this->redirect(['index', 'class' => $class]);
 	}
 }
