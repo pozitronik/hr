@@ -121,7 +121,6 @@ class ReferencesController extends WigetableController {
 	 */
 	public function actionUpdate($class, $id) {
 		if (null === $model = ReferenceLoader::getReferenceByClassName($class)::findModel($id, new NotFoundHttpException())) return null;
-
 		if ($model->updateModel(Yii::$app->request->post($model->formName()))) {
 			return $this->redirect(['update', 'id' => $model->id, 'class' => $class]);
 		}
