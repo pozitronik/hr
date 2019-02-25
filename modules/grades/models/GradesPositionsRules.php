@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $grade_id
  * @property int $position_id
+ * @property int $premium_group_id
  */
 class GradesPositionsRules extends ActiveRecord {
 	/**
@@ -26,7 +27,7 @@ class GradesPositionsRules extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['grade_id', 'position_id'], 'required'],
-			[['grade_id', 'position_id'], 'integer']
+			[['grade_id', 'position_id', 'premium_group_id'], 'integer']
 		];
 	}
 
@@ -37,7 +38,8 @@ class GradesPositionsRules extends ActiveRecord {
 		return [
 			'id' => 'ID',
 			'grade_id' => 'Grade ID',
-			'position_id' => 'Position ID'
+			'position_id' => 'Position ID',
+			'premium_group_id' => 'Группа премирования'
 		];
 	}
 }

@@ -22,7 +22,7 @@ class RefGradePremiumGroups extends Reference {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_grade_premium_groups';
+		return 'ref_grades_premium_groups';
 	}
 
 	/**
