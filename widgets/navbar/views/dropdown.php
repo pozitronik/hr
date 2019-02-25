@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Users $user
  */
 
+use app\models\core\core_module\PluginsSupport;
 use app\modules\privileges\models\rights\admin\ServiceAccess;
 use app\modules\privileges\models\UserAccess;
 use yii\base\View;
@@ -45,18 +46,7 @@ use app\modules\users\models\Users;
 			<?php if ($user->is('admin')): ?>
 				<?= AdminPanelWidget::widget([
 					'mode' => AdminPanelWidget::MODE_LIST,
-					'controllers_directory' => [
-						/*todo: CoreModule::GetModuleDirectories*/
-						AdminPanelWidget::DEFAULT_DIRECTORY,
-						'@app/modules/import/controllers/',
-						'@app/modules/export/controllers/',
-						'@app/modules/dynamic_attributes/controllers/',
-						'@app/modules/users/controllers/',
-						'@app/modules/groups/controllers/',
-						'@app/modules/references/controllers/',
-						'@app/modules/privileges/controllers/',
-						'@app/modules/grades/controllers/'
-					]
+					'controllers_directory' => array_merge([AdminPanelWidget::DEFAULT_DIRECTORY], PluginsSupport::ListControllersDirs())
 				]) ?>
 			<?php endif; ?>
 		</div>
