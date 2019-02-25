@@ -4,9 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\references\models\refs;
 
 use app\helpers\ArrayHelper;
+use app\modules\grades\models\references\RefUserPositionBranches;
+use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\references\models\Reference;
-use app\modules\references\models\relations\RelRefUserPositionsBranches;
-use app\modules\references\models\relations\RelRefUserPositionsTypes;
+use app\modules\grades\models\relations\RelRefUserPositionsBranches;
+use app\modules\grades\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
 use Throwable;
 use yii\db\ActiveQuery;
@@ -18,7 +20,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property string $name Название
  * @property int $usedCount Количество объектов, использующих это значение справочника
- * @property string $color//todo
+ * @property string $color
  * @property int $deleted
  *
  * @property RelRefUserPositionsBranches|ActiveQuery $relRefUserPositionsBranches

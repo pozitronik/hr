@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\references\models\refs;
+namespace app\modules\grades\models\references;
 
 use app\modules\references\models\Reference;
 

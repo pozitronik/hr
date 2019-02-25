@@ -8,6 +8,8 @@ use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
 use app\modules\grades\GradesModule;
 use app\modules\grades\models\references\RefGradePremiumGroups;
+use app\modules\grades\models\references\RefUserPositionBranches;
+use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\groups\GroupsModule;
 use app\modules\import\ImportModule;
 use app\modules\privileges\PrivilegesModule;
@@ -88,6 +90,8 @@ $config = [
 			'class' => GradesModule::class,
 			'params' => [
 				'references' => [
+					RefUserPositionTypes::class,
+					RefUserPositionBranches::class,
 					RefGradePremiumGroups::class
 				]
 			]
