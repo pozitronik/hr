@@ -13,7 +13,7 @@ class m190225_063837_ref_premium_groups_items extends Migration {
 		$this->createTable('ref_grades_premium_groups', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(256)->notNull()->comment('Название'),
-			'color' => $this->string(256)->notNull()->comment('Цвет'),
+			'color' => $this->string(256)->null()->comment('Цвет'),
 			'deleted' => $this->boolean()->notNull()->defaultValue(false)
 		]);
 
@@ -28,7 +28,7 @@ class m190225_063837_ref_premium_groups_items extends Migration {
 	 */
 	public function safeDown() {
 		$this->dropTable('ref_grades_premium_groups');
-		$this->dropColumn('grade_positions_rules','premium_group_id');
+		$this->dropColumn('grades_positions_rules','premium_group_id');
 	}
 
 	/*
