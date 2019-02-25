@@ -15,7 +15,7 @@ use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\references\models\refs\RefUserRoles;
+use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroups;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersOptions;

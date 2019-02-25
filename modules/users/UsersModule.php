@@ -12,5 +12,10 @@ use app\models\core\core_module\CoreModule;
  * @package app\modules\users
  */
 class UsersModule extends CoreModule {
-
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getName():string {
+		return 'Поддержка пользователей';
+	}
 }

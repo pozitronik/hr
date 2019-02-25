@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
-use app\modules\references\models\refs\RefUserRoles;
+use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;

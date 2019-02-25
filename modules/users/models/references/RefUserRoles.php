@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\references\models\refs;
+namespace app\modules\users\models\references;
 
 use kartik\grid\GridView;
 use app\modules\groups\models\Groups;

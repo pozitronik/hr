@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 use app\modules\grades\models\references\RefUserPositionBranches;
 use app\modules\grades\models\references\RefUserPositionTypes;
-use app\modules\references\models\refs\RefUserRoles;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\color\ColorInput;
 use yii\web\View;

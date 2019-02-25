@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveForm $form
  */
 
-use app\modules\references\models\refs\RefUserRoles;
+use app\modules\users\models\references\RefUserRoles;
 use kartik\color\ColorInput;
 use kartik\switchinput\SwitchInput;
 use yii\web\View;

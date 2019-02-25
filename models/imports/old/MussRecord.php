@@ -10,7 +10,7 @@ use app\helpers\Csv;
 use app\helpers\Utils;
 use app\models\groups\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\references\models\refs\RefUserPositions;
+use app\modules\users\models\references\RefUserPositions;
 use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\modules\users\models\Users;

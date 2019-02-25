@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\references\models\refs;
+namespace app\modules\users\models\references;
 
 use app\helpers\ArrayHelper;
 use app\modules\grades\models\references\RefUserPositionBranches;

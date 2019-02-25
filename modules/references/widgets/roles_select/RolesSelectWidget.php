@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\roles_select;
 
-use app\modules\references\models\refs\RefUserRoles;
+use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 use yii\base\Widget;
 

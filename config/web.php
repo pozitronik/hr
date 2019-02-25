@@ -8,6 +8,7 @@ use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
 use app\modules\grades\GradesModule;
 use app\modules\grades\models\references\RefGradePremiumGroups;
+use app\modules\grades\models\references\RefLocations;
 use app\modules\grades\models\references\RefUserPositionBranches;
 use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\groups\GroupsModule;
@@ -16,6 +17,8 @@ use app\modules\privileges\PrivilegesModule;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\ReferencesModule;
+use app\modules\users\models\references\RefUserPositions;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
 use app\models\user\User;
@@ -66,7 +69,13 @@ $config = [
 			]
 		],
 		'users' => [
-			'class' => UsersModule::class
+			'class' => UsersModule::class,
+			'params' => [
+				'references' => [
+					RefUserPositions::class,
+					RefUserRoles::class
+				]
+			]
 		],
 		'groups' => [
 			'class' => GroupsModule::class,
@@ -92,7 +101,8 @@ $config = [
 				'references' => [
 					RefUserPositionTypes::class,
 					RefUserPositionBranches::class,
-					RefGradePremiumGroups::class
+					RefGradePremiumGroups::class,
+					RefLocations::class
 				]
 			]
 		]

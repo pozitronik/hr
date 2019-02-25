@@ -12,7 +12,7 @@ use app\models\core\traits\Upload;
 use app\modules\groups\models\traits\Graph;
 use app\widgets\alert\AlertModel;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\references\models\refs\RefUserRoles;
+use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
