@@ -10,4 +10,11 @@ namespace app\models\core\core_module;
  */
 interface CoreModuleInterface {
 
+	/**
+	 * Возвращает название плагина
+	 * @return string
+	 */
+	public function getName():string;
+
+
 }
