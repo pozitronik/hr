@@ -19,14 +19,14 @@ use yii\base\Model;
  *
  */
 class ReferenceLoader extends Model {
-
+	public const REFERENCES_DIRECTORY = '@app/modules/references/models/refs';
 	/**
 	 * @return Reference[]
 	 */
 	public static function getList():array {
 		$baseReferences = [];
 
-		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias(Reference::REFERENCES_DIRECTORY)), RecursiveIteratorIterator::SELF_FIRST);
+		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias(self::REFERENCES_DIRECTORY)), RecursiveIteratorIterator::SELF_FIRST);
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
 			if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetReferenceModel($file->getRealPath())) {

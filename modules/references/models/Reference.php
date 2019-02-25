@@ -48,7 +48,6 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
-	public const REFERENCES_DIRECTORY = '@app/modules/references/models/refs';
 	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions
 		Имя может быть строковое (если название атрибута совпадает с именем data-атрибута, либо массивом
 		формата ['имя data-атрибута' => 'атрибут модели']
@@ -77,25 +76,6 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 	}
 
 	/**
-	 * @param $path
-	 * @return array
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
-	 */
-	public static function GetReferencesList(string $path = self::REFERENCES_DIRECTORY):array {
-		$result = [];
-
-		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
-		/** @var RecursiveDirectoryIterator $file */
-		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetReferenceModel($file->getRealPath())) {
-				$result[] = $model;
-			}
-		}
-		return $result;
-	}
-
-	/**
 	 * @inheritdoc
 	 */
 	public function attributeLabels():array {
@@ -112,21 +92,6 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 	 */
 	public static function find():LCQuery {
 		return new LCQuery(static::class);
-	}
-
-	/**
-	 * @param string $class_name
-	 * @return Reference
-	 * @throws ServerErrorHttpException
-	 * @throws Throwable
-	 */
-	public static function getReferenceClass(string $class_name):Reference {
-		$class = 'app\modules\references\models\refs\\'.$class_name;
-		if (!class_exists($class)) {
-			throw new ServerErrorHttpException("Отсутствует класс $class");
-		}
-
-		return new $class;
 	}
 
 	/**
