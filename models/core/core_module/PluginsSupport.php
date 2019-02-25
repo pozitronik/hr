@@ -60,6 +60,17 @@ class PluginsSupport {
 	}
 
 	/**
+	 * Возвращает плагин по его id
+	 * @param string $pluginId
+	 * @return CoreModule|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function GetPluginById(string $pluginId):?CoreModule {
+		return ArrayHelper::getValue(self::ListPlugins(), $pluginId);
+	}
+
+	/**
 	 * Возвращает имя плагина по id
 	 * @param string $pluginId
 	 * @return string|null
@@ -67,7 +78,7 @@ class PluginsSupport {
 	 * @throws Throwable
 	 */
 	public static function GetName(string $pluginId):?string {
-		if (null !== $plugin = ArrayHelper::getValue(self::ListPlugins(), $pluginId)) return $plugin->name;
+		if (null !== $plugin = self::GetPluginById($pluginId)) return $plugin->name;
 		return null;
 	}
 
@@ -94,7 +105,7 @@ class PluginsSupport {
 	 * @throws Throwable
 	 */
 	public static function GetReferences(string $pluginId, ?string $referenceClassName = null) {
-		if (null !== $plugin = ArrayHelper::getValue(self::ListPlugins(), $pluginId)) {
+		if (null !== $plugin = self::GetPluginById($pluginId)) {
 			if (null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
 				if (null === $referenceClassName) {//вернуть массив со всеми справочниками
 					$result = [];
@@ -126,7 +137,7 @@ class PluginsSupport {
 	 * @throws Throwable
 	 */
 	public static function GetAllReferences():array {
-		$result = [[]];
+		$result = [];
 		foreach (self::ListPlugins() as $plugin) {
 			if (null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
 				foreach ($references as $reference) {
