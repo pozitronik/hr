@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
+use app\models\core\core_module\PluginsSupport;
 use app\modules\export\models\attributes\ExportAttributes;
 use app\modules\references\models\refs\RefAttributesTypes;
 use Yii;
@@ -41,7 +42,7 @@ class TestController extends Controller {
 	}
 
 	public function actionList() {
-		Utils::log(CoreModule::ListModules());
+		Utils::log(PluginsSupport::ListModules());
 	}
 
 	public function actionSpeed() {
