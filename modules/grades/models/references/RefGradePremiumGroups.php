@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\grades\models\references;
 
 use app\modules\references\models\Reference;
+use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 
 /**
@@ -81,4 +82,17 @@ class RefGradePremiumGroups extends Reference {
 		];
 	}
 
+	/**
+	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
+	 * @return string
+	 * @throws InvalidConfigException
+	 * todo
+	 */
+//	public function getForm():string {
+//		/*Из-за того, что мы находимся в контексте Reference, рендер будет искать файлы вьюх в своём каталоге. Не получается разнести вьюхи по модулям.
+//		Как решение, можно выдавать не абсолютный путь, а через алиасы
+//		*/
+//		$file_path = PluginsSupport::GetPluginById(ReferenceLoader::getReferenceByClassName($this->formName())->pluginId)->viewPath.DIRECTORY_SEPARATOR.'references'.DIRECTORY_SEPARATOR.mb_strtolower($this->formName()).'/_form.php';
+//		return file_exists($file_path)?$file_path:'_form';
+//	}
 }
