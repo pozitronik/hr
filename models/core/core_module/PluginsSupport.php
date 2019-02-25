@@ -4,8 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use app\helpers\ArrayHelper;
-use app\models\core\Magic;
-use function array_key_first;
+use app\modules\references\models\Reference;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -32,10 +31,7 @@ class PluginsSupport {
 	 * @throws Throwable
 	 */
 	private static function LoadPlugin(string $name, array $pluginConfigurationArray):?CoreModule {
-		if (null === $moduleClass = ArrayHelper::getValue($pluginConfigurationArray, 'class')) {
-			throw new InvalidConfigException("Module not configured properly");
-		}
-		$module = new $moduleClass($name);
+		$module = Yii::createObject($pluginConfigurationArray, [$name]);
 		if ($module instanceof CoreModule) return $module;
 		return null;
 	}
@@ -51,11 +47,11 @@ class PluginsSupport {
 			$plugins = [];
 			foreach (Yii::$app->modules as $name => $module) {
 				if (is_object($module)) {
-					if ($module instanceof CoreModule) $plugins[] = $module;
+					if ($module instanceof CoreModule) $plugins[$name] = $module;
 				} else {
 
 					if (null !== $loadedModule = self::LoadPlugin($name, $module)) {
-						$plugins[] = $loadedModule;
+						$plugins[$name] = $loadedModule;
 					}
 				}
 			}
@@ -64,16 +60,83 @@ class PluginsSupport {
 	}
 
 	/**
+	 * Возвращает имя плагина по id
+	 * @param string $pluginId
+	 * @return string|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function GetName(string $pluginId):?string {
+		if (null !== $plugin = ArrayHelper::getValue(self::ListPlugins(), $pluginId)) return $plugin->name;
+		return null;
+	}
+
+	/**
 	 * Возращает массив путей к контроллерам плагинов, дальше WigetableController по ним построит навигацию
 	 * @return string[]
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public static function ListPluginsControllersDirs():array {
+	public static function GetAllControllers():array {
 		$result = [];
 		foreach (self::ListPlugins() as $plugin) {
 			$result[] = $plugin->controllerPath;
 		}
 		return $result;
 	}
+
+	/**
+	 * Возвращает массив моделей справочников, подключаемых в конфигурации плагина, либо одну модель (при задании $referenceClassName)
+	 * @param string $pluginId id плагина
+	 * @param null|string Имя класса загружаемого справочника
+	 * @return Reference[]|Reference|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function GetReferences(string $pluginId, ?string $referenceClassName = null) {
+		if (null !== $plugin = ArrayHelper::getValue(self::ListPlugins(), $pluginId)) {
+			if (null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
+				if (null === $referenceClassName) {//вернуть массив со всеми справочниками
+					$result = [];
+					foreach ($references as $reference) {
+						$referenceObject = Yii::createObject($reference);
+						$referenceObject->pluginId = $plugin->id;
+						$result[] = $referenceObject;
+					}
+					return $result;
+				}
+
+				foreach ($references as $reference) {
+					/** @var Reference $referenceObject */
+					$referenceObject = Yii::createObject($reference);
+					if ($referenceClassName === $referenceObject->formName()) {
+						$referenceObject->pluginId = $plugin->id;
+						return $referenceObject;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Возвращает массив справочников, подключаемых в конфигурациях плагинов
+	 * @return Reference[]
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function GetAllReferences():array {
+		$result = [[]];
+		foreach (self::ListPlugins() as $plugin) {
+			if (null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
+				foreach ($references as $reference) {
+					$referenceObject = Yii::createObject($reference);
+					$referenceObject->pluginId = $plugin->id;
+					$result[$referenceObject->formName()] = $referenceObject;
+				}
+			}
+		}
+		return $result;
+	}
+
 }
