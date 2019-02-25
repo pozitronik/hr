@@ -27,7 +27,7 @@ use app\modules\import\models\fos\activerecord\ImportFosTribe;
 use app\modules\import\models\fos\activerecord\ImportFosTribeLeader;
 use app\modules\import\models\fos\activerecord\ImportFosTribeLeaderIt;
 use app\modules\import\models\fos\activerecord\ImportFosUsers;
-use app\modules\references\models\refs\RefGroupTypes;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\models\refs\RefUserPositions;
 use app\modules\references\models\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;

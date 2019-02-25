@@ -46,7 +46,7 @@ use app\modules\users\models\Users;
 			<?php if ($user->is('admin')): ?>
 				<?= AdminPanelWidget::widget([
 					'mode' => AdminPanelWidget::MODE_LIST,
-					'controllers_directory' => array_merge([AdminPanelWidget::DEFAULT_DIRECTORY], PluginsSupport::ListControllersDirs())
+					'controllers_directory' => array_merge([AdminPanelWidget::DEFAULT_DIRECTORY], PluginsSupport::GetAllControllers())
 				]) ?>
 			<?php endif; ?>
 		</div>

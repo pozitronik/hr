@@ -12,7 +12,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
-use app\modules\references\models\refs\RefGroupTypes;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;

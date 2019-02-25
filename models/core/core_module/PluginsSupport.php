@@ -48,11 +48,8 @@ class PluginsSupport {
 			foreach (Yii::$app->modules as $name => $module) {
 				if (is_object($module)) {
 					if ($module instanceof CoreModule) $plugins[$name] = $module;
-				} else {
-
-					if (null !== $loadedModule = self::LoadPlugin($name, $module)) {
-						$plugins[$name] = $loadedModule;
-					}
+				} else if (null !== $loadedModule = self::LoadPlugin($name, $module)) {
+					$plugins[$name] = $loadedModule;
 				}
 			}
 		}
@@ -78,6 +75,7 @@ class PluginsSupport {
 	 * @throws Throwable
 	 */
 	public static function GetName(string $pluginId):?string {
+		/** @var CoreModule $plugin */
 		if (null !== $plugin = self::GetPluginById($pluginId)) return $plugin->name;
 		return null;
 	}
@@ -105,25 +103,25 @@ class PluginsSupport {
 	 * @throws Throwable
 	 */
 	public static function GetReferences(string $pluginId, ?string $referenceClassName = null) {
-		if (null !== $plugin = self::GetPluginById($pluginId)) {
-			if (null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
-				if (null === $referenceClassName) {//вернуть массив со всеми справочниками
-					$result = [];
-					foreach ($references as $reference) {
-						$referenceObject = Yii::createObject($reference);
-						$referenceObject->pluginId = $plugin->id;
-						$result[] = $referenceObject;
-					}
-					return $result;
-				}
+		/** @var array $references */
+		if ((null !== $plugin = self::GetPluginById($pluginId)) && null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
+			if (null === $referenceClassName) {//вернуть массив со всеми справочниками
+				$result = [];
 
 				foreach ($references as $reference) {
-					/** @var Reference $referenceObject */
 					$referenceObject = Yii::createObject($reference);
-					if ($referenceClassName === $referenceObject->formName()) {
-						$referenceObject->pluginId = $plugin->id;
-						return $referenceObject;
-					}
+					$referenceObject->pluginId = $plugin->id;
+					$result[] = $referenceObject;
+				}
+				return $result;
+			}
+
+			foreach ($references as $reference) {
+				/** @var Reference $referenceObject */
+				$referenceObject = Yii::createObject($reference);
+				if ($referenceClassName === $referenceObject->formName()) {
+					$referenceObject->pluginId = $plugin->id;
+					return $referenceObject;
 				}
 			}
 		}
@@ -139,6 +137,7 @@ class PluginsSupport {
 	public static function GetAllReferences():array {
 		$result = [];
 		foreach (self::ListPlugins() as $plugin) {
+			/** @var array $references */
 			if (null !== $references = ArrayHelper::getValue($plugin->params, 'references')) {
 				foreach ($references as $reference) {
 					$referenceObject = Yii::createObject($reference);

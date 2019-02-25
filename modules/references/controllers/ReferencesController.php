@@ -14,7 +14,6 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use Throwable;
 use yii\web\Response;
-use yii\web\ServerErrorHttpException;
 
 /**
  * Управление всеми справочниками
@@ -85,7 +84,6 @@ class ReferencesController extends WigetableController {
 	 * @param integer $id
 	 * @return mixed
 	 * @throws Throwable
-	 * @throws ServerErrorHttpException
 	 * @unused
 	 */
 	public function actionView($class, $id) {
@@ -97,7 +95,6 @@ class ReferencesController extends WigetableController {
 	/**
 	 * @param string $class
 	 * @return null|string|Response
-	 * @throws ServerErrorHttpException
 	 * @throws Throwable
 	 */
 	public function actionCreate($class) {
@@ -117,7 +114,6 @@ class ReferencesController extends WigetableController {
 	 * @param integer $id
 	 * @return null|string|Response
 	 * @throws Throwable
-	 * @throws ServerErrorHttpException
 	 */
 	public function actionUpdate($class, $id) {
 		if (null === $model = ReferenceLoader::getReferenceByClassName($class)::findModel($id, new NotFoundHttpException())) return null;
@@ -135,7 +131,6 @@ class ReferencesController extends WigetableController {
 	 * @param integer $id
 	 * @return mixed
 	 * @throws Throwable
-	 * @throws ServerErrorHttpException
 	 */
 	public function actionDelete($class, $id) {
 		if (null !== $model = ReferenceLoader::getReferenceByClassName($class)::findModel($id, new NotFoundHttpException())) $model->safeDelete();

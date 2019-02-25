@@ -4,23 +4,16 @@ declare(strict_types = 1);
 namespace app\modules\references\models;
 
 use app\models\core\LCQuery;
-use app\models\core\Magic;
 use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
 use app\widgets\alert\AlertModel;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use ReflectionException;
-use Throwable;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
-use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use app\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\web\ServerErrorHttpException;
 use RuntimeException;
 
 /** @noinspection UndetectableTableInspection */
@@ -286,7 +279,7 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 	}
 
 	/**
-	 * @param string|null $pluginName
+	 * @param string|null $pluginId
 	 */
 	public function setPluginId(?string $pluginId):void {
 		$this->_pluginId = $pluginId;

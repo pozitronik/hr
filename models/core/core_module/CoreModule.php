@@ -12,6 +12,8 @@ use yii\base\Module as BaseModule;
 /**
  * Class CoreModule
  * @package app\models\core\core_module
+ *
+ * @property string $name
  */
 class CoreModule extends BaseModule implements CoreModuleInterface {
 

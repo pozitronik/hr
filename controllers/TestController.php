@@ -14,7 +14,7 @@ use app\helpers\Utils;
 use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
-use app\modules\references\models\refs\RefGroupTypes;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\models\refs\RefUserRoles;
 use app\models\relations\RelUsersGroups;
 use app\modules\users\models\Users;
@@ -43,12 +43,7 @@ class TestController extends Controller {
 	}
 
 	public function actionList() {
-//		Utils::log(PluginsSupport::ListPlugins());
-
-		return AdminPanelWidget::widget([
-			'mode' => AdminPanelWidget::MODE_LIST,
-			'controllers_directory' => PluginsSupport::GetPluginsNavigation()
-		]);
+		Utils::log(PluginsSupport::GetAllReferences());
 	}
 
 	public function actionSpeed() {

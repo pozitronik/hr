@@ -10,6 +10,8 @@ use app\models\core\core_module\CoreModule;
 /**
  * Class GroupsModule
  * @package app\modules\groups
+ *
+ * @property string $name
  */
 class GroupsModule extends CoreModule {
 	/**

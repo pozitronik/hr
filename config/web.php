@@ -6,9 +6,12 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
 use app\modules\grades\GradesModule;
+use app\modules\grades\models\references\RefGradePremiumGroups;
 use app\modules\groups\GroupsModule;
 use app\modules\import\ImportModule;
 use app\modules\privileges\PrivilegesModule;
+use app\modules\groups\models\references\RefGroupRelationTypes;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\ReferencesModule;
 use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
@@ -58,7 +61,13 @@ $config = [
 			'class' => UsersModule::class
 		],
 		'groups' => [
-			'class' => GroupsModule::class
+			'class' => GroupsModule::class,
+			'params' => [
+				'references' => [
+					RefGroupTypes::class,
+					RefGroupRelationTypes::class
+				]
+			]
 		],
 		'references' => [
 			'class' => ReferencesModule::class
@@ -70,7 +79,12 @@ $config = [
 			'class' => ExportModule::class
 		],
 		'grades' => [
-			'class' => GradesModule::class
+			'class' => GradesModule::class,
+			'params' => [
+				'references' => [
+					RefGradePremiumGroups::class
+				]
+			]
 		]
 	],
 	'components' => [

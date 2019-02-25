@@ -10,6 +10,8 @@ use app\models\core\core_module\CoreModule;
 /**
  * Class GradesModule
  * @package app\modules\grades
+ *
+ * @property string $name
  */
 class GradesModule extends CoreModule {
 

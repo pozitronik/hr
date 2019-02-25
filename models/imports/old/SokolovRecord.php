@@ -10,7 +10,7 @@ use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\models\groups\Groups;
-use app\modules\references\models\refs\RefGroupTypes;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\models\refs\RefUserPositions;
 use app\modules\references\models\refs\RefUserRoles;
 use app\models\relations\RelGroupsGroups;

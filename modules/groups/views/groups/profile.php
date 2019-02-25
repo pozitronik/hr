@@ -13,7 +13,7 @@ use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-use app\modules\references\models\refs\RefGroupTypes;
+use app\modules\groups\models\references\RefGroupTypes;
 use kartik\file\FileInput;
 
 $this->title = $model->isNewRecord?'Добавление группы':"Профиль группы {$model->name}";

@@ -31,7 +31,7 @@ class GradesController extends WigetableController {
 				'min' => 512400,
 				'mid' => 640500,
 				'max' => 768600
-			],
+			]
 		]]);
 
 		return $this->render('index', [
