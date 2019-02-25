@@ -29,6 +29,8 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	 * @return CoreModule
 	 * @throws InvalidConfigException
 	 * @throws Throwable
+	 * @unused
+	 * @deprecated
 	 */
 	public static function getModuleById(string $id):self {
 		if (null === $module = ArrayHelper::getValue(Yii::$app->modules, $id)) {
@@ -48,6 +50,14 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 		$module = Yii::$app->controller->module;
 		$route = $route?:$module->defaultRoute;
 		return ['label' => $label, 'url' => ["/{$module->id}/{$route}"] + $parameters];
+	}
+
+	/**
+	 * Возвращает название плагина
+	 * @return string
+	 */
+	public function getName():string {
+		return $this->id;
 	}
 
 }
