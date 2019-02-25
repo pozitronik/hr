@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\models\core\core_module\PluginsSupport;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ArrayDataProvider;
@@ -28,11 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
 						[
 							'attribute' => 'menuCaption',
 							'label' => 'Название справочника',
-							'value' => function($referenceModel) {
-								/** @var Reference $referenceModel */
+							'value' => function(Reference $referenceModel) {
 								return Html::a($referenceModel->menuCaption, ['index', 'class' => $referenceModel->formName()]);
 							},
 							'format' => 'raw'
+						],
+						[
+							'label' => 'Модуль',
+							'value' => function(Reference $referenceModel) {
+								return null !== $referenceModel->pluginId?PluginsSupport::GetName($referenceModel->pluginId):'Базовый';
+							}
 						],
 						[
 							'attribute' => 'menuIcon',
