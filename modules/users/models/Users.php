@@ -8,7 +8,7 @@ use app\helpers\Date;
 use app\models\core\StrictInterface;
 use app\models\core\traits\MethodsAccess;
 use app\models\core\traits\Upload;
-use app\modules\references\models\refs\RefAttributesTypes;
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;

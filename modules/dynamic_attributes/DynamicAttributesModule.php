@@ -12,4 +12,11 @@ use app\models\core\core_module\CoreModule;
  * @package app\modules\dynamic_attributes
  */
 class DynamicAttributesModule extends CoreModule {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getName():string {
+		return 'Поддержка динамических атрибутов';
+	}
 }

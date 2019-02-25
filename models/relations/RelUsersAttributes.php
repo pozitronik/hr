@@ -5,7 +5,7 @@ namespace app\models\relations;
 
 use app\models\core\traits\ARExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\modules\references\models\refs\RefAttributesTypes;
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 

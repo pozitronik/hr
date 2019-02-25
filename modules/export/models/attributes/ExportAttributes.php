@@ -5,7 +5,7 @@ namespace app\modules\export\models\attributes;
 
 use app\models\relations\RelUsersAttributes;
 use app\modules\groups\models\Groups;
-use app\modules\references\models\refs\RefAttributesTypes;
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\users\models\Users;
 use PhpOffice\PhpSpreadsheet\Exception as SpreadsheetException;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

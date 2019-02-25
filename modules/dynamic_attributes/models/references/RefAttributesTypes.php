@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\references\models\refs;
+namespace app\modules\dynamic_attributes\models\references;
 
 use app\modules\references\models\Reference;
 use app\models\relations\RelUsersAttributesTypes;

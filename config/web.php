@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /** @noinspection UsingInclusionReturnValueInspection */
 
 use app\modules\dynamic_attributes\DynamicAttributesModule;
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
 use app\modules\grades\GradesModule;
 use app\modules\grades\models\references\RefGradePremiumGroups;
@@ -55,7 +56,12 @@ $config = [
 			'class' => ImportModule::class
 		],
 		'attributes' => [
-			'class' => DynamicAttributesModule::class
+			'class' => DynamicAttributesModule::class,
+			'params' => [
+				'references' => [
+					RefAttributesTypes::class
+				]
+			]
 		],
 		'users' => [
 			'class' => UsersModule::class

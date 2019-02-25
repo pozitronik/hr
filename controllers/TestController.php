@@ -6,7 +6,7 @@ namespace app\controllers;
 
 use app\models\core\core_module\PluginsSupport;
 use app\modules\export\models\attributes\ExportAttributes;
-use app\modules\references\models\refs\RefAttributesTypes;
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\widgets\admin_panel\AdminPanelWidget;
 use Yii;
 use app\helpers\ArrayHelper;

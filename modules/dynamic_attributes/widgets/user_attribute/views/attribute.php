@@ -12,7 +12,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
-use app\modules\references\models\refs\RefAttributesTypes;
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
