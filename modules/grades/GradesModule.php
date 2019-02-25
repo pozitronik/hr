@@ -13,4 +13,11 @@ use app\models\core\core_module\CoreModule;
  */
 class GradesModule extends CoreModule {
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getName():string {
+		return 'Поддержка грейдов';
+	}
+
 }
