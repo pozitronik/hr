@@ -50,29 +50,4 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 		return ['label' => $label, 'url' => ["/{$module->id}/{$route}"] + $parameters];
 	}
 
-	/**
-	 * Набросок итератора модулей (в дальнейшем через него будет получаться конфигурация плагинов, но это отдельная тема)
-	 * @return array
-	 * @throws InvalidConfigException
-	 * @throws Throwable
-	 */
-	public static function ListModules():array {
-		$modules = [];
-		foreach (Yii::$app->modules as $module) {
-			if (is_object($module)) {
-				$loadedModule = $module;
-			} else {
-				if (null === $moduleClass = ArrayHelper::getValue($module, 'class')) {
-					throw new InvalidConfigException("$module entry not configured properly");
-				}
-				$loadedModule = new $moduleClass('d');
-			}
-
-			if ($loadedModule instanceof self) {
-				$modules[] = $module;
-			}
-		}
-		return $modules;
-	}
-
 }
