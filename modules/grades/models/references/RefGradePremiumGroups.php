@@ -13,7 +13,7 @@ use yii\helpers\Html;
  * @property int $deleted
  */
 class RefGradePremiumGroups extends Reference {
-	public $menuCaption = 'Типы отношений атрибутов';
+	public $menuCaption = 'Премиальные группы';
 	public $menuIcon = false;
 
 	protected $_dataAttributes = ['color'];
