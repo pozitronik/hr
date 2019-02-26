@@ -31,26 +31,26 @@ class SalaryFork extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'salary_fork';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['position_id', 'grade_id'], 'required'],
 			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency'], 'integer'],
 			[['min', 'max'], 'number'],
-			[['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id']],
+			[['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id']]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'position_id' => 'Должность',
