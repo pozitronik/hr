@@ -55,7 +55,7 @@ class PrivilegesController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newPrivilege = new Privileges();
-		if ($newPrivilege->createPrivilege(Yii::$app->request->post($newPrivilege->formName()))) {
+		if ($newPrivilege->createModel(Yii::$app->request->post($newPrivilege->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newPrivilege->id]);
 		}
@@ -79,7 +79,7 @@ class PrivilegesController extends WigetableController {
 	public function actionUpdate(int $id):?string {
 		if (null === $privilege = Privileges::findModel($id, new NotFoundHttpException())) return null;
 
-		if (null !== ($updateArray = Yii::$app->request->post($privilege->formName()))) $privilege->updatePrivilege($updateArray);
+		if (null !== ($updateArray = Yii::$app->request->post($privilege->formName()))) $privilege->updateModel($updateArray);
 		$userRightsProvider = new ArrayDataProvider([
 			'allModels' => $privilege->userRights
 		]);
