@@ -23,7 +23,7 @@ use yii\base\UnknownClassException;
  *
  */
 class ReferenceLoader extends Model {
-	public const REFERENCES_DIRECTORY = '@app/modules/references/models/refs';
+	public const REFERENCES_DIRECTORY = '@app/models/references';
 
 	/**
 	 * @return Reference[]
@@ -34,15 +34,18 @@ class ReferenceLoader extends Model {
 	 */
 	public static function getList():array {
 		$baseReferences = [];
+		$baseReferencesDir = Yii::getAlias(self::REFERENCES_DIRECTORY);
 
-		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias(self::REFERENCES_DIRECTORY)), RecursiveIteratorIterator::SELF_FIRST);
-		/** @var RecursiveDirectoryIterator $file */
-		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetReferenceModel($file->getRealPath())) {
-				$baseReferences[$model->formName()] = $model;
+		if (file_exists($baseReferencesDir)) {//Загрузить базовые модели референсов
+			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseReferencesDir), RecursiveIteratorIterator::SELF_FIRST);
+			/** @var RecursiveDirectoryIterator $file */
+			foreach ($files as $file) {
+				if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetReferenceModel($file->getRealPath())) {
+					$baseReferences[$model->formName()] = $model;
+				}
 			}
 		}
-		$pluginsReferences = PluginsSupport::GetAllReferences();
+		$pluginsReferences = PluginsSupport::GetAllReferences();//загрузить модульные модели референсов
 		return array_merge($baseReferences, $pluginsReferences);
 	}
 
@@ -51,7 +54,8 @@ class ReferenceLoader extends Model {
 	 * @return Reference|null
 	 * @throws Throwable
 	 */
-	public static function getReferenceByClassName(string $className):?Reference {
+	public
+	static function getReferenceByClassName(string $className):?Reference {
 		return ArrayHelper::getValue(self::getList(), $className);
 	}
 }
