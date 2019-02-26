@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\grades\models;
 
+use app\models\relations\Relations;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,6 +14,8 @@ use yii\db\ActiveRecord;
  * @property int $position_id
  */
 class GradesPositionsRules extends ActiveRecord {
+	use Relations;
+
 	/**
 	 * {@inheritdoc}
 	 */

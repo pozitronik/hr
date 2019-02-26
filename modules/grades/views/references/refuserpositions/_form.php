@@ -7,11 +7,14 @@ declare(strict_types = 1);
  * @var ActiveForm $form
  */
 
+use app\helpers\ArrayHelper;
+use app\modules\grades\models\Grades;
 use app\modules\grades\models\references\RefUserPositionBranches;
 use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\color\ColorInput;
+use kartik\select2\Select2;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -27,7 +30,7 @@ use yii\widgets\ActiveForm;
 			<?php $form = ActiveForm::begin(); ?>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-7">
 						<?= $form->field($model, 'name')->textInput([
 							'maxlength' => true,
 							'autofocus' => 'autofocus',
@@ -35,7 +38,7 @@ use yii\widgets\ActiveForm;
 						]); ?>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-5">
 						<?= $form->field($model, 'color')->widget(ColorInput::class, [
 							'options' => [
 								'placeholder' => 'Выбрать цвет'
@@ -46,7 +49,10 @@ use yii\widgets\ActiveForm;
 							]
 						]) ?>
 					</div>
-					<div class="col-md-2">
+
+				</div>
+				<div class="row">
+					<div class="col-md-4">
 						<?= $form->field($model, 'types')->widget(ReferenceSelectWidget::class, [
 							'referenceClass' => RefUserPositionTypes::class,
 							'options' => ['placeholder' => 'Выберите тип'],
@@ -56,7 +62,7 @@ use yii\widgets\ActiveForm;
 							]
 						]); ?>
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-4">
 						<?= $form->field($model, 'branch')->widget(ReferenceSelectWidget::class, [
 							'referenceClass' => RefUserPositionBranches::class,
 							'options' => ['placeholder' => 'Выберите ветвь'],
@@ -65,8 +71,16 @@ use yii\widgets\ActiveForm;
 							]
 						]); ?>
 					</div>
+					<div class="col-md-4">
+						<?= $form->field($model, 'relGrades')->widget(Select2::class, [
+							'data' => ArrayHelper::map(Grades::find()->orderBy('id')->all(), 'id', 'name'),
+							'pluginOptions' => [
+								'multiple' => true,
+								'allowClear' => true
+							]
+						]); ?>
+					</div>
 				</div>
-
 			</div>
 			<div class="panel-footer">
 				<?= Html::submitButton($model->isNewRecord?'Создать':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>

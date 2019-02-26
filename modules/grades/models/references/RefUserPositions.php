@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\modules\grades\models\references;
 
 use app\helpers\ArrayHelper;
+use app\modules\grades\models\Grades;
+use app\modules\grades\models\GradesPositionsRules;
 use app\modules\references\models\Reference;
 use app\modules\grades\models\relations\RelRefUserPositionsBranches;
 use app\modules\grades\models\relations\RelRefUserPositionsTypes;
@@ -26,6 +28,8 @@ use yii\helpers\Html;
  *
  * @property RelRefUserPositionsTypes[]|ActiveQuery $relRefUserPositionsTypes
  * @property RefUserPositionTypes[]|ActiveQuery $relRefUserPositionTypes
+ * @property GradesPositionsRules[]|ActiveQuery $relGradesPositionsRules
+ * @property Grades[]|ActiveQuery $relGrades Грейды, разрешённые для этой должности
  *
  * @property null|int $branch
  * @property null|int[] $types
@@ -53,7 +57,7 @@ class RefUserPositions extends Reference {
 			[['name'], 'unique'],
 			[['id', 'deleted'], 'integer'],
 			[['name', 'color'], 'string', 'max' => 256],
-			[['branch', 'types'], 'safe'],//relational attributes
+			[['branch', 'types', 'relGrades'], 'safe'],//relational attributes
 		];
 	}
 
@@ -70,7 +74,8 @@ class RefUserPositions extends Reference {
 			'branchName' => 'Ветвь',
 			'typesNames' => 'Типы должности',
 			'branch' => 'Ветвь',
-			'types' => 'Типы'
+			'types' => 'Типы',
+			'relGrades' => 'Разрешённые грейды'
 		];
 	}
 
@@ -205,6 +210,28 @@ class RefUserPositions extends Reference {
 	 */
 	public function getRelRefUserPositionTypes() {
 		return $this->hasMany(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
+	}
+
+	/**
+	 * @return Grades[]|ActiveQuery
+	 */
+	public function getRelGrades() {
+		return $this->hasMany(Grades::class, ['id' => 'grade_id'])->via('relGradesPositionsRules');
+	}
+
+	/**
+	 * @return GradesPositionsRules[]|ActiveQuery
+	 */
+	public function getRelGradesPositionsRules() {
+		return $this->hasMany(GradesPositionsRules::class, ['position_id' => 'id']);
+	}
+
+	/**
+	 * @param mixed $relGrades
+	 */
+	public function setRelGrades($relGrades):void {
+		GradesPositionsRules::deleteAll(['position_id' => $this->id]);
+		GradesPositionsRules::linkModels($relGrades, $this->id);
 	}
 
 }
