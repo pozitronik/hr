@@ -1,14 +1,20 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
+use app\helpers\ArrayHelper;
+use app\models\core\LCQuery;
+use app\models\core\StrictInterface;
+use app\models\core\traits\ARExtended;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
-use Yii;
+use app\widgets\alert\AlertModel;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "salary_fork".
@@ -27,12 +33,21 @@ use yii\db\ActiveRecord;
  * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
  * @property RefLocations|ActiveQuery|null $refLocation
  */
-class SalaryFork extends ActiveRecord {
+class SalaryFork extends ActiveRecord implements StrictInterface {
+	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
 		return 'salary_fork';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**
@@ -59,7 +74,7 @@ class SalaryFork extends ActiveRecord {
 			'location_id' => 'Локация',
 			'min' => 'Минимальный оклад',
 			'max' => 'Максимальный оклад',
-			'currency' => 'Валюта',
+			'currency' => 'Валюта'
 		];
 	}
 
@@ -89,5 +104,50 @@ class SalaryFork extends ActiveRecord {
 	 */
 	public function getRefLocation() {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id']);
+	}
+
+	/**
+	 * @param array|null $paramsArray
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function createModel(?array $paramsArray):bool {
+		$transaction = self::getDb()->beginTransaction();
+		if ($this->loadArray($paramsArray)) {
+//			$this->updateAttributes([//todo
+//				'daddy' => CurrentUser::Id(),
+//				'create_date' => Date::lcDate(),
+//				'deleted' => false
+//			]);
+			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
+				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
+				/** @noinspection NotOptimalIfConditionsInspection */
+				if ($this->save()) {
+					$transaction->commit();
+					$this->refresh();
+					AlertModel::SuccessNotify();
+					return true;
+				}
+				AlertModel::ErrorsNotify($this->errors);
+			}
+		}
+		$transaction->rollBack();
+		return false;
+	}
+
+	/**
+	 * @param array|null $paramsArray
+	 * @return bool
+	 */
+	public function updateModel(?array $paramsArray):bool {
+		if ($this->loadArray($paramsArray)) {
+			if ($this->save()) {
+				AlertModel::SuccessNotify();
+				$this->refresh();
+				return true;
+			}
+			AlertModel::ErrorsNotify($this->errors);
+		}
+		return false;
 	}
 }
