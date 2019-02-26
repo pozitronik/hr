@@ -16,5 +16,16 @@ interface CoreModuleInterface {
 	 */
 	public function getName():string;
 
+	/**
+	 * Возвращает неймспейс загруженного модуля (для вычисления алиасных путей внутри модуля)
+	 * @return string
+	 */
+	public function getNamespace():string;
+
+	/**
+	 * Возвращает зарегистрированный алиас модуля
+	 * @return string
+	 */
+	public function getAlias():string;
 
 }

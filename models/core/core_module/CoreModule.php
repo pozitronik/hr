@@ -13,16 +13,19 @@ use yii\base\Module as BaseModule;
  * Class CoreModule
  * @package app\models\core\core_module
  *
- * @property string $name
+ * @property-read string $name
+ * @property-read string $namespace
+ * @property-read string $alias
  */
 class CoreModule extends BaseModule implements CoreModuleInterface {
+	protected $_namespace;
+	protected $_alias;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function __construct(string $id, $parent = null, array $config = []) {
 		parent::__construct($id, $parent, $config);
-//		$this->controllerNamespace = "app\modules\\{$this->id}\\controllers";
 		$this->defaultRoute = $this->id;
 	}
 
@@ -60,6 +63,34 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	 */
 	public function getName():string {
 		return $this->id;
+	}
+
+	/**
+	 * Возвращает неймспейс загруженного модуля (для вычисления алиасных путей внутри модуля)
+	 * @return string
+	 */
+	public function getNamespace():string {
+		if (null === $this->_namespace) {
+			$class = get_class($this);
+			if (false !== ($pos = strrpos($class, '\\'))) {
+				$this->_namespace = substr($class, 0, $pos);
+			}
+		}
+		return $this->_namespace;
+	}
+
+	/**
+	 * Возвращает зарегистрированный алиас модуля
+	 * @return string
+	 */
+	public function getAlias():string {
+		if (null === $this->_alias) {
+			/*Регистрируем алиас плагина*/
+			$this->_alias = "@{$this->id}";
+			Yii::setAlias($this->_alias, $this->basePath);
+		}
+
+		return $this->_alias;
 	}
 
 }
