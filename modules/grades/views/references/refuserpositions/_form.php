@@ -7,14 +7,12 @@ declare(strict_types = 1);
  * @var ActiveForm $form
  */
 
-use app\helpers\ArrayHelper;
 use app\modules\grades\models\references\RefGrades;
 use app\modules\grades\models\references\RefUserPositionBranches;
 use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\color\ColorInput;
-use kartik\select2\Select2;
 use yii\web\View;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
