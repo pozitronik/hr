@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades\controllers;
+namespace app\modules\salary\controllers;
 
 use app\models\core\WigetableController;
 use yii\data\ArrayDataProvider;
@@ -10,11 +10,11 @@ use yii\data\ArrayDataProvider;
  * Class GradesController
  * @package app\modules\grades\controllers
  */
-class GradesController extends WigetableController {
-	public $menuCaption = "<i class='fa fa-graduation-cap'></i>Грейды";
+class SalaryController extends WigetableController {
+	public $menuCaption = "<i class='fa fa-money-bill'></i>Зарплаты";
 	public $menuIcon = "/img/admin/grades.png";
 	public $orderWeight = 7;
-	public $defaultRoute = 'salary/grades';
+	public $defaultRoute = 'salary/salary';
 
 	/**
 	 * @return string

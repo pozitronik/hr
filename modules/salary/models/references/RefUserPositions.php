@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades\models\references;
+namespace app\modules\salary\models\references;
 
 use app\helpers\ArrayHelper;
-use app\modules\grades\models\relations\RelGradesPositionsRules;
+use app\modules\salary\models\relations\RelGradesPositionsRules;
 use app\modules\references\models\Reference;
-use app\modules\grades\models\relations\RelRefUserPositionsBranches;
-use app\modules\grades\models\relations\RelRefUserPositionsTypes;
+use app\modules\salary\models\relations\RelRefUserPositionsBranches;
+use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
 use Throwable;
 use yii\db\ActiveQuery;

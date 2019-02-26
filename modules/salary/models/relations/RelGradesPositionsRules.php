@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades\models\relations;
+namespace app\modules\salary\models\relations;
 
 use app\models\relations\Relations;
 use yii\db\ActiveRecord;

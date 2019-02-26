@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades\models\relations;
+namespace app\modules\salary\models\relations;
 
 use app\models\core\traits\ARExtended;
 use app\models\relations\Relations;
 use yii\db\ActiveRecord;
 
 /**
- * Class RelRefUserPositionsBranches
+ * Class RelRefUserPositionsTypes
  * @package app\modules\references\models\relations
  */
-class RelRefUserPositionsBranches extends ActiveRecord {
+class RelRefUserPositionsTypes extends ActiveRecord {
 	use Relations;
 	use ARExtended;
 
@@ -19,7 +19,7 @@ class RelRefUserPositionsBranches extends ActiveRecord {
 	 * {@inheritDoc}
 	 */
 	public static function tableName():string {
-		return 'rel_ref_user_positions_branches';
+		return 'rel_ref_user_positions_types';
 	}
 
 	/**
@@ -27,9 +27,9 @@ class RelRefUserPositionsBranches extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['position_id', 'position_branch_id'], 'required'],
-			[['position_id', 'position_branch_id'], 'integer'],
-			[['position_id', 'position_branch_id'], 'unique', 'targetAttribute' => ['position_id', 'position_branch_id']]
+			[['position_id', 'position_type_id'], 'required'],
+			[['position_id', 'position_type_id'], 'integer'],
+			[['position_id', 'position_type_id'], 'unique', 'targetAttribute' => ['position_id', 'position_type_id']]
 		];
 	}
 
@@ -40,7 +40,7 @@ class RelRefUserPositionsBranches extends ActiveRecord {
 		return [
 			'id' => 'ID',
 			'position_id' => 'Должность',
-			'position_branch_id' => 'Ветвь'
+			'position_type_id' => 'Тип'
 		];
 	}
 

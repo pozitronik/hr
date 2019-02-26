@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades;
+namespace app\modules\salary;
 
 use app\models\core\core_module\CoreModule;
 
