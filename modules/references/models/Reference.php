@@ -9,6 +9,7 @@ use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
 use app\widgets\alert\AlertModel;
+use Throwable;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
@@ -126,11 +127,21 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 
 	/**
 	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
+	 *
+	 * Сначала проверяем наличие вьюхи в расширении (/module/views/{formName}/_form.php). Если её нет, то проверяем такой же путь в модуле справочников.
+	 * Если и там ничего нет, скатываемся на показ дефолтной вьюхи
+	 *
 	 * @return string
 	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function getForm():string {
 		$file_path = mb_strtolower($this->formName()).'/_form.php';
+		if (null !== $plugin = ReferenceLoader::getReferenceByClassName($this->formName())->plugin) {//это справочник расширения
+			$form_alias = $plugin->alias.'/views/references/'.$file_path;
+			if (file_exists(Yii::getAlias($form_alias))) return $form_alias;
+
+		}
 		return file_exists(Yii::$app->controller->module->viewPath.DIRECTORY_SEPARATOR.Yii::$app->controller->id.DIRECTORY_SEPARATOR.$file_path)?$file_path:'_form';
 	}
 
@@ -290,6 +301,8 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 
 	/**
 	 * @return CoreModule|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function getPlugin():?CoreModule {
 		return (null === $this->pluginId)?null:PluginsSupport::GetPluginById($this->pluginId);

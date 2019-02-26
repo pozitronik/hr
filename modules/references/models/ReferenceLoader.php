@@ -54,8 +54,7 @@ class ReferenceLoader extends Model {
 	 * @return Reference|null
 	 * @throws Throwable
 	 */
-	public
-	static function getReferenceByClassName(string $className):?Reference {
+	public static function getReferenceByClassName(string $className):?Reference {
 		return ArrayHelper::getValue(self::getList(), $className);
 	}
 }
