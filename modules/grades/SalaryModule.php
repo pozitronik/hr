@@ -5,15 +5,14 @@ namespace app\modules\grades;
 
 use app\models\core\core_module\CoreModule;
 
-/** @noinspection EmptyClassInspection */
 
 /**
- * Class GradesModule
+ * Class SalaryModule
  * @package app\modules\grades
  *
  * @property string $name
  */
-class GradesModule extends CoreModule {
+class SalaryModule extends CoreModule {
 
 	/**
 	 * {@inheritDoc}

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades\models;
+namespace app\modules\grades\models\references;
 
 use yii\db\ActiveRecord;
 
@@ -13,12 +13,12 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name
  */
-class Grades extends ActiveRecord {
+class RefGrades extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'grades';
+		return 'ref_salary_grades';
 	}
 
 	/**

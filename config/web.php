@@ -6,8 +6,8 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
-use app\modules\grades\GradesModule;
-use app\modules\grades\models\references\RefGradePremiumGroups;
+use app\modules\grades\SalaryModule;
+use app\modules\grades\models\references\RefSalaryPremiumGroups;
 use app\modules\grades\models\references\RefLocations;
 use app\modules\grades\models\references\RefUserPositionBranches;
 use app\modules\grades\models\references\RefUserPositionTypes;
@@ -94,13 +94,13 @@ $config = [
 		'export' => [
 			'class' => ExportModule::class
 		],
-		'grades' => [
-			'class' => GradesModule::class,
+		'salary' => [
+			'class' => SalaryModule::class,
 			'params' => [
 				'references' => [
 					RefUserPositionTypes::class,
 					RefUserPositionBranches::class,
-					RefGradePremiumGroups::class,
+					RefSalaryPremiumGroups::class,
 					RefLocations::class,
 					RefUserPositions::class,
 				]

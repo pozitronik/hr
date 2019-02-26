@@ -20,7 +20,7 @@ class RelGradesPositionsRules extends ActiveRecord {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'grades_positions_rules';
+		return 'rel_grades_positions_rules';
 	}
 
 	/**

@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\modules\grades\models\Grades;
+use app\modules\grades\models\references\RefGrades;
 use app\modules\grades\models\references\RefUserPositionBranches;
 use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
@@ -73,7 +73,7 @@ use yii\widgets\ActiveForm;
 					</div>
 					<div class="col-md-4">
 						<?= $form->field($model, 'relGrades')->widget(Select2::class, [
-							'data' => ArrayHelper::map(Grades::find()->orderBy('id')->all(), 'id', 'name'),
+							'data' => ArrayHelper::map(RefGrades::find()->orderBy('id')->all(), 'id', 'name'),
 							'pluginOptions' => [
 								'multiple' => true,
 								'allowClear' => true

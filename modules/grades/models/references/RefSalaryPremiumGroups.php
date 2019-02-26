@@ -14,7 +14,7 @@ use yii\helpers\Html;
  * @property string $color
  * @property int $deleted
  */
-class RefGradePremiumGroups extends Reference {
+class RefSalaryPremiumGroups extends Reference {
 	public $menuCaption = 'Премиальные группы';
 	public $menuIcon = false;
 
@@ -24,7 +24,7 @@ class RefGradePremiumGroups extends Reference {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'ref_grades_premium_groups';
+		return 'ref_salary_premium_group';
 	}
 
 	/**

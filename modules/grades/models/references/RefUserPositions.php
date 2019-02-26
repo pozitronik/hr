@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\grades\models\references;
 
 use app\helpers\ArrayHelper;
-use app\modules\grades\models\Grades;
 use app\modules\grades\models\relations\RelGradesPositionsRules;
 use app\modules\references\models\Reference;
 use app\modules\grades\models\relations\RelRefUserPositionsBranches;
@@ -29,7 +28,7 @@ use yii\helpers\Html;
  * @property RelRefUserPositionsTypes[]|ActiveQuery $relRefUserPositionsTypes
  * @property RefUserPositionTypes[]|ActiveQuery $relRefUserPositionTypes
  * @property RelGradesPositionsRules[]|ActiveQuery $relGradesPositionsRules
- * @property Grades[]|ActiveQuery $relGrades Грейды, разрешённые для этой должности
+ * @property RefGrades[]|ActiveQuery $relGrades Грейды, разрешённые для этой должности
  *
  * @property null|int $branch
  * @property null|int[] $types
@@ -213,10 +212,10 @@ class RefUserPositions extends Reference {
 	}
 
 	/**
-	 * @return Grades[]|ActiveQuery
+	 * @return RefGrades[]|ActiveQuery
 	 */
 	public function getRelGrades() {
-		return $this->hasMany(Grades::class, ['id' => 'grade_id'])->via('relGradesPositionsRules');
+		return $this->hasMany(RefGrades::class, ['id' => 'grade_id'])->via('relGradesPositionsRules');
 	}
 
 	/**

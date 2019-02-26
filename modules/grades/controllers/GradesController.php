@@ -14,7 +14,7 @@ class GradesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-graduation-cap'></i>Грейды";
 	public $menuIcon = "/img/admin/grades.png";
 	public $orderWeight = 7;
-	public $defaultRoute = 'grades/grades';
+	public $defaultRoute = 'salary/grades';
 
 	/**
 	 * @return string
