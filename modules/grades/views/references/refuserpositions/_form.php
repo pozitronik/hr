@@ -72,8 +72,9 @@ use yii\widgets\ActiveForm;
 						]); ?>
 					</div>
 					<div class="col-md-4">
-						<?= $form->field($model, 'relGrades')->widget(Select2::class, [
-							'data' => ArrayHelper::map(RefGrades::find()->orderBy('id')->all(), 'id', 'name'),
+						<?= $form->field($model, 'relGrades')->widget(ReferenceSelectWidget::class, [
+							'referenceClass' => RefGrades::class,
+							'options' => ['placeholder' => 'Выберите грейды'],
 							'pluginOptions' => [
 								'multiple' => true,
 								'allowClear' => true

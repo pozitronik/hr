@@ -6,6 +6,7 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
+use app\modules\grades\models\references\RefGrades;
 use app\modules\grades\SalaryModule;
 use app\modules\grades\models\references\RefSalaryPremiumGroups;
 use app\modules\grades\models\references\RefLocations;
@@ -103,6 +104,7 @@ $config = [
 					RefSalaryPremiumGroups::class,
 					RefLocations::class,
 					RefUserPositions::class,
+					RefGrades::class
 				]
 			]
 		]
