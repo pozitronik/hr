@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\models\core\core_module\CoreModule;
+use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
@@ -35,6 +37,7 @@ use RuntimeException;
  *
  * @property int $usedCount Количество объектов, использующих это значение справочника
  * @property null|string $pluginId Плагин, подключающий расширение
+ * @property null|CoreModule $plugin
  */
 class Reference extends ActiveRecord implements ReferenceInterface, StrictInterface {
 	use ARExtended;
@@ -283,5 +286,12 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 	 */
 	public function setPluginId(?string $pluginId):void {
 		$this->_pluginId = $pluginId;
+	}
+
+	/**
+	 * @return CoreModule|null
+	 */
+	public function getPlugin():?CoreModule {
+		return (null === $this->pluginId)?null:PluginsSupport::GetPluginById($this->pluginId);
 	}
 }
