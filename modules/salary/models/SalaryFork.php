@@ -113,23 +113,16 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 	 */
 	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray)) {
-//			$this->updateAttributes([//todo
-//				'daddy' => CurrentUser::Id(),
-//				'create_date' => Date::lcDate(),
-//				'deleted' => false
-//			]);
-			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-				/** @noinspection NotOptimalIfConditionsInspection */
-				if ($this->save()) {
-					$transaction->commit();
-					$this->refresh();
-					AlertModel::SuccessNotify();
-					return true;
-				}
-				AlertModel::ErrorsNotify($this->errors);
+		if ($this->loadArray($paramsArray) && $this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
+			$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
+			/** @noinspection NotOptimalIfConditionsInspection */
+			if ($this->save()) {
+				$transaction->commit();
+				$this->refresh();
+				AlertModel::SuccessNotify();
+				return true;
 			}
+			AlertModel::ErrorsNotify($this->errors);
 		}
 		$transaction->rollBack();
 		return false;
