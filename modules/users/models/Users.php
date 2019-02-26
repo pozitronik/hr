@@ -18,7 +18,7 @@ use app\models\relations\RelUsersPrivileges;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\models\UserRightInterface;
 use app\widgets\alert\AlertModel;
-use app\modules\users\models\references\RefUserPositions;
+use app\modules\grades\models\references\RefUserPositions;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;

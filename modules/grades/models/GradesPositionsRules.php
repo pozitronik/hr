@@ -6,7 +6,7 @@ namespace app\modules\grades\models;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "grades_positions_rules".
+ * Модель правил соответствия должностей и грейдов. Т.е. должности может быть присвоен грейд из тех, что есть в этой таблице.
  *
  * @property int $id
  * @property int $grade_id

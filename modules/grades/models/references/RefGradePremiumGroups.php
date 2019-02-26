@@ -7,6 +7,8 @@ use app\modules\references\models\Reference;
 use yii\helpers\Html;
 
 /**
+ * Справочник премиальных групп. Премиальная группа применяется, как модификатор при указании зарплатной вилки
+ *
  * @property int $id
  * @property string $name
  * @property string $color

@@ -19,7 +19,7 @@ class GradesModule extends CoreModule {
 	 * {@inheritDoc}
 	 */
 	public function getName():string {
-		return 'Поддержка грейдов';
+		return 'Зарплатный модуль';
 	}
 
 }

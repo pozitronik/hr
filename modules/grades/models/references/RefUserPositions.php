@@ -1,11 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\users\models\references;
+namespace app\modules\grades\models\references;
 
 use app\helpers\ArrayHelper;
-use app\modules\grades\models\references\RefUserPositionBranches;
-use app\modules\grades\models\references\RefUserPositionTypes;
 use app\modules\references\models\Reference;
 use app\modules\grades\models\relations\RelRefUserPositionsBranches;
 use app\modules\grades\models\relations\RelRefUserPositionsTypes;
@@ -15,7 +13,7 @@ use yii\db\ActiveQuery;
 use yii\helpers\Html;
 
 /**
- * This is the model class for table "ref_user_positions".
+ * Справочник должностей с настройками атрибутов
  *
  * @property int $id
  * @property string $name Название

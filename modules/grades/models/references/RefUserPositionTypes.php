@@ -6,8 +6,7 @@ namespace app\modules\grades\models\references;
 use app\modules\references\models\Reference;
 
 /**
- * Class RefUserPositionTypes
- * @package app\modules\references\models\refs
+ * Справочник типов должностей. Тип должности -  необязательный, не влияющий ни на что атрибут должности.
  */
 class RefUserPositionTypes extends Reference {
 	public $menuCaption = 'Типы должностей';

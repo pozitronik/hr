@@ -17,7 +17,7 @@ use app\modules\privileges\PrivilegesModule;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\ReferencesModule;
-use app\modules\users\models\references\RefUserPositions;
+use app\modules\grades\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
@@ -72,7 +72,6 @@ $config = [
 			'class' => UsersModule::class,
 			'params' => [
 				'references' => [
-					RefUserPositions::class,
 					RefUserRoles::class
 				]
 			]
@@ -102,7 +101,8 @@ $config = [
 					RefUserPositionTypes::class,
 					RefUserPositionBranches::class,
 					RefGradePremiumGroups::class,
-					RefLocations::class
+					RefLocations::class,
+					RefUserPositions::class,
 				]
 			]
 		]

@@ -6,8 +6,7 @@ namespace app\modules\grades\models\references;
 use app\modules\references\models\Reference;
 
 /**
- * Class RefUserPositionBranches
- * @package app\modules\references\models\refs
+ * Справочник веток должностей. Ветка должности - необязательный, не влияющий ни на что атрибут должности.
  */
 class RefUserPositionBranches extends Reference {
 	public $menuCaption = 'Ветки должностей';

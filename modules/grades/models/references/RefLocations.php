@@ -6,7 +6,7 @@ namespace app\modules\grades\models\references;
 use app\modules\references\models\Reference;
 
 /**
- * This is the model class for table "ref_locations".
+ * Справочник расположений. Расположение применяется, как модификатор при задании зарплатной вилки.
  *
  * @property int $id
  * @property string $name Название
