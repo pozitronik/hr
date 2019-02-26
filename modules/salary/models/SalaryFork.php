@@ -2,7 +2,13 @@
 
 namespace app\modules\salary\models;
 
+use app\modules\salary\models\references\RefGrades;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
+use app\modules\salary\models\references\RefUserPositions;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "salary_fork".
@@ -15,8 +21,13 @@ use Yii;
  * @property double $min Минимальный оклад
  * @property double $max Максимальный оклад
  * @property int $currency Валюта
+ *
+ * @property RefUserPositions|ActiveQuery $refUserPosition
+ * @property RefGrades|ActiveQuery $refGrade
+ * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
+ * @property RefLocations|ActiveQuery|null $refLocation
  */
-class SalaryFork extends \yii\db\ActiveRecord {
+class SalaryFork extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
@@ -50,5 +61,33 @@ class SalaryFork extends \yii\db\ActiveRecord {
 			'max' => 'Максимальный оклад',
 			'currency' => 'Валюта',
 		];
+	}
+
+	/**
+	 * @return RefUserPositions|ActiveQuery
+	 */
+	public function getRefUserPosition() {
+		return $this->hasOne(RefUserPositions::class, ['id' => 'position_id']);
+	}
+
+	/**
+	 * @return RefGrades|ActiveQuery
+	 */
+	public function getRefGrade() {
+		return $this->hasOne(RefGrades::class, ['id' => 'grade_id']);
+	}
+
+	/**
+	 * @return RefSalaryPremiumGroups|ActiveQuery|null
+	 */
+	public function getRefPremiumGroup() {
+		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id']);
+	}
+
+	/**
+	 * @return RefLocations|ActiveQuery|null
+	 */
+	public function getRefLocation() {
+		return $this->hasOne(RefLocations::class, ['id' => 'location_id']);
 	}
 }
