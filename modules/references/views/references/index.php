@@ -45,29 +45,25 @@ $columns[] = [
 $columns = array_merge($columns, $class->columns);
 
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<div class="panel">
-			<div class="panel-heading">
-				<div class="panel-control">
-					<?= Html::a('Создать запись', ['create', 'class' => $class->formName()], ['class' => 'btn btn-success']); ?>
-				</div>
-				<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
-			</div>
-			<div class="panel-body">
-				<?= GridView::widget([
-					'filterModel' => $searchModel,
-					'dataProvider' => $dataProvider,
-					'columns' => $columns,
-					'rowOptions' => function($record) {
-						$class = '';
-						if ($record['deleted']) {
-							$class .= 'danger ';
-						}
-						return ['class' => $class];
-					}
-				]); ?>
-			</div>
+<div class="panel">
+	<div class="panel-heading">
+		<div class="panel-control">
+			<?= Html::a('Создать запись', ['create', 'class' => $class->formName()], ['class' => 'btn btn-success']); ?>
 		</div>
+		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+	</div>
+	<div class="panel-body">
+		<?= GridView::widget([
+			'filterModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+			'columns' => $columns,
+			'rowOptions' => function($record) {
+				$class = '';
+				if ($record['deleted']) {
+					$class .= 'danger ';
+				}
+				return ['class' => $class];
+			}
+		]); ?>
 	</div>
 </div>

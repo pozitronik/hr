@@ -23,77 +23,73 @@ $this->title = 'Атрибуты';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="row">
-	<div class="col-xs-12">
-		<?= GridView::widget([
-			'dataProvider' => $dataProvider,
-			'filterModel' => $searchModel,
-			'panel' => [
-				'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['атрибут', 'атрибута', 'атрибутов']).")":" (нет атрибутов)")
+<?= GridView::widget([
+	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
+	'panel' => [
+		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['атрибут', 'атрибута', 'атрибутов']).")":" (нет атрибутов)")
+	],
+	'summary' => ButtonGroup::widget([
+		'options' => [
+			'class' => 'summary-content'
+		],
+		'buttons' => [
+			Html::a('Новый атрибут', 'create', ['class' => 'btn btn-success']),
+			Html::a('Поиск', 'search', ['class' => 'btn btn-info'])
+		]
+	]),
+	'toolbar' => false,
+	'export' => false,
+	'resizableColumns' => true,
+	'responsive' => true,
+	'columns' => [
+		[
+			'class' => ActionColumn::class,
+			'header' => Icons::menu(),
+			'dropdown' => true,
+			'dropdownButton' => [
+				'label' => Icons::menu(),
+				'caret' => ''
 			],
-			'summary' => ButtonGroup::widget([
-				'options' => [
-					'class' => 'summary-content'
-				],
-				'buttons' => [
-					Html::a('Новый атрибут', 'create', ['class' => 'btn btn-success']),
-					Html::a('Поиск', 'search', ['class' => 'btn btn-info'])
-				]
-			]),
-			'toolbar' => false,
-			'export' => false,
-			'resizableColumns' => true,
-			'responsive' => true,
-			'columns' => [
-				[
-					'class' => ActionColumn::class,
-					'header' => Icons::menu(),
-					'dropdown' => true,
-					'dropdownButton' => [
-						'label' => Icons::menu(),
-						'caret' => ''
-					],
-					'template' => '{update} {delete}',
-					'buttons' => [
-						'update' => function($url, $model) {
-							/** @var DynamicAttributes $model */
-							return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
-						},
-						'delete' => function($url, $model) {
-							/** @var DynamicAttributes $model */
-							return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
-								'title' => 'Удалить запись',
-								'data' => [
-									'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
-									'method' => 'post'
-								]
-							]));
-						}
-					]
-				],
-				[
-					'attribute' => 'id',
-					'options' => [
-						'style' => 'width:36px'
-
-					]
-				],
-				[
-					'attribute' => 'name',
-					'value' => function($model) {
-						/** @var DynamicAttributes $model */
-						return Html::a($model->name, ['update', 'id' => $model->id]);
-					},
-					'format' => 'raw'
-				],
-				'categoryName',
-				[
-					'attribute' => 'usersCount',
-					'header' => Icons::users(),
-					'headerOptions' => ['class' => 'text-center']
-				]
+			'template' => '{update} {delete}',
+			'buttons' => [
+				'update' => function($url, $model) {
+					/** @var DynamicAttributes $model */
+					return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
+				},
+				'delete' => function($url, $model) {
+					/** @var DynamicAttributes $model */
+					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
+						'title' => 'Удалить запись',
+						'data' => [
+							'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
+							'method' => 'post'
+						]
+					]));
+				}
 			]
+		],
+		[
+			'attribute' => 'id',
+			'options' => [
+				'style' => 'width:36px'
 
-		]); ?>
-	</div>
-</div>
+			]
+		],
+		[
+			'attribute' => 'name',
+			'value' => function($model) {
+				/** @var DynamicAttributes $model */
+				return Html::a($model->name, ['update', 'id' => $model->id]);
+			},
+			'format' => 'raw'
+		],
+		'categoryName',
+		[
+			'attribute' => 'usersCount',
+			'header' => Icons::users(),
+			'headerOptions' => ['class' => 'text-center']
+		]
+	]
+
+]); ?>

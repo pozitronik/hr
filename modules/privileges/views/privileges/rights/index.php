@@ -19,46 +19,42 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<?= GridView::widget([
-			'dataProvider' => $provider,
-			'panel' => [
-				'type' => GridView::TYPE_DEFAULT,
-				'after' => false,
-				'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['право', 'права', 'прав']).")":" (нет прав)"),
-				'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-				'before' => UserRightSelectWidget::widget([
-					'model' => $model,
-					'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
-					'notData' => $model->isNewRecord?[]:$model->userRights,
-					'multiple' => true
-				])
-			],
-			'toolbar' => false,
-			'export' => false,
-			'summary' => false,
-			'resizableColumns' => true,
-			'responsive' => true,
-			'showFooter' => true,
-			'footerRowOptions' => [],
-			'columns' => [
-				[
-					'attribute' => 'name',
-					'format' => 'raw'
-				],
-				[
-					'attribute' => 'description',
-					'format' => 'raw'
-				],
-				[
-					'class' => CheckboxColumn::class,
-					'headerOptions' => ['class' => 'kartik-sheet-style'],
-					'header' => Icons::trash(),
-					'name' => $model->formName().'[dropUserRights]'
-				]
-			]
+<?= GridView::widget([
+	'dataProvider' => $provider,
+	'panel' => [
+		'type' => GridView::TYPE_DEFAULT,
+		'after' => false,
+		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['право', 'права', 'прав']).")":" (нет прав)"),
+		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
+		'before' => UserRightSelectWidget::widget([
+			'model' => $model,
+			'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
+			'notData' => $model->isNewRecord?[]:$model->userRights,
+			'multiple' => true
+		])
+	],
+	'toolbar' => false,
+	'export' => false,
+	'summary' => false,
+	'resizableColumns' => true,
+	'responsive' => true,
+	'showFooter' => true,
+	'footerRowOptions' => [],
+	'columns' => [
+		[
+			'attribute' => 'name',
+			'format' => 'raw'
+		],
+		[
+			'attribute' => 'description',
+			'format' => 'raw'
+		],
+		[
+			'class' => CheckboxColumn::class,
+			'headerOptions' => ['class' => 'kartik-sheet-style'],
+			'header' => Icons::trash(),
+			'name' => $model->formName().'[dropUserRights]'
+		]
+	]
 
-		]); ?>
-	</div>
-</div>
+]); ?>
