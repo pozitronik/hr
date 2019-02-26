@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\grades\models;
+namespace app\modules\grades\models\relations;
 
 use app\models\relations\Relations;
 use yii\db\ActiveRecord;
@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $grade_id
  * @property int $position_id
  */
-class GradesPositionsRules extends ActiveRecord {
+class RelGradesPositionsRules extends ActiveRecord {
 	use Relations;
 
 	/**

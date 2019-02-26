@@ -5,7 +5,7 @@ namespace app\modules\grades\models\references;
 
 use app\helpers\ArrayHelper;
 use app\modules\grades\models\Grades;
-use app\modules\grades\models\GradesPositionsRules;
+use app\modules\grades\models\relations\RelGradesPositionsRules;
 use app\modules\references\models\Reference;
 use app\modules\grades\models\relations\RelRefUserPositionsBranches;
 use app\modules\grades\models\relations\RelRefUserPositionsTypes;
@@ -28,7 +28,7 @@ use yii\helpers\Html;
  *
  * @property RelRefUserPositionsTypes[]|ActiveQuery $relRefUserPositionsTypes
  * @property RefUserPositionTypes[]|ActiveQuery $relRefUserPositionTypes
- * @property GradesPositionsRules[]|ActiveQuery $relGradesPositionsRules
+ * @property RelGradesPositionsRules[]|ActiveQuery $relGradesPositionsRules
  * @property Grades[]|ActiveQuery $relGrades Грейды, разрешённые для этой должности
  *
  * @property null|int $branch
@@ -220,18 +220,19 @@ class RefUserPositions extends Reference {
 	}
 
 	/**
-	 * @return GradesPositionsRules[]|ActiveQuery
+	 * @return RelGradesPositionsRules[]|ActiveQuery
 	 */
 	public function getRelGradesPositionsRules() {
-		return $this->hasMany(GradesPositionsRules::class, ['position_id' => 'id']);
+		return $this->hasMany(RelGradesPositionsRules::class, ['position_id' => 'id']);
 	}
 
 	/**
 	 * @param mixed $relGrades
+	 * @throws Throwable
 	 */
 	public function setRelGrades($relGrades):void {
-		GradesPositionsRules::deleteAll(['position_id' => $this->id]);
-		GradesPositionsRules::linkModels($relGrades, $this->id);
+		RelGradesPositionsRules::deleteAll(['position_id' => $this->id]);
+		RelGradesPositionsRules::linkModels($relGrades, $this->id);
 	}
 
 }
