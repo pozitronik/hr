@@ -13,7 +13,6 @@ use yii\db\ActiveRecord;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
-use kartik\grid\ActionColumn;
 
 ?>
 
@@ -33,10 +32,6 @@ use kartik\grid\ActionColumn;
 	'resizableColumns' => true,
 	'responsive' => true,
 	'columns' => [
-		'id',
-		[
-			'class' => ActionColumn::class,
-			'template' => '{update} {delete}'
-		]
+		'id'
 	]
 ]); ?>
