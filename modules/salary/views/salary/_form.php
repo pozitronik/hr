@@ -45,7 +45,7 @@ use kartik\depdrop\DepDrop;
 					]) ?>
 				</div>
 				<div class="col-md-2">
-					<?= $form->field($model, 'grade_id')->widget(DepDrop::class, [
+					<?= $form->field($model, 'grade_id')->widget(DepDrop::class, [//todo: впилить депдроп в поиске атрибутов
 						'options' => ['placeholder' => 'Выберите грейд'],
 						'data' => [$model->grade_id => ArrayHelper::getValue($model, 'refGrade.name')],
 						'type' => DepDrop::TYPE_SELECT2,//todo: отнаследовать свой DepDrop, который будет поддерживать ReferenceSelectWidget.
