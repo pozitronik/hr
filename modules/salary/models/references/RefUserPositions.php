@@ -117,6 +117,17 @@ class RefUserPositions extends Reference {
 	}
 
 	/**
+	 * Возвращает набор данных для выбора зарплатной вилки: там нужно разбитие по наличию грейдов
+	 * @return array
+	 */
+	public static function mapByGrade():array {
+		return [
+			'Грейды заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where(['not', ['ref_salary_grades.id' => null]])->active()->all(), "id", "name"),
+			'Грейды не заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where(['ref_salary_grades.id' => null])->active()->all(), 'id', 'name')
+		];
+	}
+
+	/**
 	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
 	 * @param int $fromId
 	 * @param int $toId
