@@ -57,13 +57,23 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 	 */
 	public function rules():array {
 		return [
-			[['position_id', 'grade_id'], 'required'],
+			[['position_id', 'grade_id', 'min', 'max'], 'required'],
 			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency'], 'integer'],
 			[['deleted'], 'boolean'],
 			[['deleted'], 'default', 'value' => false],
 			[['min', 'max'], 'number'],
+			[['max'], 'validateMinMax'],
 			[['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id']]
 		];
+	}
+
+	public function validateMinMax() {
+		if ($this->min > $this->max) {
+			$this->addErrors([
+//				['min' => 'Минимальный оклад не может быть больше максимального'],
+				['max' => 'Максимальный оклад не может быть меньше минимального']
+			]);
+		}
 	}
 
 	/**
