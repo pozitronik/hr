@@ -1,14 +1,14 @@
-<?php
+<?php /** @noinspection MissedFieldInspection */
 declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\widgets\navigation_menu\AttributePropertyNavigationMenuWidget;
 use yii\data\BaseDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\helpers\Html;
-use kartik\grid\ActionColumn;
 use app\helpers\ArrayHelper;
 
 /**
@@ -16,9 +16,7 @@ use app\helpers\ArrayHelper;
  * @var DynamicAttributes $attribute
  * @var BaseDataProvider $provider
  */
-
 ?>
-
 
 <?= GridView::widget([
 	'dataProvider' => $provider,
@@ -38,37 +36,30 @@ use app\helpers\ArrayHelper;
 	'responsive' => true,
 	'columns' => [
 		[
-			'class' => ActionColumn::class,
+			'filter' => false,
 			'header' => Icons::menu(),
-			'dropdown' => true,
-			'dropdownButton' => [
-				'label' => Icons::menu(),
-				'caret' => ''
+			'mergeHeader' => true,
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'template' => '{update} {delete}',
-			'buttons' => [
-				'update' => function($url, $model) use ($attribute) {
-					/** @var DynamicAttributeProperty $model */
-
-					return Html::tag('li', Html::a(Icons::update().'Изменение', ['/attributes/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]));
-				},
-				'delete' => function($url, $model) use ($attribute) {
-					/** @var DynamicAttributeProperty $model */
-					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['/attributes/attributes/property-delete', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')], [
-						'title' => 'Удалить запись',
-						'data' => [
-							'confirm' => 'Вы действительно хотите удалить запись?',
-							'method' => 'post'
-						]
-					]));
-				}
-			]
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => function(DynamicAttributeProperty $model) use ($attribute) {
+				return AttributePropertyNavigationMenuWidget::widget([
+					'model' => $model,
+					'attribute' => $attribute,
+					'mode' => AttributePropertyNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'attribute' => 'name',
 			'label' => 'Название',
-			'value' => function($model) use ($attribute) {
-				return Html::a(ArrayHelper::getValue($model, 'name'), ['/attributes/attributes/property', 'attribute_id' => $attribute->id, 'property_id' => ArrayHelper::getValue($model, 'id')]);
+			'value' => function(DynamicAttributeProperty $model) use ($attribute) {
+				return Html::a(ArrayHelper::getValue($model, 'name'), ['property', 'attribute_id' => $attribute->id, 'property_id' => $model->id]);
 			},
 			'format' => 'raw'
 		],
