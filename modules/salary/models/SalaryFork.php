@@ -59,21 +59,27 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 		return [
 			[['position_id', 'grade_id', 'min', 'max'], 'required'],
 			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency'], 'integer'],
+			[['premium_group_id', 'location_id'], 'default', 'value' => null],//для корректного отрабатывания unique-валидатора: при сохранении пустые поля передаются как пустые строки, БД же ждёт именно пустое значение
 			[['deleted'], 'boolean'],
 			[['deleted'], 'default', 'value' => false],
 			[['min', 'max'], 'number'],
-			[['max'], 'validateMinMax'],
-			[['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id']]
+			[['max'], function():bool {
+				if ($this->min > $this->max) {
+					$this->addError('max', 'Максимальный оклад не может быть меньше минимального');
+					return false;
+				}
+				return true;
+			}],
+			[['position_id', /*'grade_id', 'premium_group_id', 'location_id'*/], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'message' => 'Зарплатная вилка с такой конфигурацией уже существует'],
+			/*[['position_id'], function($attribute) {
+			//оставлю на всякий случай: не все БД одинаково трактуют NULL в выборках
+				return 0 === (int)self::find()->where(['position_id' => $this->position_id, 'grade_id' => $this->grade_id, 'premium_group_id' => $this->premium_group_id, 'location_id' => $this->location_id])->count();
+			}]*/
 		];
 	}
 
 	public function validateMinMax() {
-		if ($this->min > $this->max) {
-			$this->addErrors([
-//				['min' => 'Минимальный оклад не может быть больше максимального'],
-				['max' => 'Максимальный оклад не может быть меньше минимального']
-			]);
-		}
+
 	}
 
 	/**
