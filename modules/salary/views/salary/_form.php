@@ -37,6 +37,7 @@ use kartik\depdrop\DepDrop;
 				<div class="col-md-2">
 					<?= $form->field($model, 'position_id')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefUserPositions::class,
+						'data' => RefUserPositions::mapByGrade(),
 						'options' => ['placeholder' => 'Выберите должность'],
 						'pluginOptions' => [
 							'allowClear' => true
