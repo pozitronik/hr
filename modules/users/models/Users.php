@@ -191,10 +191,9 @@ class Users extends ActiveRecord implements StrictInterface {
 					$this->refresh();
 					return true;
 				}
-
+				AlertModel::ErrorsNotify($this->errors);
 			}
 		}
-		AlertModel::ErrorsNotify($this->errors);
 		$transaction->rollBack();
 		return false;
 	}
@@ -216,9 +215,8 @@ class Users extends ActiveRecord implements StrictInterface {
 				$this->refresh();
 				return true;
 			}
-
+			AlertModel::ErrorsNotify($this->errors);
 		}
-		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 
@@ -358,7 +356,7 @@ class Users extends ActiveRecord implements StrictInterface {
 	 * @throws Throwable
 	 */
 	public function getPositionName():?string {
-		return ArrayHelper::getValue($this->relUserPositions, 'name');
+		return ArrayHelper::getValue($this->relUserPositions,'name');
 	}
 
 	/**

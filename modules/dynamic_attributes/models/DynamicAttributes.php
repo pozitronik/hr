@@ -117,8 +117,8 @@ class DynamicAttributes extends ActiveRecord implements StrictInterface {
 				$this->refresh();
 				return true;
 			}
+			AlertModel::ErrorsNotify($this->errors);
 		}
-		AlertModel::ErrorsNotify($this->errors);
 		$transaction->rollBack();
 		return false;
 	}
@@ -131,7 +131,6 @@ class DynamicAttributes extends ActiveRecord implements StrictInterface {
 		if ($this->loadArray($paramsArray)) {
 			return $this->save();
 		}
-		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 

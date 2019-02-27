@@ -177,13 +177,15 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 	 * @return boolean
 	 */
 	public function createModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray) && $this->save()) {
-			AlertModel::SuccessNotify();
-			self::flushCache();
-			$this->refresh();
-			return true;
+		if ($this->loadArray($paramsArray)) {
+			if ($this->save()) {
+				AlertModel::SuccessNotify();
+				self::flushCache();
+				$this->refresh();
+				return true;
+			}
+			AlertModel::ErrorsNotify($this->errors);
 		}
-		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 
@@ -192,13 +194,15 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 	 * @return bool
 	 */
 	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray) && $this->save()) {
-			AlertModel::SuccessNotify();
-			self::flushCache();
-			$this->refresh();
-			return true;
+		if ($this->loadArray($paramsArray)) {
+			if ($this->save()) {
+				AlertModel::SuccessNotify();
+				self::flushCache();
+				$this->refresh();
+				return true;
+			}
+			AlertModel::ErrorsNotify($this->errors);
 		}
-		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 
