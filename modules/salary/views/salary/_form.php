@@ -12,7 +12,7 @@ use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\SalaryFork;
-use kartik\range\RangeInput;
+use kartik\number\NumberControl;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -75,35 +75,29 @@ use kartik\depdrop\DepDrop;
 					]) ?>
 				</div>
 				<div class="col-md-2">
-					<?= $form->field($model, 'min')->widget(RangeInput::class, [
-						'html5Options' => [
-							'min' => 0,
-							'max' => 10000000
+					<?= $form->field($model, 'min')->widget(NumberControl::class, [
+						'maskedInputOptions' => [
+							'suffix' => ' ₽',
+							'allowMinus' => false
 						],
-						'html5Container' => [
-							'style' => 'width:50%'
-						],
-						'addon' => [
-						],
-						'options' => [
+						'displayOptions' => [
+							'class' => 'form-control kv-monospace',
 							'placeholder' => 'Укажите значение'
 						]
 					]); ?>
 				</div>
-				<?= $form->field($model, 'max')->widget(RangeInput::class, [
-					'html5Options' => [
-						'min' => 0,
-						'max' => 10000000
-					],
-					'html5Container' => [
-						'style' => 'width:50%'
-					],
-					'addon' => [
-					],
-					'options' => [
-						'placeholder' => 'Укажите значение'
-					]
-				]); ?>
+				<div class="col-md-2">
+					<?= $form->field($model, 'max')->widget(NumberControl::class, [
+						'maskedInputOptions' => [
+							'suffix' => ' ₽',
+							'allowMinus' => false
+						],
+						'displayOptions' => [
+							'class' => 'form-control kv-monospace',
+							'placeholder' => 'Укажите значение'
+						]
+					]); ?>
+				</div>
 			</div>
 		</div>
 
