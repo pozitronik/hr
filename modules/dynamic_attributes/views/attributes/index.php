@@ -18,7 +18,6 @@ use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
-use kartik\grid\ActionColumn;
 
 $this->title = 'Атрибуты';
 $this->params['breadcrumbs'][] = $this->title;
