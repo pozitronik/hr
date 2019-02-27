@@ -15,6 +15,17 @@ use yii\helpers\ArrayHelper as YiiArrayHelper;
 class ArrayHelper extends YiiArrayHelper {
 
 	/**
+	 * Шорткат для мержа массива с массивом, полученным в цикле
+	 * @see https://github.com/kalessil/phpinspectionsea/blob/master/docs/performance.md#slow-array-function-used-in-loop
+	 * @param array $array1
+	 * @param array $array2
+	 * @return array
+	 */
+	public static function loopArrayMerge(array $array1, array $array2):array {
+		return array_merge($array1, array_merge(...$array2));
+	}
+
+	/**
 	 * Расширенная функция, может кидать исключение или выполнять замыканьице
 	 * @param array|object $array
 	 * @param array|Closure|string $key
@@ -33,17 +44,6 @@ class ArrayHelper extends YiiArrayHelper {
 			}
 		}
 		return $result;
-	}
-
-	/**
-	 * Шорткат для мержа массива с массивом, полученным в цикле
-	 * @see https://github.com/kalessil/phpinspectionsea/blob/master/docs/performance.md#slow-array-function-used-in-loop
-	 * @param array $array1
-	 * @param array $array2
-	 * @return array
-	 */
-	public static function loopArrayMerge(array $array1, array $array2):array {
-		return array_merge($array1, array_merge(...$array2));
 	}
 
 	/**
@@ -135,13 +135,13 @@ class ArrayHelper extends YiiArrayHelper {
 	/**
 	 * Аналог ArrayHelper::map склеивающий значения нескольких аттрибутов
 	 * @param array $array
-	 * @param string $id
+	 * @param mixed $id
 	 * @param array $concat_attributes
 	 * @param string $separator
 	 * @return array
 	 * @throws Throwable
 	 */
-	public static function cmap($array, $id, $concat_attributes = [], $separator = ' '):array {
+	public static function cmap(array $array, $id, array $concat_attributes = [], string $separator = ' '):array {
 		$result = [];
 		foreach ($array as $element) {
 			$key = self::getValue($element, $id);
@@ -193,7 +193,7 @@ class ArrayHelper extends YiiArrayHelper {
 	 * @throws Throwable
 	 */
 	public static function key(array $array) {
-		return self::getValue(array_keys($array),0);
+		return self::getValue(array_keys($array), 0);
 	}
 
 }
