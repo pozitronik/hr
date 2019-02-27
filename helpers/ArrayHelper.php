@@ -133,6 +133,26 @@ class ArrayHelper extends YiiArrayHelper {
 	}
 
 	/**
+	 * Аналог ArrayHelper::map, возвращающий смапленные аттрибуты по ключам.
+	 * @param array $array
+	 * @param array $attributes Карта атрибутов в формате ['label' => 'attributeName', 'label2' => 'attribute2Name...]
+	 * @return array Массив в формате [['label' => $attribute1, 'label2' => $attribute2]]
+	 */
+	public static function mapEx(array $array, array $attributes):array {
+		$result = [];
+		foreach ($array as $element) {
+			$cell = [];
+			foreach ($attributes as $label => $attribute) {
+				$value = self::getValue($element, $attribute);
+				$cell[$label] = $value;
+			}
+			$result[] = $cell;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Аналог ArrayHelper::map склеивающий значения нескольких аттрибутов
 	 * @param array $array
 	 * @param mixed $id
