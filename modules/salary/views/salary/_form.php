@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-2">
-					<?= $form->field($model, 'refUserPosition')->widget(ReferenceSelectWidget::class, [
+					<?= $form->field($model, 'position_id')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefUserPositions::class,
 						'options' => ['placeholder' => 'Выберите должность'],
 						'pluginOptions' => [
@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
 					]) ?>
 				</div>
 				<div class="col-md-2">
-					<?= $form->field($model, 'refGrade')->widget(ReferenceSelectWidget::class, [
+					<?= $form->field($model, 'grade_id')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefGrades::class,
 						'options' => ['placeholder' => 'Выберите грейд'],
 						'pluginOptions' => [
@@ -51,7 +51,7 @@ use yii\widgets\ActiveForm;
 					]) ?>
 				</div>
 				<div class="col-md-2">
-					<?= $form->field($model, 'refPremiumGroup')->widget(ReferenceSelectWidget::class, [
+					<?= $form->field($model, 'premium_group_id')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefSalaryPremiumGroups::class,
 						'options' => ['placeholder' => 'Выберите группу премирования'],
 						'pluginOptions' => [
@@ -60,7 +60,7 @@ use yii\widgets\ActiveForm;
 					]) ?>
 				</div>
 				<div class="col-md-2">
-					<?= $form->field($model, 'refLocation')->widget(ReferenceSelectWidget::class, [
+					<?= $form->field($model, 'location_id')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefLocations::class,
 						'options' => ['placeholder' => 'Выберите расположение'],
 						'pluginOptions' => [
