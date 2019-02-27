@@ -184,8 +184,8 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 				$this->refresh();
 				return true;
 			}
-			AlertModel::ErrorsNotify($this->errors);
 		}
+		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 
@@ -201,8 +201,9 @@ class Reference extends ActiveRecord implements ReferenceInterface, StrictInterf
 				$this->refresh();
 				return true;
 			}
-			AlertModel::ErrorsNotify($this->errors);
+
 		}
+		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 

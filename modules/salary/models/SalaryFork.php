@@ -130,7 +130,7 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 				}
 			}
 		}
-		AlertModel::ErrorsNotify($this->errors);//todo: исправить везде!
+		AlertModel::ErrorsNotify($this->errors);
 		$transaction->rollBack();
 		return false;
 	}
@@ -146,8 +146,9 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 				$this->refresh();
 				return true;
 			}
-			AlertModel::ErrorsNotify($this->errors);
+
 		}
+		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 

@@ -113,9 +113,10 @@ class Privileges extends ActiveRecord implements StrictInterface {
 					AlertModel::SuccessNotify();
 					return true;
 				}
-				AlertModel::ErrorsNotify($this->errors);
+
 			}
 		}
+		AlertModel::ErrorsNotify($this->errors);
 		$transaction->rollBack();
 		return false;
 	}
@@ -131,8 +132,9 @@ class Privileges extends ActiveRecord implements StrictInterface {
 				$this->refresh();
 				return true;
 			}
-			AlertModel::ErrorsNotify($this->errors);
+
 		}
+		AlertModel::ErrorsNotify($this->errors);
 		return false;
 	}
 
