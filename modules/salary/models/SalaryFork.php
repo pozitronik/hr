@@ -29,6 +29,7 @@ use yii\db\Exception;
  * @property int $currency Валюта
  * @property bool $deleted
  *
+ * @property-read double $mid Средний оклад
  * @property RefUserPositions|ActiveQuery $refUserPosition
  * @property RefGrades|ActiveQuery $refGrade
  * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
@@ -143,5 +144,12 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 			AlertModel::ErrorsNotify($this->errors);
 		}
 		return false;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getMid():float {
+		return ($this->max + $this->min) / 2;
 	}
 }
