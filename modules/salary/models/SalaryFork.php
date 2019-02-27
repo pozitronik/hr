@@ -76,6 +76,7 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 			'location_id' => 'Локация',
 			'min' => 'Минимальный оклад',
 			'max' => 'Максимальный оклад',
+			'mid' => 'Средний оклад',
 			'currency' => 'Валюта'
 		];
 	}
