@@ -68,7 +68,7 @@ GridView::widget([
 			'format' => 'raw',
 			'attribute' => 'username',
 			'value' => function(Users $user) {
-				return Html::a($user->username, ['/users/users/profile', 'id' => $user->id]);
+				return Html::a($user->username, ['/users/users/profile', 'id' => $user->id]);//todo module navigation
 			}
 		],
 		[

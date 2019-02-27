@@ -70,7 +70,7 @@ GridView::widget([
 			'format' => 'raw',
 			'attribute' => 'name',
 			'value' => function(Groups $group) {
-				return Html::a($group->name, Url::to(['/groups/groups/profile', 'id' => $group->id]));
+				return Html::a($group->name, Url::to(['profile', 'id' => $group->id]));
 			}
 		],
 		[

@@ -11,7 +11,6 @@ use app\modules\users\models\Users;
 use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
@@ -85,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'attribute' => 'name',
 							'value' => function($group) {
 								/** @var Groups $group */
-								return Html::a($group->name, Url::to(['/groups/groups/profile', 'id' => $group->id]));
+								return Html::a($group->name, ['profile', 'id' => $group->id]);
 							}
 						],
 						[

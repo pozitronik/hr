@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'max'
-		],
+		]
 
 	]
 ]); ?>

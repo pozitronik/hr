@@ -20,7 +20,6 @@ use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 ?>
 <?= /** @noinspection MissedFieldInspection */
@@ -70,7 +69,7 @@ GridView::widget([
 			'format' => 'raw',
 			'attribute' => 'name',
 			'value' => function(Groups $group) {
-				return Html::a($group->name, Url::to(['/groups/groups/profile', 'id' => $group->id]));
+				return Html::a($group->name, ['profile', 'id' => $group->id]);
 			}
 		],
 		[
