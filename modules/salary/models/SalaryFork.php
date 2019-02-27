@@ -58,7 +58,8 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 	public function rules():array {
 		return [
 			[['position_id', 'grade_id'], 'required'],
-			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency', 'deleted'], 'integer'],
+			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['min', 'max'], 'number'],
 			[['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id']]
 		];
@@ -116,17 +117,20 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 	 */
 	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray) && $this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-			$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-			/** @noinspection NotOptimalIfConditionsInspection */
-			if ($this->save()) {
-				$transaction->commit();
-				$this->refresh();
-				AlertModel::SuccessNotify();
-				return true;
+		if ($this->loadArray($paramsArray)) {
+			$this->updateAttributes(['deleted' => false]);
+			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
+				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
+				/** @noinspection NotOptimalIfConditionsInspection */
+				if ($this->save()) {
+					$transaction->commit();
+					$this->refresh();
+					AlertModel::SuccessNotify();
+					return true;
+				}
 			}
-			AlertModel::ErrorsNotify($this->errors);
 		}
+		AlertModel::ErrorsNotify($this->errors);//todo: исправить везде!
 		$transaction->rollBack();
 		return false;
 	}
