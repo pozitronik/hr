@@ -43,7 +43,7 @@ use kartik\select2\Select2;
 			<?php else: ?>
 				<?= $this->render('property/index.php', [
 					'attribute' => $model,
-					'provider' => new ArrayDataProvider(['allModels' => $model->structure])
+					'provider' => new ArrayDataProvider(['allModels' => $model->properties])
 				]); ?>
 			<?php endif; ?>
 		</div>
