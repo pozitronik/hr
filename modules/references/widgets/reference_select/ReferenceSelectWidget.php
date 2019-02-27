@@ -43,7 +43,7 @@ class ReferenceSelectWidget extends Select2 {
 			$this->pluginOptions['templateResult'] = new JsExpression('function(item) {return formatReferenceItem(item)}');
 			$this->pluginOptions['templateSelection'] = new JsExpression('function(item) {return formatSelectedReferenceItem(item)}');
 			$this->pluginOptions['escapeMarkup'] = new JsExpression('function (markup) { return markup; }');
-			$this->data = $this->referenceClass::mapData();
+			$this->data = $this->data??$this->referenceClass::mapData();
 			$this->options['options'] = $this->referenceClass::dataOptions();
 			if ($this->showEditAddon) {
 				$className = pathinfo($this->referenceClass, PATHINFO_FILENAME);
