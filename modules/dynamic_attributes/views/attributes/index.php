@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection MissedFieldInspection */
 declare(strict_types = 1);
 
 /**
@@ -11,6 +11,7 @@ declare(strict_types = 1);
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
 use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
@@ -44,30 +45,23 @@ $this->params['breadcrumbs'][] = $this->title;
 	'responsive' => true,
 	'columns' => [
 		[
-			'class' => ActionColumn::class,
+			'filter' => false,
 			'header' => Icons::menu(),
-			'dropdown' => true,
-			'dropdownButton' => [
-				'label' => Icons::menu(),
-				'caret' => ''
+			'mergeHeader' => true,
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'template' => '{update} {delete}',
-			'buttons' => [
-				'update' => function($url, $model) {
-					/** @var DynamicAttributes $model */
-					return Html::tag('li', Html::a(Icons::update().'Изменение', ['update', 'id' => $model->id]));
-				},
-				'delete' => function($url, $model) {
-					/** @var DynamicAttributes $model */
-					return Html::tag('li', Html::a(Icons::delete().'Удаление', ['delete', 'id' => $model->id], [
-						'title' => 'Удалить запись',
-						'data' => [
-							'confirm' => $model->deleted?'Вы действительно хотите восстановить запись?':'Вы действительно хотите удалить запись?',
-							'method' => 'post'
-						]
-					]));
-				}
-			]
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => function(DynamicAttributes $model) {
+				return AttributeNavigationMenuWidget::widget([
+					'model' => $model,
+					'mode' => AttributeNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'attribute' => 'id',
@@ -78,8 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'name',
-			'value' => function($model) {
-				/** @var DynamicAttributes $model */
+			'value' => function(DynamicAttributes $model) {
 				return Html::a($model->name, ['update', 'id' => $model->id]);
 			},
 			'format' => 'raw'
