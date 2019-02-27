@@ -93,6 +93,7 @@ class Groups extends ActiveRecord implements StrictInterface {
 			[['daddy', 'type'], 'integer'],
 			[['create_date'], 'safe'],
 			[['deleted'], 'boolean'],
+			[['deleted'], 'default', 'value' => false],
 			[['name'], 'string', 'max' => 512],
 			[['logotype'], 'string', 'max' => 255],
 			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'relUsers', 'dropUsers'], 'safe'],
@@ -186,7 +187,6 @@ class Groups extends ActiveRecord implements StrictInterface {
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate(),
-				'deleted' => false
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));

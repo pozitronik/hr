@@ -69,6 +69,7 @@ class Privileges extends ActiveRecord implements StrictInterface {
 			[['id', 'daddy'], 'integer'],
 			[['create_date'], 'safe'],
 			[['deleted', 'default'], 'boolean'],
+			[['deleted', 'default'], 'default', 'value' => false],
 			[['name'], 'string', 'max' => 256],
 			[['name'], 'required'],
 			[['userRightsNames', 'dropUserRights'], 'safe']
@@ -101,8 +102,7 @@ class Privileges extends ActiveRecord implements StrictInterface {
 		if ($this->loadArray($paramsArray)) {
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate(),
-				'deleted' => false
+				'create_date' => Date::lcDate()
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));

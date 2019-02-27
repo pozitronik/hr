@@ -118,6 +118,7 @@ class Users extends ActiveRecord implements StrictInterface {
 			[['create_date'], 'safe'],
 			[['daddy', 'position'], 'integer'],
 			[['deleted'], 'boolean'],
+			[['deleted'], 'default', 'value' => false],
 			[['username', 'password', 'salt', 'email', 'profile_image'], 'string', 'max' => 255],
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
@@ -180,7 +181,6 @@ class Users extends ActiveRecord implements StrictInterface {
 			$this->updateAttributes([
 				'daddy' => CurrentUser::Id(),
 				'create_date' => Date::lcDate(),
-				'deleted' => false
 			]);
 			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
