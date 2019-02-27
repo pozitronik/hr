@@ -46,7 +46,8 @@
 		"phpoffice/phpspreadsheet": "dev-master",
 		"kartik-v/yii2-widget-rating": "dev-master",
 		"yiisoft/yii2-redis": "^2.0@dev",
-		"kartik-v/yii2-widget-depdrop": "^1.0@dev"
+		"kartik-v/yii2-widget-depdrop": "^1.0@dev",
+		"kartik-v/yii2-money": "^1.2@dev"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
