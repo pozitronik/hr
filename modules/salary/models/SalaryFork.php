@@ -27,6 +27,7 @@ use yii\db\Exception;
  * @property double $min Минимальный оклад
  * @property double $max Максимальный оклад
  * @property int $currency Валюта
+ * @property bool $deleted
  *
  * @property RefUserPositions|ActiveQuery $refUserPosition
  * @property RefGrades|ActiveQuery $refGrade
@@ -56,7 +57,7 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 	public function rules():array {
 		return [
 			[['position_id', 'grade_id'], 'required'],
-			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency'], 'integer'],
+			[['position_id', 'grade_id', 'premium_group_id', 'location_id', 'currency', 'deleted'], 'integer'],
 			[['min', 'max'], 'number'],
 			[['position_id', 'grade_id', 'premium_group_id', 'location_id'], 'unique', 'targetAttribute' => ['position_id', 'grade_id', 'premium_group_id', 'location_id']]
 		];
