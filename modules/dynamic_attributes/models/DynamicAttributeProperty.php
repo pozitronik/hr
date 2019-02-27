@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
  *
  * @property integer $userId;
  *
- * @property boolean isNewRecord
+ * @property boolean $isNewRecord
  * @property DynamicAttributes $dynamicAttribute
  * @property-write mixed $value
  * @property-read string $categoryName
