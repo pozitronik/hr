@@ -57,15 +57,15 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'refGrade.name',
-			'label' => 'Грейд',
+			'label' => 'Грейд'
 		],
 		[
 			'attribute' => 'refPremiumGroup.name',
-			'label' => 'Группа премирования',
+			'label' => 'Группа премирования'
 		],
 		[
 			'attribute' => 'refLocation.name',
-			'label' => 'Локация',
+			'label' => 'Локация'
 		],
 		[
 			'attribute' => 'min'

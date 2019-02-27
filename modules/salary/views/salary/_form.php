@@ -52,7 +52,7 @@ use kartik\depdrop\DepDrop;
 						'pluginOptions' => [
 							'depends' => ['salaryfork-position_id'],
 							'url' => Url::to(['ajax/get-position-grades']),
-							'loadingText' => 'Загружаю грейды',
+							'loadingText' => 'Загружаю грейды'
 						]
 					]) ?>
 				</div>

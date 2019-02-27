@@ -137,6 +137,7 @@ class ArrayHelper extends YiiArrayHelper {
 	 * @param array $array
 	 * @param array $attributes Карта атрибутов в формате ['label' => 'attributeName', 'label2' => 'attribute2Name...]
 	 * @return array Массив в формате [['label' => $attribute1, 'label2' => $attribute2]]
+	 * @throws Throwable
 	 */
 	public static function mapEx(array $array, array $attributes):array {
 		$result = [];

@@ -126,13 +126,10 @@ class Privileges extends ActiveRecord implements StrictInterface {
 	 * @return bool
 	 */
 	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-
+		if ($this->loadArray($paramsArray) && $this->save()) {
+			AlertModel::SuccessNotify();
+			$this->refresh();
+			return true;
 		}
 		AlertModel::ErrorsNotify($this->errors);
 		return false;

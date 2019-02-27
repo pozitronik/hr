@@ -23,9 +23,9 @@ class AjaxController extends BaseAjaxController {
 
 		$position_id = ArrayHelper::getValue(Yii::$app->request->post('depdrop_parents'), 0);
 		if ((null === $position = RefUserPositions::findModel($position_id)) || empty($grades = $position->relGrades)) {//Неправильной должности тут быть не может, значит не заданы грейды
-			return ([
+			return [
 				'output' => [/*['id' => -1, 'name' => 'Не заполнен список грейдов']*/]
-			]);
+			];
 		}
 		$out = ArrayHelper::mapEx($grades, ['id' => 'id', 'name' => 'name']);
 		return ['output' => $out, 'selected' => ArrayHelper::getValue($out, '0.id')];
