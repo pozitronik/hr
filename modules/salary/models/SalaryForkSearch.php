@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
-use app\helpers\Utils;
 use InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 
@@ -12,10 +11,10 @@ use yii\data\ActiveDataProvider;
  * @package app\modules\salary\models
  */
 class SalaryForkSearch extends SalaryFork {
-	public $refUserPositionName;
-	public $refGradeName;
-	public $refPremiumGroupName;
-	public $refLocationName;
+	public $positionId;
+	public $gradeId;
+	public $premiumGroupId;
+	public $locationId;
 	public $mid;
 
 	/**
@@ -23,8 +22,9 @@ class SalaryForkSearch extends SalaryFork {
 	 */
 	public function rules():array {
 		return [
-			[['id', 'position_id', 'min', 'max', 'mid'], 'integer'],
-			[['refUserPositionName', 'refGradeName', 'refPremiumGroupName', 'refLocationName'], 'string']
+			[['id', 'min', 'max', 'mid'], 'integer'],
+//			[['refUserPositionName', 'refGradeName', 'refPremiumGroupName', 'refLocationName'], 'string'],//если нужен будет строковой поиск
+			[['positionId', 'gradeId', 'premiumGroupId', 'locationId'], 'safe']
 		];
 	}
 
@@ -44,21 +44,22 @@ class SalaryForkSearch extends SalaryFork {
 		]);
 
 		$MainAttributes = [
-			'defaultOrder' => ['refUserPositionName' => SORT_ASC],
+			'defaultOrder' => ['id' => SORT_ASC],
 			'attributes' => [
-				'refUserPositionName' => [
+				'id',
+				'positionId' => [
 					'asc' => ['ref_user_positions.name' => SORT_ASC],
 					'desc' => ['ref_user_positions.name' => SORT_DESC]
 				],
-				'refGradeName' => [
+				'gradeId' => [
 					'asc' => ['ref_salary_grades.name' => SORT_ASC],
 					'desc' => ['ref_salary_grades.name' => SORT_DESC]
 				],
-				'refPremiumGroupName' => [
+				'premiumGroupId' => [
 					'asc' => ['ref_salary_premium_group.name' => SORT_ASC],
 					'desc' => ['ref_salary_premium_group.name' => SORT_DESC]
 				],
-				'refLocationName' => [
+				'locationId' => [
 					'asc' => ['ref_locations.name' => SORT_ASC],
 					'desc' => ['ref_locations.name' => SORT_DESC]
 				],
@@ -72,10 +73,10 @@ class SalaryForkSearch extends SalaryFork {
 		$query->joinWith(['refUserPosition', 'refGrade', 'refPremiumGroup', 'refLocation']);
 
 		$query->andFilterWhere(['salary_fork.id' => $this->id]);
-		$query->andFilterWhere(['like', 'ref_user_positions.name', Utils::MakeLike($this->refUserPositionName), false]);
-		$query->andFilterWhere(['like', 'ref_salary_grades.name', Utils::MakeLike($this->refGradeName), false]);
-		$query->andFilterWhere(['like', 'ref_salary_premium_group.name', Utils::MakeLike($this->refPremiumGroupName), false]);
-		$query->andFilterWhere(['like', 'ref_locations.name', Utils::MakeLike($this->refLocationName), false]);
+		$query->andFilterWhere(['in', 'salary_fork.position_id', $this->positionId]);
+		$query->andFilterWhere(['in', 'salary_fork.grade_id', $this->gradeId]);
+		$query->andFilterWhere(['in', 'salary_fork.premium_group_id', $this->premiumGroupId]);
+		$query->andFilterWhere(['in', 'salary_fork.location_id', $this->locationId]);
 
 		return $dataProvider;
 	}

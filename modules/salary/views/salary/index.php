@@ -9,6 +9,11 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\salary\models\references\RefGrades;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
+use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\SalaryFork;
 use app\modules\salary\models\SalaryForkSearch;
 use app\modules\salary\widgets\navigation_menu\SalaryForkMenuWidget;
@@ -56,24 +61,56 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw'
 		],
 		[
-			'attribute' => 'refUserPositionName',
+			'attribute' => 'positionId',
+			'format' => 'raw',
 			'value' => 'refUserPosition.name',
-			'label' => 'Должность'
+			'label' => 'Должность',
+			'filter' => $searchModel->positionId,
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefUserPositions::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			]
 		],
 		[
-			'attribute' => 'refGradeName',
+			'attribute' => 'gradeId',
 			'value' => 'refGrade.name',
-			'label' => 'Грейд'
+			'label' => 'Грейд',
+			'format' => 'raw',
+			'filter' => $searchModel->gradeId,
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите грейд'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefGrades::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			]
 		],
 		[
-			'attribute' => 'refPremiumGroupName',
+			'attribute' => 'premiumGroupId',
 			'value' => 'refPremiumGroup.name',
-			'label' => 'Группа премирования'
+			'label' => 'Группа премирования',
+			'format' => 'raw',
+			'filter' => $searchModel->premiumGroupId,
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите группу премирования'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefSalaryPremiumGroups::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			]
 		],
 		[
-			'attribute' => 'refLocationName',
+			'attribute' => 'locationId',
 			'value' => 'refLocation.name',
-			'label' => 'Локация'
+			'label' => 'Локация',
+			'format' => 'raw',
+			'filter' => $searchModel->locationId,
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите локацию'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefLocations::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			]
 		],
 		[
 			'attribute' => 'min'
