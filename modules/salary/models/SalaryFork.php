@@ -78,10 +78,6 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 		];
 	}
 
-	public function validateMinMax() {
-
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
