@@ -178,13 +178,13 @@ class Utils {
 	/**
 	 * Нужно, чтобы andFilterWhere не генерировал условия вида like '%' при LikeContainMode == false
 	 * Используем в моделях для поиска
-	 * @param string $param
+	 * @param null|string $param
 	 * @return string
 	 * @throws Throwable
 	 */
-	public static function MakeLike(string $param):string {
-		if (empty($param)) return '';
-		return ArrayHelper::getValue(Yii::$app->params, 'LikeContainMode', false)?"%$param%":"$param%";
+	public static function MakeLike(?string $param = null):string {
+		if (null === $param) return '';
+		return ArrayHelper::getValue(Yii::$app->params, 'LikeContainMode', true)?"%$param%":"$param%";
 	}
 
 	/**
