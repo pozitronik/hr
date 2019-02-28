@@ -183,7 +183,7 @@ class Utils {
 	 * @throws Throwable
 	 */
 	public static function MakeLike(?string $param = null):string {
-		if (null === $param) return '';
+		if (empty($param)) return '';
 		return ArrayHelper::getValue(Yii::$app->params, 'LikeContainMode', true)?"%$param%":"$param%";
 	}
 
