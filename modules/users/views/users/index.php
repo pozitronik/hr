@@ -103,6 +103,7 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'roles',
+			'filter' => $searchModel->relRefUserRoles,
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите роль'],
 			'filterWidgetOptions' => [
