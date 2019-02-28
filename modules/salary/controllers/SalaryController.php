@@ -5,10 +5,10 @@ namespace app\modules\salary\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\salary\models\SalaryFork;
+use app\modules\salary\models\SalaryForkSearch;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -27,13 +27,14 @@ class SalaryController extends WigetableController {
 	 * @return string
 	 */
 	public function actionIndex():string {
-		$dataProvider = new ActiveDataProvider([
-			'query' => SalaryFork::find()->active()
-		]);
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new SalaryForkSearch();
 
 		return $this->render('index', [
-			'dataProvider' => $dataProvider
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params)
 		]);
+
 	}
 
 	/**

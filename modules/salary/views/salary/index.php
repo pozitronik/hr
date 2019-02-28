@@ -5,10 +5,12 @@ declare(strict_types = 1);
  * @var View $this
  * @var ActiveRecord $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var SalaryForkSearch $searchModel
  */
 
 use app\helpers\Icons;
 use app\modules\salary\models\SalaryFork;
+use app\modules\salary\models\SalaryForkSearch;
 use app\modules\salary\widgets\navigation_menu\SalaryForkMenuWidget;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -21,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= GridView::widget([
 	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
 	'panel' => [
 		'heading' => $this->title
 	],
@@ -53,7 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw'
 		],
 		[
-			'attribute' => 'refUserPosition.name'
+			'attribute' => 'refUserPositionName',
+			'value' => 'refUserPosition.name'
 		],
 		[
 			'attribute' => 'refGrade.name',
