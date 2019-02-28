@@ -11,16 +11,20 @@ use yii\data\ActiveDataProvider;
  * Class SalaryForkSearch
  * @package app\modules\salary\models
  */
-class SalaryForkSearch extends SalaryFork{
+class SalaryForkSearch extends SalaryFork {
 	public $refUserPositionName;
+	public $refGradeName;
+	public $refPremiumGroupName;
+	public $refLocationName;
+	public $mid;
 
 	/**
 	 * @inheritdoc
 	 */
 	public function rules():array {
 		return [
-			[['id', 'position_id'], 'integer'],
-			[['refUserPositionName'], 'string']
+			[['id', 'position_id', 'min', 'max', 'mid'], 'integer'],
+			[['refUserPositionName', 'refGradeName', 'refPremiumGroupName', 'refLocationName'], 'string']
 		];
 	}
 
@@ -40,9 +44,26 @@ class SalaryForkSearch extends SalaryFork{
 		]);
 
 		$MainAttributes = [
-			'defaultOrder' => ['id' => SORT_ASC],
+			'defaultOrder' => ['refUserPositionName' => SORT_ASC],
 			'attributes' => [
-				'id',
+				'refUserPositionName' => [
+					'asc' => ['ref_user_positions.name' => SORT_ASC],
+					'desc' => ['ref_user_positions.name' => SORT_DESC]
+				],
+				'refGradeName' => [
+					'asc' => ['ref_salary_grades.name' => SORT_ASC],
+					'desc' => ['ref_salary_grades.name' => SORT_DESC]
+				],
+				'refPremiumGroupName' => [
+					'asc' => ['ref_salary_premium_group.name' => SORT_ASC],
+					'desc' => ['ref_salary_premium_group.name' => SORT_DESC]
+				],
+				'refLocationName' => [
+					'asc' => ['ref_locations.name' => SORT_ASC],
+					'desc' => ['ref_locations.name' => SORT_DESC]
+				],
+				'min',
+				'max'
 			]
 		];
 
@@ -52,8 +73,11 @@ class SalaryForkSearch extends SalaryFork{
 
 		$query->andFilterWhere(['salary_fork.id' => $this->id]);
 		$query->andFilterWhere(['like', 'ref_user_positions.name', Utils::MakeLike($this->refUserPositionName), false]);
-
+		$query->andFilterWhere(['like', 'ref_salary_grades.name', Utils::MakeLike($this->refGradeName), false]);
+		$query->andFilterWhere(['like', 'ref_salary_premium_group.name', Utils::MakeLike($this->refPremiumGroupName), false]);
+		$query->andFilterWhere(['like', 'ref_locations.name', Utils::MakeLike($this->refLocationName), false]);
 
 		return $dataProvider;
 	}
+
 }
