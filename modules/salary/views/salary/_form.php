@@ -7,6 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
@@ -49,6 +50,14 @@ use kartik\depdrop\DepDrop;
 						'options' => ['placeholder' => 'Выберите грейд'],
 						'data' => [$model->grade_id => ArrayHelper::getValue($model, 'refGrade.name')],
 						'type' => DepDrop::TYPE_SELECT2,//todo: отнаследовать свой DepDrop, который будет поддерживать ReferenceSelectWidget.
+						'select2Options' => [
+							'addon' => [
+								'append' => [
+									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
+									'asButton' => true
+								]
+							],
+						],
 						'pluginOptions' => [
 							'depends' => ['salaryfork-position_id'],
 							'url' => Url::to(['ajax/get-position-grades']),

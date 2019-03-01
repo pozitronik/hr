@@ -7,6 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
 use app\models\core\core_module\CoreModule;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
@@ -53,6 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						'options' => ['placeholder' => 'Выберите грейд'],
 						'data' => [$model->relUsersSalary->grade_id => ArrayHelper::getValue($model, 'relGrade.name')],
 						'type' => DepDrop::TYPE_SELECT2,//todo: отнаследовать свой DepDrop, который будет поддерживать ReferenceSelectWidget.
+						'select2Options' => [
+							'addon' => [
+								'append' => [
+									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
+									'asButton' => true
+								]
+							],
+						],
 						'pluginOptions' => [
 							'depends' => ['users-position'],
 							'url' => Url::to(['/salary/ajax/get-position-grades']),
