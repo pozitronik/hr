@@ -1,0 +1,57 @@
+<?php
+declare(strict_types = 1);
+
+namespace app\modules\salary\models\traits;
+
+use app\modules\salary\models\references\RefGrades;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
+use app\modules\salary\models\relations\RelUsersSalary;
+use app\modules\users\models\Users;
+use yii\db\ActiveQuery;
+
+/**
+ * Trait UsersSalaryTrait
+ * Трейт для подключения функций модуля зарплат к пользователям
+ * @package app\modules\salary\models\traits
+ *
+ * @property RelUsersSalary|ActiveQuery $relUsersSalary
+ * @property RefGrades|ActiveQuery $relGrade
+ * @property RefSalaryPremiumGroups|ActiveQuery|null $relPremiumGroup
+ * @property RefLocations|ActiveQuery|null $relLocation
+ *
+ */
+trait UsersSalaryTrait {
+	/**
+	 * @return RelUsersSalary|ActiveQuery
+	 */
+	public function getRelUsersSalary() {
+		/** @var Users $this */
+		return $this->hasOne(RelUsersSalary::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * @return RefGrades|ActiveQuery
+	 */
+	public function getRelGrade() {
+		/** @var Users $this */
+		return $this->hasOne(RefGrades::class, ['id' => 'grade_id'])->via('relUsersSalary');
+	}
+
+	/**
+	 * @return RefSalaryPremiumGroups|ActiveQuery|null
+	 */
+	public function getRelPremiumGroup() {
+		/** @var Users $this */
+		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id'])->via('relUsersSalary');
+	}
+
+	/**
+	 * @return RefLocations|ActiveQuery|null
+	 */
+	public function getRelLocation() {
+		/** @var Users $this */
+		return $this->hasOne(RefLocations::class, ['id' => 'location_id'])->via('relUsersSalary');
+	}
+
+}
