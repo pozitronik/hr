@@ -31,6 +31,10 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => ['/users/users/groups', 'id' => $this->model->id]
 			],
 			[
+				'label' => Icons::money().'Зарплатные данные',
+				'url' => ['/users/users/salary', 'id' => $this->model->id]
+			],
+			[
 				'label' => Icons::attributes().'Атрибуты',
 				'url' => ['/attributes/user', 'user_id' => $this->model->id]
 			],
