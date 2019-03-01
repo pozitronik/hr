@@ -216,7 +216,7 @@ class DynamicAttributesSearchCollection extends Model {
 				$query->leftJoin("rel_users_attributes $aliasName", "$aliasName.user_id = sys_users.id");
 				$usedAliases[] = $aliasName;
 			}
-
+//TODO FIXME: при поиске разных свойств одинакового типа в одном атрибуте алиасы свойств дублируются.
 			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->property}.type")) {
 				$className = DynamicAttributeProperty::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
