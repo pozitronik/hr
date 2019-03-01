@@ -49,7 +49,7 @@ class ReferenceSelectWidget extends Select2 {
 				$className = pathinfo($this->referenceClass, PATHINFO_FILENAME);
 				$this->addon = [
 					'append' => [
-						'content' => Html::a(Icons::update(), ["/references/references/index?class=$className"], ['class' => 'btn btn-default']),
+						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => $className], ['class' => 'btn btn-default']),
 						'asButton' => true
 					]
 				];
