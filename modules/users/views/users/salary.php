@@ -9,7 +9,6 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\models\core\core_module\CoreModule;
-use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
@@ -60,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
 									'asButton' => true
 								]
-							],
+							]
 						],
 						'pluginOptions' => [
 							'depends' => ['users-position'],

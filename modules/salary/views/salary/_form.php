@@ -56,7 +56,7 @@ use kartik\depdrop\DepDrop;
 									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position_id, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
 									'asButton' => true
 								]
-							],
+							]
 						],
 						'pluginOptions' => [
 							'depends' => ['salaryfork-position_id'],
