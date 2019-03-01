@@ -104,7 +104,7 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'roles',
-			'filter' => $searchModel->relRefUserRoles,
+			'filter' => ArrayHelper::getValue($searchModel, 'relRefUserRoles'),
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите роль'],
 			'filterWidgetOptions' => [
