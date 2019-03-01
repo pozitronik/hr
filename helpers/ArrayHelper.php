@@ -136,15 +136,16 @@ class ArrayHelper extends YiiArrayHelper {
 	 * Аналог ArrayHelper::map, возвращающий смапленные аттрибуты по ключам.
 	 * @param array $array
 	 * @param array $attributes Карта атрибутов в формате ['label' => 'attributeName', 'label2' => 'attribute2Name...]
+	 * @param string $keyIndexCode - параметр, при подстановке которого в имя атрибута в значении будет возвращен индек
 	 * @return array Массив в формате [['label' => $attribute1, 'label2' => $attribute2]]
 	 * @throws Throwable
 	 */
-	public static function mapEx(array $array, array $attributes):array {
+	public static function mapEx(array $array, array $attributes, $keyIndexCode = 'key'):array {
 		$result = [];
-		foreach ($array as $element) {
+		foreach ($array as $key => $element) {
 			$cell = [];
 			foreach ($attributes as $label => $attribute) {
-				$value = self::getValue($element, $attribute);
+				$value = ($attribute === $keyIndexCode)?(string)$key:self::getValue($element, $attribute);
 				$cell[$label] = $value;
 			}
 			$result[] = $cell;
