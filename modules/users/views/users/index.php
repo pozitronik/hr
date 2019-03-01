@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var UsersSearch $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @deprecated
  */
 
 use app\helpers\ArrayHelper;
