@@ -156,7 +156,8 @@ class Users extends ActiveRecord implements StrictInterface {
 			/*UsersSalaryTrait attributes*/
 			'relGrade' => 'Грейд',
 			'relPremiumGroup' => 'Группа премирования',
-			'relLocation' => 'Расположение'
+			'relLocation' => 'Расположение',
+			'relSalaryFork' => 'Зарплатная вилка'
 		];
 	}
 

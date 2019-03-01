@@ -170,4 +170,11 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 	public function getMid():float {
 		return ($this->max + $this->min) / 2;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function __toString():string {
+		return $this->attributeLabels()['min'].": ".$this->min.", ".$this->attributeLabels()['max'].": ".$this->max;
+	}
 }

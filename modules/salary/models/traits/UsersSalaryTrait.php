@@ -7,6 +7,7 @@ use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\relations\RelUsersSalary;
+use app\modules\salary\models\SalaryFork;
 use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
@@ -19,6 +20,8 @@ use yii\db\ActiveQuery;
  * @property RefGrades|ActiveQuery $relGrade
  * @property RefSalaryPremiumGroups|ActiveQuery|null $relPremiumGroup
  * @property RefLocations|ActiveQuery|null $relLocation
+ *
+ * @property-read null|SalaryFork $relSalaryFork
  *
  */
 trait UsersSalaryTrait {
@@ -78,6 +81,16 @@ trait UsersSalaryTrait {
 	public function setRelLocation($relLocation):void {
 		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('location_id', $relLocation);
+	}
+
+	/**
+	 * @return null|SalaryFork
+	 */
+	public function getRelSalaryFork():?SalaryFork {
+		return SalaryFork::find()
+			->where(['position_id' => $this->position])
+			->andWhere(['grade_id' => $this->relUsersSalary->grade_id, 'premium_group_id' => $this->relUsersSalary->premium_group_id, 'location_id' => $this->relUsersSalary->location_id])
+			->one();
 	}
 
 }
