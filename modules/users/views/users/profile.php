@@ -70,22 +70,8 @@ $this->params['breadcrumbs'][] = $this->title;
 								<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен на введённый.'); ?>
 							<?php endif; ?>
 						</div>
-						<div class="col-md-12">
-							<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
-						</div>
-
-						<div class="col-md-12">
-							<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
-						</div>
-
 						<div class="col-md-6">
-							<?= $form->field($model, 'position')->widget(ReferenceSelectWidget::class, [
-								'referenceClass' => RefUserPositions::class,
-								'options' => ['placeholder' => 'Выберите должность'],
-								'pluginOptions' => [
-									'allowClear' => true
-								]
-							]); ?>
+							<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
 						</div>
 						<div class="col-md-6">
 							<?= $form->field($model, 'relPrivileges')->widget(Select2::class, [
@@ -97,6 +83,12 @@ $this->params['breadcrumbs'][] = $this->title;
 								]
 							]); ?>
 						</div>
+
+						<div class="col-md-12">
+							<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
+						</div>
+
+
 					</div>
 				</div>
 			</div>
