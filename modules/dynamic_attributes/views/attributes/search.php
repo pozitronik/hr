@@ -10,17 +10,16 @@ declare(strict_types = 1);
 
 use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
-use app\modules\dynamic_attributes\assets\SearchAsset;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use kartik\depdrop\DepDrop;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
-
-SearchAsset::register($this);
+use yii\helpers\Url;
 
 $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Атрибуты');
@@ -84,9 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'referenceClass' => RefAttributesTypes::class,
 								'options' => array_merge([
 									'multiple' => true,
-									'placeholder' => 'Выбрать тип отношения',
-									'data-tag' => "search-type",
-									'data-index' => $index
+									'placeholder' => 'Выбрать тип отношения'
 								])
 							])->label('Тип отношения атрибута'); ?>
 						</div>
@@ -95,35 +92,42 @@ $this->params['breadcrumbs'][] = $this->title;
 								'data' => $attribute_data,
 								'options' => [
 									'multiple' => false,
-									'placeholder' => 'Выбрать атрибут',
-									'data-tag' => "search-attribute",
-									'data-index' => $index,
-									'onchange' => 'attribute_changed($(this))'
+									'placeholder' => 'Выбрать атрибут'
 								]
 							])->label('Атрибут'); ?>
 						</div>
 
+
 						<div class="col-md-2">
-							<?= $form->field($model, "searchItems[$index][property]")->widget(Select2::class, [
+							<?= $form->field($model, "searchItems[$index][property]")->widget(DepDrop::class, [
 								'data' => $model->attributeProperties($condition->attribute),
+								'type' => DepDrop::TYPE_SELECT2,
+								'pluginOptions' => [
+									'depends' => ["dynamicattributessearchcollection-searchitems-$index-attribute"],
+									'url' => Url::to(['/attributes/ajax/attribute-get-properties']),
+									'loadingText' => 'Загружаю свойства'
+								],
 								'options' => [
 									'multiple' => false,
-									'placeholder' => 'Выбрать свойство',
-									'data-tag' => "search-property",
-									'data-index' => $index,
-									'onchange' => 'property_changed($(this))',
+									'placeholder' => 'Выбрать атрибут',
 									'options' => $model->propertyTypes($condition->attribute)
 								]
 							])->label('Свойство'); ?>
 						</div>
+
 						<div class="col-md-2">
-							<?= $form->field($model, "searchItems[$index][condition]")->widget(Select2::class, [
+							<?= $form->field($model, "searchItems[$index][condition]")->widget(DepDrop::class, [
 								'data' => $model->propertiesConditions($condition->attribute, $condition->property),
+								'type' => DepDrop::TYPE_SELECT2,
+								'pluginOptions' => [
+									'params' => ["dynamicattributessearchcollection-searchitems-$index-attribute"],
+									'depends' => ["dynamicattributessearchcollection-searchitems-$index-property"],
+									'url' => Url::to(['/attributes/ajax/attribute-get-property-condition']),
+									'loadingText' => 'Загружаю условия'
+								],
 								'options' => [
 									'multiple' => false,
-									'placeholder' => 'Выбрать условие',
-									'data-tag' => "search-condition",
-									'data-index' => $index
+									'placeholder' => 'Выбрать условие'
 								]
 							])->label('Условие'); ?>
 						</div>

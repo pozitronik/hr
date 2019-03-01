@@ -46,14 +46,15 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionAttributeGetProperties():array {
-		if (null !== $attribute_id = Yii::$app->request->post('attribute')) {
-			if (null !== $attribute = DynamicAttributes::findModel($attribute_id)) {
-				$this->answer->items = $attribute->structure;
-				return $this->answer->answer;
-			}
-			return $this->answer->addError('attribute', 'Not found');
+		$attribute_id = ArrayHelper::getValue(Yii::$app->request->post('depdrop_parents'), 0);
+		if (null === $attribute = DynamicAttributes::findModel($attribute_id)) {
+			return [
+				'output' => []
+			];
 		}
-		return $this->answer->addError('attribute', 'Empty');
+
+		$out = $attribute->structure;
+		return ['output' => $out, 'selected' => ArrayHelper::getValue($out, '0.id')];
 	}
 
 	/**
@@ -62,15 +63,31 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionAttributeGetPropertyCondition():array {
-		if (false !== $type = Yii::$app->request->post('type', false)) {
-			/** @var string $type */
-			if (null !== $className = DynamicAttributeProperty::getTypeClass($type)) {
-				$this->answer->items = ArrayHelper::keymap($className::conditionConfig(), 0);
-				return $this->answer->answer;
-			}
-			return $this->answer->addError('type', 'Not found');
+		$attribute_id = (int)ArrayHelper::getValue(Yii::$app->request->post('depdrop_params'), 0);
+		$property_id = (int)ArrayHelper::getValue(Yii::$app->request->post('depdrop_parents'), 0);
+
+		if (null === $attribute = DynamicAttributes::findModel($attribute_id)) {
+			return [
+				'output' => []
+			];
 		}
-		return $this->answer->addError('type', 'Empty');
+
+		if (null === $property = $attribute->getPropertyById($property_id)) {
+			return [
+				'output' => []
+			];
+		}
+
+		if (null === $className = DynamicAttributeProperty::getTypeClass($property->type)) {
+			return [
+				'output' => []
+			];
+		}
+
+		$out = ArrayHelper::mapEx($className::conditionConfig(), ['id' => 'key', 'name' => 0]);
+
+		return ['output' => $out, 'selected' => ArrayHelper::getValue($out, '0.id')];
+
 	}
 
 }
