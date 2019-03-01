@@ -164,4 +164,11 @@ class Icons {
 		return "<i class='fa fa-plus'></i>";
 	}
 
+	/**
+	 * @return string
+	 */
+	public static function money():string {
+		return "<i class='fa fa-money-bill'></i>";
+	}
+
 }
