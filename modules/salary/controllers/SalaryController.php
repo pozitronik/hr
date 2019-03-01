@@ -38,17 +38,28 @@ class SalaryController extends WigetableController {
 	}
 
 	/**
+	 * Может принять набор параметров (все айдишники) для предзаполнения полей (например, при задании видки для уже существующей комбинации)
+	 * @param int|null $position
+	 * @param int|null $grade
+	 * @param int|null $premium_group
+	 * @param int|null $location
 	 * @return string|Response
-	 * @throws InvalidConfigException
 	 * @throws Exception
+	 * @throws InvalidConfigException
 	 */
-	public function actionCreate() {
+	public function actionCreate(?int $position = null, ?int $grade = null, ?int $premium_group = null, ?int $location = null) {
 		$newFork = new SalaryFork();
 		if ($newFork->createModel(Yii::$app->request->post($newFork->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newFork->id]);
 		}
 
+		$newFork->setAttributes([
+			'position_id' => $position,
+			'grade_id' => $grade,
+			'premium_group_id' => $premium_group,
+			'location_id' => $location
+		]);
 
 		return $this->render('create', [
 			'model' => $newFork
