@@ -22,11 +22,13 @@ use yii\db\ActiveQuery;
  *
  */
 trait UsersSalaryTrait {
+
 	/**
 	 * @return RelUsersSalary|ActiveQuery
 	 */
 	public function getRelUsersSalary() {
 		/** @var Users $this */
+		if (null === RelUsersSalary::find()->where(['user_id' => $this->id])->one()) (new RelUsersSalary(['user_id' => $this->id]))->save();
 		return $this->hasOne(RelUsersSalary::class, ['user_id' => 'id']);
 	}
 
@@ -39,6 +41,14 @@ trait UsersSalaryTrait {
 	}
 
 	/**
+	 * @param mixed $relGrade
+	 */
+	public function setRelGrade($relGrade):void {
+		/** @var Users $this */
+		$this->relUsersSalary->setAndSaveAttribute('grade_id', $relGrade);
+	}
+
+	/**
 	 * @return RefSalaryPremiumGroups|ActiveQuery|null
 	 */
 	public function getRelPremiumGroup() {
@@ -47,11 +57,27 @@ trait UsersSalaryTrait {
 	}
 
 	/**
+	 * @param mixed $relPremiumGroup
+	 */
+	public function setRelPremiumGroup($relPremiumGroup):void {
+		/** @var Users $this */
+		$this->relUsersSalary->setAndSaveAttribute('premium_group_id', $relPremiumGroup);
+	}
+
+	/**
 	 * @return RefLocations|ActiveQuery|null
 	 */
 	public function getRelLocation() {
 		/** @var Users $this */
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id'])->via('relUsersSalary');
+	}
+
+	/**
+	 * @param mixed $relLocation
+	 */
+	public function setRelLocation($relLocation):void {
+		/** @var Users $this */
+		$this->relUsersSalary->setAndSaveAttribute('location_id', $relLocation);
 	}
 
 }

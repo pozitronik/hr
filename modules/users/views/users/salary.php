@@ -1,0 +1,89 @@
+<?php
+declare(strict_types = 1);
+
+/**
+ * @var Users $model
+ * @var View $this
+ */
+
+use app\models\core\core_module\CoreModule;
+use app\modules\salary\models\references\RefGrades;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
+use app\modules\salary\models\references\RefUserPositions;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\users\models\Users;
+use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
+use yii\web\View;
+use kartik\form\ActiveForm;
+use yii\helpers\Html;
+
+$this->title = "Зарплатные данные пользователя {$model->username}";
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
+$this->params['breadcrumbs'][] = $this->title;
+
+?>
+<?php $form = ActiveForm::begin(); ?>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-control">
+				<?= UserNavigationMenuWidget::widget([
+					'model' => $model
+				]); ?>
+			</div>
+			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		</div>
+
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-3">
+					<?= $form->field($model, 'position')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefUserPositions::class,
+						'options' => ['placeholder' => 'Выберите должность'],
+						'pluginOptions' => [
+							'allowClear' => true
+						]
+					]); ?>
+				</div>
+				<div class="col-md-2">
+					<?= $form->field($model, 'relGrade')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefGrades::class,
+						'options' => ['placeholder' => 'Выберите грейд'],
+						'pluginOptions' => [
+							'allowClear' => true
+						]
+					]); ?>
+				</div>
+				<div class="col-md-3">
+					<?= $form->field($model, 'relPremiumGroup')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefSalaryPremiumGroups::class,
+						'options' => ['placeholder' => 'Выберите группу премирования'],
+						'pluginOptions' => [
+							'allowClear' => true
+						]
+					]); ?>
+				</div>
+				<div class="col-md-4">
+					<?= $form->field($model, 'relLocation')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefLocations::class,
+						'options' => ['placeholder' => 'Выберите местонахождение'],
+						'pluginOptions' => [
+							'allowClear' => true
+						]
+					]); ?>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="panel-footer">
+			<div class="btn-group">
+				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+				<?php if ($model->isNewRecord): ?>
+					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+				<?php endif ?>
+			</div>
+		</div>
+	</div>
+<?php ActiveForm::end(); ?>

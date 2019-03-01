@@ -8,9 +8,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\models\core\core_module\CoreModule;
-use app\modules\salary\models\references\RefUserPositions;
 use app\modules\privileges\models\Privileges;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\select2\Select2;

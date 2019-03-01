@@ -8,6 +8,7 @@ use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
 use app\modules\users\models\Users;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
@@ -56,7 +57,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();//todo function
 		return $this->render('profile', [
 			'model' => $user
 		]);
@@ -82,6 +83,20 @@ class UsersController extends WigetableController {
 	 */
 	public function actionAttributes(int $id):Response {
 		return $this->redirect(['/attributes/user', 'user_id' => $id]);
+	}
+
+	/**
+	 * @param int $id
+	 * @return string|null
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 */
+	public function actionSalary(int $id):?string {
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
+		return $this->render('salary', [
+			'model' => $user
+		]);
 	}
 
 	/**

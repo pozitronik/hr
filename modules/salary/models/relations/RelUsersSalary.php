@@ -5,7 +5,6 @@ namespace app\modules\salary\models\relations;
 
 use app\models\core\traits\ARExtended;
 use app\models\relations\Relations;
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -36,7 +35,7 @@ class RelUsersSalary extends ActiveRecord {
 		return [
 			[['user_id'], 'required'],
 			[['user_id', 'grade_id', 'premium_group_id', 'location_id'], 'integer'],
-			[['user_id'], 'unique'],
+			[['user_id'], 'unique']
 		];
 	}
 
@@ -49,7 +48,7 @@ class RelUsersSalary extends ActiveRecord {
 			'user_id' => 'User ID',
 			'grade_id' => 'Grade ID',
 			'premium_group_id' => 'Premium Group ID',
-			'location_id' => 'Location ID',
+			'location_id' => 'Location ID'
 		];
 	}
 }
