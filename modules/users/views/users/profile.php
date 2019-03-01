@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<div class="col-md-6">
 							<?= $form->field($model, 'position')->widget(ReferenceSelectWidget::class, [
 								'referenceClass' => RefUserPositions::class,
-								'options' => ['placeholder' => 'Выберите роль'],
+								'options' => ['placeholder' => 'Выберите должность'],
 								'pluginOptions' => [
 									'allowClear' => true
 								]
