@@ -53,7 +53,7 @@ use kartik\depdrop\DepDrop;
 						'select2Options' => [
 							'addon' => [
 								'append' => [
-									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
+									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position_id, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
 									'asButton' => true
 								]
 							],
