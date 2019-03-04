@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="row">
 				<div class="col-md-12">
 					<?php if (null === $salaryFork = $model->relSalaryFork): ?>
-						Для этого набора параметров не задана зарпатная вилка.
+						Для этого набора параметров не задана зарплатная вилка.
 						<?= Html::a('Задать вилку', ['/salary/salary/create', 'position' => $model->position, 'grade' => $model->relUsersSalary->grade_id, 'premium_group' => $model->relUsersSalary->premium_group_id, 'location' => $model->relUsersSalary->location_id], ['class' => 'btn btn-sm btn-default']) ?>
 					<?php else: ?>
 						Параметры зарплатной вилки: <?= $salaryFork ?>
