@@ -4,11 +4,9 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\reference_select;
 
 use app\helpers\Icons;
-use app\helpers\Utils;
 use app\models\core\Magic;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
-use ReflectionClass;
 use ReflectionException;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
