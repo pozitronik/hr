@@ -5,8 +5,10 @@ namespace app\modules\references\widgets\reference_select;
 
 use app\helpers\Icons;
 use app\helpers\Utils;
+use app\models\core\Magic;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
+use ReflectionClass;
 use ReflectionException;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
@@ -47,11 +49,9 @@ class ReferenceSelectWidget extends Select2 {
 			$this->data = $this->data??$this->referenceClass::mapData();
 			$this->options['options'] = $this->referenceClass::dataOptions();
 			if ($this->showEditAddon) {
-				$className = basename($this->referenceClass);
-				Utils::log($className);
 				$this->addon = [
 					'append' => [
-						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => $className], ['class' => 'btn btn-default']),
+						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => Magic::GetClassShortName((string)$this->referenceClass)], ['class' => 'btn btn-default']),
 						'asButton' => true
 					]
 				];

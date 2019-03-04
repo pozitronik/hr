@@ -106,6 +106,17 @@ class Magic {
 	}
 
 	/**
+	 * Fast class name shortener
+	 * app\modules\salary\models\references\RefGrades => RefGrades
+	 * @param string $className
+	 * @return string
+	 * @throws ReflectionException
+	 */
+	public static function GetClassShortName(string $className):string {
+		return (new ReflectionClass($className))->getShortName();
+	}
+
+	/**
 	 * @param Configurable $controller
 	 * @param string $property
 	 * @return bool
