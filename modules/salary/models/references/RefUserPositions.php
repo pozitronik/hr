@@ -9,6 +9,7 @@ use app\modules\references\models\Reference;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
+use app\widgets\badge\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
@@ -34,7 +35,6 @@ use yii\helpers\Html;
  * @property null|int[] $types
  *
  * @property-read null|string $branchName
- * @property-read array $typesNames
  */
 class RefUserPositions extends Reference {
 	public $menuCaption = 'Должности';
@@ -71,7 +71,6 @@ class RefUserPositions extends Reference {
 			'deleted' => 'Deleted',
 			'usedCount' => 'Использований',
 			'branchName' => 'Ветвь',
-			'typesNames' => 'Типы должности',
 			'branch' => 'Ветвь',
 			'types' => 'Типы',
 			'relGrades' => 'Разрешённые грейды'
@@ -101,13 +100,45 @@ class RefUserPositions extends Reference {
 				'format' => 'raw'
 			],
 			[
-				'attribute' => 'typesNames',
+				'label' => 'Тип должности',
+				'format' => 'raw',
 				'value' => function(self $model) {
-					return implode(', ', $model->typesNames);
+					return BadgeWidget::widget([
+						'data' => $model->relRefUserPositionTypes,
+						'attribute' => 'name',
+						'unbadgedCount' => 10,
+						'itemsSeparator' => false,
+						'linkScheme' => ['/references/references/update', 'id' => 'id', 'class' => 'RefUserPositionTypes'],
+						"optionsMap" => function() {
+							$options = ArrayHelper::map(RefUserPositionTypes::find()->active()->all(), 'id', 'color');
+							array_walk($options, function(&$value, $key) {
+								if (!empty($value)) {
+									$value = [
+										'style' => "background: $value;"
+									];
+								}
+							});
+							return $options;
+						}
+					]);
 				}
 			],
+
 			[
 				'attribute' => 'branchName'
+			],
+			[
+				'label' => 'Грейды',
+				'format' => 'raw',
+				'value' => function(self $model) {
+					return BadgeWidget::widget([
+						'data' => $model->relGrades,
+						'attribute' => 'name',
+						'unbadgedCount' => 10,
+						'itemsSeparator' => false,
+						'linkScheme' => ['/references/references/update', 'id' => 'id', 'class' => 'RefGrades']
+					]);
+				}
 			],
 			[
 				'attribute' => 'usedCount'
@@ -162,16 +193,10 @@ class RefUserPositions extends Reference {
 	/**
 	 * @return null|string
 	 * @throws Throwable
+	 * @temporary
 	 */
 	public function getBranchName():?string {
 		return ArrayHelper::getValue($this->relRefUserPositionBranch, 'name');
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getTypesNames():array {
-		return ArrayHelper::getColumn($this->relRefUserPositionTypes, 'name');
 	}
 
 	/**
