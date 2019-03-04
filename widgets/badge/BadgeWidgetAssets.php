@@ -12,6 +12,9 @@ use app\assets\AppAsset;
  */
 class BadgeWidgetAssets extends AssetBundle {
 	public $sourcePath = '@app/widgets/badge/assets';
+	public $css = [
+		'css/badge.css'
+	];
 	public $depends = [
 		AppAsset::class
 	];
