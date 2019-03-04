@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\reference_select;
 
 use app\helpers\Icons;
+use app\helpers\Utils;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
 use ReflectionException;
@@ -47,6 +48,7 @@ class ReferenceSelectWidget extends Select2 {
 			$this->options['options'] = $this->referenceClass::dataOptions();
 			if ($this->showEditAddon) {
 				$className = basename($this->referenceClass);
+				Utils::log($className);
 				$this->addon = [
 					'append' => [
 						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => $className], ['class' => 'btn btn-default']),
