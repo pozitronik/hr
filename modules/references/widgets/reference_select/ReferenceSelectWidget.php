@@ -46,7 +46,7 @@ class ReferenceSelectWidget extends Select2 {
 			$this->data = $this->data??$this->referenceClass::mapData();
 			$this->options['options'] = $this->referenceClass::dataOptions();
 			if ($this->showEditAddon) {
-				$className = pathinfo($this->referenceClass, PATHINFO_FILENAME);
+				$className = basename($this->referenceClass);
 				$this->addon = [
 					'append' => [
 						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => $className], ['class' => 'btn btn-default']),
