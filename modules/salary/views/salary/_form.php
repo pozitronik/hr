@@ -51,7 +51,7 @@ use kartik\depdrop\DepDrop;
 						'data' => [$model->grade_id => ArrayHelper::getValue($model, 'refGrade.name')],
 						'type' => DepDrop::TYPE_SELECT2,//todo: отнаследовать свой DepDrop, который будет поддерживать ReferenceSelectWidget.
 						'select2Options' => [
-							'addon' => [
+							'addon' => $model->isNewRecord?false:[
 								'append' => [
 									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position_id, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
 									'asButton' => true
