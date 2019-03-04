@@ -100,7 +100,7 @@ GridView::widget([
 			'filterWidgetOptions' => [
 				'referenceClass' => RefUserPositions::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
-			],
+			]
 		],
 		[
 			'attribute' => 'groupName',
