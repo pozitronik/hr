@@ -126,7 +126,7 @@ class Users extends ActiveRecord implements StrictInterface {
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique'],
-			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],//Это только клиенсткая валидация, на сервере атрибут всегда будет валидироваться успешно
+			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],//Это только клиентская валидация, на сервере атрибут всегда будет валидироваться успешно
 			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges'], 'safe'],
 			/*Мы не можем переопределить или наследовать метод в трейте, поэтому ПОКА добавляю правила валидации атрибутов из трейта сюда. Но потом нужно придумать, как разделить код*/
 			[['relGrade', 'relPremiumGroup', 'relLocation'], 'safe']
@@ -149,7 +149,6 @@ class Users extends ActiveRecord implements StrictInterface {
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
 			'deleted' => 'Флаг удаления',
 			'position' => 'Должность',
-			'positionName' => 'Должность',
 			'profile_image' => 'Изображение профиля',
 			'upload_image' => 'Изображение профиля',
 			'update_password' => 'Смена пароля',

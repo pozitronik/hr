@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 
 namespace app\modules\users\models;
+
 use yii\data\ActiveDataProvider;
 
 /**
@@ -10,12 +11,13 @@ use yii\data\ActiveDataProvider;
  * @package app\models\users
  *
  * @property string $groupName Фильтр названия группы
+ * @property int[] $positions Фильтр должностей
  * @property int[] $roles Фильтр ролей
  * @property int[] $privileges Фильтр привилегий
  */
 class UsersSearch extends Users {
 	public $groupName;
-	public $positionName;
+	public $positions;
 	public $roles;
 	public $privileges;
 
@@ -26,7 +28,7 @@ class UsersSearch extends Users {
 		return [
 			[['id'], 'integer'],
 			[['username', 'login', 'email'], 'safe'],
-			[['groupName', 'positionName', 'roles', 'privileges'], 'safe']
+			[['groupName', 'positions', 'roles', 'privileges'], 'safe']
 		];
 	}
 
@@ -54,7 +56,7 @@ class UsersSearch extends Users {
 					'asc' => ['sys_groups.name' => SORT_ASC],
 					'desc' => ['sys_groups.name' => SORT_DESC]
 				],
-				'positionName' => [
+				'positions' => [
 					'asc' => ['position' => SORT_ASC],
 					'desc' => ['position' => SORT_DESC]
 				],
@@ -84,7 +86,7 @@ class UsersSearch extends Users {
 			->andFilterWhere(['like', 'login', $this->login])
 			->andFilterWhere(['like', 'email', $this->email])
 			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
-			->andFilterWhere(['like', 'ref_user_positions.name', $this->positionName])
+			->andFilterWhere(['in', 'ref_user_positions.id', $this->positions])
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges]);
 		return $dataProvider;

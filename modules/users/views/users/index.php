@@ -12,6 +12,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
+use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\Privileges;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
@@ -90,7 +91,16 @@ GridView::widget([
 			'format' => 'raw'
 		],
 		[
-			'attribute' => 'positionName',
+			'label' => 'Должность',
+			'attribute' => 'positions',
+			'value' => 'positionName',
+			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefUserPositions::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			],
 		],
 		[
 			'attribute' => 'groupName',
