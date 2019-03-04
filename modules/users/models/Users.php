@@ -60,6 +60,7 @@ use Yii;
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property ActiveQuery|RefUserPositions $relUserPositions Релейшен к должностям пользователей
  *
+ *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles Релейшен к ролям пользователей в группах
@@ -148,6 +149,7 @@ class Users extends ActiveRecord implements StrictInterface {
 			'daddy' => 'ID зарегистрировавшего/проверившего пользователя',
 			'deleted' => 'Флаг удаления',
 			'position' => 'Должность',
+			'positionName' => 'Должность',
 			'profile_image' => 'Изображение профиля',
 			'upload_image' => 'Изображение профиля',
 			'update_password' => 'Смена пароля',
@@ -340,13 +342,6 @@ class Users extends ActiveRecord implements StrictInterface {
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
-	 */
-	public function getRelUserPositions() {
-		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
-	}
-
-	/**
 	 * Добавляет массив ролей пользователя к группе
 	 * @param array<integer, array<integer>> $groupRoles
 	 */
@@ -363,9 +358,10 @@ class Users extends ActiveRecord implements StrictInterface {
 	/**
 	 * @return string|null
 	 * @throws Throwable
+	 * @deprecated
 	 */
 	public function getPositionName():?string {
-		return ArrayHelper::getValue($this->relUserPositions, 'name');
+		return ArrayHelper::getValue($this->relRefUserPositions, 'name');
 	}
 
 	/**

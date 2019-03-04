@@ -90,6 +90,9 @@ GridView::widget([
 			'format' => 'raw'
 		],
 		[
+			'attribute' => 'positionName',
+		],
+		[
 			'attribute' => 'groupName',
 			'label' => 'Группы',
 			'value' => function(Users $model) {

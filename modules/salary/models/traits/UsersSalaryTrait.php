@@ -6,6 +6,7 @@ namespace app\modules\salary\models\traits;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
+use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\relations\RelUsersSalary;
 use app\modules\salary\models\SalaryFork;
 use app\modules\users\models\Users;
@@ -16,6 +17,7 @@ use yii\db\ActiveQuery;
  * Трейт для подключения функций модуля зарплат к пользователям
  * @package app\modules\salary\models\traits
  *
+ * @property RefUserPositions|ActiveQuery $relRefUserPositions
  * @property RelUsersSalary|ActiveQuery $relUsersSalary
  * @property RefGrades|ActiveQuery $relGrade
  * @property RefSalaryPremiumGroups|ActiveQuery|null $relPremiumGroup
@@ -91,6 +93,13 @@ trait UsersSalaryTrait {
 			->where(['position_id' => $this->position])
 			->andWhere(['grade_id' => $this->relUsersSalary->grade_id, 'premium_group_id' => $this->relUsersSalary->premium_group_id, 'location_id' => $this->relUsersSalary->location_id])
 			->one();
+	}
+
+	/**
+	 * @return RefUserPositions|ActiveQuery
+	 */
+	public function getRelRefUserPositions() {
+		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
 }
