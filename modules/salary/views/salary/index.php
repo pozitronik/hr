@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'locationId',
 			'value' => 'refLocation.name',
-			'label' => 'Локация',
+			'label' => 'Расположение',
 			'format' => 'raw',
 			'filter' => $searchModel->locationId,
 			'filterType' => ReferenceSelectWidget::class,

@@ -87,7 +87,7 @@ class SalaryFork extends ActiveRecord implements StrictInterface {
 			'position_id' => 'Должность',
 			'grade_id' => 'Грейд',
 			'premium_group_id' => 'Группа премирования',
-			'location_id' => 'Локация',
+			'location_id' => 'Расположение',
 			'min' => 'Минимальный оклад',
 			'max' => 'Максимальный оклад',
 			'mid' => 'Средний оклад',
