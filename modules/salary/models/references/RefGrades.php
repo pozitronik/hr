@@ -39,7 +39,8 @@ class RefGrades extends Reference {
 	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
-			'name' => 'Name'
+			'name' => 'Название',
+			'usedCount' => 'Использований'
 		];
 	}
 }
