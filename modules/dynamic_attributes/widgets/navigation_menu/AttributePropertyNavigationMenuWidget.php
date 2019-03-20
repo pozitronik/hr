@@ -33,7 +33,7 @@ class AttributePropertyNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [
-						'confirm' => 'Вы действительно хотите восстановить запись?',
+						'confirm' => 'Вы действительно хотите удалить запись?',
 						'method' => 'post'
 					]
 				]
