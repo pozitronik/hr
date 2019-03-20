@@ -40,6 +40,6 @@ use kartik\select2\Select2;
 				'dataType' => 'json',
 				'data' => new JsExpression("function(params) { return {term:params.term, page: params.page, group:{$model->primaryKey}}; }")
 			]
-		]:[]),
+		]:[])
 ]); ?>
 
