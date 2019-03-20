@@ -20,10 +20,12 @@ use yii\helpers\Html;
  * @property bool $groupByType Группировка списка по типам групп (двухуровневый список)
  * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
- * @property int $mode
+ * @property int $mode Режим рендеринга
+ * @property int $dataMode Режим загрузки данных
  */
 class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
+	public $dataMode = self::DATA_MODE_LOAD;
 	public $notData;
 	public $multiple = false;
 	public $groupByType = true;
@@ -43,7 +45,7 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	 * @return string
 	 */
 	public function run():string {
-		$data = ArrayHelper::map(Users::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])
+		$data = self::DATA_MODE_AJAX === $this->dataMode?[]:ArrayHelper::map(Users::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])
 			->all(), 'id', 'username');
 
 		switch ($this->mode) {
@@ -53,8 +55,10 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
+					'data_mode' => $this->dataMode,
 					'multiple' => $this->multiple,
-					'options' => $this->options
+					'options' => $this->options,
+					'ajax_search_url' => '/users/ajax/user-search'
 				]);
 			break;
 			case self::MODE_FORM:
@@ -62,9 +66,11 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
+					'data_mode' => $this->dataMode,
 					'multiple' => $this->multiple,
 					'formAction' => $this->formAction,
-					'options' => $this->options
+					'options' => $this->options,
+					'ajax_search_url' => '/users/ajax/user-search'
 				]);
 			break;
 			case self::MODE_AJAX:
@@ -72,6 +78,7 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
+					'data_mode' => $this->dataMode,
 					'multiple' => $this->multiple,
 					'ajax_post_url' => '/users/ajax/users-add-to-group',
 					'options' => $this->options,

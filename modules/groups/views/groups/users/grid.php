@@ -37,7 +37,8 @@ GridView::widget([
 			'attribute' => 'relUsers',
 			'notData' => $model->relUsers,
 			'multiple' => true,
-			'mode' => UserSelectWidget::MODE_AJAX
+			'mode' => UserSelectWidget::MODE_FORM,
+			'dataMode' => UserSelectWidget::DATA_MODE_AJAX
 		]):false
 	],
 	'toolbar' => false,
