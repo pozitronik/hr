@@ -67,14 +67,15 @@ class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 					'options' => $this->options
 				]);
 			break;
-			case self::MODE_AJAX://todo: аяксовый постинг and shit. Я слишком мало спал, чтобы сейчас сделать всё без косяков.
+			case self::MODE_AJAX:
 				return $this->render('user_select_ajax', [
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
 					'multiple' => $this->multiple,
-					'formAction' => $this->formAction,
-					'options' => $this->options
+					'ajax_post_url' => '/users/ajax/users-add-to-group',
+					'options' => $this->options,
+					'ajax_search_url' => '/users/ajax/user-search'
 				]);
 			break;
 		}

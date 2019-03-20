@@ -4,8 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\users\controllers;
 
 use app\models\core\ajax\BaseAjaxController;
+use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
+use app\modules\groups\models\Groups;
 use app\modules\users\models\Bookmarks;
+use app\modules\users\models\Users;
 use Throwable;
 use Yii;
 
@@ -48,6 +51,45 @@ class AjaxController extends BaseAjaxController {
 		}
 		return $this->answer->addError('route', 'Not found');
 	}
+
+	/**
+	 * Поиск пользователя в Select2
+	 * @param string|null $term Строка поиска
+	 * @param int|null $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionUserSearch(?string $term = null, ?int $page = 0):array {
+		$out = ['results' => ['id' => '', 'text' => '']];
+		if (null !== $term) {
+			$data = Users::find()->select(['sys_users.id', 'sys_users.username as text'/*, 'ref_user_positions.name as position_name'*/])/*->joinWith('relUserPositions')*/
+			->where(['like', 'sys_users.username', $term])->offset(20 * $page)->limit(20)->asArray()->all();
+			$out['results'] = array_values($data);
+		}
+		return $out;
+	}
+
+	/**
+	 * Добавляет пользователей в группу. Список пользователей приходит массивом из user_select.js:ajax_post
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionUsersAddToGroup():array {
+		$groupId = Yii::$app->request->post('groupId', false);
+		$userId = Yii::$app->request->post('userId', false);
+		if (!($groupId && $userId)) {
+			return $this->answer->addError('parameters', 'Not enough parameters');
+		}
+		/** @var Groups $group */
+		if (null === ($group = Groups::findModel($groupId))) {
+			return $this->answer->addError('group', 'Not found');
+		}
+
+		RelUsersGroups::linkModels($userId, $group);
+		return $this->answer->answer;
+	}
+
+
 
 //	public function actionAddUserToGroup() {
 //		if ((false !== $userId = Yii::$app->request->post('userId', false)) && (false !== $groupId = Yii::$app->request->post('groupId', false))) {

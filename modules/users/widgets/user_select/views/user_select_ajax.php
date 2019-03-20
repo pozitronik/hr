@@ -8,7 +8,8 @@ declare(strict_types = 1);
  * @var array $data
  * @var boolean $multiple
  * @var array $options
- * @var string $formAction
+ * @var string $ajax_post_url
+ * @var string $ajax_search_url
  */
 
 use app\helpers\Icons;
@@ -22,7 +23,7 @@ use kartik\select2\Select2;
 <?= Select2::widget([
 	'addon' => [
 		'append' => [
-			'content' => Html::button(Icons::add(), ['class' => 'btn btn-primary', 'disabled' => 'disabled','onclick'=> "ajax_post($formAction, )"]),
+			'content' => Html::button(Icons::add(), ['id' => 'ajax_post_button', 'class' => 'btn btn-primary', 'disabled' => 'disabled', 'onclick' => "ajax_post('$ajax_post_url', 'ajax_post_button', {$model->primaryKey})"]),
 			'asButton' => true
 		]
 	],
@@ -35,10 +36,17 @@ use kartik\select2\Select2;
 	'pluginOptions' => [
 		'allowClear' => true,
 		'multiple' => $multiple,
+		'minimumInputLength' => 1,
+		'language' => 'ru',
+		'ajax' => [
+			'url' => $ajax_search_url,
+			'dataType' => 'json',
+			'data' => new JsExpression('function(params) { return {term:params.term, page: params.page}; }')
+		],
 		'templateResult' => new JsExpression('function(item) {return formatUser(item)}'),
 		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
 	],
 	'pluginEvents' => [
-		"change.select2" => "function(e) {submit_toggle(e)}"
+		"change.select2" => "function(e) {ajax_submit_toggle(e,'ajax_post_button')}"
 	]
 ]); ?>
