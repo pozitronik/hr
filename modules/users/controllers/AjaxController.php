@@ -54,16 +54,17 @@ class AjaxController extends BaseAjaxController {
 
 	/**
 	 * Поиск пользователя в Select2
+	 *
 	 * @param string|null $term Строка поиска
-	 * @param int|null $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @param int $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @param int|null $group Группа ИСКЛЮЧАЕМАЯ из поиска
 	 * @return array
-	 * @throws Throwable
 	 */
-	public function actionUserSearch(?string $term = null, ?int $page = 0):array {
+	public function actionUserSearch(?string $term = null, ?int $page = 0, ?int $group = null):array {
 		$out = ['results' => ['id' => '', 'text' => '']];
 		if (null !== $term) {
-			$data = Users::find()->select(['sys_users.id', 'sys_users.username as text'/*, 'ref_user_positions.name as position_name'*/])/*->joinWith('relUserPositions')*/
-			->where(['like', 'sys_users.username', $term])->offset(20 * $page)->limit(20)->asArray()->all();
+			$data = Users::find()->distinct()->select(['sys_users.id', 'sys_users.username as text'/*, 'ref_user_positions.name as position_name'*/])/*->joinWith('relUserPositions')*/
+			->where(['like', 'sys_users.username', $term])->andWhere(['not', ['sys_users.id' => RelUsersGroups::find()->select('user_id')->where(['group_id' => $group])]])->offset(20 * $page)->limit(20)->asArray()->all();
 			$out['results'] = array_values($data);
 		}
 		return $out;
