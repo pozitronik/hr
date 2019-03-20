@@ -133,6 +133,7 @@ class AttributesController extends WigetableController {
 	 * Заполненные данные по аттрибуту не удаляются.
 	 * @param int $attribute_id
 	 * @param int $property_id
+	 * @throws Throwable
 	 */
 	public function actionPropertyDelete(int $attribute_id, int $property_id = null):void {
 		if (null === $attribute = DynamicAttributes::findModel($attribute_id, new NotFoundHttpException())) return;
