@@ -25,9 +25,11 @@ use yii\db\ActiveRecord;
  * @property string $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property boolean $multiple
  * @property int $mode
+ * @property int $dataMode Режим загрузки данных
  */
 class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
+	public $dataMode = self::DATA_MODE_LOAD;
 	public $notData;
 	public $multiple = false;
 	public $groupByType = true;
@@ -47,13 +49,15 @@ class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface 
 	 */
 	public function run():string {
 		$data = [];
-		if ($this->groupByType) {
-			foreach (RefGroupTypes::find()->active()->all() as $groupType) {
-				$data[$groupType->name] = ArrayHelper::map($groups = Groups::find()->active()->where(['type' => $groupType->id])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+		if (self::DATA_MODE_LOAD === $this->dataMode) {
+			if ($this->groupByType) {
+				foreach (RefGroupTypes::find()->active()->all() as $groupType) {
+					$data[$groupType->name] = ArrayHelper::map($groups = Groups::find()->active()->where(['type' => $groupType->id])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+				}
+				$data['Тип не указан'] = ArrayHelper::map(Groups::find()->active()->where(['type' => null])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+			} else {
+				$data = ArrayHelper::map(Groups::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
 			}
-			$data['Тип не указан'] = ArrayHelper::map(Groups::find()->active()->where(['type' => null])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
-		} else {
-			$data = ArrayHelper::map(Groups::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
 		}
 
 		switch ($this->mode) {
@@ -63,8 +67,10 @@ class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface 
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
+					'data_mode' => $this->dataMode,
 					'multiple' => $this->multiple,
-					'options' => Groups::dataOptions()
+					'options' => Groups::dataOptions(),
+					'ajax_search_url' => '/groups/ajax/group-search'
 				]);
 			break;
 			case self::MODE_FORM:
@@ -72,9 +78,11 @@ class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface 
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
+					'data_mode' => $this->dataMode,
 					'multiple' => $this->multiple,
 					'options' => Groups::dataOptions(),
-					'formAction' => $this->formAction
+					'formAction' => $this->formAction,
+					'ajax_search_url' => '/groups/ajax/group-search'
 				]);
 			break;
 		}

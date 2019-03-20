@@ -163,6 +163,7 @@ class AjaxController extends BaseAjaxController {
 	 * @param int $page Номер страницы (не поддерживается, задел на быдущее)
 	 * @param int|null $user Пользователь ИСКЛЮЧАЕМЫЙ из поиска
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionGroupSearch(?string $term = null, ?int $page = 0, ?int $user = null):array {
 		$out = ['results' => ['id' => '', 'text' => '']];

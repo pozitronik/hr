@@ -50,7 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							'attribute' => 'relGroups',
 							'notData' => $model->relGroups,
 							'multiple' => true,
-							'mode' => GroupSelectWidget::MODE_FORM
+							'mode' => GroupSelectWidget::MODE_FORM,
+							'dataMode' => GroupSelectWidget::DATA_MODE_AJAX
 						]),
 						'heading' => false,
 						'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
