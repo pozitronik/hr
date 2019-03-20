@@ -245,7 +245,7 @@ class DynamicAttributesSearchCollection extends Model {
 			}
 			$query->andFilterWhere(["$aliasName.attribute_id" => $searchItem->attribute]);
 		}
-		\Yii::debug($query->createCommand()->rawSql, 'sql');
+		//\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 
