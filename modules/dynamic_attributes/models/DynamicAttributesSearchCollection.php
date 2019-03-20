@@ -216,13 +216,12 @@ class DynamicAttributesSearchCollection extends Model {
 				$query->leftJoin("rel_users_attributes $aliasName", "$aliasName.user_id = sys_users.id");
 				$usedAliases[] = $aliasName;
 			}
-//TODO FIXME: при поиске разных свойств одинакового типа в одном атрибуте алиасы свойств дублируются.
 			if (null !== $type = ArrayHelper::getValue($model, "structure.{$searchItem->property}.type")) {
 				$className = DynamicAttributeProperty::getTypeClass($type);
 				if (null !== $condition = ArrayHelper::getValue($className::conditionConfig(), "{$searchItem->condition}.1")) {
 					/** @noinspection BadExceptionsProcessingInspection */
 					try {
-						$typeAlias = $aliasName.$type;
+						$typeAlias = $aliasName.$type.$searchItem->property;
 						if (!in_array($typeAlias, $usedAliases)) {
 							$typeTableName = $className::tableName();
 
@@ -246,7 +245,7 @@ class DynamicAttributesSearchCollection extends Model {
 			}
 			$query->andFilterWhere(["$aliasName.attribute_id" => $searchItem->attribute]);
 		}
-//		\Yii::debug($query->createCommand()->rawSql, 'sql');
+		\Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 
