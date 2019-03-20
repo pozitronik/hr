@@ -20,9 +20,11 @@ use yii\db\ActiveRecord;
  * @property boolean $multiple
  * @property string|array $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property int $mode
+ * @property int $dataMode Режим загрузки данных
  */
 class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
+	public $dataMode = self::DATA_MODE_LOAD;
 	public $notData;
 	public $multiple = false;
 	public $groupByType = true;
@@ -42,7 +44,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 	 */
 	public function run():string {
 
-		$data = ArrayHelper::map($this->model->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->model->{$this->attribute}, 'id')])->all(), 'id', 'name');
+		$data = self::DATA_MODE_AJAX === $this->dataMode?[]:ArrayHelper::map($this->model->isNewRecord?DynamicAttributes::find()->active()->all():DynamicAttributes::find()->active()->where(['not in', 'id', ArrayHelper::getColumn($this->model->{$this->attribute}, 'id')])->all(), 'id', 'name');
 
 		switch ($this->mode) {
 			default:
@@ -51,7 +53,9 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $data,
-					'multiple' => $this->multiple
+					'multiple' => $this->multiple,
+					'data_mode' => $this->dataMode,
+					'ajax_search_url' => '/attributes/ajax/attribute-search'
 				]);
 			break;
 			case self::MODE_FORM:
@@ -60,7 +64,9 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 					'attribute' => $this->attribute,
 					'data' => $data,
 					'multiple' => $this->multiple,
-					'formAction' => $this->formAction
+					'formAction' => $this->formAction,
+					'data_mode' => $this->dataMode,
+					'ajax_search_url' => '/attributes/ajax/attribute-search'
 				]);
 			break;
 		}

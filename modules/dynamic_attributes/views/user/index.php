@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'model' => $user,
 								'attribute' => 'relDynamicAttributes',
 								'mode' => AttributeSelectWidget::MODE_FORM,
+								'dataMode' => AttributeSelectWidget::DATA_MODE_AJAX,
 								'multiple' => true,
 								'formAction' => $updateAttributeAction
 							]),

@@ -90,4 +90,22 @@ class AjaxController extends BaseAjaxController {
 
 	}
 
+	/**
+	 * Поиск пользователя в Select2
+	 *
+	 * @param string|null $term Строка поиска
+	 * @param int $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @param int|null $user Пользователь, атрибуты которого ИСКЛЮЧАЮТСЯ из поиска
+	 * @return array
+	 */
+	public function actionAttributeSearch(?string $term = null, ?int $page = 0, ?int $user = null):array {
+		$out = ['results' => ['id' => '', 'text' => '']];
+		if (null !== $term) {
+			$data = DynamicAttributes::find()->distinct()->select(['sys_attributes.id', 'sys_attributes.name as text'])
+				->where(['like', 'sys_attributes.name', $term])->andWhere(['not', ['sys_attributes.id' => RelUsersAttributes::find()->select('attribute_id')->where(['user_id' => $user])]])->offset(20 * $page)->limit(20)->asArray()->all();
+			$out['results'] = array_values($data);
+		}
+		return $out;
+	}
+
 }
