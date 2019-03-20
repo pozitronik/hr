@@ -502,4 +502,11 @@ class Users extends ActiveRecord implements StrictInterface {
 	public function getRefAttributesTypes() {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
+
+	/**
+	 * @return RefUserPositions|ActiveQuery
+	 */
+	public function getRelUserPositions() {
+		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
+	}
 }
