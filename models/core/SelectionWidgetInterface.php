@@ -14,6 +14,6 @@ interface SelectionWidgetInterface {
 	public const MODE_AJAX = 2;//ренедеримся, как есть, с постингом через AJAX
 
 
-	public const DATA_MODE_LOAD = 1;//данные прогружаются сразу
+	public const DATA_MODE_LOAD = 0;//данные прогружаются сразу
 	public const DATA_MODE_AJAX = 1;//данные прогружаются аяксовым поиском
 }
