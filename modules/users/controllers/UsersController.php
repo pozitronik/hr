@@ -35,6 +35,16 @@ class UsersController extends WigetableController {
 	}
 
 	/**
+	 * Макро обновления данных юзера
+	 * @param Users $user
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	private static function tryUpdate(Users $user):void {
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
+	}
+
+	/**
 	 * Основной список пользователей
 	 * @return string
 	 */
@@ -57,7 +67,8 @@ class UsersController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();//todo function
+		self::tryUpdate($user);
+
 		return $this->render('profile', [
 			'model' => $user
 		]);
@@ -70,7 +81,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionGroups(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
+		self::tryUpdate($user);
 		return $this->render('groups', [
 			'model' => $user,
 			'provider' => new ActiveDataProvider(['query' => $user->getRelGroups()->orderBy('name')->active()])
@@ -93,7 +104,7 @@ class UsersController extends WigetableController {
 	 */
 	public function actionSalary(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
+		self::tryUpdate($user);
 		return $this->render('salary', [
 			'model' => $user
 		]);
