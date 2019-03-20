@@ -135,11 +135,25 @@ class DynamicAttributes extends ActiveRecord implements StrictInterface {
 	}
 
 	/**
+	 * @param int $property_id
+	 * @return bool
+	 */
+	public function deleteProperty(int $property_id):bool {
+		$t = $this->structure;
+		if (isset($t[$property_id])) {
+			unset($t[$property_id]);
+			$this->setAndSaveAttribute('structure', $t);
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * @param DynamicAttributeProperty $attribute
 	 * @param int|null $property_id
 	 * @return int
 	 */
-	public function setProperty(DynamicAttributeProperty $attribute, $property_id):int {
+	public function setProperty(DynamicAttributeProperty $attribute, ?int $property_id):int {
 		$t = $this->structure;
 		if (null === $property_id) $property_id = count($this->structure) + 1;
 		$t[$property_id] = [
