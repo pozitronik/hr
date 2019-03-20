@@ -6,6 +6,7 @@ namespace app\modules\groups\controllers;
 use app\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\prototypes\PrototypeNodeData;
+use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
@@ -153,6 +154,34 @@ class AjaxController extends BaseAjaxController {
 		$this->answer->count = $dataProvider->totalCount;
 		$this->answer->items = $result;
 		return $this->answer->answer;
+	}
 
+	/**
+	 * Поиск группы в Select2
+	 *
+	 * @param string|null $term Строка поиска
+	 * @param int $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @param int|null $user Пользователь ИСКЛЮЧАЕМЫЙ из поиска
+	 * @return array
+	 */
+	public function actionGroupSearch(?string $term = null, ?int $page = 0, ?int $user = null):array {
+		$out = ['results' => ['id' => '', 'text' => '']];
+		$results = [];
+		if (null !== $term) {
+			/** @var Groups[] $groups */
+			$groups = Groups::find()->distinct()/*->select(['sys_groups.id', 'sys_groups.name as text'])*/
+			->where(['like', 'sys_groups.name', $term])->andWhere(['not', ['sys_groups.id' => RelUsersGroups::find()->select('group_id')->where(['user_id' => $user])]])->offset(20 * $page)->limit(20)->all();
+			foreach ($groups as $group) {
+				$results[] = [
+					'id' => $group->id,
+					'text' => $group->name,
+					'logo' => $group->logo,
+					'typename' => ArrayHelper::getValue($group->relGroupTypes, 'name'),
+					'typecolor' => ArrayHelper::getValue($group->relGroupTypes, 'color')
+				];
+			}
+			$out['results'] = $results;
+		}
+		return $out;
 	}
 }
