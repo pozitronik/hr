@@ -191,7 +191,7 @@ class AttributePropertyScore extends ActiveRecord implements AttributePropertyIn
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
 
-		if (is_string($value)) {//import way: todo refactoring
+		if (is_string($value)) {//import way.
 			$value = json_decode($value, true);
 			$record->self_score_value = ArrayHelper::getValue($value, '0');
 			$record->self_score_comment = ArrayHelper::getValue($value, '1');
