@@ -30,7 +30,7 @@ use yii\db\Exception;
  * @property bool $deleted
  *
  * @property-read double $mid Средний оклад
- * @property RefUserPositions|ActiveQuery $refUserPosition //todo: По логике приложения нуно переименовать в relUserPosition И далее
+ * @property RefUserPositions|ActiveQuery $refUserPosition
  * @property RefGrades|ActiveQuery $refGrade
  * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
  * @property RefLocations|ActiveQuery|null $refLocation
