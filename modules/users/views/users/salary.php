@@ -7,15 +7,15 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\helpers\Icons;
 use app\models\core\core_module\CoreModule;
+use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
+use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use kartik\depdrop\DepDrop;
 use yii\helpers\Url;
 use yii\web\View;
 use kartik\form\ActiveForm;
@@ -49,18 +49,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					]); ?>
 				</div>
 				<div class="col-md-2">
-					<?= $form->field($model, 'relGrade')->widget(DepDrop::class, [
+					<?= $form->field($model, 'relGrade')->widget(RefDepDrop::class, [
 						'options' => ['placeholder' => 'Выберите грейд'],
+						'referenceClass' => RefGrades::class,
 						'data' => null === $model->relUsersSalary->grade_id?ArrayHelper::map($model->relRefUserPositions->relGrades, 'id', 'name'):[$model->relUsersSalary->grade_id => ArrayHelper::getValue($model, 'relGrade.name')],
-						'type' => DepDrop::TYPE_SELECT2,//todo: отнаследовать свой DepDrop, который будет поддерживать ReferenceSelectWidget.
-						'select2Options' => [
-							'addon' => [
-								'append' => [
-									'content' => Html::a(Icons::update(), ['/references/references/update', 'id' => $model->position, 'class' => 'RefUserPositions'], ['class' => 'btn btn-default']),
-									'asButton' => true
-								]
-							]
-						],
+						'type' => RefDepDrop::TYPE_REFERENCE_SELECT,
 						'pluginOptions' => [
 							'depends' => ['users-position'],
 							'url' => Url::to(['/salary/ajax/get-position-grades']),
