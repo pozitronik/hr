@@ -6,11 +6,10 @@ namespace app\models;
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use yii\base\InvalidConfigException;
-use yii\base\Model;
 use yii\db\ActiveRecord;
 
 /**
- * Class SysLog
+ * Class ActiveRecordLogger
  * @package app\models
  * @property integer $id
  * @property-read string $timestamp
@@ -21,7 +20,11 @@ use yii\db\ActiveRecord;
  * @property array $new_attributes
  *
  */
-class SysLog extends ActiveRecord {
+class ActiveRecordLogger extends ActiveRecord {
+
+	public static function tableName():string {
+		return 'sys_log';
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -35,18 +38,18 @@ class SysLog extends ActiveRecord {
 	}
 
 	/**
-	 * @param Model $model
+	 * @param ActiveRecord $model
 	 * @param bool $ignoreUnchanged
 	 * @return bool
 	 * @throws InvalidConfigException
 	 */
-	public static function logChanges(Model $model, bool $ignoreUnchanged = true):bool {
+	public static function logChanges(ActiveRecord $model, bool $ignoreUnchanged = true):bool {
 		if (ArrayHelper::getValue($model, 'loggingEnabled', false)) {
 			if (([] === $diff = $model->identifyChangedAttributes()) && $ignoreUnchanged) return true;
 			$changedAttributes = array_intersect_key($model->oldAttributes, $diff);
 			self::push($model->formName(), $model->primaryKey, $changedAttributes, $diff);
-			return true;
 		}
+		return true;
 	}
 
 	/**

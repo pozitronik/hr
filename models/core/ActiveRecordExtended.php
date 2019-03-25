@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\models\SysLog;
+use app\models\ActiveRecordLogger;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
@@ -27,7 +27,7 @@ class ActiveRecordExtended extends ActiveRecord {
 	 * {@inheritDoc}
 	 */
 	public function beforeSave($insert):bool {
-		return (parent::beforeSave($insert) && SysLog::logChanges($this));
+		return (parent::beforeSave($insert) && ActiveRecordLogger::logChanges($this));
 	}
 
 }
