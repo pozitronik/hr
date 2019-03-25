@@ -186,6 +186,7 @@ trait ARExtended {
 		}
 
 		if ($this->hasAttribute('deleted')) {
+			/** @noinspection PhpUndefinedFieldInspection */
 			$this->setAndSaveAttribute('deleted', !$this->deleted);
 		} else {
 			$this->delete();
