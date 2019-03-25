@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
+use app\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
@@ -147,7 +148,7 @@ trait ARExtended {
 		/** @noinspection ForeachSourceInspection */
 		foreach ($this->attributes as $name => $value) {
 			/** @noinspection TypeUnsafeComparisonInspection */
-			if ($this->oldAttributes[$name] != $value) $changedAttributes[$name] = $value;//Нельзя использовать строгое сравнение из-за преобразований БД
+			if (ArrayHelper::getValue($this, "oldAttributes.$name") != $value) $changedAttributes[$name] = $value;//Нельзя использовать строгое сравнение из-за преобразований БД
 		}
 		return $changedAttributes;
 	}
