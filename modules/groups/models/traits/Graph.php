@@ -34,7 +34,7 @@ trait Graph {
 			'label' => $this->name,
 			'x' => $x,
 			'y' => $y,
-			'size' => (string)$size,//todo: придумать характеристику веса группы,
+			'size' => (string)$size,//придумать характеристику веса группы,
 			'color' => ArrayHelper::getValue($this->relGroupTypes, 'color', "rgb({$red},{$green},{$blue})"),
 			'type' => 'circle',
 			'image' => [
