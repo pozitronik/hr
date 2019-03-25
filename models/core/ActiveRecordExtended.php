@@ -7,6 +7,7 @@ use app\models\SysLog;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
+/** @noinspection UndetectableTableInspection */
 
 /**
  * Class ActiveRecordExtended
