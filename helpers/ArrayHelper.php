@@ -218,4 +218,16 @@ class ArrayHelper extends YiiArrayHelper {
 		return self::getValue(array_keys($array), 0);
 	}
 
+	/**
+	 * @param array|null $array
+	 * @param Closure|string $from
+	 * @param Closure|string $to
+	 * @param null $group
+	 * @return array
+	 */
+	public static function map($array, $from, $to, $group = null):array {
+		if (!is_iterable($array)) return [];
+		return parent::map($array, $from, $to, $group);
+	}
+
 }
