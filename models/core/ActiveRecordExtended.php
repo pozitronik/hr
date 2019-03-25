@@ -1,26 +1,40 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\core\traits;
+namespace app\models\core;
 
 use app\helpers\ArrayHelper;
-use app\models\core\SysExceptions;
+use app\models\SysLog;
+use app\modules\import\models\fos\ImportException;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
-use app\modules\import\models\fos\ImportException;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\db\ActiveRecord;
 use Throwable;
+use yii\base\InvalidConfigException;
+use yii\db\ActiveRecord;
+
+/** @noinspection UndetectableTableInspection */
 
 /**
- * Trait ARExtended
- * Расширения модели ActiveRecord
- *
+ * Class ActiveRecordExtended
+ * @package app\models\core
  */
-trait ARExtended {
+class ActiveRecordExtended extends ActiveRecord {
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tableName():string {
+		throw new InvalidConfigException('"'.static::class.'" нельзя вызывать напрямую.');
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function beforeSave($insert):bool {
+		return (parent::beforeSave($insert) && SysLog::logChanges($this));
+	}
 
 	/**
 	 * Обёртка для быстрого поиска моделей с опциональным выбросом логируемого исключения
@@ -179,13 +193,13 @@ trait ARExtended {
 	 * Универсальная функция удаления любой модели
 	 */
 	public function safeDelete():void {
-		/** @var Model $this */
 		if (!UserAccess::canAccess($this, AccessMethods::delete)) {
 			AlertModel::AccessNotify();
 			return;
 		}
 
 		if ($this->hasAttribute('deleted')) {
+			/** @noinspection PhpUndefinedFieldInspection */
 			$this->setAndSaveAttribute('deleted', !$this->deleted);
 		} else {
 			$this->delete();
@@ -204,10 +218,10 @@ trait ARExtended {
 	/**
 	 * @param string $property
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function asJSON(string $property):string {
 		if (!$this->hasAttribute($property)) throw new RuntimeException("Field $property not exists in the table ".$this::tableName());
 		return json_encode($this->$property, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
 	}
-
 }
