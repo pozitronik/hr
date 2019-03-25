@@ -5,6 +5,7 @@ namespace app\models;
 
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
+use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
@@ -42,6 +43,7 @@ class ActiveRecordLogger extends ActiveRecord {
 	 * @param bool $ignoreUnchanged
 	 * @return bool
 	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public static function logChanges(ActiveRecord $model, bool $ignoreUnchanged = true):bool {
 		if (ArrayHelper::getValue($model, 'loggingEnabled', false)) {
