@@ -40,7 +40,7 @@ class UserWidget extends Widget {
 		}
 
 
-		return $this->render('leader', [//todo: сокращёная форма имени?
+		return $this->render('leader', [//think: сокращёная форма имени?
 			'model' => $this->user,
 			'group' => $this->group,
 			'options' => function() {
