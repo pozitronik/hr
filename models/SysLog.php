@@ -5,6 +5,7 @@ namespace app\models;
 
 use app\models\user\CurrentUser;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 
 /**
@@ -33,12 +34,12 @@ class SysLog extends ActiveRecord {
 	}
 
 	/**
-	 * @param ActiveRecord $model
+	 * @param Model $model
 	 * @param bool $ignoreUnchanged
 	 * @return bool
 	 * @throws InvalidConfigException
 	 */
-	public static function logChanges(ActiveRecord $model, bool $ignoreUnchanged = true):bool {
+	public static function logChanges(Model $model, bool $ignoreUnchanged = true):bool {
 		if (([] === $diff = $model->identifyChangedAttributes()) && $ignoreUnchanged) return true;
 		$changedAttributes = array_intersect_key($model->oldAttributes, $diff);
 		self::push($model->formName(), $model->primaryKey, $changedAttributes, $diff);
