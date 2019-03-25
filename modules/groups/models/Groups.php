@@ -8,7 +8,6 @@ use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
-use app\models\core\traits\ARExtended;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\traits\Graph;
 use app\widgets\alert\AlertModel;
@@ -61,7 +60,6 @@ use yii\db\Exception;
  *
  */
 class Groups extends ActiveRecordExtended implements StrictInterface {
-	use ARExtended;
 	use Graph;
 	use Upload;
 

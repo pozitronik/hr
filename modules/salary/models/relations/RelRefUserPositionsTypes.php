@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\salary\models\relations;
 
 use app\models\core\ActiveRecordExtended;
-use app\models\core\traits\ARExtended;
 use app\models\relations\Relations;
 
 /**
@@ -13,7 +12,6 @@ use app\models\relations\Relations;
  */
 class RelRefUserPositionsTypes extends ActiveRecordExtended {
 	use Relations;
-	use ARExtended;
 
 	/**
 	 * {@inheritDoc}

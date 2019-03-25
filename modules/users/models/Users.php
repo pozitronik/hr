@@ -13,7 +13,6 @@ use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
-use app\models\core\traits\ARExtended;
 use app\modules\salary\models\traits\UsersSalaryTrait;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersPrivileges;
@@ -87,7 +86,6 @@ use Yii;
  * @property RefAttributesTypes[]|ActiveQuery $refAttributesTypes Типы атрибутов, присвоенных пользователю
  */
 class Users extends ActiveRecordExtended implements StrictInterface {
-	use ARExtended;
 	use Upload;
 	use MethodsAccess;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.

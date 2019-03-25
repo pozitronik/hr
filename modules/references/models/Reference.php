@@ -8,7 +8,6 @@ use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
-use app\models\core\traits\ARExtended;
 use app\widgets\alert\AlertModel;
 use Throwable;
 use Yii;
@@ -41,8 +40,6 @@ use RuntimeException;
  * @property null|CoreModule $plugin
  */
 class Reference extends ActiveRecordExtended implements ReferenceInterface, StrictInterface {
-	use ARExtended;
-
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
 	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions

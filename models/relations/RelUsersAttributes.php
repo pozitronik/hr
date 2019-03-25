@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\models\core\ActiveRecordExtended;
-use app\models\core\traits\ARExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use yii\db\ActiveQuery;
@@ -22,7 +21,6 @@ use yii\db\ActiveQuery;
  */
 class RelUsersAttributes extends ActiveRecordExtended {
 	use Relations;
-	use ARExtended;
 
 	/**
 	 * {@inheritdoc}

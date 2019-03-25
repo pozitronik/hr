@@ -14,7 +14,6 @@ use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\models\core\SysExceptions;
-use app\models\core\traits\ARExtended;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
@@ -47,7 +46,6 @@ use yii\db\Exception;
  * @property-read int $usersCount
  */
 class DynamicAttributes extends ActiveRecordExtended implements StrictInterface {
-	use ARExtended;
 
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',

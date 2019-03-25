@@ -9,7 +9,6 @@ use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\models\core\StrictInterface;
-use app\models\core\traits\ARExtended;
 use app\models\relations\RelPrivilegesRights;
 use app\models\relations\RelUsersPrivileges;
 use app\models\user\CurrentUser;
@@ -44,7 +43,6 @@ use yii\db\Exception;
  * @property-read UserRightInterface[] $userRights
  */
 class Privileges extends ActiveRecordExtended implements StrictInterface {
-	use ARExtended;
 	public const RIGHTS_DIRECTORY = '@app/modules/privileges/models/rights';
 
 	/**

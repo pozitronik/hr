@@ -7,7 +7,6 @@ use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
-use app\models\core\traits\ARExtended;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
@@ -36,7 +35,6 @@ use yii\db\Exception;
  * @property RefLocations|ActiveQuery|null $refLocation
  */
 class SalaryFork extends ActiveRecordExtended implements StrictInterface {
-	use ARExtended;
 
 	/**
 	 * {@inheritdoc}

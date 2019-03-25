@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\models\ActiveRecordLogger;
+use app\models\core\traits\ARExtended;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
@@ -14,6 +15,7 @@ use yii\db\ActiveRecord;
  * @package app\models\core
  */
 class ActiveRecordExtended extends ActiveRecord {
+	use ARExtended;
 	public $loggingEnabled = true;
 
 	/**
