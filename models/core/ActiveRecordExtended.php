@@ -21,6 +21,7 @@ use yii\db\ActiveRecord;
  * @package app\models\core
  */
 class ActiveRecordExtended extends ActiveRecord {
+	public $loggingEnabled = true;
 
 	/**
 	 * {@inheritdoc}
