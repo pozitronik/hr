@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace app\widgets\alert;
 
 use app\helpers\ArrayHelper;
+use app\models\core\SQueue;
+use app\models\user\CurrentUser;
 use kartik\growl\Growl;
-use Yii;
 use yii\bootstrap\Widget;
 
 /**
@@ -23,14 +24,9 @@ class Alert extends Widget {
 	 * {@inheritdoc}
 	 */
 	public function run() {
-		$session = Yii::$app->session;
-		/*
-		 * fixme: имеем тут проблему: getAllFlashes помечает ВСЕ флеши к удалению при следующем обращении к сессии (в том числе - и к AJAX)
-		 * Т.о. передача алертов через флеши некорректна, нужно реализовать собственную очередь уведомлений (либо собственный механизм флешек, либо серверная очередь)
-		*/
-		$flashes = $session->getAllFlashes();
+		$flashes = SQueue::get(CurrentUser::Id());
 
-		foreach ($flashes as $type => $flash) {
+		foreach ($flashes as $flash) {
 			if (AlertModel::IDENTIFY_MARKER === ArrayHelper::getValue($flash, 'identify')) {
 				$alert = new AlertModel($flash);
 				echo Growl::widget([
@@ -42,7 +38,7 @@ class Alert extends Widget {
 					'delay' => $alert->delay,
 					'pluginOptions' => $alert->pluginOptions
 				]);
-				$session->removeFlash($type);
+				SQueue::clear(CurrentUser::Id());
 			}
 		}
 	}

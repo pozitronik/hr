@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace app\widgets\alert;
 
+use app\models\core\SQueue;
+use app\models\user\CurrentUser;
 use kartik\growl\Growl;
-use Yii;
 use yii\base\Model;
 
 /**
@@ -85,7 +86,7 @@ class AlertModel extends Model {
 	 * Пушает модель в стек алертов
 	 */
 	public function push():void {
-		Yii::$app->session->setFlash($this->type, [
+		SQueue::push(CurrentUser::Id(),[
 			'identify' => self::IDENTIFY_MARKER,
 			'type' => $this->type,
 			'title' => $this->title,
