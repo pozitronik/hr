@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<?= $form->field($model, 'relGrade')->widget(RefDepDrop::class, [
 						'options' => ['placeholder' => 'Выберите грейд'],
 						'referenceClass' => RefGrades::class,
-						'data' => null === $model->relUsersSalary->grade_id?ArrayHelper::map($model->relRefUserPositions->relGrades, 'id', 'name'):[$model->relUsersSalary->grade_id => ArrayHelper::getValue($model, 'relGrade.name')],
+						'data' => null === $model->relUsersSalary->grade_id?ArrayHelper::map(ArrayHelper::getValue($model->relRefUserPositions, 'relGrades'), 'id', 'name'):[$model->relUsersSalary->grade_id => ArrayHelper::getValue($model, 'relGrade.name')],
 						'type' => RefDepDrop::TYPE_REFERENCE_SELECT,
 						'pluginOptions' => [
 							'depends' => ['users-position'],
