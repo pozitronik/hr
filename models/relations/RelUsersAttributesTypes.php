@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\helpers\ArrayHelper;
+use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use Throwable;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "rel_users_attributes_types".
@@ -18,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|RelUsersAttributes[] $relUsersAttributes
  * @property ActiveQuery|RefAttributesTypes $refAttributesType Типы связей (справочник)
  */
-class RelUsersAttributesTypes extends ActiveRecord {
+class RelUsersAttributesTypes extends ActiveRecordExtended {
 	/**
 	 * {@inheritdoc}
 	 */

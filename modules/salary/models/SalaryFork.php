@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\salary\models;
 
 use app\helpers\ArrayHelper;
+use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
@@ -13,7 +14,6 @@ use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\widgets\alert\AlertModel;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -35,7 +35,7 @@ use yii\db\Exception;
  * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
  * @property RefLocations|ActiveQuery|null $refLocation
  */
-class SalaryFork extends ActiveRecord implements StrictInterface {
+class SalaryFork extends ActiveRecordExtended implements StrictInterface {
 	use ARExtended;
 
 	/**

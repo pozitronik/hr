@@ -5,6 +5,7 @@ namespace app\modules\users\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\core\ActiveRecordExtended;
 use app\models\core\StrictInterface;
 use app\models\core\traits\MethodsAccess;
 use app\models\core\traits\Upload;
@@ -27,7 +28,6 @@ use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use Throwable;
 use Yii;
 
@@ -86,7 +86,7 @@ use Yii;
  * @property RelUsersAttributesTypes[]|ActiveQuery $relUsersAttributesTypes Релейшен к таблице связей с типами атрибутов
  * @property RefAttributesTypes[]|ActiveQuery $refAttributesTypes Типы атрибутов, присвоенных пользователю
  */
-class Users extends ActiveRecord implements StrictInterface {
+class Users extends ActiveRecordExtended implements StrictInterface {
 	use ARExtended;
 	use Upload;
 	use MethodsAccess;

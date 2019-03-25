@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\models\core\ActiveRecordExtended;
 use app\modules\users\models\references\RefUserRoles;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "rel_users_groups".
@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|RelUsersGroupsRoles[] $relUsersGroupsRoles Связь с релейшеном к ролям в группе
  * @property ActiveQuery|RefUserRoles[] $refUserRoles Роли пользователя в группе, полученные через релейшен
  */
-class RelUsersGroups extends ActiveRecord {
+class RelUsersGroups extends ActiveRecordExtended {
 	use Relations;
 
 	/**

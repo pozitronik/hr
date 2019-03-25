@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\helpers\ArrayHelper;
+use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use Yii;
@@ -21,7 +22,7 @@ use yii\widgets\ActiveForm;
  * @property int $user_id ID пользователя
  * @property string $value Значение
  */
-class AttributePropertyString extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyString extends ActiveRecordExtended implements AttributePropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */

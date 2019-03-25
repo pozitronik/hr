@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
@@ -14,7 +15,6 @@ use Yii;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use app\helpers\ArrayHelper;
 use yii\helpers\Html;
 use RuntimeException;
@@ -40,7 +40,7 @@ use RuntimeException;
  * @property null|string $pluginId Плагин, подключающий расширение
  * @property null|CoreModule $plugin
  */
-class Reference extends ActiveRecord implements ReferenceInterface, StrictInterface {
+class Reference extends ActiveRecordExtended implements ReferenceInterface, StrictInterface {
 	use ARExtended;
 
 	public $menuCaption = "Справочник";

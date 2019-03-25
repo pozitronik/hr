@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\relations;
 
+use app\models\core\ActiveRecordExtended;
 use app\models\core\traits\ARExtended;
 use app\models\relations\Relations;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "rel_users_salary".
@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property int $premium_group_id
  * @property int $location_id
  */
-class RelUsersSalary extends ActiveRecord {
+class RelUsersSalary extends ActiveRecordExtended {
 	use Relations;
 	use ARExtended;
 

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\helpers\ArrayHelper;
+use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Throwable;
@@ -31,7 +32,7 @@ use yii\widgets\ActiveForm;
  * @property-read array $valueArray
  * @property-read ScoreProperty $scoreValue
  */
-class AttributePropertyScore extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyScore extends ActiveRecordExtended implements AttributePropertyInterface {
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.

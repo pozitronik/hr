@@ -10,6 +10,7 @@ namespace app\modules\dynamic_attributes\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\models\core\SysExceptions;
@@ -22,7 +23,6 @@ use RuntimeException;
 use Throwable;
 use Yii;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -46,7 +46,7 @@ use yii\db\Exception;
  * @property int $userProperties
  * @property-read int $usersCount
  */
-class DynamicAttributes extends ActiveRecord implements StrictInterface {
+class DynamicAttributes extends ActiveRecordExtended implements StrictInterface {
 	use ARExtended;
 
 	public const CATEGORIES = [/*Ну хер знает*/

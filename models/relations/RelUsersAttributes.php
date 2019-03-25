@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\models\core\ActiveRecordExtended;
 use app\models\core\traits\ARExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "rel_users_attributes".
@@ -20,7 +20,7 @@ use yii\db\ActiveRecord;
  *
  * @property ActiveQuery|DynamicAttributes $relDynamicAttribute Атрибут связки
  */
-class RelUsersAttributes extends ActiveRecord {
+class RelUsersAttributes extends ActiveRecordExtended {
 	use Relations;
 	use ARExtended;
 

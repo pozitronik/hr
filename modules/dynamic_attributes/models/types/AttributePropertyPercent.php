@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models\types;
 
+use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use kartik\range\RangeInput;
@@ -21,7 +22,7 @@ use yii\widgets\ActiveForm;
  * @property int $user_id ID пользователя
  * @property int $value Значение
  */
-class AttributePropertyPercent extends ActiveRecord implements AttributePropertyInterface {
+class AttributePropertyPercent extends ActiveRecordExtended implements AttributePropertyInterface {
 	/**
 	 * {@inheritdoc}
 	 */

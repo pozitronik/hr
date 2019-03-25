@@ -5,6 +5,7 @@ namespace app\modules\privileges\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\models\core\StrictInterface;
@@ -21,7 +22,6 @@ use Throwable;
 use Yii;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -43,7 +43,7 @@ use yii\db\Exception;
  * @property ActiveQuery|Users $relUsers
  * @property-read UserRightInterface[] $userRights
  */
-class Privileges extends ActiveRecord implements StrictInterface {
+class Privileges extends ActiveRecordExtended implements StrictInterface {
 	use ARExtended;
 	public const RIGHTS_DIRECTORY = '@app/modules/privileges/models/rights';
 

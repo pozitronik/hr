@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use yii\db\ActiveRecord;
+use app\models\core\ActiveRecordExtended;
 
 /**
  * This is the model class for table "rel_privileges_rights".
@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property string $right название класса права
  *
  */
-class RelPrivilegesRights extends ActiveRecord {
+class RelPrivilegesRights extends ActiveRecordExtended {
 	use Relations;
 
 	/**

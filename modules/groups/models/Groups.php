@@ -5,6 +5,7 @@ namespace app\modules\groups\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
+use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\models\core\traits\ARExtended;
@@ -22,7 +23,6 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -60,7 +60,7 @@ use yii\db\Exception;
  * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
-class Groups extends ActiveRecord implements StrictInterface {
+class Groups extends ActiveRecordExtended implements StrictInterface {
 	use ARExtended;
 	use Graph;
 	use Upload;

@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\relations;
 
+use app\models\core\ActiveRecordExtended;
 use app\models\relations\Relations;
-use yii\db\ActiveRecord;
 
 /**
  * Модель правил соответствия должностей и грейдов. Т.е. должности может быть присвоен грейд из тех, что есть в этой таблице.
@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $grade_id
  * @property int $position_id
  */
-class RelGradesPositionsRules extends ActiveRecord {
+class RelGradesPositionsRules extends ActiveRecordExtended {
 	use Relations;
 
 	/**

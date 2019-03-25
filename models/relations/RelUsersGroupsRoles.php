@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\models\core\ActiveRecordExtended;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property int $role Роль
  */
-class RelUsersGroupsRoles extends ActiveRecord {
+class RelUsersGroupsRoles extends ActiveRecordExtended {
 	/**
 	 * {@inheritdoc}
 	 */
