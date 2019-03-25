@@ -142,6 +142,7 @@ trait ARExtended {
 	/**
 	 * Вычисляет разницу между старыми и новыми аттрибутами
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function identifyChangedAttributes():array {
 		$changedAttributes = [];
