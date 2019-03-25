@@ -23,6 +23,9 @@ use yii\db\ActiveRecord;
  */
 class ActiveRecordLogger extends ActiveRecord {
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public static function tableName():string {
 		return 'sys_log';
 	}
