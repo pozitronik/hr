@@ -58,6 +58,14 @@ class ActiveRecordLogger extends ActiveRecord {
 	}
 
 	/**
+	 * @param ActiveRecord $model
+	 * @throws InvalidConfigException
+	 */
+	public static function logModel(ActiveRecord $model):void {
+		self::push($model->formName(), $model->primaryKey, [], $model->attributes);
+	}
+
+	/**
 	 * @param string|null $modelName
 	 * @param int|null $pKey
 	 * @param array $oldAttributes
