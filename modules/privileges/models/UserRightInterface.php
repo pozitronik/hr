@@ -63,7 +63,7 @@ interface UserRightInterface {
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null Одна из констант доступа
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool;//todo static
+	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool;
 
 	/**
 	 * @param Model $model Модель, к которой проверяется доступ
