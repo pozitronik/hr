@@ -35,7 +35,7 @@ class RightGroupCreate extends UserRight {
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		$definedRules = [
-			'groups/groups' => [
+			'groups' => [
 				'actions' => [
 					'create' => self::ACCESS_ALLOW
 				]
