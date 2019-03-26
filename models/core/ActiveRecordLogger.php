@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models;
+namespace app\models\core;
 
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;

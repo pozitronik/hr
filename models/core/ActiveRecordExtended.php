@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\models\ActiveRecordLogger;
 use app\models\core\traits\ARExtended;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
