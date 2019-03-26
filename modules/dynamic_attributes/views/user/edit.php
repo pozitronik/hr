@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'format' => 'raw',
 							'attribute' => 'value',
 							'label' => 'Значение',
-							'value' => function($model) use ($form) {
+							'value' => static function($model) use ($form) {
 								/** @var DynamicAttributeProperty $model */
 								return $model->editField($form);
 							}

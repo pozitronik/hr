@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(DynamicAttributes $model) {
+			'value' => static function(DynamicAttributes $model) {
 				return AttributeNavigationMenuWidget::widget([
 					'model' => $model,
 					'mode' => AttributeNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'name',
-			'value' => function(DynamicAttributes $model) {
+			'value' => static function(DynamicAttributes $model) {
 				return Html::a($model->name, ['update', 'id' => $model->id]);
 			},
 			'format' => 'raw'

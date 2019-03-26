@@ -61,25 +61,25 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	 */
 	public static function conditionConfig():array {
 		return [
-			['равно', function($tableAlias, $searchValue) {
+			['равно', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.value", $searchValue];
 			}],
-			['не равно', function($tableAlias, $searchValue) {
+			['не равно', static function($tableAlias, $searchValue) {
 				return ['!=', "$tableAlias.value", $searchValue];
 			}],
-			['начинается с', function($tableAlias, $searchValue) {
+			['начинается с', static function($tableAlias, $searchValue) {
 				return ['like', "$tableAlias.value", "%$searchValue", false];
 			}],
-			['содержит', function($tableAlias, $searchValue) {
+			['содержит', static function($tableAlias, $searchValue) {
 				return ['like', "$tableAlias.value", "%$searchValue%", false];
 			}],
-			['не содержит', function($tableAlias, $searchValue) {
+			['не содержит', static function($tableAlias, $searchValue) {
 				return ['not like', "$tableAlias.value", "%$searchValue", false];
 			}],
-			['заполнено', function($tableAlias, $searchValue) {
+			['заполнено', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.value" => null]];
 			}],
-			['не заполнено', function($tableAlias, $searchValue) {
+			['не заполнено', static function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.value", new Expression('null')];//todo: пустые строки не равны Null
 			}]
 		];
@@ -95,7 +95,7 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	 * @throws \Throwable
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
-		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id, $formatted) {
+		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id, $formatted) {
 			$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
 			return $formatted?Yii::$app->formatter->asText($value):$value;
 		});

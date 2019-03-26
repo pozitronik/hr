@@ -58,7 +58,7 @@ GridView::widget([
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return UserNavigationMenuWidget::widget([
 					'model' => $model,
 					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -73,7 +73,7 @@ GridView::widget([
 			]
 		],
 		[
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return Html::img($model->avatar, ['class' => 'img-circle img-xs']);
 			},
 			'label' => 'Аватар',
@@ -85,7 +85,7 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'username',
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return Html::a($model->username, ['/users/users/profile', 'id' => $model->id]);
 			},
 			'format' => 'raw'
@@ -105,7 +105,7 @@ GridView::widget([
 		[
 			'attribute' => 'groupName',
 			'label' => 'Группы',
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->relGroups,
 					'useBadges' => false,
@@ -126,16 +126,16 @@ GridView::widget([
 			],
 
 			'label' => 'Роли',
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => function() {
+					"optionsMap" => static function() {
 						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-						array_walk($options, function(&$value, $key) {
+						array_walk($options, static function(&$value, $key) {
 							if (!empty($value)) {
 								$value = [
 									'style' => "background: $value;"
@@ -156,7 +156,7 @@ GridView::widget([
 			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
 
 			'label' => 'Привилегии',
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->getRelPrivileges()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,

@@ -31,16 +31,16 @@ class AttributePropertyBoolean extends ActiveRecordExtended implements Attribute
 	 */
 	public static function conditionConfig():array {
 		return [
-			['да', function($tableAlias, $searchValue) {
+			['да', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.value", true];
 			}],
-			['нет', function($tableAlias, $searchValue) {
+			['нет', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.value", false];
 			}],
-			['заполнено', function($tableAlias, $searchValue) {
+			['заполнено', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.value" => null]];
 			}],
-			['не заполнено', function($tableAlias, $searchValue) {
+			['не заполнено', static function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.value", new Expression('null')];
 			}]
 		];
@@ -88,7 +88,7 @@ class AttributePropertyBoolean extends ActiveRecordExtended implements Attribute
 	 * @throws \Throwable
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
-		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id, $formatted) {
+		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id, $formatted) {
 			$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
 			return $formatted?Yii::$app->formatter->asBoolean($value):$value;
 		});

@@ -136,7 +136,7 @@ class RefUserRoles extends Reference {
 			[
 				'attribute' => 'boss_flag',
 //				'header' => Html::tag('i', false, ['class' => 'fa fa-crown']),
-				'value' => function($model) {
+				'value' => static function($model) {
 					/** @var self $model */
 					return $model->boss_flag?Html::tag('i', false, ['class' => 'fa fa-crown']):false;
 				},
@@ -151,7 +151,7 @@ class RefUserRoles extends Reference {
 			],
 			[
 				'attribute' => 'name',
-				'value' => function($model) {
+				'value' => static function($model) {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'

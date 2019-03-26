@@ -32,7 +32,7 @@ $columns[] = [
 		'style' => 'width:50px',
 		'class' => 'skip-export kv-align-center kv-align-middle'
 	],
-	'value' => function(Reference $model) use ($class) {
+	'value' => static function(Reference $model) use ($class) {
 		return ReferenceNavigationMenuWidget::widget([
 			'model' => $model,
 			'className' => $class->formName(),
@@ -57,7 +57,7 @@ $columns = array_merge($columns, $class->columns);
 			'filterModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 			'columns' => $columns,
-			'rowOptions' => function($record) {
+			'rowOptions' => static function($record) {
 				$class = '';
 				if ($record['deleted']) {
 					$class .= 'danger ';

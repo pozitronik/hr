@@ -43,7 +43,7 @@ class AjaxController extends BaseAjaxController {
 	public function actionUserRemoveBookmark():array {
 		if (false !== $route = Yii::$app->request->post('route', false)) {
 			if (null === $user = CurrentUser::User()) $this->answer->addError('user', 'Unauthorized');
-			$user->options->bookmarks = array_filter($user->options->bookmarks, function(Bookmarks $bookmark) use ($route) {/*PHP не модифицирует результирующий массив при каждом вызове замыкания, поэтому можно не вводить временную переменную*/
+			$user->options->bookmarks = array_filter($user->options->bookmarks, static function(Bookmarks $bookmark) use ($route) {/*PHP не модифицирует результирующий массив при каждом вызове замыкания, поэтому можно не вводить временную переменную*/
 				return $route !== $bookmark->route;
 			});
 

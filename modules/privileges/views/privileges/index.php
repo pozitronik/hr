@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(Privileges $model) {
+			'value' => static function(Privileges $model) {
 				return PrivilegesNavigationMenuWidget::widget([
 					'model' => $model,
 					'mode' => PrivilegesNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'name',
-			'value' => function(Privileges $model) {
+			'value' => static function(Privileges $model) {
 				return Html::a($model->name, ['update', 'id' => $model->id]);
 			},
 			'format' => 'raw'
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'default:boolean',
 		[
 			'attribute' => 'userRights',
-			'value' => function(Privileges $model) {
+			'value' => static function(Privileges $model) {
 				return GridView::widget([
 					'dataProvider' => new ArrayDataProvider([
 						'allModels' => $model->userRights
@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'usersCount',
-			'value' => function(Privileges $model) {
+			'value' => static function(Privileges $model) {
 				return $model->default?"Все пользователи":$model->usersCount;
 			}
 		]

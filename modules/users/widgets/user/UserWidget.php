@@ -43,9 +43,9 @@ class UserWidget extends Widget {
 		return $this->render('leader', [//think: сокращёная форма имени?
 			'model' => $this->user,
 			'group' => $this->group,
-			'options' => function() {
+			'options' => static function() {
 				$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-				array_walk($options, function(&$value, $key) {
+				array_walk($options, static function(&$value, $key) {
 					if (!empty($value)) {
 						$value = [
 							'style' => "background: $value;"

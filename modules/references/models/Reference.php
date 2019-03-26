@@ -102,7 +102,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 			],
 			[
 				'attribute' => 'name',
-				'value' => function($model) {
+				'value' => static function($model) {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
@@ -160,7 +160,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 	 * @inheritdoc
 	 */
 	public static function mapData(bool $sort = true):array {
-		return Yii::$app->cache->getOrSet(static::class."MapData".$sort, function() use ($sort) {
+		return Yii::$app->cache->getOrSet(static::class."MapData".$sort, static function() use ($sort) {
 			$data = ArrayHelper::map(self::find()->active()->all(), 'id', 'name');
 			if ($sort) {
 				asort($data);
@@ -259,7 +259,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 	 * @return array
 	 */
 	public static function dataOptions():array {
-		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", static function() {
 			/** @var self[] $items */
 			$items = self::find()->active()->all();
 			$result = [];

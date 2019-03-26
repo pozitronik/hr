@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'style' => 'width:50px',
 								'class' => 'skip-export kv-align-center kv-align-middle'
 							],
-							'value' => function(Groups $model) {
+							'value' => static function(Groups $model) {
 								return GroupNavigationMenuWidget::widget([
 									'model' => $model,
 									'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -83,14 +83,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						[
 							'format' => 'raw',
 							'attribute' => 'name',
-							'value' => function($group) {
+							'value' => static function($group) {
 								/** @var Groups $group */
 								return Html::a($group->name, ['profile', 'id' => $group->id]);
 							}
 						],
 						[
 							'label' => 'Роли в группе',
-							'value' => function($group) use ($model) {
+							'value' => static function($group) use ($model) {
 								return RolesSelectWidget::widget([
 									'userId' => $model->id,
 									'groupId' => $group->id

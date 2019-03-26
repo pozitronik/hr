@@ -40,85 +40,85 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 */
 	public static function conditionConfig():array {
 		return [
-			['самооценка равна', function($tableAlias, $searchValue) {
+			['самооценка равна', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.self_score_value", $searchValue];
 			}],
-			['самооценка не равна', function($tableAlias, $searchValue) {
+			['самооценка не равна', static function($tableAlias, $searchValue) {
 				return ['!=', "$tableAlias.self_score_value", $searchValue];
 			}],
-			['самооценка больше', function($tableAlias, $searchValue) {
+			['самооценка больше', static function($tableAlias, $searchValue) {
 				return ['>', "$tableAlias.self_score_value", $searchValue];
 			}],
-			['самооценка меньше', function($tableAlias, $searchValue) {
+			['самооценка меньше', static function($tableAlias, $searchValue) {
 				return ['<', "$tableAlias.self_score_value", $searchValue];
 			}],
-			['самооценка меньше или равно', function($tableAlias, $searchValue) {
+			['самооценка меньше или равно', static function($tableAlias, $searchValue) {
 				return ['<=', "$tableAlias.self_score_value", $searchValue];
 			}],
-			['самооценка больше или равно', function($tableAlias, $searchValue) {
+			['самооценка больше или равно', static function($tableAlias, $searchValue) {
 				return ['>=', "$tableAlias.self_score_value", $searchValue];
 			}],
-			['самооценка заполнена', function($tableAlias, $searchValue) {
+			['самооценка заполнена', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.self_score_value" => null]];
 			}],
-			['самооценка не заполнена', function($tableAlias, $searchValue) {
+			['самооценка не заполнена', static function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.tl_score_value", new Expression('null')];
 			}],/************************************************************/
-			['оценка тимлида равна', function($tableAlias, $searchValue) {
+			['оценка тимлида равна', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.tl_score_value", $searchValue];
 			}],
-			['оценка тимлида не равна', function($tableAlias, $searchValue) {
+			['оценка тимлида не равна', static function($tableAlias, $searchValue) {
 				return ['!=', "$tableAlias.tl_score_value", $searchValue];
 			}],
-			['оценка тимлида больше', function($tableAlias, $searchValue) {
+			['оценка тимлида больше', static function($tableAlias, $searchValue) {
 				return ['>', "$tableAlias.tl_score_value", $searchValue];
 			}],
-			['оценка тимлида меньше', function($tableAlias, $searchValue) {
+			['оценка тимлида меньше', static function($tableAlias, $searchValue) {
 				return ['<', "$tableAlias.tl_score_value", $searchValue];
 			}],
-			['оценка тимлида меньше или равно', function($tableAlias, $searchValue) {
+			['оценка тимлида меньше или равно', static function($tableAlias, $searchValue) {
 				return ['<=', "$tableAlias.tl_score_value", $searchValue];
 			}],
-			['оценка тимлида больше или равно', function($tableAlias, $searchValue) {
+			['оценка тимлида больше или равно', static function($tableAlias, $searchValue) {
 				return ['>=', "$tableAlias.tl_score_value", $searchValue];
 			}],
-			['оценка тимлида заполнена', function($tableAlias, $searchValue) {
+			['оценка тимлида заполнена', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.tl_score_value" => null]];
 			}],
-			['оценка тимлида не заполнена', function($tableAlias, $searchValue) {
+			['оценка тимлида не заполнена', static function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.tl_score_value", new Expression('null')];
 			}],/************************************************************/
-			['оценка ареалида равна', function($tableAlias, $searchValue) {
+			['оценка ареалида равна', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.al_score_value", $searchValue];
 			}],
-			['оценка ареалида не равна', function($tableAlias, $searchValue) {
+			['оценка ареалида не равна', static function($tableAlias, $searchValue) {
 				return ['!=', "$tableAlias.al_score_value", $searchValue];
 			}],
-			['оценка ареалида больше', function($tableAlias, $searchValue) {
+			['оценка ареалида больше', static function($tableAlias, $searchValue) {
 				return ['>', "$tableAlias.al_score_value", $searchValue];
 			}],
-			['оценка ареалида меньше', function($tableAlias, $searchValue) {
+			['оценка ареалида меньше', static function($tableAlias, $searchValue) {
 				return ['<', "$tableAlias.al_score_value", $searchValue];
 			}],
-			['оценка ареалида меньше или равно', function($tableAlias, $searchValue) {
+			['оценка ареалида меньше или равно', static function($tableAlias, $searchValue) {
 				return ['<=', "$tableAlias.al_score_value", $searchValue];
 			}],
-			['оценка ареалида больше или равно', function($tableAlias, $searchValue) {
+			['оценка ареалида больше или равно', static function($tableAlias, $searchValue) {
 				return ['>=', "$tableAlias.al_score_value", $searchValue];
 			}],
-			['оценка ареалида заполнена', function($tableAlias, $searchValue) {
+			['оценка ареалида заполнена', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.al_score_value" => null]];
 			}],
-			['оценка ареалида не заполнена', function($tableAlias, $searchValue) {
+			['оценка ареалида не заполнена', static function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.al_score_value", new Expression('null')];
 			}],/************************************************************/
-			['есть комментарий самооценки', function($tableAlias, $searchValue) {
+			['есть комментарий самооценки', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.self_score_comment" => null]];
 			}],
-			['есть комментарий оценки тимлида', function($tableAlias, $searchValue) {
+			['есть комментарий оценки тимлида', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.tl_score_comment" => null]];
 			}],
-			['есть комментарий оценки ареалида', function($tableAlias, $searchValue) {
+			['есть комментарий оценки ареалида', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.al_score_comment" => null]];
 			}]
 		];
@@ -172,7 +172,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
-		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id) {
+		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id) {
 			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
 		});
 

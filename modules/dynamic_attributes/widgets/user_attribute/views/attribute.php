@@ -66,9 +66,9 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 				'attribute' => 'name',
 				'unbadgedCount' => 3,
 				'itemsSeparator' => false,
-				'optionsMap' => function() {
+				'optionsMap' => static function() {
 					$options = ArrayHelper::map(RefAttributesTypes::find()->active()->all(), 'id', 'color');
-					array_walk($options, function(&$value, $key) {
+					array_walk($options, static function(&$value, $key) {
 						if (!empty($value)) {
 							$value = [
 								'style' => "background: $value;"

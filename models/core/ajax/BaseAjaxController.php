@@ -45,7 +45,7 @@ class BaseAjaxController extends Controller {
 			],
 			'access' => [
 				'class' => AccessControl::class,
-				'denyCallback' => function() {
+				'denyCallback' => static function() {
 					return null;
 				},
 				'rules' => [

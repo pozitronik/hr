@@ -90,7 +90,7 @@ class RefUserPositions extends Reference {
 			],
 			[
 				'attribute' => 'name',
-				'value' => function(self $model) {
+				'value' => static function(self $model) {
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
 						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), [
@@ -102,16 +102,16 @@ class RefUserPositions extends Reference {
 			[
 				'label' => 'Тип должности',
 				'format' => 'raw',
-				'value' => function(self $model) {
+				'value' => static function(self $model) {
 					return BadgeWidget::widget([
 						'data' => $model->relRefUserPositionTypes,
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
 						'linkScheme' => ['/references/references/update', 'id' => 'id', 'class' => 'RefUserPositionTypes'],
-						"optionsMap" => function() {
+						"optionsMap" => static function() {
 							$options = ArrayHelper::map(RefUserPositionTypes::find()->active()->all(), 'id', 'color');
-							array_walk($options, function(&$value, $key) {
+							array_walk($options, static function(&$value, $key) {
 								if (!empty($value)) {
 									$value = [
 										'style' => "background: $value;"
@@ -130,7 +130,7 @@ class RefUserPositions extends Reference {
 			[
 				'label' => 'Грейды',
 				'format' => 'raw',
-				'value' => function(self $model) {
+				'value' => static function(self $model) {
 					return BadgeWidget::widget([
 						'data' => $model->relGrades,
 						'attribute' => 'name',

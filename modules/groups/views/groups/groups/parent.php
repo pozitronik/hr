@@ -58,7 +58,7 @@ GridView::widget([
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				return GroupNavigationMenuWidget::widget([
 					'model' => $model,
 					'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -69,13 +69,13 @@ GridView::widget([
 		[
 			'format' => 'raw',
 			'attribute' => 'name',
-			'value' => function(Groups $group) {
+			'value' => static function(Groups $group) {
 				return Html::a($group->name, Url::to(['profile', 'id' => $group->id]));
 			}
 		],
 		[
 			'attribute' => 'type',
-			'value' => function(Groups $group) {
+			'value' => static function(Groups $group) {
 				return GroupTypeSelectWidget::widget([
 					'groupId' => $group->id,
 					'showStatus' => false
@@ -86,7 +86,7 @@ GridView::widget([
 		[
 			'attribute' => 'relGroupsGroupsChild.refGroupsRelationTypes.name',
 			'label' => 'Тип связи',
-			'value' => function(Groups $group) use ($model) {
+			'value' => static function(Groups $group) use ($model) {
 				return RelationTypeSelectWidget::widget([
 					'parentGroupId' => $group->id,
 					'childGroupId' => $model->id,

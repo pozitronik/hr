@@ -52,7 +52,7 @@ GridView::widget([
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				return GroupNavigationMenuWidget::widget([
 					'model' => $model,
 					'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -69,7 +69,7 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'name',
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				return Html::a($model->name, ['profile', 'id' => $model->id]);
 			},
 			'format' => 'raw'
@@ -87,7 +87,7 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'leaders',
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				$users = [];
 				foreach ($model->leaders as $leader) {
 					$users[] = Html::a($leader->username, ['/users/users/profile', 'id' => $leader->id]);

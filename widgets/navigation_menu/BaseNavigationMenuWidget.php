@@ -62,7 +62,7 @@ class BaseNavigationMenuWidget extends Widget {
 			break;
 			default:
 			case self::MODE_BOTH:
-				$menuItems = array_filter($this->_navigationItems, function($element) {
+				$menuItems = array_filter($this->_navigationItems, static function($element) {
 					return true === ArrayHelper::getValue($element, 'menu');
 				});
 				$tabItems = array_diff_key($this->_navigationItems, $menuItems);

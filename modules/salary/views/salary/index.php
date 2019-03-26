@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(SalaryFork $model) {
+			'value' => static function(SalaryFork $model) {
 				return SalaryForkMenuWidget::widget([
 					'model' => $model,
 					'mode' => SalaryForkMenuWidget::MODE_ACTION_COLUMN_MENU

@@ -57,7 +57,7 @@ GridView::widget([
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return UserNavigationMenuWidget::widget([
 					'model' => $model,
 					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
@@ -68,13 +68,13 @@ GridView::widget([
 		[
 			'format' => 'raw',
 			'attribute' => 'username',
-			'value' => function(Users $user) {
+			'value' => static function(Users $user) {
 				return Html::a($user->username, ['/users/users/profile', 'id' => $user->id]);//todo module navigation
 			}
 		],
 		[
 			'label' => 'Роли в группе',
-			'value' => function(Users $user) use ($model) {
+			'value' => static function(Users $user) use ($model) {
 				return RolesSelectWidget::widget([
 					'groupId' => $model->id,
 					'userId' => $user->id

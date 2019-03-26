@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										'allowClear' => true, 'multiple' => true
 									]
 								],
-								'value' => function($model) use ($user) {
+								'value' => static function($model) use ($user) {
 									/** @var RelUsersAttributes $model */
 									return UserAttributeWidget::widget([
 										'user_id' => $user->id,

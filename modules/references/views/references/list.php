@@ -27,14 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'attribute' => 'menuCaption',
 					'label' => 'Название справочника',
-					'value' => function(Reference $referenceModel) {
+					'value' => static function(Reference $referenceModel) {
 						return Html::a($referenceModel->menuCaption, ['index', 'class' => $referenceModel->formName()]);
 					},
 					'format' => 'raw'
 				],
 				[
 					'label' => 'Модуль',
-					'value' => function(Reference $referenceModel) {
+					'value' => static function(Reference $referenceModel) {
 						return null !== $referenceModel->pluginId?PluginsSupport::GetName($referenceModel->pluginId):'Базовый';
 					}
 				],

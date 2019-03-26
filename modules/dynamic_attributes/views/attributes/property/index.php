@@ -46,7 +46,7 @@ use app\helpers\ArrayHelper;
 				'style' => 'width:50px',
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
-			'value' => function(DynamicAttributeProperty $model) use ($attribute) {
+			'value' => static function(DynamicAttributeProperty $model) use ($attribute) {
 				return AttributePropertyNavigationMenuWidget::widget([
 					'model' => $model,
 					'attribute' => $attribute,
@@ -58,7 +58,7 @@ use app\helpers\ArrayHelper;
 		[
 			'attribute' => 'name',
 			'label' => 'Название',
-			'value' => function(DynamicAttributeProperty $model) use ($attribute) {
+			'value' => static function(DynamicAttributeProperty $model) use ($attribute) {
 				return Html::a(ArrayHelper::getValue($model, 'name'), ['property', 'attribute_id' => $attribute->id, 'property_id' => $model->id]);
 			},
 			'format' => 'raw'

@@ -68,7 +68,7 @@ class BadgeWidget extends Widget {
 
 			if (!is_array($badgeHtmlOptions)) $badgeHtmlOptions = $this->badgeOptions;
 			if ($this->linkScheme) {
-				array_walk($this->linkScheme, function(&$value, $key) use ($model) {//постановка в схему значений из модели
+				array_walk($this->linkScheme, static function(&$value, $key) use ($model) {//постановка в схему значений из модели
 					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
 				});
 				$badgeContent = Html::a(ArrayHelper::getValue($model, $this->attribute), $this->linkScheme);

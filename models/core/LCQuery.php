@@ -86,7 +86,7 @@ class LCQuery extends ActiveQuery {
 		$countQuery->distinct()
 			->limit(false)
 			->offset(false);//нелимитированный запрос для использования его в качестве ключа
-		return Yii::$app->cache->getOrSet($this->createCommand()->rawSql, function() use ($countQuery) {
+		return Yii::$app->cache->getOrSet($this->createCommand()->rawSql, static function() use ($countQuery) {
 			return $countQuery->count();
 		}, $duration);
 	}

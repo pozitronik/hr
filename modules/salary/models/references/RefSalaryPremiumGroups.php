@@ -66,7 +66,7 @@ class RefSalaryPremiumGroups extends Reference {
 			],
 			[
 				'attribute' => 'name',
-				'value' => function($model) {
+				'value' => static function($model) {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'

@@ -223,7 +223,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	 * @return array
 	 */
 	public static function dataOptions():array {
-		return Yii::$app->cache->getOrSet(static::class."DataOptions", function() {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", static function() {
 			$items = self::GetRightsList();
 			$result = [];
 			foreach ($items as $key => $item) {

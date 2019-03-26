@@ -50,28 +50,28 @@ class AttributePropertyTime extends ActiveRecordExtended implements AttributePro
 	 */
 	public static function conditionConfig():array {
 		return [
-			['равно', function($tableAlias, $searchValue) {
+			['равно', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.value", $searchValue];
 			}],
-			['не равно', function($tableAlias, $searchValue) {
+			['не равно', static function($tableAlias, $searchValue) {
 				return ['!=', "$tableAlias.value", $searchValue];
 			}],
-			['раньше', function($tableAlias, $searchValue) {
+			['раньше', static function($tableAlias, $searchValue) {
 				return ['<', "$tableAlias.value", $searchValue];
 			}],
-			['позже', function($tableAlias, $searchValue) {
+			['позже', static function($tableAlias, $searchValue) {
 				return ['>', "$tableAlias.value", $searchValue];
 			}],
-			['раньше или равно', function($tableAlias, $searchValue) {
+			['раньше или равно', static function($tableAlias, $searchValue) {
 				return ['<=', "$tableAlias.value", $searchValue];
 			}],
-			['позже или равно', function($tableAlias, $searchValue) {
+			['позже или равно', static function($tableAlias, $searchValue) {
 				return ['<=', "$tableAlias.value", $searchValue];
 			}],
-			['заполнено', function($tableAlias, $searchValue) {
+			['заполнено', static function($tableAlias, $searchValue) {
 				return ['not', ["$tableAlias.value" => null]];
 			}],
-			['не заполнено', function($tableAlias, $searchValue) {
+			['не заполнено', static function($tableAlias, $searchValue) {
 				return ['is', "$tableAlias.value", new Expression('null')];
 			}]
 		];
@@ -98,7 +98,7 @@ class AttributePropertyTime extends ActiveRecordExtended implements AttributePro
 	 * @return mixed
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
-		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", function() use ($attribute_id, $property_id, $user_id, $formatted) {
+		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id, $formatted) {
 			$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
 			return $formatted?Yii::$app->formatter->asTime($value):$value;
 		});

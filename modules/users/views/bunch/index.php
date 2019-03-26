@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'attribute' => 'id',
 						'label' => 'id пользователя',
-						'value' => function($array) {
+						'value' => static function($array) {
 							return Html::a(ArrayHelper::getValue($array, 'username'), ['/users/users/profile', 'id' => ArrayHelper::getValue($array, 'id')]);
 						},
 						'format' => 'raw'
@@ -145,7 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format' => 'boolean'
 					]
 				],
-				'rowOptions' => function($array) {
+				'rowOptions' => static function($array) {
 					return ['class' => ArrayHelper::getValue($array, 'error')?'danger':'success'];
 				}
 			]); ?>
