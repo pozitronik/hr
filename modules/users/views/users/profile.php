@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'initialPreview' => !empty($model->profile_image)?[
 								$model->avatar
 							]:false,
+							'initialPreviewConfig' => [['caption' => "Это вы"]],
 							'initialPreviewAsData' => true,
 							'browseClass' => 'btn btn-primary pull-right',
 							'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
