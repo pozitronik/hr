@@ -99,7 +99,7 @@ class UserAccess extends Model {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function GetFlag(int $flag, bool $defaultAllow = true):bool {
+	public static function GetFlag(int $flag, bool $defaultAllow = false):bool {
 		if (null === $user = CurrentUser::User()) return false;
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		if ($user->is('sysadmin')) $defaultAllow = true;
