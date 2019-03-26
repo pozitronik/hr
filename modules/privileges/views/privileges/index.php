@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
 	'toolbar' => [
 		[
-			'content' => Html::a('Новый', 'create', ['class' => 'btn btn-success'])
+			'content' => Html::a('Новый', ['create'], ['class' => 'btn btn-success'])
 		]
 	],
 	'export' => false,
