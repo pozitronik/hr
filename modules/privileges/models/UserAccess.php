@@ -28,7 +28,7 @@ class UserAccess extends Model {
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 */
-	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = true):array {
+	public static function getUserAccessRules(Controller $controller, ?array $actionParameters = null, bool $defaultAllow = false):array {
 		if (null === $user = CurrentUser::User()) return [];
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
@@ -71,7 +71,7 @@ class UserAccess extends Model {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = true):bool {
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, ?array $actionParameters = null, bool $defaultAllow = false):bool {
 		if (null === $user = CurrentUser::User()) return false;
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		if ($user->is('sysadmin')) $defaultAllow = true;
