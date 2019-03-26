@@ -65,8 +65,7 @@ class Utils {
 			case self::VAR_DUMP:
 				ob_start();
 				var_dump($data);
-				$data = ob_get_contents();
-				ob_end_clean();
+				$data = ob_get_clean();
 			break;
 		}
 		if ($title) {
