@@ -28,7 +28,8 @@ class ActiveRecordExtended extends ActiveRecord {
 	 * {@inheritDoc}
 	 */
 	public function beforeSave($insert):bool {
-		return (parent::beforeSave($insert) && !$insert && ActiveRecordLogger::logChanges($this));//do not log inserts here => log into afterSave
+		if (!$insert) ActiveRecordLogger::logChanges($this);//do not log inserts here => log into afterSave
+		return parent::beforeSave($insert);
 	}
 
 	/**
