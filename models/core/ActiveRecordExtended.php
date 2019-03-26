@@ -4,6 +4,9 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\models\core\traits\ARExtended;
+use app\modules\privileges\models\AccessMethods;
+use app\modules\privileges\models\UserAccess;
+use app\widgets\alert\AlertModel;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
@@ -28,6 +31,12 @@ class ActiveRecordExtended extends ActiveRecord {
 	 * {@inheritDoc}
 	 */
 	public function beforeSave($insert):bool {
+		if (UserAccess::canAccess($this, $insert?AccessMethods::create:AccessMethods::update)) {
+			$this->addError('id', 'Вам не разрешено производить данное действие.');
+			AlertModel::AccessNotify();
+			return false;
+		}
+
 		if (!$insert) ActiveRecordLogger::logChanges($this);//do not log inserts here => log into afterSave
 		return parent::beforeSave($insert);
 	}
