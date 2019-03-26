@@ -12,7 +12,7 @@ use yii\base\Widget;
  * @package app\components\relation_type_select
  *
  * @property array $data
- * @property array $value
+ * @property array|null $value
  * @property int $parentGroupId
  * @property int $childGroupId
  * @property bool $showStatus

@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
  * @package app\components\group_type_select
  *
  * @property array $data
- * @property array $value
+ * @property array|null $value
  * @property int $groupId
  * @property bool $showStatus
  */
