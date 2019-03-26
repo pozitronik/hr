@@ -14,9 +14,9 @@ use yii\web\View;
 
 <li id="dropdown-user" class="dropdown">
 	<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
-		<div class="username hidden-xs"><?= $user->username; ?></div>
+		<div class="username hidden-xs"><?= $user->username ?></div>
 		<span class="pull-right">
-			<img class="img-circle img-user media-object img-border-current" src="<?= $user->avatar; ?>" alt="Profile Picture">
+			<img class="img-circle img-user media-object img-border-current" src="<?= $user->avatar ?>" alt="Profile Picture">
 			<i class="demo-pli-male ic-user"></i>
 		</span>
 	</a>
@@ -26,14 +26,14 @@ use yii\web\View;
 
 		<!-- Dropdown heading  -->
 		<div class="pad-all bord-btm">
-			<?= $user->comment; ?>
+			<?= $user->comment ?>
 		</div>
 
 
 		<!-- User dropdown menu -->
 		<ul class="head-list">
 			<li>
-				<?= Html::a("Профиль", ["/users/users/profile", "id" => $user->id]); ?>
+				<?= Html::a("Профиль", ["/users/users/profile", "id" => $user->id]) ?>
 			</li>
 		</ul>
 

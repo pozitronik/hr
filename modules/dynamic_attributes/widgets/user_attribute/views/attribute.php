@@ -77,7 +77,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 					});
 					return $options;
 				}
-			]); ?>
+			]) ?>
 		</div>
 	</div>
 
@@ -89,7 +89,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 						'attribute' => 'value',
 						'readOnly' => $read_only,
 						'showEmpty' => true
-					]); ?>
+					]) ?>
 				</div>
 			<?php endforeach; ?>
 

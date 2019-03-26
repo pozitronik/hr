@@ -44,13 +44,13 @@ use yii\web\View;
 							5 => '5/5'
 						]
 					]
-				]); ?>
+				]) ?>
 			</div>
 		</div>
 		<?php if (null !== $comment = ArrayHelper::getValue($model->$attribute, $commentAttributeName)): ?>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $comment; ?>
+					<?= $comment ?>
 				</div>
 			</div>
 		<?php endif; ?>

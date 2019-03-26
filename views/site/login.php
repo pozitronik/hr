@@ -26,22 +26,22 @@ $this->title = 'Вход';
 		<?php $form = ActiveForm::begin(); ?>
 		<div class="form-group">
 			<?= $form->field($login, 'login')
-				->textInput(['placeholder' => 'Пожалуйста, введите логин']); ?>
+				->textInput(['placeholder' => 'Пожалуйста, введите логин']) ?>
 		</div>
 		<div class="form-group">
 			<?= $form->field($login, 'password')
-				->passwordInput(['placeholder' => 'Пожалуйста, введите пароль']); ?>
+				->passwordInput(['placeholder' => 'Пожалуйста, введите пароль']) ?>
 		</div>
 		<div class="checkbox pad-btm text-left">
 			<?= $form->field($login, 'rememberMe')
-				->checkbox(); ?>
+				->checkbox() ?>
 		</div>
-		<?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']); ?>
+		<?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']) ?>
 		<?php ActiveForm::end(); ?>
 	</div>
 <!--	<div class="pad-all">
-		<?= Html::a('Восстановление пароля', ['site/restore-password'], ['class' => 'btn-link mar-rgt']); ?>
-		<?= Html::a('Регистрация', ['site/register'], ['class' => 'btn-link mar-lft']); ?>
+		<?= Html::a('Восстановление пароля', ['site/restore-password'], ['class' => 'btn-link mar-rgt']) ?>
+		<?= Html::a('Регистрация', ['site/register'], ['class' => 'btn-link mar-lft']) ?>
 	</div>
 	-->
 </div>

@@ -45,8 +45,8 @@ use yii\web\View;
 							5 => '5/5'
 						]
 					]
-				]); ?>
-				<?= Html::textInput("DynamicAttributeProperty[$model->id][$commentAttributeName]", ArrayHelper::getValue($model->$attribute, $commentAttributeName), ['placeholder' => 'Комментарий', 'maxlength' => 255, 'style' => 'width:100%']); ?>
+				]) ?>
+				<?= Html::textInput("DynamicAttributeProperty[$model->id][$commentAttributeName]", ArrayHelper::getValue($model->$attribute, $commentAttributeName), ['placeholder' => 'Комментарий', 'maxlength' => 255, 'style' => 'width:100%']) ?>
 			</div>
 		</div>
 	</div>

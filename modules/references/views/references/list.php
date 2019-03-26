@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="panel">
 	<div class="panel-heading">
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 	<div class="panel-body">
 		<?= GridView::widget([
@@ -43,6 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format' => 'raw'
 				]
 			]
-		]); ?>
+		]) ?>
 	</div>
 </div>

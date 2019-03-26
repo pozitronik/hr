@@ -13,7 +13,7 @@ use yii\helpers\Html;
 
 ?>
 
-<p class="text-semibold text-dark mar-no"><?= Html::a($caption, $action); ?></p>
+<p class="text-semibold text-dark mar-no"><?= Html::a($caption, $action) ?></p>
 
 
 

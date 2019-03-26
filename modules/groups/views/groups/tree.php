@@ -21,6 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= StructureWidget::widget([
 	'id' => $id
-]); ?>
+]) ?>
 
 

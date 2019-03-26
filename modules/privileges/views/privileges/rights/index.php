@@ -57,4 +57,4 @@ use kartik\grid\CheckboxColumn;
 		]
 	]
 
-]); ?>
+]) ?>

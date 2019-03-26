@@ -31,11 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<?= Html::button("", ['class' => 'hidden', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>
-			<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'type' => 'submit', 'name' => 'remove', 'value' => count($model->searchItems) > 1, 'disabled' => (count($model->searchItems) > 1)?false:'disabled', 'title' => 'Убрать условие']); ?>
-			<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true, 'title' => 'Добавить условие']); ?>
+			<?= Html::button("", ['class' => 'hidden', 'type' => 'submit', 'name' => 'search', 'value' => true]) ?>
+			<?= Html::button("<i class='glyphicon glyphicon-minus'></i>", ['class' => 'btn btn-danger', 'type' => 'submit', 'name' => 'remove', 'value' => count($model->searchItems) > 1, 'disabled' => (count($model->searchItems) > 1)?false:'disabled', 'title' => 'Убрать условие']) ?>
+			<?= Html::button("<i class='glyphicon glyphicon-plus'></i>", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'add', 'value' => true, 'title' => 'Добавить условие']) ?>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 
 	<div class="panel-body">
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'multiple' => true,
 							'placeholder' => 'Все группы'
 						]
-					])->label('Искать в группах'); ?>
+					])->label('Искать в группах') ?>
 				</div>
 				<div class="col-md-2">
 					<?= $form->field($model, "searchTree")->widget(SwitchInput::class, [
@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'onColor' => 'primary',
 							'offColor' => 'default'
 						]
-					])->label('Поиск в дочерних группах'); ?>
+					])->label('Поиск в дочерних группах') ?>
 				</div>
 			</div>
 
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									'onColor' => 'primary',
 									'offColor' => 'primary'
 								]
-							])->label('Объединение'); ?>
+							])->label('Объединение') ?>
 						</div>
 						<div class="col-md-2">
 							<?= $form->field($model, "searchItems[$index][type]")->widget(ReferenceSelectWidget::class, [
@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									'multiple' => true,
 									'placeholder' => 'Выбрать тип отношения'
 								])
-							])->label('Тип отношения атрибута'); ?>
+							])->label('Тип отношения атрибута') ?>
 						</div>
 						<div class="col-md-3">
 							<?= $form->field($model, "searchItems[$index][attribute]")->widget(Select2::class, [
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									'multiple' => false,
 									'placeholder' => 'Выбрать атрибут'
 								]
-							])->label('Атрибут'); ?>
+							])->label('Атрибут') ?>
 						</div>
 
 
@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									'placeholder' => 'Выбрать атрибут',
 									'options' => $model->propertyTypes($condition->attribute)
 								]
-							])->label('Свойство'); ?>
+							])->label('Свойство') ?>
 						</div>
 
 						<div class="col-md-2">
@@ -129,10 +129,10 @@ $this->params['breadcrumbs'][] = $this->title;
 									'multiple' => false,
 									'placeholder' => 'Выбрать условие'
 								]
-							])->label('Условие'); ?>
+							])->label('Условие') ?>
 						</div>
 						<div class="col-md-2">
-							<?= $form->field($model, "searchItems[$index][value]")->textInput()->label('Значение'); ?>
+							<?= $form->field($model, "searchItems[$index][value]")->textInput()->label('Значение') ?>
 						</div>
 					</div>
 				</div>
@@ -141,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="panel-footer">
 			<div class="btn-group">
-				<?= Html::button("Поиск", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'search', 'value' => true]); ?>
+				<?= Html::button("Поиск", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'search', 'value' => true]) ?>
 
 			</div>
 		</div>

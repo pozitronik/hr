@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $form = ActiveForm::begin(); ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?= $this->title; ?></h3>
+			<h3 class="panel-title"><?= $this->title ?></h3>
 		</div>
 		<div class="panel-body">
 			<div class="form-group">
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'allowClear' => false,
 								'multiple' => true
 							]
-						])->label($usersLabel); ?>
+						])->label($usersLabel) ?>
 					</div>
 				</div>
 			</div>
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'multiple' => true,
 								'placeholder' => 'Добавить в группы'
 							]
-						]); ?>
+						]) ?>
 
 					</div>
 					<div class="col-md-6">
@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'multiple' => true,
 								'placeholder' => 'Убрать из групп'
 							]
-						]); ?>
+						]) ?>
 
 					</div>
 				</div>
@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 		</div>
 		<div class="panel-footer">
-			<?= Html::submitButton('Применить', ['class' => 'btn btn-success']); ?>
+			<?= Html::submitButton('Применить', ['class' => 'btn btn-success']) ?>
 		</div>
 	</div>
 <?php ActiveForm::end(); ?>
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'rowOptions' => static function($array) {
 					return ['class' => ArrayHelper::getValue($array, 'error')?'danger':'success'];
 				}
-			]); ?>
+			]) ?>
 		</div>
 	</div>
 <?php endif; ?>

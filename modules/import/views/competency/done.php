@@ -25,9 +25,9 @@ use yii\web\View;
 			<div class="row">
 				<div class="col-md-12">
 					<?php if ([] === $messages): ?>
-						<?= Html::label('Нет ошибок'); ?>
+						<?= Html::label('Нет ошибок') ?>
 					<?php else: ?>
-						<?= Html::label('Ошибки:'); ?>
+						<?= Html::label('Ошибки:') ?>
 						<br/>
 						<?php Utils::log($messages); ?>
 					<?php endif; ?>
@@ -36,8 +36,8 @@ use yii\web\View;
 
 		</div>
 		<div class="panel-footer">
-			<?= Html::a('Повторить', ['import'], ['class' => 'btn btn-warning pull-left']); ?>
-			<?= Html::a('К началу', 'index', ['class' => 'btn btn-default pull-right']); ?>
+			<?= Html::a('Повторить', ['import'], ['class' => 'btn btn-warning pull-left']) ?>
+			<?= Html::a('К началу', 'index', ['class' => 'btn btn-default pull-right']) ?>
 			<div class="clearfix"></div>
 		</div>
 	</div>

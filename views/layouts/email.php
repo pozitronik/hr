@@ -15,9 +15,9 @@ AppAsset::register($this);
 <?php $this->beginPage(); ?>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset; ?>"/>
+	<meta charset="<?= Yii::$app->charset ?>"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<?= Html::csrfMetaTags(); ?>
+	<?= Html::csrfMetaTags() ?>
 	<title>Preview Email Template</title>
 	<?php $this->head(); ?>
 </head>
@@ -26,7 +26,7 @@ AppAsset::register($this);
 <div id="page-content">
 	<div class="boxed">
 		<div id="content-container">
-			<?= $content; ?>
+			<?= $content ?>
 		</div>
 	</div>
 </div>

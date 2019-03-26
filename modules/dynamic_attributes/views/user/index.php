@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-control">
 			<?= UserNavigationMenuWidget::widget([
 				'model' => $user
-			]); ?>
+			]) ?>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 
 	<div class="panel-body">
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							]
 						]
 
-					]); ?>
+					]) ?>
 
 				</div>
 

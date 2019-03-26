@@ -27,10 +27,10 @@ use yii\widgets\ActiveForm;
 		<div class="panel-heading">
 			<div class="panel-control">
 				<?php if (!$model->isNewRecord): ?>
-					<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']); ?>
+					<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']) ?>
 				<?php endif; ?>
 			</div>
-			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 		</div>
 
 		<div class="panel-body">
@@ -86,7 +86,7 @@ use yii\widgets\ActiveForm;
 							'class' => 'form-control kv-monospace',
 							'placeholder' => 'Укажите значение'
 						]
-					]); ?>
+					]) ?>
 				</div>
 				<div class="col-md-2">
 					<?= $form->field($model, 'max')->widget(NumberControl::class, [
@@ -98,7 +98,7 @@ use yii\widgets\ActiveForm;
 							'class' => 'form-control kv-monospace',
 							'placeholder' => 'Укажите значение'
 						]
-					]); ?>
+					]) ?>
 				</div>
 			</div>
 		</div>
@@ -108,9 +108,9 @@ use yii\widgets\ActiveForm;
 	</div>
 	<div class="panel-footer">
 		<div class="btn-group">
-			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 			<?php if ($model->isNewRecord): ?>
-				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 			<?php endif ?>
 		</div>
 	</div>

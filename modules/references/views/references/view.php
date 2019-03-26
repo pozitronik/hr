@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'Изменить',
 					['update', 'id' => $model->id, 'class' => $model->formName()],
 					['class' => 'btn btn-primary']
-				); ?>
+				) ?>
 				<?= Html::a(
 					'Удалить',
 					['delete', 'id' => $model->id, 'class' => $model->formName()],
@@ -40,15 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
 							'method' => 'post'
 						]
 					]
-				); ?>
+				) ?>
 			</div>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 	<div class="panel-body">
 		<?= DetailView::widget([
 			'model' => $model,
 			'attributes' => $model->view_columns
-		]); ?>
+		]) ?>
 	</div>
 </div>

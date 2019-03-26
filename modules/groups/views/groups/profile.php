@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-control">
 			<?= GroupNavigationMenuWidget::widget([
 				'model' => $model
-			]); ?>
+			]) ?>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 
 	<div class="panel-body">
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="row">
 
 					<div class="col-md-12">
-						<?= $form->field($model, 'name')->textInput(['maxlength' => 512]); ?>
+						<?= $form->field($model, 'name')->textInput(['maxlength' => 512]) ?>
 					</div>
 
 					<div class="col-md-12">
@@ -68,11 +68,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							'pluginOptions' => [
 								'allowClear' => true
 							]
-						]); ?>
+						]) ?>
 					</div>
 
 					<div class="col-md-12">
-						<?= $form->field($model, 'comment')->textarea(); ?>
+						<?= $form->field($model, 'comment')->textarea() ?>
 					</div>
 				</div>
 			</div>
@@ -83,9 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="panel-footer">
 		<div class="btn-group">
-			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 			<?php if ($model->isNewRecord): ?>
-				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 			<?php endif ?>
 		</div>
 	</div>

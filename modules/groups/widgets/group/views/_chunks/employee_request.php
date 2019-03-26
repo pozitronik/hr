@@ -32,8 +32,8 @@ $dataProvider = new ArrayDataProvider(['allModels' => [
 	<div class="panel-body">
 		<?php $form = ActiveForm::begin(); ?>
 
-		<?= $form->field($request, 'requestText')->textarea(['placeholder' => 'Нужен работник работать работу']); ?>
-		<?= Html::submitButton('Отправить на согласование', ['class' => 'btn btn-primary pull-right']); ?>
+		<?= $form->field($request, 'requestText')->textarea(['placeholder' => 'Нужен работник работать работу']) ?>
+		<?= Html::submitButton('Отправить на согласование', ['class' => 'btn btn-primary pull-right']) ?>
 		<?php ActiveForm::end(); ?>
 	</div>
 </div>
@@ -57,6 +57,6 @@ $dataProvider = new ArrayDataProvider(['allModels' => [
 					'label' => 'Текущий согласующий'
 				]
 			]
-		]); ?>
+		]) ?>
 	</div>
 </div>

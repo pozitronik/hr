@@ -15,7 +15,7 @@ $action = ["{$model->route}/{$model->defaultAction}"];
 $caption = Magic::hasProperty($model, 'menuCaption')?$model->menuCaption:$model->id;
 ?>
 
-<a href="<?= Url::toRoute($action); ?>" class="icon">
+<a href="<?= Url::toRoute($action) ?>" class="icon">
 	<div class="panel panel-icon">
 		<div class="panel-body">
 			<div class="text-center bord-btm">

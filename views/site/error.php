@@ -18,10 +18,10 @@ $this->title = $name;
 	<div class="col-lg-6 col-lg-offset-3">
 		<div class="panel panel-trans text-center">
 			<div class="panel-heading">
-				<h1 class="error-code text-primary"><?= Html::encode($this->title); ?></h1>
+				<h1 class="error-code text-primary"><?= Html::encode($this->title) ?></h1>
 			</div>
 			<div class="panel-body">
-				<p><?= nl2br(Html::encode($message)); ?></p>
+				<p><?= nl2br(Html::encode($message)) ?></p>
 				<div class="pad-top"><a class="btn-link text-semibold" href="/">На главную</a></div>
 			</div>
 		</div>

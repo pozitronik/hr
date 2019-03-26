@@ -31,5 +31,5 @@ $leaderName = empty($leaderName)?'Не указан':$leaderName;
 			'attribute' => 'comment'
 		]
 	]
-]); ?>
+]) ?>
 

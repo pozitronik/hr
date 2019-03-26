@@ -36,4 +36,4 @@ use yii\bootstrap\Html;
 	'responsive' => true,
 	'columns' => [
 	]
-]); ?>
+]) ?>

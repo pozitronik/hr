@@ -91,4 +91,4 @@ GridView::widget([
 			'visible' => $showDropColumn
 		]
 	]
-]); ?>
+]) ?>

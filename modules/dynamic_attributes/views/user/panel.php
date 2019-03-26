@@ -34,7 +34,7 @@ use yii\web\View;
 		<?= UserAttributeWidget::widget([
 			'user_id' => $user->id,
 			'attribute_id' => $model->attribute_id
-		]); ?>
+		]) ?>
 
 	<?php endforeach; ?>
 </div>

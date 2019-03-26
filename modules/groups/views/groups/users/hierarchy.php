@@ -36,7 +36,7 @@ if (1 === count($hierarchy)) {
 			'homeLink' => false,
 			'links' => $hierarchy
 		])
-	]); ?>
+	]) ?>
 <?php endif; ?>
 <?php foreach ($model->getRelChildGroups()->orderBy('name')->active()->all() as $subgroup): ?>
 	<?php $hierarchy[] = [
@@ -48,6 +48,6 @@ if (1 === count($hierarchy)) {
 		'model' => $subgroup,
 		'showRolesSelector' => $showRolesSelector,
 		'hierarchy' => $hierarchy
-	]); ?>
+	]) ?>
 	<?php array_pop($hierarchy) ?>
 <?php endforeach; ?>

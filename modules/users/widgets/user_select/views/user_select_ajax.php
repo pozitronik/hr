@@ -52,4 +52,4 @@ use kartik\select2\Select2;
 	'pluginEvents' => [
 		"change.select2" => "function(e) {ajax_submit_toggle(e,'ajax_post_button')}"
 	]
-]); ?>
+]) ?>

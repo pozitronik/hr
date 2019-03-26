@@ -14,5 +14,5 @@ use yii\web\View;
 	'label' => '<i class="fa fa-radiation"></i> Очистка базы <i class="fa fa-radiation"></i>',
 	'encodeLabel' => false,
 	'options' => ['class' => 'btn-lg btn btn-danger']
-]), ['service/service/reset']);
+]), ['service/service/reset'])
 ?>

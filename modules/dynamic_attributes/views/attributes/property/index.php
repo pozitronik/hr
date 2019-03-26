@@ -74,4 +74,4 @@ use app\helpers\ArrayHelper;
 		]
 	]
 
-]); ?>
+]) ?>

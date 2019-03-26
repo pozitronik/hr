@@ -34,14 +34,14 @@ use app\modules\users\widgets\user\UserWidget;
 				<?php endif; ?>
 			</ul>
 		</div>
-		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['/groups/groups/profile', 'id' => $group->id]); ?>
-		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['/groups/groups/profile', 'id' => $group->id]); ?></h3>
+		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['/groups/groups/profile', 'id' => $group->id]) ?>
+		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['/groups/groups/profile', 'id' => $group->id]) ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="tab1-<?= $group->id ?>">
 				<?php foreach ($users as $user): ?>
-					<?= UserWidget::widget(compact('user', 'group')); ?>
+					<?= UserWidget::widget(compact('user', 'group')) ?>
 				<?php endforeach; ?>
 			</div>
 			<div class="tab-pane fade" id="tab2-<?= $group->id ?>">
@@ -49,7 +49,7 @@ use app\modules\users\widgets\user\UserWidget;
 			</div>
 			<?php if ($group->isLeader(CurrentUser::User())): ?>
 				<div class="tab-pane fade" id="tab3-<?= $group->id ?>">
-					<?= $this->render('_chunks/employee_request'); ?>
+					<?= $this->render('_chunks/employee_request') ?>
 				</div>
 			<?php endif; ?>
 		</div>
@@ -57,7 +57,7 @@ use app\modules\users\widgets\user\UserWidget;
 	<div class="panel-footer">
 		<!--Сводка-->
 		<?php if (0 < ($childCount = $group->childGroupsCount)): ?>
-			Ещё <?= Utils::pluralForm($childCount, ['дочерняя группа', 'дочерние группы', 'дочерних групп']); ?>:
+			Ещё <?= Utils::pluralForm($childCount, ['дочерняя группа', 'дочерние группы', 'дочерних групп']) ?>:
 			<?= BadgeWidget::widget([
 				'data' => $group->relChildGroups,
 				'attribute' => 'name',
@@ -65,8 +65,8 @@ use app\modules\users\widgets\user\UserWidget;
 				'moreBadgeOptions' => ['class' => 'badge'],
 				'itemsSeparator' => false,
 				'linkScheme' => ['/groups/groups/profile', 'id' => 'id']
-			]); ?>
-			<?= Html::a('Визуализация иерархии', ['/groups/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']); ?>
+			]) ?>
+			<?= Html::a('Визуализация иерархии', ['/groups/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']) ?>
 		<?php endif; ?>
 
 	</div>

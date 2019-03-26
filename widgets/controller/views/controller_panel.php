@@ -14,7 +14,7 @@ use yii\helpers\Url;
 
 ?>
 
-<a href="<?= Url::toRoute($action); ?>" class="icon">
+<a href="<?= Url::toRoute($action) ?>" class="icon">
 	<div class="panel panel-icon">
 		<div class="panel-body">
 			<div class="text-center bord-btm">

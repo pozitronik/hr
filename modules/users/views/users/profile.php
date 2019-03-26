@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="panel-control">
 				<?= UserNavigationMenuWidget::widget([
 					'model' => $model
-				]); ?>
+				]) ?>
 			</div>
-			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 		</div>
 
 		<div class="panel-body">
@@ -57,20 +57,20 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="col-md-9">
 					<div class="row">
 						<div class="col-md-12">
-							<?= $form->field($model, 'username')->textInput(['maxlength' => 50]); ?>
+							<?= $form->field($model, 'username')->textInput(['maxlength' => 50]) ?>
 						</div>
 						<div class="col-md-6">
-							<?= $form->field($model, 'login')->textInput(['maxlength' => 50]); ?>
+							<?= $form->field($model, 'login')->textInput(['maxlength' => 50]) ?>
 						</div>
 						<div class="col-md-6">
 							<?php if ($model->isNewRecord): ?>
-								<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.'); ?>
+								<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.') ?>
 							<?php else: ?>
-								<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен на введённый.'); ?>
+								<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен на введённый.') ?>
 							<?php endif; ?>
 						</div>
 						<div class="col-md-6">
-							<?= $form->field($model, 'email')->textInput(['maxlength' => 50]); ?>
+							<?= $form->field($model, 'email')->textInput(['maxlength' => 50]) ?>
 						</div>
 						<div class="col-md-6">
 							<?= $form->field($model, 'relPrivileges')->widget(Select2::class, [
@@ -80,11 +80,11 @@ $this->params['breadcrumbs'][] = $this->title;
 									'multiple' => true,
 									'allowClear' => true
 								]
-							]); ?>
+							]) ?>
 						</div>
 
 						<div class="col-md-12">
-							<?= $form->field($model, 'comment')->label('Комментарий пользователя'); ?>
+							<?= $form->field($model, 'comment')->label('Комментарий пользователя') ?>
 						</div>
 
 
@@ -96,9 +96,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="panel-footer">
 			<div class="btn-group">
-				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 				<?php if ($model->isNewRecord): ?>
-					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 				<?php endif ?>
 			</div>
 		</div>

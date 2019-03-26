@@ -21,7 +21,7 @@ use yii\web\View;
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<?= $this->render('dropdown', [
 					'user' => $user
-				]); ?>
+				]) ?>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<!--End mega dropdown-->
 
@@ -33,13 +33,13 @@ use yii\web\View;
 		<!--Navbar Dropdown-->
 		<!--================================-->
 		<div class="navbar-content clearfix">
-			<?= $this->render('breadcrumbs'); ?>
+			<?= $this->render('breadcrumbs') ?>
 
 			<ul class="nav navbar-top-links pull-right">
 
 				<?= $this->render('user_dropdown', [
 					'user' => $user
-				]); ?>
+				]) ?>
 
 			</ul>
 		</div>

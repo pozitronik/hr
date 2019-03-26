@@ -22,7 +22,7 @@ use app\widgets\controller\ControllerWidget;
 					<?= ControllerWidget::widget([
 						'model' => $controller,
 						'mode' => $mode
-					]); ?>
+					]) ?>
 				</li>
 			<?php endif; ?>
 		<?php endforeach; ?>

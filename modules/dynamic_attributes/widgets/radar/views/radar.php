@@ -17,5 +17,5 @@ use yii\web\View;
 		'width' => 600
 	],
 	'data' => $data
-]); ?>
+]) ?>
 

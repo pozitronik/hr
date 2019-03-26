@@ -52,7 +52,7 @@ use yii\web\View;
 	'pluginEvents' => [
 		"change.select2" => "function(e) {submit_toggle(e)}"
 	]
-]);
+])
 
 ?>
 <?php ActiveForm::end(); ?>

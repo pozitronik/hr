@@ -113,4 +113,4 @@ GridView::widget([
 			'name' => $model->formName().'[dropChildGroups]'
 		]
 	]
-]); ?>
+]) ?>

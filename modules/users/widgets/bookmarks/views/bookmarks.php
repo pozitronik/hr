@@ -14,4 +14,4 @@ use yii\web\View;
 <?= $this->render('list', [
 	'bookmarks' => $bookmarks,
 	'model' => $currentBookmark
-]); ?>
+]) ?>

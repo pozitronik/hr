@@ -17,13 +17,13 @@ $borderStyle = (CurrentUser::Id() === $model->id)?'img-border-current':'img-bord
 		<div class="panel">
 			<div class="text-center pad-all bord-btm">
 				<div class="pad-ver">
-					<?= Html::a(Html::img($model->avatar, ['class' => "img-lg {$borderStyle} img-circle", 'alt' => $model->username]), ['/users/users/profile', 'id' => $model->id]); ?>
+					<?= Html::a(Html::img($model->avatar, ['class' => "img-lg {$borderStyle} img-circle", 'alt' => $model->username]), ['/users/users/profile', 'id' => $model->id]) ?>
 				</div>
 
 				<h4 class="text-lg mar-no" style="white-space: nowrap;"><?= Html::a($model->username, ['/users/users/profile', 'id' => $model->id]) ?></h4>
 			</div>
 			<div class="mar-btm">
-				<p class="text-semibold text-main pad-all mar-no text-lg-center"><?= $model->positionName; ?></p>
+				<p class="text-semibold text-main pad-all mar-no text-lg-center"><?= $model->positionName ?></p>
 			</div>
 		</div>
 	</div>

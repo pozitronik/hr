@@ -15,7 +15,7 @@ use yii\web\View;
 
 <div class="panel">
 	<div class="panel-heading">
-		<h3 class="panel-title"><?= ImportFosDecomposed::step_labels[$step]; ?></h3>
+		<h3 class="panel-title"><?= ImportFosDecomposed::step_labels[$step] ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
@@ -26,8 +26,8 @@ use yii\web\View;
 
 	</div>
 	<div class="panel-footer">
-		<?= Html::a('Повторить', ['import', 'step' => $step, 'domain' => $domain], ['class' => 'btn btn-warning pull-left']); ?>
-		<?= ($step !== ImportFosDecomposed::LAST_STEP)?Html::a('Следующий шаг', ['import', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']):Html::a('Готово, домой', ['/home/index', 'domain' => $domain], ['class' => 'btn btn-success pull-right']); ?>
+		<?= Html::a('Повторить', ['import', 'step' => $step, 'domain' => $domain], ['class' => 'btn btn-warning pull-left']) ?>
+		<?= ($step !== ImportFosDecomposed::LAST_STEP)?Html::a('Следующий шаг', ['import', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']):Html::a('Готово, домой', ['/home/index', 'domain' => $domain], ['class' => 'btn btn-success pull-right']) ?>
 		<div class="clearfix"></div>
 	</div>
 </div>

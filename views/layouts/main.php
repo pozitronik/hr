@@ -16,13 +16,13 @@ AppAsset::register($this);
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage(); ?>
-<html lang="<?= Yii::$app->language; ?>">
+<html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset; ?>"/>
+	<meta charset="<?= Yii::$app->charset ?>"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<?= Html::csrfMetaTags(); ?>
-	<title><?= $this->title; ?></title>
+	<?= Html::csrfMetaTags() ?>
+	<title><?= $this->title ?></title>
 	<?php $this->head(); ?>
 </head>
 <body>
@@ -30,14 +30,14 @@ AppAsset::register($this);
 <div id="container" class="mainnav-fixed print-content navbar-fixed">
 	<?= NavbarWidget::widget([
 		'user' => CurrentUser::User()
-	]); ?>
+	]) ?>
 
 
 	<div class="boxed">
 		<div id="content-container">
 			<div id="page-content">
-				<?= Alert::widget(); ?>
-				<?= $content; ?>
+				<?= Alert::widget() ?>
+				<?= $content ?>
 			</div>
 		</div>
 	</div>

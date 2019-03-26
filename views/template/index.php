@@ -34,4 +34,4 @@ use yii\bootstrap\Html;
 	'columns' => [
 		'id'
 	]
-]); ?>
+]) ?>

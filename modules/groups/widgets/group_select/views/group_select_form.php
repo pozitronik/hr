@@ -56,6 +56,6 @@ use kartik\select2\Select2;
 	'pluginEvents' => [
 		"change.select2" => "function(e) {submit_toggle(e)}"
 	]
-]); ?>
+]) ?>
 
 <?php ActiveForm::end(); ?>

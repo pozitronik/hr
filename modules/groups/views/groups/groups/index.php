@@ -26,9 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-control">
 			<?= GroupNavigationMenuWidget::widget([
 				'model' => $model
-			]); ?>
+			]) ?>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 
 	<div class="panel-body">
@@ -38,14 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
 					'model' => $model,
 					'provider' => $parentProvider,
 					'heading' => '<label class="control-label">Родительские группы</label>'
-				]); ?>
+				]) ?>
 			</div>
 			<div class="col-md-6">
 				<?= $this->render('child', [
 					'model' => $model,
 					'provider' => $childProvider,
 					'heading' => '<label class="control-label">Дочерние группы</label>'
-				]); ?>
+				]) ?>
 			</div>
 		</div>
 

@@ -34,4 +34,4 @@ use yii\helpers\Html;
 	'resizableColumns' => true,
 	'responsive' => true,
 	'columns' => []
-]); ?>
+]) ?>

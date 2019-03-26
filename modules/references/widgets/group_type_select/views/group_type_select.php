@@ -42,6 +42,6 @@ use yii\web\JsExpression;
 		]
 	]:false
 
-]);
+])
 
 ?>

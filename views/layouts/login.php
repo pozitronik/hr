@@ -17,12 +17,12 @@ $this->registerJs("particlesJS.load('bg-overlay', '/js/particles.js/particles.js
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage(); ?>
-<html lang="<?= Yii::$app->language; ?>">
+<html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset; ?>">
+	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<?= Html::csrfMetaTags(); ?>
-	<title> <?= Html::encode($this->title); ?></title>
+	<?= Html::csrfMetaTags() ?>
+	<title> <?= Html::encode($this->title) ?></title>
 	<?php $this->head(); ?>
 </head>
 <body>
@@ -30,7 +30,7 @@ $this->registerJs("particlesJS.load('bg-overlay', '/js/particles.js/particles.js
 <div id="container" class="cls-container">
 	<div id="bg-overlay" class="bg-img"></div>
 	<div class="cls-content">
-		<?= $content; ?>
+		<?= $content ?>
 	</div>
 </div>
 <?php $this->endBody(); ?>

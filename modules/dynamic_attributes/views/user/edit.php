@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				]) ?>
 			</div>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							}
 						]
 					]
-				]); ?>
+				]) ?>
 
 
 			</div>
@@ -73,9 +73,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 	<div class="panel-footer">
 		<div class="btn-group">
-			<?= Html::submitButton($attribute->isNewRecord?'Сохранить':'Изменить', ['class' => $attribute->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+			<?= Html::submitButton($attribute->isNewRecord?'Сохранить':'Изменить', ['class' => $attribute->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 			<?php if ($attribute->isNewRecord): ?>
-				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 			<?php endif ?>
 		</div>
 	</div>

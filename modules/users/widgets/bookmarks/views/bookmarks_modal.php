@@ -25,7 +25,7 @@ $model = new Bookmarks([
 <?= $this->render('list', [
 	'bookmarks' => $user->options->bookmarks,
 	'model' => $model
-]); ?>
+]) ?>
 <?php Modal::begin([
 	'header' => 'Добавление закладки',
 	'toggleButton' => [
@@ -42,7 +42,7 @@ $model = new Bookmarks([
 
 <?= $form->field($model, 'type')->widget(Select2::class, [
 	'data' => Bookmarks::Types
-]); ?>
+]) ?>
 
 	<div class="form-group">
 		<?= Html::a('Добавить', "javascript:add_bookmark('{$model->route}','{$model->name}','{$model->type}')", ['class' => 'btn btn-primary', 'name' => 'add-bookmark']) ?>

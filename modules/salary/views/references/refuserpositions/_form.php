@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 <div class="panel">
 	<div class="panel-heading">
 		<div class="panel-control"></div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 	<?php $form = ActiveForm::begin(); ?>
 	<div class="panel-body">
@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
 					'maxlength' => true,
 					'autofocus' => 'autofocus',
 					'spellcheck' => 'true'
-				]); ?>
+				]) ?>
 			</div>
 
 			<div class="col-md-5">
@@ -56,7 +56,7 @@ use yii\widgets\ActiveForm;
 						'multiple' => true,
 						'allowClear' => true
 					]
-				]); ?>
+				]) ?>
 			</div>
 			<div class="col-md-4">
 				<?= $form->field($model, 'branch')->widget(ReferenceSelectWidget::class, [
@@ -65,7 +65,7 @@ use yii\widgets\ActiveForm;
 					'pluginOptions' => [
 						'allowClear' => true
 					]
-				]); ?>
+				]) ?>
 			</div>
 			<div class="col-md-4">
 				<?= $form->field($model, 'relGrades')->widget(ReferenceSelectWidget::class, [
@@ -75,14 +75,14 @@ use yii\widgets\ActiveForm;
 						'multiple' => true,
 						'allowClear' => true
 					]
-				]); ?>
+				]) ?>
 			</div>
 		</div>
 	</div>
 	<div class="panel-footer">
-		<?= Html::submitButton($model->isNewRecord?'Создать':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+		<?= Html::submitButton($model->isNewRecord?'Создать':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 		<?php if ($model->isNewRecord): ?>
-			<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+			<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 		<?php endif ?>
 	</div>
 	<?php ActiveForm::end(); ?>

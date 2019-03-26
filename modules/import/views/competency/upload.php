@@ -20,13 +20,13 @@ use yii\widgets\ActiveForm;
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-12">
-					<?= $form->field($model, 'uploadFileInstance')->fileInput()->label('Выберите файл'); ?>
+					<?= $form->field($model, 'uploadFileInstance')->fileInput()->label('Выберите файл') ?>
 				</div>
 			</div>
 
 		</div>
 		<div class="panel-footer">
-			<?= Html::submitButton('Загрузить', ['class' => 'btn btn-success pull-right']); ?>
+			<?= Html::submitButton('Загрузить', ['class' => 'btn btn-success pull-right']) ?>
 			<div class="clearfix"></div>
 		</div>
 	</div>

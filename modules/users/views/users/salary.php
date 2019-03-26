@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="panel-control">
 				<?= UserNavigationMenuWidget::widget([
 					'model' => $model
-				]); ?>
+				]) ?>
 			</div>
-			<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 		</div>
 
 		<div class="panel-body">
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'pluginOptions' => [
 							'allowClear' => true
 						]
-					]); ?>
+					]) ?>
 				</div>
 				<div class="col-md-2">
 					<?= $form->field($model, 'relGrade')->widget(RefDepDrop::class, [
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'pluginOptions' => [
 							'allowClear' => true
 						]
-					]); ?>
+					]) ?>
 				</div>
 				<div class="col-md-4">
 					<?= $form->field($model, 'relLocation')->widget(ReferenceSelectWidget::class, [
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'pluginOptions' => [
 							'allowClear' => true
 						]
-					]); ?>
+					]) ?>
 				</div>
 
 			</div>
@@ -98,9 +98,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="panel-footer">
 			<div class="btn-group">
-				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 				<?php if ($model->isNewRecord): ?>
-					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 				<?php endif ?>
 			</div>
 		</div>

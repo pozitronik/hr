@@ -24,10 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-heading">
 		<div class="panel-control">
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 	<div class="panel-body">
-		<?= RadarWidget::widget(compact('attribute', 'user')); ?>
+		<?= RadarWidget::widget(compact('attribute', 'user')) ?>
 	</div>
 </div>
 

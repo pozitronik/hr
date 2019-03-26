@@ -15,4 +15,4 @@ use yii\widgets\Breadcrumbs;
 		'url' => Yii::$app->homeUrl
 	],
 	'links' => ArrayHelper::getValue($this->params, 'breadcrumbs', [])
-]); ?>
+]) ?>

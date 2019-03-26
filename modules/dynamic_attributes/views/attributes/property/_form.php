@@ -21,21 +21,21 @@ use kartik\switchinput\SwitchInput;
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?php if (!$model->isNewRecord): ?>
-				<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']); ?>
+				<?= Html::a('Новый', 'create', ['class' => 'btn btn-success']) ?>
 			<?php endif; ?>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($this->title); ?></h3>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-4">
-				<?= $form->field($model, 'name'); ?>
+				<?= $form->field($model, 'name') ?>
 			</div>
 			<div class="col-md-4">
 				<?= $form->field($model, 'type')->widget(Select2::class, [
 					'data' => ArrayHelper::keymap(DynamicAttributeProperty::PROPERTY_TYPES, 'label')
-				]); ?>
+				]) ?>
 			</div>
 			<div class="col-md-4">
 				<?= $form->field($model, 'required')->widget(SwitchInput::class) ?>
@@ -45,9 +45,9 @@ use kartik\switchinput\SwitchInput;
 
 	<div class="panel-footer">
 		<div class="btn-group">
-			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']); ?>
+			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
 			<?php if ($model->isNewRecord): ?>
-				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']); ?>
+				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
 			<?php endif ?>
 		</div>
 	</div>

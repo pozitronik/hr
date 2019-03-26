@@ -37,7 +37,7 @@ use yii\web\View;
 			'data' => new JsExpression("function(params) { return {term:params.term, page: params.page, user:{$model->primaryKey}}; }")
 		]
 	]:[]
-]);
+])
 
 ?>
 

@@ -20,7 +20,7 @@ use kartik\form\ActiveForm;
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-12">
-					<?= $model->editField($form); ?>
+					<?= $model->editField($form) ?>
 				</div>
 			</div>
 		</div>

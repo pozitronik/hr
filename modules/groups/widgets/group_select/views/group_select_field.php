@@ -41,4 +41,4 @@ use kartik\select2\Select2;
 				'data' => new JsExpression("function(params) { return {term:params.term, page: params.page, group:{$model->primaryKey}}; }")
 			]
 		]:[])
-]); ?>
+]) ?>

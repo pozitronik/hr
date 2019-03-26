@@ -17,5 +17,5 @@ $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Привилеги�
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', compact('model', 'userRights'));
+<?= $this->render('_form', compact('model', 'userRights'))
 ?>
