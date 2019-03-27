@@ -87,7 +87,7 @@ class PluginsSupport {
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public static function GetAllControllers():array {
+	public static function GetAllControllersPaths():array {
 		$result = [];
 		foreach (self::ListPlugins() as $plugin) {
 			$result[] = $plugin->controllerPath;
