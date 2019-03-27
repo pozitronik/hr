@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var array $rules
  */
 
+use app\modules\privileges\widgets\access_tree\AccessTreeWidget;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\web\View;
@@ -28,8 +29,15 @@ use yii\widgets\ActiveForm;
 
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-12">
 					<?= $form->field($model, 'name') ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'rules')->widget(AccessTreeWidget::class, [
+						'tree' => $rules
+					]); ?>
 				</div>
 			</div>
 

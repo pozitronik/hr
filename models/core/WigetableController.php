@@ -10,6 +10,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionException;
+use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
@@ -94,8 +95,11 @@ class WigetableController extends Controller {
 	/**
 	 * Загружает динамически класс веб-контроллера Yii2 по его пути
 	 * @param string $fileName
+	 * @param string|null $moduleId
 	 * @return self|null
+	 * @throws InvalidConfigException
 	 * @throws ReflectionException
+	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
 	public static function GetController(string $fileName, ?string $moduleId):?object {
@@ -117,8 +121,11 @@ class WigetableController extends Controller {
 	/**
 	 * Выгружает список контроллеров в указанном неймспейсе
 	 * @param string $path
+	 * @param string|null $moduleId
 	 * @return self[]
+	 * @throws InvalidConfigException
 	 * @throws ReflectionException
+	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
 	public static function GetControllersList(string $path, ?string $moduleId = null):array {

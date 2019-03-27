@@ -7,5 +7,4 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
-echo 'widget access_tree view';
 
