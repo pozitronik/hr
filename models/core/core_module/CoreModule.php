@@ -4,6 +4,9 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use app\helpers\ArrayHelper;
+use app\models\core\Magic;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -91,6 +94,24 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 		}
 
 		return $this->_alias;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getRightsList(array $excludedRights = []):array {
+		$result = [];
+		$rightsDir = Yii::getAlias($this->alias."/models/rights/");
+		if (file_exists($rightsDir)) {
+
+			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($rightsDir), RecursiveIteratorIterator::SELF_FIRST);
+			$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
+			/** @var RecursiveDirectoryIterator $file */
+			foreach ($files as $file) {
+				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) $result[] = $model;
+			}
+		}
+		return $result;
 	}
 
 }

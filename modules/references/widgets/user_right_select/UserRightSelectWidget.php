@@ -5,8 +5,8 @@ namespace app\modules\references\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
 use app\modules\privileges\models\Privileges;
-use ReflectionException;
-use yii\base\UnknownClassException;
+use Throwable;
+use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 
@@ -37,12 +37,12 @@ class UserRightSelectWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function run():string {
 
-		$data = Privileges::GetRightsList(Privileges::RIGHTS_DIRECTORY, $this->notData);
+		$data = Privileges::GetRightsList($this->notData);
 
 		return $this->render('user_right_select', [
 			'model' => $this->model,

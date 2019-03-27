@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\core\core_module;
 
+use app\modules\privileges\models\UserRightInterface;
+
 /**
  * Интерфейс системного модуля приложения
  * Interface CoreModule
@@ -27,5 +29,11 @@ interface CoreModuleInterface {
 	 * @return string
 	 */
 	public function getAlias():string;
+	/**
+	 * Возвращает массив прав, поддерживаемых модулем
+	 * @param UserRightInterface[] $excludedRights Массив моделей, исключаемых из списка
+	 * @return UserRightInterface[]
+	 */
+	public function getRightsList(array $excludedRights = []):array;
 
 }

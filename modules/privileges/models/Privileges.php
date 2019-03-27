@@ -6,20 +6,17 @@ namespace app\modules\privileges\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
+use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
-use app\models\core\Magic;
 use app\models\core\StrictInterface;
 use app\models\relations\RelPrivilegesRights;
 use app\models\relations\RelUsersPrivileges;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use app\widgets\alert\AlertModel;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use ReflectionException;
 use Throwable;
 use Yii;
-use yii\base\UnknownClassException;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 
@@ -43,7 +40,6 @@ use yii\db\Exception;
  * @property-read UserRightInterface[] $userRights
  */
 class Privileges extends ActiveRecordExtended implements StrictInterface {
-	public const RIGHTS_DIRECTORY = '@app/modules/privileges/models/rights';
 
 	/**
 	 * @return LCQuery
@@ -135,22 +131,19 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	}
 
 	/**
-	 * Возвращает массив всех возможных прав
-	 * @param string $path
+	 * Возвращает массив всех возможных прав из всех модулей
 	 * @param UserRightInterface[] $excludedRights Массив моделей, исключённых из общего списка
 	 * @return UserRightInterface[]
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
-	public static function GetRightsList(string $path = self::RIGHTS_DIRECTORY, array $excludedRights = []):array {
-		$result = [];
-
-		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
-		$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
-		/** @var RecursiveDirectoryIterator $file */
-		foreach ($files as $file) {
-			if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) $result[] = $model;
+	public static function GetRightsList(array $excludedRights = []):array {
+		$result = [[]];
+		foreach (PluginsSupport::ListPlugins() as $plugin) {
+			$result[] = $plugin->getRightsList($excludedRights);
 		}
+		$result = array_merge(...$result);
+
 		return $result;
 	}
 
