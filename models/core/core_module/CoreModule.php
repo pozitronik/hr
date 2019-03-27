@@ -108,7 +108,10 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 			$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
 			/** @var RecursiveDirectoryIterator $file */
 			foreach ($files as $file) {
-				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) $result[] = $model;
+				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetUserRightModel($file->getRealPath())) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) {
+					$model->module = $this->name;
+					$result[] = $model;
+				}
 			}
 		}
 		return $result;

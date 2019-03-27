@@ -18,14 +18,16 @@ use yii\db\ActiveRecord;
  *
  * @property ActiveRecord|null $model При использовании виджета в ActiveForm ассоциируем с моделью...
  * @property string|null $attribute ...и свойством модели
- * @property array $notData Группы, исключённые из списка (например те, в которых пользователь уже есть)
- * @property boolean $multiple
+ * @property array $notData Права, исключённые из списка (например те, в которых пользователь уже есть)
+ * @property bool $multiple
+ * @property bool $orderByModule Группировать по модулю
  */
 class UserRightSelectWidget extends Widget {
 	public $model;
 	public $attribute;
 	public $notData;
 	public $multiple = false;
+	public $orderByModule = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -48,7 +50,7 @@ class UserRightSelectWidget extends Widget {
 		return $this->render('user_right_select', [
 			'model' => $this->model,
 			'attribute' => $this->attribute,
-			'data' => ArrayHelper::map($data, 'id', 'name'),
+			'data' => ArrayHelper::map($data, 'id', 'name', $this->orderByModule?'module':null),
 			'multiple' => $this->multiple,
 			'options' => Privileges::dataOptions()
 		]);

@@ -16,6 +16,7 @@ use yii\web\Controller;
  * @property-read string $name
  * @property-read string $description
  * @property-read bool $hidden
+ * @property string $module
  */
 interface UserRightInterface {
 	/*Константы доступа*/

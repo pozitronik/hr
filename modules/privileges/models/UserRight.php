@@ -14,8 +14,10 @@ use yii\web\Controller;
  *
  * @property string $id
  * @property array $actions
+ * @property string $module
  */
 class UserRight extends Model implements UserRightInterface {
+	protected $_module;//Регистрирующий модуль, заполняется при инициализации
 
 	/**
 	 * @inheritdoc
@@ -23,7 +25,8 @@ class UserRight extends Model implements UserRightInterface {
 	public function attributeLabels():array {
 		return [
 			'name' => 'Название',
-			'description' => 'Описание'
+			'description' => 'Описание',
+			'module' => 'Модуль'
 		];
 	}
 
@@ -100,5 +103,19 @@ class UserRight extends Model implements UserRightInterface {
 	 */
 	public function getFlag(int $flag):?bool {
 		return self::ACCESS_UNDEFINED;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getModule():string {
+		return $this->_module;
+	}
+
+	/**
+	 * @param string $module
+	 */
+	public function setModule(string $module):void {
+		$this->_module = $module;
 	}
 }

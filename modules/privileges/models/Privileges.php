@@ -201,7 +201,8 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			$result = [];
 			foreach (PluginsSupport::GetAllRights() as $key => $item) {
 				$result[$item->id] = [
-					'data-description' => $item->description
+					'data-description' => $item->description,
+					'data-module' => $item->module
 				];
 			}
 			return $result;
