@@ -31,7 +31,7 @@ class ActiveRecordExtended extends ActiveRecord {
 	 * {@inheritDoc}
 	 */
 	public function beforeSave($insert):bool {
-		if (UserAccess::canAccess($this, $insert?AccessMethods::create:AccessMethods::update)) {
+		if (!UserAccess::canAccess($this, $insert?AccessMethods::create:AccessMethods::update)) {
 			$this->addError('id', 'Вам не разрешено производить данное действие.');
 			AlertModel::AccessNotify();
 			return false;
