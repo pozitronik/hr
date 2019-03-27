@@ -36,11 +36,12 @@ class RightUserView extends UserRight {
 		$definedRules = [
 			'users/users' => [
 				'actions' => [
-					'index' => self::ACCESS_ALLOW
+					'index' => self::ACCESS_ALLOW,
+					'profile' => self::ACCESS_ALLOW
 				]
 			]
 		];
-		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+		return ArrayHelper::getValue($definedRules, "{$controller->module->id}/{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 
 	}
 }

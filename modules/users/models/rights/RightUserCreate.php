@@ -41,6 +41,6 @@ class RightUserCreate extends UserRight {
 				]
 			]
 		];
-		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+		return ArrayHelper::getValue($definedRules, "{$controller->module->id}/{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 	}
 }
