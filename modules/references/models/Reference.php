@@ -82,13 +82,6 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 	}
 
 	/**
-	 * @return LCQuery
-	 */
-	public static function find():LCQuery {
-		return new LCQuery(static::class);
-	}
-
-	/**
 	 * Набор колонок для отображения на главной
 	 * @return array
 	 */

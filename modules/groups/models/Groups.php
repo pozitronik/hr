@@ -76,13 +76,6 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 	}
 
 	/**
-	 * @return LCQuery
-	 */
-	public static function find():LCQuery {
-		return new LCQuery(static::class);
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function rules():array {
