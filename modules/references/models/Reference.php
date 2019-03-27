@@ -6,7 +6,6 @@ namespace app\modules\references\models;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\widgets\alert\AlertModel;
 use Throwable;

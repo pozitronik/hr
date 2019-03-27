@@ -5,7 +5,6 @@ namespace app\modules\salary\models;
 
 use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
-use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
