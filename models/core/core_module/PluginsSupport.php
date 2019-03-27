@@ -90,7 +90,7 @@ class PluginsSupport {
 	public static function GetAllControllersPaths():array {
 		$result = [];
 		foreach (self::ListPlugins() as $plugin) {
-			$result[] = $plugin->controllerPath;
+			$result[$plugin->id] = $plugin->controllerPath;
 		}
 		return $result;
 	}
