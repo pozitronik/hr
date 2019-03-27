@@ -65,4 +65,15 @@ class ActiveRecordExtended extends ActiveRecord {
 		return parent::beforeDelete();
 	}
 
+	/**
+	 * Поскольку базовый deleteAll не триггерит beforeDelete, перекрываем и триггерим сами
+	 * {@inheritDoc}
+	 */
+	public static function deleteAll($condition = null, $params = []):?int {
+		if ((new self())->beforeDelete()) {
+			return parent::deleteAll($condition, $params);
+		}
+		return null;
+	}
+
 }
