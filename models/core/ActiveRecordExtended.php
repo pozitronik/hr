@@ -7,6 +7,7 @@ use app\models\core\traits\ARExtended;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
 use app\widgets\alert\AlertModel;
+use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
@@ -47,6 +48,20 @@ class ActiveRecordExtended extends ActiveRecord {
 	public function afterSave($insert, $changedAttributes) {
 		parent::afterSave($insert, $changedAttributes);
 		if ($insert) ActiveRecordLogger::logModel($this);
+	}
+
+	/**
+	 * @return bool
+	 * @throws Throwable
+	 */
+	public function beforeDelete():bool {
+		if (!UserAccess::canAccess($this, AccessMethods::delete)) {
+			$this->addError('id', 'Вам не разрешено производить данное действие.');
+			AlertModel::AccessNotify();
+			return false;
+		}
+		ActiveRecordLogger::logDelete($this);
+		return parent::beforeDelete();
 	}
 
 }

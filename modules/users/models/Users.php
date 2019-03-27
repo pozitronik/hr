@@ -7,7 +7,6 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\StrictInterface;
-use app\models\core\traits\MethodsAccess;
 use app\models\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
@@ -87,7 +86,6 @@ use Yii;
  */
 class Users extends ActiveRecordExtended implements StrictInterface {
 	use Upload;
-	use MethodsAccess;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.
 
 	/*Переменная для инстанса заливки аватарок*/
