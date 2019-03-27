@@ -4,12 +4,14 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\Path;
+use app\models\core\core_module\PluginsSupport;
 use app\modules\privileges\models\UserAccess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionException;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
@@ -92,16 +94,22 @@ class WigetableController extends Controller {
 	/**
 	 * Загружает динамически класс веб-контроллера Yii2 по его пути
 	 * @param string $fileName
-	 * @return Controller|null
+	 * @return self|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetController(string $fileName):?object {
+	public static function GetController(string $fileName, ?string $moduleId):?object {
 		$className = Magic::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ($class->isSubclassOf(__CLASS__)) {
-			return new $className(self::ExtractControllerId($className), Yii::$app);
+			if (null === $moduleId) {
+				$module = Yii::$app;
+			} else {
+				$module = PluginsSupport::GetPluginById($moduleId);
+				if (null === $module) throw new InvalidConfigException("Module $moduleId not found or plugin not configured properly.");
+			}
+			return new $className(self::ExtractControllerId($className), $module);
 		}
 		return null;
 	}
@@ -109,17 +117,17 @@ class WigetableController extends Controller {
 	/**
 	 * Выгружает список контроллеров в указанном неймспейсе
 	 * @param string $path
-	 * @return Controller[]
+	 * @return self[]
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function GetControllersList(string $path):array {
+	public static function GetControllersList(string $path, ?string $moduleId = null):array {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && null !== $controller = self::GetController($file->getRealPath())) {
+			if ($file->isFile() && 'php' === $file->getExtension() && null !== $controller = self::GetController($file->getRealPath(), $moduleId)) {
 				$result[] = $controller;
 			}
 		}
