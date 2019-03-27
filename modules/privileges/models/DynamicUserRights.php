@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 
+use app\models\core\ActiveRecordExtended;
+use app\models\core\StrictInterface;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\db\ActiveRecord;
 use yii\web\Controller;
 
 /**
@@ -15,31 +17,31 @@ use yii\web\Controller;
  * @property string $name Название правила
  * @property array $rules Набор разрешений правила
  */
-class DynamicUserRights extends ActiveRecord implements UserRightInterface {
+class DynamicUserRights extends ActiveRecordExtended implements UserRightInterface, StrictInterface {
 	protected $_module;//Регистрирующий модуль, заполняется при инициализации
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'sys_user_rights';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['name', 'rules'], 'required'],
 			[['rules'], 'safe'],
-			[['name'], 'string', 'max' => 255],
+			[['name'], 'string', 'max' => 255]
 		];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
@@ -53,9 +55,10 @@ class DynamicUserRights extends ActiveRecord implements UserRightInterface {
 	 * Магическое свойство, необходимое для сравнения классов, например
 	 * Предполагается, что будет использоваться имя класса
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function __toString():string {
-		// TODO: Implement __toString() method.
+		return $this->formName();
 	}
 
 	/**
@@ -126,5 +129,21 @@ class DynamicUserRights extends ActiveRecord implements UserRightInterface {
 	 */
 	public function getFlag(int $flag):?bool {
 		// TODO: Implement getFlag() method.
+	}
+
+	/**
+	 * @param array|null $paramsArray
+	 * @return bool
+	 */
+	public function createModel(?array $paramsArray):bool {
+		return false;
+	}
+
+	/**
+	 * @param array|null $paramsArray
+	 * @return bool
+	 */
+	public function updateModel(?array $paramsArray):bool {
+		// TODO: Implement updateModel() method.
 	}
 }
