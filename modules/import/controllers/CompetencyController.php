@@ -9,7 +9,6 @@ use app\modules\import\models\fos\ImportException;
 use Throwable;
 use Yii;
 use yii\db\Exception;
-use yii\web\ErrorAction;
 use yii\web\Response;
 
 /**
@@ -22,17 +21,6 @@ class CompetencyController extends WigetableController {
 	public $disabled = false;
 	public $orderWeight = 7;
 	public $defaultRoute = 'import/competency';
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * @param int|null $domain

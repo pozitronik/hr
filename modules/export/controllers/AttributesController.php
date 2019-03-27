@@ -8,7 +8,6 @@ use app\modules\export\models\attributes\ExportAttributes;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use Throwable;
-use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -20,17 +19,6 @@ class AttributesController extends WigetableController {
 	public $disabled = true;
 	public $orderWeight = 7;
 	public $defaultRoute = 'export/competency';
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * Выдать экспорт атрибутов пользователя

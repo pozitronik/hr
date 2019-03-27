@@ -13,7 +13,6 @@ use Yii;
 use app\modules\users\models\Users;
 use yii\data\ArrayDataProvider;
 use yii\filters\ContentNegotiator;
-use yii\web\ErrorAction;
 use yii\web\Response;
 
 /**
@@ -38,17 +37,6 @@ class BunchController extends WigetableController {
 					'application/xml' => Response::FORMAT_XML,
 					'text/html' => Response::FORMAT_HTML
 				]
-			]
-		];
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
 			]
 		];
 	}

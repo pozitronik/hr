@@ -10,7 +10,6 @@ use Yii;
 use app\modules\users\models\Users;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
-use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -22,17 +21,6 @@ class UsersController extends WigetableController {
 	public $menuIcon = "/img/admin/users.png";
 	public $orderWeight = 1;
 	public $defaultRoute = 'users/users';
-
-	/**
-	 * @inheritdoc
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * Макро обновления данных юзера

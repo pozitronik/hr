@@ -10,7 +10,6 @@ use Throwable;
 use Yii;
 use app\models\core\WigetableController;
 use yii\data\ActiveDataProvider;
-use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -22,17 +21,6 @@ class GroupsController extends WigetableController {
 	public $menuIcon = "/img/admin/groups.png";
 	public $orderWeight = 2;
 	public $defaultRoute = 'groups/groups';
-
-	/**
-	 * @inheritdoc
-	 */
-	public function actions():array {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * @return string

@@ -14,6 +14,7 @@ use yii\base\UnknownClassException;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\web\Controller;
+use yii\web\ErrorAction;
 use yii\web\Response;
 
 /**
@@ -46,6 +47,17 @@ class WigetableController extends Controller {
 			'access' => [
 				'class' => AccessControl::class,
 				'rules' => UserAccess::getUserAccessRules($this)
+			]
+		];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function actions() {
+		return [
+			'error' => [
+				'class' => ErrorAction::class
 			]
 		];
 	}

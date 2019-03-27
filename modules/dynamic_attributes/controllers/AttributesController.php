@@ -14,7 +14,6 @@ use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\Exception;
-use yii\web\ErrorAction;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -28,17 +27,6 @@ class AttributesController extends WigetableController {
 	public $menuIcon = "/img/admin/attributes.png";
 	public $orderWeight = 4;
 	public $defaultRoute = 'attributes/attributes';
-
-	/**
-	 * @inheritdoc
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * @return string

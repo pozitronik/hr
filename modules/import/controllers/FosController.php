@@ -10,7 +10,6 @@ use app\modules\import\models\fos\ImportFosDecomposedSearch;
 use app\modules\import\models\fos\ImportFosSearch;
 use Throwable;
 use Yii;
-use yii\web\ErrorAction;
 use yii\web\Response;
 
 /**
@@ -23,17 +22,6 @@ class FosController extends WigetableController {
 	public $disabled = false;
 	public $orderWeight = 6;
 	public $defaultRoute = 'import/fos';
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * @return string

@@ -10,7 +10,6 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -24,17 +23,6 @@ class PrivilegesController extends WigetableController {
 	public $disabled = false;
 	public $orderWeight = 5;
 	public $defaultRoute = 'privileges/privileges';
-
-	/**
-	 * @inheritdoc
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * @return string
