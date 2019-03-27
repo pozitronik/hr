@@ -1,17 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\privileges\models\rights\groups;
+namespace app\modules\users\models\rights;
 
 use app\helpers\ArrayHelper;
 use app\modules\privileges\models\UserRight;
 use yii\web\Controller;
 
 /**
- * Class RightGroupCreate
- * @package app\modules\privileges\models\rights\groups
+ * Class RightUserCreate
+ * @package app\models\user_rights\rights
  */
-class RightGroupCreate extends UserRight {
+class RightUserCreate extends UserRight {
 
 
 	/**
@@ -19,7 +19,7 @@ class RightGroupCreate extends UserRight {
 	 * @return string
 	 */
 	public function getName():string {
-		return "Создание группы";
+		return "Создание пользователя";
 	}
 
 	/**
@@ -27,7 +27,7 @@ class RightGroupCreate extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Разрешает создать новую группу в системе";
+		return "Разрешает создать нового пользователя в системе";
 	}
 
 	/**
@@ -35,7 +35,7 @@ class RightGroupCreate extends UserRight {
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		$definedRules = [
-			'groups' => [
+			'users/users' => [
 				'actions' => [
 					'create' => self::ACCESS_ALLOW
 				]

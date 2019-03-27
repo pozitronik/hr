@@ -1,25 +1,24 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\privileges\models\rights\users;
+namespace app\modules\users\models\rights;
 
 use app\helpers\ArrayHelper;
 use app\modules\privileges\models\UserRight;
 use yii\web\Controller;
 
 /**
- * Class RightUserDelete
- * @package app\models\user_rights\rights
+ * Class RightUserView
+ * @package app\models\user_rights\rights\users
  */
-class RightUserDelete extends UserRight {
-
+class RightUserView extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Удаление пользователя";
+		return "Просмотр пользователей";
 	}
 
 	/**
@@ -27,7 +26,7 @@ class RightUserDelete extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Разрешает удалить пользователя из системы";
+		return "Доступ к списку всех пользователей в системе";
 	}
 
 	/**
@@ -37,7 +36,7 @@ class RightUserDelete extends UserRight {
 		$definedRules = [
 			'users/users' => [
 				'actions' => [
-					'delete' => self::ACCESS_ALLOW
+					'index' => self::ACCESS_ALLOW
 				]
 			]
 		];

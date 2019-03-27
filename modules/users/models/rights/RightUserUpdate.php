@@ -1,28 +1,28 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\privileges\models\rights\users;
+namespace app\modules\users\models\rights;
 
+use app\helpers\ArrayHelper;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserRight;
-use app\modules\users\models\Users;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\web\Controller;
 
 /**
- * Class RightUserAdmin
+ * Class RightUserUpdate
  * @package app\models\user_rights\rights\users
  */
-class RightUserAdmin extends UserRight {
+class RightUserUpdate extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Управление пользователями";
+		return "Редактирование профиля";
 	}
 
 	/**
@@ -30,14 +30,22 @@ class RightUserAdmin extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Неограниченный доступ к управлению всеми пользователями в системе";
+		return "Пользователь может вносить любые изменения в профили всех пользователей";
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return ('users/users' === $controller->id)?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
+		$definedRules = [
+			'users/users' => [
+				'actions' => [
+					'update' => self::ACCESS_ALLOW
+				]
+			]
+		];
+
+		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 	}
 
 	/**
@@ -49,6 +57,12 @@ class RightUserAdmin extends UserRight {
 	 * @throws InvalidConfigException
 	 */
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		return ($model->formName() === (new Users())->formName())?self::ACCESS_ALLOW:parent::canAccess($model, $method, $actionParameters);
+		$definedRules = [
+			'users' => [
+				AccessMethods::update => self::ACCESS_ALLOW
+			]
+		];
+
+		return ArrayHelper::getValue($definedRules, "{$model->formName()}.$method", parent::canAccess($model, $method, $actionParameters));
 	}
 }

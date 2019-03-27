@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\privileges\models\rights\users;
+namespace app\modules\users\models\rights;
 
 use app\helpers\ArrayHelper;
+use app\models\user\CurrentUser;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserRight;
 use Throwable;
@@ -12,17 +13,17 @@ use yii\base\Model;
 use yii\web\Controller;
 
 /**
- * Class RightUserUpdate
+ * Class RightUserUpdateSelf
  * @package app\models\user_rights\rights\users
  */
-class RightUserUpdate extends UserRight {
+class RightUserUpdateSelf extends UserRight {
 
 	/**
 	 * Имя права
 	 * @return string
 	 */
 	public function getName():string {
-		return "Редактирование профиля";
+		return "Редактирование своего профиля";
 	}
 
 	/**
@@ -30,7 +31,7 @@ class RightUserUpdate extends UserRight {
 	 * @return string
 	 */
 	public function getDescription():string {
-		return "Пользователь может вносить любые изменения в профили всех пользователей";
+		return "Пользователь может вносить любые изменения в собственный профиль";
 	}
 
 	/**
@@ -40,12 +41,13 @@ class RightUserUpdate extends UserRight {
 		$definedRules = [
 			'users/users' => [
 				'actions' => [
-					'update' => self::ACCESS_ALLOW
+					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED,
+					'profile' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 				]
 			]
 		];
 
-		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+		return ArrayHelper::getValue($definedRules, "{$controller->module->id}/{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 	}
 
 	/**
@@ -58,8 +60,8 @@ class RightUserUpdate extends UserRight {
 	 */
 	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		$definedRules = [
-			'users' => [
-				AccessMethods::update => self::ACCESS_ALLOW
+			'Users' => [
+				AccessMethods::update => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 			]
 		];
 
