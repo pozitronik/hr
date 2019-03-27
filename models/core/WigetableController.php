@@ -54,7 +54,7 @@ class WigetableController extends Controller {
 	/**
 	 * @return array
 	 */
-	public function actions() {
+	public function actions():array {
 		return [
 			'error' => [
 				'class' => ErrorAction::class
