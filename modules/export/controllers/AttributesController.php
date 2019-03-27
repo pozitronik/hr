@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
  */
 class AttributesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-file-export'></i>Экспорт атрибутов";
-	public $disabled = true;
+	public $menuDisabled = true;
 	public $orderWeight = 7;
 	public $defaultRoute = 'export/competency';
 

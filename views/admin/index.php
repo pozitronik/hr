@@ -14,7 +14,7 @@ $this->title = 'Управление';
 $this->params['breadcrumbs'][] = $this->title;
 
 foreach ($controllers as $controller) {
-	if (!$controller->disabled) {
+	if (!$controller->menuDisabled) {
 		echo ControllerWidget::widget([
 			'model' => $controller
 		]);

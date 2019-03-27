@@ -25,12 +25,12 @@ use yii\web\Response;
  *
  * @property-read false|string $menuIcon
  * @property-read false|string $menuCaption
- * @property-read boolean $disabled
+ * @property-read boolean $menuDisabled
  * @property-read integer $orderWeight
  * @property-read string $defaultRoute
  */
 class WigetableController extends Controller {
-	public $disabled = false;
+	public $menuDisabled = false;//отключает пункт меню
 	public $orderWeight = 0;
 
 	/**

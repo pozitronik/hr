@@ -18,7 +18,7 @@ use yii\web\Response;
 class CompetencyController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-file-import'></i>Импорт компетенций";
 	public $menuIcon = "/img/admin/import.png";
-	public $disabled = false;
+	public $menuDisabled = false;
 	public $orderWeight = 7;
 	public $defaultRoute = 'import/competency';
 

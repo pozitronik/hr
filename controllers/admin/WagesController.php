@@ -11,7 +11,7 @@ use app\models\core\WigetableController;
 class WagesController extends WigetableController {
 	public $menuCaption = "Зарплаты";
 	public $menuIcon = "/img/admin/wages.png";
-	public $disabled = true;
+	public $menuDisabled = true;
 
 	public function actionIndex():void {
 		echo $this->id;

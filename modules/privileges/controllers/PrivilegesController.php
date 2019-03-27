@@ -20,7 +20,7 @@ use yii\web\Response;
 class PrivilegesController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-users-crown'></i>Привилегии";
 	public $menuIcon = "/img/admin/privileges.png";
-	public $disabled = false;
+	public $menuDisabled = false;
 	public $orderWeight = 5;
 	public $defaultRoute = 'privileges/privileges';
 

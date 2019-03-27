@@ -11,7 +11,7 @@ use app\models\core\WigetableController;
 class AgreementsController extends WigetableController {
 	public $menuCaption = "Договорённости";
 	public $menuIcon = "/img/admin/agreements.png";
-	public $disabled = true;
+	public $menuDisabled = true;
 
 	public function actionIndex():void {
 		echo $this->id;

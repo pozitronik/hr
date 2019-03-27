@@ -3,14 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
+use app\models\core\WigetableController;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use Throwable;
 use Yii;
 use app\modules\users\models\Users;
 use yii\base\InvalidConfigException;
-use yii\web\Controller;
-use yii\web\ErrorAction;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -18,18 +17,8 @@ use yii\web\Response;
  * Class UserController
  * @package app\modules\dynamic_attributes\controllers
  */
-class UserController extends Controller {
-
-	/**
-	 * @inheritdoc
-	 */
-	public function actions() {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
+class UserController extends WigetableController {
+	public $menuDisabled = true;
 
 	/**
 	 * Отдаёт страницу просмотра всех атрибутов пользователя

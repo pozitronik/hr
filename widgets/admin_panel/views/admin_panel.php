@@ -17,7 +17,7 @@ use app\widgets\controller\ControllerWidget;
 	<p class="dropdown-header">Управление</p>
 	<ul class="list-unstyled list-inline">
 		<?php foreach ($controllers as $controller): ?>
-			<?php if (!$controller->disabled): ?>
+			<?php if (!$controller->menuDisabled): ?>
 				<li class="pad-btm">
 					<?= ControllerWidget::widget([
 						'model' => $controller,

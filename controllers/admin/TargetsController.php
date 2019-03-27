@@ -11,7 +11,7 @@ use app\models\core\WigetableController;
 class TargetsController extends WigetableController {
 	public $menuCaption = "Цели";
 	public $menuIcon = "/img/admin/targets.png";
-	public $disabled = true;
+	public $menuDisabled = true;
 
 	public function actionIndex():void {
 		echo $this->id;

@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\controllers;
 
+use app\models\core\core_module\PluginsSupport;
+use app\models\core\Magic;
 use app\models\core\WigetableController;
 use app\modules\privileges\models\DynamicUserRights;
 use Throwable;
@@ -17,7 +19,7 @@ use yii\web\Response;
 class DynamicRightsController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-ruler'></i>Динамические правила";
 	public $menuIcon = "/img/admin/rules.png";
-	public $disabled = false;
+	public $menuDisabled = false;
 	public $orderWeight = 6;
 	public $defaultRoute = 'privileges/dynamic-rights';
 
@@ -44,10 +46,18 @@ class DynamicRightsController extends WigetableController {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newRight->id]);
 		}
+		$ruleMap = [];
+		$controllersPaths = PluginsSupport::GetAllControllersPaths();//Only WigetableControllers
+		foreach ($controllersPaths as $moduleId => $controllerPath) {
+			$controllers = WigetableController::GetControllersList($controllerPath, $moduleId);
+			foreach ($controllers as $controller) {
+				$ruleMap[$moduleId][$controller->id][] = Magic::GetControllerActions($controller);
+			}
+		}
 
 		return $this->render('create', [
 			'model' => $newRight,
-			'rules' => []
+			'rules' => $ruleMap
 		]);
 	}
 }

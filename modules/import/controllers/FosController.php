@@ -19,7 +19,7 @@ use yii\web\Response;
 class FosController extends WigetableController {
 	public $menuCaption = "<i class='fa fa-file-import'></i>Импорт структуры SAP";
 	public $menuIcon = "/img/admin/import.png";
-	public $disabled = false;
+	public $menuDisabled = false;
 	public $orderWeight = 6;
 	public $defaultRoute = 'import/fos';
 
