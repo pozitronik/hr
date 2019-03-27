@@ -50,6 +50,10 @@ use kartik\grid\CheckboxColumn;
 			'format' => 'raw'
 		],
 		[
+			'attribute' => 'module',
+			'format' => 'raw'
+		],
+		[
 			'class' => CheckboxColumn::class,
 			'headerOptions' => ['class' => 'kartik-sheet-style'],
 			'header' => Icons::trash(),
