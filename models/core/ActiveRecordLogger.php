@@ -66,6 +66,15 @@ class ActiveRecordLogger extends ActiveRecord {
 	}
 
 	/**
+	 * Логирует удаление модели
+	 * @param ActiveRecord $model
+	 * @throws InvalidConfigException
+	 */
+	public static function logDelete(ActiveRecord $model):void {
+		self::push($model->formName(), $model->primaryKey, $model->attributes, []);
+	}
+
+	/**
 	 * @param string|null $modelName
 	 * @param int|null $pKey
 	 * @param array $oldAttributes
