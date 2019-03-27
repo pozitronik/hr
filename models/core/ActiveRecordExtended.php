@@ -33,6 +33,7 @@ class ActiveRecordExtended extends ActiveRecord {
 	 */
 	public function beforeSave($insert):bool {
 		if (!UserAccess::canAccess($this, $insert?AccessMethods::create:AccessMethods::update)) {
+			$this->refresh();
 			$this->addError('id', 'Вам не разрешено производить данное действие.');
 			AlertModel::AccessNotify();
 			return false;
