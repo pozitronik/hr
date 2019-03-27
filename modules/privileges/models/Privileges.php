@@ -16,7 +16,6 @@ use app\modules\users\models\Users;
 use app\widgets\alert\AlertModel;
 use Throwable;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 
@@ -131,23 +130,6 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	}
 
 	/**
-	 * Возвращает массив всех возможных прав из всех модулей
-	 * @param UserRightInterface[] $excludedRights Массив моделей, исключённых из общего списка
-	 * @return UserRightInterface[]
-	 * @throws Throwable
-	 * @throws InvalidConfigException
-	 */
-	public static function GetRightsList(array $excludedRights = []):array {
-		$result = [[]];
-		foreach (PluginsSupport::ListPlugins() as $plugin) {
-			$result[] = $plugin->getRightsList($excludedRights);
-		}
-		$result = array_merge(...$result);
-
-		return $result;
-	}
-
-	/**
 	 * Связь с именами классов
 	 * @return ActiveQuery|LCQuery|RelPrivilegesRights[]
 	 */
@@ -194,8 +176,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	public function getUserRights():array {
 		return Yii::$app->cache->getOrSet(static::class."getUserRights".$this->id, function() {
 			$result = [];
-			$allRights = self::GetRightsList();
-			foreach ($allRights as $right) {
+			foreach (PluginsSupport::GetAllRights() as $right) {
 				if (in_array($right->id, $this->userRightsNames)) $result[] = $right;
 			}
 			return $result;
@@ -217,9 +198,8 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public static function dataOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", static function() {
-			$items = self::GetRightsList();
 			$result = [];
-			foreach ($items as $key => $item) {
+			foreach (PluginsSupport::GetAllRights() as $key => $item) {
 				$result[$item->id] = [
 					'data-description' => $item->description
 				];

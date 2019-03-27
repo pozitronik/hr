@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use app\helpers\ArrayHelper;
+use app\modules\privileges\models\UserRightInterface;
 use app\modules\references\models\Reference;
 use Throwable;
 use Yii;
@@ -146,6 +147,23 @@ class PluginsSupport {
 				}
 			}
 		}
+		return $result;
+	}
+
+	/**
+	 * Возвращает массив всех возможных прав из всех модулей
+	 * @param UserRightInterface[] $excludedRights Массив моделей, исключённых из общего списка
+	 * @return UserRightInterface[]
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 */
+	public static function GetAllRights(array $excludedRights = []):array {
+		$result = [[]];
+		foreach (self::ListPlugins() as $plugin) {
+			$result[] = $plugin->getRightsList($excludedRights);
+		}
+		$result = array_merge(...$result);
+
 		return $result;
 	}
 

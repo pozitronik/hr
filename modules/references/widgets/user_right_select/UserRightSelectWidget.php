@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
+use app\models\core\core_module\PluginsSupport;
 use app\modules\privileges\models\Privileges;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -42,7 +43,7 @@ class UserRightSelectWidget extends Widget {
 	 */
 	public function run():string {
 
-		$data = Privileges::GetRightsList($this->notData);
+		$data = PluginsSupport::GetAllRights($this->notData);
 
 		return $this->render('user_right_select', [
 			'model' => $this->model,
