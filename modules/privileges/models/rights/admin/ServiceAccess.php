@@ -31,8 +31,8 @@ class ServiceAccess extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return ('service/service' === $controller->id)?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return ('service/service' === "{$controller->module->id}/{$controller->id}")?self::ACCESS_ALLOW:parent::getAccess($controller, $action, $actionParameters);
 	}
 
 	/**

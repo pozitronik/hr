@@ -37,17 +37,16 @@ class RightUserUpdateSelf extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		$definedRules = [
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return parent::checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [
 					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED,
 					'profile' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 				]
 			]
-		];
+		], $controller, $action);
 
-		return ArrayHelper::getValue($definedRules, "{$controller->module->id}/{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
 	}
 
 	/**
@@ -58,13 +57,11 @@ class RightUserUpdateSelf extends UserRight {
 	 * @throws Throwable
 	 * @throws InvalidConfigException
 	 */
-	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		$definedRules = [
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+		return parent::checkModelAccessRule([
 			'Users' => [
 				AccessMethods::update => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 			]
-		];
-
-		return ArrayHelper::getValue($definedRules, "{$model->formName()}.$method", parent::canAccess($model, $method, $actionParameters));
+		], $model, $method);
 	}
 }

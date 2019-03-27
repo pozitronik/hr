@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\rights;
 
-use app\helpers\ArrayHelper;
+use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserRight;
+use Throwable;
+use yii\base\InvalidConfigException;
+use yii\base\Model;
 use yii\web\Controller;
 
 /**
@@ -12,7 +15,6 @@ use yii\web\Controller;
  * @package app\models\user_rights\rights
  */
 class RightUserCreate extends UserRight {
-
 
 	/**
 	 * Имя права
@@ -33,14 +35,29 @@ class RightUserCreate extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		$definedRules = [
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return parent::checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [
 					'create' => self::ACCESS_ALLOW
 				]
 			]
-		];
-		return ArrayHelper::getValue($definedRules, "{$controller->module->id}/{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+		], $controller, $action);
+	}
+
+	/**
+	 * @param Model $model Модель, к которой проверяется доступ
+	 * @param int|null $method Метод доступа (см. AccessMethods)
+	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
+	 * @return bool|null
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 */
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+		return parent::checkModelAccessRule([
+			'users' => [
+				AccessMethods::create => self::ACCESS_ALLOW
+			]
+		], $model, $method);
 	}
 }

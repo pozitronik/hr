@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use app\helpers\ArrayHelper;
+use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\web\Controller;
@@ -66,7 +68,7 @@ class UserRight extends Model implements UserRightInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
 
@@ -94,7 +96,7 @@ class UserRight extends Model implements UserRightInterface {
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null
 	 */
-	public function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {//todo: проверить, нужны ли тут $actionParameters, вероятно нужны $methodParameters
 		return self::ACCESS_UNDEFINED;
 	}
 
@@ -117,5 +119,30 @@ class UserRight extends Model implements UserRightInterface {
 	 */
 	public function setModule(string $module):void {
 		$this->_module = $module;
+	}
+
+	/**
+	 * Макро для проверки разрешений доступов к экшенам контроллера. Перенесено сюда для микрооптимизации, поскольку один и тот же код использовался во многих рулесах
+	 * @param array $accessRule
+	 * @param Controller $controller
+	 * @param string $action
+	 * @return bool|null
+	 * @throws Throwable
+	 */
+	protected static function checkControllerAccessRule(array $accessRule, Controller $controller, string $action):?bool {
+		return ArrayHelper::getValue($accessRule, "{$controller->module->id}/{$controller->id}.actions.{$action}", self::getAccess($controller, $action));
+	}
+
+	/**
+	 * Макро для проверки разрешений доступов к методам моделей. Перенесено сюда для микрооптимизации, поскольку один и тот же код использовался во многих рулесах
+	 * @param array $accessRule
+	 * @param Model $model
+	 * @param int|null $method
+	 * @return bool|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	protected static function checkModelAccessRule(array $accessRule, Model $model, ?int $method = AccessMethods::any):?bool {
+		return ArrayHelper::getValue($accessRule, "{$model->formName()}.$method", self::canAccess($model, $method));
 	}
 }

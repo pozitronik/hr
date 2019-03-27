@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models\rights;
 
-use app\helpers\ArrayHelper;
+use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserRight;
+use yii\base\Model;
 use yii\web\Controller;
 
 /**
@@ -12,7 +13,6 @@ use yii\web\Controller;
  * @package app\modules\privileges\models\rights\groups
  */
 class RightGroupCreate extends UserRight {
-
 
 	/**
 	 * Имя права
@@ -33,14 +33,24 @@ class RightGroupCreate extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		$definedRules = [
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return parent::checkControllerAccessRule([
 			'groups' => [
 				'actions' => [
 					'create' => self::ACCESS_ALLOW
 				]
 			]
-		];
-		return ArrayHelper::getValue($definedRules, "{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+		], $controller, $action);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+		return parent::checkModelAccessRule([
+			'groups' => [
+				AccessMethods::create => self::ACCESS_ALLOW
+			]
+		], $model, $method);
 	}
 }

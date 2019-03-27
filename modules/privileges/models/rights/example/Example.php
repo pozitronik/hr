@@ -32,7 +32,7 @@ class Example extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return 'UsersController' === $controller;
 	}
 

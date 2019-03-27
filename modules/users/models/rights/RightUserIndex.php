@@ -3,15 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\rights;
 
-use app\helpers\ArrayHelper;
 use app\modules\privileges\models\UserRight;
 use yii\web\Controller;
 
 /**
- * Class RightUserView
- * @package app\models\user_rights\rights\users
+ * Class RightUserIndex
+ * @package app\modules\users\models\rights
  */
-class RightUserView extends UserRight {
+class RightUserIndex extends UserRight {
 
 	/**
 	 * Имя права
@@ -32,16 +31,15 @@ class RightUserView extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		$definedRules = [
+	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return parent::checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [
 					'index' => self::ACCESS_ALLOW,
 					'profile' => self::ACCESS_ALLOW
 				]
 			]
-		];
-		return ArrayHelper::getValue($definedRules, "{$controller->module->id}/{$controller->id}.actions.{$action}", parent::getAccess($controller, $action));
+		], $controller, $action);
 
 	}
 }
