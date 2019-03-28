@@ -51,7 +51,7 @@ class DynamicRightsController extends WigetableController {
 		foreach ($controllersPaths as $moduleId => $controllerPath) {
 			$controllers = WigetableController::GetControllersList($controllerPath, $moduleId);
 			foreach ($controllers as $controller) {
-				$ruleMap[$moduleId][$controller->id][] = Magic::GetControllerActions($controller);
+				$ruleMap[$moduleId][$controller->id] = Magic::GetControllerActions($controller);
 			}
 		}
 
