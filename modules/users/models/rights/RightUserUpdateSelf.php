@@ -38,7 +38,7 @@ class RightUserUpdateSelf extends UserRight {
 	 * {@inheritDoc}
 	 */
 	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return parent::checkControllerAccessRule([
+		return $this->checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [
 					'update' => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED,
@@ -58,7 +58,7 @@ class RightUserUpdateSelf extends UserRight {
 	 * @throws InvalidConfigException
 	 */
 	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		return parent::checkModelAccessRule([
+		return $this->checkModelAccessRule([
 			'Users' => [
 				AccessMethods::update => CurrentUser::Id() === (int)ArrayHelper::getValue($actionParameters, 'id')?self::ACCESS_ALLOW:self::ACCESS_UNDEFINED
 			]

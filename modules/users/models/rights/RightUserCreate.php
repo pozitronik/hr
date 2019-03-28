@@ -36,7 +36,7 @@ class RightUserCreate extends UserRight {
 	 * {@inheritDoc}
 	 */
 	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return parent::checkControllerAccessRule([
+		return $this->checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [
 					'create' => self::ACCESS_ALLOW
@@ -54,7 +54,7 @@ class RightUserCreate extends UserRight {
 	 * @throws InvalidConfigException
 	 */
 	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		return parent::checkModelAccessRule([
+		return $this->checkModelAccessRule([
 			'users' => [
 				AccessMethods::create => self::ACCESS_ALLOW
 			]
