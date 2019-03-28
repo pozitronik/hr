@@ -4,7 +4,6 @@ declare(strict_types = 1);
 /**
  * @var ActiveRecord $model
  * @var View $this
- * @var array $rules
  */
 
 use app\models\core\core_module\CoreModule;
@@ -16,5 +15,5 @@ $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Динамичес�
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', compact('model', 'rules'))
+<?= $this->render('_form', compact('model'))
 ?>
