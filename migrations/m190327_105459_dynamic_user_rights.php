@@ -16,7 +16,7 @@ class m190327_105459_dynamic_user_rights extends Migration {
 			'rules' => $this->json()->notNull()->comment('Набор разрешений правила')
 		]);
 
-		$this->createIndex('name', 'sys_user_rights', 'name');
+		$this->createIndex('name', 'sys_user_rights', 'name', true);
 	}
 
 	/**
