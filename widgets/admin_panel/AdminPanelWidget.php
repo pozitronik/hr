@@ -6,6 +6,8 @@ namespace app\widgets\admin_panel;
 use app\helpers\ArrayHelper;
 use app\models\core\WigetableController;
 use ReflectionException;
+use Throwable;
+use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\base\Widget;
 
@@ -40,6 +42,8 @@ class AdminPanelWidget extends Widget {
 	 * @return string
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function run():string {
 		if (is_array($this->controllers_directory)) {
