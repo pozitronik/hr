@@ -32,6 +32,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	protected $_actionsAccessMap = [];
 	private $_rules;//для обхода прямой модификации $rules
 	private $ruleActionsIndexName = 'actionAccess';//имя секции для сохранения правил доступа к экшонам
+	private $ruleMethodsIndexName = 'methodAccess';//имя секции для сохранения правил доступа к экшонам
 
 	/**
 	 * {@inheritdoc}
@@ -89,7 +90,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	}
 
 	/**
-	 * @param ActionAccess[] $actionAccessMap
+	 * @param ActionAccess[] $actionsAccessMap
 	 */
 	public function setActionsAccessMap(array $actionsAccessMap):void {
 		foreach ($actionsAccessMap as $accessItem => $value) {
@@ -180,9 +181,10 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	/**
 	 * Уникальный идентификатор (подразумевается имя класса)
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function getId():string {
-		// TODO: Implement getId() method.
+		return $this->formName();
 	}
 
 	/**
@@ -190,15 +192,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @return bool
 	 */
 	public function getHidden():bool {
-		// TODO: Implement getHidden() method.
-	}
-
-	/**
-	 * Имя права
-	 * @return string
-	 */
-	public function getName():string {
-		// TODO: Implement getName() method.
+		return false;
 	}
 
 	/**
@@ -206,7 +200,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @return string
 	 */
 	public function getDescription():string {
-		// TODO: Implement getDescription() method.
+		return $this->name;/*Потом добавить поле*/
 	}
 
 	/**
@@ -214,9 +208,10 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @param string $action Имя экшена
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null Одна из констант доступа
+	 * @throws Throwable
 	 */
 	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return ArrayHelper::getValue($this->rules, "{$this->ruleActionsIndexName}.{$controller->module->id}.{$controller->id}.{$action}");
+		return ArrayHelper::getValue($this->rules, "{$this->ruleActionsIndexName}.{$controller->module->id}.{$controller->id}.{$action}", self::ACCESS_UNDEFINED);
 	}
 
 	/**
@@ -224,9 +219,11 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @param int|null $method Метод доступа (см. AccessMethods)
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		// TODO: Implement canAccess() method.
+		return ArrayHelper::getValue($this->rules, "{$this->ruleMethodsIndexName}.{$model->formName()}.{$method}", self::ACCESS_UNDEFINED);
 	}
 
 	/**
@@ -235,7 +232,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @return array
 	 */
 	public function getActions():array {
-		// TODO: Implement getActions() method.
+		return [];
 	}
 
 	/**
@@ -244,7 +241,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @return null|bool
 	 */
 	public function getFlag(int $flag):?bool {
-		// TODO: Implement getFlag() method.
+		return self::ACCESS_UNDEFINED;
 	}
 
 	/**
@@ -262,5 +259,13 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 
 	private static function flushCache() {
 		//todo
+	}
+
+	/**
+	 * Имя права
+	 * @return string
+	 */
+	public function getName():string {
+		return $this->name;
 	}
 }
