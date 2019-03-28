@@ -82,14 +82,14 @@ class WigetableController extends Controller {
 	}
 
 	/**
+	 * Вытаскивает из имени класса контроллера его id
+	 * app/shit/BlaBlaBlaController => bla-bla-bla
 	 * @param string $className
 	 * @return string
-	 * Функция не умеет преобразовывать имена классов по той же схеме, что Yii. Реализован простейший вариант, а вот что-то вроде MassUpdateController к mass-update эта регулярка уже не вернёт.
-	 * Переделывать нет смысла: нужно писать функцию, которая будет обходить все зарегистрированные модули и собирать из них данные, по которым и строить меню
 	 */
 	private static function ExtractControllerId(string $className):string {
-		return mb_strtolower(preg_replace('/(^.+)([A-Z].+)(Controller$)/', '$2', $className));
-//		return "admin/{$id}";
+		$controllerName = preg_replace('/(^.+)(\\\)([A-Z].+)(Controller$)/', '$3', $className);//app/shit/BlaBlaBlaController => BlaBlaBla
+		return mb_strtolower(implode('-', preg_split('/([[:upper:]][[:lower:]]+)/', $controllerName, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY)));
 	}
 
 	/**
@@ -116,6 +116,19 @@ class WigetableController extends Controller {
 			return new $className(self::ExtractControllerId($className), $module);
 		}
 		return null;
+	}
+
+	/**
+	 * Загружает динамически класс веб-контроллера Yii2 по его id и модулю
+	 * @param string $controllerId
+	 * @param string|null $moduleId
+	 * @return self|null
+	 */
+	public static function GetControllerByControllerId(string $controllerId, ?string $moduleId):?object {
+		if (null === $plugin = PluginsSupport::GetPluginById($moduleId)) throw new InvalidConfigException("Module $moduleId not found or plugin not configured properly.");
+		$controllerId = implode('', array_map('ucfirst', preg_split('/-/', $controllerId, -1, PREG_SPLIT_NO_EMPTY)));
+		return self::GetController("{$plugin->controllerPath}/{$controllerId}Controller.php", $moduleId);
+
 	}
 
 	/**
