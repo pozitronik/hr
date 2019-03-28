@@ -68,7 +68,7 @@ class UserRight extends Model implements UserRightInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
 
@@ -96,7 +96,7 @@ class UserRight extends Model implements UserRightInterface {
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null
 	 */
-	public static function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {//todo: проверить, нужны ли тут $actionParameters, вероятно нужны $methodParameters
+	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {//todo: проверить, нужны ли тут $actionParameters, вероятно нужны $methodParameters
 		return self::ACCESS_UNDEFINED;
 	}
 
@@ -129,8 +129,8 @@ class UserRight extends Model implements UserRightInterface {
 	 * @return bool|null
 	 * @throws Throwable
 	 */
-	protected static function checkControllerAccessRule(array $accessRule, Controller $controller, string $action):?bool {
-		return ArrayHelper::getValue($accessRule, "{$controller->module->id}/{$controller->id}.actions.{$action}", self::getAccess($controller, $action));
+	protected function checkControllerAccessRule(array $accessRule, Controller $controller, string $action):?bool {
+		return ArrayHelper::getValue($accessRule, "{$controller->module->id}/{$controller->id}.actions.{$action}", $this->checkActionAccess($controller, $action));
 	}
 
 	/**
@@ -142,7 +142,7 @@ class UserRight extends Model implements UserRightInterface {
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	protected static function checkModelAccessRule(array $accessRule, Model $model, ?int $method = AccessMethods::any):?bool {
-		return ArrayHelper::getValue($accessRule, "{$model->formName()}.$method", self::canAccess($model, $method));
+	protected function checkModelAccessRule(array $accessRule, Model $model, ?int $method = AccessMethods::any):?bool {
+		return ArrayHelper::getValue($accessRule, "{$model->formName()}.$method", $this->checkMethodAccess($model, $method));
 	}
 }
