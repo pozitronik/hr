@@ -4,10 +4,11 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var ActiveRecord $model
- * @var array $rules
  */
 
-use app\modules\privileges\widgets\access_tree\AccessTreeWidget;
+use app\modules\privileges\models\ActionAccess;
+use kartik\grid\GridView;
+use kartik\switchinput\SwitchInput;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\web\View;
@@ -35,9 +36,35 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $form->field($model, 'rules')->widget(AccessTreeWidget::class, [
-						'tree' => $rules
-					]); ?>
+					<?= GridView::widget([
+						'dataProvider' => $model->actionsAccessProvider,
+						'panel' => [
+							'type' => GridView::TYPE_DEFAULT
+						],
+						'columns' => [
+							'moduleId',
+							'controllerId',
+							'actionName',
+							[
+								'attribute' => 'state',
+								'format' => 'raw',
+								'value' => static function(ActionAccess $actionAccess) use ($model) {
+									return SwitchInput::widget([
+										'value' => $actionAccess->state,
+										'name' => "{$model->formName()}[actionsAccessMap][{$actionAccess->id}]",
+										'pluginOptions' => [
+											'size' => 'mini',
+											'onText' => 'ДА',
+											'offText' => 'НЕТ',
+											'onColor' => 'primary',
+											'offColor' => 'gray'
+										]
+									]);
+								}
+							]
+						]
+
+					]) ?>
 				</div>
 			</div>
 
