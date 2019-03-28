@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var ActiveRecord $model
+ * @var DynamicUserRights $model
  */
 
 use app\modules\privileges\models\ActionAccess;
+use app\modules\privileges\models\DynamicUserRights;
 use kartik\grid\GridView;
 use kartik\switchinput\SwitchInput;
-use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
