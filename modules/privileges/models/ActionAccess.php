@@ -23,7 +23,7 @@ class ActionAccess extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'actionName' => 'Действие',
 			'controllerId' => 'Контроллер',
