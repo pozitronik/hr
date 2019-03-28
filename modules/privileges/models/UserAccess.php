@@ -41,7 +41,7 @@ class UserAccess extends Model {
 			foreach ($rights as $right) {//перебираем все права, пока не найдём право, определяющее доступ (или не переберём все права; в этом случае присвоим доступ по умолчанию)
 				//функция не учитывает коллизии прав (одно разрешает, другое запрещает). Буду дорабатывать с тем, чтобы создать метод получающий список определений прав, на основе которого уже будут высчитываться суммарные правила и коллизии
 				//Пофиг на коллизии, будем определять очерёдность применения прав по порядку, определённому в наборе прав
-				if (null === $access = $right::getAccess($controller, $action, $actionParameters??Yii::$app->request->get())) continue;
+				if (null === $access = $right->checkActionAccess($controller, $action, $actionParameters??Yii::$app->request->get())) continue;
 				$rules[] = [
 					'actions' => [$action],
 					'allow' => $access,
@@ -76,7 +76,7 @@ class UserAccess extends Model {
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		if ($user->is('sysadmin')) $defaultAllow = true;
 		foreach ($rights as $right) {//перебираем все права, пока не найдём право, определяющее доступ (или не переберём все права; в этом случае присвоим доступ по умолчанию)
-			if (null !== $access = $right::canAccess($model, $method, $actionParameters??Yii::$app->request->get())) {
+			if (null !== $access = $right->checkMethodAccess($model, $method, $actionParameters??Yii::$app->request->get())) {
 				return $access;
 			}
 
