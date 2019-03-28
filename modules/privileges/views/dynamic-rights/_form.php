@@ -42,9 +42,21 @@ use yii\widgets\ActiveForm;
 							'type' => GridView::TYPE_DEFAULT
 						],
 						'columns' => [
-							'moduleId',
-							'controllerId',
-							'actionName',
+							[
+								'attribute' => 'moduleId',
+								'value' => 'moduleDescription',
+								'format' => 'raw'
+							],
+							[
+								'attribute' => 'controllerId',
+								'value' => 'controllerDescription',
+								'format' => 'raw'
+							],
+							[
+								'attribute' => 'actionName',
+								'value' => 'actionDescription',
+								'format' => 'raw'
+							],
 							[
 								'attribute' => 'state',
 								'format' => 'raw',
