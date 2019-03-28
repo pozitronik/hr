@@ -33,8 +33,8 @@ class RightGroupCreate extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
-		return parent::checkControllerAccessRule([
+	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+		return $this->checkControllerAccessRule([
 			'groups' => [
 				'actions' => [
 					'create' => self::ACCESS_ALLOW
@@ -46,8 +46,8 @@ class RightGroupCreate extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
-		return parent::checkModelAccessRule([
+	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+		return $this->checkModelAccessRule([
 			'groups' => [
 				AccessMethods::create => self::ACCESS_ALLOW
 			]
