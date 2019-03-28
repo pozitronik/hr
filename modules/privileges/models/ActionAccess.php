@@ -4,9 +4,12 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\Magic;
 use app\models\core\WigetableController;
+use ReflectionException;
+use Throwable;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\base\UnknownClassException;
 
 /**
  * Class ActionMap
@@ -105,6 +108,8 @@ class ActionAccess extends Model {
 
 	/**
 	 * @return string
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function getModuleDescription():string {
 		return PluginsSupport::GetName($this->moduleId);
@@ -126,6 +131,10 @@ class ActionAccess extends Model {
 
 	/**
 	 * @return WigetableController
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 * @throws UnknownClassException
 	 */
 	public function getController():WigetableController {
 		return WigetableController::GetControllerByControllerId($this->controllerId, $this->moduleId);

@@ -123,6 +123,10 @@ class WigetableController extends Controller {
 	 * @param string $controllerId
 	 * @param string|null $moduleId
 	 * @return self|null
+	 * @throws InvalidConfigException
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws UnknownClassException
 	 */
 	public static function GetControllerByControllerId(string $controllerId, ?string $moduleId):?object {
 		if (null === $plugin = PluginsSupport::GetPluginById($moduleId)) throw new InvalidConfigException("Module $moduleId not found or plugin not configured properly.");
