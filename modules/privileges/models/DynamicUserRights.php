@@ -26,6 +26,7 @@ use yii\web\Controller;
  * @property array $rules Набор разрешений правила (то, что уходит в БД в JSON)
  * @property ActionAccess[] $actionsAccessMap Массив разрешений доступов к экшонам
  * @property-read ArrayDataProvider $actionsAccessProvider Провайдер для отображения списка экшонов
+ * @property-read string $module
  */
 class DynamicUserRights extends ActiveRecordExtended implements UserRightInterface, StrictInterface {
 	protected $_module;//Регистрирующий модуль, заполняется при инициализации
@@ -267,5 +268,13 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 */
 	public function getName():string {
 		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getModule():string {
+//		return $this->_module;
+		return 'Dynamic';
 	}
 }

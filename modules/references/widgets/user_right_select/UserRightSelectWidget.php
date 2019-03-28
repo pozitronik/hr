@@ -5,6 +5,7 @@ namespace app\modules\references\widgets\user_right_select;
 
 use app\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
+use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -45,7 +46,7 @@ class UserRightSelectWidget extends Widget {
 	 */
 	public function run():string {
 
-		$data = PluginsSupport::GetAllRights($this->notData);
+		$data = array_merge(PluginsSupport::GetAllRights($this->notData), DynamicUserRights::find()->select(['id', 'name'])->active()->all());
 
 		return $this->render('user_right_select', [
 			'model' => $this->model,
