@@ -64,7 +64,7 @@ interface UserRightInterface {
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null Одна из констант доступа
 	 */
-	public static function getAccess(Controller $controller, string $action, array $actionParameters = []):?bool;
+	public static function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool;
 
 	/**
 	 * @param Model $model Модель, к которой проверяется доступ
@@ -72,7 +72,7 @@ interface UserRightInterface {
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null
 	 */
-	public static function canAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool;
+	public static function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool;
 
 	/**
 	 * Набор действий, предоставляемых правом. Пока прототипирую
