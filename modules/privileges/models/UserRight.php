@@ -130,7 +130,8 @@ class UserRight extends Model implements UserRightInterface {
 	 * @throws Throwable
 	 */
 	protected function checkControllerAccessRule(array $accessRule, Controller $controller, string $action):?bool {
-		return ArrayHelper::getValue($accessRule, "{$controller->module->id}/{$controller->id}.actions.{$action}", $this->checkActionAccess($controller, $action));
+		/*Интересная фигня: мы не можем сослаться на $this->checkActionAccess, поскольку находимся в контексте вызывающего класса (и попадём в бесконечный цикл), мы не можем сослаться на parent (вот тут я хз), можем сослаться на self/static, но метод динамический. Я не стал копать, написал, как есть*/
+		return ArrayHelper::getValue($accessRule, "{$controller->module->id}/{$controller->id}.actions.{$action}", self::ACCESS_UNDEFINED);
 	}
 
 	/**
@@ -143,6 +144,6 @@ class UserRight extends Model implements UserRightInterface {
 	 * @throws Throwable
 	 */
 	protected function checkModelAccessRule(array $accessRule, Model $model, ?int $method = AccessMethods::any):?bool {
-		return ArrayHelper::getValue($accessRule, "{$model->formName()}.$method", $this->checkMethodAccess($model, $method));
+		return ArrayHelper::getValue($accessRule, "{$model->formName()}.$method", self::ACCESS_UNDEFINED);
 	}
 }
