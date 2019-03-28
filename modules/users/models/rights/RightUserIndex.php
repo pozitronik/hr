@@ -31,7 +31,7 @@ class RightUserIndex extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return parent::checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [

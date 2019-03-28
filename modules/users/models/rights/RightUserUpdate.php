@@ -35,7 +35,7 @@ class RightUserUpdate extends UserRight {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
+	public function checkActionAccess(Controller $controller, string $action, array $actionParameters = []):?bool {
 		return parent::checkControllerAccessRule([
 			'users/users' => [
 				'actions' => [
@@ -53,7 +53,7 @@ class RightUserUpdate extends UserRight {
 	 * @throws Throwable
 	 * @throws InvalidConfigException
 	 */
-	public static function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
+	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		return parent::checkModelAccessRule([
 			'users' => [
 				AccessMethods::update => self::ACCESS_ALLOW
