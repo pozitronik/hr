@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\controllers;
 
-use app\models\core\core_module\PluginsSupport;
-use app\models\core\Magic;
 use app\models\core\WigetableController;
 use app\modules\privileges\models\DynamicUserRights;
 use Throwable;
@@ -46,18 +44,9 @@ class DynamicRightsController extends WigetableController {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newRight->id]);
 		}
-		$ruleMap = [];
-		$controllersPaths = PluginsSupport::GetAllControllersPaths();//Only WigetableControllers
-		foreach ($controllersPaths as $moduleId => $controllerPath) {
-			$controllers = WigetableController::GetControllersList($controllerPath, $moduleId);
-			foreach ($controllers as $controller) {
-				$ruleMap[$moduleId][$controller->id] = Magic::GetControllerActions($controller);
-			}
-		}
 
 		return $this->render('create', [
-			'model' => $newRight,
-			'rules' => $ruleMap
+			'model' => $newRight
 		]);
 	}
 }
