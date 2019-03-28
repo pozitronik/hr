@@ -28,7 +28,7 @@ class ActionAccess extends Model {
 			'actionName' => 'Действие',
 			'controllerId' => 'Контроллер',
 			'moduleId' => 'Модуль',
-			'state' => 'Разрешение'
+			'state' => 'Разрешить'
 		];
 	}
 
