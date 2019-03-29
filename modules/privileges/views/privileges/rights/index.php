@@ -26,12 +26,19 @@ use kartik\grid\CheckboxColumn;
 		'after' => false,
 		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['право', 'права', 'прав']).")":" (нет прав)"),
 		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-		'before' => UserRightSelectWidget::widget([
-			'model' => $model,
-			'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
-			'notData' => $model->isNewRecord?[]:$model->userRights,
-			'multiple' => true
-		])
+		'before' => "<div class='col-md-6'>".UserRightSelectWidget::widget([
+				'model' => $model,
+				'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
+				'notData' => $model->isNewRecord?[]:$model->userRights,
+				'multiple' => true,
+				'mode' => UserRightSelectWidget::MODE_MODELS,
+			])."</div><div class='col-md-6'>".UserRightSelectWidget::widget([
+				'model' => $model,
+				'attribute' => 'userDynamicRightsIds',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
+				'notData' => $model->isNewRecord?[]:$model->userRights,
+				'multiple' => true,
+				'mode' => UserRightSelectWidget::MODE_DYNAMIC,
+			])."</div>"
 	],
 	'toolbar' => false,
 	'export' => false,

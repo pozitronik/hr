@@ -9,6 +9,7 @@ use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
 use app\models\core\StrictInterface;
+use app\modules\privileges\models\relations\RelPrivilegesDynamicRights;
 use app\modules\privileges\models\relations\RelPrivilegesRights;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\models\user\CurrentUser;
@@ -33,10 +34,17 @@ use yii\db\Exception;
  * @property ActiveQuery|LCQuery|RelPrivilegesRights[] $relPrivilegesRights
  * @property string[] $userRightsNames
  * @property-write int[] $dropUserRights
+ *
+ * @property ActiveQuery|LCQuery|RelPrivilegesDynamicRights[] $relPrivilegesDynamicRights
+ * @property int[] $userDynamicRightsIds
+ * @property-write int[] $dropUserDynamicRights
+ *
  * @property ActiveQuery|RelUsersPrivileges[] $relUsersPrivileges
  * @property int $usersCount
  * @property ActiveQuery|Users $relUsers
- * @property-read UserRightInterface[] $userRights
+ * @property-read UserRightInterface[] $userRights Все права, как модельные, так и динамические
+ *
+ *
  */
 class Privileges extends ActiveRecordExtended implements StrictInterface {
 
@@ -58,7 +66,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			[['deleted', 'default'], 'default', 'value' => false],
 			[['name'], 'string', 'max' => 256],
 			[['name'], 'required'],
-			[['userRightsNames', 'dropUserRights'], 'safe']
+			[['userRightsNames', 'dropUserRights', 'userDynamicRightsIds', 'dropDynamicUserRights'], 'safe']
 		];
 	}
 
@@ -153,6 +161,28 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	}
 
 	/**
+	 * @return int[]
+	 */
+	public function getUserDynamicRightsIds():array {
+		return ArrayHelper::getColumn($this->relPrivilegesDynamicRights, 'right');
+	}
+
+	/**
+	 * @param int[] $userRightsIds
+	 */
+	public function setUserDynamicRightsIds($userRightsIds):void {
+		if ($this->isNewRecord || empty($userRightsIds)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
+		foreach ($userRightsIds as $id) {
+			$relRight = new RelPrivilegesDynamicRights([
+				'privilege' => $this->id,
+				'right' => $id
+			]);
+			$relRight->save();
+		}
+		$this->dropCaches();
+	}
+
+	/**
 	 * Дропнет права в привилегии
 	 * @param int[] $dropUserRights - ПОРЯДКОВЫЙ номер привилегии в списке (особенность работы CheckboxColumn), потому дополнительно делаем сопоставление номера к названию класса (который является тут айдишником)
 	 * @throws Throwable
@@ -160,6 +190,15 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	public function setDropUserRights(array $dropUserRights):void {
 		$dropUserRights = array_intersect_key($this->userRights, array_flip($dropUserRights));
 		RelPrivilegesRights::unlinkModels($this, $dropUserRights);
+		$this->dropCaches();
+	}
+
+	/**
+	 * @param int[] $dropUserDynamicRights
+	 */
+	public function setDropUserDynamicRights(array $dropUserDynamicRights):void {
+		$dropUserRights = array_intersect_key($this->userRights, array_flip($dropUserDynamicRights));
+		RelPrivilegesDynamicRights::unlinkModels($this, $dropUserRights);
 		$this->dropCaches();
 	}
 
@@ -182,6 +221,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."DataOptions");
 		Yii::$app->cache->delete(static::class."getUserRights".$this->id);
+		//todo DynamicRights
 	}
 
 	/**
@@ -200,6 +240,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			}
 			return $result;
 		});
+		//todo DynamicRights
 	}
 
 	/**
@@ -229,6 +270,13 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public static function GetDefaultPrivileges():array {
 		return self::find()->where(['default' => true])->all();
+	}
+
+	/**
+	 * @return LCQuery|RelPrivilegesDynamicRights[]|ActiveQuery
+	 */
+	public function getRelPrivilegesDynamicRights() {
+		return $this->hasMany(RelPrivilegesDynamicRights::class, ['privilege' => 'id']);
 	}
 
 }
