@@ -211,7 +211,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			foreach (PluginsSupport::GetAllRights() as $right) {
 				if (in_array($right->id, $this->userRightsNames)) $result[] = $right;
 			}
-			return $result;
+			return array_merge($result, DynamicUserRights::find()->active()->where(['id' => $this->userDynamicRightsIds])->all());
 		});
 	}
 
@@ -221,7 +221,6 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."DataOptions");
 		Yii::$app->cache->delete(static::class."getUserRights".$this->id);
-		//todo DynamicRights
 	}
 
 	/**
