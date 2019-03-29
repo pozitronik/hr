@@ -74,7 +74,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 					$actionAccess = new ActionAccess([
 						'moduleId' => $moduleId,
 						'controllerId' => $controller->id,
-						'actionName' => $action,
+						'actionName' => mb_strtolower($action),
 						'state' => $this->checkActionAccess($controller, $action)
 					]);
 					$this->_actionsAccessMap[$actionAccess->id] = $actionAccess;
