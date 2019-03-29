@@ -22,13 +22,19 @@ use yii\db\ActiveRecord;
  * @property array $notData Права, исключённые из списка (например те, в которых пользователь уже есть)
  * @property bool $multiple
  * @property bool $orderByModule Группировать по модулю
+ * @property int $mode Режим выбора прав
  */
 class UserRightSelectWidget extends Widget {
+	public const MODE_MODELS = 1;//только заданные кодом (в моделях)
+	public const MODE_DYNAMIC = 2;//только динамические
+	public const MODE_BOTH = 3;//объединять
+
 	public $model;
 	public $attribute;
 	public $notData;
 	public $multiple = false;
 	public $orderByModule = true;
+	public $mode = self::MODE_BOTH;//можно сделать флагом, но для двух вариантов не буду заморачиваться
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -46,7 +52,19 @@ class UserRightSelectWidget extends Widget {
 	 */
 	public function run():string {
 
-		$data = array_merge(PluginsSupport::GetAllRights($this->notData), DynamicUserRights::find()->select(['id', 'name'])->active()->all());
+		switch ($this->mode) {
+			case self::MODE_MODELS:
+				$data = PluginsSupport::GetAllRights($this->notData);
+			break;
+			case self::MODE_DYNAMIC:
+				$data = DynamicUserRights::find()->select(['id', 'name'])->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->active()->all();
+			break;
+			default:
+			case self::MODE_BOTH:
+				$data = array_merge(PluginsSupport::GetAllRights($this->notData), DynamicUserRights::find()->select(['id', 'name'])->where(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->active()->all());
+			break;
+
+		}
 
 		return $this->render('user_right_select', [
 			'model' => $this->model,
