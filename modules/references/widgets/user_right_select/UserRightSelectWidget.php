@@ -71,7 +71,7 @@ class UserRightSelectWidget extends Widget {
 			'attribute' => $this->attribute,
 			'data' => ArrayHelper::map($data, 'id', 'name', $this->orderByModule?'module':null),
 			'multiple' => $this->multiple,
-			'options' => Privileges::dataOptions()
+			'options' => Privileges::dataOptions()//todo DynamicRights
 		]);
 	}
 }
