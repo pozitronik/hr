@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\relations;
+namespace app\modules\privileges\models\relations;
 
 use app\models\core\ActiveRecordExtended;
+use app\models\relations\Relations;
 
 /**
  * This is the model class for table "rel_privileges_rights".

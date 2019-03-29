@@ -14,7 +14,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
 use app\modules\salary\models\traits\UsersSalaryTrait;
 use app\modules\users\models\references\RefUserRoles;
-use app\models\relations\RelUsersPrivileges;
+use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\models\UserRightInterface;
 use app\widgets\alert\AlertModel;
