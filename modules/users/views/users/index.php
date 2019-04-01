@@ -39,9 +39,9 @@ GridView::widget([
 	'panel' => [
 		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)")
 	],
-	'summary' => null !== $searchModel?Html::a('Новый пользователь', '/users/users/create', ['class' => 'btn btn-success summary-content']):null,
+	'summary' => null !== $searchModel?Html::a('Новый пользователь', ['create'], ['class' => 'btn btn-success summary-content']):null,
 	'showOnEmpty' => true,
-	'emptyText' => Html::a('Новый пользователь', 'create', ['class' => 'btn btn-success']),
+	'emptyText' => Html::a('Новый пользователь', ['create'], ['class' => 'btn btn-success']),
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
