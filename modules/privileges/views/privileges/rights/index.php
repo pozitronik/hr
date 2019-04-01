@@ -11,9 +11,12 @@ use app\helpers\Utils;
  * @var Privileges $model
  */
 
+use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
+use app\modules\privileges\models\UserRightInterface;
 use app\modules\references\widgets\user_right_select\UserRightSelectWidget;
 use yii\data\ArrayDataProvider;
+use yii\helpers\Html;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
@@ -26,19 +29,19 @@ use kartik\grid\CheckboxColumn;
 		'after' => false,
 		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['право', 'права', 'прав']).")":" (нет прав)"),
 		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-		'before' => "<div class='col-md-6'>".UserRightSelectWidget::widget([
+		'before' => Html::tag('div', UserRightSelectWidget::widget([
 				'model' => $model,
 				'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
 				'notData' => $model->isNewRecord?[]:$model->userRights,
 				'multiple' => true,
 				'mode' => UserRightSelectWidget::MODE_MODELS
-			])."</div><div class='col-md-6'>".UserRightSelectWidget::widget([
+			]), ['class' => 'col-md-6']).Html::tag('div', UserRightSelectWidget::widget([
 				'model' => $model,
 				'attribute' => 'userDynamicRightsIds',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
 				'notData' => $model->isNewRecord?[]:$model->userRights,
 				'multiple' => true,
 				'mode' => UserRightSelectWidget::MODE_DYNAMIC
-			])."</div>"
+			]), ['class' => 'col-md-6'])
 	],
 	'toolbar' => false,
 	'export' => false,
@@ -50,7 +53,13 @@ use kartik\grid\CheckboxColumn;
 	'columns' => [
 		[
 			'attribute' => 'name',
-			'format' => 'raw'
+			'format' => 'raw',
+			'value' => static function(UserRightInterface $model) {
+				if (is_a($model, DynamicUserRights::class)) {
+					return Html::a($model->name, ['dynamic-rights/update', 'id' => $model->id]);
+				}
+				return $model->name;
+			}
 		],
 		[
 			'attribute' => 'description',
