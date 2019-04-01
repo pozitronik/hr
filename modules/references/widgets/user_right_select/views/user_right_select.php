@@ -23,7 +23,7 @@ use kartik\select2\Select2;
 	'name' => 'right_class',
 	'data' => $data,
 	'options' => [
-		'placeholder' => 'Добавить право',
+		'placeholder' => 'Добавить правило',
 		'options' => $options
 	],
 	'pluginOptions' => [
