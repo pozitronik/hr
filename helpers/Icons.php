@@ -90,6 +90,13 @@ class Icons {
 	/**
 	 * @return string
 	 */
+	public static function rule():string {
+		return "<i class='fa fa-pencil-ruler'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function menu():string {
 		return "<i class='fa fa-bars'></i>";
 	}
