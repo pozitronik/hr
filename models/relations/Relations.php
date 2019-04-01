@@ -16,7 +16,7 @@ use yii\db\ActiveRecord;
 trait Relations {
 
 	/**
-	 * Линкует в этом релейшене две модели. Модели могут быть заданы как через айдишники
+	 * Линкует в этом релейшене две модели. Модели могут быть заданы как через айдишники, так и моделью, и ещё тупо строкой
 	 * @param ActiveRecord|integer $master
 	 * @param ActiveRecord|integer $slave
 	 * @throws Throwable
@@ -29,15 +29,25 @@ trait Relations {
 		$first_name = ArrayHelper::getValue($link->rules(), '0.0.0', new Exception('Не удалось получить атрибут для связи'));
 		$second_name = ArrayHelper::getValue($link->rules(), '0.0.1', new Exception('Не удалось получить атрибут для связи'));
 
-		$link->$first_name = is_numeric($master)?$master:$master->primaryKey;
-		$link->$second_name = is_numeric($slave)?$slave:$slave->primaryKey;
+		if (is_numeric($master)) {
+			$link->$first_name = (int)$master;
+		} elseif (is_object($master)) {
+			$link->$first_name = ArrayHelper::getValue($master, 'primaryKey', new Exception("Класс {$master->formName()} не имеет атрибута primaryKey"));
+		} else $link->$first_name = (string)$master; //suppose it string field name
+
+		if (is_numeric($slave)) {
+			$link->$second_name = (int)$slave;
+		} elseif (is_object($slave)) {
+			$link->$second_name = ArrayHelper::getValue($slave, 'primaryKey', new Exception("Класс {$slave->formName()} не имеет атрибута primaryKey"));
+		} else $link->$second_name = (string)$slave; //suppose it string field name
+
 		$link->save();//save or update, whatever
 	}
 
 	/**
 	 * Линкует в этом релейшене две модели. Модели могут быть заданы как через айдишники, так и напрямую, в виде массивов или так.
-	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $master
-	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $slave
+	 * @param integer|ActiveRecord|integer[]|ActiveRecord[]|string|string[]|array $master
+	 * @param integer|ActiveRecord|integer[]|ActiveRecord[]|string|string[]|array $slave
 	 * @throws Throwable
 	 */
 	public static function linkModels($master, $slave):void {
