@@ -43,7 +43,7 @@ use yii\data\ArrayDataProvider;
 					<?= $this->render('rights/index', [
 						'model' => $model,
 						'provider' => $userRights,
-						'heading' => '<label class="control-label">Права в привилегии</label>',
+						'heading' => '<label class="control-label">Правила в привилегии</label>',
 //							'selectorInPanel' => true,
 //							'showRolesSelector' => true,
 //							'showDropColumn' => true
