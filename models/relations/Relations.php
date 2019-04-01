@@ -73,7 +73,6 @@ trait Relations {
 	 * @param integer|ActiveRecord|integer[]|ActiveRecord[]|string|string[]|array $slave
 	 * @throws Throwable
 	 *
-	 * Функция не будет работать с объектами, не имеющими атрибута/ключа id (даже если в качестве primaryKey указан другой атрибут).
 	 * Такое поведение оставлено специально во избежание ошибок проектирования
 	 * @see Privileges::setDropUserRights
 	 */
