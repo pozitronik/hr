@@ -66,7 +66,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			[['deleted', 'default'], 'default', 'value' => false],
 			[['name'], 'string', 'max' => 256],
 			[['name'], 'required'],
-			[['userRightsNames', 'dropUserRights', 'userDynamicRightsIds', 'dropDynamicUserRights'], 'safe']
+			[['userRightsNames', 'dropUserRights', 'userDynamicRightsIds'], 'safe']
 		];
 	}
 
@@ -147,16 +147,11 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 
 	/**
 	 * @param string[] $userRightsNames
+	 * @throws Throwable
 	 */
 	public function setUserRightsNames($userRightsNames):void {
 		if ($this->isNewRecord || empty($userRightsNames)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
-		foreach ($userRightsNames as $className) {
-			$relRight = new RelPrivilegesRights([
-				'privilege' => $this->id,
-				'right' => $className
-			]);
-			$relRight->save();
-		}
+		RelPrivilegesRights::linkModels($this, $userRightsNames);
 		$this->dropCaches();
 	}
 
@@ -169,16 +164,11 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 
 	/**
 	 * @param int[] $userRightsIds
+	 * @throws Throwable
 	 */
 	public function setUserDynamicRightsIds($userRightsIds):void {
 		if ($this->isNewRecord || empty($userRightsIds)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
-		foreach ($userRightsIds as $id) {
-			$relRight = new RelPrivilegesDynamicRights([
-				'privilege' => $this->id,
-				'right' => $id
-			]);
-			$relRight->save();
-		}
+		RelPrivilegesDynamicRights::linkModels($this, $userRightsIds);
 		$this->dropCaches();
 	}
 
@@ -188,18 +178,15 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	 * @throws Throwable
 	 */
 	public function setDropUserRights(array $dropUserRights):void {
-		$dropUserRights = array_intersect_key($this->userRights, array_flip($dropUserRights));
-		RelPrivilegesRights::unlinkModels($this, $dropUserRights);
-		$this->dropCaches();
-	}
+		$dropUserRightsClasses = array_intersect_key($this->userRights, array_flip($dropUserRights));
+		foreach ($dropUserRightsClasses as $userRightsClass) {
+			if (is_a($userRightsClass, DynamicUserRights::class)) {
+				RelPrivilegesDynamicRights::unlinkModel($this, $userRightsClass->id);
+			} else {
+				RelPrivilegesRights::unlinkModel($this, $userRightsClass->id);
+			}
+		}
 
-	/**
-	 * @param int[] $dropUserDynamicRights
-	 * @throws Throwable
-	 */
-	public function setDropUserDynamicRights(array $dropUserDynamicRights):void {
-		$dropUserRights = array_intersect_key($this->userRights, array_flip($dropUserDynamicRights));
-		RelPrivilegesDynamicRights::unlinkModels($this, $dropUserRights);
 		$this->dropCaches();
 	}
 
