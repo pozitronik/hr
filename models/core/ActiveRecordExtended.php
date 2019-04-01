@@ -77,7 +77,7 @@ class ActiveRecordExtended extends ActiveRecord {
 	 * {@inheritDoc}
 	 */
 	public static function deleteAll($condition = null, $params = []):?int {
-		$self_class_name = get_called_class();
+		$self_class_name = static::class;
 		if ((new $self_class_name())->beforeDelete()) {
 			return parent::deleteAll($condition, $params);
 		}
