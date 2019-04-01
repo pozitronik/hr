@@ -5,11 +5,13 @@ namespace app\modules\privileges\widgets\navigation_menu;
 
 use app\helpers\Icons;
 use app\modules\privileges\models\DynamicUserRights;
+use app\modules\privileges\models\UserRight;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 
 /**
  * Class UserRightNavigationMenuWidget
  * @package app\modules\privileges\widgets\navigation_menu
+ * @property UserRight $model
  */
 class UserRightNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public $className;
