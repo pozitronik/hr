@@ -25,6 +25,10 @@ class PrivilegesNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => ['update', 'id' => $this->model->id]
 			],
 			[
+				'label' => Icons::rule().'Новое правило',
+				'url' => ['dynamic-rights/create']
+			],
+			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
 				'url' => ['delete', 'id' => $this->model->id],
