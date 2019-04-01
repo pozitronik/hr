@@ -50,14 +50,14 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 */
 	public function init() {
 		parent::init();
-		$this->loadActionsMap(PluginsSupport::GetAllControllersPaths());
+		$this->loadActionsMap(PluginsSupport::GetAllControllersPaths());//Загрузит только карту экшенов БЕЗ заполнения правилами: атрибут правил ещё не заполнен. Но вызывать нужно, чтобы строилась карта при создании моделей.
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function afterFind() {
-		$this->loadActionsMap(PluginsSupport::GetAllControllersPaths());
+		$this->loadActionsMap(PluginsSupport::GetAllControllersPaths());//Загрузит карту и уже заполнит правилами
 	}
 
 	/**
@@ -78,7 +78,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 						'moduleId' => $moduleId,
 						'controllerId' => $controller->id,
 						'actionName' => mb_strtolower($action),
-						'state' => $this->checkActionAccess($controller, $action)
+						'state' => $this->checkActionAccess($controller, mb_strtolower($action))
 					]);
 					$this->_actionsAccessMap[$actionAccess->id] = $actionAccess;
 				}
