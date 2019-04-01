@@ -59,8 +59,8 @@ trait Relations {
 
 	/**
 	 * Удаляет связь между моделями в этом релейшене
-	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $master
-	 * @param integer|ActiveRecord|integer[]|ActiveRecord[] $slave
+	 * @param integer|ActiveRecord|integer[]|ActiveRecord[]|string|string[]|array $master
+	 * @param integer|ActiveRecord|integer[]|ActiveRecord[]|string|string[]|array $slave
 	 * @throws Throwable
 	 *
 	 * Функция не будет работать с объектами, не имеющими атрибута/ключа id (даже если в качестве primaryKey указан другой атрибут).
@@ -78,7 +78,12 @@ trait Relations {
 				$master = ArrayHelper::getColumn($master, 'id');
 			}
 		} else {
-			$master = is_numeric($master)?(int)$master:$master->primaryKey;
+			if (is_numeric($master)) {
+				$master = (int)$master;
+			} elseif (is_object($master)) {
+				$master = ArrayHelper::getValue($master, 'primaryKey', new Exception("Класс {$master->formName()} не имеет атрибута primaryKey"));
+			}//suppose it string field name
+
 		}
 
 		if (is_array($slave)) {
@@ -86,7 +91,12 @@ trait Relations {
 				$slave = ArrayHelper::getColumn($slave, 'id');
 			}
 		} else {
-			$slave = is_numeric($slave)?(int)$slave:$slave->primaryKey;
+
+			if (is_numeric($slave)) {
+				$slave = (int)$slave;
+			} elseif (is_object($slave)) {
+				$slave = ArrayHelper::getValue($slave, 'primaryKey', new Exception("Класс {$slave->formName()} не имеет атрибута primaryKey"));
+			}//suppose it string field name
 		}
 
 		self::deleteAll([$first_name => $master, $second_name => $slave]);
