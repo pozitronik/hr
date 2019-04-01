@@ -16,7 +16,7 @@ use yii\web\Response;
  * @package app\modules\privileges\controllers
  */
 class DynamicRightsController extends WigetableController {
-	public $menuCaption = "<i class='fa fa-ruler'></i>Правила доступа";
+	public $menuCaption = "<i class='fa fa-pencil-ruler'></i>Правила доступа";
 	public $menuIcon = "/img/admin/rules.png";
 	public $menuDisabled = false;
 	public $orderWeight = 6;
