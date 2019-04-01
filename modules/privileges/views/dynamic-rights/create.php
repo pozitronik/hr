@@ -10,8 +10,9 @@ use app\models\core\core_module\CoreModule;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
-$this->title = 'Создать динамическое правило';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Динамические правила');
+$this->title = 'Создать правило';
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Привилегии');
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Правила доступа', 'dynamic-rights/index');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

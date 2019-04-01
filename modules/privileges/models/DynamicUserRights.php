@@ -23,6 +23,8 @@ use yii\web\Controller;
  *
  * @property int $id
  * @property string $name Название правила
+ * @property string $description Описание
+ *
  * @property array $rules Набор разрешений правила (то, что уходит в БД в JSON)
  * @property ActionAccess[] $actionsAccessMap Массив разрешений доступов к экшонам
  * @property-read ArrayDataProvider $actionsAccessProvider Провайдер для отображения списка экшонов
@@ -151,7 +153,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 		return [
 			[['name', 'actionsAccessMap', 'rules'], 'required'],
 			[['actionsAccessMap', 'rules'], 'safe'],
-			[['name'], 'string', 'max' => 255],
+			[['name', 'description'], 'string', 'max' => 255],
 			[['name'], 'unique']
 		];
 	}

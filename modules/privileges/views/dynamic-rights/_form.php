@@ -36,6 +36,11 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
+					<?= $form->field($model, 'description') ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
 					<?= GridView::widget([
 						'dataProvider' => $model->actionsAccessProvider,
 						'panel' => [
