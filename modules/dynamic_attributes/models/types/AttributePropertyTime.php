@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use Exception;
 use kartik\time\TimePicker;
 use Yii;
 use yii\db\ActiveRecord;
@@ -162,7 +163,7 @@ class AttributePropertyTime extends ActiveRecordExtended implements AttributePro
 	 * Рендер поля просмотра значения свойства
 	 * @param array $config Опциональные параметры виджета/поля
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);

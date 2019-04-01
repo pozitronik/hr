@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
+use Exception;
 use Throwable;
 use Yii;
 use yii\db\ActiveRecord;
@@ -293,7 +294,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * Рендер поля просмотра значения свойства
 	 * @param array $config Опциональные параметры виджета/поля
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function viewField(array $config = []):string {
 		return ScoreWidget::widget($config);

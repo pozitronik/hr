@@ -7,6 +7,8 @@ use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use Exception;
+use Throwable;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -92,7 +94,7 @@ class AttributePropertyText extends ActiveRecordExtended implements AttributePro
 	 * @param int $user_id
 	 * @param bool $formatted
 	 * @return mixed
-	 * @throws \Throwable
+	 * @throws Throwable
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id, $formatted) {
@@ -148,7 +150,7 @@ class AttributePropertyText extends ActiveRecordExtended implements AttributePro
 	 * Рендер поля просмотра значения свойства
 	 * @param array $config Опциональные параметры виджета/поля
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);

@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 use app\assets\AppAsset;
 use yii\helpers\Html;
+use yii\web\View;
 
 /**
- * @var \yii\web\View $this
+ * @var View $this
  * @var string $content
  */
 

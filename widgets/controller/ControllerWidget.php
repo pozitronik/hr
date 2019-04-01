@@ -5,6 +5,7 @@ namespace app\widgets\controller;
 
 use app\models\core\Magic;
 use app\models\core\WigetableController;
+use ReflectionException;
 use yii\base\Widget;
 
 /**
@@ -34,7 +35,7 @@ class ControllerWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function run():string {
 		$action = ["/{$this->model->defaultRoute}/{$this->model->defaultAction}"];

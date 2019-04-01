@@ -3,12 +3,13 @@ declare(strict_types = 1);
 
 /**
  * Технические работы
- * @var \yii\web\View $this
+ * @var View $this
  * @var string $content
  */
 
 use app\assets\AppAsset;
 use yii\helpers\Html;
+use yii\web\View;
 
 AppAsset::register($this);
 ?>

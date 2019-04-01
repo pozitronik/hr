@@ -6,6 +6,7 @@ namespace app\modules\dynamic_attributes\models\types;
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use Exception;
 use kartik\range\RangeInput;
 use Yii;
 use yii\db\ActiveRecord;
@@ -168,7 +169,7 @@ class AttributePropertyPercent extends ActiveRecordExtended implements Attribute
 	 * Рендер поля просмотра значения свойства
 	 * @param array $config Опциональные параметры виджета/поля
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);

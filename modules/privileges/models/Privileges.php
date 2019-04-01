@@ -195,6 +195,7 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 
 	/**
 	 * @param int[] $dropUserDynamicRights
+	 * @throws Throwable
 	 */
 	public function setDropUserDynamicRights(array $dropUserDynamicRights):void {
 		$dropUserRights = array_intersect_key($this->userRights, array_flip($dropUserDynamicRights));

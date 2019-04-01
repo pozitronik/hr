@@ -31,13 +31,13 @@ use kartik\grid\CheckboxColumn;
 				'attribute' => 'userRightsNames',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
 				'notData' => $model->isNewRecord?[]:$model->userRights,
 				'multiple' => true,
-				'mode' => UserRightSelectWidget::MODE_MODELS,
+				'mode' => UserRightSelectWidget::MODE_MODELS
 			])."</div><div class='col-md-6'>".UserRightSelectWidget::widget([
 				'model' => $model,
 				'attribute' => 'userDynamicRightsIds',//Выбиралка передаёт имена классов, метод модели подхватывает именно этот параметр
 				'notData' => $model->isNewRecord?[]:$model->userRights,
 				'multiple' => true,
-				'mode' => UserRightSelectWidget::MODE_DYNAMIC,
+				'mode' => UserRightSelectWidget::MODE_DYNAMIC
 			])."</div>"
 	],
 	'toolbar' => false,

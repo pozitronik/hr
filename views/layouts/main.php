@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 /**
- * @var \yii\web\View $this
+ * @var View $this
  * @var string $content
  */
 
@@ -11,6 +11,7 @@ use app\widgets\alert\Alert;
 use yii\helpers\Html;
 use app\widgets\navbar\NavbarWidget;
 use app\models\user\CurrentUser;
+use yii\web\View;
 
 AppAsset::register($this);
 ?>
