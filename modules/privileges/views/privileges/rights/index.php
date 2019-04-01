@@ -49,6 +49,7 @@ GridView::widget([
 	'toolbar' => false,
 	'export' => false,
 	'summary' => Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success summary-content']),
+	'emptyText' => Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success summary-content']),
 	'resizableColumns' => true,
 	'responsive' => true,
 	'showFooter' => true,

@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'footer' => false
 	],
 	'summary' => Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success summary-content']),
+	'emptyText' => Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success summary-content']),
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
