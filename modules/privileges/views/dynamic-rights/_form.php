@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var DynamicUserRights $model
  */
 
+use app\helpers\Utils;
 use app\modules\privileges\models\ActionAccess;
 use app\modules\privileges\models\DynamicUserRights;
 use kartik\grid\GridView;
@@ -21,7 +22,6 @@ use yii\widgets\ActiveForm;
 		<div class="panel-heading">
 			<div class="panel-control">
 				<?php if (!$model->isNewRecord): ?>
-					<?= Html::a('Новая привилегия', ['create'], ['class' => 'btn btn-success']) ?>
 					<?= Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success']) ?>
 				<?php endif; ?>
 			</div>
@@ -44,8 +44,17 @@ use yii\widgets\ActiveForm;
 					<?= GridView::widget([
 						'dataProvider' => $model->actionsAccessProvider,
 						'panel' => [
-							'type' => GridView::TYPE_DEFAULT
+							'type' => GridView::TYPE_DEFAULT,
+							'heading' => 'Доступ к действиям'.(($model->actionsAccessProvider->totalCount > 0)?" (".Utils::pluralForm($model->actionsAccessProvider->totalCount, ['действие', 'действия', 'действий']).")":" (нет действий)"),
+							'after' => false,
+							'footer' => false
 						],
+						'toolbar' => false,
+						'export' => false,
+						'resizableColumns' => true,
+						'responsive' => true,
+						'summary' => false,
+
 						'columns' => [
 							[
 								'attribute' => 'moduleId',

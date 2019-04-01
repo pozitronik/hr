@@ -8,6 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
+use app\helpers\Utils;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\widgets\navigation_menu\PrivilegesNavigationMenuWidget;
 use yii\data\ActiveDataProvider;
@@ -24,16 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= GridView::widget([
 	'dataProvider' => $dataProvider,
 	'panel' => [
-		'heading' => $this->title
+		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['привилегия', 'привилегии', 'привилегий']).")":" (нет привилегий)")
 	],
-	'toolbar' => [
-		[
-			'content' => Html::a('Новая привилегия', ['create'], ['class' => 'btn btn-success'])
-		],
-		[
-			'content' => Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success'])
-		]
-	],
+	'summary' => Html::a('Новая привилегия', ['create'], ['class' => 'btn btn-success summary-content']),
+	'showOnEmpty' => true,
+	'emptyText' => Html::a('Новая привилегия', ['create'], ['class' => 'btn btn-success']),
+	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
 	'responsive' => true,

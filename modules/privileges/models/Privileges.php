@@ -80,8 +80,8 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			'daddy' => 'Создатель',
 			'create_date' => 'Дата создания',
 			'deleted' => 'Deleted',
-			'default' => 'Привилегия по умолчанию',
-			'userRights' => 'Права',
+			'default' => 'Включена по умолчанию',
+			'userRights' => 'Правила',
 			'usersCount' => 'Пользователей'
 		];
 	}

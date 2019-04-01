@@ -22,7 +22,6 @@ use yii\data\ArrayDataProvider;
 			<div class="panel-control">
 				<?php if (!$model->isNewRecord): ?>
 					<?= Html::a('Новая привилегия', ['create'], ['class' => 'btn btn-success']) ?>
-					<?= Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success']) ?>
 				<?php endif; ?>
 			</div>
 			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>

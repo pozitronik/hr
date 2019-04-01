@@ -14,6 +14,7 @@ use app\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\models\UserRightInterface;
+use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
 use app\modules\references\widgets\user_right_select\UserRightSelectWidget;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
@@ -22,12 +23,14 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 
 ?>
-<?= GridView::widget([
+<?= /** @noinspection MissedFieldInspection */
+GridView::widget([
 	'dataProvider' => $provider,
+
 	'panel' => [
 		'type' => GridView::TYPE_DEFAULT,
 		'after' => false,
-		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['право', 'права', 'прав']).")":" (нет прав)"),
+		'heading' => $heading.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['правило', 'правила', 'правил']).")":" (нет прав)"),
 		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
 		'before' => Html::tag('div', UserRightSelectWidget::widget([
 				'model' => $model,
@@ -45,12 +48,31 @@ use kartik\grid\CheckboxColumn;
 	],
 	'toolbar' => false,
 	'export' => false,
-	'summary' => false,
+	'summary' => Html::a('Новое правило', ['dynamic-rights/create'], ['class' => 'btn btn-success summary-content']),
 	'resizableColumns' => true,
 	'responsive' => true,
 	'showFooter' => true,
 	'footerRowOptions' => [],
 	'columns' => [
+		[
+			'filter' => false,
+			'header' => Icons::menu(),
+			'mergeHeader' => true,
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => static function(UserRightInterface $model) {
+				return UserRightNavigationMenuWidget::widget([
+					'model' => $model,
+					'mode' => UserRightNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				]);
+			},
+			'format' => 'raw'
+		],
 		[
 			'attribute' => 'name',
 			'format' => 'raw',
