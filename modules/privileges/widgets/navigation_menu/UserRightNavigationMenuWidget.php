@@ -22,6 +22,7 @@ class UserRightNavigationMenuWidget extends BaseNavigationMenuWidget {
 	 */
 	public function run():string {
 		if (is_a($this->model, DynamicUserRights::class)) {
+			/** @noinspection PhpUndefinedFieldInspection */
 			$this->_navigationItems = [
 				[
 					'label' => Icons::update().'Изменение',
