@@ -77,4 +77,13 @@ class PrivilegesController extends WigetableController {
 			'userRights' => $userRightsProvider
 		]);
 	}
+
+	/**
+	 * @param int $id
+	 * @throws Throwable
+	 */
+	public function actionDelete(int $id):void {
+		if (null !== $model = Privileges::findModel($id, new NotFoundHttpException())) $model->safeDelete();
+		$this->redirect('index');
+	}
 }

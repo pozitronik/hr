@@ -65,4 +65,13 @@ class DynamicRightsController extends WigetableController {
 			'model' => $right
 		]);
 	}
+
+	/**
+	 * @param int $id
+	 * @throws Throwable
+	 */
+	public function actionDelete(int $id):void {
+		if (null !== $model = DynamicUserRights::findModel($id, new NotFoundHttpException())) $model->safeDelete();
+		$this->redirect('index');
+	}
 }
