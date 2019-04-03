@@ -279,7 +279,6 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @return string
 	 */
 	public function getModule():string {
-//		return $this->_module;
-		return 'Dynamic';
+		return 'Динамическое правило';/*Оставляем так; настоящее имя модуля возвращается только статическими правилами, динамика же, хоть и находидся кодово в модуле, логически обособлена и на модули не завязана*/
 	}
 }

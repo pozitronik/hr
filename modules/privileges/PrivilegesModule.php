@@ -12,5 +12,10 @@ use app\models\core\core_module\CoreModule;
  * @package app\modules\privileges
  */
 class PrivilegesModule extends CoreModule {
-
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getName():string {
+		return 'Управление доступами';
+	}
 }
