@@ -205,7 +205,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @return string
 	 */
 	public function getDescription():string {
-		return $this->name;/*Потом добавить поле*/
+		return $this->description;
 	}
 
 	/**
