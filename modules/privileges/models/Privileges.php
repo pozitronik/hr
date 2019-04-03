@@ -219,7 +219,14 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 	public static function dataOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."DataOptions", static function() {
 			$result = [];
-			foreach (PluginsSupport::GetAllRights() as $key => $item) {
+			foreach (PluginsSupport::GetAllRights() as $key => $item) {//только статика
+				$result[$item->id] = [
+					'data-description' => $item->description,
+					'data-module' => $item->module
+				];
+			}
+			/** @var DynamicUserRights $item */
+			foreach (DynamicUserRights::find()->active()->all() as $key => $item) {//только динамика
 				$result[$item->id] = [
 					'data-description' => $item->description,
 					'data-module' => $item->module
@@ -227,7 +234,6 @@ class Privileges extends ActiveRecordExtended implements StrictInterface {
 			}
 			return $result;
 		});
-		//todo DynamicRights
 	}
 
 	/**
