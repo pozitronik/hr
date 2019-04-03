@@ -121,7 +121,6 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 			$this->prepareAccessMap();
 			if ($this->save()) {
 				AlertModel::SuccessNotify();
-				self::flushCache();
 				$this->refresh();
 				return true;
 			}
@@ -261,10 +260,6 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 				'attributes' => ['moduleId', 'controllerId', 'actionName', 'state']
 			]
 		]);
-	}
-
-	private static function flushCache() {
-		//todo
 	}
 
 	/**
