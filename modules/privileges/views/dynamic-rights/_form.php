@@ -41,7 +41,8 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= GridView::widget([
+					<?= /** @noinspection MissedFieldInspection */
+					GridView::widget([
 						'dataProvider' => $model->actionsAccessProvider,
 						'panel' => [
 							'type' => GridView::TYPE_DEFAULT,
@@ -59,12 +60,14 @@ use yii\widgets\ActiveForm;
 							[
 								'attribute' => 'moduleId',
 								'value' => 'moduleDescription',
-								'format' => 'raw'
+								'format' => 'raw',
+								'group' => true
 							],
 							[
 								'attribute' => 'controllerId',
 								'value' => 'controllerDescription',
-								'format' => 'raw'
+								'format' => 'raw',
+								'group' => true
 							],
 							[
 								'attribute' => 'actionName',
