@@ -82,7 +82,7 @@ interface UserRightInterface {
 	public function getActions():array;
 
 	/**
-	 * Для возможностей, которые можно и нужно включать только флагамм + прототипирование
+	 * Для возможностей, которые можно и нужно включать только флагами + прототипирование
 	 * @param int $flag
 	 * @return null|bool
 	 */
