@@ -9,8 +9,6 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use Throwable;
 use yii\web\Response;
@@ -23,30 +21,6 @@ class ReferencesController extends WigetableController {
 	public $menuIcon = "/img/admin/references.png";
 	public $orderWeight = 3;
 	public $defaultRoute = 'references/references';
-
-	/**
-	 * @inheritdoc
-	 */
-	public function behaviors():array {
-		return [
-			'access' => [
-				'class' => AccessControl::class,
-				'rules' => [
-					[
-						'actions' => ['index', 'create', 'view', 'update', 'delete'],
-						'allow' => true,
-						'roles' => ['@']
-					]
-				]
-			],
-			'verbs' => [
-				'class' => VerbFilter::class,
-				'actions' => [
-					'delete' => ['post']
-				]
-			]
-		];
-	}
 
 	/**
 	 * @param string|null $class имя класса справочника

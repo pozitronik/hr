@@ -12,7 +12,6 @@ use Throwable;
 use Yii;
 use app\modules\users\models\Users;
 use yii\data\ArrayDataProvider;
-use yii\filters\ContentNegotiator;
 use yii\web\Response;
 
 /**
@@ -24,22 +23,6 @@ class BunchController extends WigetableController {
 //	public $menuIcon = "/img/admin/users.png";
 	public $orderWeight = 5;
 	public $defaultRoute = 'users/bunch';
-
-	/**
-	 * @inheritdoc
-	 */
-	public function behaviors():array {
-		return [
-			[
-				'class' => ContentNegotiator::class,
-				'formats' => [
-					'application/json' => Response::FORMAT_JSON,
-					'application/xml' => Response::FORMAT_XML,
-					'text/html' => Response::FORMAT_HTML
-				]
-			]
-		];
-	}
 
 	/**
 	 * Групповое изменение пользователей
