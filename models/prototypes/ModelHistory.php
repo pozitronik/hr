@@ -35,7 +35,11 @@ class ModelHistory extends Model {
 	 * Высчитывает и описывает изменения на шаге
 	 */
 	private function populateChanges(ActiveRecordLoggerInterface $record):string {
-		$diff = [[]];
+		$diff = [
+			HistoryEvent::EVENT_DELETED => [],
+			HistoryEvent::EVENT_CHANGED => [],
+			HistoryEvent::EVENT_CREATED => []
+		];
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
 			if (null === $newAttributeValue = ArrayHelper::getValue($record->new_attributes, $attributeName)) {
 				$diff[HistoryEvent::EVENT_DELETED][$attributeName] = [$attributeValue, $newAttributeValue];
@@ -60,7 +64,7 @@ class ModelHistory extends Model {
 			$result[] = "Удалено значение поля ".ArrayHelper::getValue($this->requestModel->attributeLabels(), $deletedAttributesName, $deletedAttributesName).": $changes[0]";
 		}
 
-		return implode("\n", $result);
+		return implode("<br />", $result);
 	}
 
 	/**
