@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace app\models\prototypes;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Date;
 use app\models\core\ActiveRecordLogger;
 use app\modules\users\models\Users;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -73,15 +75,17 @@ class ModelHistory extends Model {
 			$result->eventType = empty($record->old_attributes)?HistoryEvent::EVENT_CREATED:HistoryEvent::EVENT_DELETED;
 		} else $result->eventType = HistoryEvent::EVENT_CHANGED;
 
+		$result->eventTime = $record->timestamp;
 		$result->objectName = $record->model;
-		$result->subjectName = (null === $user = Users::findModel($record->user))?'system':$user->username;
+		$result->subject = Users::findModel($record->user);
+
 		$result->action = $this->populateChanges($record);
 		return $result;
 	}
 
 	/**
 	 * @param ActiveRecordLoggerInterface[] $timeline
-	 * @return string[]
+	 * @return HistoryEventInterface[]
 	 */
 	public function populateTimeline(array $timeline):array {
 		$result = [];

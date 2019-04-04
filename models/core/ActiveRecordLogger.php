@@ -14,7 +14,8 @@ use yii\db\ActiveRecord;
  * Class ActiveRecordLogger
  * @package app\models
  * @property integer $id
- * @property-read string $timestamp
+ * @property-read string $at
+ * @property-read string $timestamp//alias of $at
  * @property int $user
  * @property string $model
  * @property int $model_key
@@ -90,6 +91,13 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 			'new_attributes' => $newAttributes
 		]);
 		$log->save();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTimestamp():string {
+		return $this->at;
 	}
 
 }
