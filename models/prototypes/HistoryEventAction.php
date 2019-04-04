@@ -16,9 +16,9 @@ use yii\base\Model;
  *
  */
 class HistoryEventAction extends Model {
-	const EVENT_CREATED = 0;
-	const EVENT_CHANGED = 1;
-	const EVENT_DELETED = 2;
+	const ATTRIBUTE_CREATED = 0;
+	const ATTRIBUTE_CHANGED = 1;
+	const ATTRIBUTE_DELETED = 2;
 
 	public $type;
 	public $attributeName;
