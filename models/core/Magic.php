@@ -6,6 +6,7 @@ namespace app\models\core;
 use app\helpers\ArrayHelper;
 use app\modules\references\models\Reference;
 use app\modules\privileges\models\UserRightInterface;
+use app\modules\users\models\Users;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -21,6 +22,10 @@ use yii\web\Controller;
  * @package app\models\core
  */
 class Magic {
+	/*очень временное и очень хуёвое решение на время протипирования*/
+	public static $classMap = [
+		'Users' => Users::class
+	];
 
 	/**
 	 * Вытаскивает неймспейс из файла, если он там есть
@@ -53,10 +58,10 @@ class Magic {
 
 	/**
 	 * Переводит вид имени экшена к виду запроса, который этот экшен дёргает.
-	 * @example actionSomeActionName => some-action-name
-	 * @example OtherActionName => other-action-name
 	 * @param string $action
 	 * @return string
+	 * @example actionSomeActionName => some-action-name
+	 * @example OtherActionName => other-action-name
 	 */
 	public static function GetActionRequestName(string $action):string {
 		$lines = preg_split('/(?=[A-Z])/', $action, -1, PREG_SPLIT_NO_EMPTY);
@@ -98,6 +103,7 @@ class Magic {
 	 * @throws UnknownClassException
 	 */
 	public static function LoadClassByName(string $className, ?string $parentClass = null):?object {
+		$className = ArrayHelper::getValue(self::$classMap, $className, $className);//если имя есть в карте, подставляем значение оттуда
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ((null !== $parentClass && $class->isSubclassOf($parentClass)) || null === $parentClass) return new $className;
