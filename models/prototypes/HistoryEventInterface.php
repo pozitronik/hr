@@ -20,6 +20,6 @@ use app\modules\users\models\Users;
 interface HistoryEventInterface {
 	const EVENT_CREATED = 0;
 	const EVENT_CHANGED = 1;
-	const EVENT_DELETED = 1;
+	const EVENT_DELETED = 2;
 
 }
