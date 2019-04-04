@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
+use yii\base\Model;
+
 /**
  * Class TimelineEntry
  * @package app\models\prototypes
@@ -12,7 +14,7 @@ namespace app\models\prototypes;
  * @property string $header
  * @property string $content
  */
-class TimelineEntry {
+class TimelineEntry extends Model {
 	public $icon;
 	public $time;
 	public $header;
