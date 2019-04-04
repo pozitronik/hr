@@ -9,7 +9,7 @@ namespace app\models\prototypes;
  *
  * @property int $eventType Что сделал
  * @property string $eventTypeName Что сделал
- * @property string|null $eventTypeIcon Нарисовать?
+ * @property string|null $eventIcon Иконка?
  * @property string $eventTime Во сколько сделал
  * @property string $objectName Где сделал
  * @property string $subjectName Кто сделал
