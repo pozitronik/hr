@@ -32,69 +32,65 @@ class ModelHistory extends Model {
 	}
 
 	/**
-	 * Высчитывает и описывает изменения на шаге
+	 * Вытаскивает из записи описание изменений атрибутов, конвертируя их в набор HistoryEventAction
+	 * @return HistoryEventAction[]
 	 */
-	private function populateChanges(ActiveRecordLoggerInterface $record):string {
-		$diff = [
-			HistoryEvent::EVENT_DELETED => [],
-			HistoryEvent::EVENT_CHANGED => [],
-			HistoryEvent::EVENT_CREATED => []
-		];
+	private function getEventActions(ActiveRecordLoggerInterface $record):array {
+		$diff = [];
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
+			$eventAction = new HistoryEventAction(['attributeName' => $attributeName, 'attributeOldValue' => $attributeValue]);
 			if (null === $newAttributeValue = ArrayHelper::getValue($record->new_attributes, $attributeName)) {
-				$diff[HistoryEvent::EVENT_DELETED][$attributeName] = [$attributeValue, $newAttributeValue];
+				$eventAction->type = HistoryEventAction::ATTRIBUTE_DELETED;
+
 			} else {
-				$diff[HistoryEvent::EVENT_CHANGED][$attributeName] = [$attributeValue, $newAttributeValue];
+				$eventAction->type = HistoryEventAction::ATTRIBUTE_CHANGED;
+				$eventAction->attributeNewValue = $newAttributeValue;
 			}
+			$diff[] = $eventAction;
 		}
 		foreach ($record->new_attributes as $attributeName => $attributeValue) {
+			$eventAction = new HistoryEventAction(['attributeName' => $attributeName, 'attributeNewValue' => $attributeValue]);
 			if (null === $oldAttributeValue = ArrayHelper::getValue($record->old_attributes, $attributeName)) {
-				$diff[HistoryEvent::EVENT_CREATED][$attributeName] = [$oldAttributeValue, $attributeValue];
+				$eventAction->type = HistoryEventAction::ATTRIBUTE_CREATED;
+				$eventAction->attributeOldValue = $oldAttributeValue;
 			}//игнорируем изменения - они учтены на предыдущем шаге
+			$diff[] = $eventAction;
 		}
 
-		$result = [];
-		foreach ($diff[HistoryEvent::EVENT_CREATED] as $createdAttributesName => $changes) {
-			$result[] = "Задано значение поля ".ArrayHelper::getValue($this->requestModel->attributeLabels(), $createdAttributesName, $createdAttributesName).": {$changes[1]}";
-		}
-		foreach ($diff[HistoryEvent::EVENT_CHANGED] as $changedAttributesName => $changes) {
-			$result[] = "Изменено значение поля ".ArrayHelper::getValue($this->requestModel->attributeLabels(), $changedAttributesName, $changedAttributesName).": $changes[0] => $changes[1]";
-		}
-		foreach ($diff[HistoryEvent::EVENT_DELETED] as $deletedAttributesName => $changes) {
-			$result[] = "Удалено значение поля ".ArrayHelper::getValue($this->requestModel->attributeLabels(), $deletedAttributesName, $deletedAttributesName).": $changes[0]";
-		}
-
-		return implode("<br />", $result);
+		return $diff;
 	}
 
 	/**
-	 * @param ActiveRecordLoggerInterface $record
+	 * @param ActiveRecordLoggerInterface $logRecord
 	 * @return HistoryEventInterface
 	 */
-	public function populateRecord(ActiveRecordLoggerInterface $record):HistoryEventInterface {
+	public function getHistoryEvent(ActiveRecordLoggerInterface $logRecord):HistoryEventInterface {
 		$result = new HistoryEvent();
-		if (null === $record->model_key) {
-			$result->eventType = empty($record->old_attributes)?HistoryEvent::EVENT_CREATED:HistoryEvent::EVENT_DELETED;
+
+		if (null === $logRecord->model_key) {
+			$result->eventType = empty($logRecord->old_attributes)?HistoryEvent::EVENT_CREATED:HistoryEvent::EVENT_DELETED;
 		} else $result->eventType = HistoryEvent::EVENT_CHANGED;
 
-		$result->eventTime = $record->timestamp;
-		$result->objectName = $record->model;
-		$result->subject = Users::findModel($record->user);
+		$result->eventTime = $logRecord->timestamp;
+		$result->objectName = $logRecord->model;
+		$result->subject = Users::findModel($logRecord->user);
 
-		$result->action = $this->populateChanges($record);
+		$result->actions = $this->getEventActions($logRecord);
 		return $result;
 	}
 
 	/**
+	 * Переводит набор записей из лога в набор событий
 	 * @param ActiveRecordLoggerInterface[] $timeline
 	 * @return HistoryEventInterface[]
 	 */
 	public function populateTimeline(array $timeline):array {
 		$result = [];
 		foreach ($timeline as $record) {
-			$result[] = $this->populateRecord($record);
+			$result[] = $this->getHistoryEvent($record);
 		}
 		return $result;
 	}
+
 
 }
