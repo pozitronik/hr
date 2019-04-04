@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace app\models\prototypes;
 
 use app\modules\users\models\Users;
+use Exception;
 use yii\base\Model;
+use yii\data\ArrayDataProvider;
+use yii\grid\GridView;
 
 /**
  * Class HistoryEvent
@@ -16,7 +19,7 @@ use yii\base\Model;
  * @property string $eventTime Во сколько сделал
  * @property string $objectName Где сделал
  * @property null|Users $subject Кто сделал
- * @property string $action Что произошло
+ * @property HistoryEventAction[] $actions Что произошло
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventType;
@@ -26,6 +29,29 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	public $objectName;
 	public $subject;
 	public $subjectId;
-	public $action;
+	public $actions;
 
+	/**
+	 * Converts log event to timeline entry
+	 * @return TimelineEntry
+	 */
+	public function asTimelineEntry():TimelineEntry {
+		return new TimelineEntry([
+			'icon' => $this->eventIcon,
+			'time' => $this->eventTime,
+			'header' => $this->objectName,
+			'content' => $this->getActionsTable()
+		]);
+	}
+
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	public function getActionsTable():string {
+		$provider = new ArrayDataProvider(['allModels' => $this->actions, 'sort' => ['type', 'attributeName']]);
+		return GridView::widget([
+			'dataProvider' => $provider,
+		]);
+	}
 }
