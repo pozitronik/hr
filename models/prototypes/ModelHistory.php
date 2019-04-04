@@ -4,10 +4,8 @@ declare(strict_types = 1);
 namespace app\models\prototypes;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Date;
 use app\models\core\ActiveRecordLogger;
 use app\modules\users\models\Users;
-use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
