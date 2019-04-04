@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
+use app\modules\users\models\Users;
+
 /**
  * Interface HistoryEventInterface
  * @package app\models\prototypes
@@ -12,7 +14,7 @@ namespace app\models\prototypes;
  * @property string|null $eventIcon Иконка?
  * @property string $eventTime Во сколько сделал
  * @property string $objectName Где сделал
- * @property string $subjectName Кто сделал
+ * @property null|Users $subject Кто сделал
  * @property string $action Что произошло
  */
 interface HistoryEventInterface {
@@ -20,5 +22,4 @@ interface HistoryEventInterface {
 	const EVENT_CHANGED = 1;
 	const EVENT_DELETED = 1;
 
-	public function __toString();
 }

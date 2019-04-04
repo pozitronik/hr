@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
+use app\modules\users\models\Users;
 use yii\base\Model;
 
 /**
@@ -14,7 +15,7 @@ use yii\base\Model;
  * @property string|null $eventIcon Иконка?
  * @property string $eventTime Во сколько сделал
  * @property string $objectName Где сделал
- * @property string $subjectName Кто сделал
+ * @property null|Users $subject Кто сделал
  * @property string $action Что произошло
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
@@ -23,13 +24,8 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventIcon;
 	public $eventTime;
 	public $objectName;
-	public $subjectName;
+	public $subject;
+	public $subjectId;
 	public $action;
 
-	/**
-	 * @return string
-	 */
-	public function __toString() {
-		return "{$this->subjectName} {$this->eventTypeName} {$this->objectName}: {$this->action}";
-	}
 }
