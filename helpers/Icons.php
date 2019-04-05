@@ -19,16 +19,16 @@ class Icons {
 	public static function event_icon(int $eventType):string {
 		switch ($eventType) {
 			case HistoryEventInterface::EVENT_CREATED:
-				return "<i class='fa fa-plus-circle' style='color: #51a351;' title='Создание'></i>";
+				return "<i class='fa fa-2x fa-plus-circle' style='color: #51a351;' title='Создание'></i>";
 			break;
 			case HistoryEventInterface::EVENT_CHANGED:
-				return "<i class='fa fa-exchange-alt' title='Изменение'></i>";
+				return "<i class='fa fa-2x fa-exchange-alt' title='Изменение'></i>";
 			break;
 			case HistoryEventInterface::EVENT_DELETED:
-				return "<i class='fa fa-minus-circle' style='color: Tomato;' title='Удаление'></i>";
+				return "<i class='fa fa-2x fa-minus-circle' style='color: Tomato;' title='Удаление'></i>";
 			break;
 			default:
-				return "<i class='fa fa-question-circle' title='Неизвестный тип события'></i>";
+				return "<i class='fa fa-2x fa-question-circle' title='Неизвестный тип события'></i>";
 			break;
 		}
 	}
