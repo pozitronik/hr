@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
 use app\models\core\ActiveRecordLogger;
 use app\models\core\ActiveRecordLoggerInterface;
 use app\modules\users\models\Users;
@@ -45,7 +46,6 @@ class ModelHistory extends Model {
 			$eventAction = new HistoryEventAction(['attributeName' => $attributeName, 'attributeOldValue' => $attributeValue]);
 			if (null === $newAttributeValue = ArrayHelper::getValue($record->new_attributes, $attributeName)) {
 				$eventAction->type = HistoryEventAction::ATTRIBUTE_DELETED;
-
 			} else {
 				$eventAction->type = HistoryEventAction::ATTRIBUTE_CHANGED;
 				$eventAction->attributeNewValue = $newAttributeValue;
@@ -66,6 +66,7 @@ class ModelHistory extends Model {
 	}
 
 	/**
+	 * Переводит запись из лога в событие истории
 	 * @param ActiveRecordLoggerInterface $logRecord
 	 * @return HistoryEventInterface
 	 * @throws Throwable
@@ -75,11 +76,14 @@ class ModelHistory extends Model {
 
 		if (null === $logRecord->model_key) {
 			$result->eventType = empty($logRecord->old_attributes)?HistoryEvent::EVENT_CREATED:HistoryEvent::EVENT_DELETED;
-		} else $result->eventType = HistoryEvent::EVENT_CHANGED;
+		} else {
+			$result->eventType = HistoryEvent::EVENT_CHANGED;
+		}
 
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
 		$result->subject = Users::findModel($logRecord->user);
+		$result->eventIcon = Icons::event_icon($result->eventType);
 
 		$result->actions = $this->getEventActions($logRecord);
 		return $result;
@@ -98,6 +102,5 @@ class ModelHistory extends Model {
 		}
 		return $result;
 	}
-
 
 }
