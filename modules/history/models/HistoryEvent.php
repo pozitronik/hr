@@ -5,7 +5,6 @@ namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
 use app\modules\users\models\Users;
-use app\modules\users\widgets\user\UserWidget;
 use Exception;
 use kartik\grid\DataColumn;
 use yii\base\Model;
@@ -69,14 +68,14 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 					'group' => true
 				],
 				[
-					'attribute' => 'attributeName',
+					'attribute' => 'attributeName'
 				],
 				[
-					'attribute' => 'attributeOldValue',
+					'attribute' => 'attributeOldValue'
 				],
 				[
-					'attribute' => 'attributeNewValue',
-				],
+					'attribute' => 'attributeNewValue'
+				]
 			]
 		]);
 	}
