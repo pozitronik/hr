@@ -6,6 +6,7 @@ namespace app\modules\users\widgets\navigation_menu;
 use app\helpers\Icons;
 use app\modules\users\models\Users;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use yii\base\InvalidConfigException;
 
 /**
  * Class UserNavigationMenuWidget
@@ -17,6 +18,7 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function run():string {
 		if ($this->model->isNewRecord) return '';
