@@ -42,17 +42,19 @@ class ModelHistory extends Model {
 	 */
 	private function getEventActions(ActiveRecordLoggerInterface $record):array {
 		$diff = [];
+		$labels = (null === $record->modelClass)?[]:$record->modelClass->attributeLabels();
+
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
 			if (isset($record->new_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
-					'attributeName' => $attributeName,
+					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
 					'attributeOldValue' => $attributeValue,
 					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
 					'attributeNewValue' => $record->new_attributes[$attributeName]
 				]);
 			} else {
 				$diff[] = new HistoryEventAction([
-					'attributeName' => $attributeName,
+					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
 					'attributeOldValue' => $attributeValue,
 					'type' => HistoryEventAction::ATTRIBUTE_DELETED
 				]);
@@ -63,7 +65,11 @@ class ModelHistory extends Model {
 
 		foreach ($e as $attributeName => $attributeValue) {
 			if (!isset($record->old_attributes, $attributeName) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
-				$diff[] = new HistoryEventAction(['attributeName' => $attributeName, 'attributeNewValue' => $attributeValue, 'type' => HistoryEventAction::ATTRIBUTE_CREATED]);
+				$diff[] = new HistoryEventAction([
+					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
+					'attributeNewValue' => $attributeValue,
+					'type' => HistoryEventAction::ATTRIBUTE_CREATED
+				]);
 			}
 		}
 
