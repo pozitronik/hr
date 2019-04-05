@@ -17,19 +17,20 @@ use yii\base\UnknownClassException;
  * @package app\controllers
  */
 class HistoryController extends WigetableController {
+	public $menuDisabled = true;
 
 	/**
-	 * @param string $className
-	 * @param int $modelId
+	 * @param string $for
+	 * @param int $id
 	 * @return string
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws InvalidConfigException
 	 * @throws UnknownClassException
 	 */
-	public function actionShow(string $className, int $modelId):string {
-		if (null === $askedClass = Magic::LoadClassByName($className)) throw new ReflectionException("Class $className not found");
-		$askedModel = $askedClass::findModel($modelId);
+	public function actionShow(string $for, int $id):string {
+		if (null === $askedClass = Magic::LoadClassByName($for)) throw new ReflectionException("Class $for not found");
+		$askedModel = $askedClass::findModel($id);
 
 		$history = new ModelHistory(['requestModel' => $askedModel, 'loggerModel' => ActiveRecordLogger::class]);
 		$timeline = $history->getHistory();

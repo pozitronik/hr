@@ -46,7 +46,12 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::user_add().'Новый пользователь',
-				'url' => '/users/users/create'
+				'url' => ['/users/users/create']
+			],
+			[
+				'menu' => true,
+				'label' => Icons::history().'История изменений',
+				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
 			],
 			[
 				'menu' => true,
