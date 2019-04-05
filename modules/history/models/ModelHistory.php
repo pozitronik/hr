@@ -43,23 +43,28 @@ class ModelHistory extends Model {
 	private function getEventActions(ActiveRecordLoggerInterface $record):array {
 		$diff = [];
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
-			$eventAction = new HistoryEventAction(['attributeName' => $attributeName, 'attributeOldValue' => $attributeValue]);
-			if (null === $newAttributeValue = ArrayHelper::getValue($record->new_attributes, $attributeName)) {
-				$eventAction->type = HistoryEventAction::ATTRIBUTE_DELETED;
+			if (isset($record->new_attributes, $attributeName)) {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => $attributeName,
+					'attributeOldValue' => $attributeValue,
+					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
+					'attributeNewValue' => $record->new_attributes[$attributeName]
+				]);
 			} else {
-				$eventAction->type = HistoryEventAction::ATTRIBUTE_CHANGED;
-				$eventAction->attributeNewValue = $newAttributeValue;
-			}
-			$diff[] = $eventAction;
-		}
-		foreach ($record->new_attributes as $attributeName => $attributeValue) {
-			$eventAction = new HistoryEventAction(['attributeName' => $attributeName, 'attributeNewValue' => $attributeValue]);
-			if (null === $oldAttributeValue = ArrayHelper::getValue($record->old_attributes, $attributeName)) {
-				$eventAction->type = HistoryEventAction::ATTRIBUTE_CREATED;
-				$eventAction->attributeOldValue = $oldAttributeValue;
-				$diff[] = $eventAction;
-			}//игнорируем изменения - они учтены на предыдущем шаге
+				$diff[] = new HistoryEventAction([
+					'attributeName' => $attributeName,
+					'attributeOldValue' => $attributeValue,
+					'type' => HistoryEventAction::ATTRIBUTE_DELETED
+				]);
 
+			}
+		}
+		$e = array_diff_key($record->new_attributes, $record->old_attributes);
+
+		foreach ($e as $attributeName => $attributeValue) {
+			if (!isset($record->old_attributes, $attributeName) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
+				$diff[] = new HistoryEventAction(['attributeName' => $attributeName, 'attributeNewValue' => $attributeValue, 'type' => HistoryEventAction::ATTRIBUTE_CREATED]);
+			}
 		}
 
 		return $diff;
@@ -74,8 +79,10 @@ class ModelHistory extends Model {
 	public function getHistoryEvent(ActiveRecordLoggerInterface $logRecord):HistoryEventInterface {
 		$result = new HistoryEvent();
 
-		if (null === $logRecord->model_key) {
-			$result->eventType = empty($logRecord->old_attributes)?HistoryEvent::EVENT_CREATED:HistoryEvent::EVENT_DELETED;
+		if ([] === $logRecord->old_attributes) {
+			$result->eventType = HistoryEvent::EVENT_CREATED;
+		} elseif ([] === $logRecord->new_attributes) {
+			$result->eventType = HistoryEvent::EVENT_DELETED;
 		} else {
 			$result->eventType = HistoryEvent::EVENT_CHANGED;
 		}
