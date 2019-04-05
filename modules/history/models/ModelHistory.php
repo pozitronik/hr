@@ -57,8 +57,9 @@ class ModelHistory extends Model {
 			if (null === $oldAttributeValue = ArrayHelper::getValue($record->old_attributes, $attributeName)) {
 				$eventAction->type = HistoryEventAction::ATTRIBUTE_CREATED;
 				$eventAction->attributeOldValue = $oldAttributeValue;
+				$diff[] = $eventAction;
 			}//игнорируем изменения - они учтены на предыдущем шаге
-			$diff[] = $eventAction;
+
 		}
 
 		return $diff;
