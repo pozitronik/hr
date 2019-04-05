@@ -7,6 +7,7 @@ use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordLogger;
 use app\models\core\ActiveRecordLoggerInterface;
 use app\modules\users\models\Users;
+use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -26,7 +27,7 @@ class ModelHistory extends Model {
 	 * @throws InvalidConfigException
 	 */
 	public function getHistory():array {
-		$this->loggerModel = null === $this->loggerModel?ActiveRecordLogger::class:$this->loggerModel;
+		$this->loggerModel = $this->loggerModel??ActiveRecordLogger::class;
 		$formName = $this->requestModel->formName();
 		$modelKey = $this->requestModel->primaryKey;
 		return $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey])->all();
@@ -34,7 +35,9 @@ class ModelHistory extends Model {
 
 	/**
 	 * Вытаскивает из записи описание изменений атрибутов, конвертируя их в набор HistoryEventAction
+	 * @param ActiveRecordLoggerInterface $record
 	 * @return HistoryEventAction[]
+	 * @throws Throwable
 	 */
 	private function getEventActions(ActiveRecordLoggerInterface $record):array {
 		$diff = [];
@@ -64,6 +67,7 @@ class ModelHistory extends Model {
 	/**
 	 * @param ActiveRecordLoggerInterface $logRecord
 	 * @return HistoryEventInterface
+	 * @throws Throwable
 	 */
 	public function getHistoryEvent(ActiveRecordLoggerInterface $logRecord):HistoryEventInterface {
 		$result = new HistoryEvent();
@@ -84,6 +88,7 @@ class ModelHistory extends Model {
 	 * Переводит набор записей из лога в набор событий
 	 * @param ActiveRecordLoggerInterface[] $timeline
 	 * @return HistoryEventInterface[]
+	 * @throws Throwable
 	 */
 	public function populateTimeline(array $timeline):array {
 		$result = [];

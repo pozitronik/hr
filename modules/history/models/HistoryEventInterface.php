@@ -17,9 +17,9 @@ use app\modules\users\models\Users;
  * @property HistoryEventAction[] $actions Что произошло
  */
 interface HistoryEventInterface {
-	const EVENT_CREATED = 0;
-	const EVENT_CHANGED = 1;
-	const EVENT_DELETED = 2;
+	public const EVENT_CREATED = 0;
+	public const EVENT_CHANGED = 1;
+	public const EVENT_DELETED = 2;
 
 	/**
 	 * Converts log event to timeline entry

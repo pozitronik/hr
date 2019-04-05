@@ -21,7 +21,7 @@ use yii\web\View;
 	<?php foreach ($timeline as $populatedEvent): ?>
 		<?= TimelineEntryWidget::widget([
 			'entry' => $populatedEvent->asTimelineEntry()
-		]); ?>
+		]) ?>
 
 	<?php endforeach; ?>
 

@@ -15,9 +15,9 @@ use yii\base\Model;
  *
  */
 class HistoryEventAction extends Model {
-	const ATTRIBUTE_CREATED = 0;
-	const ATTRIBUTE_CHANGED = 1;
-	const ATTRIBUTE_DELETED = 2;
+	public const ATTRIBUTE_CREATED = 0;
+	public const ATTRIBUTE_CHANGED = 1;
+	public const ATTRIBUTE_DELETED = 2;
 
 	public $type;
 	public $attributeName;
@@ -27,7 +27,7 @@ class HistoryEventAction extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'type' => 'Изменение',
 			'attributeName' => 'Атрибут',

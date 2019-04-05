@@ -10,6 +10,7 @@ use app\modules\users\models\Users;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use Throwable;
 use Yii;
 use app\helpers\Path;
 use yii\base\Configurable;
@@ -74,6 +75,7 @@ class Magic {
 	 * @param string $fileName
 	 * @return Reference|null|ReflectionClass
 	 * @throws ReflectionException
+	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
 	public static function GetReferenceModel(string $fileName):?object {
@@ -87,6 +89,7 @@ class Magic {
 	 * @param string $fileName
 	 * @return UserRightInterface|null|ReflectionClass
 	 * @throws ReflectionException
+	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
 	public static function GetUserRightModel(string $fileName):?object {
@@ -101,6 +104,7 @@ class Magic {
 	 * @return ReflectionClass|object|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
+	 * @throws Throwable
 	 */
 	public static function LoadClassByName(string $className, ?string $parentClass = null):?object {
 		$className = ArrayHelper::getValue(self::$classMap, $className, $className);//если имя есть в карте, подставляем значение оттуда

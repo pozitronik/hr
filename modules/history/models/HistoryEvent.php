@@ -33,6 +33,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	/**
 	 * Converts log event to timeline entry
 	 * @return TimelineEntry
+	 * @throws Exception
 	 */
 	public function asTimelineEntry():TimelineEntry {
 		return new TimelineEntry([
@@ -55,7 +56,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 			]
 		]);
 		return GridView::widget([
-			'dataProvider' => $provider,
+			'dataProvider' => $provider
 		]);
 	}
 }

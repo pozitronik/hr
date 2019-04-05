@@ -8,6 +8,9 @@ use app\models\core\Magic;
 use app\models\core\WigetableController;
 use app\modules\history\models\ModelHistory;
 use ReflectionException;
+use Throwable;
+use yii\base\InvalidConfigException;
+use yii\base\UnknownClassException;
 
 /**
  * Class HistoryController
@@ -19,6 +22,10 @@ class HistoryController extends WigetableController {
 	 * @param string $className
 	 * @param int $modelId
 	 * @return string
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws InvalidConfigException
+	 * @throws UnknownClassException
 	 */
 	public function actionShow(string $className, int $modelId):string {
 		if (null === $askedClass = Magic::LoadClassByName($className)) throw new ReflectionException("Class $className not found");
