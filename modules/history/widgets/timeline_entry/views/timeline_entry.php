@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var TimelineEntry $entry ;
  */
 
-use app\models\prototypes\TimelineEntry;
+use app\modules\history\models\TimelineEntry;
 use yii\web\View;
 
 ?>

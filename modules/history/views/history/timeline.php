@@ -6,8 +6,8 @@ declare(strict_types = 1);
  * @var HistoryEventInterface[] $timeline
  */
 
-use app\models\prototypes\HistoryEventInterface;
-use app\widgets\timeline_entry\TimelineEntryWidget;
+use app\modules\history\models\HistoryEventInterface;
+use app\modules\history\widgets\timeline_entry\TimelineEntryWidget;
 use yii\web\View;
 
 ?>

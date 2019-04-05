@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers;
+namespace app\modules\history\controllers;
 
 use app\models\core\ActiveRecordLogger;
 use app\models\core\Magic;
 use app\models\core\WigetableController;
-use app\models\prototypes\ModelHistory;
+use app\modules\history\models\ModelHistory;
 use ReflectionException;
 
 /**

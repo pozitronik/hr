@@ -1,13 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\prototypes;
+namespace app\modules\history\models;
 
 use app\modules\users\models\Users;
 
 /**
  * Interface HistoryEventInterface
- * @package app\models\prototypes
  *
  * @property int $eventType Что сделал
  * @property string $eventTypeName Что сделал

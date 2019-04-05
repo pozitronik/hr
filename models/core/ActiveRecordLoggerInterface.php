@@ -1,11 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\prototypes;
+namespace app\models\core;
 
 /**
  * Interface ActiveRecordLoggerInterface
- * @package app\models\prototypes
  *
  * @property-read string $timestamp
  * @property int $user

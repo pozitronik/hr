@@ -1,13 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\prototypes;
+namespace app\modules\history\models;
 
 use yii\base\Model;
 
 /**
  * Class TimelineEntry
- * @package app\models\prototypes
  *
  * @property string $icon
  * @property string $time

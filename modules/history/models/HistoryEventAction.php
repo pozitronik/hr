@@ -1,13 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\prototypes;
+namespace app\modules\history\models;
 
 use yii\base\Model;
 
 /**
  * Class HistoryEventAction
- * @package app\models\prototypes
  *
  * @property int $type тип события
  * @property string $attributeName изменившийся атрибут

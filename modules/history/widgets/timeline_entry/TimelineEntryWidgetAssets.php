@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\timeline_entry;
+namespace app\modules\history\widgets\timeline_entry;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\timeline
  */
 class TimelineEntryWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/timeline_entry/assets';
+	public $sourcePath = '@app/modules/history/widgets/timeline_entry/assets';
 	public $css = [
 		'css/timeline_entry.css'
 	];

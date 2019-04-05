@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
-use app\models\prototypes\ActiveRecordLoggerInterface;
 use app\models\user\CurrentUser;
 use Throwable;
 use yii\base\InvalidConfigException;

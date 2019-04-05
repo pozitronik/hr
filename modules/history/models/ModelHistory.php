@@ -1,10 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\prototypes;
+namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordLogger;
+use app\models\core\ActiveRecordLoggerInterface;
 use app\modules\users\models\Users;
 use yii\base\InvalidConfigException;
 use yii\base\Model;

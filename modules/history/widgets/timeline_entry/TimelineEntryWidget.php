@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\timeline_entry;
+namespace app\modules\history\widgets\timeline_entry;
 
-use app\models\prototypes\TimelineEntry;
+use app\modules\history\models\TimelineEntry;
 use yii\base\Widget;
 
 /**
