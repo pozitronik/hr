@@ -5,8 +5,10 @@ namespace app\models\core;
 
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
+use ReflectionClass;
 use Throwable;
 use yii\base\InvalidConfigException;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,6 +22,8 @@ use yii\db\ActiveRecord;
  * @property int $model_key
  * @property array $old_attributes
  * @property array $new_attributes
+ *
+ * @property-read null|Model $modelClass
  *
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
@@ -97,6 +101,13 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 */
 	public function getTimestamp():string {
 		return $this->at;
+	}
+
+	/**
+	 * @return null|object
+	 */
+	public function getModelClass():?object {
+		return Magic::LoadClassByName($this->model);
 	}
 
 }
