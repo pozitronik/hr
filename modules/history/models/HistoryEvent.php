@@ -59,12 +59,22 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 
 		return GridView::widget([
 			'dataProvider' => $provider,
+			'summary' => false,
 			'columns' => [
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'typeName',
 					'group' => true
-				]
+				],
+				[
+					'attribute' => 'attributeName',
+				],
+				[
+					'attribute' => 'attributeOldValue',
+				],
+				[
+					'attribute' => 'attributeNewValue',
+				],
 			]
 		]);
 	}
