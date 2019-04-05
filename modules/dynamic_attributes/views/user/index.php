@@ -1,4 +1,4 @@
-<?php /** @noinspection MissedFieldInspection */
+<?php
 declare(strict_types = 1);
 
 /**
@@ -16,6 +16,7 @@ use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
+use kartik\grid\DataColumn;
 use kartik\select2\Select2;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -76,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'filterPosition' => GridView::FILTER_POS_BODY,
 						'columns' => [
 							[
+								'class' => DataColumn::class,
 								'headerOptions' => [/*Фактический хак: таким образом объединяем ячейки заголовка и фильтра без необходимости патчить код фреймворка*/
 									'rowspan' => 2,
 									'style' => 'width: 50%'

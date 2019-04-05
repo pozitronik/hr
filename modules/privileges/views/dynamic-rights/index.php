@@ -1,4 +1,4 @@
-<?php /** @noinspection MissedFieldInspection */
+<?php
 declare(strict_types = 1);
 
 /**
@@ -13,6 +13,7 @@ use app\models\core\core_module\CoreModule;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRightInterface;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
+use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -40,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,

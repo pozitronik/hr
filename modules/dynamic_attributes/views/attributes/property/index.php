@@ -1,10 +1,11 @@
-<?php /** @noinspection MissedFieldInspection */
+<?php
 declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributePropertyNavigationMenuWidget;
+use kartik\grid\DataColumn;
 use yii\data\BaseDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -36,6 +37,7 @@ use app\helpers\ArrayHelper;
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,

@@ -16,6 +16,7 @@ use app\modules\privileges\models\Privileges;
 use app\modules\privileges\models\UserRightInterface;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
 use app\modules\references\widgets\user_right_select\UserRightSelectWidget;
+use kartik\grid\DataColumn;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -23,7 +24,7 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 
 ?>
-<?= /** @noinspection MissedFieldInspection */
+<?=
 GridView::widget([
 	'dataProvider' => $provider,
 
@@ -56,6 +57,7 @@ GridView::widget([
 	'footerRowOptions' => [],
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,

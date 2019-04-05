@@ -9,6 +9,7 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\modules\privileges\models\ActionAccess;
 use app\modules\privileges\models\DynamicUserRights;
+use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use kartik\switchinput\SwitchInput;
 use yii\helpers\Html;
@@ -41,7 +42,7 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= /** @noinspection MissedFieldInspection */
+					<?=
 					GridView::widget([
 						'dataProvider' => $model->actionsAccessProvider,
 						'panel' => [
@@ -58,12 +59,14 @@ use yii\widgets\ActiveForm;
 
 						'columns' => [
 							[
+								'class' => DataColumn::class,
 								'attribute' => 'moduleId',
 								'value' => 'moduleDescription',
 								'format' => 'raw',
 								'group' => true
 							],
 							[
+								'class' => DataColumn::class,
 								'attribute' => 'controllerId',
 								'value' => 'controllerDescription',
 								'format' => 'raw',

@@ -20,6 +20,7 @@ use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
+use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -32,7 +33,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 
 ?>
 
-<?= /** @noinspection MissedFieldInspection */
+<?=
 GridView::widget([
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
@@ -48,6 +49,7 @@ GridView::widget([
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,
@@ -91,6 +93,7 @@ GridView::widget([
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'label' => 'Должность',
 			'attribute' => 'positions',
 			'value' => 'positionName',
@@ -116,6 +119,7 @@ GridView::widget([
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'roles',
 			'filter' => ArrayHelper::getValue($searchModel, 'relRefUserRoles'),
 			'filterType' => ReferenceSelectWidget::class,
@@ -149,6 +153,7 @@ GridView::widget([
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'privileges',
 			'filterType' => GridView::FILTER_SELECT2,
 			'filter' => ArrayHelper::map(Privileges::find()->active()->all(), 'id', 'name'),

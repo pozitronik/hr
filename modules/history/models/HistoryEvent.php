@@ -5,9 +5,10 @@ namespace app\modules\history\models;
 
 use app\modules\users\models\Users;
 use Exception;
+use kartik\grid\DataColumn;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /**
  * Class HistoryEvent
@@ -55,8 +56,16 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 				'attributes' => ['type', 'attributeName']
 			]
 		]);
+
 		return GridView::widget([
-			'dataProvider' => $provider
+			'dataProvider' => $provider,
+			'columns' => [
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'typeName',
+					'group' => true
+				]
+			]
 		]);
 	}
 }

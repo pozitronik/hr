@@ -1,4 +1,4 @@
-<?php /** @noinspection MissedFieldInspection */
+<?php
 declare(strict_types = 1);
 
 /**
@@ -13,6 +13,7 @@ use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
+use kartik\grid\DataColumn;
 use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -44,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,

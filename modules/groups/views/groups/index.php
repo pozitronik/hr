@@ -16,6 +16,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
+use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
-<?= /** @noinspection MissedFieldInspection */
+<?=
 GridView::widget([
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
@@ -42,6 +43,7 @@ GridView::widget([
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,
@@ -75,6 +77,7 @@ GridView::widget([
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'type',
 			'value' => 'relGroupTypes.name',
 			'filterType' => ReferenceSelectWidget::class,
@@ -86,6 +89,7 @@ GridView::widget([
 			]
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'leaders',
 			'value' => static function(Groups $model) {
 				$users = [];

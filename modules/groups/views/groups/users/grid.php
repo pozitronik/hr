@@ -19,13 +19,14 @@ use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\modules\users\widgets\user_select\UserSelectWidget;
 use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use kartik\grid\CheckboxColumn;
+use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 ?>
 
-<?= /** @noinspection MissedFieldInspection */
+<?=
 GridView::widget([
 	'dataProvider' => $provider,
 	'panel' => [
@@ -47,6 +48,7 @@ GridView::widget([
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,

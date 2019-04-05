@@ -1,4 +1,4 @@
-<?php /** @noinspection MissedFieldInspection */
+<?php
 declare(strict_types = 1);
 
 /**
@@ -17,6 +17,7 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\SalaryFork;
 use app\modules\salary\models\SalaryForkSearch;
 use app\modules\salary\widgets\navigation_menu\SalaryForkMenuWidget;
+use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
@@ -42,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'responsive' => true,
 	'columns' => [
 		[
+			'class' => DataColumn::class,
 			'filter' => false,
 			'header' => Icons::menu(),
 			'mergeHeader' => true,
@@ -61,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'positionId',
 			'format' => 'raw',
 			'value' => 'refUserPosition.name',
@@ -74,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			]
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'gradeId',
 			'value' => 'refGrade.name',
 			'label' => 'Грейд',
@@ -87,6 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			]
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'premiumGroupId',
 			'value' => 'refPremiumGroup.name',
 			'label' => 'Группа премирования',
@@ -100,6 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			]
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'locationId',
 			'value' => 'refLocation.name',
 			'label' => 'Расположение',
