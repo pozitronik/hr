@@ -3,12 +3,35 @@ declare(strict_types = 1);
 
 namespace app\helpers;
 
+use app\modules\history\models\HistoryEventInterface;
+
 /**
  * Class Icons
  * @package app\helpers
  * Хелпер с HTML-иконками
  */
 class Icons {
+
+	/**
+	 * @param int $eventType
+	 * @return string
+	 */
+	public static function event_icon(int $eventType):string {
+		switch ($eventType) {
+			case HistoryEventInterface::EVENT_CREATED:
+				return "<i class='fa fa-plus-circle' style='color: #51a351;' title='Создание'></i>";
+			break;
+			case HistoryEventInterface::EVENT_CHANGED:
+				return "<i class='fa fa-exchange-alt' title='Изменение'></i>";
+			break;
+			case HistoryEventInterface::EVENT_DELETED:
+				return "<i class='fa fa-minus-circle' style='color: Tomato;' title='Удаление'></i>";
+			break;
+			default:
+				return "<i class='fa fa-question-circle' title='Неизвестный тип события'></i>";
+			break;
+		}
+	}
 
 	/**
 	 * @return string
@@ -177,6 +200,7 @@ class Icons {
 	public static function money():string {
 		return "<i class='fa fa-money-bill'></i>";
 	}
+
 	/**
 	 * @return string
 	 */
