@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use ReflectionClass;
-
 /**
  * Interface ActiveRecordLoggerInterface
  *

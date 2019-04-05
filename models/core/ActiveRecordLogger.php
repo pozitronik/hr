@@ -5,10 +5,11 @@ namespace app\models\core;
 
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
-use ReflectionClass;
+use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\base\UnknownClassException;
 use yii\db\ActiveRecord;
 
 /**
@@ -105,6 +106,9 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 
 	/**
 	 * @return null|object
+	 * @throws Throwable
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public function getModelClass():?object {
 		return Magic::LoadClassByName($this->model);
