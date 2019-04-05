@@ -7,9 +7,11 @@ use app\helpers\ArrayHelper;
 use app\modules\users\models\Users;
 use Exception;
 use kartik\grid\DataColumn;
+use Throwable;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use kartik\grid\GridView;
+use yii\i18n\Formatter;
 
 /**
  * Class HistoryEvent
@@ -61,6 +63,10 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 		return GridView::widget([
 			'dataProvider' => $provider,
 			'summary' => false,
+			'formatter' => [
+				'class' => Formatter::class,
+				'nullDisplay' => ''
+			],
 			'columns' => [
 				[
 					'class' => DataColumn::class,
@@ -82,6 +88,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 
 	/**
 	 * @return null|string
+	 * @throws Throwable
 	 */
 	public function getEventTypeName():?string {
 		return ArrayHelper::getValue(self::EVENT_TYPE_NAMES, $this->eventType);
