@@ -40,6 +40,7 @@ class HistoryEventAction extends Model {
 	public function attributeLabels():array {
 		return [
 			'type' => 'Изменение',
+			'typeName' => 'Событие',
 			'attributeName' => 'Атрибут',
 			'attributeOldValue' => 'Было',
 			'attributeNewValue' => 'Стало'

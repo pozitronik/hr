@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models;
 
+use app\helpers\ArrayHelper;
 use app\modules\users\models\Users;
 use Exception;
 use kartik\grid\DataColumn;
@@ -14,7 +15,7 @@ use kartik\grid\GridView;
  * Class HistoryEvent
  *
  * @property int $eventType Что сделал
- * @property string $eventTypeName Что сделал
+ * @property null|string $eventTypeName Что сделал
  * @property string|null $eventIcon Иконка?
  * @property string $eventTime Во сколько сделал
  * @property string $objectName Где сделал
@@ -23,7 +24,6 @@ use kartik\grid\GridView;
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventType;
-	public $eventTypeName;
 	public $eventIcon;
 	public $eventTime;
 	public $objectName;
@@ -40,7 +40,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 		return new TimelineEntry([
 			'icon' => $this->eventIcon,
 			'time' => $this->eventTime,
-			'header' => $this->objectName,
+			'header' => "{$this->eventTypeName}",// $this->objectName,
 			'content' => $this->getActionsTable()
 		]);
 	}
@@ -77,5 +77,12 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 				],
 			]
 		]);
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getEventTypeName():?string {
+		return ArrayHelper::getValue(self::EVENT_TYPE_NAMES, $this->eventType);
 	}
 }
