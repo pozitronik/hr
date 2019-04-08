@@ -12,11 +12,9 @@ use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\modules\users\models\Users;
 use Throwable;
-use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
-use yii\db\Expression;
 
 /**
  * Модель истории изменений объекта (предполагается, что это ActiveRecord, но по факту это любая модель с атрибутами)
@@ -42,8 +40,8 @@ class ModelHistory extends Model {
 
 		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
 			foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
-				$model = ArrayHelper::getValue($ruleCondition, 'model');//full linked model name with namespace
-				$link = ArrayHelper::getValue($ruleCondition, 'link');//link between models attributes like ['id' => 'user_id']
+				$model = ArrayHelper::getValue($ruleCondition, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
+				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'user_id']
 				$linkKey = ArrayHelper::key($link);
 				$linkValue = $link[$linkKey];
 				$modelKey = $this->requestModel->$linkKey;
@@ -51,7 +49,6 @@ class ModelHistory extends Model {
 				$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
 
 			}
-//			Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 		}
 
 		return $findCondition->orderBy('at')->all();
@@ -110,8 +107,8 @@ class ModelHistory extends Model {
 				foreach ($substitutionRules as $substitutionRule) {
 					$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
 					if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
-						$model = ArrayHelper::getValue($substitutionRule, 'model');//full linked model name with namespace
-						$link = ArrayHelper::getValue($substitutionRule, 'link');//link between models attributes like ['id' => 'group_id']
+						$model = ArrayHelper::getValue($substitutionRule, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
+						$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
 						if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
 						$linkKey = ArrayHelper::key($link);
 						$resultModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
