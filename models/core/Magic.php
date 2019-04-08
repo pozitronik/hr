@@ -6,6 +6,7 @@ namespace app\models\core;
 use app\helpers\ArrayHelper;
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
+use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\references\models\Reference;
 use app\modules\privileges\models\UserRightInterface;
 use app\modules\users\models\Users;
@@ -29,7 +30,8 @@ class Magic {
 	public static $classMap = [
 		'Users' => Users::class,
 		'Groups' => Groups::class,
-		'RelUsersGroups' => RelUsersGroups::class
+		'RelUsersGroups' => RelUsersGroups::class,
+		'RelUsersPrivileges' => RelUsersPrivileges::class
 	];
 
 	/**

@@ -111,11 +111,27 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 						'model' => self::class,
 						'link' => ['id' => 'user_id'],
 						'substitute' => ['user_id' => 'username']
+					],
+//					[
+//						'model' => RelUsersGroupsRoles::class,
+//						'link' => ['user_group_id' => 'id'],//todo -> closure
+//						'substitute' => ['id' => 'user_group_id']
+//					]
+				]
+
+			],
+			'RelUsersPrivileges' => [
+				'model' => RelUsersPrivileges::class,
+				'link' => ['id' => 'user_id'],
+				'substitutions' => [
+					[
+						'model' => Privileges::class,
+						'link' => ['id' => 'privilege_id'],
+						'substitute' => ['privilege_id' => 'name']
 					]
 				]
-			],
-//			'RelUsersGroupsRoles' => [//чёрт, многохитрое условие
-//			]
+
+			]
 		];
 	}
 
