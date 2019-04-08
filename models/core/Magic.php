@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
+use app\models\relations\RelUsersGroups;
+use app\modules\groups\models\Groups;
 use app\modules\references\models\Reference;
 use app\modules\privileges\models\UserRightInterface;
 use app\modules\users\models\Users;
@@ -25,7 +27,9 @@ use yii\web\Controller;
 class Magic {
 	/*очень временное и очень хуёвое решение на время протипирования*/
 	public static $classMap = [
-		'Users' => Users::class
+		'Users' => Users::class,
+		'Groups' => Groups::class,
+		'RelUsersGroups' => RelUsersGroups::class
 	];
 
 	/**
