@@ -122,7 +122,7 @@ class ModelHistory extends Model {
 					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
 					if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
 					$linkKey = ArrayHelper::key($link);
-					return $modelClass::find()->where([$linkKey => $attributeValue])->one()->$substitutionAttributeName;
+					return (null === $returnModel = $modelClass::find()->where([$linkKey => $attributeValue])->one())?null:$returnModel->$substitutionAttributeName;
 				}
 			}
 		}
