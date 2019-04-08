@@ -7,11 +7,15 @@ use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\models\core\ActiveRecordLogger;
 use app\models\core\ActiveRecordLoggerInterface;
+use app\models\core\LCQuery;
+use app\models\core\Magic;
 use app\modules\users\models\Users;
 use Throwable;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * Модель истории изменений объекта (предполагается, что это ActiveRecord, но по факту это любая модель с атрибутами)
@@ -31,7 +35,27 @@ class ModelHistory extends Model {
 		$this->loggerModel = $this->loggerModel??ActiveRecordLogger::class;
 		$formName = $this->requestModel->formName();
 		$modelKey = $this->requestModel->primaryKey;
-		return $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey])->all();
+
+		/** @var LCQuery $findCondition */
+		$findCondition = $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
+
+		/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
+		$modelHistoryRules = $this->requestModel->historyRelations();
+
+		foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
+			$model = ArrayHelper::getValue($ruleCondition, 'model');
+			$attribute = ArrayHelper::getValue($ruleCondition, 'attribute');
+			$return_attribute = ArrayHelper::getValue($ruleCondition, 'return_attribute');
+			$return_model = ArrayHelper::getValue($ruleCondition, 'return_model');
+
+			$modelFormName = (null !== $modelClass = Magic::LoadClassByName($model))?$modelClass->formName():null;//temp code
+			$sqlCondition = "model = '{$modelFormName}' and (new_attributes->'$.{$attribute}' = {$modelKey} or old_attributes->'$.{$attribute}' = {$modelKey})";
+
+			$findCondition->orWhere($sqlCondition);
+		}
+		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
+
+		return $findCondition->all();
 	}
 
 	/**
