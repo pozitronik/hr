@@ -36,6 +36,15 @@ class ActiveRecordExtended extends ActiveRecord {
 	}
 
 	/**
+	 * Описание связи между историей изменения моделей
+	 * @todo insert samples
+	 * @return array
+	 */
+	public function historyRelations():array {
+		return [];
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function beforeSave($insert):bool {
