@@ -45,8 +45,6 @@ class ModelHistory extends Model {
 		foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
 			$model = ArrayHelper::getValue($ruleCondition, 'model');
 			$attribute = ArrayHelper::getValue($ruleCondition, 'attribute');
-			$return_attribute = ArrayHelper::getValue($ruleCondition, 'return_attribute');
-			$return_model = ArrayHelper::getValue($ruleCondition, 'return_model');
 
 			$modelFormName = (null !== $modelClass = Magic::LoadClassByName($model))?$modelClass->formName():null;//temp code
 			$sqlCondition = "model = '{$modelFormName}' and (new_attributes->'$.{$attribute}' = {$modelKey} or old_attributes->'$.{$attribute}' = {$modelKey})";
@@ -55,7 +53,7 @@ class ModelHistory extends Model {
 		}
 		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 
-		return $findCondition->all();
+		return $findCondition->orderBy('at')->all();
 	}
 
 	/**
@@ -72,14 +70,14 @@ class ModelHistory extends Model {
 			if (isset($record->new_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => $attributeValue,
+					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->modelClass),
 					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
-					'attributeNewValue' => $record->new_attributes[$attributeName]
+					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $record->new_attributes[$attributeName], $record->modelClass)
 				]);
 			} else {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => $attributeValue,
+					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->modelClass),
 					'type' => HistoryEventAction::ATTRIBUTE_DELETED
 				]);
 
@@ -91,13 +89,47 @@ class ModelHistory extends Model {
 			if (!isset($record->old_attributes, $attributeName) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeNewValue' => $attributeValue,
+					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->modelClass),
 					'type' => HistoryEventAction::ATTRIBUTE_CREATED
 				]);
 			}
 		}
 
 		return $diff;
+	}
+
+	/**
+	 * @param string $attributeName
+	 * @param mixed $attributeValue
+	 * @param string $modelName
+	 * @return mixed
+	 */
+	private function SubstituteAttributeValue(string $attributeName, $attributeValue, object $modelClass) {
+		if ($modelClass->hasMethod('historyRelationsOut')) {
+			$rules = $modelClass->historyRelationsOut();
+			foreach ($rules as $ruleName => $ruleCondition) {
+				$modelName = ArrayHelper::getValue($ruleCondition, 'model');
+				$substituteModelClass = Magic::LoadClassByName($modelName);
+				$link = ArrayHelper::getValue($ruleCondition, 'link');
+				if (null === $substitutionAttribute = ArrayHelper::getValue(array_flip($link), $attributeName)) {
+					continue;
+				} else {
+					$substitute = ArrayHelper::getValue($ruleCondition, 'substitute');//['group_id' => 'name]
+					if (null !== $substitutionAttributeName = ArrayHelper::getValue($substitute,$attributeName)) {
+						$substitutionValue = $modelClass::find()->where([$attributeName => $attributeValue])->one();
+
+						$resultModel = ($substituteModelClass::find()->where([$substitutionAttribute => $substitutionValue])->one());
+
+						return $resultModel->$substitutionAttributeName;
+					}
+
+
+				}
+
+			}
+		}
+
+		return $attributeValue;//no substitutions found
 	}
 
 	/**
