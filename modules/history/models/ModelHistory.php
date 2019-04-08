@@ -11,9 +11,11 @@ use app\models\core\ActiveRecordLoggerInterface;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\modules\users\models\Users;
+use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\base\UnknownClassException;
 use yii\db\ActiveRecord;
 
 /**
@@ -29,6 +31,9 @@ class ModelHistory extends Model {
 	/**
 	 * @return ActiveRecordLoggerInterface[]
 	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public function getHistory():array {
 		$this->loggerModel = $this->loggerModel??ActiveRecordLogger::class;
@@ -97,26 +102,29 @@ class ModelHistory extends Model {
 	}
 
 	/**
-	 * @param $attributeName
-	 * @param $attributeValue
+	 * @param string $attributeName
+	 * @param mixed $attributeValue
+	 * @param string $relationModelName
+	 * @return mixed
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
-	private function SubstituteAttributeValue($attributeName, $attributeValue, $relationModelName) {
-		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) { //у класса задано описание подстановки между таблицами
+	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $relationModelName) {
+
+		if ($this->requestModel->hasMethod('historyRelations') && ([] !== $modelHistoryRules = $this->requestModel->historyRelations()) && (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions"))) {//у класса задано описание подстановки между таблицами
 			/** @var array $substitutionRules */
-			if (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions")) {//todo combine conditions
-				foreach ($substitutionRules as $substitutionRule) {
-					$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
-					if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
-						$model = ArrayHelper::getValue($substitutionRule, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
-						$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
-						if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
-						$linkKey = ArrayHelper::key($link);
-						$resultModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
-						return $resultModel->$substitutionAttributeName;
-					}
+			foreach ($substitutionRules as $substitutionRule) {
+				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
+				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
+					$model = ArrayHelper::getValue($substitutionRule, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
+					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
+					if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
+					$linkKey = ArrayHelper::key($link);
+					return $modelClass::find()->where([$linkKey => $attributeValue])->one()->$substitutionAttributeName;
 				}
 			}
-
 		}
 		return $attributeValue;
 	}

@@ -108,14 +108,14 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 						'substitute' => ['group_id' => 'name']
 					],
 					[
-						'model' => Users::class,
+						'model' => self::class,
 						'link' => ['id' => 'user_id'],
 						'substitute' => ['user_id' => 'username']
 					]
 				]
 			],
-			'RelUsersGroupsRoles' => [//чёрт, многохитрое условие
-			]
+//			'RelUsersGroupsRoles' => [//чёрт, многохитрое условие
+//			]
 		];
 	}
 
