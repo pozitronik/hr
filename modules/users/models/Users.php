@@ -101,10 +101,17 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 			'RelUsersGroups' => [
 				'model' => RelUsersGroups::class,//Имя связанной модели в таблице
 				'link' => ['id' => 'user_id'],//Схема связи между таблицами
-				'substitution' => [//таблица является связующей, задаём к чему и как она связует.
-					'model' => Groups::class,
-					'link' => ['id' => 'group_id'],
-					'substitute' => ['group_id' => 'name']
+				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
+					[
+						'model' => Groups::class,
+						'link' => ['id' => 'group_id'],
+						'substitute' => ['group_id' => 'name']
+					],
+					[
+						'model' => Users::class,
+						'link' => ['id' => 'user_id'],
+						'substitute' => ['user_id' => 'username']
+					]
 				]
 			]
 		];

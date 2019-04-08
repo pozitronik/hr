@@ -105,15 +105,18 @@ class ModelHistory extends Model {
 	 */
 	private function SubstituteAttributeValue($attributeName, $attributeValue, $relationModelName) {
 		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) { //у класса задано описание подстановки между таблицами
-			if (null !== $substitutionRule = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitution")) {//todo combine conditions
-				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
-				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
-					$model = ArrayHelper::getValue($substitutionRule, 'model');//full linked model name with namespace
-					$link = ArrayHelper::getValue($substitutionRule, 'link');//link between models attributes like ['id' => 'group_id']
-					if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
-					$linkKey = ArrayHelper::key($link);
-					$resultModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
-					return $resultModel->$substitutionAttributeName;
+			/** @var array $substitutionRules */
+			if (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions")) {//todo combine conditions
+				foreach ($substitutionRules as $substitutionRule) {
+					$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
+					if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
+						$model = ArrayHelper::getValue($substitutionRule, 'model');//full linked model name with namespace
+						$link = ArrayHelper::getValue($substitutionRule, 'link');//link between models attributes like ['id' => 'group_id']
+						if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
+						$linkKey = ArrayHelper::key($link);
+						$resultModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
+						return $resultModel->$substitutionAttributeName;
+					}
 				}
 			}
 
