@@ -37,7 +37,15 @@ class ActiveRecordExtended extends ActiveRecord {
 
 	/**
 	 * Описание связи между историей изменения моделей
-	 * @todo insert samples
+	 * @example 'relUsersGroups' => [
+	 *		'model' => RelUsersGroups::class,//Имя связанной модели в таблице
+	 *		'link' => ['id' => 'user_id'],//Схема связи между таблицами
+	 *		'relation' => [//таблица является связующей, задаём к чему и как она связует. Если не задано, то игнорируем
+	 *			'model' => Groups::class,
+	 *			'link' => ['id' => 'group_id']
+	 *		]
+	 *	]
+	 *
 	 * @return array
 	 */
 	public function historyRelations():array {
