@@ -99,12 +99,14 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function historyRelations():array {
 		return [
-			'relGroups' => [
-				'model' => RelUsersGroups::class,
-				'attribute' => 'user_id',
-				'return_attribute' => 'group_id',
-				'return_model' => Groups::class
-			]
+			'relUsersGroups' => [
+				'model' => RelUsersGroups::class,//model name in log table
+				'attribute' => 'user_id'//changed attribute name
+			],
+//			'relGroups' => [
+//				'model' => Groups::class,
+//				'attribute' =>
+//			]
 		];
 
 	}
