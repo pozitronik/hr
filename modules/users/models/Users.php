@@ -94,6 +94,22 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
 	/**
+	 * Прототипируем историю связей
+	 * @return array
+	 */
+	public function historyRelations():array {
+		return [
+			'relGroups' => [
+				'model' => RelUsersGroups::class,
+				'attribute' => 'user_id',
+				'return_attribute' => 'group_id',
+				'return_model' => Groups::class
+			]
+		];
+
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
