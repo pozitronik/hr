@@ -42,7 +42,8 @@ class ActiveRecordExtended extends ActiveRecord {
 	 *		'link' => ['id' => 'user_id'],//Схема связи между таблицами
 	 *		'relation' => [//таблица является связующей, задаём к чему и как она связует. Если не задано, то игнорируем
 	 *			'model' => Groups::class,
-	 *			'link' => ['id' => 'group_id']
+	 *			'link' => ['id' => 'group_id'],
+	 *			'substitute' => ['group_id' => 'name']
 	 *		]
 	 *	]
 	 *

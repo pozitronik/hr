@@ -94,21 +94,20 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
 	/**
-	 * Прототипируем историю связей
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function historyRelations():array {
 		return [
-			'relUsersGroups' => [
-				'model' => RelUsersGroups::class,//model name in log table
-				'attribute' => 'user_id'//changed attribute name
-			],
-//			'relGroups' => [
-//				'model' => Groups::class,
-//				'attribute' =>
-//			]
+			'RelUsersGroups' => [
+				'model' => RelUsersGroups::class,//Имя связанной модели в таблице
+				'link' => ['id' => 'user_id'],//Схема связи между таблицами
+				'substitution' => [//таблица является связующей, задаём к чему и как она связует.
+					'model' => Groups::class,
+					'link' => ['id' => 'group_id'],
+					'substitute' => ['group_id' => 'name']
+				]
+			]
 		];
-
 	}
 
 	/**

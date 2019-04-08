@@ -5,6 +5,7 @@ namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
+use app\models\core\ActiveRecordExtended;
 use app\models\core\ActiveRecordLogger;
 use app\models\core\ActiveRecordLoggerInterface;
 use app\models\core\LCQuery;
@@ -21,7 +22,7 @@ use yii\db\Expression;
  * Модель истории изменений объекта (предполагается, что это ActiveRecord, но по факту это любая модель с атрибутами)
  *
  * @property ActiveRecordLoggerInterface $loggerModel AR-интерфейс для работы с базой логов
- * @property ActiveRecord $requestModel Модель, для которой запрашиваем историю
+ * @property ActiveRecord|ActiveRecordExtended $requestModel Модель, для которой запрашиваем историю
  */
 class ModelHistory extends Model {
 	public $loggerModel;
@@ -39,19 +40,19 @@ class ModelHistory extends Model {
 		/** @var LCQuery $findCondition */
 		$findCondition = $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 
-		/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
-		$modelHistoryRules = $this->requestModel->historyRelations();
+		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
+			foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
+				$model = ArrayHelper::getValue($ruleCondition, 'model');//full linked model name with namespace
+				$link = ArrayHelper::getValue($ruleCondition, 'link');//link between models attributes like ['id' => 'user_id']
+				$linkKey = ArrayHelper::key($link);
+				$linkValue = $link[$linkKey];
+				$modelKey = $this->requestModel->$linkKey;
+				if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
+				$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
 
-		foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
-			$model = ArrayHelper::getValue($ruleCondition, 'model');
-			$attribute = ArrayHelper::getValue($ruleCondition, 'attribute');
-
-			$modelFormName = (null !== $modelClass = Magic::LoadClassByName($model))?$modelClass->formName():null;//temp code
-			$sqlCondition = "model = '{$modelFormName}' and (new_attributes->'$.{$attribute}' = {$modelKey} or old_attributes->'$.{$attribute}' = {$modelKey})";
-
-			$findCondition->orWhere($sqlCondition);
+			}
+//			Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 		}
-		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 
 		return $findCondition->orderBy('at')->all();
 	}
@@ -70,14 +71,14 @@ class ModelHistory extends Model {
 			if (isset($record->new_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->modelClass),
+					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
 					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
-					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $record->new_attributes[$attributeName], $record->modelClass)
+					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $record->new_attributes[$attributeName], $record->model)
 				]);
 			} else {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->modelClass),
+					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
 					'type' => HistoryEventAction::ATTRIBUTE_DELETED
 				]);
 
@@ -89,7 +90,7 @@ class ModelHistory extends Model {
 			if (!isset($record->old_attributes, $attributeName) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->modelClass),
+					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
 					'type' => HistoryEventAction::ATTRIBUTE_CREATED
 				]);
 			}
@@ -99,37 +100,25 @@ class ModelHistory extends Model {
 	}
 
 	/**
-	 * @param string $attributeName
-	 * @param mixed $attributeValue
-	 * @param string $modelName
-	 * @return mixed
+	 * @param $attributeName
+	 * @param $attributeValue
 	 */
-	private function SubstituteAttributeValue(string $attributeName, $attributeValue, object $modelClass) {
-		if ($modelClass->hasMethod('historyRelationsOut')) {
-			$rules = $modelClass->historyRelationsOut();
-			foreach ($rules as $ruleName => $ruleCondition) {
-				$modelName = ArrayHelper::getValue($ruleCondition, 'model');
-				$substituteModelClass = Magic::LoadClassByName($modelName);
-				$link = ArrayHelper::getValue($ruleCondition, 'link');
-				if (null === $substitutionAttribute = ArrayHelper::getValue(array_flip($link), $attributeName)) {
-					continue;
-				} else {
-					$substitute = ArrayHelper::getValue($ruleCondition, 'substitute');//['group_id' => 'name]
-					if (null !== $substitutionAttributeName = ArrayHelper::getValue($substitute,$attributeName)) {
-						$substitutionValue = $modelClass::find()->where([$attributeName => $attributeValue])->one();
-
-						$resultModel = ($substituteModelClass::find()->where([$substitutionAttribute => $substitutionValue])->one());
-
-						return $resultModel->$substitutionAttributeName;
-					}
-
-
+	private function SubstituteAttributeValue($attributeName, $attributeValue, $relationModelName) {
+		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) { //у класса задано описание подстановки между таблицами
+			if (null !== $substitutionRule = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitution")) {//todo combine conditions
+				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
+				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
+					$model = ArrayHelper::getValue($substitutionRule, 'model');//full linked model name with namespace
+					$link = ArrayHelper::getValue($substitutionRule, 'link');//link between models attributes like ['id' => 'group_id']
+					if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
+					$linkKey = ArrayHelper::key($link);
+					$resultModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
+					return $resultModel->$substitutionAttributeName;
 				}
-
 			}
-		}
 
-		return $attributeValue;//no substitutions found
+		}
+		return $attributeValue;
 	}
 
 	/**
