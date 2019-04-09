@@ -29,7 +29,7 @@ class HistoryController extends WigetableController {
 	 * @throws UnknownClassException
 	 */
 	public function actionShow(string $for, int $id):string {
-		if (null === $askedClass = Magic::LoadClassByName($for)) throw new ReflectionException("Class $for not found");
+		$askedClass = Magic::LoadClassByName($for);
 		$askedModel = $askedClass::findModel($id);
 
 		$history = new ModelHistory(['requestModel' => $askedModel, 'loggerModel' => ActiveRecordLogger::class]);

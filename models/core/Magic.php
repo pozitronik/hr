@@ -19,6 +19,7 @@ use Throwable;
 use Yii;
 use app\helpers\Path;
 use yii\base\Configurable;
+use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\web\Controller;
 
@@ -111,18 +112,18 @@ class Magic {
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
 	 * @param string|null $parentClass Опциональный фильтр родительского класса
-	 * @return ReflectionClass|object|null
+	 * @return ReflectionClass|object
+	 * @throws InvalidConfigException
 	 * @throws ReflectionException
-	 * @throws UnknownClassException
 	 * @throws Throwable
+	 * @throws UnknownClassException
 	 */
-	public static function LoadClassByName(string $className, ?string $parentClass = null):?object {
+	public static function LoadClassByName(string $className, ?string $parentClass = null):object {
 		$className = ArrayHelper::getValue(self::$classMap, $className, $className);//если имя есть в карте, подставляем значение оттуда
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ((null !== $parentClass && $class->isSubclassOf($parentClass)) || null === $parentClass) return new $className;
-
-		return null;
+		throw new InvalidConfigException("Class $className not found in application scope!");
 	}
 
 	/**
