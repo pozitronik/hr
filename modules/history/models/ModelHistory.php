@@ -45,13 +45,11 @@ class ModelHistory extends Model {
 		$findCondition = $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 
 		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
-			foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
-				$model = ArrayHelper::getValue($ruleCondition, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
-				if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
+			foreach ($modelHistoryRules as $modelClassName => $ruleCondition) {
+				$modelClass = Magic::LoadClassByName($modelClassName);
 				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'user_id']
 				if (is_callable($link)) {//closure
 					$link($findCondition, $modelClass);
-
 				} else {
 					$linkKey = ArrayHelper::key($link);
 					$linkValue = $link[$linkKey];
@@ -117,16 +115,21 @@ class ModelHistory extends Model {
 	 * @throws UnknownClassException
 	 */
 	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $relationModelName) {
+		$relationModelName = Magic::ExpandClassName($relationModelName);
 		if ($this->requestModel->hasMethod('historyRelations') && ([] !== $modelHistoryRules = $this->requestModel->historyRelations()) && (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions"))) {//у класса задано описание подстановки между таблицами
 			/** @var array $substitutionRules */
 			foreach ($substitutionRules as $substitutionRule) {
 				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
 				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
 					$model = ArrayHelper::getValue($substitutionRule, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
-					if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
+
+					$modelClass = Magic::LoadClassByName($model);
+
 					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
 					if (is_callable($link)) {//closure configured
-						if (null === $loadedClass = Magic::LoadClassByName($relationModelName)) throw new InvalidConfigException("Class $relationModelName not found in application scope!");
+
+						$loadedClass = Magic::LoadClassByName($relationModelName);
+
 						$loadedModel = $loadedClass::find()->where([$attributeName => $attributeValue])->one();
 						$returnModel = $link($loadedModel);
 					} else {

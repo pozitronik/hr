@@ -98,9 +98,8 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function historyRelations():array {
 		return [
-			'RelUsersGroupsRoles' => [
+			RelUsersGroupsRoles::class => [
 				'label' => 'Пользователю добавлена роль',
-				'model' => RelUsersGroupsRoles::class,
 				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
 					$userGroups = $this->relUsersGroups;
 					$ids = implode(',', ArrayHelper::getColumn($userGroups, 'id'));
@@ -123,9 +122,8 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					]
 				]
 			],
-			'RelUsersGroups' => [
+			RelUsersGroups::class => [//Имя связанной модели в таблице
 				'label' => 'Пользователь добавлен в группу',
-				'model' => RelUsersGroups::class,//Имя связанной модели в таблице
 				'link' => ['id' => 'user_id'],//Схема связи между таблицами
 				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
 					[
@@ -140,9 +138,8 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					]
 				]
 			],
-			'RelUsersPrivileges' => [
+			RelUsersPrivileges::class => [
 				'label' => 'Пользователю добавлена привилегия',
-				'model' => RelUsersPrivileges::class,
 				'link' => ['id' => 'user_id'],
 				'substitutions' => [
 					[
@@ -158,9 +155,8 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				]
 
 			],
-			'RelUsersAttributes' => [
+			RelUsersAttributes::class => [
 				'label' => 'Пользователю добавлен атрибут',
-				'model' => RelUsersAttributes::class,
 				'link' => ['id' => 'user_id'],
 				'substitutions' => [
 					[
