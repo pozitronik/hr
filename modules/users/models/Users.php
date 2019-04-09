@@ -107,16 +107,14 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					return $condition;
 				},
 				'substitutions' => [
-					[
-						'model' => RefUserRoles::class,
+					RefUserRoles::class => [
 						'link' => ['id' => 'role'],
 						'substitute' => ['role' => 'name']
 					],
-					[
-						'model' => Groups::class,
-						'link' => static function(ActiveRecordExtended $model):ActiveRecordExtended {
-							/** @var RelUsersGroupsRoles $model */
-							return Groups::find()->where(['id' => RelUsersGroups::find()->select(['group_id'])->where(['id' => $model->user_group_id])])->one();
+					Groups::class => [
+						'link' => static function(ActiveRecordExtended $relatedModel, ActiveRecordExtended $substitutionModel):ActiveRecordExtended {
+							/** @var RelUsersGroupsRoles $relatedModel */
+							return Groups::find()->where(['id' => RelUsersGroups::find()->select(['group_id'])->where(['id' => $relatedModel->user_group_id])])->one();
 						},
 						'substitute' => ['user_group_id' => 'name']
 					]
@@ -126,13 +124,11 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				'label' => 'Пользователь добавлен в группу',
 				'link' => ['id' => 'user_id'],//Схема связи между таблицами
 				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
-					[
-						'model' => Groups::class,
+					Groups::class => [
 						'link' => ['id' => 'group_id'],
 						'substitute' => ['group_id' => 'name']
 					],
-					[
-						'model' => self::class,
+					self::class => [
 						'link' => ['id' => 'user_id'],
 						'substitute' => ['user_id' => 'username']
 					]
@@ -142,13 +138,11 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				'label' => 'Пользователю добавлена привилегия',
 				'link' => ['id' => 'user_id'],
 				'substitutions' => [
-					[
-						'model' => self::class,
+					self::class => [
 						'link' => ['id' => 'user_id'],
 						'substitute' => ['user_id' => 'username']
 					],
-					[
-						'model' => Privileges::class,
+					Privileges::class => [
 						'link' => ['id' => 'privilege_id'],
 						'substitute' => ['privilege_id' => 'name']
 					]
@@ -159,13 +153,11 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				'label' => 'Пользователю добавлен атрибут',
 				'link' => ['id' => 'user_id'],
 				'substitutions' => [
-					[
-						'model' => self::class,
+					self::class => [
 						'link' => ['id' => 'user_id'],
 						'substitute' => ['user_id' => 'username']
 					],
-					[
-						'model' => DynamicAttributes::class,
+					DynamicAttributes::class => [
 						'link' => ['id' => 'attribute_id'],
 						'substitute' => ['attribute_id' => 'name']
 					]

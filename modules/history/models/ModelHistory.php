@@ -118,23 +118,20 @@ class ModelHistory extends Model {
 		$relationModelName = Magic::ExpandClassName($relationModelName);
 		if ($this->requestModel->hasMethod('historyRelations') && ([] !== $modelHistoryRules = $this->requestModel->historyRelations()) && (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions"))) {//у класса задано описание подстановки между таблицами
 			/** @var array $substitutionRules */
-			foreach ($substitutionRules as $substitutionRule) {
+			foreach ($substitutionRules as $substitutionModelName => $substitutionRule) {
 				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
 				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
-					$model = ArrayHelper::getValue($substitutionRule, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
-
-					$modelClass = Magic::LoadClassByName($model);
-
+					$substitutionModelClass = Magic::LoadClassByName($substitutionModelName);
 					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
 					if (is_callable($link)) {//closure configured
 
 						$loadedClass = Magic::LoadClassByName($relationModelName);
 
 						$loadedModel = $loadedClass::find()->where([$attributeName => $attributeValue])->one();
-						$returnModel = $link($loadedModel);
+						$returnModel = $link($loadedModel, $substitutionModelClass);
 					} else {
 						$linkKey = ArrayHelper::key($link);
-						$returnModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
+						$returnModel = $substitutionModelClass::find()->where([$linkKey => $attributeValue])->one();
 					}
 					return (null === $returnModel)?null:$returnModel->$substitutionAttributeName;
 				}
