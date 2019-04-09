@@ -40,6 +40,17 @@ class Magic {
 	];
 
 	/**
+	 * todo
+	 * Временная фуккция, разворачивающая имена классов в полные пути (надо придумать, как строить карту имён, посмотреть, может в Yii есть обратная formName() функция)
+	 * @param string $shortClassName
+	 * @return string
+	 * @throws Throwable
+	 */
+	public static function ExpandClassName(string $shortClassName):string {
+		return ArrayHelper::getValue(self::$classMap, $shortClassName, $shortClassName);
+	}
+
+	/**
 	 * Вытаскивает неймспейс из файла, если он там есть
 	 * @param string $path
 	 * @return string|false
