@@ -145,7 +145,9 @@ class ModelHistory extends Model {
 			$result->eventType = HistoryEvent::EVENT_CHANGED;
 		}
 
-		$result->eventCaption = $this->requestModel->hasMethod('historyRelations')??ArrayHelper::getValue($this->requestModel->historyRelations(), "{$logRecord->model}.label");
+		if ($this->requestModel->hasMethod('historyRelations')) {
+			$result->eventCaption = ArrayHelper::getValue($this->requestModel->historyRelations(), "{$logRecord->model}.label");
+		}
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
 		$result->subject = Users::findModel($logRecord->user);
