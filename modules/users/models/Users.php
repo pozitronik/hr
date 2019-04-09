@@ -127,12 +127,34 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				'link' => ['id' => 'user_id'],
 				'substitutions' => [
 					[
+						'model' => self::class,
+						'link' => ['id' => 'user_id'],
+						'substitute' => ['user_id' => 'username']
+					],
+					[
 						'model' => Privileges::class,
 						'link' => ['id' => 'privilege_id'],
 						'substitute' => ['privilege_id' => 'name']
 					]
 				]
 
+			],
+			'RelUsersAttributes' => [
+				'label' => 'Пользователю добавлен атрибут',
+				'model' => RelUsersAttributes::class,
+				'link' => ['id' => 'user_id'],
+				'substitutions' => [
+					[
+						'model' => self::class,
+						'link' => ['id' => 'user_id'],
+						'substitute' => ['user_id' => 'username']
+					],
+					[
+						'model' => DynamicAttributes::class,
+						'link' => ['id' => 'attribute_id'],
+						'substitute' => ['attribute_id' => 'name']
+					]
+				]
 			]
 		];
 	}
