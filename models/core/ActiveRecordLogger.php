@@ -82,11 +82,13 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 
 	/**
 	 * @param string|null $modelName
-	 * @param int|null $pKey
+	 * @param mixed $pKey
 	 * @param array $oldAttributes
 	 * @param array $newAttributes
 	 */
-	public static function push(?string $modelName, ?int $pKey, array $oldAttributes, array $newAttributes):void {
+	public static function push(?string $modelName, $pKey, array $oldAttributes, array $newAttributes):void {
+		$pKey = is_numeric($pKey)?$pKey:null;//$pKey может быть массивом
+
 		$log = new self([
 			'user' => CurrentUser::Id(),
 			'model' => $modelName,
