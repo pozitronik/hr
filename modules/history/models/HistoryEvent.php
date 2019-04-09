@@ -23,9 +23,11 @@ use yii\i18n\Formatter;
  * @property string $objectName Где сделал
  * @property null|Users $subject Кто сделал
  * @property HistoryEventAction[] $actions Что произошло
+ * @property null|string $eventCaption Переопределить типовой заголовок события
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventType;
+	public $eventCaption;
 	public $eventIcon;
 	public $eventTime;
 	public $objectName;
@@ -43,7 +45,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 		return new TimelineEntry([
 			'icon' => $this->eventIcon,
 			'time' => $this->eventTime,
-			'header' => "{$this->eventTypeName}{$userInfo}",
+			'header' => (null === $this->eventCaption?$this->eventTypeName:$this->eventCaption).$userInfo,
 			'content' => $this->getActionsTable()
 		]);
 	}

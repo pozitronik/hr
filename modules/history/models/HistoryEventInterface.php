@@ -15,6 +15,7 @@ use app\modules\users\models\Users;
  * @property string $objectName Где сделал
  * @property null|Users $subject Кто сделал
  * @property HistoryEventAction[] $actions Что произошло
+ * @property null|string $eventCaption Переопределить типовой заголовок события
  */
 interface HistoryEventInterface {
 	public const EVENT_CREATED = 0;
