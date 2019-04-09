@@ -4,7 +4,9 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
+use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroups;
+use app\models\relations\RelUsersGroupsRoles;
 use app\modules\groups\models\Groups;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\references\models\Reference;
@@ -31,7 +33,9 @@ class Magic {
 		'Users' => Users::class,
 		'Groups' => Groups::class,
 		'RelUsersGroups' => RelUsersGroups::class,
-		'RelUsersPrivileges' => RelUsersPrivileges::class
+		'RelUsersPrivileges' => RelUsersPrivileges::class,
+		'RelUsersAttributes' => RelUsersAttributes::class,
+		'RelUsersGroupsRoles' => RelUsersGroupsRoles::class
 	];
 
 	/**
