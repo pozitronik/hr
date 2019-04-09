@@ -112,7 +112,7 @@ class ModelHistory extends Model {
 	 * @throws UnknownClassException
 	 */
 	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $relationModelName) {
-
+		//todo: проверка на historyRelations может быть опущена, т.к. идёт наследование от Extended-модели
 		if ($this->requestModel->hasMethod('historyRelations') && ([] !== $modelHistoryRules = $this->requestModel->historyRelations()) && (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions"))) {//у класса задано описание подстановки между таблицами
 			/** @var array $substitutionRules */
 			foreach ($substitutionRules as $substitutionRule) {
@@ -146,6 +146,7 @@ class ModelHistory extends Model {
 			$result->eventType = HistoryEvent::EVENT_CHANGED;
 		}
 
+		$result->eventCaption =  ArrayHelper::getValue($this->requestModel->historyRelations(),"{$logRecord->model}.label");
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
 		$result->subject = Users::findModel($logRecord->user);

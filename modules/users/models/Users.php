@@ -99,6 +99,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	public function historyRelations():array {
 		return [
 			'RelUsersGroups' => [
+				'label' => 'Пользователь добавлен в группу',
 				'model' => RelUsersGroups::class,//Имя связанной модели в таблице
 				'link' => ['id' => 'user_id'],//Схема связи между таблицами
 				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
@@ -121,6 +122,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 
 			],
 			'RelUsersPrivileges' => [
+				'label' => 'Пользователю добавлена привилегия',
 				'model' => RelUsersPrivileges::class,
 				'link' => ['id' => 'user_id'],
 				'substitutions' => [
