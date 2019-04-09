@@ -100,6 +100,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 		return [
 			RelUsersGroupsRoles::class => [
 				'label' => 'Пользователю добавлена роль',
+				/*параметр может быть задан замыканием, первый параметр - текущее условие (которое модифицируется и возвращается), второй - класс, по логам которого ищем (собственно, это задающая модель, но нам не лом передавать инциализированный объект)*/
 				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
 					$userGroups = $this->relUsersGroups;
 					$ids = implode(',', ArrayHelper::getColumn($userGroups, 'id'));
@@ -112,6 +113,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 						'substitute' => ['role' => 'name']
 					],
 					Groups::class => [
+						/*параметр может быть задан замыканием, первый параметр - модель, в которую идёт подстановка, второй - класс, из которой идёт подстановка. Вернуть нужно модель класса, из которого будет идти подстановка*/
 						'link' => static function(ActiveRecordExtended $relatedModel, ActiveRecordExtended $substitutionModel):ActiveRecordExtended {
 							/** @var RelUsersGroupsRoles $relatedModel */
 							return Groups::find()->where(['id' => RelUsersGroups::find()->select(['group_id'])->where(['id' => $relatedModel->user_group_id])])->one();
