@@ -28,6 +28,7 @@ use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use Throwable;
 use Yii;
+use yii\db\ActiveQueryInterface;
 
 /**
  * This is the model class for table "sys_users".
@@ -98,6 +99,31 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function historyRelations():array {
 		return [
+			'RelUsersGroupsRoles' => [
+				'label' => 'Пользователю добавлена роль',
+				'model' => RelUsersGroupsRoles::class,
+				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
+					$userGroups = $this->relUsersGroups;
+					$ids = implode(',', ArrayHelper::getColumn($userGroups, 'id'));
+					$condition->orWhere("model = '{$model->formName()}' and (new_attributes->'$.user_group_id' in ({$ids}) or old_attributes->'$.user_group_id' in ({$ids}))");
+					return $condition;
+				},
+				'substitutions' => [
+					[
+						'model' => RefUserRoles::class,
+						'link' => ['id' => 'role'],
+						'substitute' => ['role' => 'name']
+					],
+					[
+						'model' => Groups::class,
+						'link' => function(ActiveRecordExtended $model):ActiveRecordExtended {
+							/** @var RelUsersGroupsRoles $model */
+							return Groups::find()->where(['id' => RelUsersGroups::find()->select(['group_id'])->where(['id' => $model->user_group_id])])->one();
+						},
+						'substitute' => ['user_group_id' => 'name']
+					]
+				]
+			],
 			'RelUsersGroups' => [
 				'label' => 'Пользователь добавлен в группу',
 				'model' => RelUsersGroups::class,//Имя связанной модели в таблице

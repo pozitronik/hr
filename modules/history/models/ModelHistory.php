@@ -13,6 +13,7 @@ use app\models\core\Magic;
 use app\modules\users\models\Users;
 use ReflectionException;
 use Throwable;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\UnknownClassException;
@@ -46,16 +47,20 @@ class ModelHistory extends Model {
 		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
 			foreach ($modelHistoryRules as $ruleName => $ruleCondition) {
 				$model = ArrayHelper::getValue($ruleCondition, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
-				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'user_id']
-				$linkKey = ArrayHelper::key($link);
-				$linkValue = $link[$linkKey];
-				$modelKey = $this->requestModel->$linkKey;
 				if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
-				$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
+				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'user_id']
+				if (is_callable($link)) {//closure
+					$link($findCondition, $modelClass);
 
+				} else {
+					$linkKey = ArrayHelper::key($link);
+					$linkValue = $link[$linkKey];
+					$modelKey = $this->requestModel->$linkKey;
+					$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
+				}
 			}
 		}
-
+		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 		return $findCondition->orderBy('at')->all();
 	}
 
@@ -118,10 +123,17 @@ class ModelHistory extends Model {
 				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
 				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
 					$model = ArrayHelper::getValue($substitutionRule, 'model', new InvalidConfigException("'Model property is required in rule configuration'"));//full linked model name with namespace
-					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
 					if (null === $modelClass = Magic::LoadClassByName($model)) throw new InvalidConfigException("Class $model not found in application scope!");
-					$linkKey = ArrayHelper::key($link);
-					return (null === $returnModel = $modelClass::find()->where([$linkKey => $attributeValue])->one())?null:$returnModel->$substitutionAttributeName;
+					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
+					if (is_callable($link)) {//closure configured
+						if (null === $loadedClass = Magic::LoadClassByName($relationModelName)) throw new InvalidConfigException("Class $relationModelName not found in application scope!");
+						$loadedModel = $loadedClass::find()->where([$attributeName => $attributeValue])->one();
+						$returnModel = $link($loadedModel);
+					} else {
+						$linkKey = ArrayHelper::key($link);
+						$returnModel = $modelClass::find()->where([$linkKey => $attributeValue])->one();
+					}
+					return (null === $returnModel)?null:$returnModel->$substitutionAttributeName;
 				}
 			}
 		}
