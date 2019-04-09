@@ -73,16 +73,23 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'typeName',
-					'group' => true
+					'group' => true,
+					'width' => '10%'
 				],
 				[
-					'attribute' => 'attributeName'
+					'class' => DataColumn::class,
+					'attribute' => 'attributeName',
+					'width' => '20%'
 				],
 				[
-					'attribute' => 'attributeOldValue'
+					'class' => DataColumn::class,
+					'attribute' => 'attributeOldValue',
+					'width' => '25%'
 				],
 				[
-					'attribute' => 'attributeNewValue'
+					'class' => DataColumn::class,
+					'attribute' => 'attributeNewValue',
+					'width' => '25%'
 				]
 			]
 		]);
