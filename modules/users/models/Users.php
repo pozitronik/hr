@@ -28,7 +28,6 @@ use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use Throwable;
 use Yii;
-use yii\db\ActiveQueryInterface;
 
 /**
  * This is the model class for table "sys_users".
@@ -116,7 +115,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					],
 					[
 						'model' => Groups::class,
-						'link' => function(ActiveRecordExtended $model):ActiveRecordExtended {
+						'link' => static function(ActiveRecordExtended $model):ActiveRecordExtended {
 							/** @var RelUsersGroupsRoles $model */
 							return Groups::find()->where(['id' => RelUsersGroups::find()->select(['group_id'])->where(['id' => $model->user_group_id])])->one();
 						},
@@ -138,7 +137,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 						'model' => self::class,
 						'link' => ['id' => 'user_id'],
 						'substitute' => ['user_id' => 'username']
-					],
+					]
 				]
 			],
 			'RelUsersPrivileges' => [
