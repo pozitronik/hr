@@ -69,6 +69,28 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 	public $upload_image;
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRelations():array {
+		return [
+			RelUsersGroups::class => [//Имя связанной модели в таблице
+				'label' => 'В группу добавлен пользователь',
+				'link' => ['id' => 'group_id'],//Схема связи между таблицами
+				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
+					self::class => [
+						'link' => ['id' => 'group_id'],
+						'substitute' => ['group_id' => 'name']
+					],
+					Users::class => [
+						'link' => ['id' => 'user_id'],
+						'substitute' => ['user_id' => 'username']
+					]
+				]
+			]
+		];
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
