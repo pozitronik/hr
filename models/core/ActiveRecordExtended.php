@@ -37,22 +37,22 @@ class ActiveRecordExtended extends ActiveRecord {
 
 	/**
 	 * Описание связи между историей изменения моделей
-	 *	'RelUsersGroups' => [
-	 *		'model' => RelUsersGroups::class,//Имя связанной модели в таблице
-	 *		'link' => ['id' => 'user_id'],//Схема связи между таблицами
-	 *		'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
-	 *			[
-	 *				'model' => Groups::class,//Имя связуемой таблицы
-	 *				'link' => ['id' => 'group_id'],//правило связывания (входящий атрибут => исходящий атрибут, как в hasOne)
-	 *				'substitute' => ['group_id' => 'name']//какой атрибут каким заменяем
-	 *			],
-	 *			[
-	 *				'model' => Users::class,
-	 *				'link' => ['id' => 'user_id'],
-	 *				'substitute' => ['user_id' => 'username']
-	 *			]
-	 *		]
-	 *	]
+	 *    'RelUsersGroups' => [
+	 *        'model' => RelUsersGroups::class,//Имя связанной модели в таблице
+	 *        'link' => ['id' => 'user_id'],//Схема связи между таблицами
+	 *        'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
+	 *            [
+	 *                'model' => Groups::class,//Имя связуемой таблицы
+	 *                'link' => ['id' => 'group_id'],//правило связывания (входящий атрибут => исходящий атрибут, как в hasOne)
+	 *                'substitute' => ['group_id' => 'name']//какой атрибут каким заменяем
+	 *            ],
+	 *            [
+	 *                'model' => Users::class,
+	 *                'link' => ['id' => 'user_id'],
+	 *                'substitute' => ['user_id' => 'username']
+	 *            ]
+	 *        ]
+	 *    ]
 	 * @return array
 	 */
 	public function historyRelations():array {
@@ -98,14 +98,22 @@ class ActiveRecordExtended extends ActiveRecord {
 
 	/**
 	 * Поскольку базовый deleteAll не триггерит beforeDelete, перекрываем и триггерим сами
+	 * Важно: изменение через deleteAll не может быть логировано корректно, потому будем логировать некорректно
 	 * {@inheritDoc}
 	 */
 	public static function deleteAll($condition = null, $params = []):?int {
 		$self_class_name = static::class;
-		if ((new $self_class_name())->beforeDelete()) {
+		$self_class = new $self_class_name();
+
+		if (UserAccess::canAccess($self_class, AccessMethods::delete)) {
+			ActiveRecordLogger::logDeleteAll($self_class, $condition);
 			return parent::deleteAll($condition, $params);
 		}
+
+		$self_class->addError('id', 'Вам не разрешено производить данное действие.');
+		AlertModel::AccessNotify();
 		return null;
+
 	}
 
 }

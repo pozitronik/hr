@@ -81,6 +81,16 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	}
 
 	/**
+	 * Логирует удаление моделей по условию
+	 * @param ActiveRecord $model
+	 * @param array $deleteConditions //Выбросит аяяяй, если сюда пойдёт строка. Пока оставляю так, этот метод ещё будет меняться
+	 * @throws InvalidConfigException
+	 */
+	public static function logDeleteAll(ActiveRecord $model, array $deleteConditions):void {
+		self::push($model->formName(), null, [], $deleteConditions);
+	}
+
+	/**
 	 * @param string|null $modelName
 	 * @param mixed $pKey
 	 * @param array $oldAttributes
