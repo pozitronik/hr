@@ -87,7 +87,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws InvalidConfigException
 	 */
 	public static function logDeleteAll(ActiveRecord $model, array $deleteConditions):void {
-		self::push($model->formName(), null, [], $deleteConditions);
+		self::push($model->formName(), null, $deleteConditions, []);
 	}
 
 	/**
