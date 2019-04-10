@@ -348,6 +348,7 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 	/**
 	 * Добавляет массив ролей пользователя к группе
 	 * @param array<integer, array<integer>> $userRoles
+	 * @throws Throwable
 	 */
 	public function setRolesInGroup(array $userRoles):void {
 		foreach ($userRoles as $user => $roles) {

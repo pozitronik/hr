@@ -162,6 +162,7 @@ class RefUserPositions extends Reference {
 	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
 	 * @param int $fromId
 	 * @param int $toId
+	 * @throws Throwable
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		Users::updateAll(['position' => $toId], ['position' => $fromId]);

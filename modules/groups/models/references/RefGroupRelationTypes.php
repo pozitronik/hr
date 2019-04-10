@@ -5,6 +5,7 @@ namespace app\modules\groups\models\references;
 
 use app\modules\references\models\Reference;
 use app\models\relations\RelGroupsGroups;
+use Throwable;
 use yii\helpers\Html;
 
 /**
@@ -58,6 +59,7 @@ class RefGroupRelationTypes extends Reference {
 	 * Объединяет две записи справочника (все ссылки на fromId ведут на toId, fromId удаляется)
 	 * @param int $fromId
 	 * @param int $toId
+	 * @throws Throwable
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		RelGroupsGroups::updateAll(['relation' => $toId], ['relation' => $fromId]);

@@ -122,6 +122,7 @@ class RelUsersAttributesTypes extends ActiveRecordExtended {
 	 * @param int $userId
 	 * @param int $attributeId
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public static function clearAttributeTypeForUser($typeId, int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
@@ -143,6 +144,7 @@ class RelUsersAttributesTypes extends ActiveRecordExtended {
 	 * @param int $userId
 	 * @param int $attributeId
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public static function clearAllAttributeTypesForUser(int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
