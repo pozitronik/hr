@@ -4,7 +4,9 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\models\core\ActiveRecordExtended;
+use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
+use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
 /**
@@ -16,9 +18,22 @@ use yii\db\ActiveQuery;
  *
  * @property ActiveQuery|RelUsersGroupsRoles[] $relUsersGroupsRoles Связь с релейшеном к ролям в группе
  * @property ActiveQuery|RefUserRoles[] $refUserRoles Роли пользователя в группе, полученные через релейшен
+ *
  */
 class RelUsersGroups extends ActiveRecordExtended {
 	use Relations;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRules():array {
+		return [
+			'attributes' => [
+				'group_id' => [Groups::class => 'name'],
+				'user_id' => [Users::class => 'username']
+			]
+		];
+	}
 
 	/**
 	 * {@inheritdoc}

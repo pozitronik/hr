@@ -6,6 +6,7 @@ namespace app\models\relations;
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
+use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
 /**
@@ -21,6 +22,18 @@ use yii\db\ActiveQuery;
  */
 class RelUsersAttributes extends ActiveRecordExtended {
 	use Relations;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRules():array {
+		return [
+			'attributes' => [
+				'attribute_id' => [DynamicAttributes::class => 'name'],
+				'user_id' => [Users::class => 'username']
+			]
+		];
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -46,8 +59,8 @@ class RelUsersAttributes extends ActiveRecordExtended {
 	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
-			'user_id' => 'User ID',
-			'attribute_id' => 'Attribute ID'
+			'user_id' => 'Пользователь',
+			'attribute_id' => 'Атрибут'
 		];
 	}
 

@@ -5,6 +5,8 @@ namespace app\modules\privileges\models\relations;
 
 use app\models\core\ActiveRecordExtended;
 use app\models\relations\Relations;
+use app\modules\privileges\models\Privileges;
+use app\modules\users\models\Users;
 
 /**
  * This is the model class for table "rel_users_privileges".
@@ -15,6 +17,19 @@ use app\models\relations\Relations;
  */
 class RelUsersPrivileges extends ActiveRecordExtended {
 	use Relations;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRules():array {
+		return [
+			'attributes' => [
+				'privilege_id' => [Privileges::class => 'name'],
+				'user_id' => [Users::class => 'username']
+			]
+		];
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -39,8 +54,8 @@ class RelUsersPrivileges extends ActiveRecordExtended {
 	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
-			'user_id' => 'User ID',
-			'privilege_id' => 'Privilege ID'
+			'user_id' => 'Пользователь',
+			'privilege_id' => 'Привилегия'
 		];
 	}
 }
