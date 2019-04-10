@@ -104,7 +104,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
 					$userGroups = $this->relUsersGroups;
 					$ids = implode(',', ArrayHelper::getColumn($userGroups, 'id'));
-					$condition->orWhere("model = '{$model->formName()}' and (new_attributes->'$.user_group_id' in ({$ids}) or old_attributes->'$.user_group_id' in ({$ids}))");
+					if (!empty($ids)) $condition->orWhere("model = '{$model->formName()}' and (new_attributes->'$.user_group_id' in ({$ids}) or old_attributes->'$.user_group_id' in ({$ids}))");
 					return $condition;
 				},
 				'substitutions' => [
@@ -383,7 +383,8 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 * @throws Throwable
 	 */
 	public function setDropGroups($dropGroups):void {
-		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
+		$userGroupRoles = RelUsersGroupsRoles::find()->where(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')])->all();
+		foreach ($userGroupRoles as $role) $role->delete();
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
 
