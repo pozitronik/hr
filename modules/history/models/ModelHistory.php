@@ -73,7 +73,7 @@ class ModelHistory extends Model {
 		$labels = (null === $record->modelClass)?[]:$record->modelClass->attributeLabels();
 
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
-			if (isset($record->new_attributes, $attributeName)) {
+			if (isset($record->new_attributes[$attributeName])) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
 					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
@@ -92,7 +92,7 @@ class ModelHistory extends Model {
 		$e = array_diff_key($record->new_attributes, $record->old_attributes);
 
 		foreach ($e as $attributeName => $attributeValue) {
-			if (!isset($record->old_attributes, $attributeName) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
+			if (!isset($record->old_attributes[$attributeName]) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
 					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
