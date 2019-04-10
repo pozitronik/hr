@@ -142,7 +142,8 @@ class ModelHistory extends Model {
 			$modelValueAttribute = $attributeConfig[$fromModelName];
 			return ArrayHelper::getValue($fromModel::findModel($attributeValue), $modelValueAttribute, $attributeValue);
 
-		} else throw new InvalidConfigException('Attribute config must be array or callable instance!');
+		} else return $attributeConfig;//Можем вернуть прямо заданное значение
+		//todo: добавить параметр конфига для скрытия атрибутов из истории
 
 	}
 
