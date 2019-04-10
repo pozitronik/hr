@@ -112,19 +112,21 @@ class ActiveRecordExtended extends ActiveRecord {
 	}
 
 	/**
-	 * Поскольку базовый deleteAll не триггерит beforeDelete, перекрываем и триггерим сами
-	 * Важно: изменение через deleteAll не может быть логировано корректно, потому будем логировать некорректно
+	 * Отличия от базового deleteAll(): работаем в цикле для корректного логирования + проверяем доступы
 	 * {@inheritDoc}
 	 */
 	public static function deleteAll($condition = null, $params = []):?int {
 		$self_class_name = static::class;
+		/** @var static $self_class */
 		$self_class = new $self_class_name();
-
 		if (UserAccess::canAccess($self_class, AccessMethods::delete)) {
-//			ActiveRecordLogger::logDeleteAll($self_class, $condition);
-			return parent::deleteAll($condition, $params);
+			$deletedModels = $self_class::findAll($condition);
+			$dc = 0;
+			foreach ($deletedModels as $deletedModel) {
+				$dc += (int)$deletedModel->delete();
+			}
+			return $dc;
 		}
-
 		$self_class->addError('id', 'Вам не разрешено производить данное действие.');
 		AlertModel::AccessNotify();
 		return null;
