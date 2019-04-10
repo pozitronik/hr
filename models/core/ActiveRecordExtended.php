@@ -122,6 +122,7 @@ class ActiveRecordExtended extends ActiveRecord {
 		if (UserAccess::canAccess($self_class, AccessMethods::delete)) {
 			$deletedModels = $self_class::findAll($condition);
 			$dc = 0;
+			/** @var static[] $deletedModels */
 			foreach ($deletedModels as $deletedModel) {
 				$dc += (int)$deletedModel->delete();
 			}
