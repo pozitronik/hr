@@ -95,9 +95,28 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRules():array {
+		return [
+			'attributes' => [
+				'daddy' => [self::class => 'username'],
+				'position' => [RefUserPositions::class => 'name']
+			],
+			'relations' => [
+				RelUsersGroups::class => ['id' => 'user_id'],
+				RelUsersPrivileges::class => ['id' => 'user_id'],
+				RelUsersAttributes::class => ['id' => 'user_id'],
+//				RelUsersGroupsRoles::class => function
+			]
+		];
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function historyRelations():array {
+		return [];
 		return [
 			RelUsersGroupsRoles::class => [
 				/*label может быть строкой (применяется ко всем типам записей), массивом в формате HistoryEventInterface::EVENT_TYPE_NAMES, замыканием с параметрами (int $eventType, string $default):string, или же вообще может быть игнорировано */
@@ -128,52 +147,6 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					]
 				]
 			],
-			RelUsersGroups::class => [//Имя связанной модели в таблице
-				'label' => [
-					HistoryEvent::EVENT_CREATED => 'Пользователь добавлен в группу',
-					HistoryEvent::EVENT_DELETED => 'Пользователь убран из группы'
-				],
-				'link' => ['id' => 'user_id'],//Схема связи между таблицами
-				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
-					Groups::class => [
-						'link' => ['id' => 'group_id'],
-						'substitute' => ['group_id' => 'name']
-					],
-					self::class => [
-						'link' => ['id' => 'user_id'],
-						'substitute' => ['user_id' => 'username']
-					]
-				]
-			],
-			RelUsersPrivileges::class => [
-				'label' => 'Пользователю добавлена привилегия',
-				'link' => ['id' => 'user_id'],
-				'substitutions' => [
-					self::class => [
-						'link' => ['id' => 'user_id'],
-						'substitute' => ['user_id' => 'username']
-					],
-					Privileges::class => [
-						'link' => ['id' => 'privilege_id'],
-						'substitute' => ['privilege_id' => 'name']
-					]
-				]
-
-			],
-			RelUsersAttributes::class => [
-				'label' => 'Пользователю добавлен атрибут',
-				'link' => ['id' => 'user_id'],
-				'substitutions' => [
-					self::class => [
-						'link' => ['id' => 'user_id'],
-						'substitute' => ['user_id' => 'username']
-					],
-					DynamicAttributes::class => [
-						'link' => ['id' => 'attribute_id'],
-						'substitute' => ['attribute_id' => 'name']
-					]
-				]
-			]
 		];
 	}
 
