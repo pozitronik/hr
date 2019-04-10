@@ -99,7 +99,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	public function historyRelations():array {
 		return [
 			RelUsersGroupsRoles::class => [
-				'label' => 'Пользователю добавлена роль',
+				'label' => 'Пользователю добавлена роль',//todo: label actions as array|closure
 				/*параметр может быть задан замыканием, первый параметр - текущее условие (которое модифицируется и возвращается), второй - класс, по логам которого ищем (собственно, это задающая модель, но нам не лом передавать инциализированный объект)*/
 				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
 					$userGroups = $this->relUsersGroups;
