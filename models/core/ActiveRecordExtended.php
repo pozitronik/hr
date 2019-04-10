@@ -37,26 +37,10 @@ class ActiveRecordExtended extends ActiveRecord {
 	}
 
 	/**
-	 * Описание связи между историей изменения моделей
-	 *    'RelUsersGroups' => [
-	 *        'model' => RelUsersGroups::class,//Имя связанной модели в таблице
-	 *        'link' => ['id' => 'user_id'],//Схема связи между таблицами
-	 *        'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
-	 *            [
-	 *                'model' => Groups::class,//Имя связуемой таблицы
-	 *                'link' => ['id' => 'group_id'],//правило связывания (входящий атрибут => исходящий атрибут, как в hasOne)
-	 *                'substitute' => ['group_id' => 'name']//какой атрибут каким заменяем
-	 *            ],
-	 *            [
-	 *                'model' => Users::class,
-	 *                'link' => ['id' => 'user_id'],
-	 *                'substitute' => ['user_id' => 'username']
-	 *            ]
-	 *        ]
-	 *    ]
+	 * Описание правил отображения истории моделей. todo: посмотреть, как у картика сделаны модели конфигов колонок, сделать аналогично
 	 * @return array
 	 */
-	public function historyRelations():array {
+	public function historyRules():array {
 		return [];
 	}
 
