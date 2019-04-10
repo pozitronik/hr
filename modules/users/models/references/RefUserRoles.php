@@ -116,7 +116,7 @@ class RefUserRoles extends Reference {
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		RelUsersGroupsRoles::updateAll(['role' => $toId], ['role' => $fromId]);
-		self::deleteAll(['id' => $fromId]);
+		self::deleteAllEx(['id' => $fromId]);
 		self::flushCache();
 	}
 

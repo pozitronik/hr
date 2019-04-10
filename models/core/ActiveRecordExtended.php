@@ -113,9 +113,8 @@ class ActiveRecordExtended extends ActiveRecord {
 
 	/**
 	 * Отличия от базового deleteAll(): работаем в цикле для корректного логирования + проверяем доступы
-	 * {@inheritDoc}
 	 */
-	public static function deleteAll($condition = null, $params = []):?int {
+	public static function deleteAllEx($condition = null):?int {
 		$self_class_name = static::class;
 		/** @var static $self_class */
 		$self_class = new $self_class_name();

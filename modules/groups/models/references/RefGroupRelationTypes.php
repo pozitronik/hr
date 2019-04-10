@@ -61,7 +61,7 @@ class RefGroupRelationTypes extends Reference {
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		RelGroupsGroups::updateAll(['relation' => $toId], ['relation' => $fromId]);
-		self::deleteAll(['id' => $fromId]);
+		self::deleteAllEx(['id' => $fromId]);
 		self::flushCache();
 	}
 

@@ -128,10 +128,10 @@ class RelUsersAttributesTypes extends ActiveRecordExtended {
 		if ($rel) {
 			if (is_array($typeId)) {
 				foreach ($typeId as $type) {
-					self::deleteAll(['user_attribute_id' => $rel->id, 'type' => $type]);
+					self::deleteAllEx(['user_attribute_id' => $rel->id, 'type' => $type]);
 				}
 			} else {
-				self::deleteAll(['user_attribute_id' => $rel->id, 'type' => $typeId]);
+				self::deleteAllEx(['user_attribute_id' => $rel->id, 'type' => $typeId]);
 			}
 			return true;//Результат дальше особо не анализируется, что плохо
 		}
@@ -147,7 +147,7 @@ class RelUsersAttributesTypes extends ActiveRecordExtended {
 	public static function clearAllAttributeTypesForUser(int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
 		if ($rel) {
-			self::deleteAll(['user_attribute_id' => $rel->id]);
+			self::deleteAllEx(['user_attribute_id' => $rel->id]);
 			return true;//Результат дальше особо не анализируется, что плохо
 		}
 		return false;//Попытка добавления типа к несуществующей связи между пользователем и атрибутом

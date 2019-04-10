@@ -91,7 +91,7 @@ trait Relations {
 			$slave = ArrayHelper::getValue($slave, 'primaryKey', new Exception("Класс {$slave->formName()} не имеет атрибута primaryKey"));
 		} else $slave = (string)$slave; //suppose it string field name
 
-		self::deleteAll([$first_name => $master, $second_name => $slave]);
+		self::deleteAllEx([$first_name => $master, $second_name => $slave]);
 	}
 
 	/**
