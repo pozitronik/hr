@@ -10,6 +10,7 @@ use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
+use yii\db\StaleObjectException;
 
 /** @noinspection UndetectableTableInspection */
 
@@ -97,6 +98,20 @@ class ActiveRecordExtended extends ActiveRecord {
 	}
 
 	/**
+	 * Удаляет набор моделей по наборк первичных ключей
+	 * @param array $primaryKeys
+	 * @throws Throwable
+	 * @throws StaleObjectException
+	 */
+	public static function deleteByKeys(array $primaryKeys):void {
+		foreach ($primaryKeys as $primaryKey) {
+			if (null !== $model = self::findModel($primaryKey)) {
+				$model->delete();
+			}
+		}
+	}
+
+	/**
 	 * Поскольку базовый deleteAll не триггерит beforeDelete, перекрываем и триггерим сами
 	 * Важно: изменение через deleteAll не может быть логировано корректно, потому будем логировать некорректно
 	 * {@inheritDoc}
@@ -106,14 +121,13 @@ class ActiveRecordExtended extends ActiveRecord {
 		$self_class = new $self_class_name();
 
 		if (UserAccess::canAccess($self_class, AccessMethods::delete)) {
-			ActiveRecordLogger::logDeleteAll($self_class, $condition);
+//			ActiveRecordLogger::logDeleteAll($self_class, $condition);
 			return parent::deleteAll($condition, $params);
 		}
 
 		$self_class->addError('id', 'Вам не разрешено производить данное действие.');
 		AlertModel::AccessNotify();
 		return null;
-
 	}
 
 }
