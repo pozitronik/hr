@@ -12,6 +12,7 @@ use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
+use app\modules\history\models\HistoryEvent;
 use app\modules\salary\models\traits\UsersSalaryTrait;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
@@ -99,7 +100,11 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	public function historyRelations():array {
 		return [
 			RelUsersGroupsRoles::class => [
-				'label' => 'Пользователю добавлена роль',//todo: label actions as array|closure
+				/*label может быть строкой (применяется ко всем типам записей), массивом в формате HistoryEventInterface::EVENT_TYPE_NAMES, замыканием с параметрами (int $eventType, string $default):string, или же вообще может быть игнорировано */
+				'label' => [
+					HistoryEvent::EVENT_CREATED => 'Пользователю добавлена роль',
+					HistoryEvent::EVENT_DELETED => 'Пользователь лишён роли'
+				],
 				/*параметр может быть задан замыканием, первый параметр - текущее условие (которое модифицируется и возвращается), второй - класс, по логам которого ищем (собственно, это задающая модель, но нам не лом передавать инциализированный объект)*/
 				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
 					$userGroups = $this->relUsersGroups;
@@ -123,7 +128,10 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				]
 			],
 			RelUsersGroups::class => [//Имя связанной модели в таблице
-				'label' => 'Пользователь добавлен в группу',
+				'label' => [
+					HistoryEvent::EVENT_CREATED => 'Пользователь добавлен в группу',
+					HistoryEvent::EVENT_DELETED => 'Пользователь убран из группы'
+				],
 				'link' => ['id' => 'user_id'],//Схема связи между таблицами
 				'substitutions' => [//таблица является связующей, задаём к чему и как она связует.
 					Groups::class => [

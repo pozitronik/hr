@@ -159,7 +159,13 @@ class ModelHistory extends Model {
 
 		if ($this->requestModel->hasMethod('historyRelations')) {
 			$modelName = Magic::ExpandClassName($logRecord->model);
-			$result->eventCaption = ArrayHelper::getValue($this->requestModel->historyRelations(), "{$modelName}.label");
+			/** @var null|string|array|callable $label */
+			$label = ArrayHelper::getValue($this->requestModel->historyRelations(), "{$modelName}.label");
+			if (is_callable($label)) {
+				$result->eventCaption = $label($result->eventType, $result->eventTypeName);
+			} elseif (is_array($label)) {
+				$result->eventCaption = ArrayHelper::getValue($label, $result->eventType, $result->eventTypeName);
+			} else $result->eventCaption = $label;
 		}
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
