@@ -28,6 +28,7 @@ use yii\db\ActiveRecord;
 class ModelHistory extends Model {
 	public $loggerModel;
 	public $requestModel;
+	private $modelHistoryRules = [];
 
 	/**
 	 * @return ActiveRecordLoggerInterface[]
@@ -40,25 +41,38 @@ class ModelHistory extends Model {
 		$this->loggerModel = $this->loggerModel??ActiveRecordLogger::class;
 		$formName = $this->requestModel->formName();
 		$modelKey = $this->requestModel->primaryKey;
+		$this->modelHistoryRules = $this->requestModel->hasMethod('historyRules')?$this->requestModel->historyRules():[];
 
 		/** @var LCQuery $findCondition */
 		$findCondition = $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 
-		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
-			foreach ($modelHistoryRules as $modelClassName => $ruleCondition) {
-				$modelClass = Magic::LoadClassByName($modelClassName);
-				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'user_id']
-				if (is_callable($link)) {//closure
-					$link($findCondition, $modelClass);
-				} else {
-					$linkKey = ArrayHelper::key($link);
-					$linkValue = $link[$linkKey];
-					$modelKey = $this->requestModel->$linkKey;
-					$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
-				}
-			}
+		foreach (ArrayHelper::getValue($this->modelHistoryRules, 'relations', []) as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
+			$relatedModel = Magic::LoadClassByName($relatedModelClassName);
+			if (is_callable($relationRule)) {
+//todo
+			} elseif (is_array($relationRule)) {
+				$linkKey = ArrayHelper::key($relationRule);
+				$linkValue = $relationRule[$linkKey];
+				$modelKey = $this->requestModel->$linkKey;
+				$findCondition->orWhere("model = '{$relatedModel->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
+			} else throw new InvalidConfigException('Relation rule must be array or callable instance!');
 		}
-		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
+
+//		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
+//			foreach ($modelHistoryRules as $modelClassName => $ruleCondition) {
+//				$modelClass = Magic::LoadClassByName($modelClassName);
+//				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("Link property is required in rule configuration"));//link between models attributes like ['id' => 'user_id']
+//				if (is_callable($link)) {//closure
+//					$link($findCondition, $modelClass);
+//				} else {
+//					$linkKey = ArrayHelper::key($link);
+//					$linkValue = $link[$linkKey];
+//					$modelKey = $this->requestModel->$linkKey;
+//					$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
+//				}
+//			}
+//		}
+//		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 		return $findCondition->orderBy('at')->all();
 	}
 
@@ -105,6 +119,34 @@ class ModelHistory extends Model {
 	}
 
 	/**
+	 * @param string $attributeName Название атрибута, для которого пытаемся найти подстановку
+	 * @param mixed $attributeValue Значение атрибута, которому ищем соответствие
+	 * @param string $substitutionClassName Имя AR-класса, по записям которого будем искать соответствие
+	 * @return mixed Подстановленное значение (если найдено, иначе переданное значение)
+	 * @throws InvalidConfigException
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws UnknownClassException
+	 */
+	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $substitutionClassName) {
+		$relationModel = Magic::LoadClassByName(Magic::ExpandClassName($substitutionClassName));
+
+		if (null === $attributeConfig = ArrayHelper::getValue($relationModel->historyRules(), "attributes.{$attributeName}")) return $attributeValue;
+		if (is_callable($attributeConfig)) {
+			return $attributeConfig($attributeName, $attributeValue);
+		}
+		if (is_array($attributeConfig)) {//[className => valueAttribute]
+			$fromModelName = ArrayHelper::key($attributeConfig);
+			/** @var ActiveRecordExtended $fromModel */
+			$fromModel = Magic::LoadClassByName($fromModelName);
+			$modelValueAttribute = $attributeConfig[$fromModelName];
+			return ArrayHelper::getValue($fromModel::findModel($attributeValue), $modelValueAttribute, $attributeValue);
+
+		} else throw new InvalidConfigException('Attribute config must be array or callable instance!');
+
+	}
+
+	/**
 	 * @param string $attributeName
 	 * @param mixed $attributeValue
 	 * @param string $relationModelName
@@ -114,7 +156,7 @@ class ModelHistory extends Model {
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $relationModelName) {
+	private function SubstituteAttributeValueOld(string $attributeName, $attributeValue, string $relationModelName) {
 		$relationModelName = Magic::ExpandClassName($relationModelName);
 		if ($this->requestModel->hasMethod('historyRelations') && ([] !== $modelHistoryRules = $this->requestModel->historyRelations()) && (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions"))) {//у класса задано описание подстановки между таблицами
 			/** @var array $substitutionRules */
