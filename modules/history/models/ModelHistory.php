@@ -124,11 +124,11 @@ class ModelHistory extends Model {
 					$substitutionModelClass = Magic::LoadClassByName($substitutionModelName);
 					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
 					if (is_callable($link)) {//closure configured
-
 						$loadedClass = Magic::LoadClassByName($relationModelName);
-
 						$loadedModel = $loadedClass::find()->where([$attributeName => $attributeValue])->one();
 						$returnModel = $link($loadedModel, $substitutionModelClass);
+						if (null === $returnModel) return $attributeValue;//Подстановку не удалось сделать, скорее всего записи в таблице удалены, покажем хоть что-то
+						/*Варианты решения: 1) искать по истории последнее событие с удалённым объектом и раскручивать цепочку 2) не удалять, добавив флаг для консистентности*/
 					} else {
 						$linkKey = ArrayHelper::key($link);
 						$returnModel = $substitutionModelClass::find()->where([$linkKey => $attributeValue])->one();
