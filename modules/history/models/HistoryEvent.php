@@ -41,11 +41,11 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	 * @throws Exception
 	 */
 	public function asTimelineEntry():TimelineEntry {
-		$userInfo = (null === $this->subject)?'':" пользователем {$this->subject->username}";
 		return new TimelineEntry([
 			'icon' => $this->eventIcon,
 			'time' => $this->eventTime,
-			'header' => ($this->eventCaption??$this->eventTypeName).$userInfo,
+			'caption' => $this->eventCaption??$this->eventTypeName,
+			'user' => $this->subject,
 			'content' => $this->getActionsTable()
 		]);
 	}
