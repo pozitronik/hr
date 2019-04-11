@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use app\models\core\ActiveRecordExtended;
+use app\modules\groups\models\Groups;
+use app\modules\users\models\references\RefUserRoles;
 use yii\db\ActiveQuery;
-use yii\helpers\ArrayHelper;
+use app\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "rel_users_groups_roles".
@@ -20,6 +22,23 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	 */
 	public static function tableName():string {
 		return 'rel_users_groups_roles';
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRules():array {
+		return [
+			'attributes' => [
+				'role' => [RefUserRoles::class => 'name'],
+				'user_group_id' => static function(string $attributeName, $attributeValue) {
+					if (null !== $groupId = ArrayHelper::getValue(RelUsersGroups::findModel($attributeValue), 'group_id')) {
+						return ArrayHelper::getValue(Groups::findModel($groupId), 'name', $attributeValue);
+					}
+					return $attributeValue;
+				}
+			]
+		];
 	}
 
 	/**
