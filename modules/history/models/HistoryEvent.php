@@ -6,14 +6,10 @@ namespace app\modules\history\models;
 use app\helpers\ArrayHelper;
 use app\modules\users\models\Users;
 use Exception;
-use kartik\grid\DataColumn;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\data\ArrayDataProvider;
-use kartik\grid\GridView;
-use yii\i18n\Formatter;
 
 /**
  * Class HistoryEvent
@@ -76,42 +72,8 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	 * @throws Exception
 	 */
 	public static function ActionsFormatterDefault(array $actions):string {
-		return GridView::widget([
-			'dataProvider' => new ArrayDataProvider([
-				'allModels' => $actions,
-				'sort' => [
-					'attributes' => ['type', 'attributeName']
-				]
-			]),
-			'summary' => false,
-			'formatter' => [
-				'class' => Formatter::class,
-				'nullDisplay' => ''
-			],
-			'columns' => [
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'typeName',
-					'group' => true,
-					'width' => '10%'
-				],
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'attributeName',
-					'width' => '20%'
-				],
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'attributeOldValue',
-					'width' => '25%'
-				],
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'attributeNewValue',
-					'width' => '25%'
-				]
-			]
-		]);
+		return Yii::$app->view->render('actions', ['actions' => $actions]);
+
 	}
 
 	/**
