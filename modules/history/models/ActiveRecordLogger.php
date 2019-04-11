@@ -6,12 +6,13 @@ namespace app\modules\history\models;
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use Throwable;
+use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\Module;
 use yii\db\ActiveRecord;
 
 /**
  * Class ActiveRecordLogger
- * @package app\models
  * @property integer $id
  * @property-read string $at
  * @property-read string $timestamp//alias of $at
@@ -23,6 +24,11 @@ use yii\db\ActiveRecord;
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
 	public static $logShortFormat = true;
+
+	public function init() {
+		parent::init();
+		self::$logShortFormat = ArrayHelper::getValue(Yii::$app->modules, 'history.params.logShortFormat', self::$logShortFormat);
+	}
 
 	/**
 	 * {@inheritDoc}

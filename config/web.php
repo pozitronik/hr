@@ -110,7 +110,13 @@ $config = [
 			]
 		],
 		'history' => [
-			'class' => HistoryModule::class
+			'class' => HistoryModule::class,
+			'params' => [
+				'logShortFormat' => false,
+				'classNamesMap' => [
+					
+				]
+			]
 		]
 	],
 	'components' => [
