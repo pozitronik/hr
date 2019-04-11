@@ -6,8 +6,6 @@ namespace app\modules\history\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\models\core\ActiveRecordExtended;
-use app\models\core\ActiveRecordLogger;
-use app\models\core\ActiveRecordLoggerInterface;
 use app\models\core\LCQuery;
 use app\models\core\Magic;
 use app\modules\users\models\Users;

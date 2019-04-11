@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\models\core\traits\ARExtended;
+use app\modules\history\models\ActiveRecordLogger;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
 use app\widgets\alert\AlertModel;

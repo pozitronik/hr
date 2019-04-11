@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\core;
+namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
+use app\models\core\Magic;
 use app\models\user\CurrentUser;
 use ReflectionException;
 use Throwable;
