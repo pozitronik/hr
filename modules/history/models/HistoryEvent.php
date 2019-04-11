@@ -8,6 +8,8 @@ use app\modules\users\models\Users;
 use Exception;
 use kartik\grid\DataColumn;
 use Throwable;
+use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use kartik\grid\GridView;
@@ -25,7 +27,7 @@ use yii\i18n\Formatter;
  * @property HistoryEventAction[] $actions Набор изменений внутри одного события.
  * @property null|string $eventCaption Переопределить типовой заголовок события
  *
- * @property null|string|callable $actionsFormatter
+ * @property null|string|callable|array|false $actionsFormatter
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventType;
@@ -50,6 +52,12 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 			$content = $this->actionsFormatter;
 		} elseif (is_callable($this->actionsFormatter)) {
 			$content = call_user_func($this->actionsFormatter, $this->actions);
+		} elseif (is_array($this->actionsFormatter)) {//['view', parameters]
+			$view = ArrayHelper::getValue($this->actionsFormatter, 0, new InvalidConfigException('actionsFormatter array config must contain view path as first item'));
+			$parameters = ArrayHelper::getValue($this->actionsFormatter, 1, []);
+			$parameters['actions'] = $this->actions;
+			$content = Yii::$app->view->render($view, $parameters);
+
 		} else $content = null;
 
 		return new TimelineEntry([
