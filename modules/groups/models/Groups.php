@@ -75,7 +75,7 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 	public function historyRules():array {
 		return [
 			'attributes' => [
-				'daddy' => function($attributeName, $attributeValue) {
+				'daddy' => static function($attributeName, $attributeValue) {
 					return ArrayHelper::getValue(Users::findModel($attributeValue), 'username', $attributeValue);
 				},
 				'type' => [RefGroupTypes::class => 'name'],
