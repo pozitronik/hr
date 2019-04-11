@@ -37,7 +37,7 @@ class ActiveRecordExtended extends ActiveRecord {
 	}
 
 	/**
-	 * Описание правил отображения истории моделей. todo: посмотреть, как у картика сделаны модели конфигов колонок, сделать аналогично
+	 * Описание правил отображения истории моделей.
 	 * @return array
 	 */
 	public function historyRules():array {
