@@ -13,7 +13,6 @@ use app\models\core\Magic;
 use app\modules\users\models\Users;
 use ReflectionException;
 use Throwable;
-use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\UnknownClassException;
@@ -45,11 +44,12 @@ class ModelHistory extends Model {
 
 		/** @var LCQuery $findCondition */
 		$findCondition = $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
-
-		foreach (ArrayHelper::getValue($this->modelHistoryRules, 'relations', []) as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
+		/** @var array $relationsRules */
+		$relationsRules = ArrayHelper::getValue($this->modelHistoryRules, 'relations', []);
+		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
 			$relatedModel = Magic::LoadClassByName($relatedModelClassName);
 			if (is_callable($relationRule)) {
-//todo
+				$relationRule($findCondition, $relatedModel);
 			} elseif (is_array($relationRule)) {
 				$linkKey = ArrayHelper::key($relationRule);
 				$linkValue = $relationRule[$linkKey];
@@ -57,22 +57,6 @@ class ModelHistory extends Model {
 				$findCondition->orWhere("model = '{$relatedModel->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
 			} else throw new InvalidConfigException('Relation rule must be array or callable instance!');
 		}
-
-//		if ($this->requestModel->hasMethod('historyRelations') && [] !== $modelHistoryRules = $this->requestModel->historyRelations()) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в таблицах релейшенов*/
-//			foreach ($modelHistoryRules as $modelClassName => $ruleCondition) {
-//				$modelClass = Magic::LoadClassByName($modelClassName);
-//				$link = ArrayHelper::getValue($ruleCondition, 'link', new InvalidConfigException("Link property is required in rule configuration"));//link between models attributes like ['id' => 'user_id']
-//				if (is_callable($link)) {//closure
-//					$link($findCondition, $modelClass);
-//				} else {
-//					$linkKey = ArrayHelper::key($link);
-//					$linkValue = $link[$linkKey];
-//					$modelKey = $this->requestModel->$linkKey;
-//					$findCondition->orWhere("model = '{$modelClass->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
-//				}
-//			}
-//		}
-//		Yii::debug($findCondition->createCommand()->rawSql, 'sql');
 		return $findCondition->orderBy('at')->all();
 	}
 
