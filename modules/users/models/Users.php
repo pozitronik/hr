@@ -102,7 +102,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 			'attributes' => [
 				'daddy' => [self::class => 'username'],
 				'position' => [RefUserPositions::class => 'name'],
-				'password' => false,
+				'password' => false
 			],
 			'relations' => [
 				RelUsersGroups::class => ['id' => 'user_id'],
