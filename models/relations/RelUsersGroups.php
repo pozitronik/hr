@@ -5,6 +5,7 @@ namespace app\models\relations;
 
 use app\models\core\ActiveRecordExtended;
 use app\modules\groups\models\Groups;
+use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
@@ -28,6 +29,17 @@ class RelUsersGroups extends ActiveRecordExtended {
 	 */
 	public function historyRules():array {
 		return [
+			'eventConfig' => [
+				'actionLabels' => function(int $eventType, string $default):string {//for example
+					switch ($eventType) {
+						case HistoryEventInterface::EVENT_CREATED:
+							return 'Добавление в группу';
+						case HistoryEventInterface::EVENT_DELETED:
+							return 'Удаление из группы';
+					}
+					return $default;
+				}
+			],
 			'attributes' => [
 				'group_id' => [Groups::class => 'name'],
 				'user_id' => [Users::class => 'username']

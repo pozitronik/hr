@@ -5,9 +5,15 @@ namespace app\models\relations;
 
 use app\models\core\ActiveRecordExtended;
 use app\modules\groups\models\Groups;
+use app\modules\history\models\HistoryEventAction;
+use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
+use kartik\grid\DataColumn;
+use kartik\grid\GridView;
+use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
 use app\helpers\ArrayHelper;
+use yii\i18n\Formatter;
 
 /**
  * This is the model class for table "rel_users_groups_roles".
@@ -29,22 +35,65 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	 */
 	public function historyRules():array {
 		return [
-			'attributes' => [
-				'role' => [RefUserRoles::class => 'name'],
+			'eventConfig' => [
+				'actionLabels' => [
+					HistoryEventInterface::EVENT_CREATED => 'Добавление роли',
+					HistoryEventInterface::EVENT_CHANGED => 'Изменение роли',
+					HistoryEventInterface::EVENT_DELETED => 'Удаление роли',
+				],
+				'eventsFormatter' => function(array $actions):string {
+					/** @var HistoryEventAction[] $actions */
+					return GridView::widget([
+						'dataProvider' => new ArrayDataProvider([
+							'allModels' => $actions,
+							'sort' => [
+								'attributes' => ['type', 'attributeName']
+							]
+						]),
+						'summary' => false,
+						'formatter' => [
+							'class' => Formatter::class,
+							'nullDisplay' => ''
+						],
+						'columns' => [
+							[
+								'class' => DataColumn::class,
+								'attribute' => 'typeName',
+								'group' => true,
+								'width' => '10%'
+							],
+							[
+								'class' => DataColumn::class,
+								'attribute' => 'attributeName',
+								'width' => '20%'
+							],
+							[
+								'class' => DataColumn::class,
+								'attribute' => 'attributeOldValue',
+								'width' => '25%'
+							],
+							[
+								'class' => DataColumn::class,
+								'attribute' => 'attributeNewValue',
+								'width' => '25%'
+							]
+						]
+					]);
+				}],
+			'attributes' => ['role' => [RefUserRoles::class => 'name'],
 				'user_group_id' => static function(string $attributeName, $attributeValue) {
 					if (null !== $groupId = ArrayHelper::getValue(RelUsersGroups::findModel($attributeValue), 'group_id')) {
 						return ArrayHelper::getValue(Groups::findModel($groupId), 'name', $attributeValue);
 					}
 					return $attributeValue;
-				}
-			]
-		];
+				}]];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules():array {
+	public
+	function rules():array {
 		return [
 			[['user_group_id', 'role'], 'required'],
 			[['user_group_id', 'role'], 'integer'],
@@ -55,7 +104,8 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels():array {
+	public
+	function attributeLabels():array {
 		return [
 			'user_group_id' => 'ID связки пользователь/группа',
 			'role' => 'Роль'
@@ -69,7 +119,8 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	 * @param int $user
 	 * @return bool
 	 */
-	public static function setRoleInGroup(int $role, int $group, int $user):bool {
+	public
+	static function setRoleInGroup(int $role, int $group, int $user):bool {
 		/*Связь пользователя в группе уже есть*/
 		/** @var RelUsersGroups|null $rel */
 		$rel = RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $user])->one();
@@ -85,7 +136,8 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	/**
 	 * @return ActiveQuery|RelUsersGroups[]
 	 */
-	public function getRelUsersGroups():ActiveQuery {
+	public
+	function getRelUsersGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['id' => 'user_group_id']);
 	}
 
@@ -95,7 +147,8 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	 * @param int $group
 	 * @return int[]
 	 */
-	public static function getRoleIdInGroup(int $user, int $group):array {
+	public
+	static function getRoleIdInGroup(int $user, int $group):array {
 		return ArrayHelper::getColumn(self::find()->joinWith(['relUsersGroups'])->where(['rel_users_groups.user_id' => $user, 'rel_users_groups.group_id' => $group])->select('rel_users_groups_roles.role')->all(), 'role');
 	}
 

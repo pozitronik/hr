@@ -55,15 +55,13 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	 * @throws Exception
 	 */
 	public function getActionsTable():string {
-		$provider = new ArrayDataProvider([
-			'allModels' => $this->actions,
-			'sort' => [
-				'attributes' => ['type', 'attributeName']
-			]
-		]);
-
 		return GridView::widget([
-			'dataProvider' => $provider,
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $this->actions,
+				'sort' => [
+					'attributes' => ['type', 'attributeName']
+				]
+			]),
 			'summary' => false,
 			'formatter' => [
 				'class' => Formatter::class,

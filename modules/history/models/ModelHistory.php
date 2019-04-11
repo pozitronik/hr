@@ -38,12 +38,11 @@ class ModelHistory extends Model {
 	 */
 	public function getHistory():array {
 		$this->loggerModel = $this->loggerModel??ActiveRecordLogger::class;
-		$formName = $this->requestModel->formName();
 		$modelKey = $this->requestModel->primaryKey;
 		$this->modelHistoryRules = $this->requestModel->hasMethod('historyRules')?$this->requestModel->historyRules():[];
 
 		/** @var LCQuery $findCondition */
-		$findCondition = $this->loggerModel::find()->where(['model' => $formName, 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
+		$findCondition = $this->loggerModel::find()->where(['model' => $this->requestModel->formName(), 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 		/** @var array $relationsRules */
 		$relationsRules = ArrayHelper::getValue($this->modelHistoryRules, 'relations', []);
 		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
@@ -184,16 +183,15 @@ class ModelHistory extends Model {
 			$result->eventType = HistoryEvent::EVENT_CHANGED;
 		}
 
-		if ($this->requestModel->hasMethod('historyRelations')) {
-			$modelName = Magic::ExpandClassName($logRecord->model);
-			/** @var null|string|array|callable $label */
-			$label = ArrayHelper::getValue($this->requestModel->historyRelations(), "{$modelName}.label");
-			if (is_callable($label)) {
-				$result->eventCaption = $label($result->eventType, $result->eventTypeName);
-			} elseif (is_array($label)) {
-				$result->eventCaption = ArrayHelper::getValue($label, $result->eventType, $result->eventTypeName);
-			} else $result->eventCaption = $label;
+		$logRecordedModel = Magic::LoadClassByName(Magic::ExpandClassName($logRecord->model));
+		if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionLabels")) {
+			if (is_callable($labelsConfig)) {
+				$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
+			} elseif (is_array($labelsConfig)) {
+				$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
+			} else $result->eventCaption = $labelsConfig;
 		}
+
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
 		$result->subject = Users::findModel($logRecord->user);
