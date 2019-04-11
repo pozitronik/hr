@@ -6,7 +6,6 @@ namespace app\modules\history\models;
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use Throwable;
-use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
@@ -22,10 +21,6 @@ use yii\db\ActiveRecord;
  * @property array $new_attributes
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
-
-	public function init() {
-		parent::init();
-	}
 
 	/**
 	 * {@inheritDoc}
