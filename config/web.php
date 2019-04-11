@@ -3,10 +3,15 @@ declare(strict_types = 1);
 
 /** @noinspection UsingInclusionReturnValueInspection */
 
+use app\models\relations\RelUsersAttributes;
+use app\models\relations\RelUsersGroups;
+use app\models\relations\RelUsersGroupsRoles;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
+use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
+use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\SalaryModule;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
@@ -21,6 +26,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
+use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use kartik\grid\Module as GridModule;
 use app\models\user\User;
@@ -112,9 +118,14 @@ $config = [
 		'history' => [
 			'class' => HistoryModule::class,
 			'params' => [
-				'logShortFormat' => false,
+				'logShortFormat' => true,
 				'classNamesMap' => [
-					
+					'Users' => Users::class,
+					'Groups' => Groups::class,
+					'RelUsersGroups' => RelUsersGroups::class,
+					'RelUsersPrivileges' => RelUsersPrivileges::class,
+					'RelUsersAttributes' => RelUsersAttributes::class,
+					'RelUsersGroupsRoles' => RelUsersGroupsRoles::class
 				]
 			]
 		]

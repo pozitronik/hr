@@ -4,14 +4,8 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
-use app\models\relations\RelUsersAttributes;
-use app\models\relations\RelUsersGroups;
-use app\models\relations\RelUsersGroupsRoles;
-use app\modules\groups\models\Groups;
-use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\references\models\Reference;
 use app\modules\privileges\models\UserRightInterface;
-use app\modules\users\models\Users;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -29,26 +23,6 @@ use yii\web\Controller;
  * @package app\models\core
  */
 class Magic {
-	/*очень временное и очень хуёвое решение на время протипирования*/
-	public static $classMap = [
-		'Users' => Users::class,
-		'Groups' => Groups::class,
-		'RelUsersGroups' => RelUsersGroups::class,
-		'RelUsersPrivileges' => RelUsersPrivileges::class,
-		'RelUsersAttributes' => RelUsersAttributes::class,
-		'RelUsersGroupsRoles' => RelUsersGroupsRoles::class
-	];
-
-	/**
-	 * todo
-	 * Временная фуккция, разворачивающая имена классов в полные пути (надо придумать, как строить карту имён, посмотреть, может в Yii есть обратная formName() функция)
-	 * @param string $shortClassName
-	 * @return string
-	 * @throws Throwable
-	 */
-	public static function ExpandClassName(string $shortClassName):string {
-		return ArrayHelper::getValue(self::$classMap, $shortClassName, $shortClassName);
-	}
 
 	/**
 	 * Вытаскивает неймспейс из файла, если он там есть
@@ -130,7 +104,6 @@ class Magic {
 	 * @throws UnknownClassException
 	 */
 	public static function LoadClassByName(string $className, ?string $parentClass = null):object {
-		$className = ArrayHelper::getValue(self::$classMap, $className, $className);//если имя есть в карте, подставляем значение оттуда
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
 		if ((null !== $parentClass && $class->isSubclassOf($parentClass)) || null === $parentClass) return new $className;

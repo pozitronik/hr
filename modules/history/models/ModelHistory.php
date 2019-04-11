@@ -11,6 +11,7 @@ use app\models\core\Magic;
 use app\modules\users\models\Users;
 use ReflectionException;
 use Throwable;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\UnknownClassException;
@@ -65,7 +66,7 @@ class ModelHistory extends Model {
 	 */
 	private function getEventActions(ActiveRecordLoggerInterface $record):array {
 		$diff = [];
-		$labels = (null === $modelClass = Magic::LoadClassByName($record->model))?[]:$modelClass->attributeLabels();
+		$labels = (null === $modelClass = Magic::LoadClassByName(self::ExpandClassName($record->model)))?[]:$modelClass->attributeLabels();
 
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
 			if (isset($record->new_attributes[$attributeName])) {
@@ -110,7 +111,7 @@ class ModelHistory extends Model {
 	 * @throws UnknownClassException
 	 */
 	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $substitutionClassName) {
-		$relationModel = Magic::LoadClassByName(Magic::ExpandClassName($substitutionClassName));
+		$relationModel = Magic::LoadClassByName(self::ExpandClassName($substitutionClassName));
 
 		if (null === $attributeConfig = ArrayHelper::getValue($relationModel->historyRules(), "attributes.{$attributeName}")) return $attributeValue;
 		if (false === $attributeConfig) return false;//не показывать атрибут
@@ -143,7 +144,7 @@ class ModelHistory extends Model {
 			$result->eventType = HistoryEvent::EVENT_CHANGED;
 		}
 
-		$logRecordedModel = Magic::LoadClassByName(Magic::ExpandClassName($logRecord->model));
+		$logRecordedModel = Magic::LoadClassByName(self::ExpandClassName($logRecord->model));
 		if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
 			if (is_callable($labelsConfig)) {
 				$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
@@ -175,6 +176,15 @@ class ModelHistory extends Model {
 			$result[] = $this->getHistoryEvent($record);
 		}
 		return $result;
+	}
+
+	/**
+	 * @param string $shortClassName
+	 * @return string
+	 * @throws Throwable
+	 */
+	public static function ExpandClassName(string $shortClassName):string {
+		return ArrayHelper::getValue(Yii::$app->modules, "history.params.classNamesMap.$shortClassName", $shortClassName);
 	}
 
 }

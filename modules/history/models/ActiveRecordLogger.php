@@ -8,7 +8,6 @@ use app\models\user\CurrentUser;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\Module;
 use yii\db\ActiveRecord;
 
 /**
