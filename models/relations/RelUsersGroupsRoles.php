@@ -41,45 +41,47 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 					HistoryEventInterface::EVENT_CHANGED => 'Изменение роли',
 					HistoryEventInterface::EVENT_DELETED => 'Удаление роли'
 				],
-				'actionsFormatter' => static function(array $actions):string {
-					/** @var HistoryEventAction[] $actions */
-					return GridView::widget([
-						'dataProvider' => new ArrayDataProvider([
-							'allModels' => $actions,
-							'sort' => [
-								'attributes' => ['type', 'attributeName']
-							]
-						]),
-						'summary' => false,
-						'formatter' => [
-							'class' => Formatter::class,
-							'nullDisplay' => ''
-						],
-						'columns' => [
-							[
-								'class' => DataColumn::class,
-								'attribute' => 'typeName',
-								'group' => true,
-								'width' => '10%'
-							],
-							[
-								'class' => DataColumn::class,
-								'attribute' => 'attributeName',
-								'width' => '20%'
-							],
-							[
-								'class' => DataColumn::class,
-								'attribute' => 'attributeOldValue',
-								'width' => '15%'
-							],
-							[
-								'class' => DataColumn::class,
-								'attribute' => 'attributeNewValue',
-								'width' => '25%'
-							]
-						]
-					]);
-				}],
+//				'actionsFormatter' => ['@app/modules/history/views/history/actions'],//examples
+//				'actionsFormatter' => static function(array $actions):string {//example
+//					/** @var HistoryEventAction[] $actions */
+//					return GridView::widget([
+//						'dataProvider' => new ArrayDataProvider([
+//							'allModels' => $actions,
+//							'sort' => [
+//								'attributes' => ['type', 'attributeName']
+//							]
+//						]),
+//						'summary' => false,
+//						'formatter' => [
+//							'class' => Formatter::class,
+//							'nullDisplay' => ''
+//						],
+//						'columns' => [
+//							[
+//								'class' => DataColumn::class,
+//								'attribute' => 'typeName',
+//								'group' => true,
+//								'width' => '10%'
+//							],
+//							[
+//								'class' => DataColumn::class,
+//								'attribute' => 'attributeName',
+//								'width' => '20%'
+//							],
+//							[
+//								'class' => DataColumn::class,
+//								'attribute' => 'attributeOldValue',
+//								'width' => '15%'
+//							],
+//							[
+//								'class' => DataColumn::class,
+//								'attribute' => 'attributeNewValue',
+//								'width' => '25%'
+//							]
+//						]
+//					]);
+//				}
+			],
 			'attributes' => ['role' => [RefUserRoles::class => 'name'],
 				'user_group_id' => static function(string $attributeName, $attributeValue) {
 					if (null !== $groupId = ArrayHelper::getValue(RelUsersGroups::findModel($attributeValue), 'group_id')) {
