@@ -48,4 +48,4 @@ use yii\i18n\Formatter;
 			'width' => '25%'
 		]
 	]
-]); ?>
+]) ?>

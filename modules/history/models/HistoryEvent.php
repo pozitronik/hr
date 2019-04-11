@@ -39,7 +39,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	/**
 	 * Converts log event to timeline entry
 	 * @return TimelineEntry
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function asTimelineEntry():TimelineEntry {
 		if (null === $this->actionsFormatter) {

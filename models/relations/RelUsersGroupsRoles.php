@@ -5,15 +5,10 @@ namespace app\models\relations;
 
 use app\models\core\ActiveRecordExtended;
 use app\modules\groups\models\Groups;
-use app\modules\history\models\HistoryEventAction;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
-use kartik\grid\DataColumn;
-use kartik\grid\GridView;
-use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
 use app\helpers\ArrayHelper;
-use yii\i18n\Formatter;
 
 /**
  * This is the model class for table "rel_users_groups_roles".
