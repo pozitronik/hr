@@ -41,7 +41,7 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 					HistoryEventInterface::EVENT_CHANGED => 'Изменение роли',
 					HistoryEventInterface::EVENT_DELETED => 'Удаление роли',
 				],
-				'eventsFormatter' => function(array $actions):string {
+				'actionsFormatter' => function(array $actions):string {
 					/** @var HistoryEventAction[] $actions */
 					return GridView::widget([
 						'dataProvider' => new ArrayDataProvider([
@@ -70,7 +70,7 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 							[
 								'class' => DataColumn::class,
 								'attribute' => 'attributeOldValue',
-								'width' => '25%'
+								'width' => '15%'
 							],
 							[
 								'class' => DataColumn::class,

@@ -49,7 +49,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 		} elseif (is_string($this->actionsFormatter)) {
 			$content = $this->actionsFormatter;
 		} elseif (is_callable($this->actionsFormatter)) {
-			$content = $this->actionsFormatter($this->actions);
+			$content = call_user_func($this->actionsFormatter, $this->actions);
 		} else $content = null;
 
 		return new TimelineEntry([

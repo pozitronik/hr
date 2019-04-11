@@ -192,6 +192,8 @@ class ModelHistory extends Model {
 			} else $result->eventCaption = $labelsConfig;
 		}
 
+		$result->actionsFormatter = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionsFormatter");
+
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
 		$result->subject = Users::findModel($logRecord->user);
