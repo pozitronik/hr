@@ -131,42 +131,6 @@ class ModelHistory extends Model {
 	}
 
 	/**
-	 * @param string $attributeName
-	 * @param mixed $attributeValue
-	 * @param string $relationModelName
-	 * @return mixed
-	 * @throws InvalidConfigException
-	 * @throws Throwable
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
-	 */
-	private function SubstituteAttributeValueOld(string $attributeName, $attributeValue, string $relationModelName) {
-		$relationModelName = Magic::ExpandClassName($relationModelName);
-		if ($this->requestModel->hasMethod('historyRelations') && ([] !== $modelHistoryRules = $this->requestModel->historyRelations()) && (null !== $substitutionRules = ArrayHelper::getValue($modelHistoryRules, "{$relationModelName}.substitutions"))) {//у класса задано описание подстановки между таблицами
-			/** @var array $substitutionRules */
-			foreach ($substitutionRules as $substitutionModelName => $substitutionRule) {
-				$substituteCondition = ArrayHelper::getValue($substitutionRule, 'substitute');//substitution rule like ['user_id' => 'name'] (replace user_id in relational model by name from substitution model)
-				if (null !== $substitutionAttributeName = ArrayHelper::getValue($substituteCondition, $attributeName)) {//задано правило подстановки
-					$substitutionModelClass = Magic::LoadClassByName($substitutionModelName);
-					$link = ArrayHelper::getValue($substitutionRule, 'link', new InvalidConfigException("'Link property is required in rule configuration'"));//link between models attributes like ['id' => 'group_id']
-					if (is_callable($link)) {//closure configured
-						$loadedClass = Magic::LoadClassByName($relationModelName);
-						$loadedModel = $loadedClass::find()->where([$attributeName => $attributeValue])->one();
-						$returnModel = $link($loadedModel, $substitutionModelClass);
-						if (null === $returnModel) return $attributeValue;//Подстановку не удалось сделать, скорее всего записи в таблице удалены, покажем хоть что-то
-						/*Варианты решения: 1) искать по истории последнее событие с удалённым объектом и раскручивать цепочку 2) не удалять, добавив флаг для консистентности*/
-					} else {
-						$linkKey = ArrayHelper::key($link);
-						$returnModel = $substitutionModelClass::find()->where([$linkKey => $attributeValue])->one();
-					}
-					return (null === $returnModel)?null:$returnModel->$substitutionAttributeName;
-				}
-			}
-		}
-		return $attributeValue;
-	}
-
-	/**
 	 * Переводит запись из лога в событие истории
 	 * @param ActiveRecordLoggerInterface $logRecord
 	 * @return HistoryEventInterface
