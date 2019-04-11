@@ -4,13 +4,9 @@ declare(strict_types = 1);
 namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
-use app\models\core\Magic;
 use app\models\user\CurrentUser;
-use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\base\UnknownClassException;
 use yii\db\ActiveRecord;
 
 /**
@@ -24,11 +20,9 @@ use yii\db\ActiveRecord;
  * @property int $model_key
  * @property array $old_attributes
  * @property array $new_attributes
- *
- * @property-read null|Model $modelClass
- *
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
+	public static $logShortFormat = true;
 
 	/**
 	 * {@inheritDoc}
@@ -59,7 +53,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		if (ArrayHelper::getValue($model, 'loggingEnabled', false)) {
 			if (([] === $diff = $model->identifyChangedAttributes()) && $ignoreUnchanged) return true;
 			$changedAttributes = array_intersect_key($model->oldAttributes, $diff);
-			self::push($model->formName(), $model->primaryKey, $changedAttributes, $diff);
+			self::push((self::$logShortFormat?$model->formName():get_class($model)), $model->primaryKey, $changedAttributes, $diff);
 		}
 		return true;
 	}
@@ -69,7 +63,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws InvalidConfigException
 	 */
 	public static function logModel(ActiveRecord $model):void {
-		self::push($model->formName(), $model->primaryKey, [], $model->attributes);
+		self::push((self::$logShortFormat?$model->formName():get_class($model)), $model->primaryKey, [], $model->attributes);
 	}
 
 	/**
@@ -78,7 +72,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws InvalidConfigException
 	 */
 	public static function logDelete(ActiveRecord $model):void {
-		self::push($model->formName(), $model->primaryKey, $model->attributes, []);
+		self::push((self::$logShortFormat?$model->formName():get_class($model)), $model->primaryKey, $model->attributes, []);
 	}
 
 	/**
@@ -87,7 +81,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @param array $oldAttributes
 	 * @param array $newAttributes
 	 */
-	public static function push(?string $modelName, $pKey, array $oldAttributes, array $newAttributes):void {
+	private static function push(?string $modelName, $pKey, array $oldAttributes, array $newAttributes):void {
 		$pKey = is_numeric($pKey)?$pKey:null;//$pKey может быть массивом
 
 		$log = new self([
@@ -105,16 +99,6 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 */
 	public function getTimestamp():string {
 		return $this->at;
-	}
-
-	/**
-	 * @return null|object
-	 * @throws Throwable
-	 * @throws ReflectionException
-	 * @throws UnknownClassException
-	 */
-	public function getModelClass():?object {
-		return Magic::LoadClassByName($this->model);
 	}
 
 }

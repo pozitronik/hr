@@ -65,7 +65,7 @@ class ModelHistory extends Model {
 	 */
 	private function getEventActions(ActiveRecordLoggerInterface $record):array {
 		$diff = [];
-		$labels = (null === $record->modelClass)?[]:$record->modelClass->attributeLabels();
+		$labels = (null === $modelClass = Magic::LoadClassByName($record->model))?[]:$modelClass->attributeLabels();
 
 		foreach ($record->old_attributes as $attributeName => $attributeValue) {
 			if (isset($record->new_attributes[$attributeName])) {
