@@ -12,7 +12,6 @@ use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
-use app\modules\history\models\HistoryEvent;
 use app\modules\salary\models\traits\UsersSalaryTrait;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
@@ -29,6 +28,7 @@ use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use Throwable;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "sys_users".
@@ -107,46 +107,12 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 				RelUsersGroups::class => ['id' => 'user_id'],
 				RelUsersPrivileges::class => ['id' => 'user_id'],
 				RelUsersAttributes::class => ['id' => 'user_id'],
-//				RelUsersGroupsRoles::class => function
-			]
-		];
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function historyRelations():array {
-		return [];
-		return [
-			RelUsersGroupsRoles::class => [
-				/*label может быть строкой (применяется ко всем типам записей), массивом в формате HistoryEventInterface::EVENT_TYPE_NAMES, замыканием с параметрами (int $eventType, string $default):string, или же вообще может быть игнорировано */
-				'label' => [
-					HistoryEvent::EVENT_CREATED => 'Пользователю добавлена роль',
-					HistoryEvent::EVENT_DELETED => 'Пользователь лишён роли'
-				],
-				/*параметр может быть задан замыканием, первый параметр - текущее условие (которое модифицируется и возвращается), второй - класс, по логам которого ищем (собственно, это задающая модель, но нам не лом передавать инциализированный объект)*/
-				'link' => function(ActiveQuery $condition, ActiveRecordExtended $model):ActiveQuery {
-					$userGroups = $this->relUsersGroups;
-					$ids = implode(',', ArrayHelper::getColumn($userGroups, 'id'));
+				RelUsersGroupsRoles::class => function(ActiveQuery $condition, ActiveRecord $model):ActiveQuery {
+					$ids = implode(',', ArrayHelper::getColumn($this->relUsersGroups, 'id'));
 					if (!empty($ids)) $condition->orWhere("model = '{$model->formName()}' and (new_attributes->'$.user_group_id' in ({$ids}) or old_attributes->'$.user_group_id' in ({$ids}))");
 					return $condition;
-				},
-				'substitutions' => [
-					RefUserRoles::class => [
-						'link' => ['id' => 'role'],
-						'substitute' => ['role' => 'name']
-					],
-					Groups::class => [
-						/*параметр может быть задан замыканием, первый параметр - модель, в которую идёт подстановка, второй - класс, из которой идёт подстановка. Вернуть нужно модель класса, из которого будет идти подстановка*/
-						'link' => static function(?ActiveRecordExtended $relatedModel, ActiveRecordExtended $substitutionModel):?ActiveRecordExtended {
-							if (null === $relatedModel) return null;
-							/** @var RelUsersGroupsRoles $relatedModel */
-							return Groups::find()->where(['id' => RelUsersGroups::find()->select(['group_id'])->where(['id' => $relatedModel->user_group_id])])->one();
-						},
-						'substitute' => ['user_group_id' => 'name']
-					]
-				]
-			],
+				}
+			]
 		];
 	}
 
