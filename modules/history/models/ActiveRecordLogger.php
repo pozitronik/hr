@@ -22,11 +22,9 @@ use yii\db\ActiveRecord;
  * @property array $new_attributes
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
-	public static $logShortFormat = true;
 
 	public function init() {
 		parent::init();
-		self::$logShortFormat = ArrayHelper::getValue(Yii::$app->modules, 'history.params.logShortFormat', self::$logShortFormat);
 	}
 
 	/**
@@ -58,7 +56,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		if (ArrayHelper::getValue($model, 'loggingEnabled', false)) {
 			if (([] === $diff = $model->identifyChangedAttributes()) && $ignoreUnchanged) return true;
 			$changedAttributes = array_intersect_key($model->oldAttributes, $diff);
-			self::push((self::$logShortFormat?$model->formName():get_class($model)), $model->primaryKey, $changedAttributes, $diff);
+			self::push($model->formName(), $model->primaryKey, $changedAttributes, $diff);
 		}
 		return true;
 	}
@@ -68,7 +66,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws InvalidConfigException
 	 */
 	public static function logModel(ActiveRecord $model):void {
-		self::push((self::$logShortFormat?$model->formName():get_class($model)), $model->primaryKey, [], $model->attributes);
+		self::push($model->formName(), $model->primaryKey, [], $model->attributes);
 	}
 
 	/**
@@ -77,7 +75,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws InvalidConfigException
 	 */
 	public static function logDelete(ActiveRecord $model):void {
-		self::push((self::$logShortFormat?$model->formName():get_class($model)), $model->primaryKey, $model->attributes, []);
+		self::push($model->formName(), $model->primaryKey, $model->attributes, []);
 	}
 
 	/**

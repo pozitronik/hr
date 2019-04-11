@@ -118,7 +118,6 @@ $config = [
 		'history' => [
 			'class' => HistoryModule::class,
 			'params' => [
-				'logShortFormat' => true,
 				'classNamesMap' => [
 					'Users' => Users::class,
 					'Groups' => Groups::class,
