@@ -146,7 +146,7 @@ class ModelHistory extends Model {
 		}
 
 		$logRecordedModel = Magic::LoadClassByName(Magic::ExpandClassName($logRecord->model));
-		if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionLabels")) {
+		if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
 			if (is_callable($labelsConfig)) {
 				$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
 			} elseif (is_array($labelsConfig)) {

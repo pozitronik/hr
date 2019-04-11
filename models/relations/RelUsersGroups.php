@@ -30,7 +30,7 @@ class RelUsersGroups extends ActiveRecordExtended {
 	public function historyRules():array {
 		return [
 			'eventConfig' => [
-				'actionLabels' => static function(int $eventType, string $default):string {//for example
+				'eventLabels' => static function(int $eventType, string $default):string {//for example
 					switch ($eventType) {
 						case HistoryEventInterface::EVENT_CREATED:
 							return 'Добавление в группу';

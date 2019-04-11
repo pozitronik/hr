@@ -36,7 +36,7 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 	public function historyRules():array {
 		return [
 			'eventConfig' => [
-				'actionLabels' => [
+				'eventLabels' => [
 					HistoryEventInterface::EVENT_CREATED => 'Добавление роли',
 					HistoryEventInterface::EVENT_CHANGED => 'Изменение роли',
 					HistoryEventInterface::EVENT_DELETED => 'Удаление роли'
