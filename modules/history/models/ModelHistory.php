@@ -115,6 +115,7 @@ class ModelHistory extends Model {
 		$relationModel = Magic::LoadClassByName(Magic::ExpandClassName($substitutionClassName));
 
 		if (null === $attributeConfig = ArrayHelper::getValue($relationModel->historyRules(), "attributes.{$attributeName}")) return $attributeValue;
+		if (false === $attributeConfig) return false;//не показывать атрибут
 		if (is_callable($attributeConfig)) {
 			return $attributeConfig($attributeName, $attributeValue);
 		}
@@ -124,10 +125,7 @@ class ModelHistory extends Model {
 			$fromModel = Magic::LoadClassByName($fromModelName);
 			$modelValueAttribute = $attributeConfig[$fromModelName];
 			return ArrayHelper::getValue($fromModel::findModel($attributeValue), $modelValueAttribute, $attributeValue);
-
 		} else return $attributeConfig;//Можем вернуть прямо заданное значение
-		//todo: добавить параметр конфига для скрытия атрибутов из истории
-
 	}
 
 	/**
