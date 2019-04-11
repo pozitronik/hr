@@ -39,9 +39,9 @@ class RelUsersGroupsRoles extends ActiveRecordExtended {
 				'actionLabels' => [
 					HistoryEventInterface::EVENT_CREATED => 'Добавление роли',
 					HistoryEventInterface::EVENT_CHANGED => 'Изменение роли',
-					HistoryEventInterface::EVENT_DELETED => 'Удаление роли',
+					HistoryEventInterface::EVENT_DELETED => 'Удаление роли'
 				],
-				'actionsFormatter' => function(array $actions):string {
+				'actionsFormatter' => static function(array $actions):string {
 					/** @var HistoryEventAction[] $actions */
 					return GridView::widget([
 						'dataProvider' => new ArrayDataProvider([
