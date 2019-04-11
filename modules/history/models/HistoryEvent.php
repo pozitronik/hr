@@ -16,13 +16,13 @@ use yii\i18n\Formatter;
 /**
  * Class HistoryEvent
  *
- * @property int $eventType Что сделал
- * @property null|string $eventTypeName Что сделал
+ * @property int $eventType Что произошло. Добавление/изменение/удаление/свой тип
+ * @property null|string $eventTypeName Строковое название события, null - по умолчанию
  * @property string|null $eventIcon Иконка?
  * @property string $eventTime Во сколько сделал
- * @property string $objectName Где сделал
+ * @property string $objectName Где сделал (имя класса)
  * @property null|Users $subject Кто сделал
- * @property HistoryEventAction[] $actions Что произошло
+ * @property HistoryEventAction[] $actions Набор изменений внутри одного события.
  * @property null|string $eventCaption Переопределить типовой заголовок события
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
