@@ -24,6 +24,8 @@ use yii\i18n\Formatter;
  * @property null|Users $subject Кто сделал
  * @property HistoryEventAction[] $actions Набор изменений внутри одного события.
  * @property null|string $eventCaption Переопределить типовой заголовок события
+ *
+ * @property null|string|callable $actionsFormatter
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventType;
@@ -34,6 +36,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	public $subject;
 	public $subjectId;
 	public $actions;
+	public $actionsFormatter;
 
 	/**
 	 * Converts log event to timeline entry
@@ -41,23 +44,33 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	 * @throws Exception
 	 */
 	public function asTimelineEntry():TimelineEntry {
+		if (null === $this->actionsFormatter) {
+			$content = self::ActionsFormatterDefault($this->actions);//default formatter
+		} elseif (is_string($this->actionsFormatter)) {
+			$content = $this->actionsFormatter;
+		} elseif (is_callable($this->actionsFormatter)) {
+			$content = $this->actionsFormatter($this->actions);
+		} else $content = null;
+
 		return new TimelineEntry([
 			'icon' => $this->eventIcon,
 			'time' => $this->eventTime,
 			'caption' => $this->eventCaption??$this->eventTypeName,
 			'user' => $this->subject,
-			'content' => $this->getActionsTable()
+			'content' => $content
 		]);
 	}
 
 	/**
+	 * Форматирование массива событий по умолчанию
+	 * @param HistoryEventAction[] $actions
 	 * @return string
 	 * @throws Exception
 	 */
-	public function getActionsTable():string {
+	public static function ActionsFormatterDefault(array $actions):string {
 		return GridView::widget([
 			'dataProvider' => new ArrayDataProvider([
-				'allModels' => $this->actions,
+				'allModels' => $actions,
 				'sort' => [
 					'attributes' => ['type', 'attributeName']
 				]
