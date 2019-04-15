@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\admin_panel;
 
 use app\helpers\ArrayHelper;
+use app\models\core\CoreController;
 use app\models\core\WigetableController;
 use ReflectionException;
 use Throwable;
@@ -50,13 +51,14 @@ class AdminPanelWidget extends Widget {
 			$controllersList = [[]];
 			/** @noinspection ForeachSourceInspection */
 			foreach ($this->controllers_directory as $directory) {
-				$controllersList[] = WigetableController::GetControllersList($directory);
+				$controllersList[] = CoreController::GetControllersList($directory, null, [WigetableController::class]);
 			}
 			$controllers = array_merge(...$controllersList);
 
 		} else {
-			$controllers = WigetableController::GetControllersList($this->controllers_directory);
+			$controllers = CoreController::GetControllersList($this->controllers_directory, null, [WigetableController::class]);
 		}
+
 		ArrayHelper::multisort($controllers, ['orderWeight']);
 		return $this->render('admin_panel', [
 			'controllers' => $controllers,
