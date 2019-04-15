@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use app\helpers\ArrayHelper;
 use app\models\core\Magic;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
@@ -32,7 +33,9 @@ class UserAccess extends Model {
 		if (null === $user = CurrentUser::User()) return [];
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
+		$defaultAllow = ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
 		if ($user->is('sysadmin')) $defaultAllow = true;
+
 		$actions = Magic::GetControllerActions($controller);
 
 		foreach ($actions as $action) {//Пытаемся подобрать правила для всех экшенов в контроллере
@@ -81,7 +84,7 @@ class UserAccess extends Model {
 			}
 
 		}
-		return $defaultAllow;
+		return ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
 	}
 
 	/**
@@ -90,7 +93,7 @@ class UserAccess extends Model {
 	public static function GetGroupsScope():ActiveQuery {
 //		$query =;
 //		Example::SetGroupsScope($query);
-		return  Groups::find()->active();
+		return Groups::find()->active();
 	}
 
 	/**
@@ -109,7 +112,7 @@ class UserAccess extends Model {
 			}
 
 		}
-		return $defaultAllow;
+		return ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
 	}
 
 }
