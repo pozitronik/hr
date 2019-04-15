@@ -126,7 +126,8 @@ $config = [
 					'RelUsersPrivileges' => RelUsersPrivileges::class,
 					'RelUsersAttributes' => RelUsersAttributes::class,
 					'RelUsersGroupsRoles' => RelUsersGroupsRoles::class,
-					'SalaryFork' => SalaryFork::class
+					'SalaryFork' => SalaryFork::class,
+					'RefAttributesTypes' => RefAttributesTypes::class
 				]
 			]
 		]
