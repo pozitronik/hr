@@ -8,13 +8,11 @@ use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\CoreController;
 use app\models\core\StrictInterface;
-use app\models\core\WigetableController;
 use app\widgets\alert\AlertModel;
 use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\base\UnknownClassException;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 
@@ -66,11 +64,10 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 * @throws InvalidConfigException
 	 * @throws ReflectionException
 	 * @throws Throwable
-	 * @throws UnknownClassException
 	 */
 	public function loadActionsMap(array $fromControllersPaths):void {
 		foreach ($fromControllersPaths as $moduleId => $controllerPath) {
-			$controllers = WigetableController::GetControllersList($controllerPath, $moduleId);
+			$controllers = CoreController::GetControllersList($controllerPath, $moduleId, [self::class]);
 			foreach ($controllers as $controller) {
 				$actions = CoreController::GetControllerActions($controller);
 				foreach ($actions as $action) {
