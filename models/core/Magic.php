@@ -66,19 +66,6 @@ class Magic {
 	}
 
 	/**
-	 * Загружает динамически класс права пользователя по его пути
-	 * @param string $fileName
-	 * @return UserRightInterface|null|ReflectionClass
-	 * @throws ReflectionException
-	 * @throws Throwable
-	 * @throws UnknownClassException
-	 */
-	public static function GetUserRightModel(string $fileName):?object {
-		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
-		return self::LoadClassByName($className, UserRightInterface::class);
-	}
-
-	/**
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
 	 * @param string|null $parentClass Опциональный фильтр родительского класса
