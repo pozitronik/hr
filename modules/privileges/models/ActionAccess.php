@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use app\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\WigetableController;
-use ReflectionException;
+use app\models\core\CoreController;
+use app\models\core\traits\ModelExtended;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\base\UnknownClassException;
 
 /**
  * Class ActionMap
@@ -20,12 +20,13 @@ use yii\base\UnknownClassException;
  * @property string $moduleId
  * @property null|bool $state
  *
- * @property-read WigetableController $controller
+ * @property-read CoreController $controller
  * @property-read string $moduleDescription
  * @property-read string $controllerDescription
  * @property-read string $actionDescription
  */
 class ActionAccess extends Model {
+	use ModelExtended;
 	private $_actionName;
 	private $_controllerId;
 	private $_moduleId;
@@ -119,7 +120,7 @@ class ActionAccess extends Model {
 	 * @return string
 	 */
 	public function getControllerDescription():string {
-		return false !== $this->controller->menuCaption?$this->controller->menuCaption:$this->controllerId;
+		return (string)$this->getPropertyValue('menuCaption', $this->controllerId);
 	}
 
 	/**
@@ -130,14 +131,12 @@ class ActionAccess extends Model {
 	}
 
 	/**
-	 * @return WigetableController
-	 * @throws ReflectionException
-	 * @throws Throwable
+	 * @return CoreController
 	 * @throws InvalidConfigException
-	 * @throws UnknownClassException
+	 * @throws Throwable
 	 */
-	public function getController():WigetableController {
-		return WigetableController::GetControllerByControllerId($this->controllerId, $this->moduleId);
+	public function getController():CoreController {
+		return CoreController::GetControllerByControllerId($this->controllerId, $this->moduleId);
 	}
 
 }
