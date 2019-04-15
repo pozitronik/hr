@@ -49,16 +49,16 @@ class ReflectionHelper {
 	/**
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
-	 * @param string|null $parentClass Опциональный фильтр родительского класса
+	 * @param string|null $parentClassFilter Опциональный фильтр родительского класса
 	 * @return ReflectionClass|object
 	 * @throws InvalidConfigException
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassByName(string $className, ?string $parentClass = null):object {
+	public static function LoadClassByName(string $className, ?string $parentClassFilter = null):object {
 		$class = self::New($className);
-		if (null === $parentClass || (null !== $parentClass && $class->isSubclassOf($parentClass))) {
+		if (null === $parentClassFilter || (null !== $parentClassFilter && $class->isSubclassOf($parentClassFilter))) {
 			return new $className;
 		}
 		throw new InvalidConfigException("Class $className not found in application scope!");
@@ -67,14 +67,14 @@ class ReflectionHelper {
 	/**
 	 * Загружает класс из файла (при условии одного класса в файле и совпадения имени файла с именем класса)
 	 * @param string $fileName
-	 * @param string|null $parentClass Опциональный фильтр родительского класса
+	 * @param string|null $parentClassFilter Опциональный фильтр родительского класса
 	 * @return ReflectionClass
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassFromFile(string $fileName, ?string $parentClass = null):object {
-		return self::LoadClassByName(self::GetClassNameFromFile($fileName), $parentClass);
+	public static function LoadClassFromFile(string $fileName, ?string $parentClassFilter = null):object {
+		return self::LoadClassByName(self::GetClassNameFromFile($fileName), $parentClassFilter);
 	}
 
 	/**
