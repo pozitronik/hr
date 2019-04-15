@@ -87,6 +87,19 @@ class ReflectionHelper {
 	}
 
 	/**
+	 * Проверяет, является ли класс потомков одного из перечисленных классов
+	 * @param ReflectionClass $class проверяемый класс
+	 * @param array $subclassesList список родительских классов для проверки
+	 * @return bool
+	 */
+	public static function IsInSubclassOf(ReflectionClass $class, array $subclassesList):bool {
+		foreach ($subclassesList as $subclass) {
+			if ($class->isSubclassOf($subclass)) return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Fast class name shortener
 	 * app\modules\salary\models\references\RefGrades => RefGrades
 	 * @param string $className
