@@ -3,7 +3,8 @@ declare(strict_types = 1);
 
 namespace app\widgets\controller;
 
-use app\models\core\Magic;
+use app\helpers\ArrayHelper;
+use app\models\core\helpers\ReflectionHelper;
 use app\models\core\WigetableController;
 use ReflectionException;
 use yii\base\Widget;
@@ -39,11 +40,12 @@ class ControllerWidget extends Widget {
 	 */
 	public function run():string {
 		$action = ["/{$this->model->defaultRoute}/{$this->model->defaultAction}"];
-		$caption = Magic::hasProperty($this->model, 'menuCaption')?$this->model->menuCaption:$this->model->id;
+		$caption = ArrayHelper::getValue($this->model, 'menuCaption', $this->model->id);
+		$iconStyle = (null === $icon = ArrayHelper::getValue($this->model, 'menuIcon'))?'':"style = 'background-image: url({$icon});'";
 		switch ($this->mode) {
 			case self::MODE_PANEL:
 				return $this->render('controller_panel', [
-					'style' => Magic::hasProperty($this->model, 'menuIcon')?"style = 'background-image: url({$this->model->menuIcon});'":'',
+					'style' => $iconStyle,
 					'action' => $action,
 					'caption' => $caption
 				]);
