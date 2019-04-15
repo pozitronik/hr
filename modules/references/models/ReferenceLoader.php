@@ -40,7 +40,7 @@ class ReferenceLoader extends Model {
 			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseReferencesDir), RecursiveIteratorIterator::SELF_FIRST);
 			/** @var RecursiveDirectoryIterator $file */
 			foreach ($files as $file) {
-				if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::GetReferenceModel($file->getRealPath())) {
+				if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::LoadClassFromFilename($file->getRealPath(), Reference::class)) {
 					$baseReferences[$model->formName()] = $model;
 				}
 			}
