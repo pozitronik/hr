@@ -27,6 +27,11 @@ class SalaryForkMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'menu' => true,
+				'label' => Icons::history().'История изменений',
+				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
+			],
+			[
+				'menu' => true,
 				'label' => Icons::delete().'Удаление',
 				'url' => ['delete', 'id' => $this->model->id],
 				'linkOptions' => [

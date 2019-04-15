@@ -13,6 +13,7 @@ use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\salary\models\references\RefGrades;
+use app\modules\salary\models\SalaryFork;
 use app\modules\salary\SalaryModule;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefLocations;
@@ -124,7 +125,8 @@ $config = [
 					'RelUsersGroups' => RelUsersGroups::class,
 					'RelUsersPrivileges' => RelUsersPrivileges::class,
 					'RelUsersAttributes' => RelUsersAttributes::class,
-					'RelUsersGroupsRoles' => RelUsersGroupsRoles::class
+					'RelUsersGroupsRoles' => RelUsersGroupsRoles::class,
+					'SalaryFork' => SalaryFork::class
 				]
 			]
 		]
