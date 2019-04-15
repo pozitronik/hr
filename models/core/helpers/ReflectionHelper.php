@@ -104,11 +104,11 @@ class ReflectionHelper {
 	 * @param string $className
 	 * @return string
 	 * @throws ReflectionException
-	 *
+	 * @throws UnknownClassException
 	 * todo: разобраться с пераметрами: строка или объект?
 	 */
 	public static function GetClassShortName(string $className):string {
-		return $class = self::New($className)->getShortName();
+		return self::New($className)->getShortName();
 	}
 
 	/**
