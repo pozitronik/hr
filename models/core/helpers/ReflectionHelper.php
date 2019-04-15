@@ -49,31 +49,29 @@ class ReflectionHelper {
 	/**
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
-	 * @param string|null $parentClassFilter Опциональный фильтр родительского класса
+	 * @param null|string[] $parentClassFilter Опциональный фильтр родительского класса
 	 * @return ReflectionClass|object
 	 * @throws InvalidConfigException
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassByName(string $className, ?string $parentClassFilter = null):object {
+	public static function LoadClassByName(string $className, ?array $parentClassFilter = null):object {
 		$class = self::New($className);
-		if (null === $parentClassFilter || (null !== $parentClassFilter && $class->isSubclassOf($parentClassFilter))) {
-			return new $className;
-		}
+		if (self::IsInSubclassOf($class, $parentClassFilter)) return new $className;
 		throw new InvalidConfigException("Class $className not found in application scope!");
 	}
 
 	/**
 	 * Загружает класс из файла (при условии одного класса в файле и совпадения имени файла с именем класса)
 	 * @param string $fileName
-	 * @param string|null $parentClassFilter Опциональный фильтр родительского класса
+	 * @param string[]|null $parentClassFilter Опциональный фильтр родительского класса
 	 * @return ReflectionClass
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassFromFile(string $fileName, ?string $parentClassFilter = null):object {
+	public static function LoadClassFromFile(string $fileName, ?array $parentClassFilter = null):object {
 		return self::LoadClassByName(self::GetClassNameFromFile($fileName), $parentClassFilter);
 	}
 
@@ -89,10 +87,11 @@ class ReflectionHelper {
 	/**
 	 * Проверяет, является ли класс потомков одного из перечисленных классов
 	 * @param ReflectionClass $class проверяемый класс
-	 * @param array $subclassesList список родительских классов для проверки
+	 * @param null|string[] $subclassesList список родительских классов для проверки (null - не проверять)
 	 * @return bool
 	 */
-	public static function IsInSubclassOf(ReflectionClass $class, array $subclassesList):bool {
+	public static function IsInSubclassOf(ReflectionClass $class, ?array $subclassesList = null):bool {
+		if (null === $subclassesList) return true;
 		foreach ($subclassesList as $subclass) {
 			if ($class->isSubclassOf($subclass)) return true;
 		}
