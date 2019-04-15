@@ -5,7 +5,6 @@ namespace app\models\core;
 
 use app\helpers\Path;
 use app\models\core\core_module\PluginsSupport;
-use app\modules\privileges\models\UserAccess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -14,11 +13,6 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
-use yii\filters\AccessControl;
-use yii\filters\ContentNegotiator;
-use yii\web\Controller;
-use yii\web\ErrorAction;
-use yii\web\Response;
 
 /**
  * Class WigetableController
@@ -30,40 +24,9 @@ use yii\web\Response;
  * @property-read integer $orderWeight
  * @property-read string $defaultRoute
  */
-class WigetableController extends Controller {
+class WigetableController extends CoreController {
 	public $menuDisabled = false;//отключает пункт меню
 	public $orderWeight = 0;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function behaviors():array {
-		return [
-			[
-				'class' => ContentNegotiator::class,
-				'formats' => [
-					'application/json' => Response::FORMAT_JSON,
-					'application/xml' => Response::FORMAT_XML,
-					'text/html' => Response::FORMAT_HTML
-				]
-			],
-			'access' => [
-				'class' => AccessControl::class,
-				'rules' => UserAccess::getUserAccessRules($this)
-			]
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function actions():array {
-		return [
-			'error' => [
-				'class' => ErrorAction::class
-			]
-		];
-	}
 
 	/**
 	 * Возвращает путь к иконке контроллера
@@ -103,9 +66,9 @@ class WigetableController extends Controller {
 	 * @throws UnknownClassException
 	 */
 	public static function GetController(string $fileName, ?string $moduleId):?object {
-		$className = Magic::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 		if (!class_exists($className)) Yii::autoload($className);
-		$class = new ReflectionClass($className);
+		$class = new ReflectionClass($className);//todo: find all Reflections => move to helper
 		if ($class->isSubclassOf(__CLASS__)) {
 			if (null === $moduleId) {
 				$module = Yii::$app;
@@ -165,4 +128,5 @@ class WigetableController extends Controller {
 	public function getDefaultRoute():string {
 		return $this->route;
 	}
+
 }
