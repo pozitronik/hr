@@ -3,11 +3,10 @@ declare(strict_types = 1);
 
 namespace app\models\core\ajax;
 
-use app\models\core\Magic;
+use app\models\core\CoreController;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
-use yii\web\Controller;
 use yii\web\Response;
 
 /**
@@ -17,7 +16,7 @@ use yii\web\Response;
  *
  * @property AjaxAnswer $answer
  */
-class BaseAjaxController extends Controller {
+class BaseAjaxController extends CoreController {
 	private $_answer;
 
 	public function init():void {
@@ -29,10 +28,10 @@ class BaseAjaxController extends Controller {
 	 * {@inheritDoc}
 	 */
 	public function behaviors():array {
-		$controllerActions = Magic::GetControllerActions($this);
+		$controllerActions = self::GetControllerActions($this);
 		$actions = [];
 		foreach ($controllerActions as $controllerAction) {
-			$actions[] = Magic::GetActionRequestName($controllerAction);
+			$actions[] = self::GetActionRequestName($controllerAction);
 		}
 		return [
 			[
