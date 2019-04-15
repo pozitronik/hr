@@ -6,6 +6,7 @@ namespace app\modules\salary\widgets\navigation_menu;
 use app\helpers\Icons;
 use app\modules\salary\models\SalaryFork;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use yii\base\InvalidConfigException;
 
 /**
  * @property SalaryFork $model
@@ -15,6 +16,7 @@ class SalaryForkMenuWidget extends BaseNavigationMenuWidget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function run():string {
 		if ($this->model->isNewRecord) return '';
