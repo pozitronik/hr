@@ -9,6 +9,7 @@ use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
 use ReflectionException;
 use yii\base\InvalidConfigException;
+use yii\base\UnknownClassException;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 
@@ -38,6 +39,7 @@ class ReferenceSelectWidget extends Select2 {
 	 * @return string
 	 * @throws ReflectionException
 	 * @throws InvalidConfigException
+	 * @throws UnknownClassException
 	 */
 	public function run():?string {
 		if (null !== $this->referenceClass) {
