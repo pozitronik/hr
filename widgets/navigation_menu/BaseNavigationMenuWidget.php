@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\navigation_menu;
 
 use app\helpers\ArrayHelper;
-use ReflectionClass;
+use app\models\core\helpers\ReflectionHelper;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 
@@ -39,8 +39,7 @@ class BaseNavigationMenuWidget extends Widget {
 	 * Перекрываем getViewPath, чтобы путь к вьюхам возвращался для ЭТОГО виджета, а не для наследующей модели
 	 */
 	public function getViewPath():string {
-		$class = new ReflectionClass(self::class);
-		return dirname($class->getFileName()).DIRECTORY_SEPARATOR.'views';
+		return dirname(ReflectionHelper::New(self::class)->getFileName()).DIRECTORY_SEPARATOR.'views';
 	}
 
 	/**
