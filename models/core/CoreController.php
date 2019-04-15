@@ -4,18 +4,15 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\helpers\ArrayHelper;
-use app\helpers\Path;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\helpers\ReflectionHelper;
 use app\modules\privileges\models\UserAccess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use ReflectionClass;
 use ReflectionException;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\UnknownClassException;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\web\Controller;
@@ -126,9 +123,7 @@ class CoreController extends Controller {
 	 * @param string|null $moduleId
 	 * @return self|null
 	 * @throws InvalidConfigException
-	 * @throws ReflectionException
 	 * @throws Throwable
-	 * @throws UnknownClassException
 	 */
 	public static function GetControllerByControllerId(string $controllerId, ?string $moduleId):?object {
 		if (null === $plugin = PluginsSupport::GetPluginById($moduleId)) throw new InvalidConfigException("Module $moduleId not found or plugin not configured properly.");
@@ -144,9 +139,7 @@ class CoreController extends Controller {
 	 * @param string[]|null $parentClassFilter Фильтр по классу родителя
 	 * @return self[]
 	 * @throws InvalidConfigException
-	 * @throws ReflectionException
 	 * @throws Throwable
-	 * @throws UnknownClassException
 	 */
 	public static function GetControllersList(string $path, ?string $moduleId = null, ?array $parentClassFilter = null):array {
 		$result = [];
