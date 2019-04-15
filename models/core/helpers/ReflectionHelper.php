@@ -42,7 +42,7 @@ class ReflectionHelper {
 	 * @throws UnknownClassException
 	 */
 	public static function New($className):ReflectionClass {
-		if (!class_exists($className)) Yii::autoload($className);//todo: нужен ли автолоадер? Похоже, нужен для контроллеров
+		if (is_string($className) && !class_exists($className)) Yii::autoload($className);//todo: нужен ли автолоадер? Похоже, нужен для контроллеров
 		return new ReflectionClass($className);
 	}
 
