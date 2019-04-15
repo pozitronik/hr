@@ -10,9 +10,8 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 use Throwable;
-use Yii;
 use app\helpers\Path;
-use yii\base\Configurable;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\web\Controller;
@@ -67,20 +66,6 @@ class Magic {
 	}
 
 	/**
-	 * Загружает динамически класс справочника Yii2 по его пути
-	 * @param string $fileName
-	 * @return Reference|null|ReflectionClass
-	 * @throws ReflectionException
-	 * @throws Throwable
-	 * @throws UnknownClassException
-	 */
-	public static function GetReferenceModel(string $fileName):?object {
-		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
-		return self::LoadClassByName($className, Reference::class);
-
-	}
-
-	/**
 	 * Загружает динамически класс права пользователя по его пути
 	 * @param string $fileName
 	 * @return UserRightInterface|null|ReflectionClass
@@ -111,6 +96,20 @@ class Magic {
 	}
 
 	/**
+	 * Загружает класс из файла (при условии одного класса в файле и совпадения имени файла с именем класса)
+	 * @param string $fileName
+	 * @param string|null $parentClass Опциональный фильтр родительского класса
+	 * @return Reference|null|ReflectionClass
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws UnknownClassException
+	 */
+	public static function LoadClassFromFilename(string $fileName, ?string $parentClass = null):?object {
+		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+		return self::LoadClassByName($className, $parentClass);
+	}
+
+	/**
 	 * Fast class name shortener
 	 * app\modules\salary\models\references\RefGrades => RefGrades
 	 * @param string $className
@@ -122,13 +121,13 @@ class Magic {
 	}
 
 	/**
-	 * @param Configurable $controller
+	 * @param object $model
 	 * @param string $property
 	 * @return bool
 	 * @throws ReflectionException
 	 */
-	public static function hasProperty(Configurable $controller, string $property):bool {
-		return (new ReflectionClass($controller))->hasProperty($property);
+	public static function HasProperty(object $model, string $property):bool {
+		return (new ReflectionClass($model))->hasProperty($property);
 	}
 
 }
