@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use app\helpers\ArrayHelper;
-use app\models\core\Magic;
+use app\models\core\helpers\ReflectionHelper;
 use app\modules\privileges\models\UserRightInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -109,7 +109,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 			$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
 			/** @var RecursiveDirectoryIterator $file */
 			foreach ($files as $file) {
-				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::LoadClassFromFilename($file->getRealPath(), UserRightInterface::class)) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) {
+				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = ReflectionHelper::LoadClassFromFilename($file->getRealPath(), UserRightInterface::class)) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) {
 					$model->module = $this->name;
 					$result[] = $model;
 				}

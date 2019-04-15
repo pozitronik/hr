@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\reference_select;
 
 use app\helpers\Icons;
-use app\models\core\Magic;
+use app\models\core\helpers\ReflectionHelper;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
 use ReflectionException;
@@ -49,7 +49,7 @@ class ReferenceSelectWidget extends Select2 {
 			if ($this->showEditAddon) {
 				$this->addon = [
 					'append' => [
-						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => Magic::GetClassShortName((string)$this->referenceClass)], ['class' => 'btn btn-default']),
+						'content' => Html::a(Icons::update(), ['/references/references/index', 'class' => ReflectionHelper::GetClassShortName((string)$this->referenceClass)], ['class' => 'btn btn-default']),
 						'asButton' => true
 					]
 				];

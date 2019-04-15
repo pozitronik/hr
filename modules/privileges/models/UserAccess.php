@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use app\helpers\ArrayHelper;
-use app\models\core\Magic;
+use app\models\core\CoreController;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use ReflectionException;
@@ -36,11 +36,11 @@ class UserAccess extends Model {
 		$defaultAllow = ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
 		if ($user->is('sysadmin')) $defaultAllow = true;
 
-		$actions = Magic::GetControllerActions($controller);
+		$actions = CoreController::GetControllerActions($controller);
 
 		foreach ($actions as $action) {//Пытаемся подобрать правила для всех экшенов в контроллере
 			$ruleDefined = false;//Флаг устанавливается, если определение правила найдено
-			$action = Magic::GetActionRequestName($action);
+			$action = CoreController::GetActionRequestName($action);
 			foreach ($rights as $right) {//перебираем все права, пока не найдём право, определяющее доступ (или не переберём все права; в этом случае присвоим доступ по умолчанию)
 				//функция не учитывает коллизии прав (одно разрешает, другое запрещает). Буду дорабатывать с тем, чтобы создать метод получающий список определений прав, на основе которого уже будут высчитываться суммарные правила и коллизии
 				//Пофиг на коллизии, будем определять очерёдность применения прав по порядку, определённому в наборе прав

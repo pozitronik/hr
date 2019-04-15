@@ -6,7 +6,7 @@ namespace app\modules\privileges\models;
 use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\Magic;
+use app\models\core\CoreController;
 use app\models\core\StrictInterface;
 use app\models\core\WigetableController;
 use app\widgets\alert\AlertModel;
@@ -72,7 +72,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 		foreach ($fromControllersPaths as $moduleId => $controllerPath) {
 			$controllers = WigetableController::GetControllersList($controllerPath, $moduleId);
 			foreach ($controllers as $controller) {
-				$actions = Magic::GetControllerActions($controller);
+				$actions = CoreController::GetControllerActions($controller);
 				foreach ($actions as $action) {
 					$actionAccess = new ActionAccess([
 						'moduleId' => $moduleId,

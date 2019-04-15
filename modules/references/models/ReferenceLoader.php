@@ -5,7 +5,7 @@ namespace app\modules\references\models;
 
 use app\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\Magic;
+use app\models\core\helpers\ReflectionHelper;
 use ReflectionException;
 use Throwable;
 use Yii;
@@ -40,7 +40,7 @@ class ReferenceLoader extends Model {
 			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($baseReferencesDir), RecursiveIteratorIterator::SELF_FIRST);
 			/** @var RecursiveDirectoryIterator $file */
 			foreach ($files as $file) {
-				if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = Magic::LoadClassFromFilename($file->getRealPath(), Reference::class)) {
+				if ($file->isFile() && 'php' === $file->getExtension() && null !== $model = ReflectionHelper::LoadClassFromFilename($file->getRealPath(), Reference::class)) {
 					$baseReferences[$model->formName()] = $model;
 				}
 			}

@@ -5,6 +5,7 @@ namespace app\models\core;
 
 use app\helpers\Path;
 use app\models\core\core_module\PluginsSupport;
+use app\models\core\helpers\ReflectionHelper;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -66,7 +67,7 @@ class WigetableController extends CoreController {
 	 * @throws UnknownClassException
 	 */
 	public static function GetController(string $fileName, ?string $moduleId):?object {
-		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
+		$className = ReflectionHelper::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);//todo: find all Reflections => move to helper
 		if ($class->isSubclassOf(__CLASS__)) {
