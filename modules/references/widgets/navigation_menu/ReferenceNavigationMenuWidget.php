@@ -6,6 +6,7 @@ namespace app\modules\references\widgets\navigation_menu;
 use app\helpers\Icons;
 use app\modules\references\models\Reference;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use yii\base\InvalidConfigException;
 
 /**
  * Class ReferenceNavigationMenuWidget
@@ -18,6 +19,7 @@ class ReferenceNavigationMenuWidget extends BaseNavigationMenuWidget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws InvalidConfigException
 	 */
 	public function run():string {
 		$this->_navigationItems = [
