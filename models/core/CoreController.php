@@ -76,19 +76,4 @@ class CoreController extends Controller {
 		return mb_strtolower(implode('-', $lines));
 	}
 
-	/**
-	 * Вытаскивает неймспейс из файла, если он там есть
-	 * @param string $path
-	 * @return string|false
-	 */
-	public static function ExtractNamespaceFromFile(string $path) {
-		$lines = file($path);
-		foreach ($lines as $line) {
-			$line = trim($line);
-			if (preg_match('/^namespace\W(.*);$/', $line)) {
-				return preg_replace('/(^namespace\W)(.*)(;$)/', '$2', $line);
-			}
-		}
-		return false;
-	}
 }
