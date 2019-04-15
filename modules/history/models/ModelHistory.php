@@ -15,29 +15,37 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\UnknownClassException;
-use yii\db\ActiveRecord;
 
 /**
  * Модель истории изменений объекта (предполагается, что это ActiveRecord, но по факту это любая модель с атрибутами)
  *
  * @property ActiveRecordLoggerInterface $loggerModel AR-интерфейс для работы с базой логов
- * @property ActiveRecord|ActiveRecordExtended $requestModel Модель, для которой запрашиваем историю
  */
 class ModelHistory extends Model {
 	public $loggerModel;
-	public $requestModel;
+
+	private $requestModel;
 	private $modelHistoryRules = [];
 
 	/**
+	 * @param string $className
+	 * @param int $modelKey
 	 * @return ActiveRecordLoggerInterface[]
 	 * @throws InvalidConfigException
-	 * @throws Throwable
 	 * @throws ReflectionException
+	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public function getHistory():array {
+	public function getHistory(string $className, int $modelKey):array {
 		$this->loggerModel = $this->loggerModel??ActiveRecordLogger::class;
-		$modelKey = $this->requestModel->primaryKey;
+
+		try {
+			$askedClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($className));//Пытаемся загрузить класс приложения
+			$this->requestModel = $askedClass::findModel($modelKey);
+		} /** @noinspection BadExceptionsProcessingInspection */ catch (ReflectionException $t) {//не получилось загрузить, грузим as is
+			return $this->loggerModel::find()->where(['model' => $className, 'model_key' => $modelKey])->orderBy('at')->all();
+		}
+
 		$this->modelHistoryRules = $this->requestModel->hasMethod('historyRules')?$this->requestModel->historyRules():[];
 
 		/** @var LCQuery $findCondition */
@@ -101,6 +109,46 @@ class ModelHistory extends Model {
 	}
 
 	/**
+	 * Вытаскивает из записи описание изменений атрибутов, конвертируя их в набор HistoryEventAction для тех случаев, когда не удалось определить сопоставление логированного имени класса и кодовой модель
+	 * @param ActiveRecordLoggerInterface $record
+	 * @return array
+	 * @throws Throwable
+	 */
+	private function getEventActionsDegraded(ActiveRecordLoggerInterface $record):array {
+		$diff = [];
+		foreach ($record->old_attributes as $attributeName => $attributeValue) {
+			if (isset($record->new_attributes[$attributeName])) {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => $attributeName,
+					'attributeOldValue' => $attributeValue,
+					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
+					'attributeNewValue' => $record->new_attributes[$attributeName]
+				]);
+			} else {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => $attributeName,
+					'attributeOldValue' => $attributeValue,
+					'type' => HistoryEventAction::ATTRIBUTE_DELETED
+				]);
+
+			}
+		}
+		$e = array_diff_key($record->new_attributes, $record->old_attributes);
+
+		foreach ($e as $attributeName => $attributeValue) {
+			if (!isset($record->old_attributes[$attributeName]) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => $attributeName,
+					'attributeNewValue' => $attributeValue,
+					'type' => HistoryEventAction::ATTRIBUTE_CREATED
+				]);
+			}
+		}
+
+		return $diff;
+	}
+
+	/**
 	 * @param string $attributeName Название атрибута, для которого пытаемся найти подстановку
 	 * @param mixed $attributeValue Значение атрибута, которому ищем соответствие
 	 * @param string $substitutionClassName Имя AR-класса, по записям которого будем искать соответствие
@@ -144,23 +192,27 @@ class ModelHistory extends Model {
 			$result->eventType = HistoryEvent::EVENT_CHANGED;
 		}
 
-		$logRecordedModel = ReflectionHelper::LoadClassByName(self::ExpandClassName($logRecord->model));
-		if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
-			if (is_callable($labelsConfig)) {
-				$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
-			} elseif (is_array($labelsConfig)) {
-				$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
-			} else $result->eventCaption = $labelsConfig;
-		}
-
-		$result->actionsFormatter = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionsFormatter");
-
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
 		$result->subject = Users::findModel($logRecord->user);
 		$result->eventIcon = Icons::event_icon($result->eventType);
 
-		$result->actions = $this->getEventActions($logRecord);
+		if (null === $this->requestModel) {//degraded mode
+			$result->actions = $this->getEventActionsDegraded($logRecord);
+		} else {
+			$logRecordedModel = ReflectionHelper::LoadClassByName(self::ExpandClassName($logRecord->model));
+			if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
+				if (is_callable($labelsConfig)) {
+					$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
+				} elseif (is_array($labelsConfig)) {
+					$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
+				} else $result->eventCaption = $labelsConfig;
+			}
+
+			$result->actionsFormatter = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionsFormatter");
+			$result->actions = $this->getEventActions($logRecord);
+		}
+
 		return $result;
 	}
 
