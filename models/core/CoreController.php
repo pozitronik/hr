@@ -99,17 +99,15 @@ class CoreController extends Controller {
 	 * Загружает динамически класс веб-контроллера Yii2 по его пути
 	 * @param string $fileName
 	 * @param string|null $moduleId
-	 * @param string|null $parentClassFilter Фильтр по родительскому классу (загружаемый контролер должен от него наследоваться)
+	 * @param string[]|null $parentClassFilter Фильтр по родительскому классу (загружаемый контролер должен от него наследоваться)
 	 * @return self|null
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public static function LoadControllerClassFromFile(string $fileName, ?string $moduleId, ?string $parentClassFilter = null):?object {
+	public static function LoadControllerClassFromFile(string $fileName, ?string $moduleId, ?array $parentClassFilter = null):?object {
 		$className = ReflectionHelper::GetClassNameFromFile($fileName);
 		$class = ReflectionHelper::New($className);
-		if (null !== $parentClassFilter && !$class->isSubclassOf($parentClassFilter)) return null;
-
-		if ($class->isSubclassOf(__CLASS__)) {
+		if (ReflectionHelper::IsInSubclassOf($class, $parentClassFilter)) {
 			if (null === $moduleId) {
 				$module = Yii::$app;
 			} else {
@@ -118,6 +116,7 @@ class CoreController extends Controller {
 			}
 			return new $className(self::ExtractControllerId($className), $module);
 		}
+
 		return null;
 	}
 
@@ -142,20 +141,20 @@ class CoreController extends Controller {
 	 * Выгружает список контроллеров в указанном неймспейсе
 	 * @param string $path
 	 * @param string|null $moduleId
-	 * @param string|null $parentClass Фильтр по классу родителя
+	 * @param string[]|null $parentClassFilter Фильтр по классу родителя
 	 * @return self[]
 	 * @throws InvalidConfigException
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function GetControllersList(string $path, ?string $moduleId = null, ?string $parentClass = null):array {
+	public static function GetControllersList(string $path, ?string $moduleId = null, ?array $parentClassFilter = null):array {
 		$result = [];
 
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(Yii::getAlias($path)), RecursiveIteratorIterator::SELF_FIRST);
 		/** @var RecursiveDirectoryIterator $file */
 		foreach ($files as $file) {
-			if ($file->isFile() && 'php' === $file->getExtension() && null !== $controller = self::LoadControllerClassFromFile($file->getRealPath(), $moduleId, $parentClass)) {
+			if ($file->isFile() && 'php' === $file->getExtension() && null !== $controller = self::LoadControllerClassFromFile($file->getRealPath(), $moduleId, $parentClassFilter)) {
 				$result[] = $controller;
 			}
 		}
