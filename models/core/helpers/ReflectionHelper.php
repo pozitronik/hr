@@ -35,6 +35,18 @@ class ReflectionHelper {
 	}
 
 	/**
+	 * Инициализирует рефлектор, но не загружает класс
+	 * @param string $className
+	 * @return ReflectionClass
+	 * @throws ReflectionException
+	 * @throws UnknownClassException
+	 */
+	public static function New(string $className):ReflectionClass {
+		if (!class_exists($className)) Yii::autoload($className);//todo: нужен ли автолоадер? Похоже, нужен для контроллеров
+		return new ReflectionClass($className);
+	}
+
+	/**
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
 	 * @param string|null $parentClass Опциональный фильтр родительского класса
@@ -45,8 +57,7 @@ class ReflectionHelper {
 	 * @throws UnknownClassException
 	 */
 	public static function LoadClassByName(string $className, ?string $parentClass = null):object {
-		if (!class_exists($className)) Yii::autoload($className);
-		$class = new ReflectionClass($className);
+		$class = self::New($className);
 		if (null === $parentClass || (null !== $parentClass && $class->isSubclassOf($parentClass))) {
 			return new $className;
 		}
@@ -63,8 +74,16 @@ class ReflectionHelper {
 	 * @throws UnknownClassException
 	 */
 	public static function LoadClassFromFile(string $fileName, ?string $parentClass = null):object {
-		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
-		return self::LoadClassByName($className, $parentClass);
+		return self::LoadClassByName(self::GetClassNameFromFile($fileName), $parentClass);
+	}
+
+	/**
+	 * Возвращает имя класса, находящегося в файле (при условии одного класса в файле и совпадения имени файла с именем класса)
+	 * @param string $fileName
+	 * @return string
+	 */
+	public static function GetClassNameFromFile(string $fileName):string {
+		return self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 	}
 
 	/**
@@ -73,9 +92,11 @@ class ReflectionHelper {
 	 * @param string $className
 	 * @return string
 	 * @throws ReflectionException
+	 *
+	 * todo: разобраться с пераметрами: строка или объект?
 	 */
 	public static function GetClassShortName(string $className):string {
-		return (new ReflectionClass($className))->getShortName();
+		return $class = self::New($className)->getShortName();
 	}
 
 	/**
@@ -83,8 +104,11 @@ class ReflectionHelper {
 	 * @param int $filter
 	 * @return array
 	 * @throws ReflectionException
+	 *
+	 * todo: разобраться с пераметрами: строка или объект?
 	 */
 	public static function GetMethods(object $model, int $filter = ReflectionMethod::IS_PUBLIC):array {
 		return (new ReflectionClass($model))->getMethods($filter);
 	}
+
 }
