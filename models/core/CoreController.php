@@ -14,6 +14,7 @@ use ReflectionException;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\UnknownClassException;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\web\Controller;
@@ -64,6 +65,7 @@ class CoreController extends Controller {
 	 * @param Controller $controllerClass
 	 * @return string[]
 	 * @throws ReflectionException
+	 * @throws UnknownClassException
 	 */
 	public static function GetControllerActions(Controller $controllerClass):array {
 		$names = ArrayHelper::getColumn(ReflectionHelper::GetMethods($controllerClass), 'name');

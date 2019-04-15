@@ -115,7 +115,7 @@ class ReflectionHelper {
 	 * @param int $filter
 	 * @return array
 	 * @throws ReflectionException
-	 *
+	 * @throws UnknownClassException
 	 */
 	public static function GetMethods(object $model, int $filter = ReflectionMethod::IS_PUBLIC):array {
 		return self::New($model)->getMethods($filter);

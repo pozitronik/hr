@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use app\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\CoreController;
 use app\models\core\traits\ModelExtended;
