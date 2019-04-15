@@ -61,7 +61,7 @@ class ReflectionHelper {
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassFromFilename(string $fileName, ?string $parentClass = null):?object {
+	public static function LoadClassFromFile(string $fileName, ?string $parentClass = null):?object {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 		return self::LoadClassByName($className, $parentClass);
 	}
