@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\widgets\controller;
 
-use app\helpers\ArrayHelper;
 use app\models\core\WigetableController;
 use Throwable;
 use yii\base\Widget;
@@ -39,8 +38,8 @@ class ControllerWidget extends Widget {
 	 */
 	public function run():string {
 		$action = ["/{$this->model->defaultRoute}/{$this->model->defaultAction}"];
-		$caption = ArrayHelper::getValue($this->model, 'menuCaption', $this->model->id);
-		$iconStyle = (null === $icon = ArrayHelper::getValue($this->model, 'menuIcon'))?'':"style = 'background-image: url({$icon});'";
+		$caption = $this->model->getPropertyValue('menuCaption', $this->model->id);
+		$iconStyle = (null === $icon = $this->model->getPropertyValue('menuIcon'))?'':"style = 'background-image: url({$icon});'";
 		switch ($this->mode) {
 			case self::MODE_PANEL:
 				return $this->render('controller_panel', [
