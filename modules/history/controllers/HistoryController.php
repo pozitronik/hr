@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\history\controllers;
 
-use app\models\core\helpers\ReflectionHelper;
 use app\models\core\WigetableController;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ModelHistory;
@@ -29,11 +28,9 @@ class HistoryController extends WigetableController {
 	 * @throws UnknownClassException
 	 */
 	public function actionShow(string $for, int $id):string {
-		$askedClass = ReflectionHelper::LoadClassByName(ModelHistory::ExpandClassName($for));
-		$askedModel = $askedClass::findModel($id);
+		$history = new ModelHistory(['loggerModel' => ActiveRecordLogger::class]);
 
-		$history = new ModelHistory(['requestModel' => $askedModel, 'loggerModel' => ActiveRecordLogger::class]);
-		$timeline = $history->getHistory();
+		$timeline = $history->getHistory($for, $id);
 		$populatedTimeline = $history->populateTimeline($timeline);
 
 		return $this->render('timeline', [
