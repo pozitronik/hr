@@ -20,6 +20,6 @@ trait ModelExtended {
 	 */
 	public function getPropertyValue(string $propertyName, $default = null) {
 		/** @var Model $this */
-		return $this->hasProperty($propertyName)?$this->$$propertyName:$default;
+		return $this->hasProperty($propertyName)?$this->$propertyName:$default;
 	}
 }
