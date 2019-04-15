@@ -109,7 +109,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 			$excludedIds = ArrayHelper::getColumn($excludedRights, 'id');
 			/** @var RecursiveDirectoryIterator $file */
 			foreach ($files as $file) {
-				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = ReflectionHelper::LoadClassFromFilename($file->getRealPath(), UserRightInterface::class)) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) {
+				if (($file->isFile() && 'php' === $file->getExtension() && null !== $model = ReflectionHelper::LoadClassFromFile($file->getRealPath(), [UserRightInterface::class])) && (!$model->hidden) && (!in_array($model->id, $excludedIds))) {
 					$model->module = $this->name;
 					$result[] = $model;
 				}
