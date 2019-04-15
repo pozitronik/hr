@@ -36,12 +36,12 @@ class ReflectionHelper {
 
 	/**
 	 * Инициализирует рефлектор, но не загружает класс
-	 * @param string $className
+	 * @param string|object $className Имя класса/экземпляр класса
 	 * @return ReflectionClass
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function New(string $className):ReflectionClass {
+	public static function New($className):ReflectionClass {
 		if (!class_exists($className)) Yii::autoload($className);//todo: нужен ли автолоадер? Похоже, нужен для контроллеров
 		return new ReflectionClass($className);
 	}
@@ -105,7 +105,6 @@ class ReflectionHelper {
 	 * @return string
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
-	 * todo: разобраться с пераметрами: строка или объект?
 	 */
 	public static function GetClassShortName(string $className):string {
 		return self::New($className)->getShortName();
@@ -117,10 +116,9 @@ class ReflectionHelper {
 	 * @return array
 	 * @throws ReflectionException
 	 *
-	 * todo: разобраться с пераметрами: строка или объект?
 	 */
 	public static function GetMethods(object $model, int $filter = ReflectionMethod::IS_PUBLIC):array {
-		return (new ReflectionClass($model))->getMethods($filter);
+		return self::New($model)->getMethods($filter);
 	}
 
 }
