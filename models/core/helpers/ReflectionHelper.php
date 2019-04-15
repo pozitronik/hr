@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\core\helpers;
 
 use app\helpers\Path;
-use app\modules\references\models\Reference;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -48,7 +47,9 @@ class ReflectionHelper {
 	public static function LoadClassByName(string $className, ?string $parentClass = null):object {
 		if (!class_exists($className)) Yii::autoload($className);
 		$class = new ReflectionClass($className);
-		if ((null !== $parentClass && $class->isSubclassOf($parentClass)) || null === $parentClass) return new $className;
+		if (null === $parentClass || (null !== $parentClass && $class->isSubclassOf($parentClass))) {
+			return new $className;
+		}
 		throw new InvalidConfigException("Class $className not found in application scope!");
 	}
 
@@ -56,12 +57,12 @@ class ReflectionHelper {
 	 * Загружает класс из файла (при условии одного класса в файле и совпадения имени файла с именем класса)
 	 * @param string $fileName
 	 * @param string|null $parentClass Опциональный фильтр родительского класса
-	 * @return Reference|null|ReflectionClass
+	 * @return ReflectionClass
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassFromFile(string $fileName, ?string $parentClass = null):?object {
+	public static function LoadClassFromFile(string $fileName, ?string $parentClass = null):object {
 		$className = self::ExtractNamespaceFromFile($fileName).'\\'.Path::ChangeFileExtension($fileName);
 		return self::LoadClassByName($className, $parentClass);
 	}
