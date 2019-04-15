@@ -6,6 +6,7 @@ namespace app\models\core;
 use app\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\helpers\ReflectionHelper;
+use app\models\core\traits\ModelExtended;
 use app\modules\privileges\models\UserAccess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -25,6 +26,7 @@ use yii\web\Response;
  * @package app\models\core
  */
 class CoreController extends Controller {
+	use ModelExtended;
 
 	/**
 	 * {@inheritDoc}
