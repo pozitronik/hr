@@ -67,7 +67,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 */
 	public function loadActionsMap(array $fromControllersPaths):void {
 		foreach ($fromControllersPaths as $moduleId => $controllerPath) {
-			$controllers = CoreController::GetControllersList($controllerPath, $moduleId, [self::class]);
+			$controllers = CoreController::GetControllersList($controllerPath, $moduleId, [CoreController::class]);
 			foreach ($controllers as $controller) {
 				$actions = CoreController::GetControllerActions($controller);
 				foreach ($actions as $action) {
