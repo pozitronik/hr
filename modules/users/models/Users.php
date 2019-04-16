@@ -460,7 +460,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function getRights():array {
 		$rights = array_merge([[]], ArrayHelper::getColumn($this->relPrivileges, 'userRights'), ArrayHelper::getColumn(Privileges::GetDefaultPrivileges(), 'userRights'));
-		return array_unique(array_merge(...$rights));
+		return array_merge(...$rights);
 	}
 
 	/**
