@@ -349,9 +349,16 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function setRolesInGroup(array $userRoles):void {
 		foreach ($userRoles as $user => $roles) {
-			RelUsersGroupsRoles::deleteAllEx(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $this->id, 'user_id' => $user])->select('id')]);
+			$currentUserGroupId = RelUsersGroups::find()->where(['group_id' => $this->id, 'user_id' => $user])->select('id')->one();
+			$currentUserRoles = RelUsersGroupsRoles::find()->where(['user_group_id' => $currentUserGroupId])->all();
+			$currentUserRolesId = ArrayHelper::getColumn($currentUserRoles, 'role');
+			$deletedRolesId = array_diff($currentUserRolesId, $roles);//id удаляемых ролей
+			/*Сначала удаляем роли, которых нет в обновлённом списке*/
+			RelUsersGroupsRoles::deleteAllEx(['user_group_id' => $currentUserGroupId, 'role' => $deletedRolesId]);
 			/** @var array $roles */
-			foreach ($roles as $role) {
+			$addedRolesId = array_diff($roles, $currentUserRolesId);//id добавляемых ролей
+			foreach ($addedRolesId as $role) {
+				/*Добавляем только те роли, которых ещё нет*/
 				RelUsersGroupsRoles::setRoleInGroup((int)$role, $this->id, $user);
 			}
 		}
