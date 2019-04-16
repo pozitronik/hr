@@ -11,8 +11,6 @@ use yii\base\InvalidConfigException;
 use yii\base\Model;
 
 /**
- * todo: вытащить сюда базовый класс управляемого контроллера. Такую же херню сделать для моделей, потом её наследовать везде
- *
  * Class ActionMap
  * @package app\modules\privileges\models
  * @property-read string $id
