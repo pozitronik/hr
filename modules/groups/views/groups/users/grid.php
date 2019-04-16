@@ -26,8 +26,7 @@ use yii\helpers\Html;
 use yii\web\View;
 ?>
 
-<?=
-GridView::widget([
+<?= GridView::widget([
 	'dataProvider' => $provider,
 	'panel' => [
 		'after' => false,
@@ -38,7 +37,7 @@ GridView::widget([
 			'attribute' => 'relUsers',
 			'notData' => $model->relUsers,
 			'multiple' => true,
-			'mode' => UserSelectWidget::MODE_FORM,
+			'mode' => UserSelectWidget::MODE_FIELD,
 			'dataMode' => UserSelectWidget::DATA_MODE_AJAX
 		]):false
 	],
