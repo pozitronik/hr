@@ -128,7 +128,6 @@ class ActiveRecordExtended extends ActiveRecord {
 	 * @param null|mixed $condition
 	 * @return int|null
 	 * @throws Throwable
-	 * todo: При изменении списка связей мы удаляем текущие связи, затем применяем новый список, это захламляет историю. Нужно сделать учёт диффа, т.о. мы совсем откажемся от deleteAllEx.
 	 */
 	public static function deleteAllEx($condition = null):?int {
 		$self_class_name = static::class;

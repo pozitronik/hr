@@ -483,7 +483,10 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 * @throws Throwable
 	 */
 	public function setRelPrivileges($relPrivileges):void {
-		RelUsersPrivileges::unlinkModels($this, $this->relPrivileges);
+		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
+		$currentPrivilegesId = ArrayHelper::getColumn($this->relPrivileges, 'id');
+		$droppedPrivileges = array_diff($currentPrivilegesId, $relPrivileges);
+		RelUsersPrivileges::unlinkModels($this, $droppedPrivileges);
 		RelUsersPrivileges::linkModels($this, $relPrivileges);
 	}
 
