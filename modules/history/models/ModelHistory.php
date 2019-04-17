@@ -67,88 +67,6 @@ class ModelHistory extends Model {
 	}
 
 	/**
-	 * Вытаскивает из записи описание изменений атрибутов, конвертируя их в набор HistoryEventAction
-	 * @param ActiveRecordLoggerInterface $record
-	 * @return HistoryEventAction[]
-	 * @throws Throwable
-	 */
-	private function getEventActions(ActiveRecordLoggerInterface $record):array {
-		$diff = [];
-		$labels = (null === $modelClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($record->model)))?[]:$modelClass->attributeLabels();
-
-		foreach ($record->old_attributes as $attributeName => $attributeValue) {
-			if (isset($record->new_attributes[$attributeName])) {
-				$diff[] = new HistoryEventAction([
-					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
-					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
-					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $record->new_attributes[$attributeName], $record->model)
-				]);
-			} else {
-				$diff[] = new HistoryEventAction([
-					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
-					'type' => HistoryEventAction::ATTRIBUTE_DELETED
-				]);
-
-			}
-		}
-		$e = array_diff_key($record->new_attributes, $record->old_attributes);
-
-		foreach ($e as $attributeName => $attributeValue) {
-			if (!isset($record->old_attributes[$attributeName]) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
-				$diff[] = new HistoryEventAction([
-					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue, $record->model),
-					'type' => HistoryEventAction::ATTRIBUTE_CREATED
-				]);
-			}
-		}
-
-		return $diff;
-	}
-
-	/**
-	 * Вытаскивает из записи описание изменений атрибутов, конвертируя их в набор HistoryEventAction для тех случаев, когда не удалось определить сопоставление логированного имени класса и кодовой модель
-	 * @param ActiveRecordLoggerInterface $record
-	 * @return array
-	 * @throws Throwable
-	 */
-	private function getEventActionsDegraded(ActiveRecordLoggerInterface $record):array {
-		$diff = [];
-		foreach ($record->old_attributes as $attributeName => $attributeValue) {
-			if (isset($record->new_attributes[$attributeName])) {
-				$diff[] = new HistoryEventAction([
-					'attributeName' => $attributeName,
-					'attributeOldValue' => $attributeValue,
-					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
-					'attributeNewValue' => $record->new_attributes[$attributeName]
-				]);
-			} else {
-				$diff[] = new HistoryEventAction([
-					'attributeName' => $attributeName,
-					'attributeOldValue' => $attributeValue,
-					'type' => HistoryEventAction::ATTRIBUTE_DELETED
-				]);
-
-			}
-		}
-		$e = array_diff_key($record->new_attributes, $record->old_attributes);
-
-		foreach ($e as $attributeName => $attributeValue) {
-			if (!isset($record->old_attributes[$attributeName]) || null === ArrayHelper::getValue($record->old_attributes, $attributeName)) {
-				$diff[] = new HistoryEventAction([
-					'attributeName' => $attributeName,
-					'attributeNewValue' => $attributeValue,
-					'type' => HistoryEventAction::ATTRIBUTE_CREATED
-				]);
-			}
-		}
-
-		return $diff;
-	}
-
-	/**
 	 * @param string $attributeName Название атрибута, для которого пытаемся найти подстановку
 	 * @param mixed $attributeValue Значение атрибута, которому ищем соответствие
 	 * @param string $substitutionClassName Имя AR-класса, по записям которого будем искать соответствие
@@ -158,7 +76,7 @@ class ModelHistory extends Model {
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	private function SubstituteAttributeValue(string $attributeName, $attributeValue, string $substitutionClassName) {
+	public static function SubstituteAttributeValue(string $attributeName, $attributeValue, string $substitutionClassName) {
 		$relationModel = ReflectionHelper::LoadClassByName(self::ExpandClassName($substitutionClassName));
 
 		if (null === $attributeConfig = ArrayHelper::getValue($relationModel->historyRules(), "attributes.{$attributeName}")) return $attributeValue;
@@ -173,41 +91,6 @@ class ModelHistory extends Model {
 			$modelValueAttribute = $attributeConfig[$fromModelName];
 			return ArrayHelper::getValue($fromModel::findModel($attributeValue), $modelValueAttribute, $attributeValue);
 		} else return $attributeConfig;//Можем вернуть прямо заданное значение
-	}
-
-	/**
-	 * Переводит запись из лога в событие истории
-	 * @param ActiveRecordLoggerInterface $logRecord
-	 * @return HistoryEventInterface
-	 * @throws Throwable
-	 */
-	public function getHistoryEvent(ActiveRecordLoggerInterface $logRecord):HistoryEventInterface {
-		$result = new HistoryEvent();
-
-		$result->eventType = $logRecord->event_type;
-
-		$result->eventTime = $logRecord->timestamp;
-		$result->objectName = $logRecord->model;
-		$result->subject = Users::findModel($logRecord->user);
-		$result->eventIcon = Icons::event_icon($result->eventType);
-
-		if (null === $this->requestModel) {//degraded mode
-			$result->actions = $this->getEventActionsDegraded($logRecord);
-		} else {
-			$logRecordedModel = ReflectionHelper::LoadClassByName(self::ExpandClassName($logRecord->model));
-			if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
-				if (is_callable($labelsConfig)) {
-					$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
-				} elseif (is_array($labelsConfig)) {
-					$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
-				} else $result->eventCaption = $labelsConfig;
-			}
-
-			$result->actionsFormatter = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionsFormatter");
-			$result->actions = $this->getEventActions($logRecord);
-		}
-
-		return $result;
 	}
 
 	/**
