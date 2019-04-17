@@ -6,7 +6,6 @@ namespace app\modules\history\controllers;
 use app\models\core\WigetableController;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
-use app\modules\history\models\ModelHistory;
 use ReflectionException;
 use Throwable;
 use Yii;
@@ -47,13 +46,10 @@ class HistoryController extends WigetableController {
 	 * @throws UnknownClassException
 	 */
 	public function actionShow(string $for, int $id):string {
-		$history = new ModelHistory(['loggerModel' => ActiveRecordLogger::class]);
-
-		$timeline = $history->getHistory($for, $id);
-		$populatedTimeline = $history->populateTimeline($timeline);
+		$logger = new ActiveRecordLogger();
 
 		return $this->render('timeline', [
-			'timeline' => $populatedTimeline
+			'timeline' => $logger->getHistory($for, $id)
 		]);
 	}
 
