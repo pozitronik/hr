@@ -15,6 +15,7 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -29,7 +30,7 @@ use yii\db\ActiveRecord;
  * @property array $new_attributes
  * @property-read int $eventType
  *
- * @property-read Users|null $userModel
+ * @property-read ActiveQuery|Users|null $userModel
  * @property-read HistoryEventInterface $event
  * @property-read HistoryEventAction[] $eventActions
  */
@@ -139,11 +140,11 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	}
 
 	/**
-	 * @return Users|null
+	 * @return Users|null|ActiveQuery
 	 * @throws Throwable
 	 */
-	public function getUserModel():?Users {
-		return Users::findModel($this->user);
+	public function getUserModel() {
+		return $this->hasOne(Users::class, ['id' => 'user']);
 	}
 
 	/**
