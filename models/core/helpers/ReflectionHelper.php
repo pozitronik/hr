@@ -50,16 +50,17 @@ class ReflectionHelper {
 	 * Загружает и возвращает экземпляр класса при условии его существования
 	 * @param string $className Имя класса
 	 * @param null|string[] $parentClassFilter Опциональный фильтр родительского класса
-	 * @return ReflectionClass|object
+	 * @param bool $throwOnFail true - упасть при ошибке, false - вернуть null
+	 * @return ReflectionClass|object|null
 	 * @throws InvalidConfigException
 	 * @throws ReflectionException
-	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public static function LoadClassByName(string $className, ?array $parentClassFilter = null):object {
+	public static function LoadClassByName(string $className, ?array $parentClassFilter = null, $throwOnFail = true):?object {
 		$class = self::New($className);
 		if (self::IsInSubclassOf($class, $parentClassFilter)) return new $className;
-		throw new InvalidConfigException("Class $className not found in application scope!");
+		if ($throwOnFail) throw new InvalidConfigException("Class $className not found in application scope!");
+		return null;
 	}
 
 	/**
