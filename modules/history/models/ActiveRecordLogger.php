@@ -4,10 +4,17 @@ declare(strict_types = 1);
 namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Icons;
+use app\models\core\ActiveRecordExtended;
+use app\models\core\helpers\ReflectionHelper;
+use app\models\core\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
+use ReflectionException;
 use Throwable;
+use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\UnknownClassException;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,9 +27,11 @@ use yii\db\ActiveRecord;
  * @property int $model_key
  * @property array $old_attributes
  * @property array $new_attributes
- * @property-read int $event_type
+ * @property-read int $eventType
  *
  * @property-read Users|null $userModel
+ * @property-read HistoryEventInterface $event
+ * @property-read HistoryEventAction[] $eventActions
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
 
@@ -45,7 +54,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 			'model' => 'Источник',
 			'old_attributes' => 'Было',
 			'new_attributes' => 'Стало',
-			'event_type' => 'Тип события',
+			'eventType' => 'Тип события',
 			'userModel' => 'Пользователь'
 		];
 	}
@@ -135,4 +144,147 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	public function getUserModel():?Users {
 		return Users::findModel($this->user);
 	}
+
+	/**
+	 * Переводит запись из лога в событие истории
+	 * @param ActiveRecordLoggerInterface $logRecord
+	 * @return HistoryEventInterface
+	 * @throws Throwable
+	 */
+	public function getEvent():HistoryEventInterface {
+		$result = new HistoryEvent();
+
+		$result->eventType = $this->eventType;
+
+		$result->eventTime = $this->timestamp;
+		$result->objectName = $this->model;
+		$result->subject = $this->userModel;
+		$result->eventIcon = Icons::event_icon($result->eventType);
+		$result->actions = $this->eventActions;
+
+		if (null !== $logRecordedModel = ReflectionHelper::LoadClassByName(self::ExpandClassName($this->model), null, false)) {
+			if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
+				if (is_callable($labelsConfig)) {
+					$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
+				} elseif (is_array($labelsConfig)) {
+					$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
+				} else $result->eventCaption = $labelsConfig;
+			}
+			$result->actionsFormatter = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionsFormatter");
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Вытаскивает из записи описание изменений атрибутов, конвертируя их в набор HistoryEventAction
+	 * @return HistoryEventAction[]
+	 * @throws Throwable
+	 */
+	public function getEventActions():array {
+		$modelClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($this->model), null, false);
+
+		$labels = null === $modelClass?[]:$modelClass->attributeLabels();
+
+		foreach ($this->old_attributes as $attributeName => $attributeValue) {
+			if (isset($this->new_attributes[$attributeName])) {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
+					'attributeOldValue' => self::SubstituteAttributeValue($attributeName, $attributeValue, $modelClass),
+					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
+					'attributeNewValue' => self::SubstituteAttributeValue($attributeName, $this->new_attributes[$attributeName], $modelClass)
+				]);
+			} else {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
+					'attributeOldValue' => self::SubstituteAttributeValue($attributeName, $attributeValue, $modelClass),
+					'type' => HistoryEventAction::ATTRIBUTE_DELETED
+				]);
+
+			}
+		}
+		$e = array_diff_key($this->new_attributes, $this->old_attributes);
+
+		foreach ($e as $attributeName => $attributeValue) {
+			if (!isset($this->old_attributes[$attributeName]) || null === ArrayHelper::getValue($this->old_attributes, $attributeName)) {
+				$diff[] = new HistoryEventAction([
+					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
+					'attributeNewValue' => self::SubstituteAttributeValue($attributeName, $attributeValue, $modelClass),
+					'type' => HistoryEventAction::ATTRIBUTE_CREATED
+				]);
+			}
+		}
+
+		return $diff;
+	}
+
+	/**
+	 * @param string $attributeName Название атрибута, для которого пытаемся найти подстановку
+	 * @param mixed $attributeValue Значение атрибута, которому ищем соответствие
+	 * @param ActiveRecordExtended|null|object $substitutionClass AR-класс, по записям которого будем искать соответствие
+	 * @return mixed Подстановленное значение (если найдено, иначе переданное значение)
+	 * @throws InvalidConfigException
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws UnknownClassException
+	 */
+	private static function SubstituteAttributeValue(string $attributeName, $attributeValue, ?ActiveRecordExtended $substitutionClass) {
+		if (null === $substitutionClass) return $attributeValue;
+		if (null === $attributeConfig = ArrayHelper::getValue($substitutionClass->historyRules(), "attributes.{$attributeName}")) return $attributeValue;
+		if (false === $attributeConfig) return false;//не показывать атрибут
+		if (is_callable($attributeConfig)) {
+			return $attributeConfig($attributeName, $attributeValue);
+		}
+		if (is_array($attributeConfig)) {//[className => valueAttribute]
+			$fromModelName = ArrayHelper::key($attributeConfig);
+			/** @var ActiveRecordExtended $fromModel */
+			$fromModel = ReflectionHelper::LoadClassByName($fromModelName);
+			$modelValueAttribute = $attributeConfig[$fromModelName];
+			return ArrayHelper::getValue($fromModel::findModel($attributeValue), $modelValueAttribute, $attributeValue);
+		} else return $attributeConfig;//Можем вернуть прямо заданное значение
+	}
+
+	/**
+	 * @param string $className
+	 * @param int $modelKey
+	 * @return ActiveRecordLoggerInterface[]
+	 * @throws InvalidConfigException
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws UnknownClassException
+	 */
+	public function getHistory(string $className, int $modelKey):array {
+		if (null === $askedClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($className), null, false)) {//не получилось сопоставить класс модели, грузим as is
+			return self::find()->where(['model' => $className, 'model_key' => $modelKey])->orderBy('at')->all();
+		}
+		$requestModel = $askedClass::findModel($modelKey);
+		$modelHistoryRules = $requestModel->hasMethod('historyRules')?$requestModel->historyRules():[];
+
+		/** @var LCQuery $findCondition */
+		$findCondition = self::find()->where(['model' => $requestModel->formName(), 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
+		/** @var array $relationsRules */
+		$relationsRules = ArrayHelper::getValue($modelHistoryRules, 'relations', []);
+		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
+			$relatedModel = ReflectionHelper::LoadClassByName($relatedModelClassName);
+			if (is_callable($relationRule)) {
+				$relationRule($findCondition, $relatedModel);
+			} elseif (is_array($relationRule)) {
+				$linkKey = ArrayHelper::key($relationRule);
+				$linkValue = $relationRule[$linkKey];
+				$modelKey = $requestModel->$linkKey;
+				$findCondition->orWhere("model = '{$relatedModelClassName}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
+			} else throw new InvalidConfigException('Relation rule must be array or callable instance!');
+		}
+		return $findCondition->orderBy('at')->all();
+	}
+
+	/**
+	 * @param string $shortClassName
+	 * @return string
+	 * @throws Throwable
+	 */
+	public static function ExpandClassName(string $shortClassName):string {
+		return ArrayHelper::getValue(Yii::$app->modules, "history.params.classNamesMap.$shortClassName", $shortClassName);
+	}
+
 }
