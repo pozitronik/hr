@@ -14,7 +14,15 @@ namespace app\modules\history\models;
  * @property array $new_attributes
  *
  * @property int $eventType
+ * @property HistoryEvent $event
  */
 interface ActiveRecordLoggerInterface {
 
+	/**
+	 * Вернуть историю запрошенного объекта
+	 * @param string $className
+	 * @param int $modelKey
+	 * @return self[]
+	 */
+	public function getHistory(string $className, int $modelKey):array;
 }
