@@ -13,6 +13,7 @@ use app\modules\history\models\ActiveRecordLoggerSearch;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
+use yii\i18n\Formatter;
 use yii\web\View;
 
 $this->title = 'История';
@@ -31,12 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
 	'export' => false,
 	'resizableColumns' => true,
 	'responsive' => true,
+	'formatter' => [
+		'class' => Formatter::class,
+		'nullDisplay' => ''
+	],
 	'columns' => [
 		[
 			'attribute' => 'at'
 		],
 		[
-			'attribute' => 'userModel',
+			'attribute' => 'username',
 			'value' => static function(ActiveRecordLogger $model) {
 				return null === $model->user?'System':Html::a($model->userModel->username, ['/users/users/profile', 'id' => $model->user]);
 			},

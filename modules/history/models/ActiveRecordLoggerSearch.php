@@ -12,13 +12,14 @@ use yii\data\ActiveDataProvider;
  */
 class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 	public $actions;
+	public $username;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function rules():array {
 		return [
-			[['actions'], 'safe']
+			[['actions', 'username'], 'safe']
 		];
 	}
 
@@ -39,9 +40,9 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 			'attributes' => [
 				'id',
 				'at',
-				'user',
+				'userModel',
+				'modelKey',
 				'model',
-				'actions'
 			]
 		]);
 
@@ -51,6 +52,8 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 		if (!$this->validate()) return $dataProvider;
 
 //		$query->distinct();
+		$query->joinWith(['userModel']);
+		$query->andFilterWhere(['like', 'sys_users.username', $this->username]);
 
 		return $dataProvider;
 	}
