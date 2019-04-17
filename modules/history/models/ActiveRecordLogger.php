@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property int $model_key
  * @property array $old_attributes
  * @property array $new_attributes
+ * @property-read int $event_type
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
 
@@ -27,6 +28,19 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 */
 	public static function tableName():string {
 		return 'sys_log';
+	}
+
+	public function attributeLabels() {
+		return [
+			'id' => 'ID',
+			'at' => 'Время события',
+			'timestamp' => 'Время события',
+			'user' => 'Пользователь',
+			'model' => 'Источник',
+			'old_attributes' => 'Было',
+			'new_attributes' => 'Стало',
+			'event_type' => 'Тип события'
+		];
 	}
 
 	/**
@@ -97,6 +111,15 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 */
 	public function getTimestamp():string {
 		return $this->at;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEventType():int {
+		if ([] === $this->old_attributes) return HistoryEvent::EVENT_CREATED;
+		if ([] === $this->new_attributes) return HistoryEvent::EVENT_DELETED;
+		return HistoryEvent::EVENT_CHANGED;
 	}
 
 }
