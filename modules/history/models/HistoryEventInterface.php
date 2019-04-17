@@ -16,6 +16,8 @@ use app\modules\users\models\Users;
  * @property null|Users $subject Кто сделал
  * @property HistoryEventAction[] $actions Что произошло
  * @property null|string $eventCaption Переопределить типовой заголовок события
+ *
+ * @property TimelineEntry $timelineEntry
  */
 interface HistoryEventInterface {
 	public const EVENT_CREATED = 0;
@@ -27,11 +29,5 @@ interface HistoryEventInterface {
 		self::EVENT_CHANGED => 'Запись изменена',
 		self::EVENT_DELETED => 'Запись удалена'
 	];
-
-	/**
-	 * Converts log event to timeline entry
-	 * @return TimelineEntry
-	 */
-	public function asTimelineEntry():TimelineEntry;
 
 }

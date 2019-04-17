@@ -24,6 +24,7 @@ use yii\base\Model;
  * @property null|string $eventCaption Переопределить типовой заголовок события
  *
  * @property null|string|callable|array|false $actionsFormatter
+ * @property TimelineEntry $timelineEntry
  */
 class HistoryEvent extends Model implements HistoryEventInterface {
 	public $eventType;
@@ -41,7 +42,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	 * @return TimelineEntry
 	 * @throws Throwable
 	 */
-	public function asTimelineEntry():TimelineEntry {
+	public function getTimelineEntry():TimelineEntry {
 		if (null === $this->actionsFormatter) {
 			$content = self::ActionsFormatterDefault($this->actions);//default formatter
 		} elseif (is_string($this->actionsFormatter)) {
