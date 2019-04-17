@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
+use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
@@ -36,9 +37,25 @@ $this->params['breadcrumbs'][] = $this->title;
 		'class' => Formatter::class,
 		'nullDisplay' => ''
 	],
-	'columns' => [
+		'columns' => [
 		[
-			'attribute' => 'at'
+			'class' => DataColumn::class,
+			'filterType' => GridView::FILTER_DATE_RANGE,
+			'filterWidgetOptions' => [
+				'pluginOptions' => [
+					'locale' => [
+						'format' => 'DD.MM.YYYY',
+						'separator' => ' по '
+					],
+					'autoclose' => true,
+					'format' => 'DD.MM.YYYY',
+					'separator' => ' по ',
+					'alwaysShowCalendars' => true
+				],
+//				'presetDropdown' => true
+			],
+			'attribute' => 'at',
+			'value' => 'at',
 		],
 		[
 			'attribute' => 'username',

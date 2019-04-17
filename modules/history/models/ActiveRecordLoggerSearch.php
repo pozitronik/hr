@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -19,7 +20,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 	 */
 	public function rules():array {
 		return [
-			[['actions', 'username'], 'safe']
+			[['actions', 'username', 'at'], 'safe']
 		];
 	}
 
@@ -54,7 +55,9 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 //		$query->distinct();
 		$query->joinWith(['userModel']);
 		$query->andFilterWhere(['like', 'sys_users.username', $this->username]);
+		$query->andFilterDateBetween('at', $this->at);
 
+		Yii::debug($query->createCommand()->rawSql,'sql');
 		return $dataProvider;
 	}
 

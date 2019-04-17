@@ -62,6 +62,13 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	}
 
 	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function rules():array {
