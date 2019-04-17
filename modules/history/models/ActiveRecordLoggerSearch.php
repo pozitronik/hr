@@ -8,8 +8,19 @@ use yii\data\ActiveDataProvider;
 /**
  * Class ActiveRecordLoggerSearch
  * @package app\modules\history\models
+ *
  */
 class ActiveRecordLoggerSearch extends ActiveRecordLogger {
+	public $actions;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function rules():array {
+		return [
+			[['actions'], 'safe']
+		];
+	}
 
 	/**
 	 * @param array $params
@@ -29,7 +40,8 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 				'id',
 				'at',
 				'user',
-				'model'
+				'model',
+				'actions'
 			]
 		]);
 
@@ -42,4 +54,5 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 
 		return $dataProvider;
 	}
+
 }
