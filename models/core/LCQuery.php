@@ -37,31 +37,30 @@ class LCQuery extends ActiveQuery {
 	/**
 	 * В некоторых поисковых моделях часто используется такое условие: если в POST передана дата, то искать все записи за неё, иначе игнорировать
 	 * @param string|array $field
-	 * @param string $value
+	 * @param string|null $value
 	 * @param boolean $formatted_already - true: принять дату как уже форматированную в Y-m-d (для тех случаев, где Женька сделал так)
 	 * @return ActiveQuery
 	 * @throws Throwable
 	 */
-	public function andFilterDateBetween($field, string $value, bool $formatted_already = false):ActiveQuery {
-		if (!empty($value)) {
-			$date = explode(' ', $value);
-			$start = ArrayHelper::getValue($date, 0);
-			$stop = ArrayHelper::getValue($date, 2);//$date[1] is delimiter
+	public function andFilterDateBetween($field, ?string $value, bool $formatted_already = false):ActiveQuery {
+		if (null === $value) return $this;
 
-			if (Date::isValidDate($start, $formatted_already?'Y-m-d':'d.m.Y') && Date::isValidDate($stop, $formatted_already?'Y-m-d':'d.m.Y')) {/*Проверяем даты на валидность*/
-				if (is_array($field)) {
-					return $this->andFilterWhere([
-						$field[0] => self::extractDate($start, $formatted_already),
-						$field[1] => self::extractDate($stop, $formatted_already)
-					]);
-				}
+		$date = explode(' ', $value);
+		$start = ArrayHelper::getValue($date, 0);
+		$stop = ArrayHelper::getValue($date, 2);//$date[1] is delimiter
 
+		if (Date::isValidDate($start, $formatted_already?'Y-m-d':'d.m.Y') && Date::isValidDate($stop, $formatted_already?'Y-m-d':'d.m.Y')) {/*Проверяем даты на валидность*/
+			if (is_array($field)) {
 				return $this->andFilterWhere([
-					'between', $field, self::extractDate($start, $formatted_already).' 00:00:00',
-					self::extractDate($stop, $formatted_already).' 23:59:00'
+					$field[0] => self::extractDate($start, $formatted_already),
+					$field[1] => self::extractDate($stop, $formatted_already)
 				]);
 			}
 
+			return $this->andFilterWhere([
+				'between', $field, self::extractDate($start, $formatted_already).' 00:00:00',
+				self::extractDate($stop, $formatted_already).' 23:59:00'
+			]);
 		}
 
 		return $this;
