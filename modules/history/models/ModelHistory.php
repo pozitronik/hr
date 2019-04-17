@@ -184,13 +184,7 @@ class ModelHistory extends Model {
 	public function getHistoryEvent(ActiveRecordLoggerInterface $logRecord):HistoryEventInterface {
 		$result = new HistoryEvent();
 
-		if ([] === $logRecord->old_attributes) {
-			$result->eventType = HistoryEvent::EVENT_CREATED;
-		} elseif ([] === $logRecord->new_attributes) {
-			$result->eventType = HistoryEvent::EVENT_DELETED;
-		} else {
-			$result->eventType = HistoryEvent::EVENT_CHANGED;
-		}
+		$result->eventType = $logRecord->event_type;
 
 		$result->eventTime = $logRecord->timestamp;
 		$result->objectName = $logRecord->model;
