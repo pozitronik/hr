@@ -15,6 +15,8 @@ use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 
+$this->title = 'История';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= GridView::widget([
