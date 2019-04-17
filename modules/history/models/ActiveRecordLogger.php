@@ -45,7 +45,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	/**
 	 * {@inheritDoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'at' => 'Время события',
@@ -140,6 +140,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 
 	/**
 	 * @return Users|null
+	 * @throws Throwable
 	 */
 	public function getUserModel():?Users {
 		return Users::findModel($this->user);
@@ -147,7 +148,6 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 
 	/**
 	 * Переводит запись из лога в событие истории
-	 * @param ActiveRecordLoggerInterface $logRecord
 	 * @return HistoryEventInterface
 	 * @throws Throwable
 	 */
@@ -182,6 +182,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws Throwable
 	 */
 	public function getEventActions():array {
+		$diff = [];
 		$modelClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($this->model), null, false);
 
 		$labels = null === $modelClass?[]:$modelClass->attributeLabels();

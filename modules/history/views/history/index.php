@@ -31,7 +31,7 @@ use yii\web\View;
 	'responsive' => true,
 	'columns' => [
 		[
-			'attribute' => 'at',
+			'attribute' => 'at'
 		],
 		[
 			'attribute' => 'userModel',
