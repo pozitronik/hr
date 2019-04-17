@@ -33,7 +33,7 @@ class UserAccess extends Model {
 		if (null === $user = CurrentUser::User()) return [];
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
-		$defaultAllow = ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
+		$defaultAllow = ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
 		if ($user->is('sysadmin')) $defaultAllow = true;
 
 		$actions = CoreController::GetControllerActions($controller);
@@ -84,7 +84,7 @@ class UserAccess extends Model {
 			}
 
 		}
-		return ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
+		return ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
 	}
 
 	/**
@@ -112,7 +112,7 @@ class UserAccess extends Model {
 			}
 
 		}
-		return ArrayHelper::getValue(Yii::$app->params, 'AccessDefaultMode', $defaultAllow);
+		return ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
 	}
 
 }
