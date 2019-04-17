@@ -5,6 +5,7 @@ namespace app\modules\history\models;
 
 use app\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
+use app\modules\users\models\Users;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
@@ -20,6 +21,8 @@ use yii\db\ActiveRecord;
  * @property array $old_attributes
  * @property array $new_attributes
  * @property-read int $event_type
+ *
+ * @property-read Users|null $userModel
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
 
@@ -30,6 +33,9 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		return 'sys_log';
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function attributeLabels() {
 		return [
 			'id' => 'ID',
@@ -39,7 +45,8 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 			'model' => 'Источник',
 			'old_attributes' => 'Было',
 			'new_attributes' => 'Стало',
-			'event_type' => 'Тип события'
+			'event_type' => 'Тип события',
+			'userModel' => 'Пользователь'
 		];
 	}
 
@@ -122,4 +129,10 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		return HistoryEvent::EVENT_CHANGED;
 	}
 
+	/**
+	 * @return Users|null
+	 */
+	public function getUserModel():?Users {
+		return Users::findModel($this->user);
+	}
 }
