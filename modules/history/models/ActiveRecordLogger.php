@@ -57,7 +57,8 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 			'new_attributes' => 'Стало',
 			'eventType' => 'Тип события',
 			'userModel' => 'Пользователь',
-			'username' => 'Пользователь'
+			'username' => 'Пользователь',
+			'actions' => 'События'
 		];
 	}
 

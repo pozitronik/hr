@@ -37,6 +37,7 @@ class ReflectionHelper {
 	/**
 	 * Инициализирует рефлектор, но не загружает класс
 	 * @param string|object $className Имя класса/экземпляр класса
+	 * @param bool $throwOnFail true - упасть при ошибке, false - вернуть null
 	 * @return ReflectionClass|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
@@ -45,7 +46,7 @@ class ReflectionHelper {
 		if (is_string($className) && !class_exists($className)) Yii::autoload($className);
 		try {
 			return new ReflectionClass($className);
-		} catch (Throwable $t) {
+		} catch (ReflectionException $t) {
 			if ($throwOnFail) throw $t;
 		}
 		return null;
@@ -113,6 +114,7 @@ class ReflectionHelper {
 	 * @throws UnknownClassException
 	 */
 	public static function GetClassShortName(string $className):string {
+		/** @noinspection NullPointerExceptionInspection */
 		return self::New($className)->getShortName();
 	}
 
@@ -124,6 +126,7 @@ class ReflectionHelper {
 	 * @throws UnknownClassException
 	 */
 	public static function GetMethods(object $model, int $filter = ReflectionMethod::IS_PUBLIC):array {
+		/** @noinspection NullPointerExceptionInspection */
 		return self::New($model)->getMethods($filter);
 	}
 

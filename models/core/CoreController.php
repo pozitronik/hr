@@ -108,6 +108,7 @@ class CoreController extends Controller {
 	public static function LoadControllerClassFromFile(string $fileName, ?string $moduleId, ?array $parentClassFilter = null):?object {
 		$className = ReflectionHelper::GetClassNameFromFile($fileName);
 		$class = ReflectionHelper::New($className);
+		/** @noinspection NullPointerExceptionInspection */
 		if (ReflectionHelper::IsInSubclassOf($class, $parentClassFilter)) {
 			if (null === $moduleId) {
 				$module = Yii::$app;

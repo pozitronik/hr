@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models;
 
+use Throwable;
 use Yii;
 use yii\data\ActiveDataProvider;
 
@@ -28,6 +29,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 	 * @param array $params
 	 * @param bool $pagination
 	 * @return ActiveDataProvider
+	 * @throws Throwable
 	 */
 	public function search(array $params, $pagination = true):ActiveDataProvider {
 		$query = ActiveRecordLogger::find();
@@ -43,7 +45,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 				'at',
 				'userModel',
 				'modelKey',
-				'model',
+				'model'
 			]
 		]);
 

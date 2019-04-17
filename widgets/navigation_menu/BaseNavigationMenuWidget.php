@@ -39,6 +39,7 @@ class BaseNavigationMenuWidget extends Widget {
 	 * Перекрываем getViewPath, чтобы путь к вьюхам возвращался для ЭТОГО виджета, а не для наследующей модели
 	 */
 	public function getViewPath():string {
+		/** @noinspection NullPointerExceptionInspection */
 		return dirname(ReflectionHelper::New(self::class)->getFileName()).DIRECTORY_SEPARATOR.'views';
 	}
 

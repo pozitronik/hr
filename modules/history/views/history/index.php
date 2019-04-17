@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //				'presetDropdown' => true
 			],
 			'attribute' => 'at',
-			'value' => 'at',
+			'value' => 'at'
 		],
 		[
 			'attribute' => 'username',
@@ -72,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'actions',
+			'filter' => false,
 			'format' => 'raw',
 			'value' => static function(ActiveRecordLogger $model) {
 				return $model->event->timelineEntry->content;

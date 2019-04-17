@@ -24,6 +24,7 @@ class HistoryController extends WigetableController {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionIndex():string {
 		$params = Yii::$app->request->queryParams;
