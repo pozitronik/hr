@@ -253,7 +253,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public function getHistory(string $className, int $modelKey):array {
+	public function getHistory(string $className, int $modelKey):array {/*А зачем возвращать массив, когда можно просто сконфигурировать запрос а-ля find() и юзать его в датапровайдере? Подумать.*/
 		if (null === $askedClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($className), null, false)) {//не получилось сопоставить класс модели, грузим as is
 			return self::find()->where(['model' => $className, 'model_key' => $modelKey])->orderBy('at')->all();
 		}
