@@ -37,13 +37,18 @@ class ReflectionHelper {
 	/**
 	 * Инициализирует рефлектор, но не загружает класс
 	 * @param string|object $className Имя класса/экземпляр класса
-	 * @return ReflectionClass
+	 * @return ReflectionClass|null
 	 * @throws ReflectionException
 	 * @throws UnknownClassException
 	 */
-	public static function New($className):ReflectionClass {
+	public static function New($className, $throwOnFail = true):?ReflectionClass {
 		if (is_string($className) && !class_exists($className)) Yii::autoload($className);
-		return new ReflectionClass($className);
+		try {
+			return new ReflectionClass($className);
+		} catch (Throwable $t) {
+			if ($throwOnFail) throw $t;
+		}
+		return null;
 	}
 
 	/**
@@ -57,7 +62,7 @@ class ReflectionHelper {
 	 * @throws UnknownClassException
 	 */
 	public static function LoadClassByName(string $className, ?array $parentClassFilter = null, $throwOnFail = true):?object {
-		$class = self::New($className);
+		if (null === $class = self::New($className, $throwOnFail)) return null;
 		if (self::IsInSubclassOf($class, $parentClassFilter)) return new $className;
 		if ($throwOnFail) throw new InvalidConfigException("Class $className not found in application scope!");
 		return null;
