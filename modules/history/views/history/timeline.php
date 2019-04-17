@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var HistoryEventInterface[] $timeline
+ * @var ActiveRecordLoggerInterface[] $timeline
  */
 
-use app\modules\history\models\HistoryEventInterface;
+use app\modules\history\models\ActiveRecordLoggerInterface;
 use app\modules\history\widgets\timeline_entry\TimelineEntryWidget;
 use yii\web\View;
 
@@ -18,9 +18,9 @@ use yii\web\View;
 	<div class="timeline-header">
 		<div class="timeline-header-title bg-primary">Начало</div>
 	</div>
-	<?php foreach ($timeline as $populatedEvent): ?>
+	<?php foreach ($timeline as $loggerEvent): ?>
 		<?= TimelineEntryWidget::widget([
-			'entry' => $populatedEvent->asTimelineEntry()
+			'entry' => $loggerEvent->event->timelineEntry
 		]) ?>
 
 	<?php endforeach; ?>
