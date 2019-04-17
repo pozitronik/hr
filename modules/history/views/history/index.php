@@ -7,18 +7,9 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\ArrayHelper;
-use app\helpers\Icons;
 use app\helpers\Utils;
+use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
-use app\modules\privileges\models\Privileges;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
-use app\modules\salary\models\references\RefUserPositions;
-use app\modules\users\models\references\RefUserRoles;
-use app\modules\users\models\Users;
-use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use app\widgets\badge\BadgeWidget;
-use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
@@ -32,10 +23,35 @@ use yii\web\View;
 	'panel' => [
 		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['запись', 'записи', 'записей']).")":" (нет записей)")
 	],
-	'summary' => null,
+	'summary' => false,
 	'showOnEmpty' => false,
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
 	'responsive' => true,
+	'columns' => [
+		[
+			'attribute' => 'at',
+		],
+		[
+			'attribute' => 'userModel',
+			'value' => static function(ActiveRecordLogger $model) {
+				return null === $model->user?'System':Html::a($model->userModel->username, ['/users/users/profile', 'id' => $model->user]);
+			},
+			'format' => 'raw'
+		],
+		[
+			'attribute' => 'model'
+		],
+		[
+			'attribute' => 'model_key'
+		],
+		[
+			'attribute' => 'actions',
+			'format' => 'raw',
+			'value' => static function(ActiveRecordLogger $model) {
+				return $model->event->timelineEntry->content;
+			}
+		]
+	]
 ]) ?>
