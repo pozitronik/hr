@@ -12,6 +12,8 @@ namespace app\modules\history\models;
  * @property int $model_key
  * @property array $old_attributes
  * @property array $new_attributes
+ *
+ * @property int $event_type
  */
 interface ActiveRecordLoggerInterface {
 
