@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var TimelineEntry $entry ;
+ * @var TimelineEntry $entry
  */
 
 use app\helpers\ArrayHelper;
