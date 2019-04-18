@@ -34,6 +34,7 @@ use yii\i18n\Formatter;
 		],
 		[
 			'class' => DataColumn::class,
+			'enableSorting' => false,
 			'attribute' => 'attributeName',
 			'width' => '20%'
 		],
