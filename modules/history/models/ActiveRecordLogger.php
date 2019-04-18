@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 declare(strict_types = 1);
 
 namespace app\modules\history\models;
@@ -184,8 +184,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 						} else $toCondition = true;
 
 						if ($fromCondition && $toCondition) return $eventType;
-
-					} else if ($condition == ArrayHelper::getValue($this->new_attributes, $attribute)) return $eventType;
+					} else  if ($condition == ArrayHelper::getValue($this->new_attributes, $attribute)) return $eventType;
 				}
 			}
 		}
