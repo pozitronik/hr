@@ -317,7 +317,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		/** @var LCQuery $findCondition */
 		$findCondition = self::find()->where(['model' => $requestModel->formName(), 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 		/** @var array $relationsRules */
-		$relationsRules = $this->getModelRules('relations');
+		if (null === $relationsRules = $this->getModelRules('relations')) $relationsRules = [];
 		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
 			/** @var ActiveRecord $relatedModel */
 			$relatedModel = ReflectionHelper::LoadClassByName($relatedModelClassName);
