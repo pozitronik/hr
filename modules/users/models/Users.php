@@ -115,7 +115,7 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					return $condition;
 				}
 			],
-			'events' => [//todo: документировать
+			'events' => [
 				HistoryEventInterface::EVENT_DELETED => [
 					'deleted' => [
 						'from' => false,
