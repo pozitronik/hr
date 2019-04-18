@@ -10,6 +10,7 @@ use app\models\core\helpers\ReflectionHelper;
 use app\models\core\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
+use ReflectionClass;
 use ReflectionException;
 use Throwable;
 use Yii;
@@ -17,7 +18,6 @@ use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\ActiveRecordInterface;
 
 /**
  * Class ActiveRecordLogger
@@ -34,6 +34,8 @@ use yii\db\ActiveRecordInterface;
  * @property-read ActiveQuery|Users|null $userModel
  * @property-read HistoryEventInterface $event
  * @property-read HistoryEventAction[] $eventActions
+ *
+ * @property object|ReflectionClass|null $loadedModel Прогруженная (если есть возможность) модель указанного в логе класса
  */
 class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInterface {
 
@@ -141,6 +143,27 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	}
 
 	/**
+	 * @return object|ReflectionClass|null
+	 * @throws InvalidConfigException
+	 * @throws ReflectionException
+	 * @throws Throwable
+	 * @throws UnknownClassException
+	 */
+	public function getLoadedModel() {
+		return ReflectionHelper::LoadClassByName(self::ExpandClassName($this->model), null, false);
+	}
+
+	/**
+	 * @param string $key
+	 * @return mixed|null
+	 * @throws Throwable
+	 */
+	private function getModelRules(string $key) {
+		if (null === $this->loadedModel) return null;
+		return ArrayHelper::getValue($this->loadedModel->historyRules(), $key);
+	}
+
+	/**
 	 * @return int
 	 */
 	public function getEventType():int {
@@ -173,16 +196,15 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		$result->eventIcon = Icons::event_icon($result->eventType);
 		$result->actions = $this->eventActions;
 
-		if (null !== $logRecordedModel = ReflectionHelper::LoadClassByName(self::ExpandClassName($this->model), null, false)) {
-			if (null !== $labelsConfig = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.eventLabels")) {
-				if (is_callable($labelsConfig)) {
-					$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
-				} elseif (is_array($labelsConfig)) {
-					$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
-				} else $result->eventCaption = $labelsConfig;
-			}
-			$result->actionsFormatter = ArrayHelper::getValue($logRecordedModel->historyRules(), "eventConfig.actionsFormatter");
-		}
+		$labelsConfig = $this->getModelRules("eventConfig.eventLabels");
+
+		if (is_callable($labelsConfig)) {
+			$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
+		} elseif (is_array($labelsConfig)) {
+			$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
+		} else $result->eventCaption = $labelsConfig;
+
+		$result->actionsFormatter = $this->getModelRules("eventConfig.actionsFormatter");
 
 		return $result;
 	}
@@ -194,22 +216,21 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 */
 	public function getEventActions():array {
 		$diff = [];
-		$modelClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($this->model), null, false);
 
-		$labels = null === $modelClass?[]:$modelClass->attributeLabels();
+		$labels = null === $this->loadedModel?[]:$this->loadedModel->attributeLabels();
 
 		foreach ($this->old_attributes as $attributeName => $attributeValue) {
 			if (isset($this->new_attributes[$attributeName])) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => self::SubstituteAttributeValue($attributeName, $attributeValue, $modelClass),
+					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue),
 					'type' => HistoryEventAction::ATTRIBUTE_CHANGED,
-					'attributeNewValue' => self::SubstituteAttributeValue($attributeName, $this->new_attributes[$attributeName], $modelClass)
+					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $this->new_attributes[$attributeName])
 				]);
 			} else {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeOldValue' => self::SubstituteAttributeValue($attributeName, $attributeValue, $modelClass),
+					'attributeOldValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue),
 					'type' => HistoryEventAction::ATTRIBUTE_DELETED
 				]);
 
@@ -221,7 +242,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 			if (!isset($this->old_attributes[$attributeName]) || null === ArrayHelper::getValue($this->old_attributes, $attributeName)) {
 				$diff[] = new HistoryEventAction([
 					'attributeName' => ArrayHelper::getValue($labels, $attributeName, $attributeName),
-					'attributeNewValue' => self::SubstituteAttributeValue($attributeName, $attributeValue, $modelClass),
+					'attributeNewValue' => $this->SubstituteAttributeValue($attributeName, $attributeValue),
 					'type' => HistoryEventAction::ATTRIBUTE_CREATED
 				]);
 			}
@@ -233,16 +254,15 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	/**
 	 * @param string $attributeName Название атрибута, для которого пытаемся найти подстановку
 	 * @param mixed $attributeValue Значение атрибута, которому ищем соответствие
-	 * @param ActiveRecordExtended|null|object $substitutionClass AR-класс, по записям которого будем искать соответствие
 	 * @return mixed Подстановленное значение (если найдено, иначе переданное значение)
 	 * @throws InvalidConfigException
 	 * @throws ReflectionException
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	private static function SubstituteAttributeValue(string $attributeName, $attributeValue, ?ActiveRecordExtended $substitutionClass) {
-		if (null === $substitutionClass) return $attributeValue;
-		if (null === $attributeConfig = ArrayHelper::getValue($substitutionClass->historyRules(), "attributes.{$attributeName}")) return $attributeValue;
+	private function SubstituteAttributeValue(string $attributeName, $attributeValue) {
+		if (null === $this->loadedModel) return $attributeValue;
+		if (null === $attributeConfig = $this->getModelRules("attributes.{$attributeName}")) return $attributeValue;
 		if (false === $attributeConfig) return false;//не показывать атрибут
 		if (is_callable($attributeConfig)) {
 			return $attributeConfig($attributeName, $attributeValue);
