@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
@@ -37,7 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
 		'class' => Formatter::class,
 		'nullDisplay' => ''
 	],
-		'columns' => [
+	'columns' => [
+		[
+			'attribute' => 'eventType',
+			'value' => static function(ActiveRecordLogger $model) {
+				return Icons::event_icon($model->eventType);
+			},
+			'format' => 'raw'
+		],
 		[
 			'class' => DataColumn::class,
 			'filterType' => GridView::FILTER_DATE_RANGE,
@@ -65,10 +73,20 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw'
 		],
 		[
-			'attribute' => 'model'
+			'attribute' => 'model',
+			'value' => static function(ActiveRecordLogger $model) {
+				return null === $model->model_key?$model->model:Html::a($model->model, ['show', 'for' => $model->model, 'id' => $model->model_key]);
+			},
+			'format' => 'raw'
+
 		],
 		[
-			'attribute' => 'model_key'
+			'attribute' => 'model_key',
+			'value' => static function(ActiveRecordLogger $model) {
+				return null === $model->model_key?$model->model_key:Html::a($model->model_key, ['show', 'for' => $model->model, 'id' => $model->model_key]);
+			},
+			'format' => 'raw'
+
 		],
 		[
 			'attribute' => 'actions',

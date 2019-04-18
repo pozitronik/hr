@@ -74,7 +74,6 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 	 */
 	public static function ActionsFormatterDefault(array $actions):string {
 		return Yii::$app->view->render('actions', ['actions' => $actions]);
-
 	}
 
 	/**
