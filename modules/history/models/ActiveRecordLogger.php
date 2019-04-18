@@ -17,6 +17,7 @@ use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\ActiveRecordInterface;
 
 /**
  * Class ActiveRecordLogger
@@ -276,6 +277,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		/** @var array $relationsRules */
 		$relationsRules = ArrayHelper::getValue($modelHistoryRules, 'relations', []);
 		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
+			/** @var ActiveRecord $relatedModel */
 			$relatedModel = ReflectionHelper::LoadClassByName($relatedModelClassName);
 			if (is_callable($relationRule)) {
 				$relationRule($findCondition, $relatedModel);
@@ -283,7 +285,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 				$linkKey = ArrayHelper::key($relationRule);
 				$linkValue = $relationRule[$linkKey];
 				$modelKey = $requestModel->$linkKey;
-				$findCondition->orWhere("model = '{$relatedModelClassName}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
+				$findCondition->orWhere("model = '{$relatedModel->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
 			} else throw new InvalidConfigException('Relation rule must be array or callable instance!');
 		}
 		return $findCondition->orderBy('at')->all();
