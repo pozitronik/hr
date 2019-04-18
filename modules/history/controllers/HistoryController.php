@@ -47,10 +47,12 @@ class HistoryController extends WigetableController {
 	 * @throws UnknownClassException
 	 */
 	public function actionShow(string $for, int $id):string {
-		$logger = new ActiveRecordLogger();
+		$logger = new ActiveRecordLogger([
+			'model' => $for
+		]);
 
 		return $this->render('timeline', [
-			'timeline' => $logger->getHistory($for, $id)
+			'timeline' => $logger->getHistory($id)
 		]);
 	}
 
