@@ -12,6 +12,7 @@ use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\LCQuery;
+use app\modules\history\models\HistoryEventInterface;
 use app\modules\salary\models\traits\UsersSalaryTrait;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
@@ -113,6 +114,14 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 					if (!empty($ids)) $condition->orWhere("model = '{$model->formName()}' and (new_attributes->'$.user_group_id' in ({$ids}) or old_attributes->'$.user_group_id' in ({$ids}))");
 					return $condition;
 				}
+			],
+			'events' => [//todo: документировать
+				HistoryEventInterface::EVENT_DELETED => [
+					'deleted' => [
+						'from' => false,
+						'to' => true
+					]
+				]
 			]
 		];
 	}

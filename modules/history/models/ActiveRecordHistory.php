@@ -44,7 +44,7 @@ class ActiveRecordHistory extends ActiveRecord {
 	 * ]
 	 * @return array
 	 */
-	public function historyRules():array {//todo: Добавить схему переопределения событий, типа изменение такое-то - это удаление
+	public function historyRules():array {
 		return [];
 	}
 

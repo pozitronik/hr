@@ -165,11 +165,35 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 
 	/**
 	 * @return int
+	 * @throws Throwable
 	 */
 	public function getEventType():int {
+		if (null !== $eventsConfig = $this->getModelRules("events")) {
+			/** @var array $eventRule */
+			foreach ($eventsConfig as $eventType => $eventRule) {
+				foreach ($eventRule as $attribute => $condition) {
+					if (is_array($condition)) {
+						$oldAssumedValue = ArrayHelper::getValue($condition, 'from');
+						$newAssumedValue = ArrayHelper::getValue($condition, 'to');
+						if (null !== $oldAssumedValue) {
+							$fromCondition = $oldAssumedValue == ArrayHelper::getValue($this->old_attributes, $attribute);//не используем строгое сравнение
+						} else $fromCondition = true;
+
+						if (null !== $newAssumedValue) {
+							$toCondition = $newAssumedValue == ArrayHelper::getValue($this->new_attributes, $attribute);
+						} else $toCondition = true;
+
+						if ($fromCondition && $toCondition) return $eventType;
+
+					} else if ($condition == ArrayHelper::getValue($this->new_attributes, $attribute)) return $eventType;
+				}
+			}
+		}
+
 		if ([] === $this->old_attributes) return HistoryEvent::EVENT_CREATED;
 		if ([] === $this->new_attributes) return HistoryEvent::EVENT_DELETED;
 		return HistoryEvent::EVENT_CHANGED;
+
 	}
 
 	/**
