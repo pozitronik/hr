@@ -20,9 +20,8 @@ interface ActiveRecordLoggerInterface {
 
 	/**
 	 * Вернуть историю запрошенного объекта
-	 * @param string $className
 	 * @param int $modelKey
 	 * @return self[]
 	 */
-	public function getHistory(string $className, int $modelKey):array;
+	public function getHistory(int $modelKey):array;
 }

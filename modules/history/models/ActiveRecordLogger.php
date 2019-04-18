@@ -277,7 +277,6 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	}
 
 	/**
-	 * @param string $className
 	 * @param int $modelKey
 	 * @return ActiveRecordLoggerInterface[]
 	 * @throws InvalidConfigException
@@ -285,17 +284,16 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @throws Throwable
 	 * @throws UnknownClassException
 	 */
-	public function getHistory(string $className, int $modelKey):array {/*А зачем возвращать массив, когда можно просто сконфигурировать запрос а-ля find() и юзать его в датапровайдере? Подумать.*/
-		if (null === $askedClass = ReflectionHelper::LoadClassByName(self::ExpandClassName($className), null, false)) {//не получилось сопоставить класс модели, грузим as is
-			return self::find()->where(['model' => $className, 'model_key' => $modelKey])->orderBy('at')->all();
+	public function getHistory(int $modelKey):array {/*А зачем возвращать массив, когда можно просто сконфигурировать запрос а-ля find() и юзать его в датапровайдере? Подумать.*/
+		if (null === $this->loadedModel) {//не получилось сопоставить класс модели, грузим as is
+			return self::find()->where(['model' => $this->model, 'model_key' => $modelKey])->orderBy('at')->all();
 		}
-		$requestModel = $askedClass::findModel($modelKey);
-		$modelHistoryRules = $requestModel->hasMethod('historyRules')?$requestModel->historyRules():[];
+		$requestModel = $this->loadedModel::findModel($modelKey);
 
 		/** @var LCQuery $findCondition */
 		$findCondition = self::find()->where(['model' => $requestModel->formName(), 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 		/** @var array $relationsRules */
-		$relationsRules = ArrayHelper::getValue($modelHistoryRules, 'relations', []);
+		$relationsRules = $this->getModelRules('relations');
 		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
 			/** @var ActiveRecord $relatedModel */
 			$relatedModel = ReflectionHelper::LoadClassByName($relatedModelClassName);
