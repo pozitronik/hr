@@ -45,7 +45,7 @@ class RefModels extends Model implements ReferenceInterface {
 	 * @return array
 	 */
 	public function getColumns():array {
-		// TODO: Implement getColumns() method.
+		return [];//Виртуальный справочник
 	}
 
 	/**
@@ -53,7 +53,7 @@ class RefModels extends Model implements ReferenceInterface {
 	 * @return array
 	 */
 	public function getView_columns():array {
-		// TODO: Implement getView_columns() method.
+		return [];//Виртуальный справочник
 	}
 
 	/**
@@ -61,7 +61,7 @@ class RefModels extends Model implements ReferenceInterface {
 	 * @return string|false
 	 */
 	public function getForm():string {
-		// TODO: Implement getForm() method.
+		return '';
 	}
 
 	/**
@@ -69,14 +69,13 @@ class RefModels extends Model implements ReferenceInterface {
 	 * @return string|null
 	 */
 	public function getPluginId():?string {
-		// TODO: Implement getPluginId() method.
+		return null;//справочник не базовый, но поддержка не нужна
 	}
 
 	/**
 	 * @param string|null $pluginId
 	 */
 	public function setPluginId(?string $pluginId):void {
-		// TODO: Implement setPluginId() method.
 	}
 
 	/**
@@ -85,14 +84,14 @@ class RefModels extends Model implements ReferenceInterface {
 	 * @return ActiveQuery
 	 */
 	public function search(array $params):ActiveQuery {
-		// TODO: Implement search() method.
+		return null;
 	}
 
 	/**
 	 * @return array|false
 	 */
 	public function getSearchSort():?array {
-		// TODO: Implement getSearchSort() method.
+		return null;
 	}
 
 	/**
