@@ -15,10 +15,10 @@ use yii\db\ActiveQuery;
  * @property-read string $ref_name
  * @property-read array $columns
  * @property-read array $view_columns
- * @property-read string|false $form
+ * @property-read string $form
  * @property-read string $title
  * @property-read integer $usedCount
- * @property-read array|false $searchSort
+ * @property-read array $searchSort
  */
 interface ReferenceInterface {
 
@@ -66,7 +66,7 @@ interface ReferenceInterface {
 	public function search(array $params):ActiveQuery;
 
 	/**
-	 * @return array|false
+	 * @return array
 	 */
 	public function getSearchSort():?array;
 
