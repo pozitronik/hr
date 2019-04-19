@@ -21,7 +21,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 	 */
 	public function rules():array {
 		return [
-			[['actions', 'username', 'at'], 'safe']
+			[['actions', 'username', 'at', 'model'], 'safe']
 		];
 	}
 
@@ -57,9 +57,10 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 //		$query->distinct();
 		$query->joinWith(['userModel']);
 		$query->andFilterWhere(['like', 'sys_users.username', $this->username]);
+		$query->andFilterWhere(['in', 'model', $this->model]);
 		$query->andFilterDateBetween('at', $this->at);
 
-		Yii::debug($query->createCommand()->rawSql,'sql');
+		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 
