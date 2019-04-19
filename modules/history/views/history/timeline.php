@@ -9,7 +9,8 @@ declare(strict_types = 1);
 use app\modules\history\models\ActiveRecordLoggerInterface;
 use app\modules\history\widgets\timeline_entry\TimelineEntryWidget;
 use yii\web\View;
-
+$this->title = 'История изменений';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="timeline">
