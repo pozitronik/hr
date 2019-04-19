@@ -11,8 +11,11 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
+use app\modules\history\models\references\RefModels;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use kartik\select2\Select2;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\i18n\Formatter;
@@ -73,11 +76,23 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw'
 		],
 		[
+			'class' => DataColumn::class,
 			'attribute' => 'model',
 			'value' => static function(ActiveRecordLogger $model) {
 				return null === $model->model_key?$model->model:Html::a($model->model, ['show', 'for' => $model->model, 'id' => $model->model_key]);
 			},
-			'format' => 'raw'
+			'format' => 'raw',
+			'filter' => $searchModel->model,
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Фильтр по источнику'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefModels::class,
+				'size' => Select2::SMALL,
+				'showEditAddon' => false,
+				'pluginOptions' => [
+					'allowClear' => true, 'multiple' => true
+				]
+			]
 
 		],
 		[
