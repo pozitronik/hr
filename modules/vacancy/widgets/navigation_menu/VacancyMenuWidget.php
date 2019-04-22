@@ -4,12 +4,14 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\widgets\navigation_menu;
 
 use app\helpers\Icons;
+use app\modules\vacancy\models\Vacancy;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use yii\base\InvalidConfigException;
 
 /**
  * Class VacancyMenuWidget
  * @package app\modules\vacancy\widgets\navigation_menu
+ * @property Vacancy $model
  */
 class VacancyMenuWidget extends BaseNavigationMenuWidget {
 
