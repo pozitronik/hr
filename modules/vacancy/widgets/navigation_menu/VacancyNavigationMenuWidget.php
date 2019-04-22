@@ -13,7 +13,7 @@ use yii\base\InvalidConfigException;
  * @package app\modules\vacancy\widgets\navigation_menu
  * @property Vacancy $model
  */
-class VacancyMenuWidget extends BaseNavigationMenuWidget {
+class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 
 	/**
 	 * Функция возврата результата рендеринга виджета

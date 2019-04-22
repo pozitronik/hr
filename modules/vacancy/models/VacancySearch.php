@@ -14,6 +14,15 @@ use yii\data\ActiveDataProvider;
 class VacancySearch extends Vacancy {
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public function rules():array {
+		return [
+			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'create_date', 'close_date', 'estimated_close_date'], 'safe']
+		];
+	}
+
+	/**
 	 * @param array $params
 	 * @param bool $pagination
 	 * @return ActiveDataProvider

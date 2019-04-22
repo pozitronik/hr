@@ -11,6 +11,8 @@ use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\vacancy\models\references\RefVacancyRecruiters;
+use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\widgets\alert\AlertModel;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
@@ -39,6 +41,8 @@ use yii\db\Exception;
  * @property Groups|ActiveQuery $relGroup
  * @property RefUserPositions $relRefUserPosition
  * @property RefLocations $relRefLocation
+ * @property RefVacancyStatuses $relRefVacancyStatus
+ * @property RefVacancyRecruiters $relRefVacancyRecruiter
  */
 class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	/**
@@ -56,7 +60,8 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'daddy'], 'integer'],
 			[['group', 'position', 'create_date', 'daddy'], 'required'],
 			[['create_date', 'close_date', 'estimated_close_date'], 'safe'],
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			[['vacancy_id', 'ticket_id'], 'unique']
 		];
 	}
 
@@ -139,7 +144,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	/**
 	 * @return RefUserPositions|ActiveQuery
 	 */
-	public function getRelRefUserPosition(){
+	public function getRelRefUserPosition() {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
@@ -148,5 +153,19 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function getRelRefLocation() {
 		return $this->hasOne(RefLocations::class, ['id' => 'location']);
+	}
+
+	/**
+	 * @return RefVacancyStatuses|ActiveQuery
+	 */
+	public function getRelRefVacancyStatus() {
+		return $this->hasOne(RefVacancyStatuses::class, ['id' => 'status']);
+	}
+
+	/**
+	 * @return RefVacancyRecruiters|ActiveQuery
+	 */
+	public function getRelRefVacancyRecruiter() {
+		return $this->hasOne(RefVacancyRecruiters::class, ['id' => 'recruiter']);
 	}
 }

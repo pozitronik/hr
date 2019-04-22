@@ -14,7 +14,7 @@ use app\modules\users\widgets\user_select\UserSelectWidget;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
-use app\modules\vacancy\widgets\navigation_menu\VacancyMenuWidget;
+use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<?= VacancyMenuWidget::widget([
+			<?= VacancyNavigationMenuWidget::widget([
 				'model' => $model
 			]) ?>
 		</div>
@@ -34,10 +34,10 @@ use yii\widgets\ActiveForm;
 
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-1">
 				<?= $form->field($model, 'vacancy_id')->textInput() ?>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-1">
 				<?= $form->field($model, 'ticket_id')->textInput() ?>
 			</div>
 			<div class="col-md-3">
