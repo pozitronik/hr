@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models;
 
-use app\modules\history\models\ActiveRecordLogger;
 use Throwable;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -28,7 +27,7 @@ class VacancySearch extends Vacancy {
 		]);
 
 		$dataProvider->setSort([
-			'defaultOrder' => ['id' => SORT_DESC],
+			'defaultOrder' => ['id' => SORT_DESC]
 		]);
 
 		$this->load($params);
