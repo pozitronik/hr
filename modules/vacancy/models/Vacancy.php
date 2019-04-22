@@ -34,7 +34,7 @@ use yii\db\Exception;
  * @property string $close_date Дата закрытия вакансии
  * @property string $estimated_close_date Дата ожидаемого закрытия вакансии
  * @property int $daddy Автор вакансии
- * @preoprty bool $deleted
+ * @property bool $deleted
  *
  * @property Groups|ActiveQuery $relGroup
  * @property RefUserPositions $relRefUserPosition
