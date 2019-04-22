@@ -26,7 +26,7 @@ use yii\helpers\Html;
 class UserSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
 	public $dataMode = self::DATA_MODE_LOAD;
-	public $notData;
+	public $notData = [];
 	public $multiple = false;
 	public $groupByType = true;
 	public $formAction = '';
