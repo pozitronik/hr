@@ -30,7 +30,7 @@ use yii\db\ActiveRecord;
 class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
 	public $dataMode = self::DATA_MODE_LOAD;
-	public $notData;
+	public $notData = [];
 	public $multiple = false;
 	public $groupByType = true;
 	public $formAction = '';
@@ -52,7 +52,7 @@ class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface 
 		if (self::DATA_MODE_LOAD === $this->dataMode) {
 			if ($this->groupByType) {
 				foreach (RefGroupTypes::find()->active()->all() as $groupType) {
-					$data[$groupType->name] = ArrayHelper::map($groups = Groups::find()->active()->where(['type' => $groupType->id])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
+					$data[$groupType->name] = ArrayHelper::map(Groups::find()->active()->where(['type' => $groupType->id])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
 				}
 				$data['Тип не указан'] = ArrayHelper::map(Groups::find()->active()->where(['type' => null])->andWhere(['not in', 'id', ArrayHelper::getColumn($this->notData, 'id')])->all(), 'id', 'name');
 			} else {
