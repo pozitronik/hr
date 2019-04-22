@@ -26,8 +26,8 @@ class m190422_064923_vacancy_table extends Migration {
 			'create_date' => $this->dateTime()->notNull()->comment('Дата заведения вакансии'),
 			'close_date' => $this->dateTime()->null()->defaultValue(null)->comment('Дата закрытия вакансии'),
 			'estimated_close_date' => $this->dateTime()->null()->defaultValue(null)->comment('Дата ожидаемого закрытия вакансии'),
-			'daddy' => $this->integer()->notNull()->comment('Автор вакансии')
-
+			'daddy' => $this->integer()->notNull()->comment('Автор вакансии'),
+			'deleted' => $this->boolean()->notNull()->defaultValue(false)
 		]);
 
 	}
