@@ -12,8 +12,8 @@ use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
-$this->title = 'Изменить зарплатную вилку';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Изменить вакансию');
+$this->title = 'Изменить вакансию';
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Вакансии');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
