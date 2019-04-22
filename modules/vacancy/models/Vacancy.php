@@ -76,7 +76,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'employer' => 'Нанимающий руководитель',
 			'position' => 'Должность',
 			'role' => 'Назначение/роль',
-			'teamlead' => 'teamlead',
+			'teamlead' => 'Тимлид',
 			'create_date' => 'Дата заведения вакансии',
 			'close_date' => 'Дата закрытия вакансии',
 			'estimated_close_date' => 'Дата ожидаемого закрытия вакансии',

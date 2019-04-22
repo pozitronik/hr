@@ -10,6 +10,7 @@ use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\users\widgets\user_select\UserSelectWidget;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
@@ -82,7 +83,24 @@ use yii\widgets\ActiveForm;
 					]
 				]) ?>
 			</div>
+			<div class="col-md-3">
+				<?= $form->field($model, 'employer')->widget(UserSelectWidget::class, [
+					'multiple' => false,
+					'mode' => GroupSelectWidget::MODE_FIELD,
+					'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+				]) ?>
+			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<?= $form->field($model, 'teamlead')->widget(UserSelectWidget::class, [
+					'multiple' => false,
+					'mode' => GroupSelectWidget::MODE_FIELD,
+					'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+				]) ?>
+			</div>
+		</div>
+
 
 	</div>
 
