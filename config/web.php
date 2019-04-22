@@ -29,6 +29,7 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
+use app\modules\vacancy\VacancyModule;
 use kartik\grid\Module as GridModule;
 use app\models\user\User;
 use yii\debug\Module as DebugModule;
@@ -132,6 +133,9 @@ $config = [
 //					'RefUserPositions' => RefUserPositions::class
 				]
 			]
+		],
+		'vacancy' => [
+			'class' => VacancyModule::class
 		]
 	],
 	'components' => [
