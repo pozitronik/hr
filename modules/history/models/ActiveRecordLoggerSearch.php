@@ -60,7 +60,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 		$query->andFilterWhere(['in', 'model', $this->model]);
 		$query->andFilterDateBetween('at', $this->at);
 
-		Yii::debug($query->createCommand()->rawSql, 'sql');
+//		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 
