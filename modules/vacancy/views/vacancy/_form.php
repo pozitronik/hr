@@ -10,6 +10,8 @@ use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\vacancy\models\references\RefVacancyRecruiters;
+use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyMenuWidget;
 use yii\helpers\Html;
@@ -38,7 +40,22 @@ use yii\widgets\ActiveForm;
 				<?= $form->field($model, 'ticket_id')->textInput() ?>
 			</div>
 			<div class="col-md-3">
-				<?= $form->field($model, 'status')->textInput() ?>
+				<?= $form->field($model, 'status')->widget(ReferenceSelectWidget::class, [
+					'referenceClass' => RefVacancyStatuses::class,
+					'pluginOptions' => [
+						'multiple' => false,
+						'allowClear' => true
+					]
+				]) ?>
+			</div>
+			<div class="col-md-3">
+				<?= $form->field($model, 'recruiter')->widget(ReferenceSelectWidget::class, [
+					'referenceClass' => RefVacancyRecruiters::class,
+					'pluginOptions' => [
+						'multiple' => false,
+						'allowClear' => true
+					]
+				]) ?>
 			</div>
 		</div>
 		<div class="row">
