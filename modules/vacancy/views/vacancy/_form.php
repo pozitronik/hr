@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
 				<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 					'multiple' => false,
 					'mode' => GroupSelectWidget::MODE_FIELD,
-					'dataMode' => GroupSelectWidget::DATA_MODE_LOAD
+					'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
 				]) ?>
 			</div>
 			<div class="col-md-3">
