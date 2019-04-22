@@ -24,8 +24,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<?=
-GridView::widget([
+<?= GridView::widget([
 	'dataProvider' => $provider,
 	'panel' => [
 		'type' => GridView::TYPE_INFO,

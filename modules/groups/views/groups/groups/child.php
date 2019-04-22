@@ -23,8 +23,7 @@ use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 
 ?>
-<?=
-GridView::widget([
+<?= GridView::widget([
 	'dataProvider' => $provider,
 	'panel' => [
 		'type' => GridView::TYPE_INFO,
