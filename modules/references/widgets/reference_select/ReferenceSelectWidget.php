@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\reference_select;
 
+use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\models\core\helpers\ReflectionHelper;
 use app\modules\references\models\ReferenceInterface;
 use kartik\select2\Select2;
 use ReflectionException;
+use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\helpers\Html;
@@ -40,8 +42,11 @@ class ReferenceSelectWidget extends Select2 {
 	 * @throws ReflectionException
 	 * @throws InvalidConfigException
 	 * @throws UnknownClassException
+	 * @throws Throwable
 	 */
 	public function run():?string {
+		if (true === ArrayHelper::getValue($this, 'pluginOptions.allowClear') && null === ArrayHelper::getValue($this, 'pluginOptions.placeholder')) $this->pluginOptions['placeholder'] = 'Выберите значение';
+
 		if (null !== $this->referenceClass) {
 			$this->pluginOptions['templateResult'] = new JsExpression('function(item) {return formatReferenceItem(item)}');
 			$this->pluginOptions['templateSelection'] = new JsExpression('function(item) {return formatSelectedReferenceItem(item)}');
