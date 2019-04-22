@@ -8,6 +8,8 @@ use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;
 use Throwable;
 use Yii;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * Class VacancyController
@@ -40,13 +42,26 @@ class VacancyController extends WigetableController {
 	public function actionCreate() {
 		$newVacancy = new Vacancy();
 		if ($newVacancy->createModel(Yii::$app->request->post($newVacancy->formName()))) {
-			$newVacancy->uploadAvatar();
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
-			return $this->redirect(['vacancy', 'id' => $newVacancy->id]);
+			return $this->redirect(['create', 'id' => $newVacancy->id]);
 		}
 
-		return $this->render('vacancy', [
+		return $this->render('create', [
 			'model' => $newVacancy
+		]);
+	}
+
+	/**
+	 * @param int $id
+	 * @return string|null
+	 * @throws Throwable
+	 */
+	public function actionUpdate(int $id):?string {
+		if (null === $vacancy = Vacancy::findModel($id, new NotFoundHttpException())) return null;
+		if (null !== ($updateArray = Yii::$app->request->post($vacancy->formName()))) $vacancy->updateModel($updateArray);
+
+		return $this->render('update', [
+			'model' => $vacancy
 		]);
 	}
 }

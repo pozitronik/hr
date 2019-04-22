@@ -8,7 +8,12 @@ use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\StrictInterface;
 use app\models\user\CurrentUser;
+use app\modules\groups\models\Groups;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefUserPositions;
 use app\widgets\alert\AlertModel;
+use yii\db\ActiveQuery;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "sys_vacancy".
@@ -30,6 +35,10 @@ use app\widgets\alert\AlertModel;
  * @property string $estimated_close_date Дата ожидаемого закрытия вакансии
  * @property int $daddy Автор вакансии
  * @preoprty bool $deleted
+ *
+ * @property Groups|ActiveQuery $relGroup
+ * @property RefUserPositions $relRefUserPosition
+ * @property RefLocations $relRefLocation
  */
 class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	/**
@@ -78,6 +87,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	/**
 	 * @param array|null $paramsArray
 	 * @return bool
+	 * @throws Exception
 	 */
 	public function createModel(?array $paramsArray):bool {
 		$transaction = self::getDb()->beginTransaction();
@@ -97,6 +107,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 				}
 				AlertModel::ErrorsNotify($this->errors);
 			}
+			AlertModel::ErrorsNotify($this->errors);//todo: разобраться уже с алертами, м.б. переделать в дефолтное поведение
 		}
 		$transaction->rollBack();
 		return false;
@@ -116,5 +127,26 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			AlertModel::ErrorsNotify($this->errors);
 		}
 		return false;
+	}
+
+	/**
+	 * @return Groups|ActiveQuery
+	 */
+	public function getRelGroup() {
+		return $this->hasOne(Groups::class, ['id' => 'group']);
+	}
+
+	/**
+	 * @return RefUserPositions|ActiveQuery
+	 */
+	public function getRelRefUserPosition(){
+		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
+	}
+
+	/**
+	 * @return RefLocations|ActiveQuery
+	 */
+	public function getRelRefLocation() {
+		return $this->hasOne(RefLocations::class, ['id' => 'location']);
 	}
 }

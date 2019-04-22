@@ -159,8 +159,8 @@ $config = [
 		],
 		'cache' => [
 //			'class' => RedisCache::class,
-//			'class' => FileCache::class,
-			'class' => DummyCache::class
+			'class' => FileCache::class,
+//			'class' => DummyCache::class
 		],
 		'user' => [
 			'identityClass' => User::class,
