@@ -29,6 +29,7 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
+use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\VacancyModule;
 use kartik\grid\Module as GridModule;
 use app\models\user\User;
@@ -135,7 +136,12 @@ $config = [
 			]
 		],
 		'vacancy' => [
-			'class' => VacancyModule::class
+			'class' => VacancyModule::class,
+			'params' => [
+				'references' => [
+					RefVacancyStatuses::class
+				]
+			]
 		]
 	],
 	'components' => [
