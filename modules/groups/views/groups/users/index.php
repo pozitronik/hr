@@ -10,7 +10,7 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
-use app\modules\groups\widgets\navigation_menu\VacancyMenuWidget;
+use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use kartik\form\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -28,7 +28,7 @@ $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->tot
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="panel-control">
-				<?= VacancyMenuWidget::widget([
+				<?=  GroupNavigationMenuWidget::widget([
 					'model' => $model
 				]) ?>
 			</div>
