@@ -38,7 +38,7 @@ use kartik\select2\Select2;
 			'ajax' => [
 				'url' => $ajax_search_url,
 				'dataType' => 'json',
-				'data' => new JsExpression("function(params) { return {term:params.term, page: params.page, group:{$model->primaryKey}}; }")
+				'data' => new JsExpression("function(params) { return {term:params.term, page: params.page}; }")//todo: придумать, как опционально передавать фильтр по группе, если виджет привязан именно к пользователю
 			]
 		]:[])
 ]) ?>
