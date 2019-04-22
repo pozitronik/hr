@@ -18,7 +18,7 @@ class VacancySearch extends Vacancy {
 	 */
 	public function rules():array {
 		return [
-			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'create_date', 'close_date', 'estimated_close_date'], 'safe']
+			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'create_date', 'estimated_close_date'], 'safe']
 		];
 	}
 

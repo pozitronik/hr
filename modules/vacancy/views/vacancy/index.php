@@ -101,9 +101,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'create_date'
 		],
 		[
-			'attribute' => 'close_date'
-		],
-		[
 			'attribute' => 'estimated_close_date'
 		]
 	]
