@@ -24,6 +24,7 @@ use app\models\core\ActiveRecordExtended;
  * @property string $close_date Дата закрытия вакансии
  * @property string $estimated_close_date Дата ожидаемого закрытия вакансии
  * @property int $daddy Автор вакансии
+ * @preoprty bool $deleted
  */
 class Vacancy extends ActiveRecordExtended {
 	/**
