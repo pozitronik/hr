@@ -21,7 +21,7 @@ $this->title = "Вакансии в группе {$group->name}";
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы');
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($group->name, 'groups/profile', ['id' => $group->id]);
 $this->params['breadcrumbs'][] = $this->title;
-$countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['ваансия', 'вакансии', 'вакансий']).")":" (нет вакансий)");
+$countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['вакансия', 'вакансии', 'вакансий']).")":" (нет вакансий)");
 ?>
 
 <?php $form = ActiveForm::begin(); ?>
