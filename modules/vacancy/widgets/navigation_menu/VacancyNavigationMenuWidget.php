@@ -24,7 +24,7 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 		$this->_navigationItems = [
 			[
 				'label' => Icons::update().'Изменение',
-				'url' => ['update', 'id' => $this->model->id]
+				'url' => ['/vacancy/vacancy/update', 'id' => $this->model->id]
 			],
 			[
 				'menu' => true,
