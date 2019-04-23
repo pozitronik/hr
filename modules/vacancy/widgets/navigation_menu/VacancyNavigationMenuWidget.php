@@ -23,6 +23,10 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public function run():string {
 		$this->_navigationItems = [
 			[
+				'label' => Icons::update().'Изменение',
+				'url' => ['update', 'id' => $this->model->id]
+			],
+			[
 				'menu' => true,
 				'label' => Icons::history().'История изменений',
 				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
