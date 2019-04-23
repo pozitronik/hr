@@ -41,8 +41,6 @@ $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->tot
 				<?= $this->render('grid', [
 					'model' => $group,
 					'provider' => $provider,
-					'showRolesSelector' => true,
-					'showDropColumn' => true,
 					'heading' => false
 				]) ?>
 			</div>

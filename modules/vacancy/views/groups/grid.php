@@ -68,7 +68,7 @@ use yii\web\View;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'location',
-			'value' => 'relRefLocation.name',
+			'value' => 'relRefLocation.name'
 		],
 		[
 			'attribute' => 'ticket_id'
@@ -81,7 +81,7 @@ use yii\web\View;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'position',
-			'value' => 'relRefUserPosition.name',
+			'value' => 'relRefUserPosition.name'
 		],
 		[
 			'class' => DataColumn::class,
@@ -100,7 +100,7 @@ use yii\web\View;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'status',
-			'value' => 'relRefVacancyStatus.name',
+			'value' => 'relRefVacancyStatus.name'
 		],
 		[
 			'class' => DataColumn::class,
