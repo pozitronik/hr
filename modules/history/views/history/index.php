@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'username',
 			'value' => static function(ActiveRecordLogger $model) {
-				return null === $model->user?'System':Html::a($model->userModel->username, ['/users/users/profile', 'id' => $model->user]);
+				return null === $model->user?'System':Html::a($model->relUser->username, ['/users/users/profile', 'id' => $model->user]);
 			},
 			'format' => 'raw'
 		],

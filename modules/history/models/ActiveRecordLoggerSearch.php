@@ -42,7 +42,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 			'attributes' => [
 				'id',
 				'at',
-				'userModel',
+				'relUser',
 				'modelKey',
 				'model'
 			]
@@ -54,7 +54,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 		if (!$this->validate()) return $dataProvider;
 
 //		$query->distinct();
-		$query->joinWith(['userModel']);
+		$query->joinWith(['relUser']);
 		$query->andFilterWhere(['like', 'sys_users.username', $this->username]);
 		$query->andFilterWhere(['in', 'model', $this->model]);
 		$query->andFilterDateBetween('at', $this->at);
