@@ -20,7 +20,6 @@ use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
 use kartik\date\DatePicker;
-use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
