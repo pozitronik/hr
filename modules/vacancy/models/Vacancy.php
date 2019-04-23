@@ -9,7 +9,9 @@ use app\models\core\ActiveRecordExtended;
 use app\models\core\StrictInterface;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
+use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
@@ -21,20 +23,24 @@ use yii\db\Exception;
  * This is the model class for table "sys_vacancy".
  *
  * @property int $id
- * @property int $vacancy_id Внешний ID вакансии
- * @property int $ticket_id ID заявки на подбор
- * @property int $status Статус вакансии
- * @property int $group Группа
- * @property string $name Опциональное название вакансии
- * @property int $location Локация
- * @property int $recruiter Рекрутер
- * @property int $employer Нанимающий руководитель
- * @property int $position Должность
- * @property int $role Назначение/роль
- * @property int $teamlead teamlead
+ * @property int|null $vacancy_id Внешний ID вакансии
+ * @property int|null $ticket_id ID заявки на подбор
+ * @property int|null $status Статус вакансии
+ * @property int|null $group Группа
+ * @property string|null $name Опциональное название вакансии
+ * @property int|null $location Локация
+ * @property int|null $recruiter Рекрутер
+ * @property int|null $employer Нанимающий руководитель
+ * @property int|null $position Должность
+ *
+ * @property int|null $premium_group Премиальная группа
+ * @property int|null $grade Грейд
+ *
+ * @property int|null $role Назначение/роль
+ * @property int|null $teamlead teamlead
  * @property string $create_date Дата заведения вакансии
- * @property string $close_date Дата закрытия вакансии
- * @property string $estimated_close_date Дата ожидаемого закрытия вакансии
+ * @property string|null $close_date Дата закрытия вакансии
+ * @property string|null $estimated_close_date Дата ожидаемого закрытия вакансии
  * @property int $daddy Автор вакансии
  * @property bool $deleted
  *
@@ -43,8 +49,12 @@ use yii\db\Exception;
  * @property RefLocations $relRefLocation
  * @property RefVacancyStatuses $relRefVacancyStatus
  * @property RefVacancyRecruiters $relRefVacancyRecruiter
+ *
+ * @property RefSalaryPremiumGroups $relRefSalaryPremiumGroup
+ * @property RefGrades $relRefGrade
  */
 class Vacancy extends ActiveRecordExtended implements StrictInterface {
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -57,7 +67,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function rules():array {
 		return [
-			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'daddy'], 'integer'],
+			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'daddy', 'premium_group', 'grade'], 'integer'],
 			[['group', 'position', 'create_date', 'daddy'], 'required'],
 			[['create_date', 'close_date', 'estimated_close_date'], 'safe'],
 			[['name'], 'string', 'max' => 255],
@@ -81,6 +91,8 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'recruiter' => 'Рекрутер',
 			'employer' => 'Нанимающий руководитель',
 			'position' => 'Должность',
+			'premium_group' => 'Группа премирования',
+			'grade' => 'Грейд',
 			'role' => 'Назначение/роль',
 			'teamlead' => 'Тимлид',
 			'create_date' => 'Дата заведения вакансии',
@@ -168,5 +180,19 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function getRelRefVacancyRecruiter() {
 		return $this->hasOne(RefVacancyRecruiters::class, ['id' => 'recruiter']);
+	}
+
+	/**
+	 * @return RefSalaryPremiumGroups|ActiveQuery
+	 */
+	public function getRelRefSalaryPremiumGroup() {
+		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group']);
+	}
+
+	/**
+	 * @return RefGrades|ActiveQuery
+	 */
+	public function getRelRefGrade() {
+		return $this->hasOne(RefGrades::class, ['id' => 'grade']);
 	}
 }
