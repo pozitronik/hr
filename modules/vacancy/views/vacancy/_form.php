@@ -10,10 +10,12 @@ use app\helpers\ArrayHelper;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\widgets\user_select\UserSelectWidget;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
@@ -88,7 +90,7 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<?= $form->field($model, 'employer')->widget(UserSelectWidget::class, [
 							'multiple' => false,
 							'mode' => GroupSelectWidget::MODE_FIELD,
@@ -97,15 +99,25 @@ use yii\widgets\ActiveForm;
 					</div>
 
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 							'multiple' => false,
 							'mode' => GroupSelectWidget::MODE_FIELD,
 							'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
 						])->label('Группа (подразделение)') ?>
 					</div>
+					<div class="col-md-3">
+						<?= $form->field($model, 'role')->widget(ReferenceSelectWidget::class, [
+							'referenceClass' => RefUserRoles::class,//todo: 1) узнаем, что тут за роли. Если это отдельная сущность - впиливаем новый справочник, если это текущие роли в группах - делаем связь к ним, через отдельный релейшен
+							'pluginOptions' => [
+								'multiple' => false,
+								'allowClear' => true,
+								'placeholder' => 'Укажите роль'
+							]
+						]) ?>
+					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<?= $form->field($model, 'teamlead')->widget(UserSelectWidget::class, [
 							'multiple' => false,
 							'mode' => GroupSelectWidget::MODE_FIELD,
