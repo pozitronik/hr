@@ -75,6 +75,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'ticket_id' => 'ID заявки на подбор',
 			'status' => 'Статус вакансии',
 			'group' => 'Группа',
+			'groupName' => 'Группа',
 			'name' => 'Опциональное название вакансии',
 			'location' => 'Локация',
 			'recruiter' => 'Рекрутер',

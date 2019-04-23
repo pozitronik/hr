@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'group',
+			'attribute' => 'groupName',
 			'value' => 'relGroup.name'
 
 		],
