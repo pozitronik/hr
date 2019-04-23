@@ -15,13 +15,12 @@ use yii\data\ActiveDataProvider;
 class VacancySearch extends Vacancy {
 	public $groupName;
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public function rules():array {
 		return [
-			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'create_date', 'estimated_close_date', 'groupName'], 'safe']
+			[['id', 'vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'create_date', 'estimated_close_date', 'groupName'], 'safe']
 		];
 	}
 
@@ -39,7 +38,23 @@ class VacancySearch extends Vacancy {
 		]);
 
 		$dataProvider->setSort([
-			'defaultOrder' => ['id' => SORT_DESC]
+			'defaultOrder' => ['id' => SORT_DESC],
+			'attributes' => [
+				'id',
+				'status',
+				'groupName' => [
+					'asc' => ['sys_groups.name' => SORT_ASC],
+					'desc' => ['sys_groups.name' => SORT_DESC]
+				],
+				'location',
+				'recruiter',
+				'position',
+				'role',
+				'teamlead',
+				'create_date',
+				'close_date',
+				'estimated_close_date'
+			]
 		]);
 
 		$this->load($params);
