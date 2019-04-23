@@ -10,7 +10,6 @@ use app\helpers\ArrayHelper;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
-use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;

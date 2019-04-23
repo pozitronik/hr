@@ -13,7 +13,6 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
-use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
 use kartik\grid\DataColumn;
@@ -66,7 +65,7 @@ use yii\web\View;
 			'class' => DataColumn::class,
 			'attribute' => 'create_date',
 			'format' => 'date',
-			'label' => 'Открыто',
+			'label' => 'Открыто'
 		],
 		[
 			'class' => DataColumn::class,
@@ -96,7 +95,7 @@ use yii\web\View;
 			'class' => DataColumn::class,
 			'attribute' => 'estimated_close_date',
 			'label' => 'Закроется',
-			'format' => 'date',
+			'format' => 'date'
 		]
 	]
 ]) ?>
