@@ -131,7 +131,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'teamlead'
+			'attribute' => 'employerName',
+			'value' => 'relEmployer.username'
+		],
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'teamleadName',
+			'value' => 'relTeamlead.username'
 		],
 		[
 			'class' => DataColumn::class,

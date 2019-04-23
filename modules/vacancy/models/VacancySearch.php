@@ -9,18 +9,22 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Class VacancySearch
- * @property  string $groupName
+ * @property string $groupName
+ * @property string $employerName
+ * @property string $teamleadName
  * @package app\modules\vacancy\models
  */
 class VacancySearch extends Vacancy {
 	public $groupName;
+	public $employerName;
+	public $teamleadName;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function rules():array {
 		return [
-			[['id', 'vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'create_date', 'estimated_close_date', 'groupName'], 'safe']
+			[['id', 'vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'premium_group', 'grade', 'teamlead', 'create_date', 'estimated_close_date', 'groupName', 'employerName', 'teamleadName'], 'safe']
 		];
 	}
 
@@ -46,10 +50,21 @@ class VacancySearch extends Vacancy {
 					'asc' => ['sys_groups.name' => SORT_ASC],
 					'desc' => ['sys_groups.name' => SORT_DESC]
 				],
+				'teamleadName' => [
+					'asc' => ['teamlead.username' => SORT_ASC],
+					'desc' => ['teamlead.username' => SORT_DESC]
+				],
+				'employerName' => [
+					'asc' => ['employer.username' => SORT_ASC],
+					'desc' => ['employer.username' => SORT_DESC]
+				],
 				'location',
 				'recruiter',
 				'position',
+				'premium_group',
+				'grade',
 				'role',
+				'employer',
 				'teamlead',
 				'create_date',
 				'close_date',
@@ -62,9 +77,11 @@ class VacancySearch extends Vacancy {
 
 		if (!$this->validate()) return $dataProvider;
 //
-		$query->joinWith(['relGroup']);
+		$query->joinWith(['relGroup', 'relEmployer as employer', 'relTeamlead as teamlead']);
 		$query->andFilterWhere(['like', 'sys_vacancy.id', $this->id]);
 		$query->andFilterWhere(['like', 'sys_groups.name', $this->groupName]);
+		$query->andFilterWhere(['like', 'employer.username', $this->employerName]);
+		$query->andFilterWhere(['like', 'teamlead.username', $this->teamleadName]);
 		$query->andFilterWhere(['in', 'sys_vacancy.status', $this->status]);
 		$query->andFilterWhere(['in', 'sys_vacancy.location', $this->location]);
 		$query->andFilterWhere(['in', 'sys_vacancy.recruiter', $this->recruiter]);

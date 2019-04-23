@@ -13,6 +13,7 @@ use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\users\models\Users;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\widgets\alert\AlertModel;
@@ -49,9 +50,10 @@ use yii\db\Exception;
  * @property RefLocations $relRefLocation
  * @property RefVacancyStatuses $relRefVacancyStatus
  * @property RefVacancyRecruiters $relRefVacancyRecruiter
- *
  * @property RefSalaryPremiumGroups $relRefSalaryPremiumGroup
  * @property RefGrades $relRefGrade
+ * @property Users $relEmployer
+ * @property Users $relTeamlead
  */
 class Vacancy extends ActiveRecordExtended implements StrictInterface {
 
@@ -90,11 +92,13 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'location' => 'Локация',
 			'recruiter' => 'Рекрутер',
 			'employer' => 'Нанимающий руководитель',
+			'employerName' => 'Нанимающий руководитель',
 			'position' => 'Должность',
 			'premium_group' => 'Группа премирования',
 			'grade' => 'Грейд',
 			'role' => 'Назначение/роль',
 			'teamlead' => 'Тимлид',
+			'teamleadName' => 'Тимлид',
 			'create_date' => 'Дата заведения вакансии',
 			'close_date' => 'Дата закрытия вакансии',
 			'estimated_close_date' => 'Дата ожидаемого закрытия вакансии',
@@ -194,5 +198,19 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function getRelRefGrade() {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade']);
+	}
+
+	/**
+	 * @return Users|ActiveQuery
+	 */
+	public function getRelEmployer() {
+		return $this->hasOne(Users::class, ['id' => 'employer']);
+	}
+
+	/**
+	 * @return Users|ActiveQuery
+	 */
+	public function getRelTeamlead() {
+		return $this->hasOne(Users::class, ['id' => 'teamlead']);
 	}
 }
