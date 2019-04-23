@@ -45,6 +45,8 @@ class VacancySearch extends Vacancy {
 			'defaultOrder' => ['id' => SORT_DESC],
 			'attributes' => [
 				'id',
+				'vacancy_id',
+				'ticket_id',
 				'status',
 				'groupName' => [
 					'asc' => ['sys_groups.name' => SORT_ASC],

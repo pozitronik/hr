@@ -69,25 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw'
 		],
 		[
-			'attribute' => 'id'
-		],
-		[
-			'class' => DataColumn::class,
-			'attribute' => 'status',
-			'value' => 'relRefVacancyStatus.name',
-			'filter' => ArrayHelper::getValue($searchModel, 'status'),
-			'filterType' => ReferenceSelectWidget::class,
-			'filterInputOptions' => ['placeholder' => 'Выберите статус'],
-			'filterWidgetOptions' => [
-				'referenceClass' => RefVacancyStatuses::class,
-				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
-			]
-		],
-		[
-			'class' => DataColumn::class,
-			'attribute' => 'groupName',
-			'value' => 'relGroup.name'
-
+			'attribute' => 'vacancy_id',
+			'label' => 'ID вакансии'
 		],
 		[
 			'class' => DataColumn::class,
@@ -100,6 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'referenceClass' => RefLocations::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			]
+		],
+		[
+			'attribute' => 'ticket_id'
 		],
 		[
 			'class' => DataColumn::class,
@@ -115,6 +101,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
+			'attribute' => 'employerName',
+			'value' => 'relEmployer.username'
+		],
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'groupName',
+			'value' => 'relGroup.name'
+
+		],
+		[
+			'class' => DataColumn::class,
 			'attribute' => 'position',
 			'value' => 'relRefUserPosition.name',
 			'filter' => ArrayHelper::getValue($searchModel, 'position'),
@@ -127,12 +124,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'role'
+			'attribute' => 'premium_group',
+			'value' => 'relRefSalaryPremiumGroup.name'
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'employerName',
-			'value' => 'relEmployer.username'
+			'attribute' => 'grade',
+			'value' => 'relRefGrade.name'
+		],
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'role'
 		],
 		[
 			'class' => DataColumn::class,
@@ -141,7 +143,20 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
+			'attribute' => 'status',
+			'value' => 'relRefVacancyStatus.name',
+			'filter' => ArrayHelper::getValue($searchModel, 'status'),
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите статус'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefVacancyStatuses::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			]
+		],
+		[
+			'class' => DataColumn::class,
 			'attribute' => 'create_date',
+			'label' => 'Открыто',
 			'filterType' => GridView::FILTER_DATE_RANGE,
 			'filterWidgetOptions' => [
 				'pluginOptions' => [
@@ -159,6 +174,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'estimated_close_date',
+			'label' => 'Закроется',
 			'filterType' => GridView::FILTER_DATE_RANGE,
 			'filterWidgetOptions' => [
 				'pluginOptions' => [
