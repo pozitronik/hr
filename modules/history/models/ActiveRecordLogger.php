@@ -199,7 +199,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 	 * @return Users|ActiveQuery
 	 * @throws Throwable
 	 */
-	public function getRelUSer() {
+	public function getRelUser() {
 		return $this->hasOne(Users::class, ['id' => 'user']);
 	}
 
