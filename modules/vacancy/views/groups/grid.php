@@ -13,6 +13,7 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
+use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
 use kartik\grid\DataColumn;
@@ -62,21 +63,10 @@ use yii\web\View;
 			'format' => 'raw'
 		],
 		[
-			'attribute' => 'vacancy_id',
-			'label' => 'ID вакансии'
-		],
-		[
 			'class' => DataColumn::class,
-			'attribute' => 'location',
-			'value' => 'relRefLocation.name'
-		],
-		[
-			'attribute' => 'ticket_id'
-		],
-		[
-			'class' => DataColumn::class,
-			'attribute' => 'employerName',
-			'value' => 'relEmployer.username'
+			'attribute' => 'create_date',
+			'format' => 'date',
+			'label' => 'Открыто',
 		],
 		[
 			'class' => DataColumn::class,
@@ -95,50 +85,18 @@ use yii\web\View;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'role'
+			'attribute' => 'location',
+			'value' => 'relRefLocation.name'
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'status',
-			'value' => 'relRefVacancyStatus.name'
-		],
-		[
-			'class' => DataColumn::class,
-			'attribute' => 'create_date',
-			'format' => 'date',
-			'label' => 'Открыто',
-			'filterType' => GridView::FILTER_DATE_RANGE,
-			'filterWidgetOptions' => [
-				'pluginOptions' => [
-					'locale' => [
-						'format' => 'DD.MM.YYYY',
-						'separator' => ' по '
-					],
-					'autoclose' => true,
-					'format' => 'DD.MM.YYYY',
-					'separator' => ' по ',
-					'alwaysShowCalendars' => true
-				]
-			]
+			'attribute' => 'role'//todo: уточнить, что есть роль в данном кейсе
 		],
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'estimated_close_date',
 			'label' => 'Закроется',
 			'format' => 'date',
-			'filterType' => GridView::FILTER_DATE_RANGE,
-			'filterWidgetOptions' => [
-				'pluginOptions' => [
-					'locale' => [
-						'format' => 'DD.MM.YYYY',
-						'separator' => ' по '
-					],
-					'autoclose' => true,
-					'format' => 'DD.MM.YYYY',
-					'separator' => ' по ',
-					'alwaysShowCalendars' => true
-				]
-			]
 		]
 	]
 ]) ?>
