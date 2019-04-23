@@ -63,11 +63,12 @@ class VacancySearch extends Vacancy {
 		if (!$this->validate()) return $dataProvider;
 //
 		$query->joinWith(['relGroup']);
+		$query->andFilterWhere(['like', 'sys_vacancy.id', $this->id]);
 		$query->andFilterWhere(['like', 'sys_groups.name', $this->groupName]);
-		$query->andFilterWhere(['in', 'status', $this->status]);
-		$query->andFilterWhere(['in', 'location', $this->location]);
-		$query->andFilterWhere(['in', 'recruiter', $this->recruiter]);
-		$query->andFilterWhere(['in', 'position', $this->position]);
+		$query->andFilterWhere(['in', 'sys_vacancy.status', $this->status]);
+		$query->andFilterWhere(['in', 'sys_vacancy.location', $this->location]);
+		$query->andFilterWhere(['in', 'sys_vacancy.recruiter', $this->recruiter]);
+		$query->andFilterWhere(['in', 'sys_vacancy.position', $this->position]);
 
 		$query->andFilterDateBetween('create_date', $this->create_date);
 		$query->andFilterDateBetween('close_date', $this->close_date);
