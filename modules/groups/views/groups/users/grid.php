@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var Groups $model
  * @var ActiveDataProvider $provider
  * @var bool $showUserSelector Отображать виджет выбора пользователя
- * @var bool $showRolesSelector тображать колонку выбиралки роли для пользователя (отключаем в некоторых случаях для ускорения)
+ * @var bool $showRolesSelector Отображать колонку выбиралки роли для пользователя (отключаем в некоторых случаях для ускорения)
  * @var bool $showDropColumn Отображать колонку удаления пользюков
  *
  * @var bool|string $heading
