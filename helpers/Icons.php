@@ -71,6 +71,13 @@ class Icons {
 	/**
 	 * @return string
 	 */
+	public static function vacancy():string {
+		return "<i class='fa fa-user-check' title='Пользователи'></i>";
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function subgroups():string {
 		return "<i class='fa fa-users' style='color: Tomato;' title='Подгруппы'></i>";
 	}
