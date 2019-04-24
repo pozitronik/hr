@@ -31,6 +31,8 @@ use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
+use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
+use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
 use kartik\grid\Module as GridModule;
 use app\models\user\User;
@@ -125,6 +127,7 @@ $config = [
 				'classNamesMap' => [
 					'Users' => Users::class,
 					'Groups' => Groups::class,
+					'Vacancy' => Vacancy::class,
 					'RelUsersGroups' => RelUsersGroups::class,
 					'RelUsersPrivileges' => RelUsersPrivileges::class,
 					'RelUsersAttributes' => RelUsersAttributes::class,
@@ -132,7 +135,8 @@ $config = [
 					'SalaryFork' => SalaryFork::class,
 					'RefAttributesTypes' => RefAttributesTypes::class,
 					'RefGroupTypes' => RefGroupTypes::class,
-//					'RefUserPositions' => RefUserPositions::class
+					'RefUserPositions' => RefUserPositions::class,
+					'RelVacancyGroupRoles' => RelVacancyGroupRoles::class
 				]
 			]
 		],

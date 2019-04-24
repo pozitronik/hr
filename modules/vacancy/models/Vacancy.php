@@ -7,8 +7,13 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\StrictInterface;
+use app\models\relations\RelUsersAttributes;
+use app\models\relations\RelUsersGroups;
+use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
+use app\modules\history\models\HistoryEventInterface;
+use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
@@ -21,6 +26,7 @@ use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -109,6 +115,37 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'close_date' => 'Дата закрытия вакансии',
 			'estimated_close_date' => 'Дата ожидаемого закрытия вакансии',
 			'daddy' => 'Автор вакансии'
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function historyRules():array {
+		return [
+			'attributes' => [
+				'daddy' => [Users::class => 'username'],
+				'position' => [RefUserPositions::class => 'name'],
+				'group' => [Groups::class => 'name'],
+				'status' => [RefVacancyStatuses::class => 'name'],
+				'location' => [RefLocations::class => 'name'],
+				'recruiter' => [RefVacancyRecruiters::class => 'name'],
+				'premium_group' => [RefSalaryPremiumGroups::class => 'name'],
+				'employer' => [Users::class => 'username'],
+				'teamlead' => [Users::class => 'username'],
+				'deleted' => false
+			],
+			'relations' => [
+				RelVacancyGroupRoles::class => ['id' => 'vacancy_id'],
+			],
+			'events' => [
+				HistoryEventInterface::EVENT_DELETED => [
+					'deleted' => [
+						'from' => false,
+						'to' => true
+					]
+				]
+			]
 		];
 	}
 
