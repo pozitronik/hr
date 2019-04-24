@@ -167,7 +167,27 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'status',
-			'value' => 'relRefVacancyStatus.name',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefVacancyStatus()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefVacancyStatuses::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			},
+			'format' => 'raw',
 			'filter' => ArrayHelper::getValue($searchModel, 'status'),
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите статус'],
