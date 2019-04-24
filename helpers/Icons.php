@@ -72,7 +72,13 @@ class Icons {
 	 * @return string
 	 */
 	public static function vacancy():string {
-		return "<i class='fa fa-user-check' title='Пользователи'></i>";
+		return "<i class='fa fa-user-check' title='Вакансии'></i>";
+	}
+	/**
+	 * @return string
+	 */
+	public static function vacancy_red():string {
+		return "<i class='fa fa-user-check' style='color: Tomato;' title='Создать вакансию'></i>";
 	}
 
 	/**
