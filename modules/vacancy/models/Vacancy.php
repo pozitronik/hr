@@ -79,7 +79,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			[['create_date', 'close_date', 'estimated_close_date'], 'safe'],
 			[['name'], 'string', 'max' => 255],
 			[['vacancy_id', 'ticket_id'], 'unique'],
-			[['relVacancyGroupRoles'], 'safe']
+			[['relRefUserRoles'], 'safe']
 		];
 	}
 
@@ -102,7 +102,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'position' => 'Должность',
 			'premium_group' => 'Группа премирования',
 			'grade' => 'Грейд',
-			'relVacancyGroupRoles' => 'Назначение/роль',
+			'relRefUserRoles' => 'Назначение/роль',
 			'teamlead' => 'Тимлид',
 			'teamleadName' => 'Тимлид',
 			'create_date' => 'Дата заведения вакансии',
@@ -231,7 +231,9 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	 * @param int[] $roles
 	 * @throws Throwable
 	 */
-	public function setRelVacancyGroupRoles(array $roles):void {
+	public function setRelRefUserRoles($roles):void {
+		$droppedRoles = array_diff(ArrayHelper::getColumn($this->relVacancyGroupRoles, 'role_id'), (array)$roles);
+		RelVacancyGroupRoles::unlinkModels($this, $droppedRoles);
 		RelVacancyGroupRoles::linkModels($this, $roles);
 	}
 
