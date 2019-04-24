@@ -23,6 +23,11 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public function run():string {
 		$this->_navigationItems = [
 			[
+				'menu' => true,
+				'label' => Icons::vacancy_red().'Создать вакансию',
+				'url' => ['/vacancy/vacancy/create']
+			],
+			[
 				'label' => Icons::update().'Изменение',
 				'url' => ['/vacancy/vacancy/update', 'id' => $this->model->id]
 			],
