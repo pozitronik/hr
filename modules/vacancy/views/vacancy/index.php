@@ -48,7 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	'responsive' => true,
 	'formatter' => [
 		'class' => Formatter::class,
-//		'nullDisplay' => ''
 	],
 	'columns' => [
 		[
@@ -185,7 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'relVacancyGroupRoles',
+			'attribute' => 'relRefUserRoles',
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
