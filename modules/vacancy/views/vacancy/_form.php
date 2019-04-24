@@ -106,10 +106,10 @@ use yii\widgets\ActiveForm;
 						])->label('Группа (подразделение)') ?>
 					</div>
 					<div class="col-md-3">
-						<?= $form->field($model, 'role')->widget(ReferenceSelectWidget::class, [
-							'referenceClass' => RefUserRoles::class,//todo: 1) узнаем, что тут за роли. Если это отдельная сущность - впиливаем новый справочник, если это текущие роли в группах - делаем связь к ним, через отдельный релейшен
+						<?= $form->field($model, 'relRefUserRoles')->widget(ReferenceSelectWidget::class, [
+							'referenceClass' => RefUserRoles::class,
 							'pluginOptions' => [
-								'multiple' => false,
+								'multiple' => true,
 								'allowClear' => true,
 								'placeholder' => 'Укажите роль'
 							]
