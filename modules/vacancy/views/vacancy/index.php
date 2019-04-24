@@ -167,9 +167,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'status',
-			'value' => static function(Vacancy $vacancy) {
+			'value' => static function(Vacancy $vacancy) {//todo: все справочные значения подобным образом
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefVacancyStatus()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'data' => $vacancy->getRelRefVacancyStatus()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
