@@ -131,7 +131,9 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 			if (file_exists(Yii::getAlias($form_alias))) return $form_alias;
 
 		}
-		return file_exists(Yii::$app->controller->module->viewPath.DIRECTORY_SEPARATOR.Yii::$app->controller->id.DIRECTORY_SEPARATOR.$file_path)?$file_path:'_form';
+		$default_form = ($this->hasProperty('color'))?'_form_color':'_form';
+
+		return file_exists(Yii::$app->controller->module->viewPath.DIRECTORY_SEPARATOR.Yii::$app->controller->id.DIRECTORY_SEPARATOR.$file_path)?$file_path:$default_form;
 	}
 
 	/**
