@@ -276,6 +276,29 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 	}
 
 	/**
+	 * Возвращает параметр цвета (если поддерживается справочником) в виде стиля для отображения в BadgeWidget (или любом другом похожем выводе)
+	 * @return array
+	 */
+	public static function colorStyleOptions():array {
+		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
+			$options = [];
+			if ((new static)->hasProperty('color')) {
+				$options = ArrayHelper::map(self::find()->active()->all(), 'id', 'color');
+				array_walk($options, static function(&$value, $key) {
+					if (!empty($value)) {
+						$value = [
+							'style' => "background: $value;"
+						];
+					}
+				});
+			}
+
+			return $options;
+		});
+
+	}
+
+	/**
 	 * Возвращает имя раширения, добавившего справочник (null, если справочник базовый)
 	 * @return string|null
 	 */
