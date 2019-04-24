@@ -13,10 +13,13 @@ use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
+use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use app\widgets\alert\AlertModel;
+use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 
@@ -37,7 +40,6 @@ use yii\db\Exception;
  * @property int|null $premium_group Премиальная группа
  * @property int|null $grade Грейд
  *
- * @property int|null $role Назначение/роль
  * @property int|null $teamlead teamlead
  * @property string $create_date Дата заведения вакансии
  * @property string|null $close_date Дата закрытия вакансии
@@ -54,6 +56,9 @@ use yii\db\Exception;
  * @property RefGrades $relRefGrade
  * @property Users $relEmployer
  * @property Users $relTeamlead
+ *
+ * @property RelVacancyGroupRoles[]|ActiveQuery $relVacancyGroupRoles Релейшен к таблице связей с ролями
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к справочнику ролей пользователей
  */
 class Vacancy extends ActiveRecordExtended implements StrictInterface {
 
@@ -69,11 +74,12 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function rules():array {
 		return [
-			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'teamlead', 'daddy', 'premium_group', 'grade'], 'integer'],
+			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'teamlead', 'daddy', 'premium_group', 'grade'], 'integer'],
 			[['group', 'position', 'create_date', 'daddy'], 'required'],
 			[['create_date', 'close_date', 'estimated_close_date'], 'safe'],
 			[['name'], 'string', 'max' => 255],
-			[['vacancy_id', 'ticket_id'], 'unique']
+			[['vacancy_id', 'ticket_id'], 'unique'],
+			[['relVacancyGroupRoles'], 'safe']
 		];
 	}
 
@@ -96,7 +102,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			'position' => 'Должность',
 			'premium_group' => 'Группа премирования',
 			'grade' => 'Грейд',
-			'role' => 'Назначение/роль',
+			'relVacancyGroupRoles' => 'Назначение/роль',
 			'teamlead' => 'Тимлид',
 			'teamleadName' => 'Тимлид',
 			'create_date' => 'Дата заведения вакансии',
@@ -213,4 +219,27 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 	public function getRelTeamlead() {
 		return $this->hasOne(Users::class, ['id' => 'teamlead']);
 	}
+
+	/**
+	 * @return RelVacancyGroupRoles[]|ActiveQuery
+	 */
+	public function getRelVacancyGroupRoles() {
+		return $this->hasMany(RelVacancyGroupRoles::class, ['vacancy_id' => 'id']);
+	}
+
+	/**
+	 * @param int[] $roles
+	 * @throws Throwable
+	 */
+	public function setRelVacancyGroupRoles(array $roles):void {
+		RelVacancyGroupRoles::linkModels($this, $roles);
+	}
+
+	/**
+	 * @return RefUserRoles[]|ActiveQuery
+	 */
+	public function getRelRefUserRoles() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role_id'])->via('relVacancyGroupRoles');
+	}
+
 }
