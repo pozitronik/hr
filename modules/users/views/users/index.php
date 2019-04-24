@@ -119,7 +119,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'roles',
-			'filter' => ArrayHelper::getValue($searchModel, 'relRefUserRoles'),
+			'filter' => $searchModel->roles,
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите роль'],
 			'filterWidgetOptions' => [
@@ -138,6 +138,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"optionsMap" => static function() {
 						return RefUserRoles::colorStyleOptions();
 					}
+
 
 				]);
 			},
