@@ -11,13 +11,16 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
+use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
+use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
-use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\i18n\Formatter;
 use yii\web\View;
@@ -30,7 +33,7 @@ use yii\web\View;
 		'after' => false,
 		'heading' => $heading,
 		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-		'before' => Html::a('Создать вакансию', ['create', 'group' => $model->id], ['class' => 'btn btn-success summary-content'])
+		'before' => false
 	],
 	'toolbar' => false,
 	'export' => false,
@@ -89,7 +92,28 @@ use yii\web\View;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'role'//todo: уточнить, что есть роль в данном кейсе
+			'attribute' => 'relVacancyGroupRoles',
+			'format' => 'raw',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			}
 		],
 		[
 			'class' => DataColumn::class,
