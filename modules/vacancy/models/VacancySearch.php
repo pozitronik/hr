@@ -24,7 +24,7 @@ class VacancySearch extends Vacancy {
 	 */
 	public function rules():array {
 		return [
-			[['id', 'vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'role', 'premium_group', 'grade', 'teamlead', 'create_date', 'estimated_close_date', 'groupName', 'employerName', 'teamleadName'], 'safe']
+			[['id', 'vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'premium_group', 'grade', 'teamlead', 'create_date', 'estimated_close_date', 'groupName', 'employerName', 'teamleadName'], 'safe']
 		];
 	}
 
@@ -65,7 +65,6 @@ class VacancySearch extends Vacancy {
 				'position',
 				'premium_group',
 				'grade',
-				'role',
 				'employer',
 				'teamlead',
 				'create_date',
@@ -93,7 +92,7 @@ class VacancySearch extends Vacancy {
 		$query->andFilterDateBetween('close_date', $this->close_date);
 		$query->andFilterDateBetween('estimated_close_date', $this->estimated_close_date);
 
-		Yii::debug($query->createCommand()->rawSql, 'sql');
+//		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 
