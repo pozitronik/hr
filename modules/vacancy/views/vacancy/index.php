@@ -13,11 +13,13 @@ use app\helpers\Utils;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
+use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -134,7 +136,28 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
-			'attribute' => 'role'
+			'attribute' => 'relVacancyGroupRoles',
+			'format' => 'raw',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			}
 		],
 		[
 			'class' => DataColumn::class,
