@@ -7,8 +7,6 @@ declare(strict_types = 1);
  */
 
 use app\models\core\core_module\PluginsSupport;
-use app\modules\privileges\models\rights\admin\ServiceAccess;
-use app\modules\privileges\models\UserAccess;
 use yii\base\View;
 use yii\helpers\Html;
 use app\modules\users\widgets\bookmarks\BookmarksWidget;
@@ -34,7 +32,7 @@ use app\modules\users\models\Users;
 					<li class="dropdown-header">Навигация</li>
 					<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Группы</p><small class="text-muted">Рабочие группы в сфере моей ответственности</small></div>', ["/home/index"]) ?></li>
 					<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no">Атрибуты</p><small class="text-muted">Поиск сотрудников по атрибутам</small></div>', ["/attributes/attributes/search"]) ?></li>
-					<?php if (UserAccess::GetFlag(ServiceAccess::FLAG_SERVICE)): ?>
+					<?php if (false /*&& UserAccess::GetFlag(ServiceAccess::FLAG_SERVICE)*/): ?>
 						<li><?= Html::a('<div class="media-body"><p class="text-semibold text-dark mar-no"><i class="fa fa-radiation-alt"></i> Ядерный пепел <i class="fa fa-radiation-alt"></i></p><small class="text-muted">Сброс сервиса в исходное состояние</small></div>', ["/service/service/index"]) ?></li>
 					<?php endif; ?>
 				</ul>
