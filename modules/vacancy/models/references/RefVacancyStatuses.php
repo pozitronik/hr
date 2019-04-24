@@ -29,7 +29,8 @@ class RefVacancyStatuses extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'string', 'max' => 255],
-			[['id', 'deleted', 'usedCount'], 'integer']
+			[['id', 'deleted', 'usedCount'], 'integer'],
+			[['color'], 'safe']
 		];
 	}
 
@@ -40,7 +41,8 @@ class RefVacancyStatuses extends Reference {
 		return [
 			'id' => 'ID',
 			'name' => 'Название',
-			'usedCount' => 'Использований'
+			'usedCount' => 'Использований',
+			'color' => 'Цвет'
 		];
 	}
 }
