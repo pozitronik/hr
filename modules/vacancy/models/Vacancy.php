@@ -7,13 +7,9 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\StrictInterface;
-use app\models\relations\RelUsersAttributes;
-use app\models\relations\RelUsersGroups;
-use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
-use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
@@ -26,7 +22,6 @@ use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -136,7 +131,7 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 				'deleted' => false
 			],
 			'relations' => [
-				RelVacancyGroupRoles::class => ['id' => 'vacancy_id'],
+				RelVacancyGroupRoles::class => ['id' => 'vacancy_id']
 			],
 			'events' => [
 				HistoryEventInterface::EVENT_DELETED => [

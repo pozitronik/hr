@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'resizableColumns' => true,
 	'responsive' => true,
 	'formatter' => [
-		'class' => Formatter::class,
+		'class' => Formatter::class
 	],
 	'columns' => [
 		[

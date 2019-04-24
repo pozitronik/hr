@@ -3,11 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models\relations;
 
-use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\relations\Relations;
-use app\models\relations\RelUsersGroups;
-use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
@@ -39,7 +36,7 @@ class RelVacancyGroupRoles extends ActiveRecordExtended {
 					HistoryEventInterface::EVENT_CREATED => 'Добавление роли вакансии',
 					HistoryEventInterface::EVENT_CHANGED => 'Изменение роли вакансии',
 					HistoryEventInterface::EVENT_DELETED => 'Удаление роли вакансии'
-				],
+				]
 			],
 			'attributes' => [
 				'role_id' => [RefUserRoles::class => 'name'],
