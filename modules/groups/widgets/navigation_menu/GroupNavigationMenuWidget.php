@@ -38,6 +38,11 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => ['/vacancy/groups/index', 'id' => $this->model->id]
 			],
 			[
+				'menu' => true,
+				'label' => Icons::vacancy_red().'Создать вакансию',
+				'url' => ['/vacancy/vacancy/create', 'group' => $this->model->id]
+			],
+			[
 				'label' => Icons::network().'Граф',
 				'url' => ['/groups/groups/tree', 'id' => $this->model->id]
 			],
