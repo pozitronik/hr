@@ -176,7 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					}
 				]);
 			},
-			'format' => 'raw',
+			'format' => 'raw'
 		],
 		[
 			'class' => DataColumn::class,

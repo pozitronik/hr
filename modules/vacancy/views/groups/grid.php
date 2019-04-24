@@ -11,7 +11,6 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
-use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
@@ -101,15 +100,7 @@ use yii\web\View;
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					"optionsMap" => static function() {
-						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-						array_walk($options, static function(&$value, $key) {
-							if (!empty($value)) {
-								$value = [
-									'style' => "background: $value;"
-								];
-							}
-						});
-						return $options;
+						return RefUserRoles::colorStyleOptions();
 					}
 				]);
 			}

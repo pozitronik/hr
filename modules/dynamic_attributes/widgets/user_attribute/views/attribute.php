@@ -10,7 +10,6 @@ declare(strict_types = 1);
  * @var bool $read_only
  */
 
-use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
@@ -66,17 +65,10 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 				'attribute' => 'name',
 				'unbadgedCount' => 3,
 				'itemsSeparator' => false,
-				'optionsMap' => static function() {
-					$options = ArrayHelper::map(RefAttributesTypes::find()->active()->all(), 'id', 'color');
-					array_walk($options, static function(&$value, $key) {
-						if (!empty($value)) {
-							$value = [
-								'style' => "background: $value;"
-							];
-						}
-					});
-					return $options;
+				"optionsMap" => static function() {
+					return RefAttributesTypes::colorStyleOptions();
 				}
+
 			]) ?>
 		</div>
 	</div>

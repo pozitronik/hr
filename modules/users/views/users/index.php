@@ -136,16 +136,9 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					"optionsMap" => static function() {
-						$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-						array_walk($options, static function(&$value, $key) {
-							if (!empty($value)) {
-								$value = [
-									'style' => "background: $value;"
-								];
-							}
-						});
-						return $options;
+						return RefUserRoles::colorStyleOptions();
 					}
+
 				]);
 			},
 			'format' => 'raw'

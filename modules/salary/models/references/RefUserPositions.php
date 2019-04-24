@@ -110,15 +110,7 @@ class RefUserPositions extends Reference {
 						'itemsSeparator' => false,
 						'linkScheme' => ['/references/references/update', 'id' => 'id', 'class' => 'RefUserPositionTypes'],
 						"optionsMap" => static function() {
-							$options = ArrayHelper::map(RefUserPositionTypes::find()->active()->all(), 'id', 'color');
-							array_walk($options, static function(&$value, $key) {
-								if (!empty($value)) {
-									$value = [
-										'style' => "background: $value;"
-									];
-								}
-							});
-							return $options;
+							return RefUserPositionTypes::colorStyleOptions();
 						}
 					]);
 				}

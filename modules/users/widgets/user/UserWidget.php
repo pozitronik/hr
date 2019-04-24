@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\user;
 
-use app\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
@@ -39,20 +38,11 @@ class UserWidget extends Widget {
 			]);
 		}
 
-
 		return $this->render('leader', [//think: сокращёная форма имени?
 			'model' => $this->user,
 			'group' => $this->group,
 			'options' => static function() {
-				$options = ArrayHelper::map(RefUserRoles::find()->active()->all(), 'id', 'color');
-				array_walk($options, static function(&$value, $key) {
-					if (!empty($value)) {
-						$value = [
-							'style' => "background: $value;"
-						];
-					}
-				});
-				return $options;
+				return RefUserRoles::colorStyleOptions();
 			}
 		]);
 
