@@ -12,6 +12,7 @@ use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
@@ -77,7 +78,27 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'location',
-			'value' => 'relRefLocation.name',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefLocation()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefLocations::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			},
+			'format' => 'raw',
 			'filter' => ArrayHelper::getValue($searchModel, 'location'),
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите локацию'],
@@ -92,7 +113,27 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'recruiter',
-			'value' => 'relRefVacancyRecruiter.name',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefVacancyRecruiter()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefVacancyRecruiters::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			},
+			'format' => 'raw',
 			'filter' => ArrayHelper::getValue($searchModel, 'recruiter'),
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите рекрутера'],
@@ -115,7 +156,27 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'position',
-			'value' => 'relRefUserPosition.name',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefUserPosition()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefUserPositions::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			},
+			'format' => 'raw',
 			'filter' => ArrayHelper::getValue($searchModel, 'position'),
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
@@ -127,7 +188,27 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'premium_group',
-			'value' => 'relRefSalaryPremiumGroup.name'
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelRefSalaryPremiumGroup()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					"optionsMap" => static function() {
+						$options = ArrayHelper::map(RefSalaryPremiumGroups::find()->active()->all(), 'id', 'color');
+						array_walk($options, static function(&$value, $key) {
+							if (!empty($value)) {
+								$value = [
+									'style' => "background: $value;"
+								];
+							}
+						});
+						return $options;
+					}
+				]);
+			},
+			'format' => 'raw',
 		],
 		[
 			'class' => DataColumn::class,
@@ -167,7 +248,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'status',
-			'value' => static function(Vacancy $vacancy) {//todo: все справочные значения подобным образом
+			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
 					'data' => $vacancy->getRelRefVacancyStatus()->all(),
 					'useBadges' => true,
