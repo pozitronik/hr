@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\models;
 
 use Throwable;
-use Yii;
 use yii\data\ActiveDataProvider;
 
 /**

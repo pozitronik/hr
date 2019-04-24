@@ -11,20 +11,18 @@ use app\helpers\Utils;
 use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
-use kartik\form\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 
 $this->title = "Вакансии в группе {$group->name}";
 
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы');
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы', 'groups/groups');//todo place in right location
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($group->name, 'groups/profile', ['id' => $group->id]);
 $this->params['breadcrumbs'][] = $this->title;
 $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['вакансия', 'вакансии', 'вакансий']).")":" (нет вакансий)");
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="panel-control">
@@ -39,7 +37,6 @@ $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->tot
 		<div class="row">
 			<div class="col-md-12">
 				<?= $this->render('grid', [
-					'model' => $group,
 					'provider' => $provider,
 					'heading' => false
 				]) ?>
@@ -56,4 +53,3 @@ $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->tot
 		</div>
 	</div>
 </div>
-<?php ActiveForm::end(); ?>

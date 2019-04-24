@@ -14,7 +14,6 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\modules\groups\models\Groups;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
