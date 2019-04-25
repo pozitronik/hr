@@ -6,7 +6,6 @@ namespace app\modules\vacancy\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
-use app\models\core\StrictInterface;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
@@ -19,10 +18,8 @@ use app\modules\users\models\Users;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
-use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\db\ActiveQuery;
-use yii\db\Exception;
 
 /**
  * This is the model class for table "sys_vacancy".
@@ -61,7 +58,7 @@ use yii\db\Exception;
  * @property RelVacancyGroupRoles[]|ActiveQuery $relVacancyGroupRoles Релейшен к таблице связей с ролями
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к справочнику ролей пользователей
  */
-class Vacancy extends ActiveRecordExtended implements StrictInterface {
+class Vacancy extends ActiveRecordExtended {
 
 	/**
 	 * {@inheritdoc}
@@ -80,7 +77,9 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 			[['create_date', 'close_date', 'estimated_close_date'], 'safe'],
 			[['name'], 'string', 'max' => 255],
 			[['vacancy_id', 'ticket_id'], 'unique'],
-			[['relRefUserRoles'], 'safe']
+			[['relRefUserRoles'], 'safe'],
+			[['daddy'], 'default', 'value' => CurrentUser::Id()],
+			[['create_date'], 'default', 'value' => Date::lcDate()]
 		];
 	}
 
@@ -142,51 +141,6 @@ class Vacancy extends ActiveRecordExtended implements StrictInterface {
 				]
 			]
 		];
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function createModel(?array $paramsArray):bool {
-		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray)) {
-			$this->updateAttributes([
-				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate()
-			]);
-			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-				/** @noinspection NotOptimalIfConditionsInspection */
-				if ($this->save()) {
-					$transaction->commit();
-					$this->refresh();
-					AlertModel::SuccessNotify();
-					return true;
-				}
-				AlertModel::ErrorsNotify($this->errors);
-			}
-			AlertModel::ErrorsNotify($this->errors);//todo: разобраться уже с алертами, м.б. переделать в дефолтное поведение
-		}
-		$transaction->rollBack();
-		return false;
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
 	}
 
 	/**
