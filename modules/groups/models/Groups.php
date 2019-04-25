@@ -7,10 +7,8 @@ use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
-use app\models\core\StrictInterface;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\traits\Graph;
-use app\widgets\alert\AlertModel;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
@@ -22,7 +20,6 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use yii\db\Exception;
 
 /**
  * This is the model class for table "groups".
@@ -59,7 +56,7 @@ use yii\db\Exception;
  * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
-class Groups extends ActiveRecordExtended implements StrictInterface {
+class Groups extends ActiveRecordExtended {
 	use Graph;
 	use Upload;
 
@@ -107,7 +104,9 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 			[['name'], 'string', 'max' => 512],
 			[['logotype'], 'string', 'max' => 255],
 			[['relChildGroups', 'dropChildGroups', 'relParentGroups', 'dropParentGroups', 'relUsers', 'dropUsers'], 'safe'],
-			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576]
+			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],
+			[['daddy'], 'default', 'value' => CurrentUser::Id()],
+			[['create_date'], 'default', 'value' => Date::lcDate()]
 		];
 	}
 
@@ -184,50 +183,6 @@ class Groups extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function getRelRefUserRolesLeader() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
-	}
-
-	/**
-	 * @param array $paramsArray
-	 * @return null|bool
-	 * @throws Exception
-	 */
-	public function createModel(?array $paramsArray):bool {
-		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray)) {
-			$this->updateAttributes([
-				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate()
-			]);
-			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-				/** @noinspection NotOptimalIfConditionsInspection */
-				if ($this->save()) {
-					$transaction->commit();
-					$this->refresh();
-					AlertModel::SuccessNotify();
-					return true;
-				}
-				AlertModel::ErrorsNotify($this->errors);
-			}
-		}
-		$transaction->rollBack();
-		return false;
-	}
-
-	/**
-	 * @param array $paramsArray
-	 * @return bool
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
 	}
 
 	/**
