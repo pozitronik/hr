@@ -36,7 +36,7 @@ class RefAttributesTypes extends Reference {
 		return [
 			[['id'], 'integer'],
 			[['name'], 'required'],
-			[['deleted'], 'integer'],
+			[['deleted'], 'integer'],//todo: do as RefVacancyRecruiters
 			[['name', 'color'], 'string', 'max' => 255]
 		];
 	}
