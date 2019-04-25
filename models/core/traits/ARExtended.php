@@ -14,6 +14,7 @@ use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
+use yii\db\Exception;
 
 /**
  * Trait ARExtended
@@ -25,13 +26,13 @@ trait ARExtended {
 	/**
 	 * Обёртка для быстрого поиска моделей с опциональным выбросом логируемого исключения
 	 * Упрощает проверку поиска моделей
-	 * @example Users::findModel($id, new NotFoundException('Пользователь не найден'))
-	 *
-	 * @example if (null !== $user = Users::findModel($id)) return $user
 	 * @param mixed $id Поисковое условие (предпочтительно primaryKey, но не ограничиваемся им)
 	 * @param null|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
 	 * @return null|self
 	 * @throws Throwable
+	 * @example Users::findModel($id, new NotFoundException('Пользователь не найден'))
+	 *
+	 * @example if (null !== $user = Users::findModel($id)) return $user
 	 */
 	public static function findModel($id, ?Throwable $throw = null):?self {
 		if (null !== ($model = self::findOne($id))) return $model;
@@ -211,4 +212,54 @@ trait ARExtended {
 		return json_encode($this->$property, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
 	}
 
+	/**
+	 * Метод создания модели, выполняющий дополнительную обработку:
+	 * 1) Обеспечивает последовательное создание модели и заполнение данных по связям (т.е. тех данных, которые не могут быть заполнены до фактического создания модели).
+	 *    Последовательность заключена в транзакцию - сбой на любом шаге ведёт к отмене всей операции.
+	 * 2) Генерирует уведомление по результатам
+	 *
+	 * Значения по умолчанию больше не учитываются методом, предполагается, что они заданы в rules().
+	 * Если требуется выполнить какую-то логику в процессе создания - используем стандартные методы, вроде beforeValidate/beforeSave (по ситуации).
+	 *
+	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
+	 * @return bool - результат операции
+	 * @throws Exception
+	 */
+	public function createModel(?array $paramsArray):bool {
+		$saved = false;
+		if ($this->loadArray($paramsArray)) {
+			$transaction = self::getDb()->beginTransaction();
+			if (true === $saved = $this->save()) {
+				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
+				/** @noinspection NotOptimalIfConditionsInspection */
+				if (true === $saved = $this->save()) {
+					$transaction->commit();
+					$this->refresh();
+					AlertModel::SuccessNotify();
+				}
+			}
+			if (!$saved) {
+				AlertModel::ErrorsNotify($this->errors);
+				$transaction->rollBack();
+			}
+		}
+		return $saved;
+	}
+
+	/**
+	 * Метод обновления модели, выполняющий дополнительную обработку: генерация уведомления по результатам
+	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
+	 * @return bool
+	 */
+	public function updateModel(?array $paramsArray):bool {
+		if ($this->loadArray($paramsArray)) {
+			if ($this->save()) {
+				AlertModel::SuccessNotify();
+				$this->refresh();
+				return true;
+			}
+			AlertModel::ErrorsNotify($this->errors);
+		}
+		return false;
+	}
 }
