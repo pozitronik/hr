@@ -3,16 +3,12 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
-use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
-use app\models\core\StrictInterface;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
-use app\widgets\alert\AlertModel;
 use yii\db\ActiveQuery;
-use yii\db\Exception;
 
 /**
  * This is the model class for table "salary_fork".
@@ -33,7 +29,7 @@ use yii\db\Exception;
  * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
  * @property RefLocations|ActiveQuery|null $refLocation
  */
-class SalaryFork extends ActiveRecordExtended implements StrictInterface {
+class SalaryFork extends ActiveRecordExtended {
 
 	/**
 	 * {@inheritdoc}
@@ -113,46 +109,6 @@ class SalaryFork extends ActiveRecordExtended implements StrictInterface {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id']);
 	}
 
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function createModel(?array $paramsArray):bool {
-		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-				/** @noinspection NotOptimalIfConditionsInspection */
-				if ($this->save()) {
-					$transaction->commit();
-					$this->refresh();
-					AlertModel::SuccessNotify();
-					return true;
-				}
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-
-		$transaction->rollBack();
-		return false;
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
-	}
 
 	/**
 	 * @return float

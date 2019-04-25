@@ -11,7 +11,6 @@ namespace app\modules\dynamic_attributes\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
-use app\models\core\StrictInterface;
 use app\models\core\SysExceptions;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
@@ -21,7 +20,6 @@ use RuntimeException;
 use Throwable;
 use Yii;
 use yii\db\ActiveQuery;
-use yii\db\Exception;
 
 /**
  * Атрибут - сугубо динамическая штука, состоящая из произвольного набора свойств.
@@ -44,7 +42,7 @@ use yii\db\Exception;
  * @property int $userProperties
  * @property-read int $usersCount
  */
-class DynamicAttributes extends ActiveRecordExtended implements StrictInterface {
+class DynamicAttributes extends ActiveRecordExtended {
 
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',
@@ -69,7 +67,11 @@ class DynamicAttributes extends ActiveRecordExtended implements StrictInterface 
 			[['category', 'daddy', 'access'], 'integer'],
 			[['deleted'], 'boolean'],
 			[['create_date', 'structure'], 'safe'],
-			[['name'], 'string', 'max' => 255]
+			[['name'], 'string', 'max' => 255],
+			[['daddy'], 'default', 'value' => CurrentUser::Id()],
+			[['create_date'], 'default', 'value' => Date::lcDate()],
+			[['structure'], 'default', 'value' => []]
+
 		];
 	}
 
@@ -88,40 +90,6 @@ class DynamicAttributes extends ActiveRecordExtended implements StrictInterface 
 			'access' => 'Доступ',
 			'deleted' => 'Флаг удаления'
 		];
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 * @throws Exception
-	 */
-	public function createModel(?array $paramsArray):bool {
-		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray)) {
-			$this->create_date = Date::lcDate();
-			$this->daddy = CurrentUser::Id();
-			$this->structure = [];
-			if ($this->save()) {
-				$transaction->commit();
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		$transaction->rollBack();
-		return false;
-	}
-
-	/**
-	 * @param null|array $paramsArray
-	 * @return bool
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			return $this->save();
-		}
-		return false;
 	}
 
 	/**
