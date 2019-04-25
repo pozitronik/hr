@@ -6,7 +6,6 @@ namespace app\modules\users\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
-use app\models\core\StrictInterface;
 use app\models\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
@@ -18,7 +17,6 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\models\UserRightInterface;
-use app\widgets\alert\AlertModel;
 use app\modules\salary\models\references\RefUserPositions;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroups;
@@ -45,6 +43,7 @@ use yii\db\ActiveRecord;
  * @property string $profile_image Название файла фотографии профиля
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property boolean $deleted Флаг удаления
+ * @property-write string $update_password Свойство только для обновления пароля
  *
  * @property int|null $position Должность/позиция
  *
@@ -86,12 +85,13 @@ use yii\db\ActiveRecord;
  * @property RelUsersAttributesTypes[]|ActiveQuery $relUsersAttributesTypes Релейшен к таблице связей с типами атрибутов
  * @property RefAttributesTypes[]|ActiveQuery $refAttributesTypes Типы атрибутов, присвоенных пользователю
  */
-class Users extends ActiveRecordExtended implements StrictInterface {
+class Users extends ActiveRecordExtended {
 	use Upload;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.
 
 	/*Переменная для инстанса заливки аватарок*/
 	public $upload_image;
+	public $update_password;
 
 	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
@@ -138,20 +138,22 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	 */
 	public function rules():array {
 		return [
-			[['username', 'login', 'password', 'email', 'create_date'], 'required'],
+			[['username', 'login', 'password', 'email'], 'required'],//Не ставим create_date как required, поле заполнится default-валидатором (а если нет - отвалится при инсерте в базу)
 			[['comment'], 'string'],
 			[['create_date'], 'safe'],
 			[['daddy', 'position'], 'integer'],
 			[['deleted'], 'boolean'],
 			[['deleted'], 'default', 'value' => false],
-			[['username', 'password', 'salt', 'email', 'profile_image'], 'string', 'max' => 255],
+			[['username', 'password', 'salt', 'email', 'profile_image', 'update_password'], 'string', 'max' => 255],
 			[['login'], 'string', 'max' => 64],
 			[['login'], 'unique'],
 			[['email'], 'unique'],
 			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],//Это только клиентская валидация, на сервере атрибут всегда будет валидироваться успешно
 			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges'], 'safe'],
 			/*Мы не можем переопределить или наследовать метод в трейте, поэтому ПОКА добавляю правила валидации атрибутов из трейта сюда. Но потом нужно придумать, как разделить код*/
-			[['relGrade', 'relPremiumGroup', 'relLocation'], 'safe']
+			[['relGrade', 'relPremiumGroup', 'relLocation'], 'safe'],
+			[['daddy'], 'default', 'value' => CurrentUser::Id()],
+			[['create_date'], 'default', 'value' => Date::lcDate()]//default-валидатор срабатывает только на незаполненные атрибуты, его нельзя использовать как обработчик любых изменений атрибута
 		];
 	}
 
@@ -193,63 +195,19 @@ class Users extends ActiveRecordExtended implements StrictInterface {
 	}
 
 	/**
-	 * Солим пароль
+	 * {@inheritDoc}
 	 */
-	public function applySalt():void {
-		$this->salt = sha1(uniqid((string)mt_rand(), true));
-		$this->password = sha1($this->password.$this->salt);
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 * @throws Throwable
-	 */
-	public function createModel(?array $paramsArray):bool {
-		$transaction = self::getDb()->beginTransaction();
-		if ($this->loadArray($paramsArray)) {
-			if (null === $this->salt) $this->applySalt();
-
-			$this->updateAttributes([
-				'daddy' => CurrentUser::Id(),
-				'create_date' => Date::lcDate()
-			]);
-			if ($this->save()) {/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
-				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));
-				/** @noinspection NotOptimalIfConditionsInspection */
-				if ($this->save()) {
-					$transaction->commit();
-					AlertModel::SuccessNotify();
-					$this->refresh();
-					return true;
-				}
-				AlertModel::ErrorsNotify($this->errors);
+	public function beforeValidate():bool {
+		if ($this->isNewRecord) {
+			if (null === $this->salt) {
+				$this->salt = sha1(uniqid((string)mt_rand(), true));
+				$this->password = sha1($this->password.$this->salt);
 			}
+		} else if ('' !== $this->update_password) {
+			$this->salt = sha1(uniqid((string)mt_rand(), true));
+			$this->password = sha1($this->update_password.$this->salt);
 		}
-		$transaction->rollBack();
-		return false;
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 * @throws Throwable
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if (!empty($newPassword = ArrayHelper::getValue($paramsArray, 'update_password', false))) {
-				$this->password = $newPassword;
-				$this->applySalt();
-			}
-
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
+		return parent::beforeValidate();
 	}
 
 	/**
