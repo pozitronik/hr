@@ -230,6 +230,7 @@ trait ARExtended {
 		if ($this->loadArray($paramsArray)) {
 			$transaction = self::getDb()->beginTransaction();
 			if (true === $saved = $this->save()) {
+				$this->refresh();//переподгрузим атрибуты
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
 				/** @noinspection NotOptimalIfConditionsInspection */
 				if (true === $saved = $this->save()) {
