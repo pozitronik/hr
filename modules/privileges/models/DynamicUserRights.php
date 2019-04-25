@@ -7,8 +7,6 @@ use app\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\CoreController;
-use app\models\core\StrictInterface;
-use app\widgets\alert\AlertModel;
 use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -29,7 +27,7 @@ use yii\web\Controller;
  * @property-read ArrayDataProvider $actionsAccessProvider Провайдер для отображения списка экшонов
  * @property-read string $module
  */
-class DynamicUserRights extends ActiveRecordExtended implements UserRightInterface, StrictInterface {
+class DynamicUserRights extends ActiveRecordExtended implements UserRightInterface {
 	protected $_module;//Регистрирующий модуль, заполняется при инициализации
 	protected $_actionsAccessMap = [];
 	private $_rules;//для обхода прямой модификации $rules
@@ -99,6 +97,14 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public function beforeValidate():bool {
+		$this->prepareAccessMap();
+		return parent::beforeValidate();
+	}
+
 	private function prepareAccessMap() {
 		$this->_rules[$this->ruleActionsIndexName] = [];
 		foreach ($this->actionsAccessMap as $item) {
@@ -107,40 +113,6 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 			}
 		}
 		$this->rules = $this->_rules;
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 */
-	public function createModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			$this->prepareAccessMap();
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
-	}
-
-	/**
-	 * @param array|null $paramsArray
-	 * @return bool
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			$this->prepareAccessMap();
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
 	}
 
 	/**
