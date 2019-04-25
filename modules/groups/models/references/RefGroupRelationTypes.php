@@ -36,7 +36,8 @@ class RefGroupRelationTypes extends Reference {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
-			[['id', 'deleted'], 'integer'],
+			[['id'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['name', 'color'], 'string', 'max' => 256],
 			[['color'], 'safe']
 		];

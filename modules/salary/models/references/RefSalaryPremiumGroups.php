@@ -34,7 +34,7 @@ class RefSalaryPremiumGroups extends Reference {
 		return [
 			[['id'], 'integer'],
 			[['name'], 'required'],
-			[['deleted'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['name', 'color'], 'string', 'max' => 255]
 		];
 	}

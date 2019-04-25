@@ -29,7 +29,8 @@ class RefVacancyStatuses extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'string', 'max' => 255],
-			[['id', 'deleted', 'usedCount'], 'integer'],
+			[['id', 'usedCount'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['color'], 'safe']
 		];
 	}

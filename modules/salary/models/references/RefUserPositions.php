@@ -54,7 +54,8 @@ class RefUserPositions extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'unique'],
-			[['id', 'deleted'], 'integer'],
+			[['id'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['name', 'color'], 'string', 'max' => 256],
 			[['branch', 'types', 'relGrades'], 'safe'],//relational attributes
 		];

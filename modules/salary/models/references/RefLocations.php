@@ -35,7 +35,8 @@ class RefLocations extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'unique'],
-			[['id', 'deleted', 'usedCount'], 'integer'],
+			[['id', 'usedCount'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['name'], 'string', 'max' => 256],
 			[['color'], 'safe']
 		];

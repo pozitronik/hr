@@ -26,7 +26,8 @@ class RefUserPositionTypes extends Reference {
 		return [
 			[['name'], 'required'],
 			[['name'], 'unique'],
-			[['id', 'deleted'], 'integer'],
+			[['id'], 'integer'],
+			[['deleted'], 'boolean'],
 			[['name'], 'string', 'max' => 256]
 		];
 	}
