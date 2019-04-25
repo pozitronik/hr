@@ -6,8 +6,6 @@ namespace app\modules\references\models;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\StrictInterface;
-use app\widgets\alert\AlertModel;
 use Throwable;
 use Yii;
 use yii\base\ErrorException;
@@ -38,7 +36,7 @@ use RuntimeException;
  * @property null|string $pluginId Плагин, подключающий расширение
  * @property null|CoreModule $plugin
  */
-class Reference extends ActiveRecordExtended implements ReferenceInterface, StrictInterface {
+class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
 	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions
@@ -164,37 +162,11 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface, Stri
 	}
 
 	/**
-	 * @param null|array $paramsArray
-	 * @return boolean
+	 * {@inheritDoc}
 	 */
-	public function createModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				self::flushCache();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
-	}
-
-	/**
-	 * @param null|array $paramsArray
-	 * @return bool
-	 */
-	public function updateModel(?array $paramsArray):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				AlertModel::SuccessNotify();
-				self::flushCache();
-				$this->refresh();
-				return true;
-			}
-			AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
+	public function afterSave($insert, $changedAttributes) {
+		parent::afterSave($insert, $changedAttributes);
+		self::flushCache();
 	}
 
 	/**
