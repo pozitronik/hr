@@ -87,7 +87,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 		[
 			'attribute' => 'username',
 			'value' => static function(Users $model) {
-				return Html::a($model->username, ['/users/users/profile', 'id' => $model->id]);
+				return Users::a($model->username, ['users/profile', 'id' => $model->id]);
 			},
 			'format' => 'raw'
 		],

@@ -13,6 +13,7 @@ use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
 use app\modules\history\models\references\RefModels;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\users\models\Users;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use kartik\select2\Select2;
@@ -71,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'username',
 			'value' => static function(ActiveRecordLogger $model) {
-				return null === $model->user?'System':Html::a($model->relUser->username, ['/users/users/profile', 'id' => $model->user]);
+				return null === $model->user?'System':Users::a($model->relUser->username, ['users/profile', 'id' => $model->user]);
 			},
 			'format' => 'raw'
 		],

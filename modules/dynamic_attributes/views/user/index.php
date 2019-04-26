@@ -25,7 +25,7 @@ use yii\web\View;
 use kartik\grid\GridView;
 
 $this->title = "Атрибуты пользователя {$user->username}";
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
+$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => Users::to()];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

@@ -20,7 +20,7 @@ use yii\helpers\Html;
 
 $this->title = "Изменение атрибута {$attribute->name} ";
 
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => ['/users/users']];
+$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => Users::to()];
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem("Атрибуты пользователя {$user->username}", 'attributes/user', ['user_id' => $user->id]);
 $this->params['breadcrumbs'][] = $this->title;
 

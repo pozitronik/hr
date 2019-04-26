@@ -12,6 +12,7 @@ declare(strict_types = 1);
 
 use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
+use app\modules\users\models\Users;
 use app\modules\users\models\UsersMassUpdate;
 use kartik\select2\Select2;
 use app\helpers\ArrayHelper;
@@ -24,7 +25,7 @@ use kartik\grid\GridView;
 $this->title = 'Групповое изменение пользователей';
 
 if ($group) {
-	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/users/users']];
+	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => Users::to()];//todo: я уже делал такую тудуху, но и тут оставлю: нужна модификация breadcrumbItem
 	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => Groups::to(['groups/profile', 'id' => $group->id])];
 	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
@@ -131,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'attribute' => 'id',
 						'label' => 'id пользователя',
 						'value' => static function($array) {
-							return Html::a(ArrayHelper::getValue($array, 'username'), ['/users/users/profile', 'id' => ArrayHelper::getValue($array, 'id')]);
+							return Users::a(ArrayHelper::getValue($array, 'username'), ['users/profile', 'id' => ArrayHelper::getValue($array, 'id')]);
 						},
 						'format' => 'raw'
 					],

@@ -94,7 +94,7 @@ GridView::widget([
 			'value' => static function(Groups $model) {
 				$users = [];
 				foreach ($model->leaders as $leader) {
-					$users[] = Html::a($leader->username, ['/users/users/profile', 'id' => $leader->id]);
+					$users[] = Users::a($leader->username, ['users/profile', 'id' => $leader->id]);
 				}
 				return implode(", ", $users);
 			},

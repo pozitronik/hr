@@ -13,4 +13,4 @@ use yii\helpers\Html;
 
 $borderStyle = (CurrentUser::Id() === $model->id)?'img-border-current':'img-border';
 ?>
-<?= Html::a(Html::img($model->avatar, ['class' => "img-circle img-user media-object {$borderStyle}", 'alt' => $model->username, 'title' => $model->username]), ['/users/users/profile', 'id' => $model->id]) ?>
+<?= Users::a(Html::img($model->avatar, ['class' => "img-circle img-user media-object {$borderStyle}", 'alt' => $model->username, 'title' => $model->username]), ['users/profile', 'id' => $model->id]) ?>

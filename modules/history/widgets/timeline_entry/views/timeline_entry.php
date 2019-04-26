@@ -8,7 +8,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\modules\history\models\TimelineEntry;
-use yii\helpers\Html;
+use app\modules\users\models\Users;
 use yii\web\View;
 
 ?>
@@ -21,7 +21,7 @@ use yii\web\View;
 	<div class="timeline-label">
 		<p class="mar-no pad-btm">
 			<span class="text-semibold"><i><?= $entry->caption ?></i></span>
-			<?= Html::a(ArrayHelper::getValue($entry->user, 'username'), (null === $entry->user)?'#':['/users/users/profile', 'id' => $entry->user->id], ['class' => 'text-semibold pull-right']) ?>
+			<?= Users::a(ArrayHelper::getValue($entry->user, 'username'), (null === $entry->user)?'#':['users/profile', 'id' => $entry->user->id], ['class' => 'text-semibold pull-right']) ?>
 		</p>
 		<span><?= $entry->content ?></span>
 	</div>
