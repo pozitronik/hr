@@ -14,9 +14,9 @@ use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\salary\SalaryModule;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use yii\helpers\Url;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'type' => RefDepDrop::TYPE_REFERENCE_SELECT,
 						'pluginOptions' => [
 							'depends' => ['users-position'],
-							'url' => Url::to(['/salary/ajax/get-position-grades']),
+							'url' => SalaryModule::to(['ajax/get-position-grades']),
 							'loadingText' => 'Загружаю грейды'
 						]
 					]) ?>
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="col-md-12">
 					<?php if (null === $salaryFork = $model->relSalaryFork): ?>
 						Для этого набора параметров не задана зарплатная вилка.
-						<?= Html::a('Задать вилку', ['/salary/salary/create', 'position' => $model->position, 'grade' => $model->relUsersSalary->grade_id, 'premium_group' => $model->relUsersSalary->premium_group_id, 'location' => $model->relUsersSalary->location_id], ['class' => 'btn btn-sm btn-default']) ?>
+						<?= SalaryModule::a('Задать вилку', ['salary/create', 'position' => $model->position, 'grade' => $model->relUsersSalary->grade_id, 'premium_group' => $model->relUsersSalary->premium_group_id, 'location' => $model->relUsersSalary->location_id], ['class' => 'btn btn-sm btn-default']) ?>
 					<?php else: ?>
 						Параметры зарплатной вилки: <?= $salaryFork ?>
 					<?php endif; ?>

@@ -14,6 +14,7 @@ use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\salary\SalaryModule;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\widgets\user_select\UserSelectWidget;
 use app\modules\vacancy\models\references\RefVacancyRecruiters;
@@ -146,7 +147,7 @@ use yii\widgets\ActiveForm;
 							'type' => RefDepDrop::TYPE_REFERENCE_SELECT,
 							'pluginOptions' => [
 								'depends' => ['vacancy-position'],
-								'url' => Url::to(['/salary/ajax/get-position-grades']),
+								'url' => SalaryModule::to(['ajax/get-position-grades']),
 								'loadingText' => 'Загружаю грейды',
 								'placeholder' => 'Сначала выберите должность'
 							]
