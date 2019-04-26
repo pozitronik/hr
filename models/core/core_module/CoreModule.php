@@ -12,6 +12,7 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Module as BaseModule;
+use yii\helpers\Url;
 
 /**
  * Class CoreModule
@@ -116,6 +117,28 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Возвращает путь внутри модуля
+	 * @param string|array $url
+	 * @return string
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 * @example SalaryModule::to(['salary/index','id' => 10]) => /salary/salary/index?id=10
+	 * @example UsersModule::to('users/index') => users/users/index
+	 */
+	public static function to($url):string {
+		if ((null === $module = static::getInstance()) && null === $module = PluginsSupport::GetPluginByClassName(static::class)) {
+			throw new InvalidConfigException("Модуль ".static::class." не подключён");
+		}
+		if (is_array($url)) {
+			ArrayHelper::setValue($url, 0, $module->defaultRoute.'/'.ArrayHelper::getValue($url, 0));
+		} else {
+			$url = $module->defaultRoute.'/'.$url;
+		}
+
+		return Url::to($url);
 	}
 
 }
