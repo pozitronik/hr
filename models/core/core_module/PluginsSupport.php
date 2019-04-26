@@ -22,16 +22,19 @@ class PluginsSupport {
 
 	/**
 	 * @param string $name - id плагина из web.php
-	 * @param array $pluginConfigurationArray - конфиг плагина из web.php вида
+	 * @param null|array $pluginConfigurationArray - конфиг плагина из web.php вида
 	 * [
 	 *        'class' => Module::class,
 	 *        ...
 	 * ]
+	 * null - подтянуть конфиг автоматически
+	 *
 	 * @return null|CoreModule - загруженный экземпляр модуля
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	private static function LoadPlugin(string $name, array $pluginConfigurationArray):?CoreModule {
+	private static function LoadPlugin(string $name, ?array $pluginConfigurationArray = null):?CoreModule {
+		$pluginConfigurationArray = $pluginConfigurationArray??ArrayHelper::getValue(Yii::$app->modules, $name, []);
 		$module = Yii::createObject($pluginConfigurationArray, [$name]);
 		if ($module instanceof CoreModule) return $module;
 		return null;
@@ -66,6 +69,22 @@ class PluginsSupport {
 	 */
 	public static function GetPluginById(string $pluginId):?CoreModule {
 		return ArrayHelper::getValue(self::ListPlugins(), $pluginId);
+	}
+
+	/**
+	 * Возвращает плагин по его имени класса
+	 * @param string $className
+	 * @return CoreModule|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function GetPluginByClassName(string $className):?CoreModule {
+		$config = array_filter(Yii::$app->modules, static function($element) use ($className) {
+			return is_array($element) && $className === ArrayHelper::getValue($element, 'class');
+		});
+		$pluginName = ArrayHelper::key($config);
+
+		return self::LoadPlugin($pluginName, $config[$pluginName]);
 	}
 
 	/**
