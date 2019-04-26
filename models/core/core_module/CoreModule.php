@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use app\helpers\ArrayHelper;
+use app\helpers\Utils;
 use app\models\core\helpers\ReflectionHelper;
 use app\modules\privileges\models\UserRightInterface;
 use RecursiveDirectoryIterator;
@@ -12,6 +13,7 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Module as BaseModule;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
@@ -105,25 +107,38 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	}
 
 	/**
-	 * Возвращает путь внутри модуля
+	 * Возвращает путь внутри модуля. Путь всегда будет абсолютный, от корня.
 	 * @param string|array $url
 	 * @return string
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 * @example SalaryModule::to(['salary/index','id' => 10]) => /salary/salary/index?id=10
-	 * @example UsersModule::to('users/index') => users/users/index
+	 * @example UsersModule::to('users/index') => /users/users/index
 	 */
 	public static function to($url):string {
 		if ((null === $module = static::getInstance()) && null === $module = PluginsSupport::GetPluginByClassName(static::class)) {
 			throw new InvalidConfigException("Модуль ".static::class." не подключён");
 		}
 		if (is_array($url)) {
-			ArrayHelper::setValue($url, 0, $module->defaultRoute.'/'.ArrayHelper::getValue($url, 0));
+			ArrayHelper::setValue($url, 0, Utils::setAbsoluteUrl($module->defaultRoute.Utils::setAbsoluteUrl(ArrayHelper::getValue($url, 0))));
 		} else {
-			$url = $module->defaultRoute.'/'.$url;
+			$url = Utils::setAbsoluteUrl($module->defaultRoute.Utils::setAbsoluteUrl(ArrayHelper::getValue($url, 0)));
 		}
 
 		return Url::to($url);
 	}
 
+	/**
+	 * Генерация html-ссылки внутри модуля (аналог Html::a(), но с автоматическим учётом путей модуля).
+	 * @param string $text
+	 * @param array|string|null $url
+	 * @param array $options
+	 * @return string
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function a(string $text, $url = null, array $options = []):string {
+		$url = static::to($url);
+		return Html::a($text, $url, $options);
+	}
 }
