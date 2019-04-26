@@ -6,6 +6,7 @@ namespace app\modules\references\widgets\navigation_menu;
 use app\helpers\Icons;
 use app\modules\history\HistoryModule;
 use app\modules\references\models\Reference;
+use app\modules\references\ReferencesModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -28,11 +29,11 @@ class ReferenceNavigationMenuWidget extends BaseNavigationMenuWidget {
 		$this->_navigationItems = [
 			[
 				'label' => Icons::view().'Просмотр',
-				'url' => ['/references/references/view', 'id' => $this->model->id, 'class' => $this->className]
+				'url' => ReferencesModule::to(['references/view', 'id' => $this->model->id, 'class' => $this->className])
 			],
 			[
 				'label' => Icons::update().'Изменение',
-				'url' => ['/references/references/update', 'id' => $this->model->id, 'class' => $this->className]
+				'url' => ReferencesModule::to(['references/update', 'id' => $this->model->id, 'class' => $this->className])
 			],
 			[
 				'menu' => true,
@@ -42,7 +43,7 @@ class ReferenceNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
-				'url' => ['/references/references/delete', 'id' => $this->model->id, 'class' => $this->className],
+				'url' => ReferencesModule::to(['references/delete', 'id' => $this->model->id, 'class' => $this->className]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [

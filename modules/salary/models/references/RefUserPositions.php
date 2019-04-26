@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\salary\models\references;
 
 use app\helpers\ArrayHelper;
+use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
 use app\modules\references\models\Reference;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
@@ -109,7 +110,7 @@ class RefUserPositions extends Reference {
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
-						'linkScheme' => ['/references/references/update', 'id' => 'id', 'class' => 'RefUserPositionTypes'],
+						'linkScheme' => ReferencesModule::to(['references/update', 'id' => 'id', 'class' => 'RefUserPositionTypes']),
 						"optionsMap" => static function() {
 							return RefUserPositionTypes::colorStyleOptions();
 						}
@@ -129,7 +130,7 @@ class RefUserPositions extends Reference {
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
-						'linkScheme' => ['/references/references/update', 'id' => 'id', 'class' => 'RefGrades']
+						'linkScheme' => [ReferencesModule::to('references/update'), 'id' => 'id', 'class' => 'RefGrades']
 					]);
 				}
 			],
