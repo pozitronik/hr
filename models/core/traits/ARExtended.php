@@ -87,24 +87,23 @@ trait ARExtended {
 
 	/**
 	 * Первый параметр пока что специально принудительно указываю массивом, это позволяет не накосячить при задании параметров. Потом возможно будет убрать
+	 * !Функция была отрефакторена и после этого не тестировалась!
 	 * @param array $searchCondition
 	 * @param null|array $fields
 	 * @param bool $ignoreEmptyCondition Игнорировать пустое поисковое значение
+	 * @param bool $forceUpdate Если запись по условию найдена, пытаться обновить её
 	 * @return ActiveRecord|self|null
 	 * @throws ImportException
 	 */
-	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true):?self {//todo: add UPDATE flag for updating fields even for existed rows
+	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true, bool $forceUpdate = false):?self {
 		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
 
-		/** @var ActiveRecord $instance */
-		if (null === $instance = static::findOne($searchCondition)) {
-			$fields = $fields??$searchCondition;
-			/** @noinspection PhpMethodParametersCountMismatchInspection */
-			$instance = new static($fields);
+		$instance = static::getInstance($searchCondition);
+		if ($instance->isNewRecord || $forceUpdate) {
+			$instance->load($fields??$searchCondition);
 			if (!$instance->save()) {
 				throw new ImportException($instance, $instance->errors);
 			}
-			return $instance;
 		}
 		return $instance;
 	}
