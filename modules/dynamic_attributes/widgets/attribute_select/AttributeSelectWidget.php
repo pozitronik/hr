@@ -7,6 +7,8 @@ use app\helpers\ArrayHelper;
 use app\models\core\SelectionWidgetInterface;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use kartik\base\InputWidget;
+use Throwable;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
 /**
@@ -41,6 +43,8 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function run():string {
 
@@ -55,7 +59,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 					'data' => $data,
 					'multiple' => $this->multiple,
 					'data_mode' => $this->dataMode,
-					'ajax_search_url' => '/attributes/ajax/attribute-search'
+					'ajax_search_url' => DynamicAttributes::to('ajax/attribute-search')
 				]);
 			break;
 			case self::MODE_FORM:
@@ -66,7 +70,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 					'multiple' => $this->multiple,
 					'formAction' => $this->formAction,
 					'data_mode' => $this->dataMode,
-					'ajax_search_url' => '/attributes/ajax/attribute-search'
+					'ajax_search_url' => DynamicAttributes::to('ajax/attribute-search')
 				]);
 			break;
 		}

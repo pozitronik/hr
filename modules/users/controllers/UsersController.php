@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\users\controllers;
 
 use app\models\core\WigetableController;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
@@ -79,9 +80,11 @@ class UsersController extends WigetableController {
 	/**
 	 * @param int $id
 	 * @return Response
+	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function actionAttributes(int $id):Response {
-		return $this->redirect(['/attributes/user', 'user_id' => $id]);
+		return $this->redirect(DynamicAttributes::to(['user', 'user_id' => $id]));
 	}
 
 	/**

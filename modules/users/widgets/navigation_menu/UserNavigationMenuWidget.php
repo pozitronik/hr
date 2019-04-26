@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\users\widgets\navigation_menu;
 
 use app\helpers\Icons;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\users\models\Users;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
@@ -40,7 +41,7 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'label' => Icons::attributes().'Атрибуты',
-				'url' => ['/attributes/user', 'user_id' => $this->model->id]
+				'url' => DynamicAttributes::to(['user', 'user_id' => $this->model->id])
 			],
 			[
 				'menu' => true,

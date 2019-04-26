@@ -11,6 +11,7 @@ namespace app\modules\dynamic_attributes\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
+use app\models\core\core_module\PluginTrait;
 use app\models\core\SysExceptions;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
@@ -43,6 +44,7 @@ use yii\db\ActiveQuery;
  * @property-read int $usersCount
  */
 class DynamicAttributes extends ActiveRecordExtended {
+	use PluginTrait;
 
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',

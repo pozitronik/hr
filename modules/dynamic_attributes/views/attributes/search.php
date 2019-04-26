@@ -9,6 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\models\core\core_module\CoreModule;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
@@ -19,7 +20,6 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
-use yii\helpers\Url;
 
 $this->title = 'Поиск';
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Атрибуты');
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'type' => DepDrop::TYPE_SELECT2,
 								'pluginOptions' => [
 									'depends' => ["dynamicattributessearchcollection-searchitems-$index-attribute"],
-									'url' => Url::to(['/attributes/ajax/attribute-get-properties']),
+									'url' => DynamicAttributes::to(['ajax/attribute-get-properties']),
 									'loadingText' => 'Загружаю свойства'
 								],
 								'options' => [
@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'pluginOptions' => [
 									'params' => ["dynamicattributessearchcollection-searchitems-$index-attribute"],
 									'depends' => ["dynamicattributessearchcollection-searchitems-$index-property"],
-									'url' => Url::to(['/attributes/ajax/attribute-get-property-condition']),
+									'url' => DynamicAttributes::to(['ajax/attribute-get-property-condition']),
 									'loadingText' => 'Загружаю условия'
 								],
 								'options' => [
