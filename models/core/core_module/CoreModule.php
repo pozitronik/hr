@@ -35,21 +35,6 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	}
 
 	/**
-	 * @param string $id
-	 * @return CoreModule
-	 * @throws InvalidConfigException
-	 * @throws Throwable
-	 * @unused
-	 * @deprecated
-	 */
-	public static function getModuleById(string $id):self {
-		if (null === $module = ArrayHelper::getValue(Yii::$app->modules, $id)) {
-			throw new InvalidConfigException("Модуль $id не подключён");
-		}
-		return $module;
-	}
-
-	/**
 	 * Функиция генерирует пункт меню навигации внутри модуля
 	 * @param string $label
 	 * @param string|null $route
