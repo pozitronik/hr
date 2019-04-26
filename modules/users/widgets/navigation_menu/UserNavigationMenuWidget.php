@@ -6,6 +6,7 @@ namespace app\modules\users\widgets\navigation_menu;
 use app\helpers\Icons;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\export\ExportModule;
+use app\modules\history\HistoryModule;
 use app\modules\users\models\Users;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
@@ -57,7 +58,7 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::history().'История изменений',
-				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
+				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,

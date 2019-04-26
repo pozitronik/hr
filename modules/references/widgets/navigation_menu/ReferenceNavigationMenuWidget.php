@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\navigation_menu;
 
 use app\helpers\Icons;
+use app\modules\history\HistoryModule;
 use app\modules\references\models\Reference;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use Throwable;
 use yii\base\InvalidConfigException;
 
 /**
@@ -20,6 +22,7 @@ class ReferenceNavigationMenuWidget extends BaseNavigationMenuWidget {
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$this->_navigationItems = [
@@ -34,7 +37,7 @@ class ReferenceNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::history().'История изменений',
-				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
+				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,

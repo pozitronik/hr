@@ -6,6 +6,7 @@ namespace app\modules\groups\widgets\navigation_menu;
 use app\helpers\Icons;
 use app\modules\export\ExportModule;
 use app\modules\groups\models\Groups;
+use app\modules\history\HistoryModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -87,7 +88,7 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::history().'История изменений',
-				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
+				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,

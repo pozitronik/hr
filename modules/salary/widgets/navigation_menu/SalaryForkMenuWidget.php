@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\salary\widgets\navigation_menu;
 
 use app\helpers\Icons;
+use app\modules\history\HistoryModule;
 use app\modules\salary\models\SalaryFork;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use Throwable;
 use yii\base\InvalidConfigException;
 
 /**
@@ -17,6 +19,7 @@ class SalaryForkMenuWidget extends BaseNavigationMenuWidget {
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function run():string {
 		if ($this->model->isNewRecord) return '';
@@ -30,7 +33,7 @@ class SalaryForkMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::history().'История изменений',
-				'url' => ['/history/history/show', 'for' => $this->model->formName(), 'id' => $this->model->id]
+				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
