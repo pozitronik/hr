@@ -82,7 +82,7 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 				return ['not', ["$tableAlias.value" => null]];
 			}],
 			['не заполнено', static function($tableAlias, $searchValue) {
-				return ['is', "$tableAlias.value", new Expression('null')];//todo: пустые строки не равны Null
+				return ['is', "$tableAlias.value", new Expression('null')];//Внимание: пустые строки не равны null!
 			}]
 		];
 	}
