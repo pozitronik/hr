@@ -6,6 +6,7 @@ namespace app\modules\groups\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
+use app\models\core\core_module\PluginTrait;
 use app\models\core\LCQuery;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\traits\Graph;
@@ -59,6 +60,7 @@ use yii\db\ActiveQuery;
 class Groups extends ActiveRecordExtended {
 	use Graph;
 	use Upload;
+	use PluginTrait;
 
 	public const LOGO_IMAGE_DIRECTORY = '@app/web/group_logotypes/';
 
