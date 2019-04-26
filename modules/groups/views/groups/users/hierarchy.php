@@ -41,7 +41,7 @@ if (1 === count($hierarchy)) {
 <?php foreach ($model->getRelChildGroups()->orderBy('name')->active()->all() as $subgroup): ?>
 	<?php $hierarchy[] = [
 		'label' => null === $subgroup->type?$subgroup->name:"{$subgroup->relGroupTypes->name}: $subgroup->name",
-		'url' => ['/groups/groups/profile', 'id' => $subgroup->id]
+		'url' => Groups::to(['groups/profile', 'id' => $subgroup->id])
 	]; ?>
 
 	<?= $this->render('hierarchy', [

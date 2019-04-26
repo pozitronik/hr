@@ -12,6 +12,7 @@ declare(strict_types = 1);
 use app\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
+use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\Privileges;
@@ -111,7 +112,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'data' => $model->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
-					'linkScheme' => ['/groups/groups/profile', 'id' => 'id']
+					'linkScheme' => Groups::to(['groups/profile', 'id' => 'id'])
 				]);
 			},
 			'format' => 'raw'
@@ -138,7 +139,6 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"optionsMap" => static function() {
 						return RefUserRoles::colorStyleOptions();
 					}
-
 
 				]);
 			},

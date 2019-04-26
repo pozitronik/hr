@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'attribute' => 'name',
 								'value' => static function($group) {
 									/** @var Groups $group */
-									return Html::a($group->name, ['/groups/groups/profile', 'id' => $group->id]);
+									return Groups::a($group->name, ['groups/profile', 'id' => $group->id]);
 								}
 							],
 							[

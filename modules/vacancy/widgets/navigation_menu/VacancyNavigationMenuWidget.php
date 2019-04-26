@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\widgets\navigation_menu;
 
 use app\helpers\Icons;
+use app\modules\groups\models\Groups;
 use app\modules\vacancy\models\Vacancy;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use Throwable;
 use yii\base\InvalidConfigException;
 
 /**
@@ -19,6 +21,7 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$this->_navigationItems = [
@@ -39,7 +42,7 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
-				'url' => ['/groups/groups/delete', 'id' => $this->model->id],
+				'url' => Groups::to(['groups/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [

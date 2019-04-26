@@ -128,7 +128,7 @@ class GroupsController extends WigetableController {
 			'hierarchy' => [
 				[
 					'label' => null === $group->type?$group->name:"{$group->relGroupTypes->name}: $group->name",
-					'url' => ['/groups/groups/profile', 'id' => $group->id]
+					'url' => Groups::to(['groups/profile', 'id' => $group->id])
 				]
 			]
 		]);

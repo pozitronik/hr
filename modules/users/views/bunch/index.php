@@ -25,7 +25,7 @@ $this->title = 'Групповое изменение пользователей
 
 if ($group) {
 	$this->params['breadcrumbs'][] = ['label' => 'Группы', 'url' => ['/users/users']];
-	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => ['/groups/groups/profile', 'id' => $group->id]];
+	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => Groups::to(['groups/profile', 'id' => $group->id])];
 	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
 	$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
