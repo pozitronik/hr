@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use Throwable;
-use Yii;
 use yii\base\InvalidConfigException;
 
 /**
@@ -17,12 +16,22 @@ use yii\base\InvalidConfigException;
 trait PluginTrait {
 
 	/**
+	 * Геттер для $plugin (в случае, если удобнее будет обратиться к свойству)
+	 * @return CoreModule|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public function getPlugin():?CoreModule {
+		return self::Plugin();
+	}
+
+	/**
 	 * Вычисляет плагин, внутри которого находится модель
 	 * @return CoreModule|null
 	 * @throws Throwable
 	 * @throws InvalidConfigException
 	 */
-	public function getPlugin():?CoreModule {
+	public static function Plugin():?CoreModule {
 		foreach (PluginsSupport::ListPlugins() as $plugin) {
 			$currentPluginNamespace = $plugin->namespace;
 			if (0 === strncmp(static::class, $currentPluginNamespace, strlen($currentPluginNamespace))) {
@@ -40,8 +49,10 @@ trait PluginTrait {
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public function a(string $text, $url = null, array $options = []):string {
-		return $this->plugin::a($text, $url, $options);
+
+	public static function a(string $text, $url = null, array $options = []):string {
+		/*Интересно, что случится, если призвать эту штуку вне модуля. Упадёт так-то.*/
+		return self::Plugin()::a($text, $url, $options);
 	}
 
 }
