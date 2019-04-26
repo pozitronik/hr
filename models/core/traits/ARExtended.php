@@ -35,7 +35,7 @@ trait ARExtended {
 	 * @example if (null !== $user = Users::findModel($id)) return $user
 	 */
 	public static function findModel($id, ?Throwable $throw = null):?self {
-		if (null !== ($model = self::findOne($id))) return $model;
+		if (null !== ($model = static::findOne($id))) return $model;
 		if (null !== $throw) SysExceptions::log($throw, true, true);
 		return null;
 	}
@@ -49,10 +49,10 @@ trait ARExtended {
 	 * @throws InvalidConfigException
 	 */
 	public static function findModelAttribute($condition, ?string $attribute = null, $default = null) {
-		if (null === $model = self::findOne($condition)) return $default;
+		if (null === $model = static::findOne($condition)) return $default;
 
 		if (null === $attribute) {
-			$primaryKeys = self::primaryKey();
+			$primaryKeys = static::primaryKey();
 			if (!isset($primaryKeys[0])) throw new InvalidConfigException('"'.static::class.'" must have a primary key.');
 
 			$attribute = $primaryKeys[0];
@@ -69,7 +69,7 @@ trait ARExtended {
 	public static function findModels(array $keys):array {
 		$result = [];
 		foreach ($keys as $key) {
-			if (null !== $model = self::findModel($key)) $result[] = $model;
+			if (null !== $model = static::findModel($key)) $result[] = $model;
 		}
 		return $result;
 	}
@@ -81,7 +81,7 @@ trait ARExtended {
 	 */
 	public static function getInstance($searchCondition):self {
 		/** @noinspection PhpUndefinedMethodInspection */
-		$instance = self::find()->where($searchCondition)->one();
+		$instance = static::find()->where($searchCondition)->one();
 		return $instance??new static;
 	}
 
@@ -97,10 +97,10 @@ trait ARExtended {
 		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
 
 		/** @var ActiveRecord $instance */
-		if (null === $instance = self::findOne($searchCondition)) {
+		if (null === $instance = static::findOne($searchCondition)) {
 			$fields = $fields??$searchCondition;
 			/** @noinspection PhpMethodParametersCountMismatchInspection */
-			$instance = new self($fields);
+			$instance = new static($fields);
 			if (!$instance->save()) {
 				throw new ImportException($instance, $instance->errors);
 			}
@@ -227,7 +227,7 @@ trait ARExtended {
 	public function createModel(?array $paramsArray):bool {
 		$saved = false;
 		if ($this->loadArray($paramsArray)) {
-			$transaction = self::getDb()->beginTransaction();
+			$transaction = static::getDb()->beginTransaction();
 			if (true === $saved = $this->save()) {
 				$this->refresh();//переподгрузим атрибуты
 				$this->loadArray(ArrayHelper::diff_keys($this->attributes, $paramsArray));/*Возьмём разницу атрибутов и массива параметров - в нем будут новые атрибуты, которые теперь можно заполнить*/
