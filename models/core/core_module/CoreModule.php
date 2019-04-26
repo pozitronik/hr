@@ -117,7 +117,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	 * @example SalaryModule::to(['salary/index','id' => 10]) => /salary/salary/index?id=10
 	 * @example UsersModule::to('users/index') => /users/users/index
 	 */
-	public static function to($url):string {
+	public static function to($url = ''):string {
 		if ((null === $module = static::getInstance()) && null === $module = PluginsSupport::GetPluginByClassName(static::class)) {
 			throw new InvalidConfigException("Модуль ".static::class." не подключён");
 		}

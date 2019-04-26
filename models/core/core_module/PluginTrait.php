@@ -61,7 +61,7 @@ trait PluginTrait {
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public static function to($url):string {
+	public static function to($url = ''):string {
 		return self::Plugin()::to($url);
 	}
 
