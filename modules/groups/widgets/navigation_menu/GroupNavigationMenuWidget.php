@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\widgets\navigation_menu;
 
 use app\helpers\Icons;
+use app\modules\export\ExportModule;
 use app\modules\groups\models\Groups;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
@@ -76,12 +77,12 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::export().'Экспорт атрибутов пользователей',
-				'url' => ['/export/attributes/group', 'id' => $this->model->id]
+				'url' => ExportModule::to(['attributes/group', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
 				'label' => Icons::export_red().'Экспорт атрибутов пользователей (с учётом иерархии)',
-				'url' => ['/export/attributes/group', 'id' => $this->model->id, 'hierarchy' => true]
+				'url' => ExportModule::to(['attributes/group', 'id' => $this->model->id, 'hierarchy' => true])
 			],
 			[
 				'menu' => true,
