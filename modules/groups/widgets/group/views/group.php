@@ -34,8 +34,8 @@ use app\modules\users\widgets\user\UserWidget;
 				<?php endif; ?>
 			</ul>
 		</div>
-		<?= Html::a(Html::img($group->logo, ['class' => 'panel-logo']), ['/groups/groups/profile', 'id' => $group->id]) ?>
-		<h3 class="panel-title"><?= Html::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['/groups/groups/profile', 'id' => $group->id]) ?></h3>
+		<?= Groups::a(Html::img($group->logo, ['class' => 'panel-logo']), ['groups/profile', 'id' => $group->id]) ?>
+		<h3 class="panel-title"><?= Groups::a(ArrayHelper::getValue($group->relGroupTypes, 'name', 'Нет типа').": ".$group->name, ['groups/profile', 'id' => $group->id]) ?></h3>
 	</div>
 	<div class="panel-body">
 		<div class="tab-content">
@@ -64,9 +64,9 @@ use app\modules\users\widgets\user\UserWidget;
 				'unbadgedCount' => 3,
 				'moreBadgeOptions' => ['class' => 'badge'],
 				'itemsSeparator' => false,
-				'linkScheme' => ['/groups/groups/profile', 'id' => 'id']
+				'linkScheme' => [Groups::to('groups/profile'), 'id' => 'id']
 			]) ?>
-			<?= Html::a('Визуализация иерархии', ['/groups/groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']) ?>
+			<?= Groups::a('Визуализация иерархии', ['groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']) ?>
 		<?php endif; ?>
 
 	</div>
