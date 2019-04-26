@@ -239,6 +239,6 @@ class Utils {
 	 * @return string
 	 */
 	public static function setAbsoluteUrl(string $url):string {
-		return (self::URL_SEPARATOR === $url[0])?$url:self::URL_SEPARATOR.$url;
+		return ('' === $url || self::URL_SEPARATOR === $url[0])?$url:self::URL_SEPARATOR.$url;
 	}
 }
