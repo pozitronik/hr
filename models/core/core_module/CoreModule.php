@@ -122,7 +122,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 		if (is_array($url)) {
 			ArrayHelper::setValue($url, 0, Utils::setAbsoluteUrl($module->defaultRoute.Utils::setAbsoluteUrl(ArrayHelper::getValue($url, 0))));
 		} else {
-			$url = Utils::setAbsoluteUrl($module->defaultRoute.Utils::setAbsoluteUrl(ArrayHelper::getValue($url, 0)));
+			$url = Utils::setAbsoluteUrl($module->defaultRoute.Utils::setAbsoluteUrl($url));
 		}
 
 		return Url::to($url);
