@@ -7,6 +7,9 @@ namespace app\controllers;
 use app\models\core\core_module\PluginsSupport;
 use app\modules\export\models\attributes\ExportAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\SalaryModule;
+use app\modules\users\UsersModule;
 use app\widgets\admin_panel\AdminPanelWidget;
 use Yii;
 use app\helpers\ArrayHelper;
@@ -39,7 +42,10 @@ class TestController extends Controller {
 		return Yii::$app->cache->getOrSet('index', function() {
 			return $this->render('index');
 		});
+	}
 
+	public function actionTest() {
+		return SalaryModule::to(['salary/index','id' => 10]);
 	}
 
 	public function actionList() {
