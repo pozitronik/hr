@@ -30,7 +30,7 @@ class RefGrades extends Reference {
 			[['name'], 'required'],
 			[['name'], 'string', 'max' => 255],
 			[['id', 'usedCount'], 'integer'],
-			[['deleted'], 'boolean'],
+			[['deleted'], 'boolean']
 		];
 	}
 
