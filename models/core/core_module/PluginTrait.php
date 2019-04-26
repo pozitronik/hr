@@ -49,10 +49,19 @@ trait PluginTrait {
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-
 	public static function a(string $text, $url = null, array $options = []):string {
 		/*Интересно, что случится, если призвать эту штуку вне модуля. Упадёт так-то.*/
 		return self::Plugin()::a($text, $url, $options);
+	}
+
+	/**
+	 * @param $url
+	 * @return string
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public static function to($url):string {
+		return self::Plugin()::to($url);
 	}
 
 }
