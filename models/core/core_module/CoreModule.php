@@ -42,6 +42,8 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	 * @param string|null $route
 	 * @param array $parameters
 	 * @return array
+	 *
+	 * todo: делать ссылку не только на текущий контроллер, но и на указанный модуль
 	 */
 	public static function breadcrumbItem(string $label, ?string $route = null, array $parameters = []):array {
 		$module = Yii::$app->controller->module;
