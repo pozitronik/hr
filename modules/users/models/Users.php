@@ -6,6 +6,7 @@ namespace app\modules\users\models;
 use app\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
+use app\models\core\core_module\PluginTrait;
 use app\models\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
@@ -88,6 +89,7 @@ use yii\db\ActiveRecord;
 class Users extends ActiveRecordExtended {
 	use Upload;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.
+	use PluginTrait;
 
 	/*Переменная для инстанса заливки аватарок*/
 	public $upload_image;
