@@ -22,8 +22,8 @@ use kartik\grid\CheckboxColumn;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html;
 use yii\web\View;
+
 ?>
 
 <?= GridView::widget([
@@ -70,7 +70,7 @@ use yii\web\View;
 			'format' => 'raw',
 			'attribute' => 'username',
 			'value' => static function(Users $user) {
-				return Html::a($user->username, ['/users/users/profile', 'id' => $user->id]);//todo module navigation
+				return Users::a($user->username, ['/users/profile', 'id' => $user->id]);
 			}
 		],
 		[
