@@ -112,7 +112,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'data' => $model->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
-					'linkScheme' => Groups::to(['groups/profile', 'id' => 'id'])
+					'linkScheme' => [Groups::to('groups/profile'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
