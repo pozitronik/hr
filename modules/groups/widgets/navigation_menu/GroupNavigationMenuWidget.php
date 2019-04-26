@@ -7,6 +7,7 @@ use app\helpers\Icons;
 use app\modules\export\ExportModule;
 use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
+use app\modules\vacancy\VacancyModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -39,12 +40,12 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'label' => Icons::vacancy().'Вакансии',
-				'url' => ['/vacancy/groups/index', 'id' => $this->model->id]
+				'url' => VacancyModule::to(['groups/index', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
 				'label' => Icons::vacancy_red().'Создать вакансию',
-				'url' => ['/vacancy/vacancy/create', 'group' => $this->model->id]
+				'url' => VacancyModule::to(['vacancy/create', 'group' => $this->model->id])
 			],
 			[
 				'label' => Icons::network().'Граф',

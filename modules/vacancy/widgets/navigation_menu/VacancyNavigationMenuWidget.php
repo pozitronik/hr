@@ -7,6 +7,7 @@ use app\helpers\Icons;
 use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\models\Vacancy;
+use app\modules\vacancy\VacancyModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -29,11 +30,11 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::vacancy_red().'Создать вакансию',
-				'url' => ['/vacancy/vacancy/create']
+				'url' => VacancyModule::to(['vacancy/create'])
 			],
 			[
 				'label' => Icons::update().'Изменение',
-				'url' => ['/vacancy/vacancy/update', 'id' => $this->model->id]
+				'url' => VacancyModule::to(['vacancy/update', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
