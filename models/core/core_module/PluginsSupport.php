@@ -82,7 +82,7 @@ class PluginsSupport {
 		$config = array_filter(Yii::$app->modules, static function($element) use ($className) {
 			return is_array($element) && $className === ArrayHelper::getValue($element, 'class');
 		});
-		$pluginName = ArrayHelper::key($config);
+		if (null === $pluginName = ArrayHelper::key($config)) return null;
 
 		return self::LoadPlugin($pluginName, $config[$pluginName]);
 	}
