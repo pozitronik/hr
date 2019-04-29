@@ -10,13 +10,14 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\radar\RadarWidget;
 use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use yii\web\View;
 use yii\helpers\Html;
 
 $this->title = "{$user->username}: Диаграмма атрибутов {$attribute->name}";
 
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => Users::to()];
-$this->params['breadcrumbs'][] = ['label' => $user->username, 'url' => Users::to(['users/profile', 'id' => $user->id])];
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem($user->username, ['users/profile', 'id' => $user->id]);
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

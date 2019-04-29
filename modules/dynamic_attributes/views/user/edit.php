@@ -12,6 +12,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\types_select\AttributeTypesSelectWidget;
+use app\modules\users\UsersModule;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\data\ArrayDataProvider;
@@ -20,7 +21,7 @@ use yii\helpers\Html;
 
 $this->title = "Изменение атрибута {$attribute->name} ";
 
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => Users::to()];
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = DynamicAttributesModule::breadcrumbItem("Атрибуты пользователя {$user->username}", ['attributes/user', 'user_id' => $user->id]);
 $this->params['breadcrumbs'][] = $this->title;
 
