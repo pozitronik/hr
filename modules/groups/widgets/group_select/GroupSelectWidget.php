@@ -26,6 +26,8 @@ use yii\db\ActiveRecord;
  * @property boolean $multiple
  * @property int $mode
  * @property int $dataMode Режим загрузки данных
+ *
+ * @todo: см. тудуху в UserSelectWidget, здесь те же ошибки
  */
 class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
