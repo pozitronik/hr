@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\widgets\attribute
  */
 class UserAttributeWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/dynamic_attributes/widgets/user_attribute/assets';//todo ссылаться на путь в модуле?
+	public $sourcePath = '@app/modules/dynamic_attributes/widgets/user_attribute/assets';
 	public $css = [
 		'css/attribute.css'
 	];
