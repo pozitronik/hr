@@ -8,17 +8,17 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Utils;
-use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use app\modules\vacancy\VacancyModule;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 
 $this->title = "Вакансии в группе {$group->name}";
 
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы', 'groups/groups');//todo place in right location
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($group->name, ['groups/profile', 'id' => $group->id]);
+$this->params['breadcrumbs'][] = VacancyModule::breadcrumbItem('Группы', 'groups/groups');
+$this->params['breadcrumbs'][] = VacancyModule::breadcrumbItem($group->name, ['groups/profile', 'id' => $group->id]);
 $this->params['breadcrumbs'][] = $this->title;
 $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['вакансия', 'вакансии', 'вакансий']).")":" (нет вакансий)");
 ?>
