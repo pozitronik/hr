@@ -37,21 +37,6 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	}
 
 	/**
-	 * Функиция генерирует пункт меню навигации внутри модуля
-	 * @param string $label
-	 * @param string|null $route
-	 * @param array $parameters
-	 * @return array
-	 *
-	 * todo: делать ссылку не только на текущий контроллер, но и на указанный модуль
-	 */
-	public static function breadcrumbItem(string $label, ?string $route = null, array $parameters = []):array {
-		$module = Yii::$app->controller->module;
-		$route = $route?:$module->defaultRoute;
-		return ['label' => $label, 'url' => ["/{$module->id}/{$route}"] + $parameters];
-	}
-
-	/**
 	 * Возвращает название плагина
 	 * @return string
 	 */
@@ -106,6 +91,19 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Функиция генерирует пункт меню навигации внутри модуля
+	 * @param string $label
+	 * @param array|string $route
+	 * @return array
+	 */
+	public static function breadcrumbItem(string $label, $url = ''):array {
+		if ((null === $module = static::getInstance()) && null === $module = PluginsSupport::GetPluginByClassName(static::class)) {
+			$module = Yii::$app->controller->module;
+		}
+		return ['label' => $label, 'url' => $module::to($url)];
 	}
 
 	/**
