@@ -15,6 +15,7 @@ use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
+use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\grid\DataColumn;
 use kartik\select2\Select2;
@@ -25,7 +26,7 @@ use yii\web\View;
 use kartik\grid\GridView;
 
 $this->title = "Атрибуты пользователя {$user->username}";
-$this->params['breadcrumbs'][] = ['label' => 'Люди', 'url' => Users::to()];
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
