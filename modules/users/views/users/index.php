@@ -120,7 +120,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'roles',
-			'filter' => $searchModel->roles,
+			'filter' => ArrayHelper::getValue($searchModel, 'relRefUserRoles'),
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите роль'],
 			'filterWidgetOptions' => [
