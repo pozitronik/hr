@@ -96,8 +96,10 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	/**
 	 * Функиция генерирует пункт меню навигации внутри модуля
 	 * @param string $label
-	 * @param array|string $route
+	 * @param string|array $url
 	 * @return array
+	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public static function breadcrumbItem(string $label, $url = ''):array {
 		if ((null === $module = static::getInstance()) && null === $module = PluginsSupport::GetPluginByClassName(static::class)) {

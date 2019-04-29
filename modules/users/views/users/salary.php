@@ -7,7 +7,6 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\models\core\core_module\CoreModule;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
@@ -16,13 +15,14 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\SalaryModule;
 use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use yii\web\View;
 use kartik\form\ActiveForm;
 use yii\helpers\Html;
 
 $this->title = "Зарплатные данные пользователя {$model->username}";
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

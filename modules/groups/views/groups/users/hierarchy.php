@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $hierarchy
  */
 
-use app\models\core\core_module\CoreModule;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
@@ -16,8 +16,8 @@ use yii\widgets\Breadcrumbs;
 
 if (1 === count($hierarchy)) {
 	$this->title = "Иерархия пользователей в группе {$model->name}";
-	$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы');
-	$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($model->name, 'groups/profile', ['id' => $model->id]);
+	$this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem('Группы');
+	$this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem($model->name, ['groups/profile', 'id' => $model->id]);
 	$this->params['breadcrumbs'][] = $this->title;
 }
 ?>

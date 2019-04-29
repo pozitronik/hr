@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $attribute_data
  */
 
-use app\models\core\core_module\CoreModule;
+use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
@@ -22,7 +22,7 @@ use kartik\switchinput\SwitchInput;
 use kartik\select2\Select2;
 
 $this->title = 'Поиск';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Атрибуты');
+$this->params['breadcrumbs'][] = DynamicAttributesModule::breadcrumbItem('Атрибуты');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

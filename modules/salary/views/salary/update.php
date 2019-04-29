@@ -7,13 +7,13 @@ declare(strict_types = 1);
  * @var ArrayDataProvider $userRights
  */
 
-use app\models\core\core_module\CoreModule;
+use app\modules\salary\SalaryModule;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
 $this->title = 'Изменить зарплатную вилку';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Зарплатные вилки');
+$this->params['breadcrumbs'][] = SalaryModule::breadcrumbItem('Зарплатные вилки');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

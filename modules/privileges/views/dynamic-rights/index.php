@@ -9,9 +9,9 @@ declare(strict_types = 1);
 
 use app\helpers\Icons;
 use app\helpers\Utils;
-use app\models\core\core_module\CoreModule;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRightInterface;
+use app\modules\privileges\PrivilegesModule;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
@@ -21,7 +21,7 @@ use yii\web\View;
 use kartik\grid\GridView;
 
 $this->title = 'Правила доступа';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Привилегии');
+$this->params['breadcrumbs'][] = PrivilegesModule::breadcrumbItem('Привилегии');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

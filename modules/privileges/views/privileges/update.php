@@ -7,13 +7,13 @@ declare(strict_types = 1);
  * @var ArrayDataProvider $userRights
  */
 
-use app\models\core\core_module\CoreModule;
+use app\modules\privileges\PrivilegesModule;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
 $this->title = 'Изменить привилегию';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Привилегии');
+$this->params['breadcrumbs'][] = PrivilegesModule::breadcrumbItem('Привилегии');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

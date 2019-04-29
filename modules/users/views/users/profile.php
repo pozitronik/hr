@@ -7,9 +7,9 @@ declare(strict_types = 1);
  */
 
 use app\helpers\ArrayHelper;
-use app\models\core\core_module\CoreModule;
 use app\modules\privileges\models\Privileges;
 use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\select2\Select2;
 use yii\web\View;
@@ -18,7 +18,7 @@ use yii\helpers\Html;
 Use kartik\file\FileInput;
 
 $this->title = $model->isNewRecord?'Добавление пользователя':"Профиль пользователя {$model->username}";
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

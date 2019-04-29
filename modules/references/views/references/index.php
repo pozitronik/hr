@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use app\helpers\Icons;
-use app\models\core\core_module\CoreModule;
+use app\modules\references\ReferencesModule;
 use app\modules\references\widgets\navigation_menu\ReferenceNavigationMenuWidget;
 use kartik\grid\GridView;
 use yii\helpers\Html;
@@ -18,7 +18,7 @@ use app\modules\references\models\Reference;
  */
 
 $this->title = $class->menuCaption;
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Справочники');
+$this->params['breadcrumbs'][] = ReferencesModule::breadcrumbItem('Справочники');
 $this->params['breadcrumbs'][] = $this->title;
 
 $columns[] = [

@@ -10,10 +10,10 @@ declare(strict_types = 1);
  * @var false|Groups $group
  */
 
-use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersMassUpdate;
+use app\modules\users\UsersModule;
 use kartik\select2\Select2;
 use app\helpers\ArrayHelper;
 use yii\data\ArrayDataProvider;
@@ -29,7 +29,7 @@ if ($group) {
 	$this->params['breadcrumbs'][] = ['label' => $group->name, 'url' => Groups::to(['groups/profile', 'id' => $group->id])];
 	$usersLabel = "Пользователи из группы {$group->name}, всего ".count($massUpdateModel->users);
 } else {
-	$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
+	$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 	$usersLabel = "Пользователи: ".count($massUpdateModel->users)." всего";
 }
 $this->params['breadcrumbs'][] = $this->title;

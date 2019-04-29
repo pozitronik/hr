@@ -2,9 +2,9 @@
 declare(strict_types = 1);
 
 use app\helpers\Icons;
-use app\models\core\core_module\CoreModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
@@ -22,7 +22,7 @@ use kartik\grid\CheckboxColumn;
  * @var ActiveDataProvider $provider
  */
 $this->title = "Группы пользователя {$model->username}";
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Люди');
+$this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $form = ActiveForm::begin(); ?>

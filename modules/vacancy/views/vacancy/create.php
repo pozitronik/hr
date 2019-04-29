@@ -6,12 +6,12 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\models\core\core_module\CoreModule;
+use app\modules\vacancy\VacancyModule;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
 $this->title = 'Создать вакансию';
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Вакансии');
+$this->params['breadcrumbs'][] = VacancyModule::breadcrumbItem('Вакансии');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

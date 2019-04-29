@@ -18,7 +18,7 @@ use yii\web\View;
 $this->title = "Вакансии в группе {$group->name}";
 
 $this->params['breadcrumbs'][] = CoreModule::breadcrumbItem('Группы', 'groups/groups');//todo place in right location
-$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($group->name, 'groups/profile', ['id' => $group->id]);
+$this->params['breadcrumbs'][] = CoreModule::breadcrumbItem($group->name, ['groups/profile', 'id' => $group->id]);
 $this->params['breadcrumbs'][] = $this->title;
 $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['вакансия', 'вакансии', 'вакансий']).")":" (нет вакансий)");
 ?>
