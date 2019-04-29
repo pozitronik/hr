@@ -9,7 +9,6 @@ declare(strict_types = 1);
  */
 
 use app\modules\dynamic_attributes\DynamicAttributesModule;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
@@ -104,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'type' => DepDrop::TYPE_SELECT2,
 								'pluginOptions' => [
 									'depends' => ["dynamicattributessearchcollection-searchitems-$index-attribute"],
-									'url' => DynamicAttributes::to(['ajax/attribute-get-properties']),
+									'url' => DynamicAttributesModule::to(['ajax/attribute-get-properties']),
 									'loadingText' => 'Загружаю свойства'
 								],
 								'options' => [
@@ -122,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'pluginOptions' => [
 									'params' => ["dynamicattributessearchcollection-searchitems-$index-attribute"],
 									'depends' => ["dynamicattributessearchcollection-searchitems-$index-property"],
-									'url' => DynamicAttributes::to(['ajax/attribute-get-property-condition']),
+									'url' => DynamicAttributesModule::to(['ajax/attribute-get-property-condition']),
 									'loadingText' => 'Загружаю условия'
 								],
 								'options' => [

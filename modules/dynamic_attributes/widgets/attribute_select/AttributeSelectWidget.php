@@ -5,6 +5,7 @@ namespace app\modules\dynamic_attributes\widgets\attribute_select;
 
 use app\helpers\ArrayHelper;
 use app\models\core\SelectionWidgetInterface;
+use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use kartik\base\InputWidget;
 use Throwable;
@@ -59,7 +60,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 					'data' => $data,
 					'multiple' => $this->multiple,
 					'data_mode' => $this->dataMode,
-					'ajax_search_url' => DynamicAttributes::to('ajax/attribute-search')
+					'ajax_search_url' => DynamicAttributesModule::to('ajax/attribute-search')
 				]);
 			break;
 			case self::MODE_FORM:
@@ -70,7 +71,7 @@ class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterf
 					'multiple' => $this->multiple,
 					'formAction' => $this->formAction,
 					'data_mode' => $this->dataMode,
-					'ajax_search_url' => DynamicAttributes::to('ajax/attribute-search')
+					'ajax_search_url' => DynamicAttributesModule::to('ajax/attribute-search')
 				]);
 			break;
 		}

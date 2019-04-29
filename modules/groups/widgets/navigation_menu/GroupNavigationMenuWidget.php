@@ -5,6 +5,7 @@ namespace app\modules\groups\widgets\navigation_menu;
 
 use app\helpers\Icons;
 use app\modules\export\ExportModule;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\VacancyModule;
@@ -28,15 +29,15 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 		$this->_navigationItems = [
 			[
 				'label' => Icons::group().'Профиль',
-				'url' => Groups::to(['groups/profile', 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/profile', 'id' => $this->model->id])
 			],
 			[
 				'label' => Icons::subgroups().'Иерархия',
-				'url' => Groups::to(['groups/groups', 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/groups', 'id' => $this->model->id])
 			],
 			[
 				'label' => Icons::users().'Пользователи',
-				'url' => Groups::to(['groups/users', 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/users', 'id' => $this->model->id])
 			],
 			[
 				'label' => Icons::vacancy().'Вакансии',
@@ -49,17 +50,17 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'label' => Icons::network().'Граф',
-				'url' => Groups::to(['groups/tree', 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/tree', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
 				'label' => Icons::hierarchy().'Иерархия пользователей',
-				'url' => Groups::to(['groups/users-hierarchy', 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/users-hierarchy', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
 				'label' => Icons::hierarchy_red().'Иерархия пользователей (с ролями)',
-				'url' => Groups::to(['groups/users-hierarchy', 'showRolesSelector' => true, 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/users-hierarchy', 'showRolesSelector' => true, 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
@@ -74,7 +75,7 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::add().'Новая группа',
-				'url' => Groups::to(['groups/create'])
+				'url' => GroupsModule::to(['groups/create'])
 			],
 			[
 				'menu' => true,
@@ -94,7 +95,7 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
-				'url' => Groups::to(['groups/delete', 'id' => $this->model->id]),
+				'url' => GroupsModule::to(['groups/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [

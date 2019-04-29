@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\widgets\navigation_menu;
 
 use app\helpers\Icons;
-use app\modules\groups\models\Groups;
+use app\modules\groups\GroupsModule;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
@@ -44,7 +44,7 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
-				'url' => Groups::to(['groups/delete', 'id' => $this->model->id]),
+				'url' => GroupsModule::to(['groups/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [

@@ -4,10 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\users\widgets\navigation_menu;
 
 use app\helpers\Icons;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
 use app\modules\history\HistoryModule;
 use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -31,19 +32,19 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 		$this->_navigationItems = [
 			[
 				'label' => Icons::user().'Профиль',
-				'url' => Users::to(['users/profile', 'id' => $this->model->id])
+				'url' => UsersModule::to(['users/profile', 'id' => $this->model->id])
 			],
 			[
 				'label' => Icons::group().'Группы',
-				'url' => Users::to(['users/groups', 'id' => $this->model->id])
+				'url' => UsersModule::to(['users/groups', 'id' => $this->model->id])
 			],
 			[
 				'label' => Icons::money().'Зарплатные данные',
-				'url' => Users::to(['users/salary', 'id' => $this->model->id])
+				'url' => UsersModule::to(['users/salary', 'id' => $this->model->id])
 			],
 			[
 				'label' => Icons::attributes().'Атрибуты',
-				'url' => DynamicAttributes::to(['user', 'user_id' => $this->model->id])
+				'url' => DynamicAttributesModule::to(['user', 'user_id' => $this->model->id])
 			],
 			[
 				'menu' => true,
@@ -53,7 +54,7 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::user_add().'Новый пользователь',
-				'url' => Users::to(['users/create'])
+				'url' => UsersModule::to(['users/create'])
 			],
 			[
 				'menu' => true,
@@ -63,7 +64,7 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => Icons::delete().'Удаление',
-				'url' => Users::to(['users/delete', 'id' => $this->model->id]),
+				'url' => UsersModule::to(['users/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',
 					'data' => [

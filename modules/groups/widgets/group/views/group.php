@@ -9,6 +9,7 @@ declare(strict_types = 1);
 
 use app\helpers\ArrayHelper;
 use app\helpers\Utils;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
@@ -64,7 +65,7 @@ use app\modules\users\widgets\user\UserWidget;
 				'unbadgedCount' => 3,
 				'moreBadgeOptions' => ['class' => 'badge'],
 				'itemsSeparator' => false,
-				'linkScheme' => [Groups::to('groups/profile'), 'id' => 'id']
+				'linkScheme' => [GroupsModule::to('groups/profile'), 'id' => 'id']
 			]) ?>
 			<?= Groups::a('Визуализация иерархии', ['groups/tree', 'id' => $group->id], ['class' => 'btn btn-xs btn-info pull-right']) ?>
 		<?php endif; ?>

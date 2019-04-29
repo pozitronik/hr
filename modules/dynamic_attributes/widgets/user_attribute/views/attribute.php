@@ -11,6 +11,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Icons;
+use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -22,17 +23,17 @@ use yii\web\View;
 $items = [
 	[
 		'label' => Icons::attributes().'Открыть для изменения',
-		'url' => DynamicAttributes::to(['user/edit', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
+		'url' => DynamicAttributesModule::to(['user/edit', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
 	],
 	[
 		'label' => Icons::clear().'Сбросить все значения',
-		'url' => DynamicAttributes::to(['user/clear', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
+		'url' => DynamicAttributesModule::to(['user/clear', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
 	]
 ];
 
 if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 	'label' => Icons::chart().'Диаграмма',
-	'url' => DynamicAttributes::to(['user/graph', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
+	'url' => DynamicAttributesModule::to(['user/graph', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
 ];
 
 ?>

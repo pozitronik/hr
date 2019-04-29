@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\controllers;
 
 use app\helpers\Utils;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use Throwable;
@@ -128,7 +129,7 @@ class GroupsController extends WigetableController {
 			'hierarchy' => [
 				[
 					'label' => null === $group->type?$group->name:"{$group->relGroupTypes->name}: $group->name",
-					'url' => Groups::to(['groups/profile', 'id' => $group->id])
+					'url' => GroupsModule::to(['groups/profile', 'id' => $group->id])
 				]
 			]
 		]);

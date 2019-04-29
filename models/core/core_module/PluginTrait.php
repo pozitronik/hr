@@ -60,8 +60,9 @@ trait PluginTrait {
 	 * @return string
 	 * @throws InvalidConfigException
 	 * @throws Throwable
+	 * @deprecated
 	 */
-	public static function to($url = ''):string {//todo: наверное, лучше ссылаться в модуль, а не в модели
+	public static function to($url = ''):string {//Лучше ссылаться в модуль, а не в модель
 		return self::Plugin()::to($url);
 	}
 
