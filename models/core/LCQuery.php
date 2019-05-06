@@ -7,7 +7,7 @@ use app\helpers\Date;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 
 /** @noinspection MissingActiveRecordInActiveQueryInspection */

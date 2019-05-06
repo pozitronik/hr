@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\rights;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserRight;

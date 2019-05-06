@@ -36,6 +36,7 @@ use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
 use kartik\grid\Module as GridModule;
 use app\models\user\User;
+use pozitronik\arlogger\ARLogger;
 use yii\debug\Module as DebugModule;
 use yii\gii\Module as GIIModule;
 use yii\redis\Connection;
@@ -198,6 +199,11 @@ $config = [
 	],
 	'params' => $params
 ];
+
+$config['modules']['arlogger'] = [
+	'class' => ARLogger::class
+];
+$config['bootstrap'][] = 'arlogger';
 
 if (YII_ENV_DEV) {
 	$config['bootstrap'][] = 'debug';

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\CoreController;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;

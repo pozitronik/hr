@@ -4,7 +4,7 @@ declare(strict_types = 1);
 use app\modules\groups\models\Groups;
 use yii\web\View;
 use kartik\detail\DetailView;
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 
 /**
  * @var View $this

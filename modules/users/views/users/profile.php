@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\privileges\models\Privileges;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;

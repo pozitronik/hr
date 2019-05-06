@@ -8,7 +8,7 @@ use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
 use yii\db\ActiveQuery;
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "rel_users_groups_roles".

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use yii\base\Model;
 
 /** @noinspection MissingPropertyAnnotationsInspection */

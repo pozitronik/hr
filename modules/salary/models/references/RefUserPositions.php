@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
 use app\modules\references\models\Reference;

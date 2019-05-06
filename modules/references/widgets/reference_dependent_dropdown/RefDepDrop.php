@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\reference_dependent_dropdown;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\base\Config;
 use kartik\depdrop\DepDrop;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\alert;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\SQueue;
 use app\models\user\CurrentUser;
 use kartik\growl\Growl;

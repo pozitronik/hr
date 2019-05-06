@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var Users[] $users
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;

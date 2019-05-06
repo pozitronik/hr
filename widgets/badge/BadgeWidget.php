@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\badge;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Model;
 use yii\base\Widget;

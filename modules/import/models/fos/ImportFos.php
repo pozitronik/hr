@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\traits\Upload;
 use app\modules\import\models\fos\activerecord\ImportFosChapter;
 use app\modules\import\models\fos\activerecord\ImportFosChapterCouch;

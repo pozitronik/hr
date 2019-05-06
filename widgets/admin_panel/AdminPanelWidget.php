@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\admin_panel;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\CoreController;
 use app\models\core\WigetableController;
 use Throwable;

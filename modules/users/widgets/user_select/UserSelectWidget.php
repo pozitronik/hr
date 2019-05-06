@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\user_select;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\SelectionWidgetInterface;
 use app\modules\users\models\Users;
 use kartik\base\InputWidget;

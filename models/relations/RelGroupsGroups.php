@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use Throwable;

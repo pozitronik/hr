@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models\traits;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelGroupsGroups;
 use Exception;

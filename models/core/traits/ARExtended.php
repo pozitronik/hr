@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;

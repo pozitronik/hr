@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\users\models\Users;
 use Exception;
 use Throwable;

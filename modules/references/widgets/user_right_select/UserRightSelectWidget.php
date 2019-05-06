@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\user_right_select;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;

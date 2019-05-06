@@ -11,7 +11,7 @@ use Yii;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use RuntimeException;
 

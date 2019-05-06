@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Exception;
 use yii\base\Model;

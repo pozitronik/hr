@@ -12,7 +12,7 @@ use app\modules\salary\SalaryModule;
 use app\modules\users\UsersModule;
 use app\widgets\admin_panel\AdminPanelWidget;
 use Yii;
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;

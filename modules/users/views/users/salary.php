@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;

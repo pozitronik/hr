@@ -8,7 +8,7 @@ namespace app\modules\dynamic_attributes\models;
  * Саму сущность потребуется утащить в компонент.
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginTrait;

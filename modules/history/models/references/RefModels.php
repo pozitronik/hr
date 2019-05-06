@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models\references;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\references\models\ReferenceInterface;
 use yii\base\Model;

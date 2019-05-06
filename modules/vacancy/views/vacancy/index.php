@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;

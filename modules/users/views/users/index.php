@@ -9,7 +9,7 @@ declare(strict_types = 1);
  * @deprecated
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Icons;
 use app\helpers\Utils;
 use app\modules\groups\GroupsModule;

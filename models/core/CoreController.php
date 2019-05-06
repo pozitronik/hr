@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\helpers\ReflectionHelper;
 use app\models\core\traits\ModelExtended;

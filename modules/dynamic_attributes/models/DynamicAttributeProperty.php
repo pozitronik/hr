@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
 use app\modules\dynamic_attributes\models\types\AttributePropertyDate;
 use app\modules\dynamic_attributes\models\types\AttributePropertyInteger;

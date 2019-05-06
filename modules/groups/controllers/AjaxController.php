@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\controllers;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\prototypes\PrototypeNodeData;
 use app\models\relations\RelUsersGroups;

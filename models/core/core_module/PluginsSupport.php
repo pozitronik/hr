@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\core_module;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\privileges\models\UserRightInterface;
 use app\modules\references\models\Reference;
 use Throwable;

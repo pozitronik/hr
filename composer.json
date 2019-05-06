@@ -49,7 +49,9 @@
 		"kartik-v/yii2-widget-depdrop": "^1.0@dev",
 		"kartik-v/yii2-number": "^1.0@dev",
 		"kartik-v/yii2-date-range": "^1.7@dev",
-		"kartik-v/yii2-widget-datetimepicker": "*"
+		"kartik-v/yii2-widget-datetimepicker": "*",
+		"pozitronik/yii2-arlogger": "*",
+		"pozitronik/yii2-helpers": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -91,6 +93,14 @@
 		{
 			"type": "composer",
 			"url": "https://asset-packagist.org"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-arlogger"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-helpers"
 		}
 	]
 }

@@ -5,7 +5,7 @@ declare(strict_types = 1);
 
 namespace app\models\imports;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Csv;
 use app\helpers\Utils;
 use app\models\groups\Groups;

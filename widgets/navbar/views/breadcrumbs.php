@@ -4,7 +4,7 @@
 
 declare(strict_types = 1);
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
 ?>

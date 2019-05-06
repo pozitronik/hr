@@ -9,7 +9,7 @@ declare(strict_types = 1);
  * @var string $attribute
  */
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\helpers\Html;
 use kartik\rating\StarRating;

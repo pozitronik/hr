@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace app\models\imports\old;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Csv;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;

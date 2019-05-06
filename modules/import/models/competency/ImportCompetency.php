@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\competency;
 
-use app\helpers\ArrayHelper;
+use pozitronik\helpers\ArrayHelper;
 use app\helpers\Date;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
