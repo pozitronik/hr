@@ -184,7 +184,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 						} else $toCondition = true;
 
 						if ($fromCondition && $toCondition) return $eventType;
-					} else  if ($condition == ArrayHelper::getValue($this->new_attributes, $attribute)) return $eventType;
+					} else if ($condition == ArrayHelper::getValue($this->new_attributes, $attribute)) return $eventType;
 				}
 			}
 		}
@@ -311,10 +311,12 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		if (null === $this->loadedModel) {//не получилось сопоставить класс модели, грузим as is
 			return self::find()->where(['model' => $this->model, 'model_key' => $modelKey])->orderBy('at')->all();
 		}
-		$requestModel = $this->loadedModel::findModel($modelKey);
+		if (null === $requestModel = $this->loadedModel::findModel($modelKey)) {
+			$x = $this->loadedModel->formName();
+		}
 
 		/** @var LCQuery $findCondition */
-		$findCondition = self::find()->where(['model' => $requestModel->formName(), 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
+		$findCondition = self::find()->where(['model' => $this->loadedModel->formName(), 'model_key' => $modelKey]);//поиск по изменениям в основной таблице модели
 		/** @var array $relationsRules */
 		if (null === $relationsRules = $this->getModelRules('relations')) $relationsRules = [];
 		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
@@ -323,9 +325,11 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 			if (is_callable($relationRule)) {
 				$relationRule($findCondition, $relatedModel);
 			} elseif (is_array($relationRule)) {
-				$linkKey = ArrayHelper::key($relationRule);
-				$linkValue = $relationRule[$linkKey];
-				$modelKey = $requestModel->$linkKey;
+				if (null !== $requestModel = $this->loadedModel::findModel($modelKey)) {//null будет в случае, если объект уже совсем начисто удалён из БД, в этом случае пытаемся сделать хоть какое-то сопоставление
+					$linkKey = ArrayHelper::key($relationRule);
+					$linkValue = $relationRule[$linkKey];
+					$modelKey = $requestModel->$linkKey;
+				}
 				$findCondition->orWhere("model = '{$relatedModel->formName()}' and (new_attributes->'$.{$linkValue}' = {$modelKey} or old_attributes->'$.{$linkValue}' = {$modelKey})");
 			} else throw new InvalidConfigException('Relation rule must be array or callable instance!');
 		}
