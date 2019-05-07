@@ -9,7 +9,7 @@ namespace app\modules\dynamic_attributes\models;
  */
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\SysExceptions;
@@ -71,7 +71,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 			[['create_date', 'structure'], 'safe'],
 			[['name'], 'string', 'max' => 255],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
-			[['create_date'], 'default', 'value' => Date::lcDate()],
+			[['create_date'], 'default', 'value' => DateHelper::lcDate()],
 			[['structure'], 'default', 'value' => []]
 
 		];

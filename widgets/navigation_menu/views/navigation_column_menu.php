@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var array $items
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\widgets\navigation_menu\ColumnMenuWidgetAssets;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
@@ -19,7 +19,7 @@ ColumnMenuWidgetAssets::register($this);
 ?>
 
 <?= ButtonDropdown::widget([
-	'label' => Icons::menu(),
+	'label' => IconsHelper::menu(),
 	'encodeLabel' => false,
 	'containerOptions' => [
 		'class' => 'dropdown'

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\users\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\traits\Upload;
@@ -155,7 +155,7 @@ class Users extends ActiveRecordExtended {
 			/*Мы не можем переопределить или наследовать метод в трейте, поэтому ПОКА добавляю правила валидации атрибутов из трейта сюда. Но потом нужно придумать, как разделить код*/
 			[['relGrade', 'relPremiumGroup', 'relLocation'], 'safe'],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
-			[['create_date'], 'default', 'value' => Date::lcDate()]//default-валидатор срабатывает только на незаполненные атрибуты, его нельзя использовать как обработчик любых изменений атрибута
+			[['create_date'], 'default', 'value' => DateHelper::lcDate()]//default-валидатор срабатывает только на незаполненные атрибуты, его нельзя использовать как обработчик любых изменений атрибута
 		];
 	}
 

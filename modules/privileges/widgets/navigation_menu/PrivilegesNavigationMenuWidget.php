@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\privileges\models\Privileges;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 
@@ -21,16 +21,16 @@ class PrivilegesNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public function run():string {
 		$this->_navigationItems = [
 			[
-				'label' => Icons::update().'Изменение',
+				'label' => IconsHelper::update().'Изменение',
 				'url' => ['update', 'id' => $this->model->id]
 			],
 			[
-				'label' => Icons::rule().'Новое правило',
+				'label' => IconsHelper::rule().'Новое правило',
 				'url' => ['dynamic-rights/create']
 			],
 			[
 				'menu' => true,
-				'label' => Icons::delete().'Удаление',
+				'label' => IconsHelper::delete().'Удаление',
 				'url' => ['delete', 'id' => $this->model->id],
 				'linkOptions' => [
 					'title' => 'Удалить запись',

@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'eventType',
 			'value' => static function(ActiveRecordLogger $model) {
-				return Icons::event_icon($model->eventType);
+				return IconsHelper::event_icon($model->eventType);
 			},
 			'format' => 'raw'
 		],

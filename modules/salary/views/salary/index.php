@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var SalaryForkSearch $searchModel
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'

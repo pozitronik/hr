@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRight;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
@@ -25,16 +25,16 @@ class UserRightNavigationMenuWidget extends BaseNavigationMenuWidget {
 			/** @noinspection PhpUndefinedFieldInspection */
 			$this->_navigationItems = [
 				[
-					'label' => Icons::update().'Изменение',
+					'label' => IconsHelper::update().'Изменение',
 					'url' => ['update', 'id' => $this->model->id]
 				],
 				[
-					'label' => Icons::rule().'Новое правило',
+					'label' => IconsHelper::rule().'Новое правило',
 					'url' => ['dynamic-rights/create']
 				],
 				[
 					'menu' => true,
-					'label' => Icons::delete().'Удаление',
+					'label' => IconsHelper::delete().'Удаление',
 					'url' => ['delete', 'id' => $this->model->id],
 					'linkOptions' => [
 						'title' => 'Удалить запись',

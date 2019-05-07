@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
@@ -49,7 +49,7 @@ class LCQuery extends ActiveQuery {
 		$start = ArrayHelper::getValue($date, 0);
 		$stop = ArrayHelper::getValue($date, 2);//$date[1] is delimiter
 
-		if (Date::isValidDate($start, $formatted_already?'Y-m-d':'d.m.Y') && Date::isValidDate($stop, $formatted_already?'Y-m-d':'d.m.Y')) {/*Проверяем даты на валидность*/
+		if (DateHelper::isValidDate($start, $formatted_already?'Y-m-d':'d.m.Y') && DateHelper::isValidDate($stop, $formatted_already?'Y-m-d':'d.m.Y')) {/*Проверяем даты на валидность*/
 			if (is_array($field)) {
 				return $this->andFilterWhere([
 					$field[0] => self::extractDate($start, $formatted_already),
@@ -80,7 +80,7 @@ class LCQuery extends ActiveQuery {
 	 * @param int $duration
 	 * @return integer
 	 */
-	public function countFromCache(int $duration = Date::SECONDS_IN_HOUR):int {
+	public function countFromCache(int $duration = DateHelper::SECONDS_IN_HOUR):int {
 		$countQuery = clone $this;
 		$countQuery->distinct()
 			->limit(false)

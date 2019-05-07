@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 
@@ -20,12 +20,12 @@ class AttributeNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public function run():string {
 		$this->_navigationItems = [
 			[
-				'label' => Icons::update().'Изменение',
+				'label' => IconsHelper::update().'Изменение',
 				'url' => ['update', 'id' => $this->model->id]
 			],
 			[
 				'menu' => true,
-				'label' => Icons::delete().'Удаление',
+				'label' => IconsHelper::delete().'Удаление',
 				'url' => ['delete', 'id' => $this->model->id],
 				'linkOptions' => [
 					'title' => 'Удалить запись',

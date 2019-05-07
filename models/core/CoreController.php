@@ -5,9 +5,9 @@ namespace app\models\core;
 
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
-use app\models\core\helpers\ReflectionHelper;
 use app\models\core\traits\ModelExtended;
 use app\modules\privileges\models\UserAccess;
+use pozitronik\helpers\ReflectionHelper;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionException;

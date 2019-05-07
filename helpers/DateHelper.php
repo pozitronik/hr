@@ -16,7 +16,7 @@ use Throwable;
  * Class Date
  * @package app\helpers
  */
-class Date {
+class DateHelper {
 
 	/*Еврибади гоин крейзи*/
 	public const SECONDS_IN_YEAR = 31536000;

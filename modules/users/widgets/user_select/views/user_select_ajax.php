@@ -13,7 +13,7 @@ declare(strict_types = 1);
  * @var string $ajax_search_url
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\users\widgets\user_select\UserSelectWidget;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -25,7 +25,7 @@ use kartik\select2\Select2;
 <?= Select2::widget([
 	'addon' => [
 		'append' => [
-			'content' => Html::button(Icons::add(), ['id' => 'ajax_post_button', 'class' => 'btn btn-primary', 'disabled' => 'disabled', 'onclick' => "ajax_post('$ajax_post_url', 'ajax_post_button', {$model->primaryKey})"]),
+			'content' => Html::button(IconsHelper::add(), ['id' => 'ajax_post_button', 'class' => 'btn btn-primary', 'disabled' => 'disabled', 'onclick' => "ajax_post('$ajax_post_url', 'ajax_post_button', {$model->primaryKey})"]),
 			'asButton' => true
 		]
 	],

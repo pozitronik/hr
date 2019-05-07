@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
@@ -65,7 +65,7 @@ class Privileges extends ActiveRecordExtended{
 			[['name'], 'required'],
 			[['userRightsNames', 'dropUserRights', 'userDynamicRightsIds'], 'safe'],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
-			[['create_date'], 'default', 'value' => Date::lcDate()]
+			[['create_date'], 'default', 'value' => DateHelper::lcDate()]
 		];
 	}
 

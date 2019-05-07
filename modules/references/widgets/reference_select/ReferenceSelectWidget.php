@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\references\widgets\reference_select;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Icons;
-use app\models\core\helpers\ReflectionHelper;
+use app\helpers\IconsHelper;
 use app\modules\references\models\ReferenceInterface;
 use app\modules\references\ReferencesModule;
 use kartik\select2\Select2;
+use pozitronik\helpers\ReflectionHelper;
 use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -56,7 +56,7 @@ class ReferenceSelectWidget extends Select2 {
 			if ($this->showEditAddon) {
 				$this->addon = [
 					'append' => [
-						'content' => ReferencesModule::a(Icons::update(), ['references/index', 'class' => ReflectionHelper::GetClassShortName((string)$this->referenceClass)], ['class' => 'btn btn-default']),
+						'content' => ReferencesModule::a(IconsHelper::update(), ['references/index', 'class' => ReflectionHelper::GetClassShortName((string)$this->referenceClass)], ['class' => 'btn btn-default']),
 						'asButton' => true
 					]
 				];

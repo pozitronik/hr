@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\helpers;
 
 use Exception;
+use pozitronik\helpers\ArrayHelper;
 use Yii;
 use Throwable;
 use yii\data\BaseDataProvider;

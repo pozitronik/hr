@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use Yii;
-use app\helpers\Path;
+use app\helpers\PathHelper;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -31,10 +31,10 @@ trait Upload {
 		/** @var Model $this */
 		$saveDir = Yii::getAlias($saveDirAlias??"@app/web/uploads/{$this->formName()}");
 		/** @var Model $this */
-		if ((null !== $uploadFileInstance = UploadedFile::getInstance($this, $instanceName)) && Path::CreateDirIfNotExisted($saveDir)) {
+		if ((null !== $uploadFileInstance = UploadedFile::getInstance($this, $instanceName)) && PathHelper::CreateDirIfNotExisted($saveDir)) {
 			$fileName = $uploadFileInstance->name;
-			$fileName = (null === $newFileName)?$fileName:Path::ChangeFileName($fileName, $newFileName);
-			$fileName = (null === $newFileExtension)?$fileName:Path::ChangeFileExtension($fileName, $newFileExtension);
+			$fileName = (null === $newFileName)?$fileName:PathHelper::ChangeFileName($fileName, $newFileName);
+			$fileName = (null === $newFileExtension)?$fileName:PathHelper::ChangeFileExtension($fileName, $newFileExtension);
 			$fileName = $saveDir.DIRECTORY_SEPARATOR.$fileName;
 			$uploadFileInstance->saveAs($fileName);
 			return null === $returnPart?$fileName:pathinfo($fileName, $returnPart);

@@ -6,14 +6,14 @@ declare(strict_types = 1);
  * @var array $items
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
 
 ?>
 
 <?= ButtonDropdown::widget([
-	'label' => Icons::menu(),
+	'label' => IconsHelper::menu(),
 	'encodeLabel' => false,
 	'dropdown' => [
 		'options' => [

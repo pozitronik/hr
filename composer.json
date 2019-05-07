@@ -51,7 +51,7 @@
 		"kartik-v/yii2-date-range": "^1.7@dev",
 		"kartik-v/yii2-widget-datetimepicker": "*",
 		"pozitronik/yii2-arlogger": "*",
-		"pozitronik/yii2-helpers": "dev-master"
+		"pozitronik/yii2-helpers": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",

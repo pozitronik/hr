@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRightInterface;
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributePropertyNavigationMenuWidget;
@@ -39,7 +39,7 @@ use pozitronik\helpers\ArrayHelper;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'

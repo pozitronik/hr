@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\groups\GroupsModule;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\models\Vacancy;
@@ -29,21 +29,21 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 		$this->_navigationItems = [
 			[
 				'menu' => true,
-				'label' => Icons::vacancy_red().'Создать вакансию',
+				'label' => IconsHelper::vacancy_red().'Создать вакансию',
 				'url' => VacancyModule::to(['vacancy/create'])
 			],
 			[
-				'label' => Icons::update().'Изменение',
+				'label' => IconsHelper::update().'Изменение',
 				'url' => VacancyModule::to(['vacancy/update', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::history().'История изменений',
+				'label' => IconsHelper::history().'История изменений',
 				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::delete().'Удаление',
+				'label' => IconsHelper::delete().'Удаление',
 				'url' => GroupsModule::to(['groups/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',

@@ -12,7 +12,7 @@ declare(strict_types = 1);
  * @var string $ajax_search_url
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
@@ -29,7 +29,7 @@ use yii\web\View;
 <?= Select2::widget([
 	'addon' => [
 		'append' => [
-			'content' => Html::submitButton(Icons::add(), ['class' => 'btn btn-primary', 'disabled' => 'disabled']),
+			'content' => Html::submitButton(IconsHelper::add(), ['class' => 'btn btn-primary', 'disabled' => 'disabled']),
 			'asButton' => true
 		]
 	],

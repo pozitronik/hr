@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
@@ -79,7 +79,7 @@ class Vacancy extends ActiveRecordExtended {
 			[['vacancy_id', 'ticket_id'], 'unique'],
 			[['relRefUserRoles'], 'safe'],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
-			[['create_date'], 'default', 'value' => Date::lcDate()]
+			[['create_date'], 'default', 'value' => DateHelper::lcDate()]
 		];
 	}
 

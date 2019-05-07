@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\history\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\helpers\ReflectionHelper;
 use app\models\core\LCQuery;
@@ -216,7 +216,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		$result->eventTime = $this->timestamp;
 		$result->objectName = $this->model;
 		$result->subject = $this->relUser;
-		$result->eventIcon = Icons::event_icon($result->eventType);
+		$result->eventIcon = IconsHelper::event_icon($result->eventType);
 		$result->actions = $this->eventActions;
 
 		$labelsConfig = $this->getModelRules("eventConfig.eventLabels");

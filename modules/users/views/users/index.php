@@ -10,7 +10,7 @@ declare(strict_types = 1);
  */
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\salary\models\references\RefUserPositions;
@@ -50,7 +50,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'

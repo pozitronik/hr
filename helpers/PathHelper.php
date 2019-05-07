@@ -10,7 +10,7 @@ use RuntimeException;
  * Хелпер для работы с путями и файловыми объектами
  * @package app\helpers
  */
-class Path {
+class PathHelper {
 
 	/**
 	 * Создаём каталог с нужными проверками

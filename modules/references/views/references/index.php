@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\references\widgets\navigation_menu\ReferenceNavigationMenuWidget;
 use kartik\grid\GridView;
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $columns[] = [
 	'filter' => false,
-	'header' => Icons::menu(),
+	'header' => IconsHelper::menu(),
 	'mergeHeader' => true,
 	'headerOptions' => [
 		'class' => 'skip-export kv-align-center kv-align-middle'

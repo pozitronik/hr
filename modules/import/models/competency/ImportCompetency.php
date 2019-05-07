@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\competency;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use app\helpers\Utils;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\Groups;
@@ -231,7 +231,7 @@ class ImportCompetency extends Model {
 			'name' => 'Проблемы импорта компетенций',
 			'comment' => 'Сюда при импорте компетенций попадают пользователи, соответствий которым не найдено.',
 			'daddy' => CurrentUser::Id(),
-			'create_date' => Date::lcDate(),
+			'create_date' => DateHelper::lcDate(),
 			'deleted' => false
 		]);
 

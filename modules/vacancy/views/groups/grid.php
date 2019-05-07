@@ -11,7 +11,7 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
@@ -45,7 +45,7 @@ use yii\web\View;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'

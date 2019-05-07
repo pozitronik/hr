@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
@@ -49,7 +49,7 @@ use yii\helpers\Html;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'
@@ -97,20 +97,20 @@ use yii\helpers\Html;
 		],
 		[
 			'attribute' => 'usersCount',
-			'header' => Icons::users(),
+			'header' => IconsHelper::users(),
 			'footer' => Utils::pageTotal($provider, 'usersCount'),
 			'headerOptions' => ['class' => 'text-center']
 		],
 		[
 			'attribute' => 'childGroupsCount',
-			'header' => Icons::subgroups(),
+			'header' => IconsHelper::subgroups(),
 			'footer' => Utils::pageTotal($provider, 'childGroupsCount'),
 			'headerOptions' => ['class' => 'text-center']
 		],
 		[
 			'class' => CheckboxColumn::class,
 			'headerOptions' => ['class' => 'kartik-sheet-style'],
-			'header' => Icons::trash(),
+			'header' => IconsHelper::trash(),
 			'name' => $model->formName().'[dropChildGroups]'
 		]
 	]

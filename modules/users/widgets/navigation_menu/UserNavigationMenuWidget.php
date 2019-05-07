@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
 use app\modules\history\HistoryModule;
@@ -31,39 +31,39 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 
 		$this->_navigationItems = [
 			[
-				'label' => Icons::user().'Профиль',
+				'label' => IconsHelper::user().'Профиль',
 				'url' => UsersModule::to(['users/profile', 'id' => $this->model->id])
 			],
 			[
-				'label' => Icons::group().'Группы',
+				'label' => IconsHelper::group().'Группы',
 				'url' => UsersModule::to(['users/groups', 'id' => $this->model->id])
 			],
 			[
-				'label' => Icons::money().'Зарплатные данные',
+				'label' => IconsHelper::money().'Зарплатные данные',
 				'url' => UsersModule::to(['users/salary', 'id' => $this->model->id])
 			],
 			[
-				'label' => Icons::attributes().'Атрибуты',
+				'label' => IconsHelper::attributes().'Атрибуты',
 				'url' => DynamicAttributesModule::to(['user', 'user_id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::export().'Экспорт атрибутов',
+				'label' => IconsHelper::export().'Экспорт атрибутов',
 				'url' => ExportModule::to(['attributes/user', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::user_add().'Новый пользователь',
+				'label' => IconsHelper::user_add().'Новый пользователь',
 				'url' => UsersModule::to(['users/create'])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::history().'История изменений',
+				'label' => IconsHelper::history().'История изменений',
 				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::delete().'Удаление',
+				'label' => IconsHelper::delete().'Удаление',
 				'url' => UsersModule::to(['users/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',

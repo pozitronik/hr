@@ -10,7 +10,7 @@ declare(strict_types = 1);
  * @var bool $read_only
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
@@ -22,17 +22,17 @@ use yii\web\View;
 
 $items = [
 	[
-		'label' => Icons::attributes().'Открыть для изменения',
+		'label' => IconsHelper::attributes().'Открыть для изменения',
 		'url' => DynamicAttributesModule::to(['user/edit', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
 	],
 	[
-		'label' => Icons::clear().'Сбросить все значения',
+		'label' => IconsHelper::clear().'Сбросить все значения',
 		'url' => DynamicAttributesModule::to(['user/clear', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
 	]
 ];
 
 if ($dynamicAttribute->hasIntegerProperties) $items[] = [
-	'label' => Icons::chart().'Диаграмма',
+	'label' => IconsHelper::chart().'Диаграмма',
 	'url' => DynamicAttributesModule::to(['user/graph', 'user_id' => $user_id, 'attribute_id' => $dynamicAttribute->id])
 ];
 
@@ -43,7 +43,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 		<?php if ($read_only): ?>
 			<div class="panel-control">
 				<?= ButtonDropdown::widget([
-					'label' => Icons::menu(),
+					'label' => IconsHelper::menu(),
 					'encodeLabel' => false,
 					'options' => [
 						'class' => 'attribute-dropdown'

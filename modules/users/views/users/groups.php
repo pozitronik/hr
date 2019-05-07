@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\users\UsersModule;
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'columns' => [
 							[
 								'filter' => false,
-								'header' => Icons::menu(),
+								'header' => IconsHelper::menu(),
 //							'mergeHeader' => true,
 								'headerOptions' => [
 									'class' => 'skip-export kv-align-center kv-align-middle'
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							[
 								'class' => CheckboxColumn::class,
 								'headerOptions' => ['class' => 'kartik-sheet-style'],
-								'header' => Icons::trash(),
+								'header' => IconsHelper::trash(),
 								'name' => $model->formName().'[dropGroups]'
 							]
 						]

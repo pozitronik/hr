@@ -10,7 +10,7 @@ use app\modules\history\models\HistoryEventInterface;
  * @package app\helpers
  * Хелпер с HTML-иконками
  */
-class Icons {
+class IconsHelper {
 
 	/**
 	 * @param int $eventType

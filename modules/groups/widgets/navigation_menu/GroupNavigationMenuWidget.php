@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\export\ExportModule;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
@@ -28,73 +28,73 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public function run():string {
 		$this->_navigationItems = [
 			[
-				'label' => Icons::group().'Профиль',
+				'label' => IconsHelper::group().'Профиль',
 				'url' => GroupsModule::to(['groups/profile', 'id' => $this->model->id])
 			],
 			[
-				'label' => Icons::subgroups().'Иерархия',
+				'label' => IconsHelper::subgroups().'Иерархия',
 				'url' => GroupsModule::to(['groups/groups', 'id' => $this->model->id])
 			],
 			[
-				'label' => Icons::users().'Пользователи',
+				'label' => IconsHelper::users().'Пользователи',
 				'url' => GroupsModule::to(['groups/users', 'id' => $this->model->id])
 			],
 			[
-				'label' => Icons::vacancy().'Вакансии',
+				'label' => IconsHelper::vacancy().'Вакансии',
 				'url' => VacancyModule::to(['groups/index', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::vacancy_red().'Создать вакансию',
+				'label' => IconsHelper::vacancy_red().'Создать вакансию',
 				'url' => VacancyModule::to(['vacancy/create', 'group' => $this->model->id])
 			],
 			[
-				'label' => Icons::network().'Граф',
+				'label' => IconsHelper::network().'Граф',
 				'url' => GroupsModule::to(['groups/tree', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::hierarchy().'Иерархия пользователей',
+				'label' => IconsHelper::hierarchy().'Иерархия пользователей',
 				'url' => GroupsModule::to(['groups/users-hierarchy', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::hierarchy_red().'Иерархия пользователей (с ролями)',
+				'label' => IconsHelper::hierarchy_red().'Иерархия пользователей (с ролями)',
 				'url' => GroupsModule::to(['groups/users-hierarchy', 'showRolesSelector' => true, 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::users_edit().'Редактировать пользователей',
+				'label' => IconsHelper::users_edit().'Редактировать пользователей',
 				'url' => ['/users/bunch/index', 'group_id' => $this->model->id]
 			],
 			[
 				'menu' => true,
-				'label' => Icons::users_edit_red().'Редактировать пользователей (с учётом иерархии)',
+				'label' => IconsHelper::users_edit_red().'Редактировать пользователей (с учётом иерархии)',
 				'url' => ['/users/bunch/index', 'group_id' => $this->model->id, 'hierarchy' => true]
 			],
 			[
 				'menu' => true,
-				'label' => Icons::add().'Новая группа',
+				'label' => IconsHelper::add().'Новая группа',
 				'url' => GroupsModule::to(['groups/create'])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::export().'Экспорт атрибутов пользователей',
+				'label' => IconsHelper::export().'Экспорт атрибутов пользователей',
 				'url' => ExportModule::to(['attributes/group', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::export_red().'Экспорт атрибутов пользователей (с учётом иерархии)',
+				'label' => IconsHelper::export_red().'Экспорт атрибутов пользователей (с учётом иерархии)',
 				'url' => ExportModule::to(['attributes/group', 'id' => $this->model->id, 'hierarchy' => true])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::history().'История изменений',
+				'label' => IconsHelper::history().'История изменений',
 				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::delete().'Удаление',
+				'label' => IconsHelper::delete().'Удаление',
 				'url' => GroupsModule::to(['groups/delete', 'id' => $this->model->id]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',

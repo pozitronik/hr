@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'

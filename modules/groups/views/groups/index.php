@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
@@ -45,7 +45,7 @@ GridView::widget([
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'
@@ -106,12 +106,12 @@ GridView::widget([
 		],
 		[
 			'attribute' => 'usersCount',
-			'header' => Icons::users(),
+			'header' => IconsHelper::users(),
 			'headerOptions' => ['class' => 'text-center']
 		],
 		[
 			'attribute' => 'childGroupsCount',
-			'header' => Icons::subgroups(),
+			'header' => IconsHelper::subgroups(),
 			'headerOptions' => ['class' => 'text-center']
 		],
 //				'comment',

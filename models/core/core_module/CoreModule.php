@@ -5,8 +5,8 @@ namespace app\models\core\core_module;
 
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\Utils;
-use app\models\core\helpers\ReflectionHelper;
 use app\modules\privileges\models\UserRightInterface;
+use pozitronik\helpers\ReflectionHelper;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;

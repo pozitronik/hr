@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'categoryName',
 		[
 			'attribute' => 'usersCount',
-			'header' => Icons::users(),
+			'header' => IconsHelper::users(),
 			'headerOptions' => ['class' => 'text-center']
 		]
 	]

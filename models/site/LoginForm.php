@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\site;
 
-use app\helpers\Date;
+use app\helpers\DateHelper;
 use app\models\user\User;
 use Yii;
 use yii\base\Model;
@@ -94,6 +94,6 @@ class LoginForm extends Model {
 	 * @return boolean whether the user is logged in successfully
 	 */
 	public function doLogin():bool {
-		return ($this->validate() && Yii::$app->user->login($this->getUser(), $this->rememberMe?Date::SECONDS_IN_MONTH:0));
+		return ($this->validate() && Yii::$app->user->login($this->getUser(), $this->rememberMe?DateHelper::SECONDS_IN_MONTH:0));
 	}
 }

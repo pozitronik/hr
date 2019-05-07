@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\navigation_menu;
 
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\helpers\ReflectionHelper;
+use pozitronik\helpers\ReflectionHelper;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
 

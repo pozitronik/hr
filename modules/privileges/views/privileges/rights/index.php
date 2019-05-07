@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\helpers\Utils;
 
 /**
@@ -59,7 +59,7 @@ GridView::widget([
 		[
 			'class' => DataColumn::class,
 			'filter' => false,
-			'header' => Icons::menu(),
+			'header' => IconsHelper::menu(),
 			'mergeHeader' => true,
 			'headerOptions' => [
 				'class' => 'skip-export kv-align-center kv-align-middle'
@@ -97,7 +97,7 @@ GridView::widget([
 		[
 			'class' => CheckboxColumn::class,
 			'headerOptions' => ['class' => 'kartik-sheet-style'],
-			'header' => Icons::trash(),
+			'header' => IconsHelper::trash(),
 			'name' => $model->formName().'[dropUserRights]'
 		]
 	]

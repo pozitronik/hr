@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\navigation_menu;
 
-use app\helpers\Icons;
+use app\helpers\IconsHelper;
 use app\modules\history\HistoryModule;
 use app\modules\references\models\Reference;
 use app\modules\references\ReferencesModule;
@@ -28,21 +28,21 @@ class ReferenceNavigationMenuWidget extends BaseNavigationMenuWidget {
 	public function run():string {
 		$this->_navigationItems = [
 			[
-				'label' => Icons::view().'Просмотр',
+				'label' => IconsHelper::view().'Просмотр',
 				'url' => ReferencesModule::to(['references/view', 'id' => $this->model->id, 'class' => $this->className])
 			],
 			[
-				'label' => Icons::update().'Изменение',
+				'label' => IconsHelper::update().'Изменение',
 				'url' => ReferencesModule::to(['references/update', 'id' => $this->model->id, 'class' => $this->className])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::history().'История изменений',
+				'label' => IconsHelper::history().'История изменений',
 				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
-				'label' => Icons::delete().'Удаление',
+				'label' => IconsHelper::delete().'Удаление',
 				'url' => ReferencesModule::to(['references/delete', 'id' => $this->model->id, 'class' => $this->className]),
 				'linkOptions' => [
 					'title' => 'Удалить запись',
