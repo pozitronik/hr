@@ -109,9 +109,9 @@ use yii\widgets\ActiveForm;
 							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 								'multiple' => false,
 								'mode' => GroupSelectWidget::MODE_FIELD,
-								'dataMode' => GroupSelectWidget::DATA_MODE_LOAD,
+								'dataMode' => GroupSelectWidget::DATA_MODE_LOAD
 							])->label('Группа (подразделение)') ?>
-						<? endif; ?>
+						<?php endif; ?>
 					</div>
 					<div class="col-md-3">
 						<?= $form->field($model, 'relRefUserRoles')->widget(ReferenceSelectWidget::class, [
