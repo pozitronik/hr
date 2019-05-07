@@ -39,8 +39,10 @@ class VacancyController extends WigetableController {
 	 * @return string|Response
 	 * @throws Throwable
 	 */
-	public function actionCreate() {
-		$newVacancy = new Vacancy();
+	public function actionCreate(?int $group = null) {
+		$newVacancy = new Vacancy([
+			'group' => $group
+		]);
 		if ($newVacancy->createModel(Yii::$app->request->post($newVacancy->formName()))) {
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
 			return $this->redirect(['update', 'id' => $newVacancy->id]);

@@ -201,7 +201,23 @@ $config = [
 ];
 
 $config['modules']['arlogger'] = [
-	'class' => ARLogger::class
+	'class' => ARLogger::class,
+	'params' => [
+		'classNamesMap' => [
+			'Users' => Users::class,
+			'Groups' => Groups::class,
+			'Vacancy' => Vacancy::class,
+			'RelUsersGroups' => RelUsersGroups::class,
+			'RelUsersPrivileges' => RelUsersPrivileges::class,
+			'RelUsersAttributes' => RelUsersAttributes::class,
+			'RelUsersGroupsRoles' => RelUsersGroupsRoles::class,
+			'SalaryFork' => SalaryFork::class,
+			'RefAttributesTypes' => RefAttributesTypes::class,
+			'RefGroupTypes' => RefGroupTypes::class,
+			'RefUserPositions' => RefUserPositions::class,
+			'RelVacancyGroupRoles' => RelVacancyGroupRoles::class
+		]
+	]
 ];
 $config['bootstrap'][] = 'arlogger';
 

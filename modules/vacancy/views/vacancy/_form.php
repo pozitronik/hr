@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Vacancy $model
  */
 
+use app\modules\groups\models\Groups;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
@@ -97,13 +98,20 @@ use yii\widgets\ActiveForm;
 						]) ?>
 					</div>
 
-
 					<div class="col-md-3">
-						<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
-							'multiple' => false,
-							'mode' => GroupSelectWidget::MODE_FIELD,
-							'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
-						])->label('Группа (подразделение)') ?>
+						<?php if (null === $model->group): ?>
+							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
+								'multiple' => false,
+								'mode' => GroupSelectWidget::MODE_FIELD,
+								'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+							])->label('Группа (подразделение)') ?>
+						<?php else: ?>
+							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
+								'multiple' => false,
+								'mode' => GroupSelectWidget::MODE_FIELD,
+								'dataMode' => GroupSelectWidget::DATA_MODE_LOAD,
+							])->label('Группа (подразделение)') ?>
+						<? endif; ?>
 					</div>
 					<div class="col-md-3">
 						<?= $form->field($model, 'relRefUserRoles')->widget(ReferenceSelectWidget::class, [
