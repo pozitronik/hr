@@ -175,7 +175,9 @@ use yii\widgets\ActiveForm;
 						<?= $form->field($model, 'location')->widget(ReferenceSelectWidget::class, [
 							'referenceClass' => RefLocations::class,
 							'pluginOptions' => [
-								'multiple' => false
+								'multiple' => false,
+								'allowClear' => true,
+								'placeholder' => 'Укажите локацию'
 							]
 						]) ?>
 					</div>
