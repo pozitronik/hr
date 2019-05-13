@@ -80,6 +80,12 @@ class IconsHelper {
 	public static function vacancy_red():string {
 		return "<i class='fa fa-user-check' style='color: Tomato;' title='Создать вакансию'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function vacancy_green():string {
+		return "<i class='fa fa-user-check' style='color: Green;' title='Создать вакансию'></i>";
+	}
 
 	/**
 	 * @return string
