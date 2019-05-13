@@ -6,7 +6,10 @@ declare(strict_types = 1);
  * @var View $this
  */
 
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\users\models\references\RefUserRoles;
+use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
@@ -47,7 +50,17 @@ $this->params['breadcrumbs'][] = $this->title;
 						],
 						[
 							'attribute' => 'recruiter',
-							'value' => $model->relRefVacancyRecruiter->name
+							'format' => 'raw',
+							'value' => BadgeWidget::widget([
+								'data' => $model->getRelRefVacancyRecruiter()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+								'useBadges' => true,
+								'attribute' => 'name',
+								'unbadgedCount' => 6,
+								"itemsSeparator" => false,
+								"optionsMap" => static function() {
+									return RefVacancyRecruiters::colorStyleOptions();
+								}
+							])
 						]
 					]
 				],
@@ -97,11 +110,31 @@ $this->params['breadcrumbs'][] = $this->title;
 						],
 						[
 							'attribute' => 'premium_group',
-							'value' => $model->relRefSalaryPremiumGroup->name
+							'format' => 'raw',
+							'value' => BadgeWidget::widget([
+								'data' => $model->getRelRefSalaryPremiumGroup()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+								'useBadges' => true,
+								'attribute' => 'name',
+								'unbadgedCount' => 6,
+								"itemsSeparator" => false,
+								"optionsMap" => static function() {
+									return RefSalaryPremiumGroups::colorStyleOptions();
+								}
+							])
 						],
 						[
 							'attribute' => 'location',
-							'value' => $model->relRefLocation->name
+							'format' => 'raw',
+							'value' => BadgeWidget::widget([
+								'data' => $model->getRelRefLocation()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+								'useBadges' => false,
+								'attribute' => 'name',
+								'unbadgedCount' => 6,
+								"itemsSeparator" => false,
+								"optionsMap" => static function() {
+									return RefLocations::colorStyleOptions();
+								}
+							])
 						]
 					]
 				],
@@ -109,11 +142,25 @@ $this->params['breadcrumbs'][] = $this->title;
 					'columns' => [
 						[
 							'attribute' => 'employer',
-							'value' => $model->relEmployer->username
+							'format' => 'raw',
+							'value' => BadgeWidget::widget([
+								'data' => $model->getRelEmployer()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+								'useBadges' => false,
+								'attribute' => 'username',
+								'unbadgedCount' => 6,
+								"itemsSeparator" => false,
+							])
 						],
 						[
 							'attribute' => 'teamlead',
-							'value' => $model->relTeamlead->username
+							'format' => 'raw',
+							'value' => BadgeWidget::widget([
+								'data' => $model->getRelTeamlead()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+								'useBadges' => false,
+								'attribute' => 'username',
+								'unbadgedCount' => 6,
+								"itemsSeparator" => false,
+							])
 						]
 					]
 				]
