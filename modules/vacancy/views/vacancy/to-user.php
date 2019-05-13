@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="panel-footer">
 		<div class="btn-group">
-			<?= Html::submitButton('Завершить найм', ['class' => 'btn btn-success']) ?>
+			<?= Html::input('submit', 'done', 'Завершить найм', ['class' => 'btn btn-success']) ?>
 		</div>
 	</div>
 
