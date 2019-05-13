@@ -55,7 +55,7 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 			]
 		];
 
-		if ($this->model->isOpen) {
+		if ($this->model->opened) {
 			array_unshift($this->_navigationItems, [
 				'menu' => true,
 				'label' => IconsHelper::vacancy_green().'Заполнить вакансию',
