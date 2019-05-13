@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models;
 
+use app\helpers\Utils;
+use app\models\relations\RelUsersGroupsRoles;
+use app\widgets\alert\AlertModel;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
@@ -59,6 +62,8 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к справочнику ролей пользователей
  */
 class Vacancy extends ActiveRecordExtended {
+	public $isOpen = true;//todo: статус готовности подбора
+	public $username = 'Пупкин-заде Йован Пафнутьич';//todo: статус готовности подбора
 
 	/**
 	 * {@inheritdoc}
@@ -109,8 +114,8 @@ class Vacancy extends ActiveRecordExtended {
 			'create_date' => 'Дата заведения вакансии',
 			'close_date' => 'Дата закрытия вакансии',
 			'estimated_close_date' => 'Дата ожидаемого закрытия вакансии',
-			'daddy' => 'Автор вакансии'
-
+			'daddy' => 'Автор вакансии',
+			'username' => 'ФИО финалиста'
 		];
 	}
 
@@ -232,4 +237,39 @@ class Vacancy extends ActiveRecordExtended {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role_id'])->via('relVacancyGroupRoles');
 	}
 
+	/**
+	 * Прототипирую функцию создания пользователя из вакансии
+	 * @return null|int New user id on success
+	 */
+	public function toUser():?int {
+		$transaction = static::getDb()->beginTransaction();
+		$user = new Users([
+			'username' => $this->username,
+			'login' => Utils::generateLogin(),
+			'password' => Utils::gen_uuid(5),
+			'email' => Utils::generateLogin()."@localhost",
+			'position' => $this->position
+		]);
+		if (true === $saved = $user->save()) {
+			$this->refresh();//переподгрузим атрибуты
+			$user->relGroups = $this->group;
+			foreach ((array)$this->relRefUserRoles as $role) {
+				RelUsersGroupsRoles::setRoleInGroup($role->id, $this->group, $user->id);
+
+			}
+
+			$user->relGrade = $this->grade;
+			$user->relPremiumGroup = $this->premium_group;
+			$user->relLocation = $this->location;
+		}
+		if (true === $saved = $this->save()) {
+			$transaction->commit();
+			AlertModel::SuccessNotify();
+			return $user->id;
+		}
+		AlertModel::ErrorsNotify($this->errors);
+		$transaction->rollBack();
+		return null;
+
+	}
 }
