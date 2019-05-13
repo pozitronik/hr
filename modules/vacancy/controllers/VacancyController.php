@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\controllers;
 
 use app\models\core\WigetableController;
+use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;
 use Throwable;
@@ -67,6 +69,27 @@ class VacancyController extends WigetableController {
 		if (null !== ($updateArray = Yii::$app->request->post($vacancy->formName()))) $vacancy->updateModel($updateArray);
 
 		return $this->render('update', [
+			'model' => $vacancy
+		]);
+	}
+
+	/**
+	 * Создать пользователя из вакансии
+	 * @param int $id
+	 */
+	public function actionToUser(int $id) {
+		if (null === $vacancy = Vacancy::findModel($id, new NotFoundHttpException())) return null;
+		if (Yii::$app->request->post('done') && null !== $newUserId = $vacancy->toUser()) {
+			return $this->redirect(UsersModule::to(['users/profile', 'id' => $newUserId]));
+		}
+
+		if ($vacancy->isOpen) {
+			return $this->render('to-user', [//Запускаем процесс подбора
+				'model' => $vacancy
+			]);
+		}
+
+		return $this->render('history', [//Показываем историю подбора
 			'model' => $vacancy
 		]);
 	}
