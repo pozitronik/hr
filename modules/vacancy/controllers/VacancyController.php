@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\controllers;
 
 use app\models\core\WigetableController;
-use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;
@@ -76,6 +75,9 @@ class VacancyController extends WigetableController {
 	/**
 	 * Создать пользователя из вакансии
 	 * @param int $id
+	 * @return string|Response|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
 	 */
 	public function actionToUser(int $id) {
 		if (null === $vacancy = Vacancy::findModel($id, new NotFoundHttpException())) return null;

@@ -23,6 +23,7 @@ use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use Throwable;
 use yii\db\ActiveQuery;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "sys_vacancy".
@@ -240,6 +241,7 @@ class Vacancy extends ActiveRecordExtended {
 	/**
 	 * Прототипирую функцию создания пользователя из вакансии
 	 * @return null|int New user id on success
+	 * @throws Exception
 	 */
 	public function toUser():?int {
 		$transaction = static::getDb()->beginTransaction();

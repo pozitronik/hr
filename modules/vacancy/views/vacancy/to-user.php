@@ -40,38 +40,38 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'columns' => [
 						[
-							'attribute' => 'vacancy_id',
+							'attribute' => 'vacancy_id'
 						],
 						[
-							'attribute' => 'ticket_id',
+							'attribute' => 'ticket_id'
 						],
 						[
 							'attribute' => 'recruiter',
 							'value' => $model->relRefVacancyRecruiter->name
-						],
+						]
 					]
 				],
 				[
 					'columns' => [
 						[
 							'attribute' => 'create_date',
-							'format' => 'date',
+							'format' => 'date'
 						],
 						[
 							'attribute' => 'estimated_close_date',
-							'format' => 'date',
-						],
+							'format' => 'date'
+						]
 					]
 				],
 				[
 					'columns' => [
 						[
 							'attribute' => 'group',
-							'value' => $model->relGroup->name,
+							'value' => $model->relGroup->name
 						],
 						[
 							'attribute' => 'position',
-							'value' => $model->relRefUserPosition->name,
+							'value' => $model->relRefUserPosition->name
 						],
 						[
 							'label' => 'Назначение/роль',
@@ -86,43 +86,43 @@ $this->params['breadcrumbs'][] = $this->title;
 									return RefUserRoles::colorStyleOptions();
 								}
 							])
-						],
+						]
 					]
 				],
 				[
 					'columns' => [
 						[
 							'attribute' => 'grade',
-							'value' => $model->relRefGrade->name,
+							'value' => $model->relRefGrade->name
 						],
 						[
 							'attribute' => 'premium_group',
-							'value' => $model->relRefSalaryPremiumGroup->name,
+							'value' => $model->relRefSalaryPremiumGroup->name
 						],
 						[
 							'attribute' => 'location',
 							'value' => $model->relRefLocation->name
-						],
+						]
 					]
 				],
 				[
 					'columns' => [
 						[
 							'attribute' => 'employer',
-							'value' => $model->relEmployer->username,
+							'value' => $model->relEmployer->username
 						],
 						[
 							'attribute' => 'teamlead',
-							'value' => $model->relTeamlead->username,
-						],
+							'value' => $model->relTeamlead->username
+						]
 					]
-				],
+				]
 			]
-		]); ?>
+		]) ?>
 
 		<div class="row">
 			<div class="col-md-12">
-				<?= $form->field($model, 'username')->textInput(['maxlength' => 50]); ?>
+				<?= $form->field($model, 'username')->textInput(['maxlength' => 50]) ?>
 			</div>
 		</div>
 
