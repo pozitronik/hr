@@ -7,6 +7,9 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\modules\groups\GroupsModule;
+use app\modules\users\UsersModule;
+use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
 use app\helpers\Utils;
@@ -128,13 +131,32 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'employerName',
-			'value' => 'relEmployer.username'
+			'format' => 'raw',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelEmployer()->all(),
+					'useBadges' => false,
+					'attribute' => 'username',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
+				]);
+			},
 		],
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'groupName',
-			'value' => 'relGroup.name'
-
+			'format' => 'raw',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelGroup()->all(),
+					'useBadges' => false,
+					'attribute' => 'name',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => 'id']
+				]);
+			},
 		],
 		[
 			'class' => DataColumn::class,
@@ -201,7 +223,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'teamleadName',
-			'value' => 'relTeamlead.username'
+			'format' => 'raw',
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'data' => $vacancy->getRelTeamlead()->all(),
+					'useBadges' => false,
+					'attribute' => 'username',
+					'unbadgedCount' => 6,
+					"itemsSeparator" => false,
+					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
+				]);
+			},
 		],
 		[
 			'class' => DataColumn::class,
