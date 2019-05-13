@@ -85,7 +85,7 @@ class VacancyController extends WigetableController {
 			return $this->redirect(UsersModule::to(['users/profile', 'id' => $newUserId]));
 		}
 
-		if ($vacancy->isOpen) {
+		if ($vacancy->opened) {
 			return $this->render('to-user', [//Запускаем процесс подбора
 				'model' => $vacancy
 			]);
