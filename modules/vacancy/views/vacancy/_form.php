@@ -6,7 +6,6 @@ declare(strict_types = 1);
  * @var Vacancy $model
  */
 
-use app\modules\groups\models\Groups;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;

@@ -7,7 +7,6 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\modules\groups\GroupsModule;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
@@ -141,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					"itemsSeparator" => false,
 					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
 				]);
-			},
+			}
 		],
 		[
 			'class' => DataColumn::class,
@@ -156,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					"itemsSeparator" => false,
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => 'id']
 				]);
-			},
+			}
 		],
 		[
 			'class' => DataColumn::class,
@@ -233,7 +232,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					"itemsSeparator" => false,
 					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
 				]);
-			},
+			}
 		],
 		[
 			'class' => DataColumn::class,
