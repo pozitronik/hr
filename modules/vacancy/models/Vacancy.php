@@ -37,6 +37,7 @@ use yii\db\Exception;
  * @property int|null $location Локация
  * @property int|null $recruiter Рекрутер
  * @property int|null $employer Нанимающий руководитель
+ * @property string $username Имя финального кандидата
  * @property int|null $position Должность
  *
  * @property int|null $premium_group Премиальная группа
@@ -61,10 +62,9 @@ use yii\db\Exception;
  *
  * @property RelVacancyGroupRoles[]|ActiveQuery $relVacancyGroupRoles Релейшен к таблице связей с ролями
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к справочнику ролей пользователей
+ * @property bool $opened
  */
 class Vacancy extends ActiveRecordExtended {
-	public $isOpen = true;//todo: статус готовности подбора
-	public $username = 'Пупкин-заде Йован Пафнутьич';//todo: статус готовности подбора
 
 	/**
 	 * {@inheritdoc}
@@ -79,12 +79,12 @@ class Vacancy extends ActiveRecordExtended {
 	public function rules():array {
 		return [
 			[['vacancy_id', 'ticket_id', 'status', 'group', 'location', 'recruiter', 'employer', 'position', 'teamlead', 'daddy', 'premium_group', 'grade'], 'integer'],
-			[['group', 'position', 'create_date', 'daddy'], 'required'],
+			[['group', 'position'], 'required'],
 			[['create_date', 'close_date', 'estimated_close_date'], 'safe'],
-			[['name'], 'string', 'max' => 255],
+			[['name', 'username'], 'string', 'max' => 255],
 			[['vacancy_id', 'ticket_id'], 'unique'],
 			[['relRefUserRoles'], 'safe'],
-			[['daddy'], 'default', 'value' => CurrentUser::Id()],
+			[['daddy'], 'default', 'value' => CurrentUser::Id()],//default-валидатор конфликтует с required, их нельзя указывать одновременно
 			[['create_date'], 'default', 'value' => DateHelper::lcDate()]
 		];
 	}
@@ -265,6 +265,7 @@ class Vacancy extends ActiveRecordExtended {
 			$user->relLocation = $this->location;
 		}
 		if (true === $saved = $this->save()) {
+			$this->opened = false;
 			$transaction->commit();
 			AlertModel::SuccessNotify();
 			return $user->id;
@@ -273,5 +274,19 @@ class Vacancy extends ActiveRecordExtended {
 		$transaction->rollBack();
 		return null;
 
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getOpened():bool {
+		return null === $this->close_date;
+	}
+
+	/**
+	 * @param bool $opened
+	 */
+	public function setOpened(bool $opened):void {
+		$this->setAndSaveAttribute('close_date', $opened?null:DateHelper::lcDate());
 	}
 }
