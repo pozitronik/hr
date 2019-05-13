@@ -55,6 +55,13 @@ class VacancyNavigationMenuWidget extends BaseNavigationMenuWidget {
 			]
 		];
 
+		if ($this->model->isOpen) {
+			array_unshift($this->_navigationItems, [
+				'menu' => true,
+				'label' => IconsHelper::vacancy_green().'Заполнить вакансию',
+				'url' => VacancyModule::to(['vacancy/to-user', 'id' => $this->model->id])
+			]);
+		}
 		return parent::run();
 	}
 }
