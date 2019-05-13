@@ -103,12 +103,14 @@ class Vacancy extends ActiveRecordExtended {
 			'premium_group' => 'Группа премирования',
 			'grade' => 'Грейд',
 			'relRefUserRoles' => 'Назначение/роль',
+			'relVacancyGroupRoles' => 'Назначение/роль',
 			'teamlead' => 'Тимлид',
 			'teamleadName' => 'Тимлид',
 			'create_date' => 'Дата заведения вакансии',
 			'close_date' => 'Дата закрытия вакансии',
 			'estimated_close_date' => 'Дата ожидаемого закрытия вакансии',
 			'daddy' => 'Автор вакансии'
+
 		];
 	}
 
