@@ -32,7 +32,8 @@ class SQueue extends Model {
 	 * @param int $user_id
 	 * @return array
 	 */
-	public static function get(int $user_id):array {
+	public static function get(?int $user_id):array {
+		if (null === $user_id) return [];
 		$messages = Yii::$app->cache->get(self::$queue_identifier.$user_id);
 		if (false === $messages) return [];
 		return $messages;
