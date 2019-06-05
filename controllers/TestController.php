@@ -27,6 +27,8 @@ use app\widgets\alert\AlertModel;
 use kartik\growl\Growl;
 use yii\base\Response;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\ContentNegotiator;
 use yii\web\Controller;
 
 /**
@@ -34,6 +36,27 @@ use yii\web\Controller;
  * @package app\controllers
  */
 class TestController extends Controller {
+
+	public function behaviors():array {
+		return [
+			[
+				'class' => ContentNegotiator::class,
+				'formats' => [
+					'application/json' => \yii\web\Response::FORMAT_JSON,
+				]
+			],
+		];
+	}
+
+	public function beforeAction($action) {
+		$this->enableCsrfValidation = false;
+		return parent::beforeAction($action);
+	}
+
+	public function actionDebug() {
+//		Utils::log(Yii::$app->request->headers, 'headers');
+		return Yii::$app->request->post();
+	}
 
 	/**
 	 * @return string|Response
@@ -45,7 +68,7 @@ class TestController extends Controller {
 	}
 
 	public function actionTest() {
-		return SalaryModule::to(['salary/index','id' => 10]);
+		return SalaryModule::to(['salary/index', 'id' => 10]);
 	}
 
 	public function actionList() {
