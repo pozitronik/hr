@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\structure;
 
-
 use yii\base\Widget;
 
 /**
@@ -23,8 +22,6 @@ class StructureWidget extends Widget {
 	 */
 	public function init() {
 		parent::init();
-		StructureWidgetAssets::register($this->getView());
-		VisjsAsset::register($this->getView());
 	}
 
 	/**
@@ -34,11 +31,13 @@ class StructureWidget extends Widget {
 	public function run():string {
 		switch ($this->mode) {
 			case self::MODE_GRAPH:
+				StructureWidgetAssets::register($this->getView());
 				return $this->render('structure', [
 					'id' => $this->id
 				]);
 			break;
 			case self::MODE_TREE:
+				VisjsAsset::register($this->getView());
 				return $this->render('tree', [
 					'id' => $this->id
 				]);
