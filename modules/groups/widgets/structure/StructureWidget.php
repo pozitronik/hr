@@ -11,7 +11,11 @@ use yii\base\Widget;
  * @package app\components\structure
  */
 class StructureWidget extends Widget {
+	public const MODE_GRAPH = 0;
+	public const MODE_TREE = 1;
+
 	public $id;
+	public $mode = self::MODE_GRAPH;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -26,8 +30,18 @@ class StructureWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('structure',[
-			'id' => $this->id
-		]);
+		switch ($this->mode) {
+			case self::MODE_GRAPH:
+				return $this->render('structure', [
+					'id' => $this->id
+				]);
+			break;
+			case self::MODE_TREE:
+				return $this->render('tree', [
+					'id' => $this->id
+				]);
+			break;
+		}
+
 	}
 }

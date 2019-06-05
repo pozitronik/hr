@@ -7,6 +7,7 @@ use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
+use app\modules\groups\widgets\structure\StructureWidget;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
@@ -137,11 +138,13 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param int $id
+	 * @param int $mode
 	 * @return string
 	 */
-	public function actionTree(int $id):string {
+	public function actionTree(int $id, int $mode = StructureWidget::MODE_TREE):string {
 		return $this->render('tree', [
-			'id' => $id
+			'id' => $id,
+			'mode' => $mode
 		]);
 	}
 
