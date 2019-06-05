@@ -8,6 +8,7 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
+$this->registerJs("init_tree($id);");
 ?>
 <div id="tree-container"></div>
 
