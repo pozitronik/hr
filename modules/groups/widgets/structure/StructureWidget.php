@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\structure;
 
+
 use yii\base\Widget;
 
 /**
@@ -23,6 +24,7 @@ class StructureWidget extends Widget {
 	public function init() {
 		parent::init();
 		StructureWidgetAssets::register($this->getView());
+		VisjsAsset::register($this->getView());
 	}
 
 	/**

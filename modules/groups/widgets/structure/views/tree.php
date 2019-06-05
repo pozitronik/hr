@@ -8,9 +8,8 @@ declare(strict_types = 1);
 
 use yii\web\View;
 
-$this->registerJs("init_sigma($id);");
 ?>
-<div id="sigma-container"></div>
+<div id="tree-container"></div>
 
 <div class="panel" id="help-pane">
 	<div class="panel-body">
