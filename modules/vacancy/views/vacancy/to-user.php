@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'useBadges' => false,
 								'attribute' => 'username',
 								'unbadgedCount' => 6,
-								"itemsSeparator" => false,
+								"itemsSeparator" => false
 							])
 						],
 						[
@@ -159,7 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'useBadges' => false,
 								'attribute' => 'username',
 								'unbadgedCount' => 6,
-								"itemsSeparator" => false,
+								"itemsSeparator" => false
 							])
 						]
 					]
