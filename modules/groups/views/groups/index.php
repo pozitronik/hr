@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\helpers\Utils;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -34,9 +35,9 @@ GridView::widget([
 	'panel' => [
 		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)")
 	],
-	'summary' => Html::a('Новая группа', 'create', ['class' => 'btn btn-success summary-content']),
+	'summary' => Html::a('Новая группа', GroupsModule::to(['groups/create']), ['class' => 'btn btn-success summary-content']),
 	'showOnEmpty' => true,
-	'emptyText' => Html::a('Новая группа', 'create', ['class' => 'btn btn-success']),
+	'emptyText' => Html::a('Новая группа', GroupsModule::to(['groups/create']), ['class' => 'btn btn-success']),
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
