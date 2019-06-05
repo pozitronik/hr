@@ -13,10 +13,12 @@ class VisjsAsset extends AssetBundle {
 	public $sourcePath = '@app/modules/groups/widgets/structure/assets';
 
 	public $css = [
-		'js/vis.js/vis.css'
+		'js/vis.js/vis.css',
+		'css/structure.css'
 	];
 	public $js = [
-		'js/vis.js/vis.js'
+		'js/vis.js/vis.js',
+		'js/tree_init.js'
 //		'js/particles.js/particles.json'//config
 	];
 

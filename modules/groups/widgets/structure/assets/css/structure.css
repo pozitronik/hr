@@ -2,7 +2,7 @@
 	width: 20px;
 }
 
-#sigma-container {
+#sigma-container, #tree-container {
 	top: 0;
 	bottom: 0;
 	left: 0;
