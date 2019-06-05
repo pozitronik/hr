@@ -96,7 +96,7 @@ class UserRight extends Model implements UserRightInterface {
 	 * @param array $actionParameters Дополнительный массив параметров (обычно $_GET)
 	 * @return bool|null
 	 */
-	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {//todo: проверить, нужны ли тут $actionParameters, вероятно нужны $methodParameters
+	public function checkMethodAccess(Model $model, ?int $method = AccessMethods::any, array $actionParameters = []):?bool {
 		return self::ACCESS_UNDEFINED;
 	}
 
