@@ -90,8 +90,7 @@ xhr = function () {
 };
 
 json = function (from_url, data, callback) {
-	var graph,
-		request = xhr();
+	var request = xhr();
 
 	if (!request)
 		throw 'XMLHttpRequest not supported, cannot load the file.';
@@ -99,25 +98,25 @@ json = function (from_url, data, callback) {
 	request.open('GET', from_url, true);
 	request.onreadystatechange = function () {
 		if (request.readyState === 4) {
-			graph = JSON.parse(request.responseText);
+			data = JSON.parse(request.responseText);
 
-			// Update the instance's graph:
-			//todo
 
 			// Call the callback if specified:
 			if (callback)
-				callback(data || graph);
+				callback(data);
 		}
 	};
 	request.send();
 };
 
 init_tree = function (id) {
-	var data = {},
-		options = {},
-		container = _.$('tree-container');
-	json('/groups/ajax/groups-tree?id=' + id, data);
-	var network = new vis.Network(container, data, options);
+	var data = {};
+
+
+	json('/groups/ajax/groups-tree?id=' + id, data, function (tree_data) {
+		var network = new vis.Network(_.$('tree-container'), tree_data, {});
+	});
+
 
 }
 
