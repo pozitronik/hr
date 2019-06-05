@@ -57,6 +57,8 @@ trait Graph {
 			'id' => "{$this->id}x{$to->id}",
 			'source' => (string)$this->id,
 			'target' => (string)$to->id,
+			'from' => (string)$this->id,
+			'to' => (string)$to->id,
 			'type' => 'curvedArrow',
 			'label' => $to->leader->username,
 			'size' => '5',
