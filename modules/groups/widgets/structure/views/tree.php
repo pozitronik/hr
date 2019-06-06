@@ -10,7 +10,9 @@ use yii\web\View;
 
 $this->registerJs("init_tree($id);");
 ?>
-<div id="controls-block">
+
+<div class="panel" id="controls-block">
+
 
 </div>
 <div id="tree-container"></div>

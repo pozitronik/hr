@@ -5,18 +5,26 @@
 #sigma-container, #tree-container {
 	top: 0;
 	bottom: 0;
-	left: 200px;
+	left: 520px;
 	right: 0;
 	position: fixed;
+
 }
 
 #controls-block {
-	width: 200px;
-	height: 100%;
-	float:left;
+	/*width: 200px;*/
+	/*height: 100%;*/
+	float: left;
 	top: 0;
 	left: 0;
-	position: fixed;
+	position: relative;
+	z-index: 100;
+	/*background-color: rgb(249, 247, 237);*/
+}
+
+div.vis-configuration-wrapper {
+	width:520px!important;
+	background: transparent!important;
 }
 
 #control-pane {
@@ -26,8 +34,9 @@
 	position: fixed;
 	width: 230px;
 	background-color: rgb(249, 247, 237);
-	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
 #control-pane.min {
 	height: 40px;
 	width: 60px;
@@ -43,8 +52,8 @@
 
 
 /*#control-pane > div {*/
-	/*margin: 10px;*/
-	/*overflow-x: auto;*/
+/*margin: 10px;*/
+/*overflow-x: auto;*/
 /*}*/
 
 
@@ -54,7 +63,7 @@
 }
 
 #control-pane select {
-	width:100%;
+	width: 100%;
 	margin-bottom: 5px;
 }
 
@@ -74,7 +83,7 @@
 	background: transparent;
 	border: 0;
 	box-shadow: none;
-	float:left;
+	float: left;
 }
 
 #search-pane {
@@ -83,7 +92,7 @@
 	left: 250px;
 	position: fixed;
 	background-color: rgb(249, 247, 237);
-	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #search-pane.min {
@@ -91,6 +100,6 @@
 	width: 40px;
 }
 
-#search-pane.min  input {
+#search-pane.min input {
 	display: none;
 }

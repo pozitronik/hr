@@ -25,6 +25,7 @@ init_tree = function (id) {
 				enabled: false
 			},
 			configure: {
+				container: _.$('controls-block'),
 				enabled: true,
 				filter: function (option, path) {
 					if (path.indexOf('hierarchical') !== -1) {
