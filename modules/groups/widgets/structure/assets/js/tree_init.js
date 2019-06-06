@@ -43,5 +43,6 @@ init_tree = function (id) {
 		_.toggle('#controls-block', 'min');
 		_.toggle('#tree-container', 'max');
 	};
+	_.show('#toggle-controls');
 }
 

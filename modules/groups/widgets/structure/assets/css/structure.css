@@ -40,6 +40,7 @@ div.vis-configuration-wrapper {
 	z-index: 1000;
 	left: 0;
 	top: 40px;
+	display: block;
 }
 
 #control-pane {
