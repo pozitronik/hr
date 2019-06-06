@@ -4,6 +4,7 @@ init_tree = function (id) {
 	var data = {};
 	json('/groups/ajax/groups-tree?id=' + id, data, function (tree_data) {
 		var network = new vis.Network(_.$('tree-container'), tree_data, {
+			locale: 'ru',
 			layout: {
 				randomSeed: undefined,
 				improvedLayout: true,
