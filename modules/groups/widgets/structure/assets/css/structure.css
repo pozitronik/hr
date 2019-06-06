@@ -11,6 +11,10 @@
 
 }
 
+#tree-container.max {
+	left:0px;
+}
+
 #controls-block {
 	/*width: 200px;*/
 	/*height: 100%;*/
@@ -21,10 +25,21 @@
 	z-index: 100;
 	/*background-color: rgb(249, 247, 237);*/
 }
+#controls-block.min {
+	display: none;
+}
 
 div.vis-configuration-wrapper {
-	width:520px!important;
-	background: transparent!important;
+	width: 520px !important;
+	background: transparent !important;
+}
+
+
+#toggle-controls {
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 40px;
 }
 
 #control-pane {

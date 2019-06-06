@@ -12,9 +12,6 @@ $this->registerJs("init_tree($id);");
 ?>
 
 <div class="panel" id="controls-block">
-
-
 </div>
 <div id="tree-container"></div>
-
-
+<button id="toggle-controls">Настройки</button>

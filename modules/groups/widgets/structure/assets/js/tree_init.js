@@ -39,6 +39,9 @@ init_tree = function (id) {
 		});
 	});
 
-
+	_.$('toggle-controls').onclick = function click() {
+		_.toggle('#controls-block', 'min');
+		_.toggle('#tree-container', 'max');
+	};
 }
 
