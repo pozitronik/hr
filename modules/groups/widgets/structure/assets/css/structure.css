@@ -5,8 +5,17 @@
 #sigma-container, #tree-container {
 	top: 0;
 	bottom: 0;
-	left: 0;
+	left: 200px;
 	right: 0;
+	position: fixed;
+}
+
+#controls-block {
+	width: 200px;
+	height: 100%;
+	float:left;
+	top: 0;
+	left: 0;
 	position: fixed;
 }
 

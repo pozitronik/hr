@@ -26,12 +26,10 @@ trait Graph {
 		$red = random_int(10, 255);
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
-//		$size = (count($this->relUsers) + count($this->relChildGroups));
-//		$size = 50/($y+1);
-		$size = 25;
+		$size = 50/($y+1);
 		return [
 			'id' => (string)$this->id,
-			'label' => $this->name,
+			'label' => "{$this->name}",
 			'x' => $x,
 			'y' => $y,
 			'size' => (string)$size,//придумать характеристику веса группы,
@@ -40,11 +38,6 @@ trait Graph {
 			'shape' => 'image',
 			'image' => $this->logo,
 			'widthConstraint' => true,
-//			'image' => [
-//				'url' => $this->logo,
-//				'clip' => '0.95',
-//				'scale' => '1.4'
-//			]
 		];
 	}
 
@@ -65,6 +58,7 @@ trait Graph {
 			'type' => 'curvedArrow',
 			'label' => $to->leader->username,
 			'size' => '5',
+			'arrowStrikethrough' => false,
 			'color' => RelGroupsGroups::getRelationColor($this->id, $to->id)
 		];
 	}
@@ -151,7 +145,8 @@ trait Graph {
 	 * @param array $nodes
 	 * @param array $positions
 	 */
-	public function applyNodesPositions(array &$nodes, array $positions = []):void {
+	public
+	function applyNodesPositions(array &$nodes, array $positions = []):void {
 		foreach ($positions as $nodeId => $position) {
 			if (false !== ($key = array_search($nodeId, array_column($nodes, 'id')))) {
 				/** @var integer $key */

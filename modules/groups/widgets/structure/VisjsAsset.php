@@ -17,9 +17,14 @@ class VisjsAsset extends AssetBundle {
 		'css/structure.css'
 	];
 	public $js = [
+		'js/common.js',
 		'js/vis.js/vis.js',
 		'js/tree_init.js'
 //		'js/particles.js/particles.json'//config
+	];
+
+	public $publishOptions = [
+		'forceCopy'=>true,
 	];
 
 }
