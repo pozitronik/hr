@@ -92,12 +92,12 @@ class AjaxController extends BaseAjaxController {
 			$currentNodesPositions = $user->options->nodePositions;
 
 			/** @var array $nodes */
-			foreach ($nodes as $node) {
+			foreach ($nodes as $nodeId => $node) {
 				$nodeData = new PrototypeNodeData([
 					'groupId' => $groupId
 				]);
 				if ($nodeData->load($node, '')) {
-
+					$nodeData->nodeId = $nodeId;
 
 					$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, [
 						$nodeData->groupId => [
