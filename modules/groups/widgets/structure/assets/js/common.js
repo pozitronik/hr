@@ -2,15 +2,15 @@
  * DOM utility functions
  */
 var _ = {
-	$: function (id) {
+	$: function(id) {
 		return document.getElementById(id);
 	},
 
-	all: function (selectors) {
+	all: function(selectors) {
 		return document.querySelectorAll(selectors);
 	},
 
-	removeClass: function (selectors, cssClass) {
+	removeClass: function(selectors, cssClass) {
 		var nodes = document.querySelectorAll(selectors);
 		var l = nodes.length;
 		for (i = 0; i < l; i++) {
@@ -20,7 +20,7 @@ var _ = {
 		}
 	},
 
-	addClass: function (selectors, cssClass) {
+	addClass: function(selectors, cssClass) {
 		var nodes = document.querySelectorAll(selectors);
 		var l = nodes.length;
 		for (i = 0; i < l; i++) {
@@ -32,15 +32,15 @@ var _ = {
 		}
 	},
 
-	show: function (selectors) {
+	show: function(selectors) {
 		this.removeClass(selectors, 'hidden');
 	},
 
-	hide: function (selectors) {
+	hide: function(selectors) {
 		this.addClass(selectors, 'hidden');
 	},
 
-	toggle: function (selectors, cssClass) {
+	toggle: function(selectors, cssClass) {
 		var cssClass = cssClass || "hidden";
 		var nodes = document.querySelectorAll(selectors);
 		var l = nodes.length;
@@ -56,7 +56,7 @@ var _ = {
 		}
 	},
 
-	get: function (name) {
+	get: function(name) {
 		var url = new URL(window.location);
 		return url.searchParams.get(name)
 	},
@@ -64,7 +64,7 @@ var _ = {
 
 };
 
-ajax = function () {
+ajax = function() {
 	if (window.XMLHttpRequest)
 		return new XMLHttpRequest();
 
@@ -89,27 +89,33 @@ ajax = function () {
 	return null;
 };
 
-json = function (from_url, data, callback) {
-	var request = ajax();
-
-	if (!request)
-		throw 'XMLHttpRequest not supported, cannot load the file.';
-
-	request.open('GET', from_url, true);
-	request.onreadystatechange = function () {
-		if (request.readyState === 4) {
-			data = JSON.parse(request.responseText);
-			// Call the callback if specified:
-			if (callback)
-				callback(data);
+getJSON = function(url) {
+	return new Promise(function(resolve, reject) {
+		var request = ajax();
+		if (!request) {
+			var error = new Error('XMLHttpRequest not supported, cannot load the file.');
+			reject(error);
 		}
-	};
-	request.send();
+		request.open('GET', url, true);
+		request.onreadystatechange = function() {
+			if (request.readyState === 4) {
+				resolve(JSON.parse(request.responseText));
+			}
+		};
+		request.onerror = function() {
+			reject(new Error("Network Error"));
+		};
+
+		request.send();
+	});
+
+
 };
+
 
 /*Добавляем метод к массивам*/
 Object.defineProperty(Array.prototype, 'pushOrReplace', {
-	value: function (item) {
+	value: function(item) {
 		var indexOfItem
 		if (-1 === (indexOfItem = this.indexOf(item))) {
 			this.push(item);
