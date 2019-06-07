@@ -21,6 +21,7 @@ class BaseAjaxController extends CoreController {
 
 	public function init():void {
 		parent::init();
+		$this->enableCsrfValidation = false;
 		$this->_answer = new AjaxAnswer();
 	}
 
