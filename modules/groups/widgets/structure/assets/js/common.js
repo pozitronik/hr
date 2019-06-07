@@ -93,7 +93,7 @@ getJSON = function(url) {
 	return new Promise(function(resolve, reject) {
 		var request = ajax();
 		if (!request) {
-			var error = new Error('XMLHttpRequest not supported, cannot load the file.');
+			var error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
 		request.open('GET', url, true);
@@ -108,10 +108,33 @@ getJSON = function(url) {
 
 		request.send();
 	});
-
-
 };
 
+postJSON = function(url, json) {
+
+}
+
+postUrlEncoded = function(url, postString) {
+	return new Promise(function(resolve, reject) {
+		var request = ajax();
+		if (!request) {
+			var error = new Error('XMLHttpRequest not supported');
+			reject(error);
+		}
+		request.open('POST', url, true);
+		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.onreadystatechange = function() {
+			if (request.readyState === 4) {
+				resolve(JSON.parse(request.responseText));
+			}
+		};
+		request.onerror = function() {
+			reject(new Error("Network Error"));
+		};
+
+		request.send(postString);
+	});
+}
 
 /*Добавляем метод к массивам*/
 Object.defineProperty(Array.prototype, 'pushOrReplace', {
