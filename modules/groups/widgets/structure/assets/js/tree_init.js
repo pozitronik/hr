@@ -1,6 +1,8 @@
 const positionNone = 0, //не позиционировать ноды на сервере
 	positionRound = 1;// позиционировать в круговую диаграмму
 
+var network = new vis.Network(_.$('tree-container'));
+
 /**
  * Загружает набор нод для группы
  * @param int groupId
@@ -25,7 +27,7 @@ function load_graph_options(configName = 'default') {/*todo*/
 			improvedLayout: true,
 			hierarchical: {
 				direction: "UD",
-				enabled: true,
+				enabled: false,
 				levelSeparation: 200,
 				nodeSpacing: 200,
 				treeSpacing: 200,
@@ -64,10 +66,19 @@ function load_nodes_positions(configName = 'default') {
 
 /**
  * Сохраняет набор нод в конфиг
- * @param array nodes
+ * @param int|null groupId
+ * @param array|null nodes
  * @param string configName
  */
-function save_nodes_positions(nodes, configName = 'default') {
+function save_nodes_positions(groupId = null, nodes = null, configName = 'default') {
+	if (null === groupId) groupId = _.get('id');
+	if (null === nodes) nodes = network.getPositions();
+	var request_body = 'groupId=' + encodeURIComponent(groupId) +
+		'&nodes=' + encodeURIComponent(JSON.stringify(nodes));
+	postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', request_body).then(
+		response => console.log('nodes positions saved'),
+		error => console.log(error)
+	)
 
 }
 
@@ -81,15 +92,16 @@ function save_node_position(node, configName = 'default') {
 }
 
 init_tree = function(groupId) {
-	var nodes,
-		options = load_graph_options();
-
-
 	getJSON('/groups/ajax/groups-tree?id=' + groupId).then(
-		response => network = new vis.Network(_.$('tree-container'), response, options),
+		response => network.setData(response),
 		error => console.log(error)
 	)
 
+	network.setOptions(load_graph_options());
+
+	network.addEventListener("dragEnd", function() {
+		save_nodes_positions();
+	});
 
 	_.$('toggle-controls').onclick = function click() {
 		_.toggle('#controls-block', 'min');
