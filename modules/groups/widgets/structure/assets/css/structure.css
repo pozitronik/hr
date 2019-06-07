@@ -16,15 +16,13 @@
 }
 
 #controls-block {
-	/*width: 200px;*/
-	/*height: 100%;*/
 	float: left;
 	top: 0;
 	left: 0;
 	position: relative;
 	z-index: 100;
-	/*background-color: rgb(249, 247, 237);*/
 }
+
 #controls-block.min {
 	display: none;
 }
