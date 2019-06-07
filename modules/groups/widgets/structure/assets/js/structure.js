@@ -1,17 +1,3 @@
-/*Добавляем метод к массивам*/
-Object.defineProperty(Array.prototype, 'pushOrReplace', {
-	value: function (item) {
-		var indexOfItem
-		if (-1 === (indexOfItem = this.indexOf(item))) {
-			this.push(item);
-		} else {
-			this[indexOfItem] = item;
-		}
-	},
-	enumerable: false,
-	configurable: false,
-	writable: false
-});
 
 
 function updatePane(graph, filter) {
