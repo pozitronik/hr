@@ -44,27 +44,14 @@ class NodesPositionsConfig extends Model {
 	}
 
 	/**
-	 * Загружаем конфигурацию из массива в модель
-	 * @param array $configArray
-	 * @return NodesPositionsConfig
-	 * @throws Throwable
-	 */
-	public function fromArray(array $configArray):self {
-		$this->name = ArrayHelper::getValue($configArray, 'name', new ConnectionException('Undefined config name'));
-		$this->groupId = ArrayHelper::getValue($configArray, 'groupId', new ConnectionException('Undefined group ID'));
-		$this->loadNodes(ArrayHelper::getValue($configArray, 'nodes', []));
-		return $this;
-	}
-
-	/**
 	 * Выгружаем в виде массива для хранения в опциях
 	 * @return array
 	 */
 	public function asArray():array {
 		return [
-			'name' => $this->name,
-			'groupId' => $this->groupId,
-			'nodes' => $this->nodes
+			$this->groupId => [
+				$this->name => $this->nodes
+			]
 		];
 	}
 }
