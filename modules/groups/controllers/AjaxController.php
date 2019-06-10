@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\controllers;
 
+use app\models\prototypes\NodesPositionsConfig;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\prototypes\PrototypeNodeData;
@@ -87,32 +88,24 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGroupsTreeSaveNodesPositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');//это должно разруливаться в behaviors()
-		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false)))) {
+		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('groupId', false))) && ($configName = Yii::$app->request->post('name', false))) {
 			$nodes = json_decode($nodes, true);
-			$currentNodesPositions = $user->options->nodePositions;
+			$currentNodesPositions = $user->options->nodePositionsConfig;
 
-			/** @var array $nodes */
-			foreach ($nodes as $nodeId => $node) {
-				$nodeData = new PrototypeNodeData([
-					'groupId' => $groupId
-				]);
-				if ($nodeData->load($node, '')) {
-					$nodeData->nodeId = $nodeId;
+			$currentPositionsConfig = new NodesPositionsConfig([
+				'name' => $configName,
+				'groupId' => $groupId,
+			]);
 
-					$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, [
-						$nodeData->groupId => [
-							$nodeData->nodeId => [
-								'x' => $nodeData->x,
-								'y' => $nodeData->y
-							]
-						]
-					]);
+			$currentPositionsConfig->loadNodes($nodes);
 
-				} else {
-					return $this->answer->addErrors($nodeData->errors);
-				}
+			if ($currentPositionsConfig->hasErrors()) {
+				return $this->answer->addErrors($currentPositionsConfig->errors);
 			}
-			$user->options->nodePositions = $currentNodesPositions;
+
+			$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, $currentPositionsConfig->asArray());
+
+			$user->options->nodePositionsConfig = $currentNodesPositions;
 			return $this->answer->answer;
 		}
 		return $this->answer->addError('nodes', 'Can\'t load data');
