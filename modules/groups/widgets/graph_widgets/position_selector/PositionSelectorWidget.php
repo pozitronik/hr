@@ -11,7 +11,7 @@ use yii\base\Widget;
  */
 class PositionSelectorWidget extends Widget {
 	public $positionConfigurations = [];
-	public $currentConfiguration = 0;
+	public $currentConfiguration = 'default';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

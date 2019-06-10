@@ -4,6 +4,8 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var integer $id
+ * @var string $currentConfiguration
+ * @var array $positionConfigurations
  */
 
 use app\modules\groups\widgets\graph_widgets\position_selector\PositionSelectorWidget;
@@ -14,7 +16,11 @@ $this->registerJs("init_tree($id);");
 
 <div class="panel" id="controls-block">
 	<div class="panel-body">
-		<?= PositionSelectorWidget::widget() ?>
+		<?= PositionSelectorWidget::widget([
+			'currentConfiguration' => $currentConfiguration,
+			'positionConfigurations' => $positionConfigurations
+
+		]) ?>
 	</div>
 </div>
 <div id="tree-container"></div>
