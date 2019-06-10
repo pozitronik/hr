@@ -8,14 +8,11 @@ use yii\base\Model;
 /**
  * Class PrototypeNodeData
  *
- * @property integer $groupId
  * @property integer $nodeId
  * @property integer $x
  * @property integer $y
  */
 class PrototypeNodeData extends Model {
-
-	public $groupId;
 	public $nodeId;
 	public $x;
 	public $y;
@@ -25,10 +22,9 @@ class PrototypeNodeData extends Model {
 	 */
 	public function rules():array {
 		return [
-			[['groupId', 'nodeId', 'userId'], 'integer'],
+			[['nodeId'], 'integer'],
 			[['x', 'y'], 'number'],
-			[['groupId', 'nodeId', 'x', 'y'], 'required']
+			[['nodeId', 'x', 'y'], 'required']
 		];
-
 	}
 }
