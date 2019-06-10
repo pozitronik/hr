@@ -7,7 +7,6 @@ use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
-use app\modules\groups\widgets\structure\StructureWidget;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
