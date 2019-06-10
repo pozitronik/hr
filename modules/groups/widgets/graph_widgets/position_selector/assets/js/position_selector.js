@@ -21,6 +21,7 @@ $('select[name=positions]').on('change', function() {
 	if (!isEmpty(configName)) {
 		load_nodes_positions(null, configName);
 	}
+	display_deletion_item();
 });
 /**
  * Удаляем конфигурацию
@@ -30,4 +31,18 @@ $('.js-remove-position-config').on('click', function() {
 	if (!isEmpty(configName)) {
 		load_nodes_positions(null, configName);
 	}
+});
+
+display_deletion_item = function() {
+	if (!isEmpty($('select[name=positions]').val())) {
+		_.show('.js-remove-position-config');
+	} else {
+		_.hide('.js-remove-position-config');
+	}
+
+}
+
+$(function() {
+	display_deletion_item();
+
 });
