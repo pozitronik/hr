@@ -3,9 +3,6 @@ declare(strict_types = 1);
 
 namespace app\models\prototypes;
 
-use MongoDB\Driver\Exception\ConnectionException;
-use pozitronik\helpers\ArrayHelper;
-use Throwable;
 use yii\base\Model;
 
 /**
