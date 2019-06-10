@@ -58,10 +58,15 @@ function load_graph_options(configName = 'default') {/*todo*/
 
 /**
  * Загружает сохранённый набор координат нод по имени конфига
+ * @param int groupId
  * @param string configName
  */
-function load_nodes_positions(configName = 'default') {
-
+function load_nodes_positions(groupId = null, configName = 'default') {
+	if (null === groupId) groupId = _.get('id');
+	getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(groupId) + '&configName=' + encodeURIComponent(configName)).then(
+		response => network.setData(response),
+		error => console.log(error)
+	)
 }
 
 /**
@@ -91,10 +96,7 @@ function save_node_position(node, configName = 'default') {
 }
 
 init_tree = function(groupId) {
-	getJSON('/groups/ajax/groups-tree?id=' + groupId).then(
-		response => network.setData(response),
-		error => console.log(error)
-	)
+	load_nodes_positions(groupId)
 
 	network.setOptions(load_graph_options());
 

@@ -26,11 +26,11 @@ class AjaxController extends BaseAjaxController {
 	/**
 	 * Отдаёт JSON с деревом графа для группы $is
 	 * @param int $id -- id группы
-	 * @param string $positionConfigName -- имя конфигурации
+	 * @param string $configName -- имя конфигурации
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionGroupsTree(int $id, string $positionConfigName = 'default'):array {
+	public function actionGroupsTree(int $id, string $configName = 'default'):array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if (null === $group = Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');
@@ -41,7 +41,7 @@ class AjaxController extends BaseAjaxController {
 		$group->getGraph($nodes, $edges);
 		$group->roundGraph($nodes);
 		$groupMapConfigurations = ArrayHelper::getValue($user->options->nodePositionsConfig, $id, []);
-		if (false !== $namedConfiguration = ArrayHelper::getValue($groupMapConfigurations, $positionConfigName, false)) {
+		if (false !== $namedConfiguration = ArrayHelper::getValue($groupMapConfigurations, $configName, false)) {
 			$group->applyNodesPositions($nodes, $namedConfiguration);
 		};
 
