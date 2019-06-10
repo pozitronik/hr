@@ -29,6 +29,7 @@ class StructureWidget extends Widget {
 		StructureWidgetAssets::register($this->getView());
 		$positionConfigurations = ['default' => 'default'];
 		$groupId = Yii::$app->request->get('id');//временный код, это перелезет в контроллеры
+		/** @var array $groupMapConfigurations */
 		if (false !== $groupMapConfigurations = ArrayHelper::getValue(CurrentUser::User()->options->nodePositionsConfig, $groupId, false)) {
 			foreach ($groupMapConfigurations as $name => $nodes) {
 				$positionConfigurations[$name] = $name;
