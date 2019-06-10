@@ -18,13 +18,6 @@ class StructureWidget extends Widget {
 	public $mode = self::MODE_GRAPH;
 
 	/**
-	 * Функция инициализации и нормализации свойств виджета
-	 */
-	public function init() {
-		parent::init();
-	}
-
-	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 */
@@ -36,6 +29,7 @@ class StructureWidget extends Widget {
 					'id' => $this->id
 				]);
 			break;
+			default:
 			case self::MODE_TREE:
 				VisjsAsset::register($this->getView());
 				return $this->render('tree', [

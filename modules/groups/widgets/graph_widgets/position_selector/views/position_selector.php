@@ -26,7 +26,7 @@ use kartik\select2\Select2;
 				'allowClear' => true,
 				'multiple' => false
 			]
-		]); ?>
+		]) ?>
 	</div>
 	<div class="position-config-btn-group">
 		<?= ButtonDropdown::widget([
@@ -60,7 +60,7 @@ use kartik\select2\Select2;
 					]
 				]
 			]
-		]); ?>
+		]) ?>
 	</div>
 <?php Modal::begin([
 	'id' => 'config-dialog-modal',
@@ -68,7 +68,7 @@ use kartik\select2\Select2;
 	'footer' => Html::button('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success js-save-user-position-config'])
 ]); ?>
 	<div class='form-group'>
-		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']); ?>
+		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']) ?>
 	</div>
 <?php Modal::end(); ?>
 
@@ -78,6 +78,6 @@ use kartik\select2\Select2;
 	'footer' => Html::button('<i class="fa fa-refresh"></i> Обновить', ['class' => 'btn btn-success js-edit-user-position-config'])
 ]); ?>
 	<div class="form-group">
-		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']); ?>
+		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']) ?>
 	</div>
 <?php Modal::end(); ?>

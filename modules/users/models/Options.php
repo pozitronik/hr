@@ -55,7 +55,7 @@ class Options extends Model {
 	}
 
 	/**
-	 * @param array $nodePositions
+	 * @param array $nodePositionsConfig
 	 */
 	public function setNodePositionsConfig(array $nodePositionsConfig):void {
 		$this->set('nodePositionsConfig', $nodePositionsConfig);

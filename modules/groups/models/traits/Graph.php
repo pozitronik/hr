@@ -29,7 +29,7 @@ trait Graph {
 		$size = 50/($y+1);
 		return [
 			'id' => (string)$this->id,
-			'label' => "{$this->name}",
+			'label' => (string)$this->name,
 			'x' => $x,
 			'y' => $y,
 			'size' => (string)$size,//придумать характеристику веса группы,
@@ -37,7 +37,7 @@ trait Graph {
 			'type' => 'circle',
 			'shape' => 'image',
 			'image' => $this->logo,
-			'widthConstraint' => true,
+			'widthConstraint' => true
 		];
 	}
 

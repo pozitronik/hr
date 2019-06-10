@@ -26,7 +26,7 @@ class NodesPositionsConfig extends Model {
 	 * Загружает массив позиций нод
 	 * @param array $nodes
 	 */
-	public function loadNodes(array $nodes) {
+	public function loadNodes(array $nodes):void {
 		foreach ($nodes as $nodeId => $node) {
 			$nodeData = new PrototypeNodeData([//used fot validation only
 				'nodeId' => $nodeId

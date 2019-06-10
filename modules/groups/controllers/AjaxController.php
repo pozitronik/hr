@@ -94,7 +94,7 @@ class AjaxController extends BaseAjaxController {
 
 			$currentPositionsConfig = new NodesPositionsConfig([
 				'name' => $configName,
-				'groupId' => $groupId,
+				'groupId' => $groupId
 			]);
 
 			$currentPositionsConfig->loadNodes($nodes);

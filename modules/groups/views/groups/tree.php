@@ -20,9 +20,6 @@ $this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem(Groups::findModel(
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= StructureWidget::widget([
-	'id' => $id,
-	'mode' => $mode
-]) ?>
+<?= StructureWidget::widget(compact('id', 'mode')) ?>
 
 

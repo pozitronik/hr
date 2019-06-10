@@ -142,10 +142,7 @@ class GroupsController extends WigetableController {
 	 * @return string
 	 */
 	public function actionTree(int $id, int $mode = StructureWidget::MODE_TREE):string {
-		return $this->render('tree', [
-			'id' => $id,
-			'mode' => $mode
-		]);
+		return $this->render('tree', compact('id', 'mode'));
 	}
 
 	/**
