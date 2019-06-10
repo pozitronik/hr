@@ -25,12 +25,12 @@ class AjaxController extends BaseAjaxController {
 
 	/**
 	 * Отдаёт JSON с деревом графа для группы $is
-	 * @param int $id
-	 * @param int $restorePositions 0: use saved nodes positions, 1 - use original positions and reset saved positions, 2 - just use original
+	 * @param int $id -- id группы
+	 * @param string $positionConfigName -- имя конфигурации
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionGroupsTree(int $id, int $restorePositions = 0):array {
+	public function actionGroupsTree(int $id, string $positionConfigName = 'default'):array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if (null === $group = Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');
@@ -40,20 +40,25 @@ class AjaxController extends BaseAjaxController {
 		$edges = [];
 		$group->getGraph($nodes, $edges);
 		$group->roundGraph($nodes);
-		switch ($restorePositions) {
-			default:
-			case 0:
-				$group->applyNodesPositions($nodes, ArrayHelper::getValue($user->options->nodePositions, $id, []));
-			break;
-			case 1:
-				$newPositions = $user->options->nodePositions;
-				unset($newPositions[$id]);
-				$user->options->nodePositions = $newPositions;
-			break;
-			case 2:
-				//do nothing
-			break;
-		}
+		$groupMapConfigurations = ArrayHelper::getValue($user->options->nodePositionsConfig, $id, []);
+		if (false !== $namedConfiguration = ArrayHelper::getValue($groupMapConfigurations, $positionConfigName, false)) {
+			$group->applyNodesPositions($nodes, $namedConfiguration);
+		};
+
+//		switch ($restorePositions) {
+//			default:
+//			case 0:
+//				$group->applyNodesPositions($nodes, ArrayHelper::getValue($user->options->nodePositionsConfig, $id, []));
+//			break;
+//			case 1:
+//				$newPositions = $user->options->nodePositionsConfig;
+//				unset($newPositions[$id]);
+//				$user->options->nodePositionsConfig = $newPositions;
+//			break;
+//			case 2:
+//				//do nothing
+//			break;
+//		}
 		/*sigma.js требует выдачи данных в таком формате, пожтому answer не используем*/
 		return compact('nodes', 'edges');
 	}
