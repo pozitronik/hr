@@ -65,7 +65,7 @@ use kartik\select2\Select2;
 <?php Modal::begin([
 	'id' => 'config-dialog-modal',
 	'header' => '<h4 class="modal-title">Введите название карты:</h4>',
-	'footer' => Html::button('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success js-save-user-position-config'])
+	'footer' => Html::button('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success js-save-position-config'])
 ]); ?>
 	<div class='form-group'>
 		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']) ?>
@@ -75,7 +75,7 @@ use kartik\select2\Select2;
 <?php Modal::begin([
 	'id' => 'edit_position-configs_modal',
 	'header' => '<h4 class="modal-title">Ввведите название карты:</h4>',
-	'footer' => Html::button('<i class="fa fa-refresh"></i> Обновить', ['class' => 'btn btn-success js-edit-user-position-config'])
+	'footer' => Html::button('<i class="fa fa-refresh"></i> Обновить', ['class' => 'btn btn-success js-edit-position-config'])
 ]); ?>
 	<div class="form-group">
 		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']) ?>
