@@ -7,6 +7,9 @@ $('.js-save-position-config').on('click', function() {
 		$.notify('Не заполнено имя карты', {type: "warning"});
 	} else {
 		save_nodes_positions(configName);
+		$('select[name=positions]').append(new Option(configName, configName, false, true)).trigger('change');
+		$("#config-dialog-modal").modal("hide");
+
 	}
 });
 
