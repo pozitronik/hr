@@ -15,7 +15,7 @@ use yii\base\Model;
  * @package app\models\users
  *
  * @property integer $userId
- * @property array $nodePositions
+ * @property array $nodePositionsConfig
  * @property Bookmarks[] $bookmarks
  *
  */
@@ -43,22 +43,22 @@ class Options extends Model {
 	public function rules():array {
 		return [
 			['user_id', 'required'],
-			['nodePositions', 'safe']
+			['nodePositionsConfig', 'safe']
 		];
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getNodePositions():array {
-		return $this->get('nodePositions');
+	public function getNodePositionsConfig():array {
+		return $this->get('nodePositionsConfig');
 	}
 
 	/**
 	 * @param array $nodePositions
 	 */
-	public function setNodePositions(array $nodePositions):void {
-		$this->set('nodePositions', $nodePositions);
+	public function setNodePositionsConfig(array $nodePositionsConfig):void {
+		$this->set('nodePositionsConfig', $nodePositionsConfig);
 	}
 
 	/**
