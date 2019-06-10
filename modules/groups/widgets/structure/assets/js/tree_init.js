@@ -66,11 +66,11 @@ function load_nodes_positions(configName = 'default') {
 
 /**
  * Сохраняет набор нод в конфиг
+ * @param string configName
  * @param int|null groupId
  * @param array|null nodes
- * @param string configName
  */
-function save_nodes_positions(groupId = null, nodes = null, configName = 'default') {
+function save_nodes_positions(configName = 'default', groupId = null, nodes = null) {
 	if (null === groupId) groupId = _.get('id');
 	if (null === nodes) nodes = network.getPositions();
 	var request_body = 'groupId=' + encodeURIComponent(groupId) +
@@ -98,9 +98,9 @@ init_tree = function(groupId) {
 
 	network.setOptions(load_graph_options());
 
-	network.addEventListener("dragEnd", function() {
-		save_nodes_positions();
-	});
+	// network.addEventListener("dragEnd", function() {
+	// 	save_nodes_positions();
+	// });
 
 	_.$('toggle-controls').onclick = function click() {
 		_.toggle('#controls-block', 'min');

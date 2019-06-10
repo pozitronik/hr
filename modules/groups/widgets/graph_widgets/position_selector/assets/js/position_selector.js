@@ -6,6 +6,6 @@ $('.js-save-user-position-config').on('click', function () {
 	if (isEmpty(configName)) {
 		$.notify('Не заполнено имя карты', {type: "warning"});
 	} else {
-		save_nodes_positions(null, null, configName);
+		save_nodes_positions(configName);
 	}
 });
