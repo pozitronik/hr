@@ -44,7 +44,7 @@ function load_graph_options(configName = 'default') {/*todo*/
 		},
 		configure: {
 			container: _.$('controls-block'),
-			enabled: true,
+			enabled: false,
 			filter: function(option, path) {
 				if (path.indexOf('hierarchical') !== -1) {
 					return true;
@@ -74,12 +74,11 @@ function save_nodes_positions(groupId = null, nodes = null, configName = 'defaul
 	if (null === groupId) groupId = _.get('id');
 	if (null === nodes) nodes = network.getPositions();
 	var request_body = 'groupId=' + encodeURIComponent(groupId) +
-		'&nodes=' + encodeURIComponent(JSON.stringify(nodes));
+		'&nodes=' + encodeURIComponent(JSON.stringify(nodes)) + '&name=' + encodeURIComponent(configName);
 	postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', request_body).then(
 		response => console.log('nodes positions saved'),
 		error => console.log(error)
 	)
-
 }
 
 /**
