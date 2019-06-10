@@ -64,6 +64,31 @@ var _ = {
 
 };
 
+/**
+ * Проверка на пустоту
+ * @param value
+ * @returns {boolean|*}
+ */
+function isEmpty (value) {
+	return value === null || value === undefined || ($.isArray(value) && value.length === 0) || value === '';
+}
+/**
+ * Проверка на число
+ * @param n
+ * @returns {boolean}
+ */
+function isNumeric (n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+/**
+ * Проверка что элмент отмечен
+ * @param element
+ * @returns {*|jQuery}
+ */
+function isChecked (element) {
+	return element.prop("checked");
+}
+
 ajax = function() {
 	if (window.XMLHttpRequest)
 		return new XMLHttpRequest();
