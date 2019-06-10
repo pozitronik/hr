@@ -4,7 +4,6 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var integer $id
- * @var integer $mode
  */
 
 use app\modules\groups\GroupsModule;
@@ -20,6 +19,6 @@ $this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem(Groups::findModel(
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= StructureWidget::widget(compact('id', 'mode')) ?>
+<?= StructureWidget::widget(compact('id')) ?>
 
 

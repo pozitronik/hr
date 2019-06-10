@@ -24,7 +24,7 @@ class StructureWidget extends Widget {
 	 */
 	public function run():string {
 		StructureWidgetAssets::register($this->getView());
-		return $this->render('structure', [
+		return $this->render('tree', [
 			'id' => $this->id
 		]);
 
