@@ -10,6 +10,8 @@ use yii\base\Widget;
  * @package app\widgets\position_selector
  */
 class PositionSelectorWidget extends Widget {
+	public $positionConfigurations = [];
+	public $currentConfiguration = 0;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -24,6 +26,9 @@ class PositionSelectorWidget extends Widget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('position_selector');
+		return $this->render('position_selector', [
+			'positionConfigurations' => $this->positionConfigurations,
+			'currentConfiguration' => $this->currentConfiguration
+		]);
 	}
 }

@@ -21,4 +21,8 @@ class PositionSelectorWidgetAssets extends AssetBundle {
 	public $depends = [
 		AppAsset::class
 	];
+
+	public $publishOptions = [
+		'forceCopy' => true
+	];
 }
