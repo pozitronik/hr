@@ -29,7 +29,7 @@ $('select[name=positions]').on('change', function() {
 $('.js-remove-position-config').on('click', function() {
 	var configName = $(this).val();
 	if (!isEmpty(configName)) {
-		load_nodes_positions(null, configName);
+		delete_nodes_positions(configName);
 	}
 });
 

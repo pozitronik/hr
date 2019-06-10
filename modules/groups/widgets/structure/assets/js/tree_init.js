@@ -61,7 +61,7 @@ function load_graph_options(configName = 'default') {/*todo*/
  * @param int groupId
  * @param string configName
  */
-function load_nodes_positions(groupId = null, configName = 'default') {
+function load_nodes_positions(groupId = null, configName = 'default') {//todo согласовать порядок параметров
 	if (null === groupId) groupId = _.get('id');
 	getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(groupId) + '&configName=' + encodeURIComponent(configName)).then(
 		response => network.setData(response),
@@ -84,6 +84,16 @@ function save_nodes_positions(configName = 'default', groupId = null, nodes = nu
 		response => console.log('nodes positions saved'),
 		error => console.log(error)
 	)
+}
+
+/**
+ * Убирает конфиг с заданным именем
+ * @param string configName
+ * @param int|null groupId
+ */
+function delete_nodes_positions(configName = 'default', groupId = null){
+	if (null === groupId) groupId = _.get('id');
+	//todo
 }
 
 /**
