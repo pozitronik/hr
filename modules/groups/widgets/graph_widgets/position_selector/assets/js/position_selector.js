@@ -31,14 +31,3 @@ $('.js-remove-position-config').on('click', function() {
 		load_nodes_positions(null, configName);
 	}
 });
-/**
- * Редактируем конфигурацию
- */
-$('.js-edit-position-config').on('click', function() {
-
-});
-$('.js-edit-filter').on('click', function() {
-	var filterModal = $('#edit_filters_modal');
-	filterModal.modal('show');
-	filterModal.find("input[name=filterName]").val($("select[name=filters_list] option:selected").text());
-});

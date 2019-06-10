@@ -51,13 +51,6 @@ use kartik\select2\Select2;
 						],
 						'url' => '#'
 					],
-					[
-						'label' => 'Изменить карту',
-						'options' => [
-							'class' => 'cursor-pointer js-edit-position-config hidden'
-						],
-						'url' => '#'
-					]
 				]
 			]
 		]) ?>
