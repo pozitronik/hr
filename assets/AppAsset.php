@@ -8,6 +8,7 @@ declare(strict_types = 1);
 
 namespace app\assets;
 
+use kartik\growl\GrowlAsset;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
 use yii\bootstrap\BootstrapPluginAsset;
@@ -31,6 +32,7 @@ class AppAsset extends AssetBundle {
 	public $depends = [
 		YiiAsset::class,
 		BootstrapPluginAsset::class,
-		FontAwesomeProAsset::class
+		FontAwesomeProAsset::class,
+		GrowlAsset::class//preload notifier
 	];
 }
