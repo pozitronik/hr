@@ -43,7 +43,7 @@ class AjaxController extends BaseAjaxController {
 		$groupMapConfigurations = ArrayHelper::getValue($user->options->nodePositionsConfig, $id, []);
 		if (false !== $namedConfiguration = ArrayHelper::getValue($groupMapConfigurations, $configName, false)) {
 			$group->applyNodesPositions($nodes, $namedConfiguration);
-		};
+		}
 
 //		switch ($restorePositions) {
 //			default:

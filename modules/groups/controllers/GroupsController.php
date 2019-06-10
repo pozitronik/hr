@@ -137,7 +137,6 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param int $id
-	 * @param int $mode
 	 * @return string
 	 */
 	public function actionTree(int $id):string {

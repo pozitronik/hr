@@ -16,11 +16,7 @@ $this->registerJs("init_tree($id);");
 
 <div class="panel" id="controls-block">
 	<div class="panel-body">
-		<?= PositionSelectorWidget::widget([
-			'currentConfiguration' => $currentConfiguration,
-			'positionConfigurations' => $positionConfigurations
-
-		]) ?>
+		<?= PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')) ?>
 	</div>
 </div>
 <div id="tree-container"></div>

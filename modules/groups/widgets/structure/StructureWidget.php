@@ -5,6 +5,7 @@ namespace app\modules\groups\widgets\structure;
 
 use app\models\user\CurrentUser;
 use pozitronik\helpers\ArrayHelper;
+use Throwable;
 use Yii;
 use yii\base\Widget;
 
@@ -24,6 +25,7 @@ class StructureWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		StructureWidgetAssets::register($this->getView());
