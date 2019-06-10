@@ -70,20 +70,7 @@ class AjaxController extends BaseAjaxController {
 	 * @throws Throwable
 	 */
 	public function actionGroupsTreeSaveNodePosition():array {
-		$nodeData = new PrototypeNodeData();
-		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
-		if ($nodeData->load(Yii::$app->request->post(), '')) {
-			$user->options->nodePositions = ArrayHelper::merge_recursive($user->options->nodePositions, [
-				$nodeData->groupId => [
-					$nodeData->nodeId => [
-						'x' => $nodeData->x,
-						'y' => $nodeData->y
-					]
-				]
-			]);
-			return $this->answer->answer;
-		}
-		return $this->answer->addErrors($nodeData->errors);
+		//todo
 	}
 
 	/**
