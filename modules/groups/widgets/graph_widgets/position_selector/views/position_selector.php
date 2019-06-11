@@ -25,34 +25,39 @@ use kartik\select2\Select2;
 	'pluginOptions' => [
 		'allowClear' => true,
 		'multiple' => false
-	]
-]) ?>
-
-<?= ButtonDropdown::widget([
-	'label' => false,
-	'options' => [
-		'class' => 'btn-info fa fa-menu'
 	],
-	'dropdown' => [
-		'items' => [
-			[
-				'label' => 'Сохранить карту',
+	'addon' => [
+		'prepend' => [
+			'content' => ButtonDropdown::widget([
+				'label' => false,
 				'options' => [
-					'onclick' => '$("#config-dialog-modal").modal("show");',
-					'class' => 'cursor-pointer'
+					'class' => 'btn-info fa fa-menu'
 				],
-				'url' => '#'
-			],
-			[
-				'label' => 'Удалить карту',
-				'options' => [
-					'class' => 'cursor-pointer js-remove-position-config hidden'
-				],
-				'url' => '#'
-			]
+				'dropdown' => [
+					'items' => [
+						[
+							'label' => 'Сохранить карту',
+							'options' => [
+								'onclick' => '$("#config-dialog-modal").modal("show");',
+								'class' => 'cursor-pointer'
+							],
+							'url' => '#'
+						],
+						[
+							'label' => 'Удалить карту',
+							'options' => [
+								'class' => 'cursor-pointer js-remove-position-config hidden'
+							],
+							'url' => '#'
+						]
+					]
+				]
+			]),
+			'asButton' => false
 		]
 	]
 ]) ?>
+
 
 <?php Modal::begin([
 	'id' => 'config-dialog-modal',
