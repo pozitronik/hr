@@ -110,13 +110,21 @@ function save_node_position(node, configName = 'default') {
 
 }
 
-function fitAnimated(){
-	var options = {offset: {x:0,y:0},
+function fitAnimated() {
+	var options = {
+		offset: {x: 0, y: 0},
 		duration: 1000,
 		easingFunction: 'easeInOutQuint'
 	};
+	network.fit({animation: options});
+}
 
-	network.fit({animation:options});
+function togglePhysics() {
+	network.setOptions({
+		physics: {
+			enabled: !network.physics.physicsEnabled
+		},
+	});
 }
 
 init_tree = function(groupId) {

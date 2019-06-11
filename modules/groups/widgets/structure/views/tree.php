@@ -28,7 +28,7 @@ $this->registerJs("init_tree($id);", View::POS_END);
 			'content' => '<div class="col-md-2">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'.
 				'<div class="col-md-3">
 					<button class="btn btn-primary" onclick="fitAnimated()">fit</button>
-					<button class="btn btn-primary">ФИЗИКА</button>
+					<button class="btn btn-primary" onclick="togglePhysics()">ФИЗИКА</button>
 				</div>'
 		]),
 		new RibbonPage([
