@@ -1,0 +1,9 @@
+.panel.ribbon {
+	position: fixed;
+	top: 200;
+	left: 0;
+	width: 100%;
+	border:1px solid;
+	box-shadow: #1d2428;
+}
+
