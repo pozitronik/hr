@@ -103,6 +103,25 @@ class AjaxController extends BaseAjaxController {
 	}
 
 	/**
+	 * Удаляет конфигурацию нод
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionGroupsTreeDeleteNodesPositions():array {
+		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
+		if (false !== (($groupId = Yii::$app->request->post('groupId', false))) && ($configName = Yii::$app->request->post('name', false))) {
+
+			$userConfig = $user->options->nodePositionsConfig;
+			/** @var string $groupId */
+			unset($userConfig[$groupId][$configName]);
+
+			$user->options->nodePositionsConfig = $userConfig;
+			return $this->answer->answer;
+		}
+		return $this->answer->addError('nodes', 'Can\'t load data');
+	}
+
+	/**
 	 * Генерит и отдаёт вьюшеньку с инфой о группе
 	 */
 	public function actionGetGroupInfo():array {
