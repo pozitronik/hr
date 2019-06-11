@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\ribbon;
 
 use pozitronik\helpers\ArrayHelper;
+use Throwable;
 use yii\base\Model;
 use yii\base\Widget;
 
@@ -30,6 +31,7 @@ class RibbonWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$pageIndex = 1;
@@ -78,12 +80,12 @@ class RibbonPage extends Model {
 	/**
 	 * @param int|null $order -- при инициализации массивом передаём порядковый номер для автогенерации значений
 	 */
-	public function init(?int $order = null) {
+	public function init(?int $order = null):void {
 		parent::init();
 		if (null !== $order) {
 			$this->_id = "tab{$order}";
-			$this->_active = $order === 1;
-			$this->_expanded = $order === 1;
+			$this->_active = 1 === $order;
+			$this->_expanded = 1 === $order;
 		}
 	}
 

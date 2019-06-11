@@ -20,7 +20,7 @@ use kartik\select2\Select2;
 	'data' => $positionConfigurations,
 	'value' => $currentConfiguration,
 	'options' => [
-		'placeholder' => 'Сохранённые позиции',
+		'placeholder' => 'Сохранённые позиции'
 	],
 	'pluginOptions' => [
 		'allowClear' => true,
@@ -49,7 +49,7 @@ use kartik\select2\Select2;
 					'class' => 'cursor-pointer js-remove-position-config hidden'
 				],
 				'url' => '#'
-			],
+			]
 		]
 	]
 ]) ?>

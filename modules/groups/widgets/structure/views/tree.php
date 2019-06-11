@@ -30,8 +30,8 @@ $this->registerJs("init_tree($id);");
 		new RibbonPage([
 			'caption' => 'Параметры',
 			'content' => 'pupupupu'
-		]),
+		])
 	]
-]); ?>
+]) ?>
 
 <div id="tree-container"></div>

@@ -109,7 +109,7 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGroupsTreeDeleteNodesPositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
-		if (false !== (($groupId = Yii::$app->request->post('groupId', false))) && ($configName = Yii::$app->request->post('name', false))) {
+		if (false !== $groupId = Yii::$app->request->post('groupId', false) && ($configName = Yii::$app->request->post('name', false))) {
 
 			$userConfig = $user->options->nodePositionsConfig;
 			/** @var string $groupId */
