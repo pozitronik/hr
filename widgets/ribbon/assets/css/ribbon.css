@@ -3,7 +3,28 @@
 	top: 200;
 	left: 0;
 	width: 100%;
-	border:1px solid;
-	box-shadow: #1d2428;
 }
 
+.ribbon-tab {
+
+}
+
+.panel.ribbon .panel-heading {
+	height:25px;
+}
+
+.panel.ribbon .panel-control {
+}
+
+.panel.ribbon .nav.nav-tabs {
+	height:24px;
+	margin-top:0px;
+}
+
+.panel.ribbon .panel-control .nav-tabs > li > a {
+	line-height: normal;
+}
+
+.panel.ribbon .panel-body {
+	padding:0 0 5px 0;
+}

@@ -25,7 +25,7 @@ $this->registerJs("init_tree($id);");
 			'active' => true,
 			'expanded' => true,
 			'caption' => 'Позиция',
-			'content' => '<div class="col-md-6">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'
+			'content' => '<div class="col-md-3">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'
 		]),
 		new RibbonPage([
 			'caption' => 'Параметры',

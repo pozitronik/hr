@@ -11,7 +11,6 @@ use app\widgets\ribbon\RibbonPage;
 use yii\web\View;
 
 ?>
-
 <div <?= $options ?>>
 	<div class="panel-heading">
 		<div class="panel-control">
