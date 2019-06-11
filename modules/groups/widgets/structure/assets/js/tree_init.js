@@ -43,7 +43,7 @@ function load_graph_options(configName = 'default') {/*todo*/
 			enabled: false
 		},
 		configure: {
-			container: _.$('controls-block'),
+			container: $('#controls-block'),
 			enabled: false,
 			filter: function(option, path) {
 				if (path.indexOf('hierarchical') !== -1) {
@@ -119,10 +119,10 @@ init_tree = function(groupId) {
 	// 	save_nodes_positions();
 	// });
 
-	_.$('toggle-controls').onclick = function click() {
-		_.toggle('#controls-block', 'min');
-		_.toggle('#tree-container', 'max');
-	};
-	_.show('#toggle-controls');
+	// _.$('toggle-controls').onclick = function click() {
+	// 	_.toggle('#controls-block', 'min');
+	// 	_.toggle('#tree-container', 'max');
+	// };
+	// _.show('#toggle-controls');
 }
 
