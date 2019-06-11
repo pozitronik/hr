@@ -27,9 +27,10 @@ $('select[name=positions]').on('change', function() {
  * Удаляем конфигурацию
  */
 $('.js-remove-position-config').on('click', function() {
-	var configName = $(this).val();
+	var configName = $('select[name=positions]').val();
 	if (!isEmpty(configName)) {
 		delete_nodes_positions(configName);
+		$('select[name=positions] option[value="' + configName + '"]').detach();
 	}
 });
 

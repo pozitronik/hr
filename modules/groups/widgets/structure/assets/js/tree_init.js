@@ -91,9 +91,14 @@ function save_nodes_positions(configName = 'default', groupId = null, nodes = nu
  * @param string configName
  * @param int|null groupId
  */
-function delete_nodes_positions(configName = 'default', groupId = null){
+function delete_nodes_positions(configName = 'default', groupId = null) {
 	if (null === groupId) groupId = _.get('id');
-	//todo
+	var request_body = 'groupId=' + encodeURIComponent(groupId) +
+		'&name=' + encodeURIComponent(configName);
+	postUrlEncoded('/groups/ajax/groups-tree-delete-nodes-positions', request_body).then(
+		response => console.log('nodes positions saved'),
+		error => console.log(error)
+	)
 }
 
 /**
