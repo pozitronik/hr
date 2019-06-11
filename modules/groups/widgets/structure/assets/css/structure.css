@@ -3,9 +3,9 @@
 }
 
 #sigma-container, #tree-container {
-	top: 0;
+	top: 0px;
 	bottom: 0;
-	left: 520px;
+	left: 0px;
 	right: 0;
 	position: fixed;
 
@@ -16,10 +16,6 @@
 }
 
 #controls-block {
-	float: left;
-	top: 0;
-	left: 0;
-	position: relative;
 	z-index: 100;
 }
 
@@ -32,14 +28,10 @@ div.vis-configuration-wrapper {
 	background: transparent !important;
 }
 
-
-#toggle-controls {
-	position: fixed;
-	z-index: 1000;
-	left: 0;
-	top: 40px;
-	display: block;
+#page-content {
+	padding: 0!important;/*disable padding for this page*/
 }
+
 
 #control-pane {
 	/*top: 10px;*/
@@ -63,12 +55,6 @@ div.vis-configuration-wrapper {
 #control-pane.min label, #control-pane.min .panel-footer {
 	display: none;
 }
-
-
-/*#control-pane > div {*/
-/*margin: 10px;*/
-/*overflow-x: auto;*/
-/*}*/
 
 
 .hidden {
