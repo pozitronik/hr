@@ -26,7 +26,10 @@ $this->registerJs("init_tree($id);", View::POS_END);
 			'expanded' => true,
 			'caption' => 'Позиция',
 			'content' => '<div class="col-md-2">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'.
-				'<div class="col-md-3"><button class="btn btn-primary">ФИЗИКА</button></div>'
+				'<div class="col-md-3">
+					<button class="btn btn-primary" onclick="fitAnimated()">fit</button>
+					<button class="btn btn-primary">ФИЗИКА</button>
+				</div>'
 		]),
 		new RibbonPage([
 			'caption' => 'Параметры',

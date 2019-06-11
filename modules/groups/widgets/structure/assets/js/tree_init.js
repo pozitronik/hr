@@ -110,6 +110,15 @@ function save_node_position(node, configName = 'default') {
 
 }
 
+function fitAnimated(){
+	var options = {offset: {x:0,y:0},
+		duration: 1000,
+		easingFunction: 'easeInOutQuint'
+	};
+
+	network.fit({animation:options});
+}
+
 init_tree = function(groupId) {
 	load_nodes_positions(groupId)
 
@@ -125,4 +134,5 @@ init_tree = function(groupId) {
 	// };
 	// _.show('#toggle-controls');
 }
+
 
