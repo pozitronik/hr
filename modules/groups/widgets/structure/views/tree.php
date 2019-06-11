@@ -13,7 +13,7 @@ use app\widgets\ribbon\RibbonPage;
 use app\widgets\ribbon\RibbonWidget;
 use yii\web\View;
 
-$this->registerJs("init_tree($id);");
+$this->registerJs("init_tree($id);", View::POS_END);
 ?>
 
 <?= RibbonWidget::widget([

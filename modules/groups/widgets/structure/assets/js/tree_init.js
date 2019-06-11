@@ -43,7 +43,7 @@ function load_graph_options(configName = 'default') {/*todo*/
 			enabled: false
 		},
 		configure: {
-			container: $('#controls-block'),
+			container: _.$('controls-block'),
 			enabled: false,
 			filter: function(option, path) {
 				if (path.indexOf('hierarchical') !== -1) {
