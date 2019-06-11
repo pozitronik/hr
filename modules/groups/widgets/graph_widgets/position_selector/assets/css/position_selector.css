@@ -2,8 +2,3 @@ span.select2 {
 	/*width:200px!important;*/
 	float:left;
 }
-
-.input-group-addon {
-	padding: 0px;
-	min-width:auto;
-}
