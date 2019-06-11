@@ -9,15 +9,29 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\widgets\graph_widgets\position_selector\PositionSelectorWidget;
+use app\widgets\ribbon\RibbonPage;
+use app\widgets\ribbon\RibbonWidget;
 use yii\web\View;
 
 $this->registerJs("init_tree($id);");
 ?>
 
-<div class="panel" id="controls-block">
-	<div class="panel-body">
-		<?= PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')) ?>
-	</div>
-</div>
+<?= RibbonWidget::widget([
+	'options' => [
+		'id' => 'controls-block'
+	],
+	'pages' => [
+		new RibbonPage([
+			'active' => true,
+			'expanded' => true,
+			'caption' => 'Позиция',
+			'content' => PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations'))
+		]),
+		new RibbonPage([
+			'caption' => 'Параметры',
+			'content' => 'pupupupu'
+		]),
+	]
+]); ?>
+
 <div id="tree-container"></div>
-<button id="toggle-controls" class="hidden">Настройки</button>
