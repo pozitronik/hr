@@ -14,47 +14,46 @@ use yii\bootstrap\ButtonDropdown;
 use kartik\select2\Select2;
 
 ?>
-	<div class="position-config-btn-group for-menu">
-		<?= Select2::widget([
-			'name' => 'positions',
-			'data' => $positionConfigurations,
-			'value' => $currentConfiguration,
-			'options' => [
-				'placeholder' => 'Сохранённые позиции'
+
+<?= Select2::widget([
+	'name' => 'positions',
+	'data' => $positionConfigurations,
+	'value' => $currentConfiguration,
+	'options' => [
+		'placeholder' => 'Сохранённые позиции',
+	],
+	'pluginOptions' => [
+		'allowClear' => true,
+		'multiple' => false
+	]
+]) ?>
+
+<?= ButtonDropdown::widget([
+	'label' => false,
+	'options' => [
+		'class' => 'btn-info fa fa-menu'
+	],
+	'dropdown' => [
+		'items' => [
+			[
+				'label' => 'Сохранить карту',
+				'options' => [
+					'onclick' => '$("#config-dialog-modal").modal("show");',
+					'class' => 'cursor-pointer'
+				],
+				'url' => '#'
 			],
-			'pluginOptions' => [
-				'allowClear' => true,
-				'multiple' => false
-			]
-		]) ?>
-	</div>
-	<div class="position-config-btn-group">
-		<?= ButtonDropdown::widget([
-			'label' => false,
-			'options' => [
-				'class' => 'btn-info glyphicon glyphicon-position-config'
+			[
+				'label' => 'Удалить карту',
+				'options' => [
+					'class' => 'cursor-pointer js-remove-position-config hidden'
+				],
+				'url' => '#'
 			],
-			'dropdown' => [
-				'items' => [
-					[
-						'label' => 'Сохранить карту',
-						'options' => [
-							'onclick' => '$("#config-dialog-modal").modal("show");',
-							'class' => 'cursor-pointer'
-						],
-						'url' => '#'
-					],
-					[
-						'label' => 'Удалить карту',
-						'options' => [
-							'class' => 'cursor-pointer js-remove-position-config hidden'
-						],
-						'url' => '#'
-					],
-				]
-			]
-		]) ?>
-	</div>
+		]
+	]
+]) ?>
+
 <?php Modal::begin([
 	'id' => 'config-dialog-modal',
 	'header' => '<h4 class="modal-title">Введите название карты:</h4>',
