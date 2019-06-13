@@ -2,7 +2,7 @@
 	width: 20px;
 }
 
-#sigma-container, #tree-container {
+#tree-container {
 	top: 0px;
 	bottom: 0;
 	left: 0px;
@@ -12,7 +12,7 @@
 }
 
 #tree-container.max {
-	left:0px;
+	left: 0px;
 }
 
 #controls-block {
@@ -29,7 +29,7 @@ div.vis-configuration-wrapper {
 }
 
 #page-content {
-	padding: 0!important;/*disable padding for this page*/
+	padding: 0 !important; /*disable padding for this page*/
 }
 
 

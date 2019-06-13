@@ -68,7 +68,7 @@ $this->registerJs("init_tree($id);", View::POS_END);
 		]),
 		new RibbonPage([
 			'caption' => 'Параметры',
-			'content' => 'pupupupu'
+			'content' => 'Тут нет ничего'
 		])
 	]
 ]) ?>

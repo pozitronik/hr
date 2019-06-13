@@ -4,6 +4,10 @@ const positionNone = 0, //не позиционировать ноды на се
 var network = new vis.Network(_.$('tree-container'));
 var current_options = load_graph_options();
 
+function resize_container() {
+	$('#tree-container').css({'top': ($('header').height() + $('#controls-block').height()) + 'px'});
+}
+
 /**
  * Загружает набор нод для группы
  * @param int groupId
@@ -145,6 +149,12 @@ init_tree = function(groupId) {
 	load_nodes_positions(groupId)
 
 	network.setOptions(current_options);
+	network.on('beforeDrawing', function() {
+		resize_container();
+	});
+	fitAnimated();
+
+
 
 	// network.addEventListener("dragEnd", function() {
 	// 	save_nodes_positions();
