@@ -12,6 +12,7 @@ use yii\bootstrap\Modal;
 use yii\bootstrap\Html;
 use yii\bootstrap\ButtonDropdown;
 use kartik\select2\Select2;
+
 ?>
 <?= Select2::widget([
 	'name' => 'positions',
@@ -60,7 +61,8 @@ use kartik\select2\Select2;
 <?php Modal::begin([
 	'id' => 'config-dialog-modal',
 	'header' => '<h4 class="modal-title">Введите название карты:</h4>',
-	'footer' => Html::button('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success js-save-position-config'])
+	'footer' => Html::button('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success js-save-position-config']),
+	'clientOptions' => ['backdrop' => false],
 ]); ?>
 	<div class='form-group'>
 		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']) ?>
