@@ -24,6 +24,6 @@ class StructureWidgetAssets extends AssetBundle {
 	];
 
 	public $publishOptions = [
-		'forceCopy' => true
+		'forceCopy' => false
 	];
 }
