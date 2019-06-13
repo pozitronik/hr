@@ -2,6 +2,7 @@ const positionNone = 0, //не позиционировать ноды на се
 	positionRound = 1;// позиционировать в круговую диаграмму
 
 var network = new vis.Network(_.$('tree-container'));
+var current_options = load_graph_options();
 
 /**
  * Загружает набор нод для группы
@@ -124,11 +125,9 @@ function fitAnimated() {
  * @param bool|null toggle
  */
 function togglePhysics(toggle = null) {
-	network.setOptions({
-		physics: {
-			enabled: null === toggle ? !network.physics.physicsEnabled : toggle
-		},
-	});
+
+	current_options.physics.enabled = null === toggle ? !network.physics.physicsEnabled : toggle;
+	network.setOptions(current_options);
 	fitAnimated();
 }
 
@@ -137,20 +136,15 @@ function togglePhysics(toggle = null) {
  * @param bool|null toggle
  */
 function toggleHierarchy(toggle = null) {
-	network.setOptions({
-		layout: {
-			hierarchical: {
-				enabled: null === toggle ? !network.layoutEngine.options.hierarchical.enabled : toggle
-			}
-		},
-	});
+	current_options.layout.hierarchical.enabled = null === toggle ? !network.layoutEngine.options.hierarchical.enabled : toggle;
+	network.setOptions(current_options);
 	fitAnimated();
 }
 
 init_tree = function(groupId) {
 	load_nodes_positions(groupId)
 
-	network.setOptions(load_graph_options());
+	network.setOptions(current_options);
 
 	// network.addEventListener("dragEnd", function() {
 	// 	save_nodes_positions();
