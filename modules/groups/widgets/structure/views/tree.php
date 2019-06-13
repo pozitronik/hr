@@ -104,9 +104,13 @@ $this->registerJs("init_tree($id);", View::POS_END);
 					</div>'
 		]),
 		new RibbonPage([
-			'caption' => 'Параметры',
+			'caption' => 'Фильтры',
 			'content' => 'Тут нет ничего'
-		])
+		]),
+		new RibbonPage([
+			'caption' => 'Редактор',
+			'content' => 'Тут нет ничего'
+		]),
 	]
 ]) ?>
 
