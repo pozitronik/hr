@@ -48,7 +48,23 @@ $this->registerJs("init_tree($id);", View::POS_END);
 						'onColor' => 'primary',
 						'offColor' => 'default'
 					]
-				]).'</div>'
+				]).'</label><label>Иерархия:'.SwitchInput::widget([
+					'name' => 'toggle_physics',
+					'containerOptions' => [
+						'class' => '',
+						'style' => 'float:right',
+					],
+					'pluginEvents' => [
+						"switchChange.bootstrapSwitch" => "function(event, state) { toggleHierarchy(state); }",
+					],
+					'pluginOptions' => [
+						'size' => 'mini',
+						'onText' => 'ДА',
+						'offText' => 'НЕТ',
+						'onColor' => 'primary',
+						'offColor' => 'default'
+					]
+				]).'</label></div>'
 		]),
 		new RibbonPage([
 			'caption' => 'Параметры',

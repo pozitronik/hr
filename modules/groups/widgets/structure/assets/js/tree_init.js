@@ -129,6 +129,22 @@ function togglePhysics(toggle = null) {
 			enabled: null === toggle ? !network.physics.physicsEnabled : toggle
 		},
 	});
+	fitAnimated();
+}
+
+/**
+ * Переключаем иерархию
+ * @param bool|null toggle
+ */
+function toggleHierarchy(toggle = null) {
+	network.setOptions({
+		layout: {
+			hierarchical: {
+				enabled: null === toggle ? !network.layoutEngine.options.hierarchical.enabled : toggle
+			}
+		},
+	});
+	fitAnimated();
 }
 
 init_tree = function(groupId) {
