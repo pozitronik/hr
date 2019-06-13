@@ -11,10 +11,13 @@ declare(strict_types = 1);
 use app\modules\groups\widgets\graph_widgets\position_selector\PositionSelectorWidget;
 use app\widgets\ribbon\RibbonPage;
 use app\widgets\ribbon\RibbonWidget;
+use kartik\switchinput\SwitchInput;
 use yii\web\View;
 
 $this->registerJs("init_tree($id);", View::POS_END);
 ?>
+
+
 
 <?= RibbonWidget::widget([
 	'options' => [
@@ -28,8 +31,24 @@ $this->registerJs("init_tree($id);", View::POS_END);
 			'content' => '<div class="col-md-2">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'.
 				'<div class="col-md-3">
 					<button class="btn btn-primary" onclick="fitAnimated()">fit</button>
-					<button class="btn btn-primary" onclick="togglePhysics()">ФИЗИКА</button>
-				</div>'
+					<label>Физика:'.SwitchInput::widget([
+					'name' => 'toggle_physics',
+					'containerOptions' => [
+						'class' => '',
+						'style' => 'float:right',
+					],
+					'pluginEvents' => [
+						"switchChange.bootstrapSwitch" => "function(event, state) { togglePhysics(state); }",
+					],
+					'pluginOptions' => [
+
+						'size' => 'mini',
+						'onText' => 'ДА',
+						'offText' => 'НЕТ',
+						'onColor' => 'primary',
+						'offColor' => 'default'
+					]
+				]).'</div>'
 		]),
 		new RibbonPage([
 			'caption' => 'Параметры',

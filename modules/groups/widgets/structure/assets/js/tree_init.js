@@ -119,10 +119,14 @@ function fitAnimated() {
 	network.fit({animation: options});
 }
 
-function togglePhysics() {
+/**
+ * Переключаем физический движок
+ * @param bool|null toggle
+ */
+function togglePhysics(toggle = null) {
 	network.setOptions({
 		physics: {
-			enabled: !network.physics.physicsEnabled
+			enabled: null===toggle?!network.physics.physicsEnabled:toggle
 		},
 	});
 }
