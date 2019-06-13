@@ -83,6 +83,7 @@ $this->registerJs("init_tree($id);", View::POS_END);
 						'offColor' => 'default'
 					]
 				]).'</label><label>Автопозиция:'.SwitchInput::widget([
+					'value' => true,
 					'name' => 'toggle_autofit',
 					'containerOptions' => [
 						'class' => '',

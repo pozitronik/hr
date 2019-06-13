@@ -3,7 +3,7 @@ const positionNone = 0, //не позиционировать ноды на се
 
 var network = new vis.Network(_.$('tree-container'));
 var current_options = load_graph_options();
-var autofit = false;
+var autofit = true;
 
 function resize_container() {
 	$('#tree-container').css({'top': ($('header').height() + $('#controls-block').height()) + 'px'});
