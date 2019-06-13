@@ -3,6 +3,7 @@ const positionNone = 0, //не позиционировать ноды на се
 
 var network = new vis.Network(_.$('tree-container'));
 var current_options = load_graph_options();
+var autofit = false;
 
 function resize_container() {
 	$('#tree-container').css({'top': ($('header').height() + $('#controls-block').height()) + 'px'});
@@ -116,12 +117,14 @@ function save_node_position(node, configName = 'default') {
 }
 
 function fitAnimated() {
-	var options = {
-		offset: {x: 0, y: 0},
-		duration: 1000,
-		easingFunction: 'easeInOutQuint'
-	};
-	network.fit({animation: options});
+	if (autofit) {
+		var options = {
+			offset: {x: 0, y: 0},
+			duration: 1000,
+			easingFunction: 'easeInOutQuint'
+		};
+		network.fit({animation: options});
+	}
 }
 
 /**

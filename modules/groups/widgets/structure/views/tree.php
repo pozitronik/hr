@@ -30,7 +30,6 @@ $this->registerJs("init_tree($id);", View::POS_END);
 			'caption' => 'Позиция',
 			'content' => '<div class="col-md-2">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'.
 				'<div class="col-md-2">
-					<button class="btn btn-primary" onclick="fitAnimated()" title="Fit"><i class="fa fa-compress-arrows-alt"></i></button>
 					<label>Физика:'.SwitchInput::widget([
 					'name' => 'toggle_physics',
 					'containerOptions' => [
@@ -83,7 +82,25 @@ $this->registerJs("init_tree($id);", View::POS_END);
 						'onColor' => 'primary',
 						'offColor' => 'default'
 					]
-				]).'</label></div>'
+				]).'</label><label>Автопозиция:'.SwitchInput::widget([
+					'name' => 'toggle_autofit',
+					'containerOptions' => [
+						'class' => '',
+						'style' => 'float:right'
+					],
+					'pluginEvents' => [
+						"switchChange.bootstrapSwitch" => "function(event, state) { autofit = state }"
+					],
+					'pluginOptions' => [
+						'size' => 'mini',
+						'onText' => 'ДА',
+						'offText' => 'НЕТ',
+						'onColor' => 'primary',
+						'offColor' => 'default'
+					]
+				]).'</label>
+					<button class="btn btn-primary" onclick="fitAnimated()" title="Fit"><i class="fa fa-compress-arrows-alt"></i></button>
+					</div>'
 		]),
 		new RibbonPage([
 			'caption' => 'Параметры',
