@@ -126,7 +126,7 @@ function fitAnimated() {
 function togglePhysics(toggle = null) {
 	network.setOptions({
 		physics: {
-			enabled: null===toggle?!network.physics.physicsEnabled:toggle
+			enabled: null === toggle ? !network.physics.physicsEnabled : toggle
 		},
 	});
 }
