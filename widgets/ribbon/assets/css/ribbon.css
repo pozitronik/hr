@@ -11,15 +11,15 @@
 }
 
 .panel.ribbon .panel-heading {
-	height:25px;
+	height: 25px;
 }
 
 .panel.ribbon .panel-control {
 }
 
 .panel.ribbon .nav.nav-tabs {
-	height:24px;
-	margin-top:0px;
+	height: 24px;
+	margin-top: 0px;
 }
 
 .panel.ribbon .panel-control .nav-tabs > li > a {
@@ -27,9 +27,14 @@
 }
 
 .panel.ribbon .panel-body {
-	padding:0 0 5px 0;
+	padding: 0 0 5px 0;
 }
 
 label {
 	padding-left: 5px;
+}
+
+.tab-pane > div {
+	min-height: 32px;
+	line-height: 30px;
 }

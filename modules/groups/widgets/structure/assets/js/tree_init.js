@@ -145,6 +145,16 @@ function toggleHierarchy(toggle = null) {
 	fitAnimated();
 }
 
+/**
+ * Переключаем иерархию
+ * @param bool|null toggle
+ */
+function toggleMultiselection(toggle = null) {
+	current_options.interaction.multiselect = null === toggle ? !network.selectionHandler.options.multiselect : toggle;
+	network.setOptions(current_options);
+	fitAnimated();
+}
+
 init_tree = function(groupId) {
 	load_nodes_positions(groupId)
 

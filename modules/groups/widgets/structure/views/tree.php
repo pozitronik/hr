@@ -29,7 +29,7 @@ $this->registerJs("init_tree($id);", View::POS_END);
 			'expanded' => true,
 			'caption' => 'Позиция',
 			'content' => '<div class="col-md-2">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'.
-				'<div class="col-md-3">
+				'<div class="col-md-2">
 					<button class="btn btn-primary" onclick="fitAnimated()" title="Fit"><i class="fa fa-compress-arrows-alt"></i></button>
 					<label>Физика:'.SwitchInput::widget([
 					'name' => 'toggle_physics',
@@ -49,7 +49,7 @@ $this->registerJs("init_tree($id);", View::POS_END);
 						'offColor' => 'default'
 					]
 				]).'</label><label>Иерархия:'.SwitchInput::widget([
-					'name' => 'toggle_physics',
+					'name' => 'toggle_hierarchy',
 					'containerOptions' => [
 						'class' => '',
 						'style' => 'float:right',
@@ -58,6 +58,25 @@ $this->registerJs("init_tree($id);", View::POS_END);
 						"switchChange.bootstrapSwitch" => "function(event, state) { toggleHierarchy(state); }",
 					],
 					'pluginOptions' => [
+						'size' => 'mini',
+						'onText' => 'ДА',
+						'offText' => 'НЕТ',
+						'onColor' => 'primary',
+						'offColor' => 'default'
+					]
+				]).'</label></div>
+					<div class="col-md-3">
+					<label>Выбор нескольких:'.SwitchInput::widget([
+					'name' => 'toggle_multiselection',
+					'containerOptions' => [
+						'class' => '',
+						'style' => 'float:right',
+					],
+					'pluginEvents' => [
+						"switchChange.bootstrapSwitch" => "function(event, state) { toggleMultiselection(state); }",
+					],
+					'pluginOptions' => [
+
 						'size' => 'mini',
 						'onText' => 'ДА',
 						'offText' => 'НЕТ',
