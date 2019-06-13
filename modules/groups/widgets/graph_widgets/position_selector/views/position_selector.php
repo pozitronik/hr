@@ -62,7 +62,7 @@ use kartik\select2\Select2;
 	'id' => 'config-dialog-modal',
 	'header' => '<h4 class="modal-title">Введите название карты:</h4>',
 	'footer' => Html::button('<i class="fa fa-save"></i> Сохранить', ['class' => 'btn btn-success js-save-position-config']),
-	'clientOptions' => ['backdrop' => false],
+	'clientOptions' => ['backdrop' => false]
 ]); ?>
 	<div class='form-group'>
 		<?= Html::textInput('position-configName', null, ['class' => 'form-control', 'maxlength' => 50, 'id' => 'position-configName']) ?>

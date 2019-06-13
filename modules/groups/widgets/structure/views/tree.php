@@ -35,10 +35,10 @@ $this->registerJs("init_tree($id);", View::POS_END);
 					'name' => 'toggle_physics',
 					'containerOptions' => [
 						'class' => '',
-						'style' => 'float:right',
+						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { togglePhysics(state); }",
+						"switchChange.bootstrapSwitch" => "function(event, state) { togglePhysics(state); }"
 					],
 					'pluginOptions' => [
 
@@ -52,10 +52,10 @@ $this->registerJs("init_tree($id);", View::POS_END);
 					'name' => 'toggle_hierarchy',
 					'containerOptions' => [
 						'class' => '',
-						'style' => 'float:right',
+						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { toggleHierarchy(state); }",
+						"switchChange.bootstrapSwitch" => "function(event, state) { toggleHierarchy(state); }"
 					],
 					'pluginOptions' => [
 						'size' => 'mini',
@@ -70,10 +70,10 @@ $this->registerJs("init_tree($id);", View::POS_END);
 					'name' => 'toggle_multiselection',
 					'containerOptions' => [
 						'class' => '',
-						'style' => 'float:right',
+						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { toggleMultiselection(state); }",
+						"switchChange.bootstrapSwitch" => "function(event, state) { toggleMultiselection(state); }"
 					],
 					'pluginOptions' => [
 
