@@ -28,6 +28,12 @@ function load_group_graph(groupId, positionMode = positionNone) {
 function load_graph_options(configName = 'default') {/*todo*/
 	return {
 		locale: 'ru',
+		edges: {
+			arrows: {
+				to: {enabled: true, scaleFactor: 1, type: 'arrow'},
+			},
+		width: 3
+		},
 		layout: {
 			randomSeed: undefined,
 			improvedLayout: true,
@@ -41,8 +47,8 @@ function load_graph_options(configName = 'default') {/*todo*/
 				edgeMinimization: true,
 				parentCentralization: true,
 				sortMethod: 'directed'   // hubsize, directed
-
 			}
+
 		},
 		interaction: {dragNodes: true},
 		physics: {
@@ -165,11 +171,10 @@ init_tree = function(groupId) {
 	network.on('beforeDrawing', function() {
 		resize_container();
 	});
-	network.on('stabilized', function(){
+	network.on('stabilized', function() {
 		fitAnimated();
 	});
 	fitAnimated();
-
 
 
 	// network.addEventListener("dragEnd", function() {
