@@ -162,6 +162,9 @@ init_tree = function(groupId) {
 	network.on('beforeDrawing', function() {
 		resize_container();
 	});
+	network.on('stabilized', function(){
+		fitAnimated();
+	});
 	fitAnimated();
 
 
