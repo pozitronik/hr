@@ -14,7 +14,7 @@ use app\widgets\ribbon\RibbonWidget;
 use kartik\switchinput\SwitchInput;
 use yii\web\View;
 
-$this->registerJs("init_tree($id);", View::POS_END);
+$this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);", View::POS_END);
 ?>
 
 

@@ -1,7 +1,7 @@
 /**
  * DOM utility functions
  */
-var _ = {
+const _ = {
 	$: function(id) {
 		return document.getElementById(id);
 	},
@@ -11,20 +11,20 @@ var _ = {
 	},
 
 	removeClass: function(selectors, cssClass) {
-		var nodes = document.querySelectorAll(selectors);
-		var l = nodes.length;
+		const nodes = document.querySelectorAll(selectors);
+		const l = nodes.length;
 		for (i = 0; i < l; i++) {
-			var el = nodes[i];
+			const el = nodes[i];
 			// Bootstrap compatibility
 			el.className = el.className.replace(cssClass, '');
 		}
 	},
 
 	addClass: function(selectors, cssClass) {
-		var nodes = document.querySelectorAll(selectors);
-		var l = nodes.length;
+		const nodes = document.querySelectorAll(selectors);
+		const l = nodes.length;
 		for (i = 0; i < l; i++) {
-			var el = nodes[i];
+			const el = nodes[i];
 			// Bootstrap compatibility
 			if (-1 == el.className.indexOf(cssClass)) {
 				el.className += ' ' + cssClass;
@@ -40,12 +40,11 @@ var _ = {
 		this.addClass(selectors, 'hidden');
 	},
 
-	toggle: function(selectors, cssClass) {
-		var cssClass = cssClass || "hidden";
-		var nodes = document.querySelectorAll(selectors);
-		var l = nodes.length;
+	toggle: function(selectors, cssClass = 'hidden') {
+		const nodes = document.querySelectorAll(selectors);
+		const l = nodes.length;
 		for (i = 0; i < l; i++) {
-			var el = nodes[i];
+			const el = nodes[i];
 			//el.style.display = (el.style.display != 'none' ? 'none' : '' );
 			// Bootstrap compatibility
 			if (-1 !== el.className.indexOf(cssClass)) {
@@ -57,7 +56,7 @@ var _ = {
 	},
 
 	get: function(name) {
-		var url = new URL(window.location);
+		const url = new URL(window.location);
 		return url.searchParams.get(name)
 	},
 
@@ -93,7 +92,7 @@ ajax = function() {
 	if (window.XMLHttpRequest)
 		return new XMLHttpRequest();
 
-	var names,
+	let names,
 		i;
 
 	if (window.ActiveXObject) {
@@ -116,9 +115,9 @@ ajax = function() {
 
 getJSON = function(url) {
 	return new Promise(function(resolve, reject) {
-		var request = ajax();
+		const request = ajax();
 		if (!request) {
-			var error = new Error('XMLHttpRequest not supported');
+			const error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
 		request.open('GET', url, true);
@@ -141,9 +140,9 @@ postJSON = function(url, json) {
 
 postUrlEncoded = function(url, postString) {
 	return new Promise(function(resolve, reject) {
-		var request = ajax();
+		const request = ajax();
 		if (!request) {
-			var error = new Error('XMLHttpRequest not supported');
+			const error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
 		request.open('POST', url, true);
@@ -164,7 +163,7 @@ postUrlEncoded = function(url, postString) {
 /*Добавляем метод к массивам*/
 Object.defineProperty(Array.prototype, 'pushOrReplace', {
 	value: function(item) {
-		var indexOfItem
+		let indexOfItem;
 		if (-1 === (indexOfItem = this.indexOf(item))) {
 			this.push(item);
 		} else {

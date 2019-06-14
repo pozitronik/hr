@@ -1,191 +1,164 @@
+'use strict';
+
 const positionNone = 0, //не позиционировать ноды на сервере
 	positionRound = 1;// позиционировать в круговую диаграмму
 
-var network = new vis.Network(_.$('tree-container'));
-var current_options = load_graph_options();
-var autofit = true;
+class GraphControl {
 
-function resize_container() {
-	$('#tree-container').css({'top': ($('header').height() + $('#controls-block').height()) + 'px'});
-}
+	/**
+	 * @param container
+	 * @param groupId
+	 */
+	constructor(container, groupId) {
+		let self = this;
+		this.container = container;
+		this.loadNodesPositions(groupId);
+		this.network = new vis.Network(_.$('tree-container'));
+		this.setOptions(self.loadGraphOptions());
 
-/**
- * Загружает набор нод для группы
- * @param int groupId
- * @param int positionMode
- * @return object
- */
-function load_group_graph(groupId, positionMode = positionNone) {
+		this.autofit = true;
 
+		this.network.on('beforeDrawing', function() {
+			self.resizeContainer();
+		}).on('stabilized', function() {
+			GraphControl.fitAnimated();
+		});
+		GraphControl.fitAnimated();
+	}
 
-}
+	/**
+	 * Загружает набор нод для группы
+	 * @return object
+	 * @param groupId
+	 * @param positionMode
+	 */
+	loadGroupGraph(groupId, positionMode = positionNone) {
+	}
 
-/**
- * Загружает набор параметров конфигурации графа
- * @param string configName
- * @return object
- */
-function load_graph_options(configName = 'default') {/*todo*/
-	return {
-		locale: 'ru',
-		edges: {
-			arrows: {
-				to: {enabled: true, scaleFactor: 1, type: 'arrow'},
+	/**
+	 * Загружает набор параметров конфигурации графа
+	 * @return object
+	 * @param configName
+	 */
+	loadGraphOptions(configName = 'default') {/*todo*/
+		return {
+			locale: 'ru',
+			edges: {
+				arrows: {
+					to: {enabled: true, scaleFactor: 1, type: 'arrow'},
+				},
+				width: 3
 			},
-		width: 3
-		},
-		layout: {
-			randomSeed: undefined,
-			improvedLayout: true,
-			hierarchical: {
-				direction: "UD",
-				enabled: false,
-				levelSeparation: 200,
-				nodeSpacing: 200,
-				treeSpacing: 200,
-				blockShifting: true,
-				edgeMinimization: true,
-				parentCentralization: true,
-				sortMethod: 'directed'   // hubsize, directed
-			}
-
-		},
-		interaction: {dragNodes: true},
-		physics: {
-			enabled: false
-		},
-		configure: {
-			container: _.$('controls-block'),
-			enabled: false,
-			filter: function(option, path) {
-				if (path.indexOf('hierarchical') !== -1) {
-					return true;
+			layout: {
+				randomSeed: undefined,
+				improvedLayout: true,
+				hierarchical: {
+					direction: "UD",
+					enabled: false,
+					levelSeparation: 200,
+					nodeSpacing: 200,
+					treeSpacing: 200,
+					blockShifting: true,
+					edgeMinimization: true,
+					parentCentralization: true,
+					sortMethod: 'directed'   // hubsize, directed
 				}
-				return true;
+
 			},
-			showButton: true
+			interaction: {dragNodes: true},
+			physics: {
+				enabled: false
+			}
 		}
 	}
-}
 
-/**
- * Загружает сохранённый набор координат нод по имени конфига
- * @param int groupId
- * @param string configName
- */
-function load_nodes_positions(groupId = null, configName = 'default') {//todo согласовать порядок параметров
-	if (null === groupId) groupId = _.get('id');
-	getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(groupId) + '&configName=' + encodeURIComponent(configName)).then(
-		response => network.setData(response),
-		error => console.log(error)
-	)
-}
+	/**
+	 * Загружает сохранённый набор координат нод по имени конфига
+	 * @param groupId
+	 * @param configName
+	 */
+	loadNodesPositions(groupId = null, configName = 'default') {//todo согласовать порядок параметров
+		if (null === groupId) groupId = _.get('id');
+		getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(groupId) + '&configName=' + encodeURIComponent(configName)).then(
+			response => this.network.setData(response),
+			error => console.log(error)
+		)
+	}
 
-/**
- * Сохраняет набор нод в конфиг
- * @param string configName
- * @param int|null groupId
- * @param array|null nodes
- */
-function save_nodes_positions(configName = 'default', groupId = null, nodes = null) {
-	if (null === groupId) groupId = _.get('id');
-	if (null === nodes) nodes = network.getPositions();
-	var request_body = 'groupId=' + encodeURIComponent(groupId) +
-		'&nodes=' + encodeURIComponent(JSON.stringify(nodes)) + '&name=' + encodeURIComponent(configName);
-	postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', request_body).then(
-		response => console.log('nodes positions saved'),
-		error => console.log(error)
-	)
-}
+	/**
+	 * Сохраняет набор нод в конфиг
+	 * @param configName
+	 * @param groupId
+	 * @param nodes
+	 */
+	saveNodesPositions(configName = 'default', groupId = null, nodes = null) {
+		if (null === groupId) groupId = _.get('id');
+		if (null === nodes) nodes = this.network.getPositions();
 
-/**
- * Убирает конфиг с заданным именем
- * @param string configName
- * @param int|null groupId
- */
-function delete_nodes_positions(configName = 'default', groupId = null) {
-	if (null === groupId) groupId = _.get('id');
-	var request_body = 'groupId=' + encodeURIComponent(groupId) +
-		'&name=' + encodeURIComponent(configName);
-	postUrlEncoded('/groups/ajax/groups-tree-delete-nodes-positions', request_body).then(
-		response => console.log('nodes positions saved'),
-		error => console.log(error)
-	)
-}
+		postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', 'groupId=' + encodeURIComponent(groupId) +
+			'&nodes=' + encodeURIComponent(JSON.stringify(nodes)) + '&name=' + encodeURIComponent(configName)).then(
+			response => console.log('nodes positions saved'),
+			error => console.log(error)
+		)
+	}
 
-/**
- * Сохраняет координаты одной ноды в конфиге
- * @param object node
- * @param string configName
- */
-function save_node_position(node, configName = 'default') {
+	/**
+	 * Убирает конфиг с заданным именем
+	 * @param configName
+	 * @param groupId
+	 */
+	deleteNodesPositions(configName = 'default', groupId = null) {
+		if (null === groupId) groupId = _.get('id');
+		postUrlEncoded('/groups/ajax/groups-tree-delete-nodes-positions', 'groupId=' + encodeURIComponent(groupId) +
+			'&name=' + encodeURIComponent(configName)).then(
+			response => console.log('nodes positions saved'),
+			error => console.log(error)
+		)
+	}
 
-}
+	/**
+	 * Сохраняет координаты одной ноды в конфиге
+	 * @param node
+	 * @param configName
+	 */
+	saveNodePosition(node, configName = 'default') {
 
-function fitAnimated() {
-	if (autofit) {
-		var options = {
-			offset: {x: 0, y: 0},
-			duration: 1000,
-			easingFunction: 'easeInOutQuint'
-		};
-		network.fit({animation: options});
+	}
+
+	setOptions(graphOptions) {
+		this.current_options = graphOptions;
+		this.network.setOptions(this.current_options);
+	}
+
+	getOptions() {
+		return this.current_options;
+	}
+
+	setPhysics(toggle = null) {
+		this.options.physics.enabled = null === toggle?!this.network.physics.physicsEnabled:toggle;
+	}
+
+	setHierarchy(toggle = null) {
+		this.options.layout.hierarchical.enabled = null === toggle?!this.network.layoutEngine.options.hierarchical.enabled:toggle;
+	}
+
+	setMultiselection(toggle = null) {
+		this.options.interaction.multiselect = null === toggle?!this.network.selectionHandler.options.multiselect:toggle;
+	}
+
+	static fitAnimated() {
+		if (true === self.autofit) {
+			self.network.fit({
+				animation: {
+					offset: {x: 0, y: 0},
+					duration: 1000,
+					easingFunction: 'easeInOutQuint'
+				}
+			});
+		}
+	}
+
+	resizeContainer() {
+		$(this.container).css({'top': ($('header').height() + $('#controls-block').height()) + 'px'});
 	}
 }
-
-/**
- * Переключаем физический движок
- * @param bool|null toggle
- */
-function togglePhysics(toggle = null) {
-
-	current_options.physics.enabled = null === toggle ? !network.physics.physicsEnabled : toggle;
-	network.setOptions(current_options);
-	fitAnimated();
-}
-
-/**
- * Переключаем иерархию
- * @param bool|null toggle
- */
-function toggleHierarchy(toggle = null) {
-	current_options.layout.hierarchical.enabled = null === toggle ? !network.layoutEngine.options.hierarchical.enabled : toggle;
-	network.setOptions(current_options);
-	fitAnimated();
-}
-
-/**
- * Переключаем иерархию
- * @param bool|null toggle
- */
-function toggleMultiselection(toggle = null) {
-	current_options.interaction.multiselect = null === toggle ? !network.selectionHandler.options.multiselect : toggle;
-	network.setOptions(current_options);
-	fitAnimated();
-}
-
-init_tree = function(groupId) {
-	load_nodes_positions(groupId)
-
-	network.setOptions(current_options);
-	network.on('beforeDrawing', function() {
-		resize_container();
-	});
-	network.on('stabilized', function() {
-		fitAnimated();
-	});
-	fitAnimated();
-
-
-	// network.addEventListener("dragEnd", function() {
-	// 	save_nodes_positions();
-	// });
-
-	// _.$('toggle-controls').onclick = function click() {
-	// 	_.toggle('#controls-block', 'min');
-	// 	_.toggle('#tree-container', 'max');
-	// };
-	// _.show('#toggle-controls');
-}
-
-
