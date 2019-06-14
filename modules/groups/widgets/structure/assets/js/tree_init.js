@@ -14,7 +14,7 @@ class GraphControl {
 		this.container = container;
 		this.loadNodesPositions(groupId);
 		this.network = new vis.Network(_.$('tree-container'));
-		this.setOptions(self.loadGraphOptions());
+		this.options = self.loadGraphOptions();
 
 		this.autofit = true;
 
@@ -125,25 +125,28 @@ class GraphControl {
 
 	}
 
-	setOptions(graphOptions) {
+	set options(graphOptions) {
 		this.current_options = graphOptions;
 		this.network.setOptions(this.current_options);
 	}
 
-	getOptions() {
+	get options() {
 		return this.current_options;
 	}
 
-	setPhysics(toggle = null) {
-		this.options.physics.enabled = null === toggle?!this.network.physics.physicsEnabled:toggle;
+	set physics(physics) {
+		this.current_options.physics.enabled = physics;
+		this.options = this.current_options;
 	}
 
-	setHierarchy(toggle = null) {
-		this.options.layout.hierarchical.enabled = null === toggle?!this.network.layoutEngine.options.hierarchical.enabled:toggle;
+	set hierarchy(hierarchy) {
+		this.current_options.layout.hierarchical.enabled = hierarchy;
+		this.options = this.current_options;
 	}
 
-	setMultiselection(toggle = null) {
-		this.options.interaction.multiselect = null === toggle?!this.network.selectionHandler.options.multiselect:toggle;
+	set multiselection(multiselection) {
+		this.current_options.interaction.multiselect = multiselection;
+		this.options = this.current_options;
 	}
 
 	static fitAnimated() {
