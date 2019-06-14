@@ -13,7 +13,7 @@ use yii\web\View;
 use yii\helpers\Html;
 
 $bookmark_exists = ArrayHelper::array_find_deep(ArrayHelper::getColumn($bookmarks, 'route'), $model->route);
-
+/*todo: букмарка не срабатывает, если в имени есть кавычка*/
 ?>
 <ul class="list-unstyled" id="nav-bookmarks">
 	<li class="dropdown-header">Избранное
