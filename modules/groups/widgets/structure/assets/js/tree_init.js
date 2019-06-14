@@ -21,9 +21,9 @@ class GraphControl {
 		this.network.on('beforeDrawing', function() {
 			self.resizeContainer();
 		}).on('stabilized', function() {
-			GraphControl.fitAnimated();
+			self.fitAnimated();
 		});
-		GraphControl.fitAnimated();
+		self.fitAnimated();
 	}
 
 	/**
@@ -149,16 +149,14 @@ class GraphControl {
 		this.options = this.current_options;
 	}
 
-	static fitAnimated() {
-		if (true === self.autofit) {
-			self.network.fit({
-				animation: {
-					offset: {x: 0, y: 0},
-					duration: 1000,
-					easingFunction: 'easeInOutQuint'
-				}
-			});
-		}
+	fitAnimated() {
+		this.network.fit({
+			animation: {
+				offset: {x: 0, y: 0},
+				duration: 1000,
+				easingFunction: 'easeInOutQuint'
+			}
+		});
 	}
 
 	resizeContainer() {

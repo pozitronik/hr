@@ -14,7 +14,7 @@ use app\widgets\ribbon\RibbonWidget;
 use kartik\switchinput\SwitchInput;
 use yii\web\View;
 
-$this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);", View::POS_END);
+$this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); $('#fitBtn').on('click',function() {graphControl.fitAnimated()})", View::POS_END);
 ?>
 
 
@@ -37,7 +37,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);"
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { togglePhysics(state); }"
+						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.physics = state; }"
 					],
 					'pluginOptions' => [
 
@@ -54,7 +54,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);"
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { toggleHierarchy(state); }"
+						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.hierarchy = state; }"
 					],
 					'pluginOptions' => [
 						'size' => 'mini',
@@ -72,7 +72,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);"
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { toggleMultiselection(state); }"
+						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.multiselection = state; }"
 					],
 					'pluginOptions' => [
 
@@ -90,7 +90,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);"
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { autofit = state }"
+						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.autofit = state }"
 					],
 					'pluginOptions' => [
 						'size' => 'mini',
@@ -100,7 +100,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id);"
 						'offColor' => 'default'
 					]
 				]).'</label>
-					<button class="btn btn-primary" onclick="fitAnimated()" title="Fit"><i class="fa fa-compress-arrows-alt"></i></button>
+					<button class="btn btn-primary" id="fitBtn" title="Fit"><i class="fa fa-compress-arrows-alt"></i></button>
 					</div>'
 		]),
 		new RibbonPage([
