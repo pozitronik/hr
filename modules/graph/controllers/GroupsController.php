@@ -60,31 +60,35 @@ class GroupsController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionSavePositions(int $id, string $configName = 'default'):array {
+	public function actionSavePositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
-		if (null === Groups::findModel($id)) {
-			return $this->answer->addError('group', 'Not found');
-		}
-		if (false !== $nodes = Yii::$app->request->post('nodes', false)) {
-			$nodes = json_decode($nodes, true);
-			$currentNodesPositions = $user->options->nodePositionsConfig;
 
-			$currentPositionsConfig = new NodesPositionsConfig([
-				'name' => $configName,
-				'groupId' => $id
-			]);
-
-			$currentPositionsConfig->loadNodes($nodes);
-
-			if ($currentPositionsConfig->hasErrors()) {
-				return $this->answer->addErrors($currentPositionsConfig->errors);
+		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('id', false))) && ($configName = Yii::$app->request->post('configName', false))) {
+			if (null === Groups::findModel($groupId)) {
+				return $this->answer->addError('group', 'Not found');
 			}
+			if (false !== $nodes = Yii::$app->request->post('nodes', false)) {
+				$nodes = json_decode($nodes, true);
+				$currentNodesPositions = $user->options->nodePositionsConfig;
 
-			$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, $currentPositionsConfig->asArray());
+				$currentPositionsConfig = new NodesPositionsConfig([
+					'name' => $configName,
+					'groupId' => $groupId
+				]);
 
-			$user->options->nodePositionsConfig = $currentNodesPositions;
-			return $this->answer->answer;
+				$currentPositionsConfig->loadNodes($nodes);
+
+				if ($currentPositionsConfig->hasErrors()) {
+					return $this->answer->addErrors($currentPositionsConfig->errors);
+				}
+
+				$currentNodesPositions = ArrayHelper::merge_recursive($currentNodesPositions, $currentPositionsConfig->asArray());
+
+				$user->options->nodePositionsConfig = $currentNodesPositions;
+				return $this->answer->answer;
+			}
 		}
+
 		return $this->answer->addError('nodes', 'Can\'t load data');
 	}
 
@@ -102,7 +106,7 @@ class GroupsController extends BaseAjaxController {
 
 		$userConfig = $user->options->nodePositionsConfig;
 		/** @var string $groupId */
-		unset($userConfig[$groupId][$configName]);
+		unset($userConfig[$id][$configName]);
 
 		$user->options->nodePositionsConfig = $userConfig;
 		return $this->answer->answer;

@@ -7,9 +7,9 @@ const URL_LOAD_GRAPH = '/graph/groups/graph',//загрузка структур
 	URL_LOAD_OPTIONS = '',//загрузка параметров визуализации
 	URL_SAVE_OPTIONS = '',//сохранение ----
 	URL_DELETE_OPTIONS = '',//удаление ----
-	URL_LOAD_POSITIONS = '',//загрузка позиций
-	URL_SAVE_POSITIONS = '',//сохранение ----
-	URL_DELETE_POSITIONS = '';//удаление ----
+	URL_LOAD_POSITIONS = '/graph/groups/load-positions',//загрузка позиций
+	URL_SAVE_POSITIONS = '/graph/groups/save-positions',//сохранение ----
+	URL_DELETE_POSITIONS = '/graph/groups/delete-positions';//удаление ----
 
 class GraphControl {
 
@@ -38,7 +38,9 @@ class GraphControl {
 	}
 
 	loadGraph() {
-		getJSON(URL_LOAD_GRAPH + '?id=' + encodeURIComponent(this.groupId)).then(
+		getJSON(URL_LOAD_GRAPH, {
+			id: this.groupId
+		}).then(
 			response => this.network.setData(response),
 			error => console.log(error)
 		)
@@ -93,8 +95,11 @@ class GraphControl {
 	 * Загружает сохранённый набор координат нод по имени конфига
 	 * @param configName
 	 */
-	loadNodesPositions(configName = 'default') {//todo согласовать порядок параметров
-		getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(this.groupId) + '&configName=' + encodeURIComponent(configName)).then(
+	loadNodesPositions(configName = 'default') {
+		getJSON(URL_LOAD_POSITIONS, {
+			id: this.groupId,
+			configName: configName
+		}).then(
 			response => this.network.setData(response),
 			error => console.log(error)
 		)
@@ -108,8 +113,11 @@ class GraphControl {
 	saveNodesPositions(configName = 'default', nodes = null) {
 		if (null === nodes) nodes = this.network.getPositions();
 
-		postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', 'groupId=' + encodeURIComponent(this.groupId) +
-			'&nodes=' + encodeURIComponent(JSON.stringify(nodes)) + '&name=' + encodeURIComponent(configName)).then(
+		postUrlEncoded(URL_SAVE_POSITIONS, {
+			id: this.groupId,
+			configName: configName,
+			nodes: JSON.stringify(nodes)
+		}).then(
 			response => console.log('nodes positions saved'),
 			error => console.log(error)
 		)
@@ -120,9 +128,11 @@ class GraphControl {
 	 * @param configName
 	 */
 	deleteNodesPositions(configName = 'default') {
-		postUrlEncoded('/groups/ajax/groups-tree-delete-nodes-positions', 'groupId=' + encodeURIComponent(this.groupId) +
-			'&name=' + encodeURIComponent(configName)).then(
-			response => console.log('nodes positions saved'),
+		getJSON(URL_DELETE_POSITIONS, {
+			id: this.groupId,
+			configName: configName
+		}).then(
+			response => console.log('nodes positions deleted'),
 			error => console.log(error)
 		)
 	}

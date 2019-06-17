@@ -153,9 +153,9 @@ postUrlEncoded = function(url, parameters) {
 			const error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
-		url += '?';
+		postString = '';
 		for (let key in parameters) {
-			url += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
+			postString += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
 		}
 		request.open('POST', url, true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
