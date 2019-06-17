@@ -3,6 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\graph\models;
 
+use Exception;
+use pozitronik\helpers\ArrayHelper;
+use yii\base\ArrayableTrait;
 use yii\base\Model;
 
 /**
@@ -15,9 +18,41 @@ use yii\base\Model;
  * @property string $label
  * @property int $size
  * @property string $color
- * @property string $type
+ * @property string $shape
  * @property string $image
+ * @property boolean $widthConstraint
  */
 class GraphNode extends Model {
+	use ArrayableTrait;
 
+	public $x = 0;
+	public $y = 0;
+	public $id;
+	public $label;
+	public $shape;
+	public $image;
+	public $color;
+	public $widthConstraint;
+
+	/**
+	 * GraphNode constructor.
+	 * @param Model $model
+	 * @param array $config
+	 */
+	public function __construct(Model $model, $config = []) {
+		parent::__construct($config);
+		$this->id = $model->formName();
+	}
+
+
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	protected function getRandomRGB():string {
+		$red = random_int(10, 255);
+		$green = random_int(10, 255);
+		$blue = random_int(10, 255);
+		return "rgb({$red},{$green},{$blue})";
+	}
 }

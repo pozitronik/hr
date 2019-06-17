@@ -4,6 +4,9 @@ declare(strict_types = 1);
 namespace app\modules\graph\controllers;
 
 use app\models\prototypes\NodesPositionsConfig;
+use app\modules\graph\models\GraphNode;
+use app\modules\graph\models\GroupGraph;
+use app\modules\graph\models\GroupNode;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersGroups;
@@ -19,6 +22,41 @@ use Yii;
  * @package app\modules\groups\controllers
  */
 class GroupsController extends BaseAjaxController {
+
+	/**
+	 * Возвращает ноду указанной группы
+	 * @param int $id -- id группы
+	 * @return array
+	 */
+	public function actionNode(int $id):array {
+		if (null === $group = Groups::findModel($id)) {
+			return $this->answer->addError('group', 'Not found');
+		}
+		$node = new GroupNode($group);
+		return $node->toArray();
+	}
+
+	/**
+	 * Отдаёт JSON с деревом графа для группы
+	 * @param int $id -- id группы
+	 * @param int $depth -- глубина построения дерева
+	 * @return array
+	 */
+	public function actionGraph(int $id, int $depth = 0):array {
+		if (null === $group = Groups::findModel($id)) {
+			return $this->answer->addError('group', 'Not found');
+		}
+		$graph = new GroupGraph($group);
+		return $graph->toArray();
+	}
+
+	/**
+	 * @param string $configName -- имя конфигурации нод
+	 * @return array
+	 */
+	public function actionLoadPositions(string $configName = 'default'):array {
+
+	}
 
 	/*Экшены, которые потом выделить в сабмодуль графов!*/
 
