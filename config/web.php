@@ -9,6 +9,7 @@ use app\models\relations\RelUsersGroupsRoles;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\export\ExportModule;
+use app\modules\graph\GraphModule;
 use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
@@ -149,6 +150,9 @@ $config = [
 					RefVacancyRecruiters::class
 				]
 			]
+		],
+		'graph' => [
+			'class' => GraphModule::class
 		]
 	],
 	'components' => [
