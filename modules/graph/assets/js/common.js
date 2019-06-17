@@ -108,7 +108,7 @@ ajax = function() {
 		for (i in names)
 			try {
 				return new ActiveXObject(names[i]);
-			} catch (e) {
+			} catch (ignore) {
 			}
 	}
 
