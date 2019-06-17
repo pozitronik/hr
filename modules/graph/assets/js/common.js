@@ -68,23 +68,25 @@ const _ = {
  * @param value
  * @returns {boolean|*}
  */
-function isEmpty (value) {
+function isEmpty(value) {
 	return null === value || value === undefined || ($.isArray(value) && 0 === value.length) || '' === value;
 }
+
 /**
  * Проверка на число
  * @param n
  * @returns {boolean}
  */
-function isNumeric (n) {
+function isNumeric(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
 /**
  * Проверка что элмент отмечен
  * @param element
  * @returns {*|jQuery}
  */
-function isChecked (element) {
+function isChecked(element) {
 	return element.prop("checked");
 }
 
@@ -113,13 +115,19 @@ ajax = function() {
 	return null;
 };
 
-getJSON = function(url) {
+getJSON = function(url, parameters) {
 	return new Promise(function(resolve, reject) {
 		const request = ajax();
 		if (!request) {
 			const error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
+		url += '?';
+		for (let key in parameters) {
+			url += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
+		}
+
+
 		request.open('GET', url, true);
 		request.onreadystatechange = function() {
 			if (4 === request.readyState) {
@@ -137,12 +145,17 @@ getJSON = function(url) {
 postJSON = function(url, json) {
 
 };
-postUrlEncoded = function(url, postString) {
+
+postUrlEncoded = function(url, parameters) {
 	return new Promise(function(resolve, reject) {
 		const request = ajax();
 		if (!request) {
 			const error = new Error('XMLHttpRequest not supported');
 			reject(error);
+		}
+		url += '?';
+		for (let key in parameters) {
+			url += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
 		}
 		request.open('POST', url, true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
