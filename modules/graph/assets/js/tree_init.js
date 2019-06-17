@@ -2,6 +2,14 @@
 
 const positionNone = 0, //не позиционировать ноды на сервере
 	positionRound = 1;// позиционировать в круговую диаграмму
+/*адреса для ajax-запросов*/
+const URL_LOAD_GRAPH = '/graph/groups/graph',//загрузка структуры
+	URL_LOAD_OPTIONS = '',//загрузка параметров визуализации
+	URL_SAVE_OPTIONS = '',//сохранение ----
+	URL_DELETE_OPTIONS = '',//удаление ----
+	URL_LOAD_POSITIONS = '',//загрузка позиций
+	URL_SAVE_POSITIONS = '',//сохранение ----
+	URL_DELETE_POSITIONS = '';//удаление ----
 
 class GraphControl {
 
@@ -11,8 +19,11 @@ class GraphControl {
 	 */
 	constructor(container, groupId) {
 		let self = this;
+		this.groupId = groupId || _.get('id');
 		this.container = container;
-		this.loadNodesPositions(groupId);
+		this.loadGraph();
+
+		// this.loadNodesPositions(groupId);
 		this.network = new vis.Network(_.$('tree-container'));
 		this.options = self.loadGraphOptions();
 
@@ -26,13 +37,19 @@ class GraphControl {
 		self.fitAnimated();
 	}
 
+	loadGraph() {
+		getJSON(URL_LOAD_GRAPH + '?id=' + encodeURIComponent(this.groupId)).then(
+			response => this.network.setData(response),
+			error => console.log(error)
+		)
+	}
+
 	/**
 	 * Загружает набор нод для группы
 	 * @return object
-	 * @param groupId
 	 * @param positionMode
 	 */
-	loadGroupGraph(groupId, positionMode = positionNone) {
+	loadGroupGraph(positionMode = positionNone) {
 	}
 
 	/**
@@ -74,12 +91,10 @@ class GraphControl {
 
 	/**
 	 * Загружает сохранённый набор координат нод по имени конфига
-	 * @param groupId
 	 * @param configName
 	 */
-	loadNodesPositions(groupId = null, configName = 'default') {//todo согласовать порядок параметров
-		if (null === groupId) groupId = _.get('id');
-		getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(groupId) + '&configName=' + encodeURIComponent(configName)).then(
+	loadNodesPositions(configName = 'default') {//todo согласовать порядок параметров
+		getJSON('/groups/ajax/groups-tree?id=' + encodeURIComponent(this.groupId) + '&configName=' + encodeURIComponent(configName)).then(
 			response => this.network.setData(response),
 			error => console.log(error)
 		)
@@ -88,14 +103,12 @@ class GraphControl {
 	/**
 	 * Сохраняет набор нод в конфиг
 	 * @param configName
-	 * @param groupId
 	 * @param nodes
 	 */
-	saveNodesPositions(configName = 'default', groupId = null, nodes = null) {
-		if (null === groupId) groupId = _.get('id');
+	saveNodesPositions(configName = 'default', nodes = null) {
 		if (null === nodes) nodes = this.network.getPositions();
 
-		postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', 'groupId=' + encodeURIComponent(groupId) +
+		postUrlEncoded('/groups/ajax/groups-tree-save-nodes-positions', 'groupId=' + encodeURIComponent(this.groupId) +
 			'&nodes=' + encodeURIComponent(JSON.stringify(nodes)) + '&name=' + encodeURIComponent(configName)).then(
 			response => console.log('nodes positions saved'),
 			error => console.log(error)
@@ -105,11 +118,9 @@ class GraphControl {
 	/**
 	 * Убирает конфиг с заданным именем
 	 * @param configName
-	 * @param groupId
 	 */
-	deleteNodesPositions(configName = 'default', groupId = null) {
-		if (null === groupId) groupId = _.get('id');
-		postUrlEncoded('/groups/ajax/groups-tree-delete-nodes-positions', 'groupId=' + encodeURIComponent(groupId) +
+	deleteNodesPositions(configName = 'default') {
+		postUrlEncoded('/groups/ajax/groups-tree-delete-nodes-positions', 'groupId=' + encodeURIComponent(this.groupId) +
 			'&name=' + encodeURIComponent(configName)).then(
 			response => console.log('nodes positions saved'),
 			error => console.log(error)
