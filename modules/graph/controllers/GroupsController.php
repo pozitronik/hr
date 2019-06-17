@@ -4,9 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\graph\controllers;
 
 use app\models\prototypes\NodesPositionsConfig;
-use app\modules\graph\models\GraphNode;
 use app\modules\graph\models\GroupGraph;
-use app\modules\graph\models\GroupNode;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersGroups;
@@ -24,25 +22,13 @@ use Yii;
 class GroupsController extends BaseAjaxController {
 
 	/**
-	 * Возвращает ноду указанной группы
-	 * @param int $id -- id группы
-	 * @return array
-	 * Не нужно, просто запрашиваем граф без глубин
-	 */
-	public function actionNode(int $id):array {
-		if (null === $group = Groups::findModel($id)) {
-			return $this->answer->addError('group', 'Not found');
-		}
-		$node = new GroupNode($group);
-		return $node->toArray();
-	}
-
-	/**
 	 * Отдаёт JSON с деревом графа для группы
 	 * @param int $id -- id группы
 	 * @param int $up -- глубина построения дерева вверх
 	 * @param int $down -- глубина построения дерева вниз
+	 * Для получения одной ноды спрашиваем с up = 0/down = 0
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionGraph(int $id, int $up = 0, int $down = -1):array {
 		if (null === $group = Groups::findModel($id)) {
@@ -53,12 +39,32 @@ class GroupsController extends BaseAjaxController {
 	}
 
 	/**
+	 * @param int $id -- id группы
 	 * @param string $configName -- имя конфигурации нод
 	 * @return array
 	 */
-	public function actionLoadPositions(string $configName = 'default'):array {
+	public function actionLoadPositions(int $id, string $configName = 'default'):array {
 
 	}
+
+	/**
+	 * @param int $id
+	 * @param string $configName
+	 * @return array
+	 */
+	public function actionSavePositions(int $id, string $configName = 'default'):array {
+
+	}
+
+	/**
+	 * @param int $id
+	 * @param string $configName
+	 * @return array
+	 */
+	public function actionDeletePositions(int $id, string $configName):array {
+
+	}
+
 
 	/*Экшены, которые потом выделить в сабмодуль графов!*/
 
@@ -149,7 +155,7 @@ class GroupsController extends BaseAjaxController {
 	 */
 	public function actionGroupsTreeDeleteNodesPositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
-		if (false !== $groupId = Yii::$app->request->post('groupId', false) && ($configName = Yii::$app->request->post('name', false))) {
+		if (false !== $groupId = (Yii::$app->request->post('groupId', false) && ($configName = Yii::$app->request->post('name', false)))) {
 
 			$userConfig = $user->options->nodePositionsConfig;
 			/** @var string $groupId */
