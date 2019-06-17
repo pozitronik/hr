@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\groups\widgets\graph_widgets\position_selector;
+namespace app\modules\graph\widgets\position_selector;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
@@ -11,7 +11,7 @@ use app\assets\AppAsset;
  * @package app\components\position_selector
  */
 class PositionSelectorWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/groups/widgets/graph_widgets/position_selector/assets';
+	public $sourcePath = '@app/modules/graph/widgets/position_selector/assets';
 	public $css = [
 		'css/position_selector.css'
 	];
@@ -23,6 +23,6 @@ class PositionSelectorWidgetAssets extends AssetBundle {
 	];
 
 	public $publishOptions = [
-		'forceCopy' => false
+		'forceCopy' => true
 	];
 }

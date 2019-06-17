@@ -1,13 +1,14 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\groups\widgets\graph_widgets\position_selector;
+namespace app\modules\graph\widgets\position_selector;
 
 use yii\base\Widget;
 
 /**
+ * Временный виджет, обеспечивающий обработку контрола сохранения/загрузки позиций нод
  * Class PositionSelectorWidget
- * @package app\widgets\position_selector
+ * @package app\modules\graph\widgets\position_selector
  */
 class PositionSelectorWidget extends Widget {
 	public $positionConfigurations = [];
