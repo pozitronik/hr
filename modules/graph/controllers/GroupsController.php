@@ -39,14 +39,15 @@ class GroupsController extends BaseAjaxController {
 	/**
 	 * Отдаёт JSON с деревом графа для группы
 	 * @param int $id -- id группы
-	 * @param int $depth -- глубина построения дерева
+	 * @param int $up -- глубина построения дерева вверх
+	 * @param int $down -- глубина построения дерева вниз
 	 * @return array
 	 */
-	public function actionGraph(int $id, int $depth = 0):array {
+	public function actionGraph(int $id, int $up = 0, int $down = -1):array {
 		if (null === $group = Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');
 		}
-		$graph = new GroupGraph($group);
+		$graph = new GroupGraph($group, ['upDepth' => $up, 'downDepth' => $down]);
 		return $graph->toArray();
 	}
 
