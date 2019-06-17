@@ -44,21 +44,6 @@ class AjaxController extends BaseAjaxController {
 			$group->applyNodesPositions($nodes, $namedConfiguration);
 		}
 
-//		switch ($restorePositions) {
-//			default:
-//			case 0:
-//				$group->applyNodesPositions($nodes, ArrayHelper::getValue($user->options->nodePositionsConfig, $id, []));
-//			break;
-//			case 1:
-//				$newPositions = $user->options->nodePositionsConfig;
-//				unset($newPositions[$id]);
-//				$user->options->nodePositionsConfig = $newPositions;
-//			break;
-//			case 2:
-//				//do nothing
-//			break;
-//		}
-		/*sigma.js требует выдачи данных в таком формате, пожтому answer не используем*/
 		return compact('nodes', 'edges');
 	}
 
@@ -109,7 +94,7 @@ class AjaxController extends BaseAjaxController {
 	 */
 	public function actionGroupsTreeDeleteNodesPositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
-		if (false !== $groupId = Yii::$app->request->post('groupId', false) && ($configName = Yii::$app->request->post('name', false))) {
+		if (false !== $groupId = (Yii::$app->request->post('groupId', false) && ($configName = Yii::$app->request->post('name', false)))) {
 
 			$userConfig = $user->options->nodePositionsConfig;
 			/** @var string $groupId */
