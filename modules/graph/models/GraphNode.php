@@ -5,6 +5,7 @@ namespace app\modules\graph\models;
 
 use Exception;
 use yii\base\ArrayableTrait;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 
 /**
@@ -37,6 +38,7 @@ class GraphNode extends Model {
 	 * GraphNode constructor.
 	 * @param Model $model
 	 * @param array $config
+	 * @throws InvalidConfigException
 	 */
 	public function __construct(Model $model, $config = []) {
 		parent::__construct($config);

@@ -38,6 +38,7 @@ class GroupGraph extends Model {//todo GraphInterface
 	/**
 	 * Строит двунаправленный граф для указанной группы
 	 * @param Groups $group
+	 * @throws Throwable
 	 */
 	public function buildGraph(Groups $group):void {
 		$processedStack[$group->id] = true;
