@@ -13,7 +13,7 @@ const _ = {
 	removeClass: function(selectors, cssClass) {
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
-		for (i = 0; i < l; i++) {
+		for (let i = 0; i < l; i++) {
 			const el = nodes[i];
 			// Bootstrap compatibility
 			el.className = el.className.replace(cssClass, '');
@@ -26,7 +26,7 @@ const _ = {
 		for (i = 0; i < l; i++) {
 			const el = nodes[i];
 			// Bootstrap compatibility
-			if (-1 == el.className.indexOf(cssClass)) {
+			if (-1 === el.className.indexOf(cssClass)) {
 				el.className += ' ' + cssClass;
 			}
 		}
@@ -153,7 +153,7 @@ postUrlEncoded = function(url, parameters) {
 			const error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
-		postString = '';
+		let postString = '';
 		for (let key in parameters) {
 			postString += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
 		}

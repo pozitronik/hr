@@ -55,8 +55,6 @@ class GroupsController extends BaseAjaxController {
 	}
 
 	/**
-	 * @param int $id
-	 * @param string $configName
 	 * @return array
 	 * @throws Throwable
 	 */
