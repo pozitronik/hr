@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models\traits;
 
+use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelGroupsGroups;
@@ -26,9 +27,9 @@ trait Graph {
 		$red = random_int(10, 255);
 		$green = random_int(10, 255);
 		$blue = random_int(10, 255);
-		$size = 50/($y+1);
+		$size = 50 / ($y + 1);
 		return [
-			'id' => (string)$this->id,
+			'id' => "group{$this->id}",
 			'label' => (string)$this->name,
 			'x' => $x,
 			'y' => $y,
@@ -46,19 +47,11 @@ trait Graph {
 	 * @return array
 	 */
 	private function Edge(Groups $to):array {
-//		if (false === $color = RelGroupsGroups::getRelationColor($this->id, $to->id)) {
-//			 //цвет вычисляется, как средний между цветом исходящей группы и входящей группы
-//		}
 		return [
-			'id' => "{$this->id}x{$to->id}",
-			'source' => (string)$this->id,
-			'target' => (string)$to->id,
-			'from' => (string)$this->id,
-			'to' => (string)$to->id,
-			'type' => 'curvedArrow',
+			'id' => "Group{$this->id}xGroup{$to->id}",
+			'from' => "group{$this->id}",
+			'to' => "group{$to->id}",
 			'label' => $to->leader->username,
-			'size' => '5',
-			'arrowStrikethrough' => false,
 			'color' => RelGroupsGroups::getRelationColor($this->id, $to->id)
 		];
 	}
@@ -71,11 +64,10 @@ trait Graph {
 	 * @param int $x
 	 * @throws Throwable
 	 */
-	public function getGraph(array &$graphStack = [], array &$edgesStack = [], array &$childStack = [], int &$x = 0, int &$y = 0):void {
+	public function getGraph(array &$graphStack = [], array &$edgesStack = [], array &$childStack = [], array &$usersStack = [], int &$x = 0, int &$y = 0):void {
 		/** @var Groups $this */
 		$childStack[$this->id] = true;
 		$graphStack[] = $this->asNode($x, $y);
-
 		/** @var Groups $childGroup */
 		$y++;
 		/** @noinspection ForeachSourceInspection */
@@ -84,9 +76,23 @@ trait Graph {
 
 			if (false === ArrayHelper::getValue($childStack, $childGroup->id, false)) {
 				$childStack[$childGroup->id] = true;
-				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $x, $y);
+				$childGroup->getGraph($graphStack, $edgesStack, $childStack, $usersStack, $x, $y);
 			}
 		}
+
+		/** @var Users $user */
+		foreach ($this->relUsers as $user) {
+
+			if (!in_array($user->id, $usersStack)) {
+
+				$graphStack[] = $user->asNode($x, $y);
+				/** @var Groups $this */
+				$edgesStack[] = $user->Edge($this);
+				$usersStack[] = $user->id;
+			}
+
+		}
+
 		$x++;
 		$y--;
 	}
