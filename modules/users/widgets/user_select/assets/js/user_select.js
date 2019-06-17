@@ -43,11 +43,11 @@ function ajax_post(postUrl, button_id, group_id) {
 
 function processResults(data, params) {//unused
 	params.page = params.page || 1;
-	var result = {
+	return {
 		results: data.results,
 		pagination: {
 			more: 20 === data.results.length
 		}
 	};
-	return result;
+
 }
