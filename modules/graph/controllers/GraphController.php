@@ -6,7 +6,7 @@ namespace app\modules\graph\controllers;
 use app\models\core\WigetableController;
 use app\models\user\CurrentUser;
 use pozitronik\helpers\ArrayHelper;
-use Yii;
+use Throwable;
 
 /**
  * Class GraphController
@@ -21,6 +21,7 @@ class GraphController extends WigetableController {
 	/**
 	 * @param int $id -- id группы
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionGroup(int $id):string {
 		$positionConfigurations = ['default' => 'default'];

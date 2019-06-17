@@ -60,8 +60,9 @@ trait Graph {
 	 * @param array $graphStack
 	 * @param array $edgesStack
 	 * @param array $childStack
-	 * @param int $y
+	 * @param array $usersStack
 	 * @param int $x
+	 * @param int $y
 	 * @throws Throwable
 	 */
 	public function getGraph(array &$graphStack = [], array &$edgesStack = [], array &$childStack = [], array &$usersStack = [], int &$x = 0, int &$y = 0):void {

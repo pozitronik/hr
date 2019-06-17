@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\graph\models;
 
 use Exception;
-use pozitronik\helpers\ArrayHelper;
 use yii\base\ArrayableTrait;
 use yii\base\Model;
 

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\graph\models;
 
 use app\modules\groups\models\Groups;
-use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\ArrayableTrait;
@@ -15,8 +14,8 @@ use yii\base\Model;
  * Class GroupGraph
  * @package app\modules\graph\models
  *
- * @property $upDepth -- глубина построения дерева вверх. 0 - только текущий уровень, отрицательное значение - нет ограничения
- * @property $downDepth -- глубина построения дерева вниз. 0 - только текущий уровень, отрицательное значение - нет ограничения
+ * @property int $upDepth -- глубина построения дерева вверх. 0 - только текущий уровень, отрицательное значение - нет ограничения
+ * @property int $downDepth -- глубина построения дерева вниз. 0 - только текущий уровень, отрицательное значение - нет ограничения
  * @property GroupNode[] $nodes
  * @property GroupEdge[] $edges
  */
@@ -51,6 +50,7 @@ class GroupGraph extends Model {//todo GraphInterface
 	 * Строит граф вниз от указанной группы
 	 * @param Groups $group
 	 * @param array $processedStack -- массив обработанных групп для предотвращения зацикливания
+	 * @param int $currentDepth
 	 * @throws Throwable
 	 */
 	public function buildGraphDown(Groups $group, array &$processedStack = [], int &$currentDepth = 0):void {
@@ -72,6 +72,7 @@ class GroupGraph extends Model {//todo GraphInterface
 	 * Строит граф вверх от указанной группы
 	 * @param Groups $group
 	 * @param array $processedStack -- массив обработанных групп для предотвращения зацикливания
+	 * @param int $currentDepth
 	 * @throws Throwable
 	 */
 	public function buildGraphUp(Groups $group, array &$processedStack = [], int &$currentDepth = 0):void {

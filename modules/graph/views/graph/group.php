@@ -8,9 +8,9 @@ declare(strict_types = 1);
  * @var array $positionConfigurations
  */
 use app\modules\graph\assets\VisjsAsset;
+use app\modules\graph\widgets\position_selector\PositionSelectorWidget;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
-use app\modules\groups\widgets\graph_widgets\position_selector\PositionSelectorWidget;
 use app\widgets\ribbon\RibbonPage;
 use app\widgets\ribbon\RibbonWidget;
 use kartik\switchinput\SwitchInput;
@@ -117,7 +117,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 		new RibbonPage([
 			'caption' => 'Редактор',
 			'content' => 'Тут нет ничего'
-		]),
+		])
 	]
 ]) ?>
 
