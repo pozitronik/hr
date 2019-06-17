@@ -17,7 +17,7 @@ use yii\base\Model;
  * @property int $upDepth -- глубина построения дерева вверх. 0 - только текущий уровень, отрицательное значение - нет ограничения
  * @property int $downDepth -- глубина построения дерева вниз. 0 - только текущий уровень, отрицательное значение - нет ограничения
  * @property GroupNode[] $nodes
- * @property GroupEdge[] $edgess
+ * @property GroupEdge[] $edges
  */
 class GroupGraph extends Model {//todo GraphInterface
 	use ArrayableTrait;
@@ -107,7 +107,22 @@ class GroupGraph extends Model {//todo GraphInterface
 		$this->downDepth = $downDepth;
 	}
 
-	public function roundNodes() {
+	/**
+	 * Применяет набор позиций к текущим нодам
+	 * @param array $positions -- позиции в формате [nodeId => [x,y]]
+	 */
+	public function applyNodesPositions(array $positions = []):void {
+		foreach ($positions as $nodeId => $position) {
+			if (false !== ($key = array_search($nodeId, array_column($this->nodes, 'id')))) {
+				/** @var integer $key */
+				$this->nodes[$key]->x = $position['x'];
+				$this->nodes[$key]->y = $position['y'];
+			}
+
+		}
+	}
+
+	public function roundNodes():void {
 		$levelMap = [];
 		foreach ($this->nodes as $node) {//распределение нод по уровням круга.
 			$levelMap[$node->y][] = $node;
