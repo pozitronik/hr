@@ -17,7 +17,7 @@ use yii\base\Model;
  * @property int $upDepth -- глубина построения дерева вверх. 0 - только текущий уровень, отрицательное значение - нет ограничения
  * @property int $downDepth -- глубина построения дерева вниз. 0 - только текущий уровень, отрицательное значение - нет ограничения
  * @property GroupNode[] $nodes
- * @property GroupEdge[] $edges
+ * @property GroupEdge[] $edgess
  */
 class GroupGraph extends Model {//todo GraphInterface
 	use ArrayableTrait;
@@ -61,8 +61,9 @@ class GroupGraph extends Model {//todo GraphInterface
 			/** @var Groups $childGroup */
 			foreach ((array)$group->relChildGroups as $childGroup) {
 				if (false === ArrayHelper::getValue($processedStack, $childGroup->id, false)) {
-					$this->nodes[] = new GroupNode($childGroup);
+					$this->nodes[] = new GroupNode($childGroup, ['y' => $currentDepth]);//позиционирование по y может использоваться при серверном расчёте координат, но его можно игнорировать при клиентском расчёте
 					$this->buildGraphDown($childGroup, $processedStack, $currentDepth);
+					$currentDepth--;
 				}
 				$this->edges[] = new GroupEdge($group, $childGroup);
 			}
@@ -83,8 +84,9 @@ class GroupGraph extends Model {//todo GraphInterface
 			/** @var Groups $parentGroup */
 			foreach ((array)$group->relParentGroups as $parentGroup) {
 				if (false === ArrayHelper::getValue($processedStack, $parentGroup->id, false)) {
-					$this->nodes[] = new GroupNode($parentGroup);
+					$this->nodes[] = new GroupNode($parentGroup, ['y' => -1 * $currentDepth]);
 					$this->buildGraphDown($parentGroup, $processedStack, $currentDepth);
+					$currentDepth--;
 				}
 				$this->edges[] = new GroupEdge($parentGroup, $group);
 			}
@@ -103,5 +105,27 @@ class GroupGraph extends Model {//todo GraphInterface
 	 */
 	public function setDownDepth($downDepth):void {
 		$this->downDepth = $downDepth;
+	}
+
+	public function roundNodes() {
+		$levelMap = [];
+		foreach ($this->nodes as $node) {//распределение нод по уровням круга.
+			$levelMap[$node->y][] = $node;
+		}
+		/** @var GraphNode[] $items */
+		foreach ($levelMap as $level => $items) {
+			$c_items = count($items) / 2;//Я не знаю, зачем делить на два, я не академик
+			$degree = 360 / $c_items;//Угловое смещение точки
+
+			$radius = (0 === $level)?$level:($level + 1);
+			$radius *= 360;
+			$angle = 0;//Стартовый угол, 0 - 360
+			/** @var GraphNode[] $items */
+			foreach ($items as $item) {//Почему-то координаты применяются к текущим нодам, хотя работаем мы с копией, а не ссылкой. Нам это ок, но как-то странно
+				$item->x = ($radius * cos($angle * M_PI / 360));
+				$item->y = ($radius * sin($angle * M_PI / 360));
+				$angle += $degree;
+			}
+		}
 	}
 }

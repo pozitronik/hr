@@ -35,6 +35,7 @@ class GroupsController extends BaseAjaxController {
 			return $this->answer->addError('group', 'Not found');
 		}
 		$graph = new GroupGraph($group, ['upDepth' => $up, 'downDepth' => $down]);
+		$graph->roundNodes();
 		return $graph->toArray();
 	}
 
