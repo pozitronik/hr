@@ -54,16 +54,17 @@ class GroupGraph extends Model {//todo GraphInterface
 	 * @throws Throwable
 	 */
 	public function buildGraphDown(Groups $group, array &$processedStack = [], int &$currentDepth = 0):void {
-		if ($this->downDepth < 0 || $currentDepth >= $this->downDepth) {
+		if ($this->downDepth < 0 || $currentDepth < $this->downDepth) {
 			$currentDepth++;
+			$processedStack[$group->id] = true;
 			/** @var Groups $childGroup */
 			foreach ((array)$group->relChildGroups as $childGroup) {
-				$processedStack[$childGroup->id] = true;
+
 				$this->nodes[] = new GroupNode($childGroup);
 				$this->edges[] = new GroupEdge($group, $childGroup);
 
 				if (false === ArrayHelper::getValue($processedStack, $childGroup->id, false)) {
-					$processedStack[$childGroup->id] = true;
+//					$processedStack[$childGroup->id] = true;
 					$this->buildGraphDown($childGroup, $processedStack, $currentDepth);
 				}
 			}
@@ -77,19 +78,34 @@ class GroupGraph extends Model {//todo GraphInterface
 	 * @throws Throwable
 	 */
 	public function buildGraphUp(Groups $group, array &$processedStack = [], int &$currentDepth = 0):void {
-		if ($this->downDepth < 0 || $currentDepth >= $this->downDepth) {
+		if ($this->upDepth < 0 || $currentDepth < $this->upDepth) {
+			$processedStack[$group->id] = true;
 			$currentDepth++;
 			/** @var Groups $parentGroup */
 			foreach ((array)$group->relParentGroups as $parentGroup) {
-				$processedStack[$parentGroup->id] = true;
+
 				$this->nodes[] = new GroupNode($parentGroup);
-				$this->edges[] = new GroupEdge($parentGroup, $groups);
+				$this->edges[] = new GroupEdge($parentGroup, $group);
 
 				if (false === ArrayHelper::getValue($processedStack, $parentGroup->id, false)) {
-					$processedStack[$parentGroup->id] = true;
+//					$processedStack[$parentGroup->id] = true;
 					$this->buildGraphDown($parentGroup, $processedStack, $currentDepth);
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param mixed $upDepth
+	 */
+	public function setUpDepth($upDepth):void {
+		$this->upDepth = $upDepth;
+	}
+
+	/**
+	 * @param mixed $downDepth
+	 */
+	public function setDownDepth($downDepth):void {
+		$this->downDepth = $downDepth;
 	}
 }
