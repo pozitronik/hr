@@ -19,7 +19,7 @@ $('.js-save-position-config').on('click', function() {
 $('select[name=positions]').on('change', function() {
 	let configName = $(this).val();
 	if (!isEmpty(configName)) {
-		graphControl.loadNodesPositions(null, configName);
+		graphControl.loadNodesPositions(configName);
 	}
 	display_deletion_item();
 });
