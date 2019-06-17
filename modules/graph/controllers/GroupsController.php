@@ -32,6 +32,7 @@ class GroupsController extends BaseAjaxController {
 			return $this->answer->addError('group', 'Not found');
 		}
 		$graph = new GroupGraph($group, ['upDepth' => $up, 'downDepth' => $down]);
+		$graph->roundNodes();
 		return $graph->toArray();
 	}
 
@@ -58,7 +59,8 @@ class GroupsController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionSavePositions():array {
+	public
+	function actionSavePositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 
 		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('id', false))) && ($configName = Yii::$app->request->post('configName', false))) {
@@ -96,7 +98,8 @@ class GroupsController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionDeletePositions(int $id, string $configName):array {
+	public
+	function actionDeletePositions(int $id, string $configName):array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if (null === Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');
