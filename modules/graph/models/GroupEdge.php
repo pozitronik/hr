@@ -5,8 +5,6 @@ namespace app\modules\graph\models;
 
 use app\models\relations\RelGroupsGroups;
 use app\modules\groups\models\Groups;
-use yii\base\ArrayableTrait;
-use yii\base\Model;
 
 /**
  * Class GroupEdge
@@ -18,15 +16,7 @@ use yii\base\Model;
  * @property string $label
  * @property string $color
  */
-class GroupEdge extends Model {
-	use ArrayableTrait;
-
-	public $id;
-	public $from;
-	public $to;
-	public $label;
-	public $color;
-
+class GroupEdge extends GraphEdge {
 	/**
 	 * {@inheritDoc}
 	 */
