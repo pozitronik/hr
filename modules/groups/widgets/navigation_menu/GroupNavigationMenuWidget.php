@@ -5,6 +5,7 @@ namespace app\modules\groups\widgets\navigation_menu;
 
 use app\helpers\IconsHelper;
 use app\modules\export\ExportModule;
+use app\modules\graph\GraphModule;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
@@ -50,7 +51,7 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'label' => IconsHelper::network().'Граф',
-				'url' => GroupsModule::to(['groups/tree', 'id' => $this->model->id])
+				'url' => GraphModule::to(['graph/group', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,

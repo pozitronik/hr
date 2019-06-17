@@ -135,15 +135,6 @@ class GroupsController extends WigetableController {
 		]);
 	}
 
-	/**
-	 * @param int $id
-	 * @return string
-	 */
-	public function actionTree(int $id):string {
-		return $this->render('tree', [
-			'id' => $id
-		]);
-	}
 
 	/**
 	 * @param int $id
