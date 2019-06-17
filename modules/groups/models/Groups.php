@@ -9,7 +9,6 @@ use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\LCQuery;
 use app\models\core\traits\Upload;
-use app\modules\groups\models\traits\Graph;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
@@ -58,7 +57,6 @@ use yii\db\ActiveQuery;
  *
  */
 class Groups extends ActiveRecordExtended {
-	use Graph;
 	use Upload;
 	use PluginTrait;
 
