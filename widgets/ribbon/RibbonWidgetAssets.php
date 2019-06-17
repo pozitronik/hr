@@ -23,6 +23,6 @@ class RibbonWidgetAssets extends AssetBundle {
 	];
 
 	public $publishOptions = [
-		'forceCopy' => false
+		'forceCopy' => true
 	];
 }

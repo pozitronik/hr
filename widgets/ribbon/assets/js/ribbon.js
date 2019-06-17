@@ -1,11 +1,12 @@
+let ribbonBody = $('.ribbon .panel-body');
 $('.ribbon-tab').on('dblclick', function() {
-	$('.ribbon .panel-body').slideToggle("fast",function(){
-		resize_container();
+	ribbonBody.slideToggle("fast", function() {
+		graphControl.resizeContainer();
 	});
 }).on('click', function() {
-	if (!$('.ribbon .panel-body').is(":visible")) {
-		$('.ribbon .panel-body').slideToggle("fast",function() {
-			resize_container();
+	if (!ribbonBody.is(":visible")) {
+		ribbonBody.slideToggle("fast", function() {
+			graphControl.resizeContainer();
 		});
 	}
 
