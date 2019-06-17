@@ -27,6 +27,7 @@ class GroupsController extends BaseAjaxController {
 	 * Возвращает ноду указанной группы
 	 * @param int $id -- id группы
 	 * @return array
+	 * Не нужно, просто запрашиваем граф без глубин
 	 */
 	public function actionNode(int $id):array {
 		if (null === $group = Groups::findModel($id)) {

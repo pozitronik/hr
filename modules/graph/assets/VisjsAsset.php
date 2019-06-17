@@ -20,7 +20,6 @@ class VisjsAsset extends AssetBundle {
 		'js/common.js',
 		'js/vis.js/vis.js',
 		'js/tree_init.js'
-//		'js/particles.js/particles.json'//config
 	];
 
 	public $publishOptions = [
