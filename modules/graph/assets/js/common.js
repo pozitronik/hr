@@ -47,10 +47,10 @@ const _ = {
 			const el = nodes[i];
 			//el.style.display = (el.style.display != 'none' ? 'none' : '' );
 			// Bootstrap compatibility
-			if (-1 !== el.className.indexOf(cssClass)) {
-				el.className = el.className.replace(cssClass, '');
-			} else {
+			if (-1 === el.className.indexOf(cssClass)) {
 				el.className += ' ' + cssClass;
+			} else {
+				el.className = el.className.replace(cssClass, '');
 			}
 		}
 	},
