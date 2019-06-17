@@ -69,7 +69,7 @@ const _ = {
  * @returns {boolean|*}
  */
 function isEmpty (value) {
-	return value === null || value === undefined || ($.isArray(value) && value.length === 0) || value === '';
+	return null === value || value === undefined || ($.isArray(value) && 0 === value.length) || '' === value;
 }
 /**
  * Проверка на число
@@ -122,7 +122,7 @@ getJSON = function(url) {
 		}
 		request.open('GET', url, true);
 		request.onreadystatechange = function() {
-			if (request.readyState === 4) {
+			if (4 === request.readyState) {
 				resolve(JSON.parse(request.responseText));
 			}
 		};
@@ -136,8 +136,7 @@ getJSON = function(url) {
 
 postJSON = function(url, json) {
 
-}
-
+};
 postUrlEncoded = function(url, postString) {
 	return new Promise(function(resolve, reject) {
 		const request = ajax();
@@ -148,7 +147,7 @@ postUrlEncoded = function(url, postString) {
 		request.open('POST', url, true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.onreadystatechange = function() {
-			if (request.readyState === 4) {
+			if (4 === request.readyState) {
 				resolve(JSON.parse(request.responseText));
 			}
 		};
@@ -158,7 +157,7 @@ postUrlEncoded = function(url, postString) {
 
 		request.send(postString);
 	});
-}
+};
 
 /*Добавляем метод к массивам*/
 Object.defineProperty(Array.prototype, 'pushOrReplace', {

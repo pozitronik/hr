@@ -40,8 +40,7 @@ display_deletion_item = function() {
 	} else {
 		_.show('.js-remove-position-config');
 	}
-}
-
+};
 $(function() {
 	display_deletion_item();
 

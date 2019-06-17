@@ -6,7 +6,7 @@ function updatePane(graph, filter) {
 	// read nodes
 	graph.nodes().forEach(function (n) {
 		labels[n.label] = n.id;
-	})
+	});
 
 	// node category
 	var labelList = _.$('node-labels');
@@ -40,7 +40,7 @@ function updatePane(graph, filter) {
 
 	/*Бытрый поиск*/
 	_.$('user-search').addEventListener("keyup", function (e) {
-		if (e.keyCode === 13)
+		if (13 === e.keyCode)
 			search_users(_.$('user-search').value);
 	});
 }
@@ -88,8 +88,7 @@ function bindFilter(s) {
 
 	s.selectNeighborhood = function selectNeighborhood(id) {
 		filter.undo().neighborsOf(id).apply()
-	}
-
+	};
 	s.applyLabelFilter = function applyLabelFilter(e) {
 		var nodeId = e.target[e.target.selectedIndex].value;
 		if (-1 == nodeId) {
@@ -97,8 +96,7 @@ function bindFilter(s) {
 		} else {
 			s.selectNeighborhood(nodeId);
 		}
-	}
-
+	};
 	_.$('node-labels').addEventListener("change", s.applyLabelFilter);
 
 	// filter.nodesBy(function (fn, key) {
@@ -155,7 +153,7 @@ function save_node_position(node_id, x, y) {
 
 
 	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4) {
+		if (4 === xhr.readyState) {
 			var response = JSON.parse(xhr.responseText);
 			console.log(response);
 		}
@@ -183,7 +181,7 @@ function save_nodes_positions(nodes) {
 
 
 	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4) {
+		if (4 === xhr.readyState) {
 			var response = JSON.parse(xhr.responseText);
 			console.log(response);
 		}
@@ -201,7 +199,7 @@ function show_group_info(group_id) {
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4) {
+		if (4 === xhr.readyState) {
 			var response = JSON.parse(xhr.responseText);
 			if (0 === response.result) {
 				jQuery('#info-pane').html(response.content)
@@ -228,10 +226,10 @@ function search_users(name) {
 	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
 	xhr.onreadystatechange = function () {
-		if (xhr.readyState === 4) {
+		if (4 === xhr.readyState) {
 			var response = JSON.parse(xhr.responseText);
 			if (0 === response.result) {
-				if (response.count === 0) {
+				if (0 === response.count) {
 					filter.undo('keys').apply();
 					_.$('users-search-counter').innerText = '';
 				} else {

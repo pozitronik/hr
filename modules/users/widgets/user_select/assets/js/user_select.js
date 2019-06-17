@@ -4,7 +4,7 @@ function formatUser(item) {
 
 function submit_toggle(select) {
 	var input = jQuery(select.target).parent().find(':submit');
-	if (jQuery(select.target).val().length > 0) {
+	if (0 < jQuery(select.target).val().length) {
 		input.removeAttr('disabled');
 	} else {
 		input.attr('disabled', 'disabled');
@@ -13,7 +13,7 @@ function submit_toggle(select) {
 
 function ajax_submit_toggle(select, button_id) {
 	var input = jQuery('#' + button_id);
-	if (jQuery(select.target).val().length > 0) {
+	if (0 < jQuery(select.target).val().length) {
 		input.removeAttr('disabled');
 	} else {
 		input.attr('disabled', 'disabled');
@@ -24,7 +24,7 @@ function ajax_post(postUrl, button_id, group_id) {
 	var input = jQuery('#' + button_id);
 	var values = input.parent().parent().find('select').val();
 
-	if (values.length > 0) {
+	if (0 < values.length) {
 		input.attr('disabled', 'disabled');
 		jQuery.ajax({
 			url: postUrl,
@@ -46,7 +46,7 @@ function processResults(data, params) {//unused
 	var result = {
 		results: data.results,
 		pagination: {
-			more: data.results.length === 20
+			more: 20 === data.results.length
 		}
 	};
 	return result;
