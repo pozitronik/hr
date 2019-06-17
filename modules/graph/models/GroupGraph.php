@@ -59,14 +59,11 @@ class GroupGraph extends Model {//todo GraphInterface
 			$processedStack[$group->id] = true;
 			/** @var Groups $childGroup */
 			foreach ((array)$group->relChildGroups as $childGroup) {
-
-				$this->nodes[] = new GroupNode($childGroup);
-				$this->edges[] = new GroupEdge($group, $childGroup);
-
 				if (false === ArrayHelper::getValue($processedStack, $childGroup->id, false)) {
-//					$processedStack[$childGroup->id] = true;
+					$this->nodes[] = new GroupNode($childGroup);
 					$this->buildGraphDown($childGroup, $processedStack, $currentDepth);
 				}
+				$this->edges[] = new GroupEdge($group, $childGroup);
 			}
 		}
 	}
@@ -83,14 +80,11 @@ class GroupGraph extends Model {//todo GraphInterface
 			$currentDepth++;
 			/** @var Groups $parentGroup */
 			foreach ((array)$group->relParentGroups as $parentGroup) {
-
-				$this->nodes[] = new GroupNode($parentGroup);
-				$this->edges[] = new GroupEdge($parentGroup, $group);
-
 				if (false === ArrayHelper::getValue($processedStack, $parentGroup->id, false)) {
-//					$processedStack[$parentGroup->id] = true;
+					$this->nodes[] = new GroupNode($parentGroup);
 					$this->buildGraphDown($parentGroup, $processedStack, $currentDepth);
 				}
+				$this->edges[] = new GroupEdge($parentGroup, $group);
 			}
 		}
 	}
