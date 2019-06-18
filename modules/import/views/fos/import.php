@@ -24,14 +24,14 @@ use yii\web\View;
 			<div class="col-md-12">
 				Импорт разбит на шаги из-за продолжительности.
 			</div>
-			<?php if ([] !== $errors): ?>
-				<div class="col-md-12">
+			<div class="col-md-12">
+				<?php if ([] !== $errors): ?>
 					<?= Html::label('Ошибки при импорте:') ?>
 					<?php Utils::log($errors); ?>
-				</div>
-			<?php else: ?>
-				<?= Html::label('Нет ошибок') ?>
-			<?php endif; ?>
+				<?php else: ?>
+					<?= Html::label('Нет ошибок') ?>
+				<?php endif; ?>
+			</div>
 		</div>
 
 	</div>
