@@ -21,6 +21,8 @@ class GraphControl {
 		let self = this;
 		this.groupId = groupId || _.get('id');
 		this.container = container;
+		this._downDepth = 0;
+		this._upDepth = 0;
 		this.loadGraph();
 
 		// this.loadNodesPositions(groupId);
@@ -28,6 +30,7 @@ class GraphControl {
 		this.options = self.loadGraphOptions();
 
 		this.autofit = true;
+
 
 		this.network.on('beforeDrawing', function() {
 			self.resizeContainer();
@@ -39,7 +42,9 @@ class GraphControl {
 
 	loadGraph() {
 		getJSON(URL_LOAD_GRAPH, {
-			id: this.groupId
+			id: this.groupId,
+			up: this._upDepth,
+			down: this._downDepth
 		}).then(
 			response => this.network.setData(response),
 			error => console.log(error)
@@ -170,6 +175,25 @@ class GraphControl {
 		this.options = this.current_options;
 	}
 
+	set upDepth(upDepth) {
+		this._upDepth = upDepth;
+		this.loadGraph();
+	}
+
+	get upDepth() {
+		return this._upDepth;
+	}
+
+	set downDepth(downDepth) {
+		this._downDepth = downDepth;
+		this.loadGraph();
+	}
+
+	get downDepth() {
+		return this._downDepth;
+	}
+
+
 	fitAnimated() {
 		this.network.fit({
 			animation: {
@@ -178,6 +202,10 @@ class GraphControl {
 				easingFunction: 'easeInOutQuint'
 			}
 		});
+	}
+
+	setLevels(up = 0, down = 0) {
+
 	}
 
 	resizeContainer() {
