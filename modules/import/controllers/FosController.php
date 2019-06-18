@@ -108,7 +108,7 @@ class FosController extends WigetableController {
 		Yii::$app->cache->set($cachedErrorsName, $errors);
 		return $this->redirect(['import',
 			'domain' => $domain,
-			'step' => $importResult?$step + 1:$step,
+			'step' => $importResult?$step + 1:$step
 		]);
 
 	}
