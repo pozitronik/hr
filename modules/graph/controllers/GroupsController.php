@@ -27,7 +27,7 @@ class GroupsController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public function actionGraph(int $id, int $up = 0, int $down = -1):array {
+	public function actionGraph(int $id, int $up = -1, int $down = -1):array {
 		if (null === $group = Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');
 		}
