@@ -84,7 +84,7 @@ class GroupGraph extends Model {//todo GraphInterface
 			/** @var Groups $parentGroup */
 			foreach ((array)$group->relParentGroups as $parentGroup) {
 				if (false === ArrayHelper::getValue($processedStack, $parentGroup->id, false)) {
-					$this->nodes[] = new GroupNode($parentGroup, ['y' => -1 * $currentDepth]);
+					$this->nodes[] = new GroupNode($parentGroup, ['y' => 1 * $currentDepth]);
 					$this->buildGraphUp($parentGroup, $processedStack, $currentDepth);
 					$currentDepth--;
 				}
