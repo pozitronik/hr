@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var string $currentConfiguration
  * @var array $positionConfigurations
  */
+
 use app\modules\graph\assets\VisjsAsset;
 use app\modules\graph\widgets\position_selector\PositionSelectorWidget;
 use app\modules\groups\GroupsModule;
@@ -14,6 +15,7 @@ use app\modules\groups\models\Groups;
 use app\widgets\ribbon\RibbonPage;
 use app\widgets\ribbon\RibbonWidget;
 use kartik\switchinput\SwitchInput;
+use kartik\touchspin\TouchSpin;
 use yii\web\View;
 
 $this->title = 'Дерево структуры: '.Groups::findModel($id)->name;
@@ -112,7 +114,29 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 		]),
 		new RibbonPage([
 			'caption' => 'Фильтры',
-			'content' => 'Тут нет ничего'
+			'content' => '<div class="col-md-2">'.TouchSpin::widget([
+					'name' => 'upDepth',
+					'pluginOptions' => [
+						'verticalbuttons' => true,
+						'min' => -1,
+//						'initval' => -1
+					],
+					'options' => [
+						'placeholder' => 'Детализация вверх'
+					]
+
+				]).'</div><div class="col-md-2">'.TouchSpin::widget([
+					'name' => 'downDepth',
+					'pluginOptions' => [
+						'verticalbuttons' => true,
+						'min' => -1,
+//						'initval' => -1
+					],
+					'options' => [
+						'placeholder' => 'Детализация вниз',
+
+					]
+				]).'</div>'
 		]),
 		new RibbonPage([
 			'caption' => 'Редактор',
