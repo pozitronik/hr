@@ -100,7 +100,7 @@ trait ARExtended {
 
 		$instance = static::getInstance($searchCondition);
 		if ($instance->isNewRecord || $forceUpdate) {
-			$instance->load($fields??$searchCondition);
+			$instance->loadArray($fields??$searchCondition);
 			if (!$instance->save()) {
 				throw new ImportException($instance, $instance->errors);
 			}
