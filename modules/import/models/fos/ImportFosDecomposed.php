@@ -175,35 +175,39 @@ class ImportFosDecomposed extends ActiveRecord {
 	}
 
 	/**
+	 * @param array $errors -- массив ошибок импорта
 	 * @return bool
 	 * @throws Throwable
 	 */
-	private static function DoStepUsers():bool {
+	private static function DoStepUsers(array &$errors = []):bool {
 		/*Пользователи, с должностями, емайлами и атрибутами*/
 		if ([] === $importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
 
 		foreach ($importFosUsers as $importFosUser) {
+			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
+					[
+						'attribute' => 'Адрес',
+						'type' => 'boolean',
+						'field' => 'Удалённое рабочее место',
+						"value" => $importFosUser->remote
+					],
+					[
+						'attribute' => 'Адрес',
+						'type' => 'string',
+						'field' => 'Населённый пункт',
+						"value" => ArrayHelper::getValue($importFosUser->relTown, 'name')
+					],
+					[
+						'attribute' => 'Адрес',
+						'type' => 'string',
+						'field' => 'Внешний почтовый адрес',
+						"value" => $importFosUser->email_sigma
+					]
+				], $errors)) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
+				continue; //пропустим засранца
+			}
 
-			$importFosUser->setAndSaveAttribute('hr_user_id', self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
-				[
-					'attribute' => 'Адрес',
-					'type' => 'boolean',
-					'field' => 'Удалённое рабочее место',
-					"value" => $importFosUser->remote
-				],
-				[
-					'attribute' => 'Адрес',
-					'type' => 'string',
-					'field' => 'Населённый пункт',
-					"value" => ArrayHelper::getValue($importFosUser->relTown, 'name')
-				],
-				[
-					'attribute' => 'Адрес',
-					'type' => 'string',
-					'field' => 'Внешний почтовый адрес',
-					"value" => $importFosUser->email_sigma
-				]
-			]));
+			$importFosUser->setAndSaveAttribute('hr_user_id', $userId);
 			/*Логика декомпозиции подразделений:
 			Если функциональный блок = Розничный бизнес, то делаем группу из level2
 			Если функциональный блок = Пуст, то делаем группу из level2
@@ -317,17 +321,19 @@ class ImportFosDecomposed extends ActiveRecord {
 	/**
 	 * Разбираем декомпозированные данные и вносим в боевую таблицу
 	 * @param int $step
+	 * @param array $errors -- прокидывание ошибок
 	 * @return bool true - шаг выполнен, false - нужно повторить запрос (шаг разбит на подшаги)
+	 * @throws NotFoundHttpException
 	 * @throws Throwable
 	 */
-	public static function Import(int $step = self::STEP_GROUPS):bool {
+	public static function Import(int $step = self::STEP_GROUPS, array &$errors = []):bool {
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 		switch ($step) {
 			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
 				return self::DoStepGroups();
 			break;
 			case self::STEP_USERS:
-				return self::DoStepUsers();
+				return self::DoStepUsers($errors);
 			break;
 			case self::STEP_LINKING_USERS:
 				return self::DoStepLinkingUsers();
@@ -375,10 +381,11 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @param string|null $position
 	 * @param string|null $email
 	 * @param array<array> $attributes
-	 * @return int
+	 * @param array $errors -- ошибки импорта (сообщить админу, пусть сам разбирается)
+	 * @return null|int
 	 * @throws Throwable
 	 */
-	public static function addUser(string $name, ?string $position, ?string $email, array $attributes = []):int {
+	public static function addUser(string $name, ?string $position, ?string $email, array $attributes = [], array &$errors = []):?int {
 		if (empty($name)) return -1;
 		/** @var null|Users $user */
 		$user = Users::find()->where(['username' => $name])->one();
@@ -406,6 +413,10 @@ class ImportFosDecomposed extends ActiveRecord {
 
 		if (null === $user->id) {
 			Yii::debug($user, 'debug');
+			$errors[] = [
+				$name => $user->errors
+			];
+			return null;
 		}
 
 		foreach ($attributes as $attribute) {
