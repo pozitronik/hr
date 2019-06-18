@@ -187,6 +187,9 @@ class ImportFos extends ActiveRecord {
 		$keys = array_keys((new self())->attributeLabels());
 		foreach ($dataArray as $importRow) {
 			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
+			if (count($keys)<>count($importRow)) {
+				throw new BaseException('Не соблюдено количество столбцов файла');
+			}
 			$data = array_combine($keys, $importRow);
 
 			$row = new self($data);
