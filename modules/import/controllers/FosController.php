@@ -98,14 +98,17 @@ class FosController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionImport(?int $domain = null, int $step = ImportFosDecomposed::STEP_GROUPS) {
-		$errors = [];
+		$cachedErrorsName = "ImportErrors".($domain??'');
+		if (false === $errors = Yii::$app->cache->get($cachedErrorsName)) $errors = [];
 		if (ImportFosDecomposed::LAST_STEP === $step) {
 			return $this->render('import', compact('step', 'domain', 'errors'));
 		}
 
+		$importResult = ImportFosDecomposed::Import($step, $errors);
+		Yii::$app->cache->set($cachedErrorsName, $errors);
 		return $this->redirect(['import',
 			'domain' => $domain,
-			'step' => ImportFosDecomposed::Import($step, $errors)?$step + 1:$step,
+			'step' => $importResult?$step + 1:$step,
 		]);
 
 	}
