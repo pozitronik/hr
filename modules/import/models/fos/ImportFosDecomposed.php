@@ -204,6 +204,7 @@ class ImportFosDecomposed extends ActiveRecord {
 						"value" => $importFosUser->email_sigma
 					]
 				], $errors)) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
+				$importFosUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный айдишник, чтобы на следующей итерации пропустился
 				continue; //пропустим засранца
 			}
 
