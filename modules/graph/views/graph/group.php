@@ -16,6 +16,7 @@ use app\widgets\ribbon\RibbonPage;
 use app\widgets\ribbon\RibbonWidget;
 use kartik\switchinput\SwitchInput;
 use kartik\touchspin\TouchSpin;
+use yii\web\JsExpression;
 use yii\web\View;
 
 $this->title = 'Дерево структуры: '.Groups::findModel($id)->name;
@@ -123,6 +124,9 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 					],
 					'options' => [
 						'placeholder' => 'Детализация вверх'
+					],
+					'pluginEvents' => [
+						"change " => new JsExpression('function(event) { graphControl.upDepth = this.value}'),
 					]
 
 				]).'</div><div class="col-md-2">'.TouchSpin::widget([
@@ -134,7 +138,9 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 					],
 					'options' => [
 						'placeholder' => 'Детализация вниз',
-
+					],
+					'pluginEvents' => [
+						"change " => new JsExpression('function(event) { graphControl.downDepth = this.value}'),
 					]
 				]).'</div>'
 		]),
