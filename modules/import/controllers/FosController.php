@@ -98,12 +98,14 @@ class FosController extends WigetableController {
 	 * @throws Throwable
 	 */
 	public function actionImport(?int $domain = null, int $step = ImportFosDecomposed::STEP_GROUPS) {
+		$errors = [];
 		if (ImportFosDecomposed::LAST_STEP === $step) {
-			return $this->render('import', compact('step', 'domain'));
+			return $this->render('import', compact('step', 'domain', 'errors'));
 		}
+
 		return $this->redirect(['import',
 			'domain' => $domain,
-			'step' => ImportFosDecomposed::Import($step)?$step + 1:$step
+			'step' => ImportFosDecomposed::Import($step, $errors)?$step + 1:$step,
 		]);
 
 	}
