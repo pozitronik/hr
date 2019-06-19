@@ -71,16 +71,6 @@ class GraphControl {
 		this.edgeSet.add(edges);
 	}
 
-	loadGraph() {
-		getJSON(URL_LOAD_GRAPH, {
-			id: this.groupId,
-			up: this._upDepth,
-			down: this._downDepth
-		}).then(
-			response => this.network.setData(response),
-			error => console.log(error)
-		)
-	}
 
 	/**
 	 * Загружает набор нод для группы
