@@ -21,8 +21,8 @@ class GraphControl {
 		let self = this;
 		this.groupId = groupId || _.get('id');
 		this.container = container;
-		this._downDepth = -1;
-		this._upDepth = -1;
+		this._downDepth = 0;
+		this._upDepth = 0;
 		// this.loadGraph();
 
 		// this.loadNodesPositions(groupId);
@@ -30,11 +30,11 @@ class GraphControl {
 		this.options = self.loadGraphOptions();
 
 		this.autofit = false;
-		this.nodes = new vis.DataSet([]);
-		this.edges = new vis.DataSet([]);
+		this.nodeSet = new vis.DataSet([]);
+		this.edgeSet = new vis.DataSet([]);
 		this.network.setData({
-			nodes: this.nodes,
-			edges: this.edges
+			nodes: this.nodeSet,
+			edges: this.edgeSet
 		});
 
 		this.loadData();
@@ -54,11 +54,21 @@ class GraphControl {
 			down: this._downDepth
 		}).then(
 			response => {
-				this.nodes.add(response.nodes);
-				this.edges.add(response.edges);
+				this.nodes = response.nodes;
+				this.edges = response.edges;
 			},
 			error => console.log(error)
 		)
+	}
+
+	set nodes(nodes) {
+		this.nodeSet.clear();
+		this.nodeSet.add(nodes);
+	}
+
+	set edges(edges) {
+		this.edgeSet.clear();
+		this.edgeSet.add(edges);
 	}
 
 	loadGraph() {
