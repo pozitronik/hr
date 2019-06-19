@@ -42,7 +42,7 @@ class GraphControl {
 		this.network.on('beforeDrawing', function() {
 			self.resizeContainer();
 		}).on('stabilized', function() {
-			self.fitAnimated();
+			self.fitAnimated(false);
 		});
 		self.fitAnimated();
 	}
@@ -54,7 +54,7 @@ class GraphControl {
 			down: this._downDepth
 		}).then(
 			response => {
-				this.nodes.add (response.nodes);
+				this.nodes.add(response.nodes);
 				this.edges.add(response.edges);
 			},
 			error => console.log(error)
@@ -215,14 +215,16 @@ class GraphControl {
 	}
 
 
-	fitAnimated() {
-		this.network.fit({
-			animation: {
-				offset: {x: 0, y: 0},
-				duration: 1000,
-				easingFunction: 'easeInOutQuint'
-			}
-		});
+	fitAnimated(always = true) {
+		if (always || this.autofit) {
+			this.network.fit({
+				animation: {
+					offset: {x: 0, y: 0},
+					duration: 1000,
+					easingFunction: 'easeInOutQuint'
+				}
+			});
+		}
 	}
 
 	setLevels(up = 0, down = 0) {
