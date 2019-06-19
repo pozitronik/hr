@@ -63,10 +63,11 @@ class GroupGraph extends Model {//todo GraphInterface
 				if (false === ArrayHelper::getValue($processedStack, $childGroup->id, false)) {
 					$this->nodes[] = new GroupNode($childGroup, ['y' => $currentDepth]);//позиционирование по y может использоваться при серверном расчёте координат, но его можно игнорировать при клиентском расчёте
 					$this->buildGraphDown($childGroup, $processedStack, $currentDepth);
-					$currentDepth--;
+
 				}
 				$this->edges[] = new GroupEdge($group, $childGroup);
 			}
+			$currentDepth--;
 		}
 	}
 
@@ -86,10 +87,11 @@ class GroupGraph extends Model {//todo GraphInterface
 				if (false === ArrayHelper::getValue($processedStack, $parentGroup->id, false)) {
 					$this->nodes[] = new GroupNode($parentGroup, ['y' => 1 * $currentDepth]);
 					$this->buildGraphUp($parentGroup, $processedStack, $currentDepth);
-					$currentDepth--;
+
 				}
 				$this->edges[] = new GroupEdge($parentGroup, $group);
 			}
+			$currentDepth--;
 		}
 	}
 

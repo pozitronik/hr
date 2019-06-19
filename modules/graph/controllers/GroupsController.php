@@ -59,8 +59,7 @@ class GroupsController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public
-	function actionSavePositions():array {
+	public function actionSavePositions():array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 
 		if (false !== (($nodes = Yii::$app->request->post('nodes', false)) && ($groupId = Yii::$app->request->post('id', false))) && ($configName = Yii::$app->request->post('configName', false))) {
