@@ -21,16 +21,23 @@ class GraphControl {
 		let self = this;
 		this.groupId = groupId || _.get('id');
 		this.container = container;
-		this._downDepth = 0;
-		this._upDepth = 0;
-		this.loadGraph();
+		this._downDepth = -1;
+		this._upDepth = -1;
+		// this.loadGraph();
 
 		// this.loadNodesPositions(groupId);
 		this.network = new vis.Network(_.$('tree-container'));
 		this.options = self.loadGraphOptions();
 
-		this.autofit = true;
+		this.autofit = false;
+		this.nodes = new vis.DataSet([]);
+		this.edges = new vis.DataSet([]);
+		this.network.setData({
+			nodes: this.nodes,
+			edges: this.edges
+		});
 
+		this.loadData();
 
 		this.network.on('beforeDrawing', function() {
 			self.resizeContainer();
@@ -38,6 +45,20 @@ class GraphControl {
 			self.fitAnimated();
 		});
 		self.fitAnimated();
+	}
+
+	loadData() {
+		getJSON(URL_LOAD_GRAPH, {
+			id: this.groupId,
+			up: this._upDepth,
+			down: this._downDepth
+		}).then(
+			response => {
+				this.nodes.add (response.nodes);
+				this.edges.add(response.edges);
+			},
+			error => console.log(error)
+		)
 	}
 
 	loadGraph() {
