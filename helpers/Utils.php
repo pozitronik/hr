@@ -242,4 +242,42 @@ class Utils {
 	public static function setAbsoluteUrl(string $url):string {
 		return ('' === $url || self::URL_SEPARATOR === $url[0])?$url:self::URL_SEPARATOR.$url;
 	}
+
+	/**
+	 * @param array $rgb
+	 * @return array
+	 */
+	private static function RGBContrast(array $rgb):array {
+		return [
+			($rgb[0] < 128)?255:0,
+			($rgb[1] < 128)?255:0,
+			($rgb[2] < 128)?255:0
+		];
+	}
+
+	/**
+	 * @param string $color
+	 * @param bool $include_alpha
+	 * @return array
+	 */
+	private static function RGBToArray(string $color, $include_alpha = false):array {
+		$pattern = '~^rgba?\((25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*,\s*(25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*,\s*(25[0-5]|2[0-4]\d|1\d{2}|\d\d?)\s*(?:,\s*([01]\.?\d*?))?\)$~';
+		if (!preg_match($pattern, $color, $matches)) {
+			return [];  // disqualified / no match
+		}
+		return array_slice($matches, 1, $include_alpha?4:3);
+	}
+
+	/**
+	 * @param null|string $rgbString
+	 * @return string
+	 */
+	public static function RGBColorContrast(?string $rgbString):string {
+		if (null === $rgbString) return "rgb(255,255,255)";
+		$rgb = self::RGBToArray($rgbString);
+		$rgbContrast = self::RGBContrast($rgb);
+		return "rgb({$rgbContrast[0]},{$rgbContrast[1]},{$rgbContrast[2]})";
+
+	}
+
 }
