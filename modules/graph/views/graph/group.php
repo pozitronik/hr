@@ -111,11 +111,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 					]
 				]).'</label>
 					<button class="btn btn-primary" id="fitBtn" title="Fit"><i class="fa fa-compress-arrows-alt"></i></button>
-					</div>'
-		]),
-		new RibbonPage([
-			'caption' => 'Фильтры',
-			'content' => '<div class="col-md-2">'.TouchSpin::widget([
+					</div>'.'<div class="col-md-2">'.TouchSpin::widget([
 					'name' => 'upDepth',
 					'pluginOptions' => [
 						'verticalbuttons' => true,
@@ -143,6 +139,10 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 						"change " => new JsExpression('function(event) { graphControl.downDepth = this.value}'),
 					]
 				]).'</div>'
+		]),
+		new RibbonPage([
+			'caption' => 'Фильтры',
+			'content' => ''
 		]),
 		new RibbonPage([
 			'caption' => 'Редактор',
