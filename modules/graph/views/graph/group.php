@@ -47,7 +47,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.physics = state; }"
+						"switchChange.bootstrapSwitch" => new JsExpression("function(event, state) { graphControl.physics = state; }")
 					],
 					'pluginOptions' => [
 
@@ -64,7 +64,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.hierarchy = state; }"
+						"switchChange.bootstrapSwitch" => new JsExpression("function(event, state) { graphControl.hierarchy = state; }")
 					],
 					'pluginOptions' => [
 						'size' => 'mini',
@@ -82,7 +82,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.multiselection = state; }"
+						"switchChange.bootstrapSwitch" => new JsExpression("function(event, state) { graphControl.multiselection = state; }")
 					],
 					'pluginOptions' => [
 
@@ -100,7 +100,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 						'style' => 'float:right'
 					],
 					'pluginEvents' => [
-						"switchChange.bootstrapSwitch" => "function(event, state) { graphControl.autofit = state }"
+						"switchChange.bootstrapSwitch" => new JsExpression("function(event, state) { graphControl.autofit = state }")
 					],
 					'pluginOptions' => [
 						'size' => 'mini',
