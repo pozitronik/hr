@@ -208,7 +208,7 @@ class GraphControl {
 
 	set upDepth(upDepth) {
 		this._upDepth = upDepth;
-		this.loadGraph();
+		this.loadData();
 	}
 
 	get upDepth() {
@@ -217,7 +217,7 @@ class GraphControl {
 
 	set downDepth(downDepth) {
 		this._downDepth = downDepth;
-		this.loadGraph();
+		this.loadData();
 	}
 
 	get downDepth() {
