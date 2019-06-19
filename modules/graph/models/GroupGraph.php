@@ -65,7 +65,12 @@ class GroupGraph extends Model {//todo GraphInterface
 					$processedStack[$childGroup->id] = true;
 					$this->buildGraphDown($childGroup, $processedStack, $currentDepth);
 				}
-				$this->edges[] = new GroupEdge($group, $childGroup);
+
+				$edge = new GroupEdge($group, $childGroup);
+				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"))) {
+					$this->edges[] = $edge;
+				}
+
 			}
 			$currentDepth--;
 		}
@@ -90,7 +95,10 @@ class GroupGraph extends Model {//todo GraphInterface
 					$this->buildGraphUp($parentGroup, $processedStack, $currentDepth);
 
 				}
-				$this->edges[] = new GroupEdge($parentGroup, $group);
+				$edge = new GroupEdge($parentGroup, $group);
+				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"))) {
+					$this->edges[] = $edge;
+				}
 			}
 			$currentDepth--;
 		}

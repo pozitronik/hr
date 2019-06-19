@@ -25,6 +25,7 @@ class GroupNode extends GraphNode {
 				'userCount' => $model->usersCount,
 				'vacancyCount' => $model->vacancyCount,
 				'outstaffCount' => '?',
+				'id' => $model->id
 			]));
 		$this->color = ArrayHelper::getValue($model->relGroupTypes, 'color', $this->getRandomRGB());
 		$this->widthConstraint = true;
