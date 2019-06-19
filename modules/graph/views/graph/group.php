@@ -122,7 +122,7 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 						'placeholder' => 'Детализация вверх'
 					],
 					'pluginEvents' => [
-						"change " => new JsExpression('function(event) { graphControl.upDepth = this.value}'),
+						"change " => new JsExpression('function(event) { graphControl.upDepth = this.value}')
 					]
 
 				]).'</div><div class="col-md-2">'.TouchSpin::widget([
@@ -133,10 +133,10 @@ $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), $id); 
 //						'initval' => -1
 					],
 					'options' => [
-						'placeholder' => 'Детализация вниз',
+						'placeholder' => 'Детализация вниз'
 					],
 					'pluginEvents' => [
-						"change " => new JsExpression('function(event) { graphControl.downDepth = this.value}'),
+						"change " => new JsExpression('function(event) { graphControl.downDepth = this.value}')
 					]
 				]).'</div>'
 		]),
