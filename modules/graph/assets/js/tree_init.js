@@ -26,7 +26,7 @@ class GraphControl {
 		// this.loadGraph();
 
 		// this.loadNodesPositions(groupId);
-		this.network = new vis.Network(_.$('tree-container'));
+		this.network = new vis.Network(this.container);
 		this.options = self.loadGraphOptions();
 
 		this.autofit = false;
