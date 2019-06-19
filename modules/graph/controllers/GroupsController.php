@@ -97,8 +97,7 @@ class GroupsController extends BaseAjaxController {
 	 * @return array
 	 * @throws Throwable
 	 */
-	public
-	function actionDeletePositions(int $id, string $configName):array {
+	public function actionDeletePositions(int $id, string $configName):array {
 		if (null === $user = CurrentUser::User()) return $this->answer->addError('user', 'Unauthorized');
 		if (null === Groups::findModel($id)) {
 			return $this->answer->addError('group', 'Not found');

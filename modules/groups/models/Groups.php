@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
+use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
@@ -40,6 +41,8 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|Groups[] $relParentGroups Группы, родительские по отношению к текущей
  * @property ActiveQuery|RefGroupTypes $relGroupTypes Тип группы через релейшен
  *
+ * @property ActiveQuery|Vacancy[] $relVacancy Релейшен к вакансиям группы
+ *
  * @property-read Users[] $leaders Пользюки, прописанне в группе с релейшеном лидера (владелец/руководитель)
  * @property-read Users|null $leader Один пользователь из лидеров (для презентации)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
@@ -52,6 +55,7 @@ use yii\db\ActiveQuery;
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
  * @property-read integer $usersCount Количество пользователей в группе
+ * @property-read integer $vacancyCount Количество вакансий в группе
  *
  * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
@@ -143,6 +147,15 @@ class Groups extends ActiveRecordExtended {
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 	}
+
+	/**
+	 * @return ActiveQuery|Vacancy[]|LCQuery
+	 */
+	public function getRelVacancy() {
+		return $this->hasMany(Vacancy::class, ['group' => 'id']);
+	}
+
+
 
 	/**
 	 * @param ActiveQuery|Users[] $relGroupsUsers
@@ -434,6 +447,13 @@ class Groups extends ActiveRecordExtended {
 
 		}
 		return $hierarchyTree;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getVacancyCount():int {
+		return (int)$this->getRelVacancy()->count();
 	}
 
 }

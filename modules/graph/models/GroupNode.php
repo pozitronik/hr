@@ -5,6 +5,7 @@ namespace app\modules\graph\models;
 
 use app\modules\groups\models\Groups;
 use pozitronik\helpers\ArrayHelper;
+use Yii;
 
 /**
  * Реализация нод для групп
@@ -20,7 +21,11 @@ class GroupNode extends GraphNode {
 		$this->id = $model->formName().$model->id;
 		$this->label = $model->name;
 		$this->shape = 'image';
-		$this->image = $model->logo;
+		$this->image = "data:image/svg+xml;charset=utf-8,".rawurlencode(Yii::$app->view->renderFile('@app/modules/graph/views/groups/info.php', [
+				'userCount' => $model->usersCount,
+				'vacancyCount' => $model->vacancyCount,
+				'outstaffCount' => '?',
+			]));
 		$this->color = ArrayHelper::getValue($model->relGroupTypes, 'color', $this->getRandomRGB());
 		$this->widthConstraint = true;
 	}
