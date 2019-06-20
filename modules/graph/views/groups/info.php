@@ -17,7 +17,7 @@ $fontColor = Utils::RGBColorContrast($color);
 
 ?>
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="140">
-	<rect x="0" y="0" width="100%" height="100%" fill="<?= $color ?>" stroke-width="20" stroke="<?= $fontColor ?>"></rect>
+	<rect x="0" y="0" width="100%" height="100%" fill="white" stroke-width="20" stroke="<?= $fontColor ?>"></rect>
 	<foreignObject x="15" y="10" width="100%" height="100%">
 		<div xmlns="http://www.w3.org/1999/xhtml"  style="font-size:60px; font-color:<?= $fontColor ?>')">
 			<center><?= $userCount ?>/<?= $vacancyCount ?>/<?= $outstaffCount ?></center>

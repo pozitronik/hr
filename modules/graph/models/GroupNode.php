@@ -22,13 +22,14 @@ class GroupNode extends GraphNode {
 		$this->label = $model->name;
 		$this->color = ArrayHelper::getValue($model->relGroupTypes, 'color', $this->getRandomRGB());
 		$this->shape = 'image';
-		$this->image = "data:image/svg+xml;charset=utf-8,".rawurlencode(Yii::$app->view->renderFile('@app/modules/graph/views/groups/info.php', [
-				'userCount' => $model->usersCount,
-				'vacancyCount' => $model->vacancyCount,
-				'outstaffCount' => '?',
-				'id' => $model->name,
-				'color' => $this->color,
-			]));
+		$this->image = $model->logo;
+//		$this->image = "data:image/svg+xml;charset=utf-8,".rawurlencode(Yii::$app->view->renderFile('@app/modules/graph/views/groups/info.php', [
+//				'userCount' => $model->usersCount,
+//				'vacancyCount' => $model->vacancyCount,
+//				'outstaffCount' => '?',
+//				'id' => $model->name,
+//				'color' => $this->color,
+//			]));
 
 		$this->widthConstraint = true;
 	}
