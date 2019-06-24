@@ -70,13 +70,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	public const STEP_LINKING_USERS = 2;
 	public const STEP_LINKING_GROUPS = 3;
 	public const LAST_STEP = self::STEP_LINKING_GROUPS + 1;
-	public const step_labels = [
-		self::STEP_GROUPS => 'Импорт декомпозированных групп',
-		self::STEP_USERS => 'Импорт декомпозированных пользователей',
-		self::STEP_LINKING_USERS => 'Добавление пользователей в группы',
-		self::STEP_LINKING_GROUPS => 'Построение иерархии групп',
-		self::LAST_STEP => 'Готово!'
-	];
+	public const step_labels = [self::STEP_GROUPS => 'Импорт декомпозированных групп', self::STEP_USERS => 'Импорт декомпозированных пользователей', self::STEP_LINKING_USERS => 'Добавление пользователей в группы', self::STEP_LINKING_GROUPS => 'Построение иерархии групп', self::LAST_STEP => 'Готово!'];
 
 	/**
 	 * {@inheritdoc}
@@ -89,47 +83,14 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * {@inheritdoc}
 	 */
 	public function rules():array {
-		return [[
-			['position_id', 'user_id',
-				'functional_block_id',
-				'division_level_1_id',
-				'division_level_2_id',
-				'division_level_3_id',
-				'division_level_4_id',
-				'division_level_5_id',
-				'functional_block_tribe_id',
-				'tribe_id',
-				'cluster_product_id',
-				'command_id',
-				'command_position_id',
-				'chapter_id',
-				'domain'
-			], 'integer']
-		];
+		return [[['position_id', 'user_id', 'functional_block_id', 'division_level_1_id', 'division_level_2_id', 'division_level_3_id', 'division_level_4_id', 'division_level_5_id', 'functional_block_tribe_id', 'tribe_id', 'cluster_product_id', 'command_id', 'command_position_id', 'chapter_id', 'domain'], 'integer']];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'position_id' => 'Position ID',
-			'user_id' => 'User ID',
-			'functional_block_id' => 'Functional Block',
-			'division_level_1_id' => 'Division Level 1',
-			'division_level_2_id' => 'Division Level 2',
-			'division_level_3_id' => 'Division Level 3',
-			'division_level_4_id' => 'Division Level 4',
-			'division_level_5_id' => 'Division Level 5',
-			'functional_block_tribe_id' => 'Functional Block Tribe',
-			'tribe_id' => 'Tribe ID',
-			'cluster_product_id' => 'Cluster Product ID',
-			'command_id' => 'Command ID',
-			'command_position_id' => 'Command Position ID',
-			'chapter_id' => 'Chapter ID',
-			'domain' => 'Служебная метка очереди импорта'
-		];
+		return ['id' => 'ID', 'position_id' => 'Position ID', 'user_id' => 'User ID', 'functional_block_id' => 'Functional Block', 'division_level_1_id' => 'Division Level 1', 'division_level_2_id' => 'Division Level 2', 'division_level_3_id' => 'Division Level 3', 'division_level_4_id' => 'Division Level 4', 'division_level_5_id' => 'Division Level 5', 'functional_block_tribe_id' => 'Functional Block Tribe', 'tribe_id' => 'Tribe ID', 'cluster_product_id' => 'Cluster Product ID', 'command_id' => 'Command ID', 'command_position_id' => 'Command Position ID', 'chapter_id' => 'Chapter ID', 'domain' => 'Служебная метка очереди импорта'];
 	}
 
 	/**
@@ -184,26 +145,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		if ([] === $importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
 
 		foreach ($importFosUsers as $importFosUser) {
-			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
-					[
-						'attribute' => 'Адрес',
-						'type' => 'boolean',
-						'field' => 'Удалённое рабочее место',
-						"value" => $importFosUser->remote
-					],
-					[
-						'attribute' => 'Адрес',
-						'type' => 'string',
-						'field' => 'Населённый пункт',
-						"value" => ArrayHelper::getValue($importFosUser->relTown, 'name')
-					],
-					[
-						'attribute' => 'Адрес',
-						'type' => 'string',
-						'field' => 'Внешний почтовый адрес',
-						"value" => $importFosUser->email_sigma
-					]
-				], $errors)) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
+			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importFosUser->remote], ['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importFosUser->relTown, 'name')], ['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importFosUser->email_sigma]], $errors)) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
 				$importFosUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный айдишник, чтобы на следующей итерации пропустился
 				continue; //пропустим засранца
 			}
@@ -247,33 +189,42 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	private static function DoStepLinkingUsers():bool {
-		foreach (ImportFosChapterCouch::find()->all() as $couch) {
-			foreach (ImportFosChapter::findAll(['couch_id' => $couch->id]) as $chapter) {
+
+		foreach (ImportFosChapterCouch::find()->all() as $couch) {//coach, хуйло неграмотное
+			/** @var ImportFosChapterCouch $couch */
+			$found = ImportFosChapter::findAll(['couch_id' => $couch->user_id]);
+			foreach ($found as $chapter) {
 				self::linkRole($chapter->hr_group_id, $couch->relUsers->hr_user_id, 'Agile-коуч');
 			}
 		}
 		foreach (ImportFosChapterLeader::find()->all() as $chapterLeader) {
-			foreach (ImportFosChapter::findAll(['leader_id' => $chapterLeader->id]) as $chapter) {
+			/** @var ImportFosChapterLeader $chapterLeader */
+			$found = ImportFosChapter::findAll(['leader_id' => $chapterLeader->user_id]);
+			foreach ($found as $chapter) {
 				self::linkRole($chapter->hr_group_id, $chapterLeader->relUsers->hr_user_id, 'Лидер чаптера');
 			}
 		}
 		foreach (ImportFosClusterProductLeader::find()->all() as $clusterLeader) {
-			foreach (ImportFosClusterProduct::findAll(['leader_id' => $clusterLeader->id]) as $cluster) {
+			/** @var ImportFosClusterProductLeader $clusterLeader */
+			foreach (ImportFosClusterProduct::findAll(['leader_id' => $clusterLeader->user_id]) as $cluster) {
 				self::linkRole($cluster->hr_group_id, $clusterLeader->relUsers->hr_user_id, 'Лидер кластера');
 			}
 		}
 		foreach (ImportFosProductOwner::find()->all() as $productOwner) {
-			foreach (ImportFosCommand::findAll(['owner_id' => $productOwner->id]) as $command) {
+			/** @var ImportFosProductOwner $productOwner */
+			foreach (ImportFosCommand::findAll(['owner_id' => $productOwner->user_id]) as $command) {
 				self::linkRole($command->hr_group_id, $productOwner->relUsers->hr_user_id, 'Владелец продукта');
 			}
 		}
 		foreach (ImportFosTribeLeader::find()->all() as $tribeLeader) {
-			foreach (ImportFosTribe::findAll(['leader_id' => $tribeLeader->id]) as $tribe) {
+			/** @var ImportFosTribeLeader $tribeLeader */
+			foreach (ImportFosTribe::findAll(['leader_id' => $tribeLeader->user_id]) as $tribe) {
 				self::linkRole($tribe->hr_group_id, $tribeLeader->relUsers->hr_user_id, 'Лидер трайба');
 			}
 		}
 		foreach (ImportFosTribeLeaderIt::find()->all() as $tribeLeaderIt) {
-			foreach (ImportFosTribe::findAll(['leader_it_id' => $tribeLeaderIt->id]) as $tribe) {
+			/** @var ImportFosTribeLeaderIt $tribeLeaderIt */
+			foreach (ImportFosTribe::findAll(['leader_it_id' => $tribeLeaderIt->user_id]) as $tribe) {
 				self::linkRole($tribe->hr_group_id, $tribeLeaderIt->relUsers->hr_user_id, 'IT-Лидер трайба');
 			}
 		}
@@ -330,8 +281,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	public static function Import(int $step = self::STEP_GROUPS, array &$errors = []):bool {
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 		switch ($step) {
-			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
-				return self::DoStepGroups();
+			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/ return self::DoStepGroups();
 			break;
 			case self::STEP_USERS:
 				return self::DoStepUsers($errors);
@@ -358,9 +308,7 @@ class ImportFosDecomposed extends ActiveRecord {
 
 		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
 		if (!$groupType) {
-			$groupType = new RefGroupTypes([
-				'name' => $type
-			]);
+			$groupType = new RefGroupTypes(['name' => $type]);
 			$groupType->save();
 		}
 
@@ -369,11 +317,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		if ($group) return $group->id;
 
 		$group = new Groups();
-		$group->createModel([
-			'name' => $name,
-			'type' => $groupType->id,
-			'deleted' => false
-		]);
+		$group->createModel(['name' => $name, 'type' => $groupType->id, 'deleted' => false]);
 		return $group->id;
 	}
 
@@ -394,29 +338,18 @@ class ImportFosDecomposed extends ActiveRecord {
 
 		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
 		if (!$userPosition) {
-			$userPosition = new RefUserPositions([
-				'name' => $position
-			]);
+			$userPosition = new RefUserPositions(['name' => $position]);
 			$userPosition->save();
 		}
 
 		$user = new Users();
 		/** @noinspection IsEmptyFunctionUsageInspection */
-		$user->createModel([
-			'username' => $name,
-			'login' => Utils::generateLogin(),
-			'password' => Utils::gen_uuid(5),
-			'salt' => null,
-			'email' => empty($email)?Utils::generateLogin()."@localhost":$email,
-			'deleted' => false
-		]);
+		$user->createModel(['username' => $name, 'login' => Utils::generateLogin(), 'password' => Utils::gen_uuid(5), 'salt' => null, 'email' => empty($email)?Utils::generateLogin()."@localhost":$email, 'deleted' => false]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
 		if (null === $user->id) {
 			Yii::debug($user, 'debug');
-			$errors[] = [
-				$name => $user->errors
-			];
+			$errors[] = [$name => $user->errors];
 			return null;
 		}
 
@@ -438,11 +371,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			$attribute->createModel(['name' => $dynamic_attribute['attribute'], 'category' => 0]);
 		}
 		if (null === $field = $attribute->getPropertyByName($dynamic_attribute['field'])) {
-			$field = new DynamicAttributeProperty([
-				'attributeId' => $attribute->id,
-				'name' => $dynamic_attribute['field'],
-				'type' => $dynamic_attribute['type']
-			]);
+			$field = new DynamicAttributeProperty(['attributeId' => $attribute->id, 'name' => $dynamic_attribute['field'], 'type' => $dynamic_attribute['type']]);
 			$field->id = $attribute->setProperty($field, null);
 		}
 		RelUsersAttributes::linkModels($user_id, $attribute);
