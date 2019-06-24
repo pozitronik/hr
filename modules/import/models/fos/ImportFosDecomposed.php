@@ -248,7 +248,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	 */
 	private static function DoStepLinkingUsers():bool {
 		foreach (ImportFosChapterCouch::find()->all() as $couch) {
-			foreach (ImportFosChapter::findAll(['leader_id' => $couch->id]) as $chapter) {
+			foreach (ImportFosChapter::findAll(['couch_id' => $couch->id]) as $chapter) {
 				self::linkRole($chapter->hr_group_id, $couch->relUsers->hr_user_id, 'Agile-коуч');
 			}
 		}
