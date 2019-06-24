@@ -20,9 +20,7 @@ class HomeController extends Controller {
 	 */
 	public function actionIndex() {
 		if (null === $user = CurrentUser::User()) return $this->redirect(['site/login']);
-		return $this->render('index',[
-			'model' => $user
-		]);
+		return $this->render('index', ['model' => $user]);
 	}
 
 	/**
@@ -33,6 +31,13 @@ class HomeController extends Controller {
 	 */
 	public function actionMatrix():string {
 		return $this->render('matrix');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function actionBoss():string {
+		return $this->render('boss');
 	}
 
 }
