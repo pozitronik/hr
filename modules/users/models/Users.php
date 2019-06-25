@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
+use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\users\models\relations\RelUserPositionsTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
@@ -58,8 +60,9 @@ use yii\db\ActiveRecord;
  * @property-read string $phone
  * @property-read string $positionName
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
- * @property ActiveQuery|RefUserPositions $relUserPositions Релейшен к должностям пользователей
- *
+ * @property ActiveQuery|RefUserPositions $relUserPosition Релейшен к должностям пользователей (у пользователя может быть только одна должность)
+ * @property ActiveQuery|RefUserPositionTypes[] $relRefUserPositionTypes Массив типов должности пользователя (с учётом переопределения). При изменении параметра ныжно менять переопределение.
+ * @property ActiveQuery|RelUserPositionsTypes[] $relUserPositionsTypes Массив типов должностей пользователя, переопредёлённых лично для него
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
@@ -85,10 +88,12 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|Groups[] $relLeadingGroups Группы, в которых пользователь лидер
  * @property RelUsersAttributesTypes[]|ActiveQuery $relUsersAttributesTypes Релейшен к таблице связей с типами атрибутов
  * @property RefAttributesTypes[]|ActiveQuery $refAttributesTypes Типы атрибутов, присвоенных пользователю
+ * *************************
  */
 class Users extends ActiveRecordExtended {
 	use Upload;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.
+
 	use PluginTrait;
 
 	/*Переменная для инстанса заливки аватарок*/
@@ -184,7 +189,8 @@ class Users extends ActiveRecordExtended {
 			'relGrade' => 'Грейд',
 			'relPremiumGroup' => 'Группа премирования',
 			'relLocation' => 'Расположение',
-			'relSalaryFork' => 'Зарплатная вилка'
+			'relSalaryFork' => 'Зарплатная вилка',
+			'relRefUserPositionTypes' => 'Тип должности'
 		];
 	}
 
@@ -492,7 +498,26 @@ class Users extends ActiveRecordExtended {
 	/**
 	 * @return RefUserPositions|ActiveQuery
 	 */
-	public function getRelUserPositions() {
+	public function getRelUserPosition() {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
+	}
+
+	/**
+	 * @return RefUserPositionTypes[]|ActiveQuery
+	 */
+	public function getRelRefUserPositionTypes() {
+		$overridenTypes = $this->relUserPositionsTypes;
+		if (empty($overridenTypes)) {
+			return $this->relUserPosition->types;
+		}
+
+		return RefUserPositionTypes::findModels(ArrayHelper::getColumn($overridenTypes, 'position_type_id'));
+	}
+
+	/**
+	 * @return RelUserPositionsTypes[]|ActiveQuery
+	 */
+	public function getRelUserPositionsTypes() {
+		return $this->hasMany(RelUserPositionsTypes::class, ['user_id' => 'id']);
 	}
 }
