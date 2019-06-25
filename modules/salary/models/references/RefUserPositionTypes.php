@@ -7,6 +7,8 @@ use app\modules\references\models\Reference;
 
 /**
  * Справочник типов должностей. Тип должности -  необязательный, не влияющий ни на что атрибут должности.
+ *
+ * @property string $color
  */
 class RefUserPositionTypes extends Reference {
 	public $menuCaption = 'Типы должностей';

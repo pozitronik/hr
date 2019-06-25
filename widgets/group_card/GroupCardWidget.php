@@ -37,12 +37,12 @@ class GroupCardWidget extends Widget {
 		/*Строим срез по типам должностей*/
 		$groupUsers = $this->group->relUsers;
 
-		$positionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'name'),0);
+		$positionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'),0);
 
 		foreach ($groupUsers as $user) {
 			$userPositionTypes = $user->relRefUserPositionTypes;
 			foreach ($userPositionTypes as $positionType) {
-				$positionTypes[$positionType->name]++;
+				$positionTypes[$positionType->id]++;
 			}
 		}
 
@@ -52,7 +52,7 @@ class GroupCardWidget extends Widget {
 			'leader_role' => $leader_role,
 			'userCount' => count($groupUsers),
 			'vacancyCount' => count($this->group->relVacancy),
-			'positionData' => $positionTypes
+			'positionTypeData' => $positionTypes
 		]);
 	}
 }

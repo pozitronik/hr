@@ -9,9 +9,11 @@ declare(strict_types = 1);
  * @var string $leader_role
  * @var int $userCount
  * @var int $vacancyCount
- * @var array $positionData
+ * @var array $positionTypeData
  */
 
+use app\helpers\Utils;
+use app\modules\salary\models\references\RefUserPositionTypes;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -27,10 +29,12 @@ use yii\web\View;
 	</div>
 
 	<div class="panel-body">
-		<?php foreach ($positionData as $positionName => $positionCount): ?>
+		<?php foreach ($positionTypeData as $positionId => $positionCount): ?>
+			<?php /** @var RefUserPositionTypes $positionType */
+			$positionType = RefUserPositionTypes::findModel($positionId); ?>
 			<div class="row">
-				<div class="col-md-10"><?= $positionName ?></div>
-				<div class="col-md-2 badge"><?= $positionCount ?></div>
+				<div class="col-md-10"><?= $positionType->name ?></div>
+				<div class="col-md-2 badge" style="background:<?= $positionType->color ?>; color:<?= Utils::RGBColorContrast($positionType->color); ?>"><?= $positionCount ?></div>
 			</div>
 		<?php endforeach; ?>
 
