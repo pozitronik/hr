@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\models\user\CurrentUser;
+use app\modules\groups\models\Groups;
 use Throwable;
 use yii\base\Response;
 use yii\web\Controller;
@@ -37,7 +38,17 @@ class HomeController extends Controller {
 	 * @return string
 	 */
 	public function actionBoss():string {
-		return $this->render('boss');
+		$leadingGroups = CurrentUser::User()->relLeadingGroups;
+		$stack = [];
+		foreach ($leadingGroups as $leadingGroup) {
+			$leadingGroup->buildHierarchyTree($stack);
+		}
+		$groups = Groups::findModels($stack);
+
+		return $this->render('boss',[
+			'groups' => $groups,
+
+		]);
 	}
 
 }

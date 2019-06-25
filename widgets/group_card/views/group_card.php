@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var string $title
  * @var string $leader
  * @var string $logo
+ * @var string $leader_role`
  */
 
 use yii\helpers\Html;
@@ -14,7 +15,7 @@ use yii\web\View;
 ?>
 
 
-<div class="panel col-md-2" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
+<div class="panel panel-card col-md-2" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
 	<div class="panel-heading">
 		<div class="panel-control">
 			<div class="badge"><?= rand(2, 100); ?></div>
@@ -37,6 +38,6 @@ use yii\web\View;
 		</div>
 	</div>
 	<div class="panel-footer">
-		<?= $leader ?>
+		<?= $leader_role ?>: <?= $leader ?>
 	</div>
 </div>
