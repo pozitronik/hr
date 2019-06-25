@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\salary\models\relations;
+namespace app\modules\users\models\relations;
 
 use app\models\core\ActiveRecordExtended;
 use app\models\relations\Relations;
@@ -17,7 +17,7 @@ class RelUserPositionsTypes extends ActiveRecordExtended {
 	 * {@inheritDoc}
 	 */
 	public static function tableName():string {
-		return 'rel_user_position_type';
+		return 'rel_user_position_types';
 	}
 
 	/**
