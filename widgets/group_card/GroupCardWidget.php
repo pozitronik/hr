@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\group_card;
 
 use app\modules\groups\models\Groups;
+use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
 use yii\base\Widget;
@@ -33,11 +34,25 @@ class GroupCardWidget extends Widget {
 	public function run():string {
 		$leader = $this->group->leader;
 		$leader_role = (null === $leader->id)?'Лидер':ArrayHelper::getValue(RefUserRoles::getUserRolesInGroup($leader->id, $this->group->id), '0.name');
+		/*Строим срез по типам должностей*/
+		$groupUsers = $this->group->relUsers;
+
+		$positionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'name'),0);
+
+		foreach ($groupUsers as $user) {
+			$userPositionTypes = $user->relRefUserPositionTypes;
+			foreach ($userPositionTypes as $positionType) {
+				$positionTypes[$positionType->name]++;
+			}
+		}
 
 		return $this->render('group_card', [
 			'title' => $this->group->name,
 			'leader' => (null === $leader->id)?'N/A':$leader->username,
-			'leader_role' => $leader_role
+			'leader_role' => $leader_role,
+			'userCount' => count($groupUsers),
+			'vacancyCount' => count($this->group->relVacancy),
+			'positionData' => $positionTypes
 		]);
 	}
 }

@@ -6,7 +6,10 @@ declare(strict_types = 1);
  * @var string $title
  * @var string $leader
  * @var string $logo
- * @var string $leader_role`
+ * @var string $leader_role
+ * @var int $userCount
+ * @var int $vacancyCount
+ * @var array $positionData
  */
 
 use yii\helpers\Html;
@@ -18,23 +21,22 @@ use yii\web\View;
 <div class="panel panel-card col-md-2" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<div class="badge"><?= rand(2, 100); ?></div>
+			<div class="badge badge-info"><?= $userCount ?></div>
 		</div>
 		<h3 class="panel-title"><?= Html::encode($title) ?></h3>
 	</div>
 
 	<div class="panel-body">
-		<div class="row">
-			<div class="col-md-10">Бизнес</div>
-			<div class="col-md-2 badge"><?= rand(2, 100); ?></div>
-		</div>
-		<div class="row">
-			<div class="col-md-10">IT</div>
-			<div class="col-md-2 badge"><?= rand(2, 100); ?></div>
-		</div>
+		<?php foreach ($positionData as $positionName => $positionCount): ?>
+			<div class="row">
+				<div class="col-md-10"><?= $positionName ?></div>
+				<div class="col-md-2 badge"><?= $positionCount ?></div>
+			</div>
+		<?php endforeach; ?>
+
 		<div class="row">
 			<div class="col-md-10">Вакансии</div>
-			<div class="col-md-2 badge badge-danger"><?= rand(2, 50); ?></div>
+			<div class="col-md-2 badge badge-danger"><?= $vacancyCount; ?></div>
 		</div>
 	</div>
 	<div class="panel-footer">
