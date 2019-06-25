@@ -53,39 +53,12 @@ class RefUserPositions extends Reference {
 	 */
 	public function rules():array {
 		return [
-			[
-				['name'],
-				'required'
-			],
-			[
-				['name'],
-				'unique'
-			],
-			[
-				['id'],
-				'integer'
-			],
-			[
-				['deleted'],
-				'boolean'
-			],
-			[
-				[
-					'name',
-					'color'
-				],
-				'string',
-				'max' => 256
-			],
-			[
-				[
-					'branch',
-					'types',
-					'relGrades'
-				],
-				'safe'
-			],
-			//relational attributes
+			[['name'], 'required'],
+			[['name'], 'unique'],
+			[['id'], 'integer'],
+			[['deleted'], 'boolean'],
+			[['name', 'color'], 'string', 'max' => 256],
+			[['branch', 'types', 'relGrades'], 'safe'],//relational attributes
 		];
 	}
 
@@ -122,13 +95,7 @@ class RefUserPositions extends Reference {
 				'value' => static function(self $model) {
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
-						]).$model->name:Html::tag('span', Html::a($model->name, [
-						'update',
-						'class' => $model->formName(),
-						'id' => $model->id
-					]), [
-						'style' => "background: {$model->color}"
-					]);
+						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), ['style' => "background: {$model->color}"]);
 				},
 				'format' => 'raw'
 			],
@@ -141,11 +108,7 @@ class RefUserPositions extends Reference {
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
-						'linkScheme' => [
-							ReferencesModule::to(['references/update']),
-							'id' => 'id',
-							'class' => 'RefUserPositionTypes'
-						],
+						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositionTypes'],
 						"optionsMap" => static function() {
 							return RefUserPositionTypes::colorStyleOptions();
 						}
@@ -165,11 +128,7 @@ class RefUserPositions extends Reference {
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
-						'linkScheme' => [
-							ReferencesModule::to('references/update'),
-							'id' => 'id',
-							'class' => 'RefGrades'
-						]
+						'linkScheme' => [ReferencesModule::to('references/update'), 'id' => 'id', 'class' => 'RefGrades']
 					]);
 				}
 			],
@@ -185,11 +144,7 @@ class RefUserPositions extends Reference {
 	 * @return array
 	 */
 	public static function mapByGrade():array {
-		return [
-			'Грейды заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where([
-				'not',
-				['ref_salary_grades.id' => null]
-			])->active()->all(), "id", "name"),
+		return ['Грейды заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where(['not', ['ref_salary_grades.id' => null]])->active()->all(), "id", "name"),
 			'Грейды не заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where(['ref_salary_grades.id' => null])->active()->all(), 'id', 'name')
 		];
 	}
