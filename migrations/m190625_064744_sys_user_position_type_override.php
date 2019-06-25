@@ -10,21 +10,25 @@ class m190625_064744_sys_user_position_type_override extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->createTable('rel_users_position_type', [
+		$this->createTable('rel_user_position_type', [
 			'id' => $this->primaryKey(),
 			'user_id' => $this->integer()->notNull()->comment('Пользователь'),
 			'position_type_id' => $this->integer()->notNull()->comment('Тип должности'),
 		]);
 
-		$this->createIndex('user_id', 'rel_users_position_type', 'user_id');
-		$this->createIndex('position_type_id', 'rel_users_position_type', 'position_type_id');
+		$this->createIndex('user_id', 'rel_user_position_type', 'user_id');
+		$this->createIndex('position_type_id', 'rel_user_position_type', 'position_type_id');
+		$this->createIndex('user_id_position_type_id', 'rel_user_position_type', [
+			'user_id',
+			'position_type_id'
+		], true);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropTable('sys_users_position_type');
+		$this->dropTable('rel_user_position_type');
 	}
 
 	/*
