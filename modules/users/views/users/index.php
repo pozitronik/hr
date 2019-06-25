@@ -9,6 +9,7 @@ declare(strict_types = 1);
  * @deprecated
  */
 
+use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
@@ -104,6 +105,23 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 				'referenceClass' => RefUserPositions::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			]
+		],
+		[
+			'class' => DataColumn::class,
+			'label' => 'Тип должности',
+			'attribute' => 'relRefUserPositionTypes',
+			'value' => static function(Users $model) {
+				return BadgeWidget::widget([
+					'data' => $model->relRefUserPositionTypes,
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					"optionsMap" => static function() {
+						return RefUserPositionTypes::colorStyleOptions();
+					}
+				]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'attribute' => 'groupName',
