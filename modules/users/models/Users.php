@@ -156,7 +156,7 @@ class Users extends ActiveRecordExtended {
 			[['login'], 'unique'],
 			[['email'], 'unique'],
 			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],//Это только клиентская валидация, на сервере атрибут всегда будет валидироваться успешно
-			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges'], 'safe'],
+			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges', 'relRefUserPositionTypes'], 'safe'],
 			/*Мы не можем переопределить или наследовать метод в трейте, поэтому ПОКА добавляю правила валидации атрибутов из трейта сюда. Но потом нужно придумать, как разделить код*/
 			[['relGrade', 'relPremiumGroup', 'relLocation'], 'safe'],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
@@ -519,5 +519,20 @@ class Users extends ActiveRecordExtended {
 	 */
 	public function getRelUserPositionsTypes() {
 		return $this->hasMany(RelUserPositionsTypes::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * Сюда прилетают изменения типа должности из профиля пользователя. Мы не меняем тип должности у самой должности, внося измненения в таблицу переопределний для этого конкретного юзернейма
+	 * @param integer[] $relRefUserPositionTypes
+	 */
+	public function setRelRefUserPositionTypes($relRefUserPositionTypes):void {
+		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
+
+		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
+		$currentUserPositionTypesId = ArrayHelper::getColumn($this->relUserPositionsTypes, 'position_type_id');
+		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, (array)$relRefUserPositionTypes);
+		RelUserPositionsTypes::unlinkModels($this, $droppedUserPositionTypes);
+		RelUserPositionsTypes::linkModels($this, $relRefUserPositionTypes);
+
 	}
 }
