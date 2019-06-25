@@ -6,6 +6,8 @@ declare(strict_types = 1);
  * @var View $this
  */
 
+use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\salary\models\references\RefGrades;
@@ -63,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 
 
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<?= $form->field($model, 'relPremiumGroup')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefSalaryPremiumGroups::class,
 						'options' => ['placeholder' => 'Выберите группу премирования'],
@@ -72,12 +74,22 @@ $this->params['breadcrumbs'][] = $this->title;
 						]
 					]) ?>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-2">
 					<?= $form->field($model, 'relLocation')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefLocations::class,
 						'options' => ['placeholder' => 'Выберите местонахождение'],
 						'pluginOptions' => [
 							'allowClear' => true
+						]
+					]) ?>
+				</div>
+				<div class="col-md-3">
+					<?= $form->field($model, 'relRefUserPositionTypes')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefUserPositionTypes::class,
+						'options' => ['placeholder' => 'Тип должности'],
+						'pluginOptions' => [
+							'allowClear' => true,
+							'multiple' => true
 						]
 					]) ?>
 				</div>
@@ -92,6 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						Параметры зарплатной вилки: <?= $salaryFork ?>
 					<?php endif; ?>
 				</div>
+
 			</div>
 
 		</div>
