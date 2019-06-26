@@ -509,7 +509,7 @@ class Users extends ActiveRecordExtended {
 	public function getRelRefUserPositionTypes() {
 		$overridenTypes = $this->relUserPositionsTypes;
 		if (empty($overridenTypes)) {
-			return $this->relUserPosition->getRelRefUserPositionTypes();
+			return null===$this->relUserPosition?[]:$this->relUserPosition->relRefUserPositionTypes;
 		}
 
 		return RefUserPositionTypes::findModels(ArrayHelper::getColumn($overridenTypes, 'position_type_id'));
