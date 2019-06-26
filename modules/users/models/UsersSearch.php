@@ -14,12 +14,14 @@ use yii\data\ActiveDataProvider;
  * @property int[] $positions Фильтр должностей
  * @property int[] $roles Фильтр ролей
  * @property int[] $privileges Фильтр привилегий
+ * @property int[] $positionTypes Фильтр типов должностей
  */
 class UsersSearch extends Users {
 	public $groupName;
 	public $positions;
 	public $roles;
 	public $privileges;
+	public $positionTypes;
 
 	/**
 	 * @inheritdoc
@@ -28,7 +30,7 @@ class UsersSearch extends Users {
 		return [
 			[['id'], 'integer'],
 			[['username', 'login', 'email'], 'safe'],
-			[['groupName', 'positions', 'roles', 'privileges'], 'safe']
+			[['groupName', 'positions', 'roles', 'privileges', 'positionTypes'], 'safe']
 		];
 	}
 
@@ -67,7 +69,11 @@ class UsersSearch extends Users {
 				'privileges' => [
 					'asc' => ['sys_privileges.name' => SORT_ASC],
 					'desc' => ['sys_privileges.name' => SORT_DESC]
-				]
+				],
+//				'positionTypes' => [
+//					'asc' => ['ref_user_position_types.name' => SORT_ASC],
+//					'desc' => ['ref_user_position_types.name' => SORT_DESC]
+//				]
 			]
 		]);
 
@@ -89,6 +95,7 @@ class UsersSearch extends Users {
 			->andFilterWhere(['in', 'ref_user_positions.id', $this->positions])
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges]);
+//			->andFilterWhere(['in', 'ref_user_position_types.id', $this->positionTypes]);
 		return $dataProvider;
 	}
 }
