@@ -31,7 +31,7 @@ class HomeController extends Controller {
 		$groups = Groups::findModels($stack);
 
 		return $this->render('boss', [
-			'groups' => $groups,
+			'groups' => $groups
 		]);
 	}
 
@@ -47,6 +47,7 @@ class HomeController extends Controller {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionBoss():string {
 		$leadingGroups = CurrentUser::User()->relLeadingGroups;
@@ -57,13 +58,11 @@ class HomeController extends Controller {
 		$groups = Groups::findModels($stack);
 
 		return $this->render('boss', [
-			'groups' => $groups,
+			'groups' => $groups
 		]);
 	}
 
 	/**
-	 * @param int $groupId
-	 * @param int $positionType
 	 * @return string
 	 */
 	public function actionUsers():string {

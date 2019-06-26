@@ -504,6 +504,7 @@ class Users extends ActiveRecordExtended {
 
 	/**
 	 * @return RefUserPositionTypes[]|ActiveQuery
+	 * @throws Throwable
 	 */
 	public function getRelRefUserPositionTypes() {
 		$overridenTypes = $this->relUserPositionsTypes;
@@ -524,6 +525,7 @@ class Users extends ActiveRecordExtended {
 	/**
 	 * Сюда прилетают изменения типа должности из профиля пользователя. Мы не меняем тип должности у самой должности, внося измненения в таблицу переопределний для этого конкретного юзернейма
 	 * @param integer[] $relRefUserPositionTypes
+	 * @throws Throwable
 	 */
 	public function setRelRefUserPositionTypes($relRefUserPositionTypes):void {
 		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
