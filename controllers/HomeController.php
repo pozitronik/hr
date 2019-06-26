@@ -5,7 +5,9 @@ namespace app\controllers;
 
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
+use app\modules\users\models\UsersSearch;
 use Throwable;
+use Yii;
 use yii\base\Response;
 use yii\web\Controller;
 
@@ -21,7 +23,16 @@ class HomeController extends Controller {
 	 */
 	public function actionIndex() {
 		if (null === $user = CurrentUser::User()) return $this->redirect(['site/login']);
-		return $this->render('index', ['model' => $user]);
+		$leadingGroups = CurrentUser::User()->relLeadingGroups;
+		$stack = [];
+		foreach ($leadingGroups as $leadingGroup) {
+			$leadingGroup->buildHierarchyTree($stack);
+		}
+		$groups = Groups::findModels($stack);
+
+		return $this->render('boss', [
+			'groups' => $groups,
+		]);
 	}
 
 	/**
@@ -45,10 +56,27 @@ class HomeController extends Controller {
 		}
 		$groups = Groups::findModels($stack);
 
-		return $this->render('boss',[
+		return $this->render('boss', [
 			'groups' => $groups,
-
 		]);
+	}
+
+	/**
+	 * @param int $groupId
+	 * @param int $positionType
+	 * @return string
+	 */
+	public function actionUsers():string {
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new UsersSearch();
+		$allowedGroups = [];
+		//Проверяем доступы к списку юзеров
+
+		return $this->render('users', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params, $allowedGroups)
+		]);
+
 	}
 
 }
