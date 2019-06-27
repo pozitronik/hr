@@ -5,7 +5,7 @@ function formatGroup(item) {
 
 	return '<div class="select-item"><div class="row"><div class="col-sm-8"><img src="' + ($(item.element).data('logo') || '') +
 		'" class="group-logo" alt="logo">' + item.text + '</div><div class="col-sm-4 text-overflow" ' + 'style="background: ' + ($(item.element).data('typecolor') || 'inherit') +
-		';"' + '>' + ($(item.element).data('typename') || '')
+		';color:' + ($(item.element).data('textcolor') || 'inherit') + '">' + ($(item.element).data('typename') || '')
 		+ '</div></div></div>';
 }
 
