@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
+use app\helpers\Utils;
 use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
@@ -154,8 +155,6 @@ class Groups extends ActiveRecordExtended {
 	public function getRelVacancy() {
 		return $this->hasMany(Vacancy::class, ['group' => 'id']);
 	}
-
-
 
 	/**
 	 * @param ActiveQuery|Users[] $relGroupsUsers
@@ -389,7 +388,8 @@ class Groups extends ActiveRecordExtended {
 				$result[$item->id] = [
 					'data-logo' => $item->logo,
 					'data-typename' => ArrayHelper::getValue($item->relGroupTypes, 'name'),
-					'data-typecolor' => ArrayHelper::getValue($item->relGroupTypes, 'color')
+					'data-typecolor' => ArrayHelper::getValue($item->relGroupTypes, 'color'),
+					'data-textcolor' => Utils::RGBColorContrast(ArrayHelper::getValue($item->relGroupTypes, 'color'))
 				];
 			}
 			return $result;
