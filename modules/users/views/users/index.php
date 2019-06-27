@@ -116,6 +116,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
 					}
