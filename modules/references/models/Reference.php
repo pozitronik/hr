@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\helpers\Utils;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
@@ -260,8 +261,9 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 				$options = ArrayHelper::map(self::find()->active()->all(), 'id', 'color');
 				array_walk($options, static function(&$value, $key) {
 					if (!empty($value)) {
+						$color = Utils::RGBColorContrast($value);
 						$value = [
-							'style' => "background: $value;"
+							'style' => "background: $value; color: $color"
 						];
 					}
 				});
