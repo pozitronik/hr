@@ -14,6 +14,7 @@ declare(strict_types = 1);
 
 use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositionTypes;
+use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -34,13 +35,28 @@ use yii\web\View;
 			$positionType = RefUserPositionTypes::findModel($positionId); ?>
 			<div class="row">
 				<div class="col-md-10"><?= $positionType->name ?></div>
-				<div class="col-md-2 badge" style="background:<?= $positionType->color ?>; color:<?= Utils::RGBColorContrast($positionType->color); ?>"><?= $positionCount ?></div>
+				<div class="col-md-2 pad-no">
+					<?= BadgeWidget::widget([
+						'value' => $positionCount,
+						"badgeOptions" => [
+							'style' => "float:right; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+						]
+
+					]) ?>
+				</div>
 			</div>
 		<?php endforeach; ?>
 
 		<div class="row">
 			<div class="col-md-10">Вакансии</div>
-			<div class="col-md-2 badge badge-danger"><?= $vacancyCount; ?></div>
+			<div class="col-md-2 pad-no">
+				<?= BadgeWidget::widget([
+					'value' => $vacancyCount,
+					"badgeOptions" => [
+						'class' => "badge badge-danger pull-right"
+					]
+				]) ?>
+			</div>
 		</div>
 	</div>
 	<div class="panel-footer">
