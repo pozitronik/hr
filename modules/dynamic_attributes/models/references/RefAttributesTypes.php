@@ -5,6 +5,7 @@ namespace app\modules\dynamic_attributes\models\references;
 
 use app\modules\references\models\Reference;
 use app\models\relations\RelUsersAttributesTypes;
+use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 
 /**
@@ -72,8 +73,13 @@ class RefAttributesTypes extends Reference {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
-						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), [
-						'style' => "background: {$model->color}"
+						]).$model->name:BadgeWidget::widget([
+						'data' => [$model],
+						'attribute' => 'name',
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
 					]);
 				},
 				'format' => 'raw'
