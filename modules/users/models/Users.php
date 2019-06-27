@@ -211,7 +211,7 @@ class Users extends ActiveRecordExtended {
 				$this->salt = sha1(uniqid((string)mt_rand(), true));
 				$this->password = sha1($this->password.$this->salt);
 			}
-		} else if ('' !== $this->update_password) {
+		} else if (!empty($this->update_password)) {
 			$this->salt = sha1(uniqid((string)mt_rand(), true));
 			$this->password = sha1($this->update_password.$this->salt);
 		}
