@@ -5,6 +5,7 @@ namespace app\modules\dynamic_attributes\models\references;
 
 use app\modules\references\models\Reference;
 use app\models\relations\RelUsersAttributesTypes;
+use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 
@@ -77,6 +78,7 @@ class RefAttributesTypes extends Reference {
 						'data' => [$model],
 						'attribute' => 'name',
 						'itemsSeparator' => false,
+						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
 						"optionsMap" => static function() {
 							return self::colorStyleOptions();
 						}

@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\references;
 
+use app\modules\references\ReferencesModule;
+use app\widgets\badge\BadgeWidget;
 use kartik\grid\GridView;
 use app\modules\groups\models\Groups;
 use app\modules\references\models\Reference;
@@ -156,8 +158,14 @@ class RefUserRoles extends Reference {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
-						]).$model->name:Html::tag('span', Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]), [
-						'style' => "background: {$model->color}"
+						]).$model->name:BadgeWidget::widget([
+						'data' => [$model],
+						'attribute' => 'name',
+						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
 					]);
 				},
 				'format' => 'raw'
