@@ -96,7 +96,7 @@ class RefUserPositions extends Reference {
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
 						]).$model->name:BadgeWidget::widget([
-						'data' => [$model],
+						'data' => $model,
 						'attribute' => 'name',
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
 						'itemsSeparator' => false,

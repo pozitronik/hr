@@ -13,7 +13,7 @@ use yii\helpers\Html;
 /**
  * Class BadgeWidget
  * @package app\widgets\badge
- * @property array<Model> $data
+ * @property array<Model>|Model $data
  * @property string $attribute
  * @property boolean $useBadges
  * @property string|false $allBadgeClass
@@ -26,7 +26,7 @@ use yii\helpers\Html;
  * @property array $moreBadgeOptions
  */
 class BadgeWidget extends Widget {
-	public $data = [];//Массив отображаемых моделей
+	public $data = [];//Массив отображаемых моделей|отображаемая модель
 	public $attribute;//Атрибут модели, отображаемый в текст
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
 	public $useBadges = true;//использовать бейджи для основного списка.
@@ -58,6 +58,7 @@ class BadgeWidget extends Widget {
 		if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap);
 
 		/** @var Model|ActiveRecord $model */
+		if (!is_array($this->data)) $this->data = [$this->data];
 		foreach ($this->data as $model) {
 			if ($model->hasProperty('primaryKey')) {
 				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
