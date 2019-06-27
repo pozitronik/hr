@@ -5,6 +5,7 @@ namespace app\widgets\badge;
 
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
+use yii\base\DynamicModel;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
@@ -15,6 +16,7 @@ use yii\helpers\Html;
  * @package app\widgets\badge
  * @property array<Model>|Model $data
  * @property string $attribute
+ * @property null|string $value
  * @property boolean $useBadges
  * @property string|false $allBadgeClass
  * @property string $linkAttribute
@@ -28,6 +30,7 @@ use yii\helpers\Html;
 class BadgeWidget extends Widget {
 	public $data = [];//Массив отображаемых моделей|отображаемая модель
 	public $attribute;//Атрибут модели, отображаемый в текст
+	public $value;//непосредственное значение, для использования без модели
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
 	public $useBadges = true;//использовать бейджи для основного списка.
 
@@ -54,6 +57,13 @@ class BadgeWidget extends Widget {
 	public function run():string {
 		$result = [];
 		$moreBadge = '';
+
+		if (null !== $this->value) {
+			$this->data = new DynamicModel([
+				'value' => $this->value
+			]);
+			$this->attribute = 'value';
+		}
 
 		if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap);
 
