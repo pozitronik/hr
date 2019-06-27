@@ -7,6 +7,7 @@ use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
+use Throwable;
 use yii\base\Widget;
 
 /**
@@ -30,6 +31,7 @@ class GroupCardWidget extends Widget {
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function run():string {
 		$leader = $this->group->leader;

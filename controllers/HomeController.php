@@ -22,7 +22,7 @@ class HomeController extends Controller {
 	 * @throws Throwable
 	 */
 	public function actionIndex() {
-		if (null === $user = CurrentUser::User()) return $this->redirect(['site/login']);
+		if (null === CurrentUser::User()) return $this->redirect(['site/login']);
 		$leadingGroups = CurrentUser::User()->relLeadingGroups;
 		$stack = [];
 		foreach ($leadingGroups as $leadingGroup) {

@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\roles_select;
 
-use Yii;
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
 
