@@ -8,7 +8,7 @@ function set_roles(userId, groupId, roles) {
 			roles: roles
 		},
 		method: 'POST'
-	}).done(function (data) {
+	}).done(function(data) {
 		jQuery('#' + userId + '-' + groupId + '-roles-progress').hide();
 	});
 }
@@ -17,26 +17,20 @@ function formatRole(item) {
 	if (item.loading) {
 		return item.text;
 	}
-	var color = $(item.element).data('color');
-	if (color) {
-		color = 'style="background: ' + color + ';"';
-	}
+	let style = 'style="background: ' + ($(item.element).data('color') || 'inherit') + ';color: ' + ($(item.element).data('textcolor') || 'inherit') + '"';
 
 	if ($(item.element).data('boss')) {
 
-		return '<div class="select-item" ' + color + '"><div class="row"><div class="col-sm-1"><i class="fa fa-crown"></i></div><div class="col-sm-11">' + item.text + '</div></div></div>';
+		return '<div class="select-item" ' + style + '"><div class="row"><div class="col-sm-1"><i class="fa fa-crown"></i></div><div class="col-sm-11">' + item.text + '</div></div></div>';
 	}
-	return '<div class="select-item" ' + color + '"><div class="row"><div class="col-sm-11">' + item.text + '</div></div></div>';
+	return '<div class="select-item" ' + style + '"><div class="row"><div class="col-sm-11">' + item.text + '</div></div></div>';
 }
 
 function formatSelectedRole(item) {
-	var color = $(item.element).data('color');
-	if (color) {
-		color = 'style = "padding: 0px 5px;background: ' + color + ';"';
-	}
+	let style = "style = 'padding: 0px 5px;background:" + ($(item.element).data('color') || "inherit") + ";color:" + ($(item.element).data('textcolor') || "inherit")+"'";
 
 	if ($(item.element).data('boss')) {
-		return '<span ' + color + '><i class="fa fa-crown"></i> ' + item.text + '</span>';
+		return '<span ' + style + '><i class="fa fa-crown"></i> ' + item.text + '</span>';
 	}
-	return '<span ' + color + '>' + item.text + '</span>';
+	return '<span ' + style + '>' + item.text + '</span>';
 }

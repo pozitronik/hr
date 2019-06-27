@@ -2,11 +2,11 @@ function formatGroup(item) {
 	if (item.loading || item.hasOwnProperty('children')) {
 		return item.text;
 	}
-	var typecolor = $(item.element).data('typecolor') || 'inherited';
-	if (typecolor) typecolor = 'style="background: ' + typecolor + ';"';
-	var logo = $(item.element).data('logo') || '';
-	var typename = $(item.element).data('typename') || '';
-	return '<div class="select-item"><div class="row"><div class="col-sm-8"><img src="' + logo + '" class="group-logo" alt="logo">' + item.text + '</div><div class="col-sm-4 text-overflow" ' + typecolor + '>' + typename + '</div></div></div>';
+
+	return '<div class="select-item"><div class="row"><div class="col-sm-8"><img src="' + ($(item.element).data('logo') || '') +
+		'" class="group-logo" alt="logo">' + item.text + '</div><div class="col-sm-4 text-overflow" ' + 'style="background: ' + ($(item.element).data('typecolor') || 'inherit') +
+		';"' + '>' + ($(item.element).data('typename') || '')
+		+ '</div></div></div>';
 }
 
 function formatGroupAJAX(item) {
@@ -14,15 +14,13 @@ function formatGroupAJAX(item) {
 		return item.text;
 	}
 
-	var typecolor = item.typecolor || 'inherited';
-	if (typecolor) typecolor = 'style="background: ' + typecolor + ';"';
-	var logo = item.logo || '';
-	var typename = item.typename || '';
-	return '<div class="select-item"><div class="row"><div class="col-sm-8"><img src="' + logo + '" class="group-logo" alt="logo">' + item.text + '</div><div class="col-sm-4 text-overflow" ' + typecolor + '>' + typename + '</div></div></div>';
+	return '<div class="select-item"><div class="row"><div class="col-sm-8"><img src="' + (item.logo || '') +
+		'" class="group-logo" alt="logo">' + item.text + '</div><div class="col-sm-4 text-overflow" ' +
+		'style="background: ' + (item.typecolor || 'inherit') + ';"' + '>' + item.typename || '' + '</div></div></div>';
 }
 
 function submit_toggle(select) {
-	var input = jQuery(select.target).parent().find(':submit');
+	let input = jQuery(select.target).parent().find(':submit');
 	if (0 < jQuery(select.target).val().length) {
 		input.removeAttr('disabled');
 	} else {
