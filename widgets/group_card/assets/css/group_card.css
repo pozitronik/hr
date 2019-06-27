@@ -4,4 +4,8 @@
 
 .panel.panel-card > .panel-footer {
 	padding: 0 10px;
+	height: 1.7em;
+	overflow: hiddem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
