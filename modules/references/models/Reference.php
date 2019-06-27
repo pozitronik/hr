@@ -7,6 +7,8 @@ use app\helpers\Utils;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
+use app\modules\references\ReferencesModule;
+use app\widgets\badge\BadgeWidget;
 use Throwable;
 use Yii;
 use yii\base\ErrorException;
@@ -36,6 +38,8 @@ use RuntimeException;
  * @property int $usedCount Количество объектов, использующих это значение справочника
  * @property null|string $pluginId Плагин, подключающий расширение
  * @property null|CoreModule $plugin
+ *
+ * @property-read string $textColor //для справочников, поддерживающих цветокодировку, будет возвращать инвертированный цвет
  */
 class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	public $menuCaption = "Справочник";
@@ -98,7 +102,15 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 					/** @var self $model */
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
-						]).$model->name:Html::a($model->name, ['update', 'class' => $model->formName(), 'id' => $model->id]);
+						]).$model->name:BadgeWidget::widget([
+						'data' => $model,
+						'attribute' => 'name',
+						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
+					]);
 				},
 				'format' => 'raw'
 			],
@@ -258,15 +270,24 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
 			$options = [];
 			if ((new static)->hasProperty('color')) {
-				$options = ArrayHelper::map(self::find()->active()->all(), 'id', 'color');
-				array_walk($options, static function(&$value, $key) {
-					if (!empty($value)) {
-						$color = Utils::RGBColorContrast($value);
-						$value = [
-							'style' => "background: $value; color: $color"
-						];
-					}
-				});
+				/** @var self[] $items */
+				$items = self::find()->active()->all();
+				foreach ($items as $referenceItem) {
+					$color = empty($referenceItem->color)?'gray':$referenceItem->color;
+					$options[$referenceItem->id] = [
+						'style' => "background: {$color}; color: {$referenceItem->textColor}"
+					];
+				}
+
+//				$options = ArrayHelper::map(self::find()->active()->all(), 'id', 'color');
+//				array_walk($options, static function(&$value, $key) {
+//					if (!empty($value)) {
+//						$color = Utils::RGBColorContrast($value);
+//						$value = [
+//							'style' => "background: $value; color: $color"
+//						];
+//					}
+//				});
 			}
 
 			return $options;
@@ -296,5 +317,12 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	 */
 	public function getPlugin():?CoreModule {
 		return (null === $this->pluginId)?null:PluginsSupport::GetPluginById($this->pluginId);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTextColor():string {
+		return Utils::RGBColorContrast($this->hasProperty('color')?$this->color:null);
 	}
 }
