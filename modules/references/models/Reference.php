@@ -39,7 +39,7 @@ use RuntimeException;
  * @property null|string $pluginId Плагин, подключающий расширение
  * @property null|CoreModule $plugin
  *
- * @property-read string $textColor //для справочников, поддерживающих цветокодировку, будет возвращать инвертированный цвет
+ *
  */
 class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	public $menuCaption = "Справочник";

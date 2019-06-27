@@ -10,6 +10,8 @@ use yii\db\ActiveQuery;
  * @package app\models\references
  * @property integer id
  * @property string name
+ * @property string $color -- html code in rgb(r,g,b) format
+ * @property-read string $textColor -- inverted color for text contrast
  * @property boolean deleted
  *
  * @property-read string $ref_name
