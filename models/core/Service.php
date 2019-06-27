@@ -97,7 +97,7 @@ class Service extends Model {
 			'sys_user_rights',
 			'sys_users',
 			'sys_users_options',
-			'sys_vacancy',
+			'sys_vacancy'
 		];
 
 		try {

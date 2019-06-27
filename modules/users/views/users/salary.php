@@ -7,7 +7,6 @@ declare(strict_types = 1);
  */
 
 use app\modules\salary\models\references\RefUserPositionTypes;
-use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\salary\models\references\RefGrades;
