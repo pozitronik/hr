@@ -317,6 +317,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 
 	/**
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function getTextColor():string {
 		return Utils::RGBColorContrast($this->color);

@@ -5,10 +5,7 @@ namespace app\modules\groups\models\references;
 
 use app\modules\references\models\Reference;
 use app\models\relations\RelGroupsGroups;
-use app\modules\references\ReferencesModule;
-use app\widgets\badge\BadgeWidget;
 use Throwable;
-use yii\helpers\Html;
 
 /**
  * This is the model class for table "ref_group_relation_types".

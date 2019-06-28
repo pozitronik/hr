@@ -246,6 +246,7 @@ class Utils {
 	/**
 	 * @param array $rgb
 	 * @return array
+	 * @throws Throwable
 	 */
 	private static function RGBContrast(array $rgb):array {
 		return [
@@ -271,6 +272,7 @@ class Utils {
 	/**
 	 * @param null|string $rgbString
 	 * @return string
+	 * @throws Throwable
 	 */
 	public static function RGBColorContrast(?string $rgbString):string {
 		if (empty($rgbString)) return "rgb(255,255,255)";
