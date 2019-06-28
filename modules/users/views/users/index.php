@@ -9,6 +9,7 @@ declare(strict_types = 1);
  * @deprecated
  */
 
+use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
@@ -97,33 +98,46 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'class' => DataColumn::class,
 			'label' => 'Должность',
 			'attribute' => 'positions',
-			'value' => 'positionName',
-			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
-			'filterType' => ReferenceSelectWidget::class,
-			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
-			'filterWidgetOptions' => [
-				'referenceClass' => RefUserPositions::class,
-				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
-			]
-		],
-		[
-			'class' => DataColumn::class,
-			'label' => 'Тип должности',
-			'attribute' => 'relRefUserPositionTypes',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->relRefUserPositionTypes,
+					'data' => $model->relRefUserPositions,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
-					}
+					},
+					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions'],
 				]);
 			},
+			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefUserPositions::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			],
 			'format' => 'raw'
 		],
+//		[
+//			'class' => DataColumn::class,
+//			'label' => 'Тип должности',
+//			'attribute' => 'positionType',
+//			'value' => static function(Users $model) {
+//				return BadgeWidget::widget([
+//					'data' => $model->relRefUserPositions,
+//					'useBadges' => true,
+//					'attribute' => 'name',
+//					'unbadgedCount' => 3,
+//					'itemsSeparator' => false,
+//					"optionsMap" => static function() {
+//						return RefUserPositionTypes::colorStyleOptions();
+//					}
+//				]);
+//			},
+//			'format' => 'raw'
+//		],
 		[
 			'attribute' => 'groupName',
 			'label' => 'Группы',
@@ -158,8 +172,8 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"itemsSeparator" => false,
 					"optionsMap" => static function() {
 						return RefUserRoles::colorStyleOptions();
-					}
-
+					},
+					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserRoles'],
 				]);
 			},
 			'format' => 'raw'
