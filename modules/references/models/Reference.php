@@ -269,25 +269,13 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	public static function colorStyleOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
 			$options = [];
-			if ((new static)->hasProperty('color')) {
-				/** @var self[] $items */
-				$items = self::find()->active()->all();
-				foreach ($items as $referenceItem) {
-					$color = empty($referenceItem->color)?'gray':$referenceItem->color;
-					$options[$referenceItem->id] = [
-						'style' => "background: {$color}; color: {$referenceItem->textColor}"
-					];
-				}
-
-//				$options = ArrayHelper::map(self::find()->active()->all(), 'id', 'color');
-//				array_walk($options, static function(&$value, $key) {
-//					if (!empty($value)) {
-//						$color = Utils::RGBColorContrast($value);
-//						$value = [
-//							'style' => "background: $value; color: $color"
-//						];
-//					}
-//				});
+			/** @var self[] $items */
+			$items = self::find()->active()->all();
+			foreach ($items as $referenceItem) {
+				$color = empty($referenceItem->color)?'gray':$referenceItem->color;
+				$options[$referenceItem->id] = [
+					'style' => "background: {$color}; color: {$referenceItem->textColor}"
+				];
 			}
 
 			return $options;
@@ -323,6 +311,6 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	 * @return string
 	 */
 	public function getTextColor():string {
-		return Utils::RGBColorContrast($this->hasProperty('color')?$this->color:null);
+		return Utils::RGBColorContrast($this->color);
 	}
 }
