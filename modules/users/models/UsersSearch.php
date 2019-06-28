@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -14,14 +15,14 @@ use yii\data\ActiveDataProvider;
  * @property int[] $positions Фильтр должностей
  * @property int[] $roles Фильтр ролей
  * @property int[] $privileges Фильтр привилегий
- * @property int[] $positionTypes Фильтр типов должностей
+ * @property int $positionType Фильтр типов должностей
  */
 class UsersSearch extends Users {
 	public $groupName;
 	public $positions;
 	public $roles;
 	public $privileges;
-	public $positionTypes;
+	public $positionType;
 
 	/**
 	 * @inheritdoc
@@ -30,7 +31,7 @@ class UsersSearch extends Users {
 		return [
 			[['id'], 'integer'],
 			[['username', 'login', 'email'], 'safe'],
-			[['groupName', 'positions', 'roles', 'privileges', 'positionTypes'], 'safe']
+			[['groupName', 'positions', 'roles', 'privileges', 'positionType'], 'safe']
 		];
 	}
 
@@ -70,10 +71,10 @@ class UsersSearch extends Users {
 					'asc' => ['sys_privileges.name' => SORT_ASC],
 					'desc' => ['sys_privileges.name' => SORT_DESC]
 				],
-//				'positionTypes' => [
-//					'asc' => ['ref_user_position_types.name' => SORT_ASC],
-//					'desc' => ['ref_user_position_types.name' => SORT_DESC]
-//				]
+				'positionType' => [
+					'asc' => ['ref_user_position_types.name' => SORT_ASC],
+					'desc' => ['ref_user_position_types.name' => SORT_DESC]
+				]
 			]
 		]);
 
@@ -82,7 +83,7 @@ class UsersSearch extends Users {
 
 		if (!$this->validate()) return $dataProvider;
 
-		$query->joinWith(['relGroups', 'relRefUserPositions', 'relRefUserRoles', 'relPrivileges']);//todo: джойны в зависимости от прав
+		$query->joinWith(['relGroups', /*'relRefUserPositions',*/ 'relRefUserRoles', 'relPrivileges', 'refUserPositionTypes']);//todo: джойны в зависимости от прав
 
 		$query->distinct();
 
@@ -94,8 +95,10 @@ class UsersSearch extends Users {
 			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
 			->andFilterWhere(['in', 'ref_user_positions.id', $this->positions])
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
-			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges]);
-//			->andFilterWhere(['in', 'ref_user_position_types.id', $this->positionTypes]);
+			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges])
+			->andFilterWhere(['=', 'rel_ref_user_positions_types.position_type_id', $this->positionType]);
+
+		Yii::debug($query->createCommand()->rawSql,'sql');
 		return $dataProvider;
 	}
 }

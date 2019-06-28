@@ -120,24 +120,23 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			],
 			'format' => 'raw'
 		],
-//		[
-//			'class' => DataColumn::class,
-//			'label' => 'Тип должности',
-//			'attribute' => 'positionType',
-//			'value' => static function(Users $model) {
-//				return BadgeWidget::widget([
-//					'data' => $model->relRefUserPositions,
-//					'useBadges' => true,
-//					'attribute' => 'name',
-//					'unbadgedCount' => 3,
-//					'itemsSeparator' => false,
-//					"optionsMap" => static function() {
-//						return RefUserPositionTypes::colorStyleOptions();
-//					}
-//				]);
-//			},
-//			'format' => 'raw'
-//		],
+		[
+			'class' => DataColumn::class,
+
+			'value' => static function(Users $model) {
+				return BadgeWidget::widget([
+					'data' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
+					"optionsMap" => static function() {
+						return RefUserPositionTypes::colorStyleOptions();
+					}
+				]);
+			},
+			'format' => 'raw'
+		],
 		[
 			'attribute' => 'groupName',
 			'label' => 'Группы',

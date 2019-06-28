@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\users\models;
 
 use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
@@ -503,23 +504,48 @@ class Users extends ActiveRecordExtended {
 	}
 
 	/**
-	 * @return RefUserPositionTypes[]|ActiveQuery
-	 * @throws Throwable
+	 * ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionTypes() {
-		$overridenTypes = $this->relUserPositionsTypes;
-		if (empty($overridenTypes)) {
-			return null===$this->relUserPosition?[]:$this->relUserPosition->relRefUserPositionTypes;
-		}
-
-		return RefUserPositionTypes::findModels(ArrayHelper::getColumn($overridenTypes, 'position_type_id'));
+	public function getRelRefUserPositionsTypes(){
+		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id'])->via('relUserPosition');
 	}
 
 	/**
+	 * Типы должностей пользователя, полученные через привязку типов к занимаемой должности
+	 * @return ActiveQuery
+	 */
+	public function getRefUserPositionTypes(){
+		return $this->hasOne(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
+	}
+
+	/**
+	 * @return RefUserPositionTypes[]|ActiveQuery
+	 * @throws Throwable
+	 */
+//	public function getRelRefUserPositionTypes() {
+//		$overridenTypes = $this->relUserPositionsTypes;
+//		if (empty($overridenTypes)) {
+//			return null===$this->relUserPosition?[]:$this->relUserPosition->relRefUserPositionTypes;
+//		}
+//
+//		return RefUserPositionTypes::findModels(ArrayHelper::getColumn($overridenTypes, 'position_type_id'));
+//	}
+
+	/**
+	 * ID типов должностей, полученных через переопределения (не зависящие от привязок должности)
 	 * @return RelUserPositionsTypes[]|ActiveQuery
 	 */
 	public function getRelUserPositionsTypes() {
 		return $this->hasMany(RelUserPositionsTypes::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * Типы должностей пользователя, полученные через переопределения (не зависящие от привязок должности)
+	 * @return ActiveQuery
+	 */
+	public function getRelRefUserPositionTypesOwn(){
+		return $this->hasMany(RelRefUserPositionsTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
 	}
 
 	/**
