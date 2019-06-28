@@ -108,7 +108,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
 					},
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions'],
+					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
 				]);
 			},
 			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
@@ -172,7 +172,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"optionsMap" => static function() {
 						return RefUserRoles::colorStyleOptions();
 					},
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserRoles'],
+					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserRoles']
 				]);
 			},
 			'format' => 'raw'

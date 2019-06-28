@@ -505,7 +505,7 @@ class Users extends ActiveRecordExtended {
 
 	/**
 	 * ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
-	 * @return ActiveQuery
+	 * @return RelRefUserPositionsTypes[]|ActiveQuery
 	 */
 	public function getRelRefUserPositionsTypes(){
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id'])->via('relUserPosition');
@@ -513,7 +513,7 @@ class Users extends ActiveRecordExtended {
 
 	/**
 	 * Типы должностей пользователя, полученные через привязку типов к занимаемой должности
-	 * @return ActiveQuery
+	 * @return ActiveQuery|RefUserPositionTypes
 	 */
 	public function getRefUserPositionTypes(){
 		return $this->hasOne(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
@@ -542,7 +542,7 @@ class Users extends ActiveRecordExtended {
 
 	/**
 	 * Типы должностей пользователя, полученные через переопределения (не зависящие от привязок должности)
-	 * @return ActiveQuery
+	 * @return ActiveQuery|RelRefUserPositionsTypes
 	 */
 	public function getRelRefUserPositionTypesOwn(){
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
