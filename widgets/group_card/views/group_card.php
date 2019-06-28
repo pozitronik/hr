@@ -43,7 +43,7 @@ use yii\web\View;
 						"badgeOptions" => [
 							'style' => "float:right; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						],
-						'linkScheme' => [UsersModule::to('users'), 'positionType' => $positionId, 'groupId' => $groupId]
+						'linkScheme' => [UsersModule::to('users'), 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
 
 					]) ?>
 				</div>
