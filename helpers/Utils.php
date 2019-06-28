@@ -249,9 +249,9 @@ class Utils {
 	 */
 	private static function RGBContrast(array $rgb):array {
 		return [
-			($rgb[0] < 128)?255:0,
-			($rgb[1] < 128)?255:0,
-			($rgb[2] < 128)?255:0
+			(ArrayHelper::getValue($rgb, 0, 0) < 128)?255:0,
+			(ArrayHelper::getValue($rgb, 1, 0) < 128)?255:0,
+			(ArrayHelper::getValue($rgb, 2, 0) < 128)?255:0
 		];
 	}
 
@@ -273,7 +273,7 @@ class Utils {
 	 * @return string
 	 */
 	public static function RGBColorContrast(?string $rgbString):string {
-		if (null === $rgbString) return "rgb(255,255,255)";
+		if (empty($rgbString)) return "rgb(255,255,255)";
 		$rgb = self::RGBToArray($rgbString);
 		$rgbContrast = self::RGBContrast($rgb);
 		return "rgb({$rgbContrast[0]},{$rgbContrast[1]},{$rgbContrast[2]})";
