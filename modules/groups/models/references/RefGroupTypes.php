@@ -71,43 +71,6 @@ class RefGroupTypes extends Reference {
 	}
 
 	/**
-	 * Набор колонок для отображения на главной
-	 * @return array
-	 */
-	public function getColumns():array {
-		return [
-			[
-				'attribute' => 'id',
-				'options' => [
-					'style' => 'width:36px;'
-				]
-			],
-			[
-				'attribute' => 'name',
-				'value' => static function($model) {
-					/** @var self $model */
-					return $model->deleted?Html::tag('span', "Удалено:", [
-							'class' => 'label label-danger'
-						]).$model->name:BadgeWidget::widget([
-						'data' => $model,
-						'attribute' => 'name',
-						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
-						'itemsSeparator' => false,
-						"optionsMap" => static function() {
-							return self::colorStyleOptions();
-						}
-					]);
-				},
-				'format' => 'raw'
-			],
-			[
-				'attribute' => 'usedCount'
-			]
-
-		];
-	}
-
-	/**
 	 * @return int
 	 */
 	public function getUsedCount():int {
