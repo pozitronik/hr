@@ -308,6 +308,14 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	}
 
 	/**
+	 * Дефолтный геттер цвета для справочников, не имплементирующих атрибут
+	 * @return string|null
+	 */
+	public function getColor():?string {
+		return null;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getTextColor():string {
