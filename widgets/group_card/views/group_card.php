@@ -16,6 +16,7 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
+use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use yii\BaseYii;
 use yii\helpers\Html;
@@ -60,13 +61,20 @@ use yii\web\View;
 		<?php endforeach; ?>
 
 		<div class="row">
-			<div class="col-md-10">Вакансии</div>
+			<div class="col-md-10"><?= BadgeWidget::widget([
+					'value' => 'Вакансии',
+					"badgeOptions" => [
+						'class' => "badge badge-danger pull-left"
+					],
+					'linkScheme' => ['vacancy', 'id' => $groupId]
+				]) ?></div>
 			<div class="col-md-2 pad-no">
 				<?= BadgeWidget::widget([
 					'value' => $vacancyCount,
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-right"
-					]
+					],
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => $groupId]
 				]) ?>
 			</div>
 		</div>

@@ -9,11 +9,14 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\UsersSearch;
+use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\Response;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class HomeController
@@ -82,5 +85,6 @@ class HomeController extends Controller {
 		]);
 
 	}
+
 
 }
