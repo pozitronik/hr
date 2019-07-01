@@ -38,7 +38,7 @@ class GroupCardWidget extends Widget {
 	public function run():string {
 		$leader = $this->group->leader;
 		$leader_role = (null === $leader->id)?'Лидер':ArrayHelper::getValue(RefUserRoles::getUserRolesInGroup($leader->id, $this->group->id), '0.name');
-
+		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
 		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
 		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
 			LEFT JOIN ref_user_positions rup ON rup.id = rrupt.position_id
