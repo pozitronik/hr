@@ -62,6 +62,16 @@ $badgeData = [];
 			</div>
 
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<?= BadgeWidget::widget([
+					'data' => $user->getBosses(),
+					'attribute' => 'username',
+					'unbadgedCount' => false,
+					'itemsSeparator' => false,
+				]) ?>
+			</div>
+		</div>
 
 	</div>
 	<div class="panel-footer">
