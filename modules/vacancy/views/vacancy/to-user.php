@@ -15,6 +15,7 @@ use app\modules\vacancy\VacancyModule;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
 use kartik\detail\DetailView;
+use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -80,11 +81,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					'columns' => [
 						[
 							'attribute' => 'group',
-							'value' => $model->relGroup->name
+							'value' => ArrayHelper::getValue($model->relGroup, 'name')
 						],
 						[
 							'attribute' => 'position',
-							'value' => $model->relRefUserPosition->name
+							'value' => ArrayHelper::getValue($model->relRefUserPosition,'name')
 						],
 						[
 							'label' => 'Назначение/роль',
@@ -106,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'columns' => [
 						[
 							'attribute' => 'grade',
-							'value' => $model->relRefGrade->name
+							'value' => ArrayHelper::getValue($model->relRefGrade, 'name')
 						],
 						[
 							'attribute' => 'premium_group',
