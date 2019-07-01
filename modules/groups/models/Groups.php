@@ -425,7 +425,7 @@ class Groups extends ActiveRecordExtended {
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."CollectRecursiveIds".$this->id);
 		Yii::$app->cache->delete(static::class."DataOptions");
-		Yii::$app->cache->delete(static::class."HierarchyTree".$this->id);
+//		Yii::$app->cache->delete(static::class."HierarchyTree".$this->id);
 	}
 
 	/**
@@ -434,7 +434,7 @@ class Groups extends ActiveRecordExtended {
 	 * @return array Массив всех обойдённых групп (иерархический)
 	 */
 	public function buildHierarchyTree(&$stackedId = []):array {
-		return Yii::$app->cache->getOrSet(static::class."HierarchyTree{$this->id}", function() use (&$stackedId) {
+//		return Yii::$app->cache->getOrSet(static::class."HierarchyTree{$this->id}", function() use (&$stackedId) {
 			if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
 			$hierarchyTree = [];
 			/** @var self[] $childGroups */
@@ -449,7 +449,7 @@ class Groups extends ActiveRecordExtended {
 
 			}
 			return $hierarchyTree;
-		});
+//		});
 
 	}
 
