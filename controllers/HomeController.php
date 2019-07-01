@@ -25,14 +25,18 @@ class HomeController extends Controller {
 	 */
 	public function actionIndex() {
 		if (null === CurrentUser::User()) return $this->redirect(['site/login']);
-		$stack = [];
-		/** @var Groups $leadingGroup */
-		foreach ((array)CurrentUser::User()->relLeadingGroups as $leadingGroup) {
-			$leadingGroup->buildHierarchyTree($stack);
-		}
+		$stack = Yii::$app->cache->getOrSet(static::class."GroupsStack".CurrentUser::User()->id, function(){
+			$stack = [];
+			/** @var Groups $leadingGroup */
+			foreach ((array)CurrentUser::User()->relLeadingGroups as $leadingGroup) {
+				$leadingGroup->buildHierarchyTree($stack);
+			}
 
-		$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups,'id');
-		$stack = array_unique(array_merge($stack, $commonGroupsIds));
+			$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups,'id');
+			return array_unique(array_merge($stack, $commonGroupsIds));
+		}, 3600);
+
+
 		$groups = Groups::findModels($stack);
 
 		return $this->render('boss', [
