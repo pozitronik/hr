@@ -9,6 +9,8 @@ use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Widget;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * Class GroupSelectWidget
@@ -36,24 +38,27 @@ class GroupCardWidget extends Widget {
 	public function run():string {
 		$leader = $this->group->leader;
 		$leader_role = (null === $leader->id)?'Лидер':ArrayHelper::getValue(RefUserRoles::getUserRolesInGroup($leader->id, $this->group->id), '0.name');
+
+		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
+		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
+			LEFT JOIN ref_user_positions rup ON rup.id = rrupt.position_id
+			LEFT JOIN sys_users su ON su.`position` = rup.id
+			LEFT JOIN rel_users_groups rug ON rug.user_id=su.id
+			LEFT JOIN sys_groups sg ON sg.id = rug.group_id
+			WHERE sg.id = {$this->group->id}
+			GROUP BY rupt.id";
+
+		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
+		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
+
 		/*Строим срез по типам должностей*/
-		$groupUsers = $this->group->relUsers;
-
-		$positionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'),0);
-
-		foreach ($groupUsers as $user) {
-			$userPositionTypes = $user->getRefUserPositionTypes()->all();
-			foreach ($userPositionTypes as $positionType) {
-				$positionTypes[$positionType->id]++;
-			}
-		}
 
 		return $this->render('group_card', [
 			'title' => $this->group->name,
 			'groupId' => $this->group->id,
 			'leader' => (null === $leader->id)?'N/A':$leader->username,
 			'leader_role' => $leader_role,
-			'userCount' => count($groupUsers),
+			'userCount' => count($this->group->relUsers),
 			'vacancyCount' => count($this->group->relVacancy),
 			'positionTypeData' => $positionTypes
 		]);
