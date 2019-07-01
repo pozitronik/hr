@@ -1,0 +1,11 @@
+.panel.panel-card {
+	padding: 0;
+}
+
+.panel.panel-card > .panel-footer {
+	padding: 0 10px;
+	height: 1.7em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
