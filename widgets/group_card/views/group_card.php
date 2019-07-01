@@ -17,6 +17,7 @@ use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
+use yii\BaseYii;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -43,7 +44,7 @@ use yii\web\View;
 						"badgeOptions" => [
 							'style' => "float:right; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						],
-						'linkScheme' => [UsersModule::to('users'), 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
 
 					]) ?>
 				</div>
