@@ -23,6 +23,6 @@ class VisjsAsset extends AssetBundle {
 	];
 
 	public $publishOptions = [
-		'forceCopy' => true
+		'forceCopy' => YII_ENV_DEV
 	];
 }

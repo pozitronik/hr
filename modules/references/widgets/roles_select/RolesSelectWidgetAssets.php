@@ -23,6 +23,6 @@ class RolesSelectWidgetAssets extends AssetBundle {
 	];
 
 	public $publishOptions = [
-		'forceCopy' => true//todo: use debug param
+		'forceCopy' => YII_ENV_DEV
 	];
 }
