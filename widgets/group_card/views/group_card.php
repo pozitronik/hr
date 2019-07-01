@@ -71,7 +71,7 @@ use yii\web\View;
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-left"
 					],
-					'linkScheme' => ['vacancy', 'id' => $groupId]
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => $groupId]
 				]) ?></div>
 			<div class="col-md-2 pad-no">
 				<?= BadgeWidget::widget([
