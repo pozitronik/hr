@@ -42,7 +42,7 @@ class GroupCardWidget extends Widget {
 		$positionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'),0);
 
 		foreach ($groupUsers as $user) {
-			$userPositionTypes = $user->relRefUserPositionTypes;
+			$userPositionTypes = $user->getRefUserPositionTypes()->all();
 			foreach ($userPositionTypes as $positionType) {
 				$positionTypes[$positionType->id]++;
 			}

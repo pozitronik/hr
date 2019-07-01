@@ -63,7 +63,7 @@ use yii\db\ActiveRecord;
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property ActiveQuery|RefUserPositions $relUserPosition Релейшен к должностям пользователей (у пользователя может быть только одна должность)
  * @property ActiveQuery|RelRefUserPositionsTypes[] $relRefUserPositionsTypes ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
- * @property ActiveQuery|RefUserPositionTypes[] $refUserPositionTypes Типы должностей пользователя, полученные через привязку типов к занимаемой должности
+ * @property ActiveQuery|RefUserPositionTypes[] $refUserPositionTypes Типы должностей пользователя, полученные через привязку типов к занимаемой должности. НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ КАК ГЕТТЕР, вызывать только функцию
  *
  * @-property ActiveQuery|RefUserPositionTypes[] $relRefUserPositionTypes Массив типов должности пользователя (с учётом переопределения). При изменении параметра ныжно менять переопределение.
  * @-property ActiveQuery|RelUserPositionsTypes[] $relUserPositionsTypes Массив типов должностей пользователя, переопредёлённых лично для него
