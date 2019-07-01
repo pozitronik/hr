@@ -70,6 +70,7 @@ class BadgeWidget extends Widget {
 		/** @var Model|ActiveRecord $model */
 		if (!is_array($this->data)) $this->data = [$this->data];
 		foreach ($this->data as $model) {
+			if (null === $model) continue;
 			if ($model->hasProperty('primaryKey')) {
 				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
 			} else {
