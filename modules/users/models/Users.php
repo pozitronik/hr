@@ -513,7 +513,8 @@ class Users extends ActiveRecordExtended {
 	 * @return RelRefUserPositionsTypes[]|ActiveQuery
 	 */
 	public function getRelRefUserPositionsTypes() {
-		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id'])->via('relUserPosition');
+//		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id'])->via('relUserPosition');
+		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'position']);
 	}
 
 	/**
