@@ -48,9 +48,13 @@ class GroupCardWidget extends Widget {
 			WHERE sg.id = {$this->group->id}
 			GROUP BY rupt.id";
 
+		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
 		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
 		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
-		$positionTypes = array_merge(array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), $positionTypes));
+
+		array_walk($allPositionTypes, function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
+			$value = ArrayHelper::getValue($positionTypes, $key, 0);
+		});
 
 		/*Строим срез по типам должностей*/
 
@@ -61,7 +65,7 @@ class GroupCardWidget extends Widget {
 			'leader_role' => $leader_role,
 			'userCount' => count($this->group->relUsers),
 			'vacancyCount' => count($this->group->relVacancy),
-			'positionTypeData' => $positionTypes
+			'positionTypeData' => $allPositionTypes
 		]);
 	}
 }
