@@ -37,7 +37,14 @@ use yii\web\View;
 			<?php /** @var RefUserPositionTypes $positionType */
 			$positionType = RefUserPositionTypes::findModel($positionId); ?>
 			<div class="row">
-				<div class="col-md-10"><?= $positionType->name ?></div>
+				<div class="col-md-10"><?= BadgeWidget::widget([
+						'value' => $positionType->name,
+						"badgeOptions" => [
+							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+						],
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
+
+					]) ?></div>
 				<div class="col-md-2 pad-no">
 					<?= BadgeWidget::widget([
 						'value' => $positionCount,
@@ -49,6 +56,7 @@ use yii\web\View;
 					]) ?>
 				</div>
 			</div>
+			<div class="list-divider"></div>
 		<?php endforeach; ?>
 
 		<div class="row">
@@ -64,6 +72,11 @@ use yii\web\View;
 		</div>
 	</div>
 	<div class="panel-footer">
-		<?= $leader_role ?>: <?= $leader ?>
+		<?= BadgeWidget::widget([
+			'value' => "{$leader_role}: {$leader}",
+			"badgeOptions" => [
+				'class' => "badge badge-info pull-right"
+			]
+		]) ?>
 	</div>
 </div>

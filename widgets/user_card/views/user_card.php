@@ -63,6 +63,9 @@ $badgeData = [];
 					]) ?>
 				</label>
 			</div>
+		</div>
+		<div class="list-divider"></div>
+		<div class="row">
 			<div class="col-md-12">
 				<label>Роли:
 					<?php foreach ($badgeData as $badgeString): ?>
@@ -78,6 +81,7 @@ $badgeData = [];
 			</div>
 
 		</div>
+		<div class="list-divider"></div>
 		<div class="row">
 			<div class="col-md-12">
 				<label>В подчинении у:
