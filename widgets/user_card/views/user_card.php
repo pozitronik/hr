@@ -20,13 +20,13 @@ $badgeData = [];
 ?>
 <?php foreach ($user->relGroups as $userGroup): ?>
 	<?php $groupRoles = RefUserRoles::getUserRolesInGroup($user->id, $userGroup->id) ?>
-	<?php $badgeData[] = ((empty($groupRoles))?'Сотрудник':BadgeWidget::widget([
+	<?php $badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
 			'data' => $groupRoles,
 			'attribute' => 'name',
 			'itemsSeparator' => false,
 			"optionsMap" => static function() {
 				return RefUserRoles::colorStyleOptions();
-			},
+			}
 		])).' в '.BadgeWidget::widget([
 			'value' => $userGroup->name,
 			"badgeOptions" => [
@@ -44,7 +44,7 @@ $badgeData = [];
 				'itemsSeparator' => false,
 				"optionsMap" => static function() {
 					return RefUserPositionTypes::colorStyleOptions();
-				},
+				}
 			]) ?></h3>
 	</div>
 
@@ -59,7 +59,7 @@ $badgeData = [];
 						'itemsSeparator' => false,
 						"optionsMap" => static function() {
 							return RefUserPositions::colorStyleOptions();
-						},
+						}
 					]) ?>
 				</label>
 			</div>

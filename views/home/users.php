@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php foreach ($dataProvider->models as $model): ?>
 	<?= UserCardWidget::widget([
-		'user' => $model,
-	]); ?>
+		'user' => $model
+	]) ?>
 
 <?php endforeach; ?>

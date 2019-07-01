@@ -15,10 +15,8 @@ declare(strict_types = 1);
 
 use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositionTypes;
-use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
-use yii\BaseYii;
 use yii\helpers\Html;
 use yii\web\View;
 

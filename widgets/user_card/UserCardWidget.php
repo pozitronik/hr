@@ -33,7 +33,7 @@ class UserCardWidget extends Widget {
 //		$leader =($this->group->isLeader($this->user));
 
 		return $this->render('user_card', [
-			'user' => $this->user,
+			'user' => $this->user
 		]);
 	}
 }
