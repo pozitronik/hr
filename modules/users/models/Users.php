@@ -62,8 +62,11 @@ use yii\db\ActiveRecord;
  * @property-read string $positionName
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property ActiveQuery|RefUserPositions $relUserPosition Релейшен к должностям пользователей (у пользователя может быть только одна должность)
- * @property ActiveQuery|RefUserPositionTypes[] $relRefUserPositionTypes Массив типов должности пользователя (с учётом переопределения). При изменении параметра ныжно менять переопределение.
- * @property ActiveQuery|RelUserPositionsTypes[] $relUserPositionsTypes Массив типов должностей пользователя, переопредёлённых лично для него
+ * @property ActiveQuery|RelRefUserPositionsTypes[] $relRefUserPositionsTypes ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
+ * @property ActiveQuery|RefUserPositionTypes[] $refUserPositionTypes Типы должностей пользователя, полученные через привязку типов к занимаемой должности
+ *
+ * @-property ActiveQuery|RefUserPositionTypes[] $relRefUserPositionTypes Массив типов должности пользователя (с учётом переопределения). При изменении параметра ныжно менять переопределение.
+ * @-property ActiveQuery|RelUserPositionsTypes[] $relUserPositionsTypes Массив типов должностей пользователя, переопредёлённых лично для него
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
@@ -507,7 +510,7 @@ class Users extends ActiveRecordExtended {
 	 * ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
 	 * @return RelRefUserPositionsTypes[]|ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypes(){
+	public function getRelRefUserPositionsTypes() {
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id'])->via('relUserPosition');
 	}
 
@@ -515,23 +518,10 @@ class Users extends ActiveRecordExtended {
 	 * Типы должностей пользователя, полученные через привязку типов к занимаемой должности
 	 * @return ActiveQuery|RefUserPositionTypes
 	 */
-	public function getRefUserPositionTypes(){
+	public function getRefUserPositionTypes() {
 		return $this->hasOne(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
 	}
-
-	/**
-	 * @return RefUserPositionTypes[]|ActiveQuery
-	 * @throws Throwable
-	 */
-//	public function getRelRefUserPositionTypes() {
-//		$overridenTypes = $this->relUserPositionsTypes;
-//		if (empty($overridenTypes)) {
-//			return null===$this->relUserPosition?[]:$this->relUserPosition->relRefUserPositionTypes;
-//		}
-//
-//		return RefUserPositionTypes::findModels(ArrayHelper::getColumn($overridenTypes, 'position_type_id'));
-//	}
-
+	/****************/
 	/**
 	 * ID типов должностей, полученных через переопределения (не зависящие от привязок должности)
 	 * @return RelUserPositionsTypes[]|ActiveQuery
@@ -544,7 +534,7 @@ class Users extends ActiveRecordExtended {
 	 * Типы должностей пользователя, полученные через переопределения (не зависящие от привязок должности)
 	 * @return ActiveQuery|RelRefUserPositionsTypes
 	 */
-	public function getRelRefUserPositionTypesOwn(){
+	public function getRelRefUserPositionsTypesOwn() {
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
 	}
 
@@ -553,7 +543,7 @@ class Users extends ActiveRecordExtended {
 	 * @param integer[] $relRefUserPositionTypes
 	 * @throws Throwable
 	 */
-	public function setRelRefUserPositionTypes($relRefUserPositionTypes):void {
+	public function setRelRefUserPositionsTypesOwn($relRefUserPositionTypes):void {
 		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
 
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
@@ -563,4 +553,5 @@ class Users extends ActiveRecordExtended {
 		RelUserPositionsTypes::linkModels($this, $relRefUserPositionTypes);
 
 	}
+	/**************/
 }
