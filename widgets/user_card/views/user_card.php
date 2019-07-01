@@ -8,6 +8,8 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
+use app\modules\salary\models\references\RefUserPositions;
+use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;
@@ -19,9 +21,15 @@ $badgeData = [];
 
 <div class="panel panel-card col-md-3" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
 	<div class="panel-heading">
-		<div class="panel-control">
-		</div>
-		<h3 class="panel-title"><?= $user->username ?></h3>
+		<h3 class="panel-title"><?= $user->username ?>: <?= BadgeWidget::widget([
+				'data' => $user->getRefUserPositionTypes()->all(),
+				'attribute' => 'name',
+				'unbadgedCount' => false,
+				'itemsSeparator' => false,
+				"optionsMap" => static function() {
+					return RefUserPositionTypes::colorStyleOptions();
+				},
+			]) ?></h3>
 	</div>
 
 	<div class="panel-body">
@@ -51,15 +59,20 @@ $badgeData = [];
 						]
 					]) ?>
 				<?php endforeach; ?>
-
-
 			</div>
 
 		</div>
 
-
 	</div>
 	<div class="panel-footer">
-
+		<?= BadgeWidget::widget([
+			'data' => $user->relRefUserPositions,
+			'attribute' => 'name',
+			'unbadgedCount' => false,
+			'itemsSeparator' => false,
+			"optionsMap" => static function() {
+				return RefUserPositions::colorStyleOptions();
+			},
+		]) ?>
 	</div>
 </div>
