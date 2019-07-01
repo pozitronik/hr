@@ -425,6 +425,7 @@ class Groups extends ActiveRecordExtended {
 	private function dropCaches():void {
 		Yii::$app->cache->delete(static::class."CollectRecursiveIds".$this->id);
 		Yii::$app->cache->delete(static::class."DataOptions");
+		Yii::$app->cache->delete(static::class."HierarchyTree".$this->id);
 	}
 
 	/**
@@ -433,20 +434,23 @@ class Groups extends ActiveRecordExtended {
 	 * @return array Массив всех обойдённых групп (иерархический)
 	 */
 	public function buildHierarchyTree(&$stackedId = []):array {
-		if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
-		$hierarchyTree = [];
-		/** @var self[] $childGroups */
-		$childGroups = $this->getRelChildGroups()->orderBy('name')->active()->all();
-		foreach ($childGroups as $childGroup) {
-			if (in_array($childGroup->id, $stackedId)) {
-				$hierarchyTree[$this->id][$childGroup->id] = $childGroup->id;
-			} else {
-				$stackedId[] = $childGroup->id;
-				$hierarchyTree[$this->id][$childGroup->id] = $childGroup->buildHierarchyTree($stackedId);
-			}
+		return Yii::$app->cache->getOrSet(static::class."HierarchyTree{$this->id}", function() use (&$stackedId) {
+			if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
+			$hierarchyTree = [];
+			/** @var self[] $childGroups */
+			$childGroups = $this->getRelChildGroups()->orderBy('name')->active()->all();
+			foreach ($childGroups as $childGroup) {
+				if (in_array($childGroup->id, $stackedId)) {
+					$hierarchyTree[$this->id][$childGroup->id] = $childGroup->id;
+				} else {
+					$stackedId[] = $childGroup->id;
+					$hierarchyTree[$this->id][$childGroup->id] = $childGroup->buildHierarchyTree($stackedId);
+				}
 
-		}
-		return $hierarchyTree;
+			}
+			return $hierarchyTree;
+		});
+
 	}
 
 	/**
