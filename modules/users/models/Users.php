@@ -554,4 +554,25 @@ class Users extends ActiveRecordExtended {
 
 	}
 	/**************/
+
+	/**
+	 * Возвращает список руководителей пользователя (пока только на уровень выше)
+	 * @return Users[]
+	 */
+	public function getBosses():array {
+		$result = [[]];
+		/** @var Groups $group */
+		foreach ((array)$this->relGroups as $group) {
+			if ($group->isLeader($this)) {
+				/** @var Groups $parentGroup */
+				foreach ((array)$group->relParentGroups as $parentGroup) {
+					$result[] = $parentGroup->leaders;
+				}
+			} else {
+				$result[] = $group->leaders;
+			}
+		}
+		$result = array_merge(...$result);
+		return $result;
+	}
 }
