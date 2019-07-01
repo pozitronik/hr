@@ -76,7 +76,7 @@ class HomeController extends Controller {
 		return $this->render('users', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'groupName' => Groups::findModel($searchModel->groupId)->name,
-			'positionTypeName' => RefUserPositionTypes::findModel($searchModel->positionType)->name
+			'positionTypeName' => null===$searchModel->positionType?'Все сотдрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name
 		]);
 
 	}

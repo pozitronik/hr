@@ -26,7 +26,14 @@ use yii\web\View;
 <div class="panel panel-card col-md-2" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
 	<div class="panel-heading">
 		<div class="panel-control">
-			<div class="badge badge-info"><?= $userCount ?></div>
+			<?= BadgeWidget::widget([
+				'value' => $userCount,
+				"badgeOptions" => [
+					'class' => "badge badge-info"
+				],
+				'linkScheme' => ['users', 'UsersSearch[groupId]' => $groupId]
+
+			]) ?>
 		</div>
 		<h3 class="panel-title"><?= Html::encode($title) ?></h3>
 	</div>
