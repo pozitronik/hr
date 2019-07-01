@@ -7,6 +7,7 @@ use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\UsersSearch;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\Response;
@@ -24,11 +25,14 @@ class HomeController extends Controller {
 	 */
 	public function actionIndex() {
 		if (null === CurrentUser::User()) return $this->redirect(['site/login']);
-		$leadingGroups = CurrentUser::User()->relLeadingGroups;
 		$stack = [];
-		foreach ($leadingGroups as $leadingGroup) {
+		/** @var Groups $leadingGroup */
+		foreach ((array)CurrentUser::User()->relLeadingGroups as $leadingGroup) {
 			$leadingGroup->buildHierarchyTree($stack);
 		}
+
+		$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups,'id');
+		$stack = array_unique(array_merge($stack, $commonGroupsIds));
 		$groups = Groups::findModels($stack);
 
 		return $this->render('boss', [
@@ -76,10 +80,9 @@ class HomeController extends Controller {
 		return $this->render('users', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'groupName' => Groups::findModel($searchModel->groupId)->name,
-			'positionTypeName' => null===$searchModel->positionType?'Все сотдрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name
+			'positionTypeName' => null === $searchModel->positionType?'Все сотдрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name
 		]);
 
 	}
-
 
 }
