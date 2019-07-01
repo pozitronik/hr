@@ -50,6 +50,7 @@ class GroupCardWidget extends Widget {
 
 		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
 		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
+		$positionTypes = array_merge(array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), $positionTypes));
 
 		/*Строим срез по типам должностей*/
 
