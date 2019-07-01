@@ -27,12 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 		</div>
 
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-6">
-				</div>
-			</div>
-		</div>
 	</div>
 
 <?php foreach ($dataProvider->models as $model): ?>

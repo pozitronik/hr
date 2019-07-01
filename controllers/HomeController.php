@@ -5,7 +5,11 @@ namespace app\controllers;
 
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
+use app\modules\salary\models\references\RefUserPositions;
+use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\UsersSearch;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\Response;
@@ -72,8 +76,9 @@ class HomeController extends Controller {
 		//Проверяем доступы к списку юзеров
 
 		return $this->render('users', [
-			'searchModel' => $searchModel,
-			'dataProvider' => $searchModel->search($params, $allowedGroups)
+			'dataProvider' => $searchModel->search($params, $allowedGroups),
+			'groupName' => Groups::findModel($searchModel->groupId)->name,
+			'positionTypeName' => RefUserPositionTypes::findModel($searchModel->positionType)->name
 		]);
 
 	}
