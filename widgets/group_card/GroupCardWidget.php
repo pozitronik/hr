@@ -37,23 +37,6 @@ class GroupCardWidget extends Widget {
 	public function run():string {
 		$leader = $this->group->leader;
 		$leader_role = (null === $leader->id)?'Лидер':ArrayHelper::getValue(RefUserRoles::getUserRolesInGroup($leader->id, $this->group->id), '0.name');
-		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
-		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
-		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
-			LEFT JOIN ref_user_positions rup ON rup.id = rrupt.position_id
-			LEFT JOIN sys_users su ON su.`position` = rup.id
-			LEFT JOIN rel_users_groups rug ON rug.user_id=su.id
-			LEFT JOIN sys_groups sg ON sg.id = rug.group_id
-			WHERE sg.id = {$this->group->id}
-			GROUP BY rupt.id";
-
-		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
-		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
-		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
-
-		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
-			$value = ArrayHelper::getValue($positionTypes, $key, 0);
-		});
 
 		/*Строим срез по типам должностей*/
 
@@ -64,7 +47,7 @@ class GroupCardWidget extends Widget {
 			'leader_role' => $leader_role,
 			'userCount' => count($this->group->relUsers),
 			'vacancyCount' => count($this->group->relVacancy),
-			'positionTypeData' => $allPositionTypes
+			'positionTypeData' => $this->group->getGroupPositionTypeData()
 		]);
 	}
 }

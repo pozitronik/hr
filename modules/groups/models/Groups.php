@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\models;
 
 use app\helpers\Utils;
+use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
@@ -22,6 +23,7 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "groups".
@@ -435,20 +437,20 @@ class Groups extends ActiveRecordExtended {
 	 */
 	public function buildHierarchyTree(&$stackedId = []):array {
 //		return Yii::$app->cache->getOrSet(static::class."HierarchyTree{$this->id}", function() use (&$stackedId) {
-			if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
-			$hierarchyTree = [];
-			/** @var self[] $childGroups */
-			$childGroups = $this->getRelChildGroups()->orderBy('name')->active()->all();
-			foreach ($childGroups as $childGroup) {
-				if (in_array($childGroup->id, $stackedId)) {
-					$hierarchyTree[$this->id][$childGroup->id] = $childGroup->id;
-				} else {
-					$stackedId[] = $childGroup->id;
-					$hierarchyTree[$this->id][$childGroup->id] = $childGroup->buildHierarchyTree($stackedId);
-				}
-
+		if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
+		$hierarchyTree = [];
+		/** @var self[] $childGroups */
+		$childGroups = $this->getRelChildGroups()->orderBy('name')->active()->all();
+		foreach ($childGroups as $childGroup) {
+			if (in_array($childGroup->id, $stackedId)) {
+				$hierarchyTree[$this->id][$childGroup->id] = $childGroup->id;
+			} else {
+				$stackedId[] = $childGroup->id;
+				$hierarchyTree[$this->id][$childGroup->id] = $childGroup->buildHierarchyTree($stackedId);
 			}
-			return $hierarchyTree;
+
+		}
+		return $hierarchyTree;
 //		});
 
 	}
@@ -458,6 +460,32 @@ class Groups extends ActiveRecordExtended {
 	 */
 	public function getVacancyCount():int {
 		return (int)$this->getRelVacancy()->count();
+	}
+
+	/**
+	 * Строит срез по типам должностей, демо-прототип
+	 * @return array
+	 */
+	public function getGroupPositionTypeData():array {
+
+		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
+		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
+		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
+			LEFT JOIN ref_user_positions rup ON rup.id = rrupt.position_id
+			LEFT JOIN sys_users su ON su.`position` = rup.id
+			LEFT JOIN rel_users_groups rug ON rug.user_id=su.id
+			LEFT JOIN sys_groups sg ON sg.id = rug.group_id
+			WHERE sg.id = {$this->group->id}
+			GROUP BY rupt.id";
+
+		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
+		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
+		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
+
+		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
+			$value = ArrayHelper::getValue($positionTypes, $key, 0);
+		});
+		return $allPositionTypes;
 	}
 
 }
