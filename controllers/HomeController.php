@@ -25,17 +25,14 @@ class HomeController extends Controller {
 	 */
 	public function actionIndex() {
 		if (null === CurrentUser::User()) return $this->redirect(['site/login']);
-		$stack = Yii::$app->cache->getOrSet(static::class."GroupsStack".CurrentUser::User()->id, function(){
-			$stack = [];
-			/** @var Groups $leadingGroup */
-			foreach ((array)CurrentUser::User()->relLeadingGroups as $leadingGroup) {
-				$leadingGroup->buildHierarchyTree($stack);
-			}
+		$stack = [];
+		/** @var Groups $leadingGroup */
+		foreach ((array)CurrentUser::User()->relLeadingGroups as $leadingGroup) {
+			$leadingGroup->buildHierarchyTree($stack);
+		}
 
-			$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups,'id');
-			return array_unique(array_merge($stack, $commonGroupsIds));
-		}, 3600);
-
+		$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups, 'id');
+		$stack = array_unique(array_merge($stack, $commonGroupsIds));
 
 		$groups = Groups::findModels($stack);
 
@@ -81,8 +78,9 @@ class HomeController extends Controller {
 		$allowedGroups = [];
 		//Проверяем доступы к списку юзеров
 
-		return $this->render('users', [
+		return $this->render(ArrayHelper::getValue($params, 't', false)?'table':'users', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
+			'searchModel' => $searchModel,
 			'groupName' => Groups::findModel($searchModel->groupId)->name,
 			'positionTypeName' => null === $searchModel->positionType?'Все сотдрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name
 		]);
