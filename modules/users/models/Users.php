@@ -196,7 +196,7 @@ class Users extends ActiveRecordExtended {
 			'relPremiumGroup' => 'Группа премирования',
 			'relLocation' => 'Расположение',
 			'relSalaryFork' => 'Зарплатная вилка',
-			'relRefUserPositionTypes' => 'Тип должности'
+			'relRefUserPositionsTypes' => 'Тип должности'
 		];
 	}
 

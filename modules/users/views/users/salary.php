@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					]) ?>
 				</div>
 				<div class="col-md-3">
-					<?= $form->field($model, 'relRefUserPositionTypes')->widget(ReferenceSelectWidget::class, [
+					<?= $form->field($model, 'relRefUserPositionsTypes')->widget(ReferenceSelectWidget::class, [
 						'referenceClass' => RefUserPositionTypes::class,
 						'options' => ['placeholder' => 'Тип должности'],
 						'pluginOptions' => [
