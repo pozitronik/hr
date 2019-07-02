@@ -98,7 +98,7 @@ class UsersSearch extends Users {
 			->andFilterWhere(['in', 'ref_user_positions.id', $this->positions])
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges])
-			->andFilterWhere(['=', 'rel_ref_user_positions_types.position_type_id', $this->positionType])
+			->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->positionType])
 			->andFilterWhere(['=', 'sys_groups.id', $this->groupId]);
 
 		Yii::debug($query->createCommand()->rawSql,'sql');
