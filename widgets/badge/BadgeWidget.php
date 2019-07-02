@@ -26,6 +26,8 @@ use yii\helpers\Html;
  * @property array|callable $optionsMap
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
+ *
+ * todo: научить виджет работать с массивами аналогично моделям
  */
 class BadgeWidget extends Widget {
 	public $data = [];//Массив отображаемых моделей|отображаемая модель
