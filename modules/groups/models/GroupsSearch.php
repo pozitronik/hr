@@ -55,7 +55,6 @@ class GroupsSearch extends Groups {
 				'id',
 				'name',
 				'type',
-				'leaders',
 				'comment',
 				'daddy'
 			]
