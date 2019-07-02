@@ -7,13 +7,10 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\IconsHelper;
 use app\helpers\Utils;
-use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\ReferencesModule;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositionTypes;
@@ -23,7 +20,6 @@ use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
-use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -59,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'class' => DataColumn::class,
 			'attribute' => 'type',
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				return BadgeWidget::widget([
 					'data' => $model->relGroupTypes,
 					'useBadges' => true,
@@ -83,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'leaders',
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				$items = [];
 				foreach ($model->leaders as $leader) {
 					$items[] = BadgeWidget::widget([
@@ -92,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'useBadges' => false,
 								'attribute' => 'username',
 								'unbadgedCount' => 3,
-								'itemsSeparator' => false,
+								'itemsSeparator' => false
 							]).': '.BadgeWidget::widget([
 								'data' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
 								'attribute' => 'name',
@@ -100,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'itemsSeparator' => false,
 								"optionsMap" => static function() {
 									return RefUserRoles::colorStyleOptions();
-								},
+								}
 							]),
 						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => 'id']
 					]);
@@ -119,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions' => ['class' => 'text-center'],
 			'header' => 'Сотрудники',
 			'format' => 'raw',
-			'value' => function(Groups $model) {
+			'value' => static function(Groups $model) {
 				$positionTypeData = $model->getGroupPositionTypeData();
 				$items[] = BadgeWidget::widget([
 					'value' => "Всего: {$model->usersCount}",
