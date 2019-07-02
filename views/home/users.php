@@ -19,6 +19,7 @@ use yii\web\View;
 
 $this->title = "Сводка по сотрудникам {$groupName}/{$positionTypeName}";
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination = false;
 ?>
 
 	<div class="panel">
