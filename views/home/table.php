@@ -123,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'referenceClass' => RefUserRoles::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			],
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				$badgeData = [];
 				foreach ((array)$model->relGroups as $userGroup) {
 					$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
@@ -159,7 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'label' => 'Подчинение',
 			'class' => DataColumn::class,
 			'attribute' => 'subordination',
-			'value' => function(Users $model) {
+			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->getBosses(),
 					'attribute' => 'username',

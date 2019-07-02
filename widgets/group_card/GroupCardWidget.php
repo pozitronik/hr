@@ -9,7 +9,6 @@ use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Widget;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -52,7 +51,7 @@ class GroupCardWidget extends Widget {
 		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
 		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
 
-		array_walk($allPositionTypes, function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
+		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
 			$value = ArrayHelper::getValue($positionTypes, $key, 0);
 		});
 
