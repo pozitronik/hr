@@ -31,11 +31,17 @@ class GroupsSearch extends Groups {
 	/**
 	 * Creates data provider instance with search query applied
 	 * @param array $params
+	 * @param int[]|null $scope -- скоуп (набор айдишников), ограничивающий выборку
 	 * @return ActiveDataProvider
-	 * @throws InvalidArgumentException
 	 */
-	public function search(array $params):ActiveDataProvider {
-		$query = UserAccess::GetGroupsScope();
+	public function search(array $params, ?array $scope):ActiveDataProvider {
+
+
+		if (null === $scope) {
+			$query = UserAccess::GetGroupsScope();
+		} else {
+			$query = Groups::find()->active()->andWhere(['in', 'sys_groups.id', $scope]);
+		}
 
 		$this->load($params);
 
@@ -69,4 +75,5 @@ class GroupsSearch extends Groups {
 
 		return $dataProvider;
 	}
+
 }
