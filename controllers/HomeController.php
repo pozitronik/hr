@@ -5,6 +5,7 @@ namespace app\controllers;
 
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
+use app\modules\groups\models\GroupsSearch;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\UsersSearch;
 use pozitronik\helpers\ArrayHelper;
@@ -34,37 +35,13 @@ class HomeController extends Controller {
 		$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups, 'id');
 		$stack = array_unique(array_merge($stack, $commonGroupsIds));
 
-		$groups = Groups::findModels($stack);
 
-		return $this->render('boss', [
-			'groups' => $groups
-		]);
-	}
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new GroupsSearch();
 
-	/**
-	 * Пытаемся загенерить матрицу ресурсов.
-	 * Пока, конечно, тупо рисуем
-	 * @return string
-	 * @throws Throwable
-	 */
-	public function actionMatrix():string {
-		return $this->render('matrix');
-	}
-
-	/**
-	 * @return string
-	 * @throws Throwable
-	 */
-	public function actionBoss():string {
-		$leadingGroups = CurrentUser::User()->relLeadingGroups;
-		$stack = [];
-		foreach ($leadingGroups as $leadingGroup) {
-			$leadingGroup->buildHierarchyTree($stack);
-		}
-		$groups = Groups::findModels($stack);
-
-		return $this->render('boss', [
-			'groups' => $groups
+		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'boss', [
+			'dataProvider' => $searchModel->search($params, $stack),
+			'searchModel' => $searchModel,
 		]);
 	}
 
@@ -82,7 +59,7 @@ class HomeController extends Controller {
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
 			'groupName' => Groups::findModel($searchModel->groupId)->name,
-			'positionTypeName' => empty( $searchModel->positionType)?'Все сотрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name//применимо только для дашборда
+			'positionTypeName' => empty($searchModel->positionType)?'Все сотрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name//применимо только для дашборда
 		]);
 
 	}
