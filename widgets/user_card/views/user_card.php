@@ -32,13 +32,16 @@ $badgeData = [];
 			"badgeOptions" => [
 				'class' => "badge badge-info"
 			],
-			'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't'=>0]
+			'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 0]
 		]) ?>
 <?php endforeach; ?>
 
 <div class="panel panel-card col-md-3" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
 	<div class="panel-heading">
-		<h3 class="panel-title"><?= $user->username ?>: <?= BadgeWidget::widget([
+		<h3 class="panel-title"><?= BadgeWidget::widget([
+				'value' => $user->username,
+				'linkScheme' => [UsersModule::to('users/groups'), 'id' => $user->id]
+			]) ?>: <?= BadgeWidget::widget([
 				'data' => $user->getRefUserPositionTypes()->all(),
 				'attribute' => 'name',
 				'unbadgedCount' => false,
