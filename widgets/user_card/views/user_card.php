@@ -31,7 +31,8 @@ $badgeData = [];
 			'value' => $userGroup->name,
 			"badgeOptions" => [
 				'class' => "badge badge-info"
-			]
+			],
+			'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't'=>0]
 		]) ?>
 <?php endforeach; ?>
 

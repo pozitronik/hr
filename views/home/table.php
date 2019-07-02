@@ -9,6 +9,7 @@ declare(strict_types = 1);
  * @var string $groupName
  */
 
+use app\modules\groups\models\Groups;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
@@ -125,6 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'value' => static function(Users $model) {
 				$badgeData = [];
+				/** @var Groups $userGroup */
 				foreach ((array)$model->relGroups as $userGroup) {
 					$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
 					$badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
@@ -138,7 +140,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							'value' => $userGroup->name,
 							"badgeOptions" => [
 								'class' => "badge badge-info"
-							]
+							],
+							'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't'=>1]
 						]);
 				}
 				$result = '';
