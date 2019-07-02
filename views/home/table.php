@@ -10,12 +10,10 @@ declare(strict_types = 1);
  * @var string $positionTypeName
  */
 
-use app\helpers\DateHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
@@ -39,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'heading' => $this->title
 	],
 	'summary' => false,
-	'showOnEmpty' => false,
+	'showOnEmpty' => true,
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
@@ -91,7 +89,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'class' => DataColumn::class,
-
+			'attribute' => 'positionType',
+			'label' => 'Тип должности',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'data' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
@@ -104,11 +103,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					}
 				]);
 			},
-			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
+			'filter' => ArrayHelper::getValue($searchModel, 'positionType'),
 			'filterType' => ReferenceSelectWidget::class,
-			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
+			'filterInputOptions' => ['placeholder' => 'Выберите тип'],
 			'filterWidgetOptions' => [
-				'referenceClass' => RefUserPositions::class,
+				'referenceClass' => RefUserPositionTypes::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			],
 			'format' => 'raw'
@@ -156,6 +155,21 @@ $this->params['breadcrumbs'][] = $this->title;
 			},
 			'format' => 'raw'
 		],
+		[
+			'label' => 'Подчинение',
+			'class' => DataColumn::class,
+			'attribute' => 'subordination',
+			'value' => function(Users $model) {
+				return BadgeWidget::widget([
+					'data' => $model->getBosses(),
+					'attribute' => 'username',
+					'unbadgedCount' => false,
+					'itemsSeparator' => false,
+					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
+				]);
+			},
+			'format' => 'raw'
+		]
 
 	]
 ]) ?>
