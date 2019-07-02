@@ -7,7 +7,6 @@ declare(strict_types = 1);
  * @var UsersSearch $searchModel
  * @var ActiveDataProvider $dataProvider
  * @var string $groupName
- * @var string $positionTypeName
  */
 
 use app\modules\references\ReferencesModule;
@@ -27,7 +26,7 @@ use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 
-$this->title = "Сводка по сотрудникам {$groupName}/{$positionTypeName}";
+$this->title = "Сводка по сотрудникам {$groupName}";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
