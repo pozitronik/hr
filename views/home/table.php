@@ -22,6 +22,7 @@ use app\modules\users\models\UsersSearch;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title
+		'heading' => $this->title.Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
