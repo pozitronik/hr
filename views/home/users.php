@@ -27,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 			<h3 class="panel-title"><?= Html::encode($this->title) ?><?= Html::a("<div class='pull-right'>Таблица</div>", Url::current(['t' => 1])) ?></h3>
 		</div>
-
 	</div>
 
 <?php foreach ($dataProvider->models as $model): ?>
