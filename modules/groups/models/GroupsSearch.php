@@ -33,7 +33,7 @@ class GroupsSearch extends Groups {
 	 * @param int[]|null $scope -- скоуп (набор айдишников), ограничивающий выборку
 	 * @return ActiveDataProvider
 	 */
-	public function search(array $params, ?array $scope):ActiveDataProvider {
+	public function search(array $params, ?array $scope = null):ActiveDataProvider {
 
 		$query = UserAccess::GetGroupsScope();
 
