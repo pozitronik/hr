@@ -475,7 +475,7 @@ class Groups extends ActiveRecordExtended {
 			LEFT JOIN sys_users su ON su.`position` = rup.id
 			LEFT JOIN rel_users_groups rug ON rug.user_id=su.id
 			LEFT JOIN sys_groups sg ON sg.id = rug.group_id
-			WHERE sg.id = {$this->group->id}
+			WHERE sg.id = {$this->id}
 			GROUP BY rupt.id";
 
 		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
