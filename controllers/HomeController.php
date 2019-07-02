@@ -82,7 +82,7 @@ class HomeController extends Controller {
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
 			'groupName' => Groups::findModel($searchModel->groupId)->name,
-			'positionTypeName' => null === $searchModel->positionType?'Все сотдрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name
+			'positionTypeName' => null === $searchModel->positionType?'Все содрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name
 		]);
 
 	}
