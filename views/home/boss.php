@@ -13,6 +13,7 @@ use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\View;
+
 $this->title = 'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
