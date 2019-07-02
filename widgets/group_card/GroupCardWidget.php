@@ -4,12 +4,10 @@ declare(strict_types = 1);
 namespace app\widgets\group_card;
 
 use app\modules\groups\models\Groups;
-use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Widget;
-use yii\db\ActiveRecord;
 
 /**
  * Class GroupSelectWidget
