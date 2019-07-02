@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\groups\models;
 
 use app\modules\privileges\models\UserAccess;
-use Yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -36,12 +35,7 @@ class GroupsSearch extends Groups {
 	 */
 	public function search(array $params, ?array $scope):ActiveDataProvider {
 
-
-		if (null === $scope) {
-			$query = UserAccess::GetGroupsScope();
-		} else {
-			$query = Groups::find()->active()->andWhere(['in', 'sys_groups.id', $scope]);
-		}
+		$query = UserAccess::GetGroupsScope();
 
 		$this->load($params);
 
@@ -72,6 +66,7 @@ class GroupsSearch extends Groups {
 			$query->joinWith(['relRefUserRoles'])->where(['boss_flag' => true, 'rel_users_groups.user_id' => $this->leaders]);
 		}
 
+		$query->andFilterWhere(['sys_groups.id' => $scope]);
 		return $dataProvider;
 	}
 
