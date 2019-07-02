@@ -85,7 +85,7 @@ class UsersSearch extends Users {
 
 		if (!$this->validate()) return $dataProvider;
 
-		$query->joinWith(['relGroups', /*'relRefUserPositions',*/ 'relRefUserRoles', 'relPrivileges', 'refUserPositionTypes']);//todo: джойны в зависимости от прав
+		$query->joinWith(['relGroups', 'relRefUserPositions', 'relRefUserRoles', 'relPrivileges', 'refUserPositionTypes']);//todo: джойны в зависимости от прав
 
 		$query->distinct();
 
