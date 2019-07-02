@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									return RefUserRoles::colorStyleOptions();
 								}
 							]),
-						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => 'id']
+						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => $leader->id]
 					]);
 				}
 
