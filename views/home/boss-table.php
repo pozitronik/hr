@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
 			'filterType' => GridView::FILTER_SELECT2,
-			'filter' => Users::mapLeaders(),
+			'filter' => Users::mapLeaders(),//todo: мапить только лидеров из скоупа
 			'filterInputOptions' => ['placeholder' => 'Руководители'],
 			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]]
 		],
