@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use app\helpers\Utils;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
@@ -38,7 +37,6 @@ class HomeController extends Controller {
 
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new GroupsSearch();
-		Utils::log($stack, 'debug');
 		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'boss', [
 			'dataProvider' => $searchModel->search($params, $stack),
 			'searchModel' => $searchModel

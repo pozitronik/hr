@@ -16,6 +16,7 @@ use yii\web\View;
 
 $this->title = 'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination = false;
 ?>
 
 <div class="panel">
