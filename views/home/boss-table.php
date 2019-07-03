@@ -21,6 +21,7 @@ use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -142,14 +143,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 				return implode('', $items);
 			},
-			'pageSummary' => function($summary, $data, $widget) use ($groupsScope) {
+			'pageSummary' => static function($summary, $data, $widget) use ($groupsScope) {
 				$positionTypeData = Groups::getGroupScopePositionTypeData($groupsScope);
-				$usersCountStat = Groups::getGroupScopeUsersCount($groupsScope)[0];
+				$usersCountStat = ArrayHelper::getValue(Groups::getGroupScopeUsersCount($groupsScope), 0);
 				$items[] = BadgeWidget::widget([
 					'value' => "Всего: {$usersCountStat['dcount']}/{$usersCountStat['count']}",
 					"badgeOptions" => [
 						'class' => "badge badge-info pull-left"
-					],
+					]
 
 				]);
 				foreach ($positionTypeData as $positionId => $positionCount) {
@@ -159,7 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'value' => "{$positionType->name}: $positionCount",
 						"badgeOptions" => [
 							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
-						],
+						]
 
 					]);
 				}
