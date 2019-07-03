@@ -40,7 +40,6 @@ class HomeController extends Controller {
 		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'boss', [
 			'dataProvider' => $searchModel->search($params, $stack),
 			'searchModel' => $searchModel,
-			'groupsScope' => $stack
 		]);
 	}
 

@@ -5,7 +5,6 @@ declare(strict_types = 1);
  * @var View $this
  * @var GroupsSearch $searchModel
  * @var ActiveDataProvider $dataProvider
- * @var int[] $groupsScope
  */
 
 use app\helpers\Utils;
@@ -143,7 +142,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 				return implode('', $items);
 			},
-			'pageSummary' => static function($summary, $data, $widget) use ($groupsScope) {
+			'pageSummary' => static function($summary, $data, $widget) use ($dataProvider) {
+				$groupsScope = ArrayHelper::getColumn($dataProvider->models, 'id');
 				$positionTypeData = Groups::getGroupScopePositionTypeData($groupsScope);
 				$usersCountStat = ArrayHelper::getValue(Groups::getGroupScopeUsersCount($groupsScope), 0);
 				$items[] = BadgeWidget::widget([
@@ -161,7 +161,6 @@ $this->params['breadcrumbs'][] = $this->title;
 						"badgeOptions" => [
 							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						]
-
 					]);
 				}
 				return implode('', $items);
