@@ -27,7 +27,7 @@ use yii\web\View;
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
-				'value' => $userCount,
+				'models' => $userCount,
 				"badgeOptions" => [
 					'class' => "badge badge-info"
 				],
@@ -44,7 +44,7 @@ use yii\web\View;
 			$positionType = RefUserPositionTypes::findModel($positionId); ?>
 			<div class="row">
 				<div class="col-md-10"><?= BadgeWidget::widget([
-						'value' => $positionType->name,
+						'models' => $positionType->name,
 						"badgeOptions" => [
 							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						],
@@ -53,7 +53,7 @@ use yii\web\View;
 					]) ?></div>
 				<div class="col-md-2 pad-no">
 					<?= BadgeWidget::widget([
-						'value' => $positionCount,
+						'models' => $positionCount,
 						"badgeOptions" => [
 							'style' => "float:right; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						],
@@ -67,7 +67,7 @@ use yii\web\View;
 
 		<div class="row">
 			<div class="col-md-10"><?= BadgeWidget::widget([
-					'value' => 'Вакансии',
+					'models' => 'Вакансии',
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-left"
 					],
@@ -75,7 +75,7 @@ use yii\web\View;
 				]) ?></div>
 			<div class="col-md-2 pad-no">
 				<?= BadgeWidget::widget([
-					'value' => $vacancyCount,
+					'models' => $vacancyCount,
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-right"
 					],
@@ -86,7 +86,7 @@ use yii\web\View;
 	</div>
 	<div class="panel-footer">
 		<?= BadgeWidget::widget([
-			'value' => "{$leader_role}: {$leader}",
+			'models' => "{$leader_role}: {$leader}",
 			"badgeOptions" => [
 				'class' => "badge badge-info pull-right"
 			]

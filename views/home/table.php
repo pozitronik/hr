@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'positions',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->relRefUserPositions,
+					'models' => $model->relRefUserPositions,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'label' => 'Тип должности',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
@@ -130,14 +130,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				foreach ((array)$model->relGroups as $userGroup) {
 					$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
 					$badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
-							'data' => $groupRoles,
+							'models' => $groupRoles,
 							'attribute' => 'name',
 							'itemsSeparator' => false,
 							"optionsMap" => static function() {
 								return RefUserRoles::colorStyleOptions();
 							}
 						])).' в '.BadgeWidget::widget([
-							'value' => $userGroup->name,
+							'models' => $userGroup->name,
 							"badgeOptions" => [
 								'class' => "badge badge-info"
 							],
@@ -147,7 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				$result = '';
 				foreach ($badgeData as $badgeString) {
 					$result .= BadgeWidget::widget([
-						'value' => $badgeString,
+						'models' => $badgeString,
 						"badgeOptions" => [
 							'class' => "badge",
 							'style' => 'margin-bottom:1px'
@@ -164,7 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'subordination',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->getBosses(),
+					'models' => $model->getBosses(),
 					'attribute' => 'username',
 					'unbadgedCount' => false,
 					'itemsSeparator' => false,

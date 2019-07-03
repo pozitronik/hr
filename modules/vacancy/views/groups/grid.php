@@ -94,7 +94,7 @@ use yii\web\View;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'models' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,

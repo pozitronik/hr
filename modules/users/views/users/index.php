@@ -100,7 +100,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'attribute' => 'positions',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->relRefUserPositions,
+					'models' => $model->relRefUserPositions,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
@@ -125,7 +125,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
@@ -142,7 +142,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'label' => 'Группы',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->relGroups,
+					'models' => $model->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
 					'linkScheme' => [GroupsModule::to('groups/profile'), 'id' => 'id']
@@ -164,7 +164,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'label' => 'Роли',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'models' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -188,7 +188,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'label' => 'Привилегии',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'data' => $model->getRelPrivileges()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'models' => $model->getRelPrivileges()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,

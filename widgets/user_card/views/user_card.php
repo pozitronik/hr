@@ -21,14 +21,14 @@ $badgeData = [];
 <?php foreach ($user->relGroups as $userGroup): ?>
 	<?php $groupRoles = RefUserRoles::getUserRolesInGroup($user->id, $userGroup->id) ?>
 	<?php $badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
-			'data' => $groupRoles,
+			'models' => $groupRoles,
 			'attribute' => 'name',
 			'itemsSeparator' => false,
 			"optionsMap" => static function() {
 				return RefUserRoles::colorStyleOptions();
 			}
 		])).' в '.BadgeWidget::widget([
-			'value' => $userGroup->name,
+			'models' => $userGroup->name,
 			"badgeOptions" => [
 				'class' => "badge badge-info"
 			],
@@ -39,10 +39,10 @@ $badgeData = [];
 <div class="panel panel-card col-md-3" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?= BadgeWidget::widget([
-				'value' => $user->username,
+				'models' => $user->username,
 				'linkScheme' => [UsersModule::to('users/groups'), 'id' => $user->id]
 			]) ?>: <?= BadgeWidget::widget([
-				'data' => $user->getRefUserPositionTypes()->all(),
+				'models' => $user->getRefUserPositionTypes()->all(),
 				'attribute' => 'name',
 				'unbadgedCount' => false,
 				'itemsSeparator' => false,
@@ -57,7 +57,7 @@ $badgeData = [];
 			<div class="col-md-12">
 				<label>Должность:
 					<?= BadgeWidget::widget([
-						'data' => $user->relRefUserPositions,
+						'models' => $user->relRefUserPositions,
 						'attribute' => 'name',
 						'unbadgedCount' => false,
 						'itemsSeparator' => false,
@@ -74,7 +74,7 @@ $badgeData = [];
 				<label>Роли:
 					<?php foreach ($badgeData as $badgeString): ?>
 						<?= BadgeWidget::widget([
-							'value' => $badgeString,
+							'models' => $badgeString,
 							"badgeOptions" => [
 								'class' => "badge",
 								'style' => 'margin-bottom:1px'
@@ -90,7 +90,7 @@ $badgeData = [];
 			<div class="col-md-12">
 				<label>В подчинении у:
 					<?= BadgeWidget::widget([
-						'data' => $user->getBosses(),
+						'models' => $user->getBosses(),
 						'attribute' => 'username',
 						'unbadgedCount' => false,
 						'itemsSeparator' => false,

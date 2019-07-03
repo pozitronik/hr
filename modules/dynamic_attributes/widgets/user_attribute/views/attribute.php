@@ -62,7 +62,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 			<?= $dynamicAttribute->name ?>
 
 			<?= BadgeWidget::widget([
-				'data' => RelUsersAttributesTypes::getRefAttributesTypes($user_id, $dynamicAttribute->id),
+				'models' => RelUsersAttributesTypes::getRefAttributesTypes($user_id, $dynamicAttribute->id),
 				'attribute' => 'name',
 				'unbadgedCount' => 3,
 				'itemsSeparator' => false,

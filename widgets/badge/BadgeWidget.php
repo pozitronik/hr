@@ -31,7 +31,6 @@ use yii\helpers\Html;
 class BadgeWidget extends Widget {
 	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
 	public $attribute;//Атрибут модели, отображаемый в текст
-//	public $value;//непосредственное значение, для использования без модели
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
 	public $useBadges = true;//использовать бейджи для основного списка.
 
@@ -41,7 +40,7 @@ class BadgeWidget extends Widget {
 	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([id => options])"
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
-
+	//todo: prefix/postfix attributes
 	/**
 	 * Функция инициализации и нормализации свойств виджета
 	 */

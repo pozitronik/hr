@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'location',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefLocation()->all(),
+					'models' => $vacancy->getRelRefLocation()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'recruiter',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefVacancyRecruiter()->all(),
+					'models' => $vacancy->getRelRefVacancyRecruiter()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelEmployer()->all(),
+					'models' => $vacancy->getRelEmployer()->all(),
 					'useBadges' => false,
 					'attribute' => 'username',
 					'unbadgedCount' => 6,
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelGroup()->all(),
+					'models' => $vacancy->getRelGroup()->all(),
 					'useBadges' => false,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -162,7 +162,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'position',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefUserPosition()->all(),
+					'models' => $vacancy->getRelRefUserPosition()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -186,7 +186,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'premium_group',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefSalaryPremiumGroup()->all(),
+					'models' => $vacancy->getRelRefSalaryPremiumGroup()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -209,7 +209,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'models' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
@@ -225,7 +225,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelTeamlead()->all(),
+					'models' => $vacancy->getRelTeamlead()->all(),
 					'useBadges' => false,
 					'attribute' => 'username',
 					'unbadgedCount' => 6,
@@ -239,7 +239,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'status',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'data' => $vacancy->getRelRefVacancyStatus()->all(),
+					'models' => $vacancy->getRelRefVacancyStatus()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,

@@ -8,6 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Utils;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -48,7 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			'headerOptions' => ['class' => 'text-center'],
 			'attribute' => 'name',
 			'value' => static function(Groups $model) {
-				return Html::a($model->name, ['profile', 'id' => $model->id]);
+				return BadgeWidget::widget([
+					'models' => $model,
+					'useBadges' => false,
+					'attribute' => 'name',
+					'linkScheme' => [GroupsModule::to(['groups/groups']), 'id' => $model->id]
+				]);
 			},
 			'format' => 'raw'
 		],
@@ -59,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'type',
 			'value' => static function(Groups $model) {
 				return BadgeWidget::widget([
-					'data' => $model->relGroupTypes,
+					'models' => $model->relGroupTypes,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
@@ -85,14 +91,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				$items = [];
 				foreach ($model->leaders as $leader) {
 					$items[] = BadgeWidget::widget([
-						'value' => BadgeWidget::widget([
-								'data' => $leader,
+						'models' => BadgeWidget::widget([
+								'models' => $leader,
 								'useBadges' => false,
 								'attribute' => 'username',
 								'unbadgedCount' => 3,
 								'itemsSeparator' => false
 							]).': '.BadgeWidget::widget([
-								'data' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
+								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
 								'attribute' => 'name',
 								'useBadges' => true,
 								'itemsSeparator' => false,
@@ -121,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Groups $model) {
 				$positionTypeData = $model->getGroupPositionTypeData();
 				$items[] = BadgeWidget::widget([
-					'value' => "Всего: {$model->usersCount}",
+					'models' => "Всего: {$model->usersCount}",
 					"badgeOptions" => [
 						'class' => "badge badge-info pull-left"
 					],
@@ -132,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					/** @var RefUserPositionTypes $positionType */
 					$positionType = RefUserPositionTypes::findModel($positionId);
 					$items[] = BadgeWidget::widget([
-						'value' => "{$positionType->name}: $positionCount",
+						'models' => "{$positionType->name}: $positionCount",
 						"badgeOptions" => [
 							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						],
@@ -147,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				$positionTypeData = Groups::getGroupScopePositionTypeData($groupsScope);
 				$usersCountStat = ArrayHelper::getValue(Groups::getGroupScopeUsersCount($groupsScope), 0);
 				$items[] = BadgeWidget::widget([
-					'value' => "Всего: {$usersCountStat['dcount']}/{$usersCountStat['count']}",
+					'models' => "Всего: {$usersCountStat['dcount']}/{$usersCountStat['count']}",
 					"badgeOptions" => [
 						'class' => "badge badge-info pull-left"
 					]
@@ -157,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					/** @var RefUserPositionTypes $positionType */
 					$positionType = RefUserPositionTypes::findModel($positionId);
 					$items[] = BadgeWidget::widget([
-						'value' => "{$positionType->name}: $positionCount",
+						'models' => "{$positionType->name}: $positionCount",
 						"badgeOptions" => [
 							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						]

@@ -60,7 +60,7 @@ use app\modules\users\widgets\user\UserWidget;
 		<?php if (0 < ($childCount = $group->childGroupsCount)): ?>
 			Ещё <?= Utils::pluralForm($childCount, ['дочерняя группа', 'дочерние группы', 'дочерних групп']) ?>:
 			<?= BadgeWidget::widget([
-				'data' => $group->relChildGroups,
+				'models' => $group->relChildGroups,
 				'attribute' => 'name',
 				'unbadgedCount' => 3,
 				'moreBadgeOptions' => ['class' => 'badge'],

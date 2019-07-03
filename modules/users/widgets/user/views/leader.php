@@ -41,7 +41,7 @@ $borderStyle = (CurrentUser::Id() === $model->id)?'img-border-current':'img-bord
 				<p class="text-xs text-right"><?= $model->positionName ?></p>
 				<span>
 					<?= BadgeWidget::widget([
-						"data" => RefUserRoles::findModels(RelUsersGroupsRoles::getRoleIdInGroup($model->id, $group->id)),
+						"models" => RefUserRoles::findModels(RelUsersGroupsRoles::getRoleIdInGroup($model->id, $group->id)),
 						"attribute" => 'name',
 						"unbadgedCount" => 5,
 						"useBadges" => true,

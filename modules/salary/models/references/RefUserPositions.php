@@ -96,7 +96,7 @@ class RefUserPositions extends Reference {
 					return $model->deleted?Html::tag('span', "Удалено:", [
 							'class' => 'label label-danger'
 						]).$model->name:BadgeWidget::widget([
-						'data' => $model,
+						'models' => $model,
 						'attribute' => 'name',
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
 						'itemsSeparator' => false,
@@ -112,7 +112,7 @@ class RefUserPositions extends Reference {
 				'format' => 'raw',
 				'value' => static function(self $model) {
 					return BadgeWidget::widget([
-						'data' => $model->relRefUserPositionTypes,
+						'models' => $model->relRefUserPositionTypes,
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
@@ -132,7 +132,7 @@ class RefUserPositions extends Reference {
 				'format' => 'raw',
 				'value' => static function(self $model) {
 					return BadgeWidget::widget([
-						'data' => $model->relGrades,
+						'models' => $model->relGrades,
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
