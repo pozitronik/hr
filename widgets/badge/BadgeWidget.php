@@ -6,6 +6,7 @@ namespace app\widgets\badge;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\DynamicModel;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
@@ -14,9 +15,8 @@ use yii\helpers\Html;
 /**
  * Class BadgeWidget
  * @package app\widgets\badge
- * @property array<Model>|Model $data
+ * @property string|array|object $models
  * @property string $attribute
- * @property null|string $value
  * @property boolean $useBadges
  * @property string|false $allBadgeClass
  * @property string $linkAttribute
@@ -27,12 +27,11 @@ use yii\helpers\Html;
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
  *
- * todo: научить виджет работать с массивами аналогично моделям
  */
 class BadgeWidget extends Widget {
-	public $data = [];//Массив отображаемых моделей|отображаемая модель
+	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
 	public $attribute;//Атрибут модели, отображаемый в текст
-	public $value;//непосредственное значение, для использования без модели
+//	public $value;//непосредственное значение, для использования без модели
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
 	public $useBadges = true;//использовать бейджи для основного списка.
 
@@ -60,19 +59,25 @@ class BadgeWidget extends Widget {
 		$result = [];
 		$moreBadge = '';
 
-		if (null !== $this->value) {
-			$this->data = new DynamicModel([
-				'value' => $this->value
-			]);
-			$this->attribute = 'value';
-		}
+		if (null === $this->models) throw new InvalidConfigException('Model property not properly configured');
+
+		if (!is_array($this->models)) $this->models = [$this->models];
 
 		if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap);
-
 		/** @var Model|ActiveRecord $model */
-		if (!is_array($this->data)) $this->data = [$this->data];
-		foreach ($this->data as $model) {
+
+		foreach ($this->models as $model) {
 			if (null === $model) continue;
+
+			if (!is_object($model)) {
+				if (is_array($model)) {
+					$model = new DynamicModel($model);
+				} else {
+					$model = new DynamicModel(['value' => $model]);
+					$this->attribute = 'value';
+				}
+			}
+
 			if ($model->hasProperty('primaryKey')) {
 				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
 			} else {
