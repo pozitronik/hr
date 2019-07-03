@@ -144,7 +144,14 @@ $this->params['breadcrumbs'][] = $this->title;
 			},
 			'pageSummary' => function($summary, $data, $widget) use ($groupsScope) {
 				$positionTypeData = Groups::getGroupScopePositionTypeData($groupsScope);
-				$items = [];
+				$usersCountStat = Groups::getGroupScopeUsersCount($groupsScope)[0];
+				$items[] = BadgeWidget::widget([
+					'value' => "Всего: {$usersCountStat['dcount']}/{$usersCountStat['count']}",
+					"badgeOptions" => [
+						'class' => "badge badge-info pull-left"
+					],
+
+				]);
 				foreach ($positionTypeData as $positionId => $positionCount) {
 					/** @var RefUserPositionTypes $positionType */
 					$positionType = RefUserPositionTypes::findModel($positionId);

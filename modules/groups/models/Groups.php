@@ -464,7 +464,7 @@ class Groups extends ActiveRecordExtended {
 
 	/**
 	 * Строит срез по типам должностей, демо-прототип
-	 * @return array
+	 * @return int[]
 	 */
 	public function getGroupPositionTypeData():array {
 		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
@@ -490,7 +490,7 @@ class Groups extends ActiveRecordExtended {
 	/**
 	 * Строит срез по типам должностей для перечисленного набора групп, демо-прототип
 	 * @param int[] $scope
-	 * @return array
+	 * @return int[]
 	 */
 	public static function getGroupScopePositionTypeData(array $scope):array {
 		$scopeString = implode(',', $scope);
@@ -511,6 +511,20 @@ class Groups extends ActiveRecordExtended {
 			$value = ArrayHelper::getValue($positionTypes, $key, 0);
 		});
 		return $allPositionTypes;
+	}
+
+	/**
+	 * Возвращает статистику по количеству юзеров в указанных группах (уники и суммари)
+	 * @param int[] $scope
+	 * @return int[]
+	 */
+	public static function getGroupScopeUsersCount(array $scope):array {
+		$scopeString = implode(',', $scope);
+		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
+		$sql = "SELECT COUNT(DISTINCT su.id) AS dcount, COUNT(su.id) as count FROM sys_users su
+			LEFT JOIN rel_users_groups rug ON rug.user_id = su.id WHERE rug.group_id IN ($scopeString)";
+		return ActiveRecord::findBySql($sql)->asArray()->all();
+
 	}
 
 }
