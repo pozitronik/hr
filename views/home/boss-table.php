@@ -92,20 +92,21 @@ $this->params['breadcrumbs'][] = $this->title;
 				foreach ($model->leaders as $leader) {
 					$items[] = BadgeWidget::widget([
 						'models' => BadgeWidget::widget([
-								'models' => $leader,
-								'useBadges' => false,
-								'attribute' => 'username',
-								'unbadgedCount' => 3,
-								'itemsSeparator' => false
-							]).': '.BadgeWidget::widget([
-								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
-								'attribute' => 'name',
-								'useBadges' => true,
-								'itemsSeparator' => false,
-								"optionsMap" => static function() {
-									return RefUserRoles::colorStyleOptions();
-								}
-							]),
+							'prefix' => BadgeWidget::widget([
+									'models' => $leader,
+									'useBadges' => false,
+									'attribute' => 'username',
+									'unbadgedCount' => 3,
+									'itemsSeparator' => false
+								]).': ',
+							'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => false,
+							"optionsMap" => static function() {
+								return RefUserRoles::colorStyleOptions();
+							}
+						]),
 						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => $leader->id]
 					]);
 				}

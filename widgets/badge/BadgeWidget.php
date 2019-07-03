@@ -26,6 +26,7 @@ use yii\helpers\Html;
  * @property array|callable $optionsMap
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
+ * @property string $prefix
  *
  */
 class BadgeWidget extends Widget {
@@ -40,7 +41,8 @@ class BadgeWidget extends Widget {
 	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([id => options])"
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
-	//todo: prefix/postfix attributes
+	public $prefix = '';//строчка, добавляемая перед бейджами
+
 	/**
 	 * Функция инициализации и нормализации свойств виджета
 	 */
@@ -106,7 +108,7 @@ class BadgeWidget extends Widget {
 			$moreBadge = Html::tag("span", "...ещё ".(count($result) - $this->unbadgedCount), $this->moreBadgeOptions);
 			array_splice($result, $this->unbadgedCount, count($result));
 		}
-		return implode($this->itemsSeparator, $result).$moreBadge;
+		return $this->prefix.implode($this->itemsSeparator, $result).$moreBadge;
 
 	}
 }
