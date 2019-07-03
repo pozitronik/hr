@@ -5,6 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var GroupsSearch $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var int[] $groupsScope
  */
 
 use app\helpers\Utils;
@@ -41,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'export' => false,
 	'resizableColumns' => true,
 	'responsive' => true,
+	'showPageSummary' => true,
 	'columns' => [
 		[
 			'headerOptions' => ['class' => 'text-center'],
@@ -112,6 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true]]
 		],
 		[
+			'class' => DataColumn::class,
 			'headerOptions' => ['class' => 'text-center'],
 			'header' => 'Сотрудники',
 			'format' => 'raw',
@@ -134,6 +137,22 @@ $this->params['breadcrumbs'][] = $this->title;
 							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
 						],
 						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $model->id]
+
+					]);
+				}
+				return implode('', $items);
+			},
+			'pageSummary' => function($summary, $data, $widget) use ($groupsScope) {
+				$positionTypeData = Groups::getGroupScopePositionTypeData($groupsScope);
+				$items = [];
+				foreach ($positionTypeData as $positionId => $positionCount) {
+					/** @var RefUserPositionTypes $positionType */
+					$positionType = RefUserPositionTypes::findModel($positionId);
+					$items[] = BadgeWidget::widget([
+						'value' => "{$positionType->name}: $positionCount",
+						"badgeOptions" => [
+							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+						],
 
 					]);
 				}

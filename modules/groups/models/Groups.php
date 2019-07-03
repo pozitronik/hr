@@ -467,7 +467,6 @@ class Groups extends ActiveRecordExtended {
 	 * @return array
 	 */
 	public function getGroupPositionTypeData():array {
-
 		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
 		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
 		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
@@ -478,6 +477,32 @@ class Groups extends ActiveRecordExtended {
 			WHERE sg.id = {$this->id}
 			GROUP BY rupt.id";
 
+		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
+		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
+		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
+
+		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
+			$value = ArrayHelper::getValue($positionTypes, $key, 0);
+		});
+		return $allPositionTypes;
+	}
+
+	/**
+	 * Строит срез по типам должностей для перечисленного набора групп, демо-прототип
+	 * @param int[] $scope
+	 * @return array
+	 */
+	public static function getGroupScopePositionTypeData(array $scope):array {
+		$scopeString = implode(',', $scope);
+		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
+		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
+		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
+			LEFT JOIN ref_user_positions rup ON rup.id = rrupt.position_id
+			LEFT JOIN sys_users su ON su.`position` = rup.id
+			LEFT JOIN rel_users_groups rug ON rug.user_id=su.id
+			LEFT JOIN sys_groups sg ON sg.id = rug.group_id
+			WHERE sg.id in ($scopeString)
+			GROUP BY rupt.id";
 		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
 		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
 		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
