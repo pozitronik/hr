@@ -60,7 +60,7 @@ class BadgeWidget extends Widget {
 		$result = [];
 		$moreBadge = '';
 
-		if (null === $this->models) throw new InvalidConfigException('Model property not properly configured');
+//		if (null === $this->models) throw new InvalidConfigException('Model property not properly configured');
 
 		if (!is_array($this->models)) $this->models = [$this->models];
 
