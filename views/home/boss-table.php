@@ -184,7 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'models' => "Вакансии: {$vacancyCount}",
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-right"
-					],
+					]
 				]);
 
 				return implode('', $items);
