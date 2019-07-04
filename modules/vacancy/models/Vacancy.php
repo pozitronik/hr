@@ -50,7 +50,7 @@ use yii\db\Exception;
  * @property int $daddy Автор вакансии
  * @property bool $deleted
  *
- * @property Groups|ActiveQuery $relGroup
+ * @property Groups|ActiveQuery $relGroups
  * @property RefUserPositions $relRefUserPosition
  * @property RefLocations $relRefLocation
  * @property RefVacancyStatuses $relRefVacancyStatus
@@ -154,7 +154,7 @@ class Vacancy extends ActiveRecordExtended {
 	/**
 	 * @return Groups|ActiveQuery
 	 */
-	public function getRelGroup() {
+	public function getRelGroups() {
 		return $this->hasOne(Groups::class, ['id' => 'group']);
 	}
 
