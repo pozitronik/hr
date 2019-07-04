@@ -515,4 +515,13 @@ class Groups extends ActiveRecordExtended {
 			->all();
 	}
 
+	/**
+	 * Возвращает статистику по количеству вакансий в указанных группах
+	 * @param int[] $scope
+	 * @return int
+	 */
+	public static function getGroupScopeVacancyCount(array $scope):int {
+		return Vacancy::find()->joinWith(['relGroups'])->where(['sys_groups.id' => $scope])->countFromCache();
+	}
+
 }
