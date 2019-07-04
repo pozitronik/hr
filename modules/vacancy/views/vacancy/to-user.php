@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'columns' => [
 						[
 							'attribute' => 'group',
-							'value' => ArrayHelper::getValue($model->relGroup, 'name')
+							'value' => ArrayHelper::getValue($model->relGroups, 'name')
 						],
 						[
 							'attribute' => 'position',
