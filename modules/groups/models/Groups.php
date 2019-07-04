@@ -509,12 +509,11 @@ class Groups extends ActiveRecordExtended {
 	 * @return int[]
 	 */
 	public static function getGroupScopeUsersCount(array $scope):array {
-		$scopeString = implode(',', $scope)??null;
-		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
-		$sql = "SELECT COUNT(DISTINCT su.id) AS dcount, COUNT(su.id) as count FROM sys_users su
-			LEFT JOIN rel_users_groups rug ON rug.user_id = su.id WHERE rug.group_id IN ($scopeString)";
-		return ActiveRecord::findBySql($sql)->asArray()->all();
-
+		return Users::find()->leftJoin('rel_users_groups', 'rel_users_groups.user_id = sys_users.id')//поскольку нам нужно получать два разных аггрегатора и нельзя получать индекс, то мы не можем использовать joinWith (ORM будет требовать индекс).
+		->select(['COUNT(DISTINCT sys_users.id) AS dcount', 'COUNT(sys_users.id) as count'])
+			->where(['rel_users_groups.group_id' => $scope])
+			->asArray()
+			->all();
 	}
 
 }
