@@ -23,7 +23,6 @@ use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "groups".

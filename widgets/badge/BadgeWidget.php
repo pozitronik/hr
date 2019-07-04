@@ -6,7 +6,6 @@ namespace app\widgets\badge;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\DynamicModel;
-use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\Widget;
 use yii\db\ActiveRecord;
