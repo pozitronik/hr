@@ -6,7 +6,6 @@ namespace app\controllers;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
-use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\UsersSearch;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
@@ -37,7 +36,7 @@ class HomeController extends Controller {
 
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new GroupsSearch();
-		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'boss', [
+		return $this->render('boss-table', [
 			'dataProvider' => $searchModel->search($params, $stack),
 			'searchModel' => $searchModel
 		]);
@@ -53,11 +52,10 @@ class HomeController extends Controller {
 		$allowedGroups = [];
 		//Проверяем доступы к списку юзеров
 
-		return $this->render(ArrayHelper::getValue($params, 't', false)?'table':'users', [
+		return $this->render('table', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
 			'groupName' => Groups::findModel($searchModel->groupId)->name,
-			'positionTypeName' => empty($searchModel->positionType)?'Все сотрудники':RefUserPositionTypes::findModel($searchModel->positionType)->name//применимо только для дашборда
 		]);
 
 	}
