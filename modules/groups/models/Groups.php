@@ -493,18 +493,14 @@ class Groups extends ActiveRecordExtended {
 	 * @return int[]
 	 */
 	public static function getGroupScopePositionTypeData(array $scope):array {
-		$scopeString = implode(',', $scope);
-		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
-		$sql = "SELECT rupt.id as 'id',COUNT(rupt.id) as 'count' FROM ref_user_position_types rupt 
-		LEFT JOIN rel_ref_user_positions_types rrupt ON rupt.id = rrupt.position_type_id
-			LEFT JOIN ref_user_positions rup ON rup.id = rrupt.position_id
-			LEFT JOIN sys_users su ON su.`position` = rup.id
-			LEFT JOIN rel_users_groups rug ON rug.user_id=su.id
-			LEFT JOIN sys_groups sg ON sg.id = rug.group_id
-			WHERE sg.id in ($scopeString)
-			GROUP BY rupt.id";
+		$positionTypes = RefUserPositionTypes::find()
+			->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
+			->joinWith(['relGroups'])
+			->groupBy(['ref_user_position_types.id'])
+			->where(['sys_groups.id' => $scope])
+			->asArray()
+			->all();
 		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
-		$positionTypes = ActiveRecord::findBySql($sql)->asArray()->all();
 		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
 
 		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
@@ -519,7 +515,7 @@ class Groups extends ActiveRecordExtended {
 	 * @return int[]
 	 */
 	public static function getGroupScopeUsersCount(array $scope):array {
-		$scopeString = implode(',', $scope);
+		$scopeString = implode(',', $scope)??null;
 		/*Пока оставляю так, после фиксации условий буду переделывать на AR*/
 		$sql = "SELECT COUNT(DISTINCT su.id) AS dcount, COUNT(su.id) as count FROM sys_users su
 			LEFT JOIN rel_users_groups rug ON rug.user_id = su.id WHERE rug.group_id IN ($scopeString)";
