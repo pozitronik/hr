@@ -18,6 +18,7 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
+use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
@@ -145,6 +146,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 					]);
 				}
+				$items[] = BadgeWidget::widget([
+					'models' => "Вакансии: {$model->vacancyCount}",
+					"badgeOptions" => [
+						'class' => "badge badge-danger pull-right"
+					],
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => $model->id]
+
+				]);
+
 				return implode('', $items);
 			},
 			'pageSummary' => static function($summary, $data, $widget) use ($dataProvider) {
