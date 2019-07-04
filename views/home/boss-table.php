@@ -178,6 +178,15 @@ $this->params['breadcrumbs'][] = $this->title;
 						]
 					]);
 				}
+
+				$vacancyCount = Groups::getGroupScopeVacancyCount($groupsScope);
+				$items[] = BadgeWidget::widget([
+					'models' => "Вакансии: {$vacancyCount}",
+					"badgeOptions" => [
+						'class' => "badge badge-danger pull-right"
+					],
+				]);
+
 				return implode('', $items);
 			}
 		]
