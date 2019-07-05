@@ -54,7 +54,7 @@ class GroupsController extends BaseAjaxController {
 
 		$commonGraph[] = new UserGraph($user);
 		foreach ($userGroups as $group) {
-			$commonGraph[] = new GroupGraph($group, ['upDepth' => -1, 'downDepth' => -1]);//для каждой группы пользователя строим полные иерархии
+			$commonGraph[] = new GroupGraph($group, ['upDepth' => -1, 'downDepth' => 0]);//для каждой группы пользователя строим полные иерархии вверх
 		}
 		$result = Graph::combine($commonGraph);
 		return $result->toArray();
