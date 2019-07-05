@@ -4,6 +4,7 @@ const positionNone = 0, //не позиционировать ноды на се
 	positionRound = 1;// позиционировать в круговую диаграмму
 /*адреса для ajax-запросов*/
 const URL_LOAD_GRAPH = '/graph/groups/graph',//загрузка структуры
+	URL_LOAD_GRAPH_USER = '/graph/groups/user-graph',//загрузка структуры
 	URL_LOAD_OPTIONS = '',//загрузка параметров визуализации
 	URL_SAVE_OPTIONS = '',//сохранение ----
 	URL_DELETE_OPTIONS = '',//удаление ----
@@ -16,10 +17,12 @@ class GraphControl {
 	/**
 	 * @param container
 	 * @param groupId
+	 * @param userId
 	 */
-	constructor(container, groupId) {
+	constructor(container, groupId, userId) {
 		let self = this;
 		this.groupId = groupId || _.get('id');
+		this.userId = userId || _.get('user_id');
 		this.container = container;
 		this._downDepth = 0;
 		this._upDepth = 0;
@@ -48,8 +51,18 @@ class GraphControl {
 	}
 
 	loadData() {
-		getJSON(URL_LOAD_GRAPH, {
-			id: this.groupId,
+		let url;
+		let id;
+		if (-1 === this.userId) {
+			url = URL_LOAD_GRAPH;
+			id = this.groupId;
+		} else {
+			url = URL_LOAD_GRAPH_USER;
+			id = this.userId;
+		}
+
+		getJSON(url, {
+			id: id,
 			up: this._upDepth,
 			down: this._downDepth
 		}).then(
@@ -99,7 +112,7 @@ class GraphControl {
 				improvedLayout: true,
 				hierarchical: {
 					direction: "UD",
-					enabled: false,
+					enabled: true,
 					levelSeparation: 200,
 					nodeSpacing: 200,
 					treeSpacing: 200,
@@ -112,7 +125,7 @@ class GraphControl {
 			},
 			interaction: {dragNodes: true},
 			physics: {
-				enabled: false
+				enabled: true
 			}
 		}
 	}
