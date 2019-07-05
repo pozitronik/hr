@@ -35,8 +35,7 @@ class GraphController extends WigetableController {
 		return $this->render('group', [
 			'id' => $id,
 			'currentConfiguration' => 'default',
-			'positionConfigurations' => $positionConfigurations,
-			'user_id' => -1,
+			'positionConfigurations' => $positionConfigurations
 		]);
 	}
 
@@ -47,9 +46,8 @@ class GraphController extends WigetableController {
 	 */
 	public function actionUser(int $id):string {
 
-		return $this->render('group', [
-			'id' => -1,
-			'user_id' => $id,
+		return $this->render('user', [
+			'id' => $id,
 			'currentConfiguration' => 'default',
 			'positionConfigurations' => ['default' => 'default']
 		]);
