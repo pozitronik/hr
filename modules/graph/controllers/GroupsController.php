@@ -5,6 +5,7 @@ namespace app\modules\graph\controllers;
 
 use app\models\prototypes\NodesPositionsConfig;
 use app\modules\graph\models\GroupGraph;
+use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\user\CurrentUser;
@@ -34,6 +35,26 @@ class GroupsController extends BaseAjaxController {
 		$graph = new GroupGraph($group, ['upDepth' => $up, 'downDepth' => $down]);
 		$graph->roundNodes();
 		return $graph->toArray();
+	}
+
+	/**
+	 * Отдаёт JSON с деревом графа для пользователя
+	 * @param int $id
+	 * @return array
+	 */
+	public function actionUserGraph(int $id):array {
+		if (null === $user = Users::findModel($id)) {
+			return $this->answer->addError('user', 'Not found');
+		}
+
+		$userGroups = $user->relGroups;
+
+		$groupGraphs = [];
+		foreach ($userGroups as $group) {
+			$groupGraphs[] = new GroupGraph($group, ['upDepth' => -1, 'downDepth' => -1]);//для каждой группы пользователя строим полные иерархии
+		}
+		$result = GroupGraph::combine($groupGraphs);
+		return $result->toArray();
 	}
 
 	/**
