@@ -14,6 +14,7 @@ use kartik\switchinput\SwitchInput;
 use kartik\touchspin\TouchSpin;
 use yii\web\JsExpression;
 use yii\web\View;
+
 ?>
 
 <?= RibbonWidget::widget([
@@ -28,6 +29,7 @@ use yii\web\View;
 			'content' => '<div class="col-md-2">'.PositionSelectorWidget::widget(compact('currentConfiguration', 'positionConfigurations')).'</div>'.
 				'<div class="col-md-2">
 					<label>Физика:'.SwitchInput::widget([
+					'value' => true,
 					'name' => 'toggle_physics',
 					'containerOptions' => [
 						'class' => '',
@@ -37,7 +39,6 @@ use yii\web\View;
 						"switchChange.bootstrapSwitch" => new JsExpression("function(event, state) { graphControl.physics = state; }")
 					],
 					'pluginOptions' => [
-
 						'size' => 'mini',
 						'onText' => 'ДА',
 						'offText' => 'НЕТ',
@@ -45,6 +46,7 @@ use yii\web\View;
 						'offColor' => 'default'
 					]
 				]).'</label><label>Иерархия:'.SwitchInput::widget([
+					'value' => true,
 					'name' => 'toggle_hierarchy',
 					'containerOptions' => [
 						'class' => '',
