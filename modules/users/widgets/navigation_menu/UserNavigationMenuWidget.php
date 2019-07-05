@@ -6,6 +6,7 @@ namespace app\modules\users\widgets\navigation_menu;
 use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
+use app\modules\graph\GraphModule;
 use app\modules\history\HistoryModule;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
@@ -41,6 +42,10 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'label' => IconsHelper::money().'Зарплатные данные',
 				'url' => UsersModule::to(['users/salary', 'id' => $this->model->id])
+			],
+			[
+				'label' => IconsHelper::network().'Граф',
+				'url' => GraphModule::to(['graph/user', 'id' => $this->model->id])
 			],
 			[
 				'label' => IconsHelper::attributes().'Атрибуты',
