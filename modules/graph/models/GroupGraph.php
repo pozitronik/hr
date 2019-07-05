@@ -30,9 +30,9 @@ class GroupGraph extends Model {//todo GraphInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(Groups $group, $config = []) {
+	public function __construct(?Groups $group = null, $config = []) {
 		parent::__construct($config);
-		$this->buildGraph($group);
+		if (null !== $group) $this->buildGraph($group);
 	}
 
 	/**
@@ -154,4 +154,48 @@ class GroupGraph extends Model {//todo GraphInterface
 			}
 		}
 	}
+
+	/**
+	 * Объединяет несколько переданных графов в одну карту
+	 * @param self[] $graphs
+	 */
+	public static function combine(array $graphs) {
+		$result = new self();
+		$resultNodes = [[]];
+		$resultEdges = [[]];
+		foreach ($graphs as $graph) {
+			$resultNodes[] = $graph->nodes;
+			$resultEdges[] = $graph->edges;
+		}
+		$result->nodes = array_merge(...$resultNodes);
+		$result->edges = array_merge(...$resultEdges);
+		$result->setUnique();
+		return $result;
+	}
+
+	private function setUnique() {
+		$nodeIds = [];
+		$edgeIds = [];
+		$this->nodes = array_filter($this->nodes, function(GraphNode $node) use (&$nodeIds) {
+			if (in_array($node->id, $nodeIds)) {
+				return false;
+			}
+			$nodeIds[] = $node->id;
+			return true;
+		});
+
+		$this->nodes = array_values($this->nodes);//reindexing required, cause vis.js vil fail otherwise
+
+		$this->edges = array_filter($this->edges, function(GraphEdge $edge) use (&$edgeIds) {
+			if (in_array($edge->id, $edgeIds)) {
+				return false;
+			}
+			$edgeIds[] = $edge->id;
+			return true;
+		});
+
+		$this->edges = array_values($this->edges);
+
+	}
+
 }
