@@ -34,9 +34,9 @@ class UserGraph extends Graph {
 			$this->nodes[] = new GroupNode($group);
 			$groupRoles = RefUserRoles::getUserRolesInGroup($user->id, $group->id);
 			$this->edges[] = new GraphEdge([
-				'id' => $this->formName().$user->id.'x'.$group->formName().$group->id,
-				'from' => $this->formName().$user->id,
-				'to' => $group->formName().$group->id,
+				'id' => $user->formName().$user->id.'x'.$group->formName().$group->id,
+				'from' => $group->formName().$group->id,
+				'to' => $user->formName().$user->id,
 				'label' => empty($groupRoles)?'':BadgeWidget::widget([
 					'models' => $groupRoles,
 					'attribute' => 'name',
