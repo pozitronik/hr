@@ -4,7 +4,9 @@ declare(strict_types = 1);
 namespace app\modules\graph\controllers;
 
 use app\models\prototypes\NodesPositionsConfig;
+use app\modules\graph\models\Graph;
 use app\modules\graph\models\GroupGraph;
+use app\modules\graph\models\UserGraph;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
@@ -50,11 +52,11 @@ class GroupsController extends BaseAjaxController {
 
 		$userGroups = $user->relGroups;
 
-		$groupGraphs = [];
+		$commonGraph[] = new UserGraph($user);
 		foreach ($userGroups as $group) {
-			$groupGraphs[] = new GroupGraph($group, ['upDepth' => -1, 'downDepth' => -1]);//для каждой группы пользователя строим полные иерархии
+			$commonGraph[] = new GroupGraph($group, ['upDepth' => -1, 'downDepth' => -1]);//для каждой группы пользователя строим полные иерархии
 		}
-		$result = GroupGraph::combine($groupGraphs);
+		$result = Graph::combine($commonGraph);
 		return $result->toArray();
 	}
 
