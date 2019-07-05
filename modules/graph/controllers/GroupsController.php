@@ -41,6 +41,7 @@ class GroupsController extends BaseAjaxController {
 	 * Отдаёт JSON с деревом графа для пользователя
 	 * @param int $id
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionUserGraph(int $id):array {
 		if (null === $user = Users::findModel($id)) {

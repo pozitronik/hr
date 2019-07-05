@@ -24,4 +24,4 @@ VisjsAsset::register($this);
 $this->registerJs("graphControl = new GraphControl(_.$('tree-container'), '-1', $id); $('#fitBtn').on('click',function() {graphControl.fitAnimated()})", View::POS_END);
 ?>
 
-<?= $this->render('common', compact('currentConfiguration','positionConfigurations')); ?>
+<?= $this->render('common', compact('currentConfiguration','positionConfigurations')) ?>

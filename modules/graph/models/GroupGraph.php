@@ -158,8 +158,9 @@ class GroupGraph extends Model {//todo GraphInterface
 	/**
 	 * Объединяет несколько переданных графов в одну карту
 	 * @param self[] $graphs
+	 * @return GroupGraph
 	 */
-	public static function combine(array $graphs) {
+	public static function combine(array $graphs):GroupGraph {
 		$result = new self();
 		$resultNodes = [[]];
 		$resultEdges = [[]];
@@ -173,10 +174,10 @@ class GroupGraph extends Model {//todo GraphInterface
 		return $result;
 	}
 
-	private function setUnique() {
+	private function setUnique():void {
 		$nodeIds = [];
 		$edgeIds = [];
-		$this->nodes = array_filter($this->nodes, function(GraphNode $node) use (&$nodeIds) {
+		$this->nodes = array_filter($this->nodes, static function(GraphNode $node) use (&$nodeIds) {
 			if (in_array($node->id, $nodeIds)) {
 				return false;
 			}
@@ -186,7 +187,7 @@ class GroupGraph extends Model {//todo GraphInterface
 
 		$this->nodes = array_values($this->nodes);//reindexing required, cause vis.js vil fail otherwise
 
-		$this->edges = array_filter($this->edges, function(GraphEdge $edge) use (&$edgeIds) {
+		$this->edges = array_filter($this->edges, static function(GraphEdge $edge) use (&$edgeIds) {
 			if (in_array($edge->id, $edgeIds)) {
 				return false;
 			}
