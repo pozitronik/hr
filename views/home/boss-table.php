@@ -23,7 +23,9 @@ use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;
+use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
 
 $this->title = 'Мои группы';
@@ -34,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title
+		'heading' => $this->title.Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
