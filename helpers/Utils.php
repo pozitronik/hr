@@ -275,7 +275,7 @@ class Utils {
 	 * @throws Throwable
 	 */
 	public static function RGBColorContrast(?string $rgbString):string {
-		if (empty($rgbString)) return "rgb(255,255,255)";
+		/*if (empty($rgbString))*/ return "rgb(255,255,255)";
 		$rgb = self::RGBToArray($rgbString);
 		$rgbContrast = self::RGBContrast($rgb);
 		return "rgb({$rgbContrast[0]},{$rgbContrast[1]},{$rgbContrast[2]})";
