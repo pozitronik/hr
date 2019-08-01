@@ -33,7 +33,7 @@ class SqlDebugInfo extends Model {
 		$this->userid = null;
 		$this->operation = null;
 		$matches = [];
-		$r = preg_match('/\/\*debug=>(.*?)<=debug\*\//', $sql, $matches);
+		$r = preg_match('//\*debug=>(.*?)<=debug\*//', $sql, $matches);
 		if ($r) {
 			$this->setAttributes(json_decode($matches[1], true), false);
 			return true;
