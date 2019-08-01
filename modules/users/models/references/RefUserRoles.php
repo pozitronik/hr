@@ -37,7 +37,7 @@ class RefUserRoles extends CustomisableReference {
 	public $menuCaption = 'Роли пользователей внутри групп';
 	public $menuIcon = false;
 
-	protected $_dataAttributes = ['color', ['boss' => 'boss_flag']];
+	protected $_dataAttributes = ['color', 'textcolor', ['boss' => 'boss_flag']];
 
 	/**
 	 * {@inheritdoc}
