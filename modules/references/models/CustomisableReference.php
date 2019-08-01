@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\helpers\Utils;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use Throwable;
@@ -109,7 +110,7 @@ class CustomisableReference extends Reference {
 			$items = self::find()->active()->all();
 			foreach ($items as $referenceItem) {
 				$color = empty($referenceItem->color)?'gray':$referenceItem->color;
-				$fontOptions = empty($referenceItem->font)?'inherit':$referenceItem->font;//todo: parse font options maybe
+				$fontOptions = empty($referenceItem->font)?'white':$referenceItem->font;//todo: parse font options maybe
 				$options[$referenceItem->id] = [
 					'style' => "background: {$color}; color: {$fontOptions}"
 				];
