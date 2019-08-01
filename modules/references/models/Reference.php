@@ -143,9 +143,8 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 			if (file_exists(Yii::getAlias($form_alias))) return $form_alias;
 
 		}
-		$default_form = $this->hasProperty('color')?'_form_color':'_form';
 
-		return file_exists(Yii::$app->controller->module->viewPath.DIRECTORY_SEPARATOR.Yii::$app->controller->id.DIRECTORY_SEPARATOR.$file_path)?$file_path:$default_form;
+		return file_exists(Yii::$app->controller->module->viewPath.DIRECTORY_SEPARATOR.Yii::$app->controller->id.DIRECTORY_SEPARATOR.$file_path)?$file_path:'_form';
 	}
 
 	/**
@@ -201,7 +200,6 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 		$cacheNames = [
 			"{$class}MapData",
 			"{$class}DataOptions",
-			"{$class}ColorStyleOptions"
 		];
 		foreach ($cacheNames as $className) {
 			Yii::$app->cache->delete($className);
@@ -262,27 +260,6 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	}
 
 	/**
-	 * Возвращает параметр цвета (если поддерживается справочником) в виде стиля для отображения в BadgeWidget (или любом другом похожем выводе)
-	 * @return array
-	 */
-	public static function colorStyleOptions():array {
-		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
-			$options = [];
-			/** @var self[] $items */
-			$items = self::find()->active()->all();
-			foreach ($items as $referenceItem) {
-				$color = empty($referenceItem->color)?'gray':$referenceItem->color;
-				$options[$referenceItem->id] = [
-					'style' => "background: {$color}; color: {$referenceItem->textColor}"
-				];
-			}
-
-			return $options;
-		});
-
-	}
-
-	/**
 	 * Возвращает имя раширения, добавившего справочник (null, если справочник базовый)
 	 * @return string|null
 	 */
@@ -306,19 +283,4 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 		return (null === $this->pluginId)?null:PluginsSupport::GetPluginById($this->pluginId);
 	}
 
-	/**
-	 * Дефолтный геттер цвета для справочников, не имплементирующих атрибут
-	 * @return string|null
-	 */
-	public function getColor():?string {
-		return null;
-	}
-
-	/**
-	 * @return string
-	 * @throws Throwable
-	 */
-	public function getTextColor():string {
-		return Utils::RGBColorContrast($this->color);
-	}
 }
