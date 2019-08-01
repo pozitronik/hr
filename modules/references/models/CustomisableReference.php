@@ -1,0 +1,120 @@
+<?php
+declare(strict_types = 1);
+
+namespace app\modules\references\models;
+
+use Throwable;
+use Yii;
+use yii\base\InvalidConfigException;
+
+/**
+ * Class CustomisableReference
+ * Расширение класса справочника с поддержкой настроек отображения
+ * @package app\modules\references\models
+ *
+ * @property string $color -- html code in rgb(r,g,b) format
+ * @property string $font -- css font options
+ */
+class CustomisableReference extends Reference {
+	/**
+	 * @inheritdoc
+	 */
+	public function rules():array {
+		return [
+			[['name'], 'required'],
+			[['id', 'usedCount'], 'integer'],
+			[['deleted'], 'boolean'],
+			[['name', 'color', 'font'], 'string', 'max' => 256],
+			[['value'], 'string', 'max' => 512]
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels():array {
+		return [
+			'id' => 'ID',
+			'name' => 'Название',
+			'deleted' => 'Удалёно',
+			'usedCount' => 'Использований',
+			'color' => 'Цвет',
+			'font' => 'Шрифт'
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function flushCache():void {
+		$class = static::class;
+		$cacheNames = [
+			"{$class}MapData",
+			"{$class}DataOptions",
+			"{$class}ColorStyleOptions"
+		];
+		foreach ($cacheNames as $className) {
+			Yii::$app->cache->delete($className);
+		}
+	}
+
+	/**
+	 * Возвращает параметр цвета (если поддерживается справочником) в виде стиля для отображения в BadgeWidget (или любом другом похожем выводе)
+	 * @return array
+	 */
+	public static function colorStyleOptions():array {//todo: CustomisableReference
+		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
+			$options = [];
+			/** @var self[] $items */
+			$items = self::find()->active()->all();
+			foreach ($items as $referenceItem) {
+				$color = empty($referenceItem->color)?'gray':$referenceItem->color;
+				$fontOptions = empty($referenceItem->font)?'inherit':$referenceItem->font;//todo: parse font options maybe
+				$options[$referenceItem->id] = [
+					'style' => "background: {$color}; color: {$fontOptions}"
+				];
+			}
+
+			return $options;
+		});
+
+	}
+
+	/**
+	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
+	 *
+	 * Сначала проверяем наличие вьюхи в расширении (/module/views/{formName}/_form.php). Если её нет, то проверяем такой же путь в модуле справочников.
+	 * Если и там ничего нет, скатываемся на показ дефолтной вьюхи
+	 *
+	 * @return string
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public function getForm():string {
+		$file_path = mb_strtolower($this->formName()).'/_form.php';
+		if (null !== $plugin = ReferenceLoader::getReferenceByClassName($this->formName())->plugin) {//это справочник расширения
+			$form_alias = $plugin->alias.'/views/references/'.$file_path;
+			if (file_exists(Yii::getAlias($form_alias))) return $form_alias;
+
+		}
+		$default_form = $this->hasProperty('color')?'_form_color':'_form';//аналогично родительскому вызову, но проверяем наличие вьюхи с настройками
+
+		return file_exists(Yii::$app->controller->module->viewPath.DIRECTORY_SEPARATOR.Yii::$app->controller->id.DIRECTORY_SEPARATOR.$file_path)?$file_path:$default_form;
+	}
+
+	/**
+	 * Дефолтный геттер цвета для справочников, не имплементирующих атрибут
+	 * @return string|null
+	 */
+	public function getColor():?string {
+		return null;
+	}
+
+	/**
+	 * @return string
+	 * @throws Throwable
+	 */
+	public function getFont():?string {
+		return null;
+	}
+}
