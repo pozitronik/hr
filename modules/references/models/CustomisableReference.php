@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
-use app\helpers\Utils;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use Throwable;
@@ -82,6 +81,14 @@ class CustomisableReference extends Reference {
 			],
 			'usedCount'
 		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function afterSave($insert, $changedAttributes) {
+		parent::afterSave($insert, $changedAttributes);
+		self::flushCache();
 	}
 
 	/**
