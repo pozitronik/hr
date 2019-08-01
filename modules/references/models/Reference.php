@@ -200,7 +200,6 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 		$class = static::class;
 		$cacheNames = [
 			"{$class}MapData",
-			"{$class}MapData1",
 			"{$class}DataOptions",
 			"{$class}ColorStyleOptions"
 		];
