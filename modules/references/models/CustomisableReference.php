@@ -1,11 +1,14 @@
-<?php
+<?php /** @noinspection UndetectableTableInspection */
 declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\modules\references\ReferencesModule;
+use app\widgets\badge\BadgeWidget;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\helpers\Html;
 
 /**
  * Class CustomisableReference
@@ -44,6 +47,40 @@ class CustomisableReference extends Reference {
 	}
 
 	/**
+	 * Набор колонок для отображения на главной
+	 * @return array
+	 */
+	public function getColumns():array {
+		return [
+			[
+				'attribute' => 'id',
+				'options' => [
+					'style' => 'width:36px;'
+				]
+			],
+			[
+				'attribute' => 'name',
+				'value' => static function($model) {
+					/** @var self $model */
+					return $model->deleted?Html::tag('span', "Удалено:", [
+							'class' => 'label label-danger'
+						]).$model->name:BadgeWidget::widget([
+						'models' => $model,
+						'attribute' => 'name',
+						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
+					]);
+				},
+				'format' => 'raw'
+			],
+			'usedCount'
+		];
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public static function flushCache():void {
@@ -62,7 +99,7 @@ class CustomisableReference extends Reference {
 	 * Возвращает параметр цвета (если поддерживается справочником) в виде стиля для отображения в BadgeWidget (или любом другом похожем выводе)
 	 * @return array
 	 */
-	public static function colorStyleOptions():array {//todo: CustomisableReference
+	public static function colorStyleOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
 			$options = [];
 			/** @var self[] $items */
