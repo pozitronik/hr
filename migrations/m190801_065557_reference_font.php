@@ -10,17 +10,17 @@ class m190801_065557_reference_font extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->addColumn('ref_attributes_types', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_group_relation_types', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_group_types', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_locations', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_salary_premium_group', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_user_position_branches', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_user_position_types', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_user_positions', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_user_roles', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_vacancy_recruiters', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
-		$this->addColumn('ref_vacancy_statuses', 'font', $this->string()->null()->defaultValue(null)->comment('Параметры шрифта'));
+		$this->addColumn('ref_attributes_types', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_group_relation_types', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_group_types', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_locations', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_salary_premium_group', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_user_position_branches', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_user_position_types', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_user_positions', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_user_roles', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_vacancy_recruiters', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
+		$this->addColumn('ref_vacancy_statuses', 'textcolor', $this->string()->null()->defaultValue(null)->comment('Цвет текста'));
 
 	}
 
@@ -28,17 +28,17 @@ class m190801_065557_reference_font extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropColumn('ref_attributes_types', 'font');
-		$this->dropColumn('ref_group_relation_types', 'font');
-		$this->dropColumn('ref_group_types', 'font');
-		$this->dropColumn('ref_locations', 'font');
-		$this->dropColumn('ref_salary_premium_group', 'font');
-		$this->dropColumn('ref_user_position_branches', 'font');
-		$this->dropColumn('ref_user_position_types', 'font');
-		$this->dropColumn('ref_user_positions', 'font');
-		$this->dropColumn('ref_user_roles', 'font');
-		$this->dropColumn('ref_vacancy_recruiters', 'font');
-		$this->dropColumn('ref_vacancy_statuses', 'font');
+		$this->dropColumn('ref_attributes_types', 'textcolor');
+		$this->dropColumn('ref_group_relation_types', 'textcolor');
+		$this->dropColumn('ref_group_types', 'textcolor');
+		$this->dropColumn('ref_locations', 'textcolor');
+		$this->dropColumn('ref_salary_premium_group', 'textcolor');
+		$this->dropColumn('ref_user_position_branches', 'textcolor');
+		$this->dropColumn('ref_user_position_types', 'textcolor');
+		$this->dropColumn('ref_user_positions', 'textcolor');
+		$this->dropColumn('ref_user_roles', 'textcolor');
+		$this->dropColumn('ref_vacancy_recruiters', 'textcolor');
+		$this->dropColumn('ref_vacancy_statuses', 'textcolor');
 	}
 
 	/*
@@ -50,7 +50,7 @@ class m190801_065557_reference_font extends Migration {
 
 	public function down()
 	{
-		echo "m190801_065557_reference_font cannot be reverted.\n";
+		echo "m190801_065557_reference_textcolor cannot be reverted.\n";
 
 		return false;
 	}

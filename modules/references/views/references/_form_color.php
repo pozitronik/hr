@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
 			</div>
 
 			<div class="col-md-3">
-				<?= $form->field($model, 'font')->widget(ColorInput::class, [
+				<?= $form->field($model, 'textcolor')->widget(ColorInput::class, [
 					'options' => [
 						'placeholder' => 'Выбрать цвет текста'
 					],

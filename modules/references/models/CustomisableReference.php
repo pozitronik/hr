@@ -16,7 +16,7 @@ use yii\helpers\Html;
  * @package app\modules\references\models
  *
  * @property string $color -- html code in rgb(r,g,b) format
- * @property string $font -- css font options
+ * @property string $textcolor -- css font options
  */
 class CustomisableReference extends Reference {
 
@@ -31,7 +31,7 @@ class CustomisableReference extends Reference {
 			[['name'], 'unique'],
 			[['id', 'usedCount'], 'integer'],
 			[['deleted'], 'boolean'],
-			[['name', 'color', 'font'], 'string', 'max' => 256]
+			[['name', 'color', 'textcolor'], 'string', 'max' => 256]
 		];
 	}
 
@@ -45,7 +45,7 @@ class CustomisableReference extends Reference {
 			'deleted' => 'Удалёно',
 			'usedCount' => 'Использований',
 			'color' => 'Цвет фона',
-			'font' => 'Цвет текста'
+			'textcolor' => 'Цвет текста'
 		];
 	}
 
@@ -117,9 +117,9 @@ class CustomisableReference extends Reference {
 			$items = self::find()->active()->all();
 			foreach ($items as $referenceItem) {
 				$color = empty($referenceItem->color)?'gray':$referenceItem->color;
-				$fontOptions = empty($referenceItem->font)?'white':$referenceItem->font;//todo: parse font options maybe
+				$textColor = empty($referenceItem->textcolor)?'white':$referenceItem->textcolor;
 				$options[$referenceItem->id] = [
-					'style' => "background: {$color}; color: {$fontOptions}"
+					'style' => "background: {$color}; color: {$textColor}"
 				];
 			}
 
