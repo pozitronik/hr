@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
-use app\helpers\Utils;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
@@ -106,10 +105,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 						'models' => $model,
 						'attribute' => 'name',
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
-						'itemsSeparator' => false,
-						"optionsMap" => static function() {
-							return self::colorStyleOptions();
-						}
+						'itemsSeparator' => false
 					]);
 				},
 				'format' => 'raw'
@@ -199,7 +195,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 		$class = static::class;
 		$cacheNames = [
 			"{$class}MapData",
-			"{$class}DataOptions",
+			"{$class}DataOptions"
 		];
 		foreach ($cacheNames as $className) {
 			Yii::$app->cache->delete($className);
