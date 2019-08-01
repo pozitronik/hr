@@ -31,8 +31,7 @@ class CustomisableReference extends Reference {
 			[['name'], 'unique'],
 			[['id', 'usedCount'], 'integer'],
 			[['deleted'], 'boolean'],
-			[['name', 'color', 'font'], 'string', 'max' => 256],
-			[['value'], 'string', 'max' => 512]
+			[['name', 'color', 'font'], 'string', 'max' => 256]
 		];
 	}
 
@@ -45,8 +44,8 @@ class CustomisableReference extends Reference {
 			'name' => 'Название',
 			'deleted' => 'Удалёно',
 			'usedCount' => 'Использований',
-			'color' => 'Цвет',
-			'font' => 'Шрифт'
+			'color' => 'Цвет фона',
+			'font' => 'Цвет текста'
 		];
 	}
 
