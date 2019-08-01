@@ -20,7 +20,7 @@ use yii\helpers\Html;
  */
 class CustomisableReference extends Reference {
 
-	protected $_dataAttributes = ['color'];//todo font
+	protected $_dataAttributes = ['color', 'font'];
 
 	/**
 	 * @inheritdoc
