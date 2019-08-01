@@ -13,7 +13,6 @@ declare(strict_types = 1);
  * @var array $positionTypeData
  */
 
-use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
