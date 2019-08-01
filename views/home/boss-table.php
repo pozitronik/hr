@@ -142,7 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					$items[] = BadgeWidget::widget([
 						'models' => "{$positionType->name}: $positionCount",
 						"badgeOptions" => [
-							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+							'style' => "float:left; background: {$positionType->color}; color: $positionType->textcolor"
 						],
 						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $model->id]
 
@@ -176,7 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					$items[] = BadgeWidget::widget([
 						'models' => "{$positionType->name}: $positionCount",
 						"badgeOptions" => [
-							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+							'style' => "float:left; background: {$positionType->color}; color: $positionType->textcolor"
 						]
 					]);
 				}

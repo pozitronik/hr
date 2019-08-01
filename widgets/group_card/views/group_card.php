@@ -46,7 +46,7 @@ use yii\web\View;
 				<div class="col-md-10"><?= BadgeWidget::widget([
 						'models' => $positionType->name,
 						"badgeOptions" => [
-							'style' => "float:left; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+							'style' => "float:left; background: {$positionType->color}; color: $positionType->textcolor"
 						],
 						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
 
@@ -55,7 +55,7 @@ use yii\web\View;
 					<?= BadgeWidget::widget([
 						'models' => $positionCount,
 						"badgeOptions" => [
-							'style' => "float:right; background: {$positionType->color}; color: ".Utils::RGBColorContrast($positionType->color)
+							'style' => "float:right; background: {$positionType->color}; color: $positionType->textcolor"
 						],
 						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
 

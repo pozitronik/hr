@@ -390,7 +390,7 @@ class Groups extends ActiveRecordExtended {
 					'data-logo' => $item->logo,
 					'data-typename' => ArrayHelper::getValue($item->relGroupTypes, 'name'),
 					'data-typecolor' => ArrayHelper::getValue($item->relGroupTypes, 'color'),
-					'data-textcolor' => Utils::RGBColorContrast(ArrayHelper::getValue($item->relGroupTypes, 'color'))
+					'data-textcolor' => ArrayHelper::getValue($item->relGroupTypes, 'textcolor')
 				];
 			}
 			return $result;
