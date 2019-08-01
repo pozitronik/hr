@@ -54,7 +54,7 @@ class RefUserRoles extends CustomisableReference {
 			[['name'], 'required'],
 			[['name'], 'unique'],
 			[['id', 'deleted', 'usedCount'], 'integer'],
-			[['name', 'color', 'font'], 'string', 'max' => 256],
+			[['name', 'color', 'textcolor'], 'string', 'max' => 256],
 			['boss_flag', 'boolean']
 		];
 	}
@@ -68,8 +68,8 @@ class RefUserRoles extends CustomisableReference {
 			'name' => 'Название',
 			'deleted' => 'Deleted',
 			'boss_flag' => 'Лидер',
-			'color' => 'Цвет',
-			'font' => 'Шрифт',
+			'color' => 'Цвет фона',
+			'textcolor' => 'Цвет текста',
 			'usedCount' => 'Использований'
 		];
 	}
