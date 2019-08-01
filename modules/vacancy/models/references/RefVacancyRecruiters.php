@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models\references;
 
-use app\modules\references\models\Reference;
+use app\modules\references\models\CustomisableReference;
 
 /**
  * Class RefVacancyRecruiters
  * @package app\modules\vacancy\models\references
  */
-class RefVacancyRecruiters extends Reference {
+class RefVacancyRecruiters extends CustomisableReference {
 	public $menuCaption = 'Рекрутеры';
 	public $menuIcon = false;
 
@@ -20,28 +20,4 @@ class RefVacancyRecruiters extends Reference {
 		return 'ref_vacancy_recruiters';
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function rules():array {
-		return [
-			[['name'], 'required'],
-			[['name'], 'string', 'max' => 255],
-			[['id', 'usedCount'], 'integer'],
-			[['deleted'], 'boolean'],
-			[['color'], 'safe']
-		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'name' => 'Название',
-			'usedCount' => 'Использований',
-			'color' => 'Цвет'
-		];
-	}
 }

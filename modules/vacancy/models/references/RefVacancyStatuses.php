@@ -4,13 +4,13 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\models\references;
 
 
-use app\modules\references\models\Reference;
+use app\modules\references\models\CustomisableReference;
 
 /**
  * Class RefVacancyStatuses
  * @package app\modules\salary\models\vacancy
  */
-class RefVacancyStatuses extends Reference {
+class RefVacancyStatuses extends CustomisableReference {
 	public $menuCaption = 'Статусы вакансий';
 	public $menuIcon = false;
 
@@ -22,28 +22,4 @@ class RefVacancyStatuses extends Reference {
 		return 'ref_vacancy_statuses';
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function rules():array {
-		return [
-			[['name'], 'required'],
-			[['name'], 'string', 'max' => 255],
-			[['id', 'usedCount'], 'integer'],
-			[['deleted'], 'boolean'],
-			[['color'], 'safe']
-		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'name' => 'Название',
-			'usedCount' => 'Использований',
-			'color' => 'Цвет'
-		];
-	}
 }

@@ -5,7 +5,7 @@ namespace app\modules\salary\models\references;
 
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
-use app\modules\references\models\Reference;
+use app\modules\references\models\CustomisableReference;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
@@ -21,7 +21,7 @@ use yii\db\ActiveQuery;
  * @property RelUsersGroups[]|ActiveQuery $relUserGroups
  * @property Groups[]|ActiveQuery $relGroups
  */
-class RefUserPositionTypes extends Reference {
+class RefUserPositionTypes extends CustomisableReference {
 	public $menuCaption = 'Типы должностей';
 	public $menuIcon = false;
 
@@ -30,19 +30,6 @@ class RefUserPositionTypes extends Reference {
 	 */
 	public static function tableName():string {
 		return 'ref_user_position_types';
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function rules():array {
-		return [
-			[['name'], 'required'],
-			[['name'], 'unique'],
-			[['id'], 'integer'],
-			[['deleted'], 'boolean'],
-			[['name', 'color'], 'string', 'max' => 256]
-		];
 	}
 
 	/**

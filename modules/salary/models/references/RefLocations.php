@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use app\modules\references\models\Reference;
+use app\modules\references\models\CustomisableReference;
 
 /**
  * Справочник расположений. Расположение применяется, как модификатор при задании зарплатной вилки.
@@ -15,11 +15,10 @@ use app\modules\references\models\Reference;
  * @property string $color
  *
  */
-class RefLocations extends Reference {
+class RefLocations extends CustomisableReference {
 	public $menuCaption = 'Локации';
 	public $menuIcon = false;
 
-	protected $_dataAttributes = ['color'];
 
 	/**
 	 * {@inheritdoc}
@@ -28,30 +27,4 @@ class RefLocations extends Reference {
 		return 'ref_locations';
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function rules():array {
-		return [
-			[['name'], 'required'],
-			[['name'], 'unique'],
-			[['id', 'usedCount'], 'integer'],
-			[['deleted'], 'boolean'],
-			[['name'], 'string', 'max' => 256],
-			[['color'], 'safe']
-		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'name' => 'Название',
-			'deleted' => 'Deleted',
-			'color' => 'Цвет',
-			'usedCount' => 'Использований'
-		];
-	}
 }

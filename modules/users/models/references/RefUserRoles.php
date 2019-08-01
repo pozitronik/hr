@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\references;
 
+use app\modules\references\models\CustomisableReference;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\GridView;
 use app\modules\groups\models\Groups;
-use app\modules\references\models\Reference;
 use app\models\relations\RelUsersGroups;
 use app\models\relations\RelUsersGroupsRoles;
 use app\modules\users\models\Users;
@@ -33,7 +33,7 @@ use yii\helpers\Html;
  * @property ActiveQuery|Users[] $users
  *
  */
-class RefUserRoles extends Reference {
+class RefUserRoles extends CustomisableReference {
 	public $menuCaption = 'Роли пользователей внутри групп';
 	public $menuIcon = false;
 
@@ -54,9 +54,8 @@ class RefUserRoles extends Reference {
 			[['name'], 'required'],
 			[['name'], 'unique'],
 			[['id', 'deleted', 'usedCount'], 'integer'],
-			[['name'], 'string', 'max' => 256],
+			[['name', 'color', 'font'], 'string', 'max' => 256],
 			['boss_flag', 'boolean'],
-			[['color'], 'safe']
 		];
 	}
 
@@ -70,6 +69,7 @@ class RefUserRoles extends Reference {
 			'deleted' => 'Deleted',
 			'boss_flag' => 'Лидер',
 			'color' => 'Цвет',
+			'font' => 'Шрифт',
 			'usedCount' => 'Использований'
 		];
 	}

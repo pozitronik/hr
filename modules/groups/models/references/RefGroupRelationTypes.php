@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models\references;
 
-use app\modules\references\models\Reference;
+use app\modules\references\models\CustomisableReference;
 use app\models\relations\RelGroupsGroups;
 use Throwable;
 
@@ -16,43 +16,16 @@ use Throwable;
  * @property string $color
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
-class RefGroupRelationTypes extends Reference {
+class RefGroupRelationTypes extends CustomisableReference {
 	public $menuCaption = 'Типы соединений групп';
 	public $menuIcon = false;
 
-	protected $_dataAttributes = ['color'];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
 		return 'ref_group_relation_types';
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function rules():array {
-		return [
-			[['name'], 'required'],
-			[['id'], 'integer'],
-			[['deleted'], 'boolean'],
-			[['name', 'color'], 'string', 'max' => 256],
-			[['color'], 'safe']
-		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'name' => 'Название',
-			'deleted' => 'Deleted',
-			'color' => 'Цвет',
-			'usedCount' => 'Использований'
-		];
 	}
 
 	/**

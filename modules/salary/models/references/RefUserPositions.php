@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
+use app\modules\references\models\CustomisableReference;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
-use app\modules\references\models\Reference;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
@@ -37,7 +37,7 @@ use yii\helpers\Html;
  *
  * @property-read null|string $branchName
  */
-class RefUserPositions extends Reference {
+class RefUserPositions extends CustomisableReference {
 	public $menuCaption = 'Должности';
 	public $menuIcon = false;
 

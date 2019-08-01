@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models\references;
 
-use app\modules\references\models\Reference;
+use app\modules\references\models\CustomisableReference;
 use app\models\relations\RelUsersAttributesTypes;
 
 /**
@@ -15,42 +15,16 @@ use app\models\relations\RelUsersAttributesTypes;
  * @property int $deleted
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
  */
-class RefAttributesTypes extends Reference {
+class RefAttributesTypes extends CustomisableReference {
 	public $menuCaption = 'Типы отношений атрибутов';
 	public $menuIcon = false;
 
-	protected $_dataAttributes = ['color'];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
 		return 'ref_attributes_types';
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function rules():array {
-		return [
-			[['id'], 'integer'],
-			[['name'], 'required'],
-			[['deleted'], 'boolean'],
-			[['name', 'color'], 'string', 'max' => 255]
-		];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function attributeLabels():array {
-		return [
-			'id' => 'ID',
-			'name' => 'Название',
-			'deleted' => 'Deleted',
-			'color' => 'Цвет',
-			'usedCount' => 'Использований'
-		];
 	}
 
 
