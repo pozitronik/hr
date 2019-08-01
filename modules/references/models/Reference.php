@@ -64,6 +64,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
+			[['name'], 'unique'],
 			[['id', 'usedCount'], 'integer'],
 			[['deleted'], 'boolean'],
 			[['name'], 'string', 'max' => 256],

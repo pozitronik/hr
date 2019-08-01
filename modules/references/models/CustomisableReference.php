@@ -34,6 +34,7 @@ class CustomisableReference extends Reference {
 	public function rules():array {
 		return [
 			[['name'], 'required'],
+			[['name'], 'unique'],
 			[['id', 'usedCount'], 'integer'],
 			[['deleted'], 'boolean'],
 			[['name', 'color', 'font'], 'string', 'max' => 256],
