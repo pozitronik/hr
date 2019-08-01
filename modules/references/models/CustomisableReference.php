@@ -1,4 +1,4 @@
-<?php /** @noinspection UndetectableTableInspection */
+<?php
 declare(strict_types = 1);
 
 namespace app\modules\references\models;
@@ -19,6 +19,15 @@ use yii\helpers\Html;
  * @property string $font -- css font options
  */
 class CustomisableReference extends Reference {
+
+	protected $_dataAttributes = ['color'];//todo font
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function tableName():string {
+		return parent::tableName();
+	}
 	/**
 	 * @inheritdoc
 	 */
