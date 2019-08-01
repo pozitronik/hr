@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 	<?php $form = ActiveForm::begin(); ?>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-4">
 				<?= $form->field($model, 'name')->textInput([
 					'maxlength' => true,
 					'autofocus' => 'autofocus',
@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
 			<div class="col-md-3">
 				<?= $form->field($model, 'color')->widget(ColorInput::class, [
 					'options' => [
-						'placeholder' => 'Выбрать цвет'
+						'placeholder' => 'Выбрать цвет фона'
 					],
 					'pluginOptions' => [
 						'showAlpha' => false,
@@ -42,6 +42,19 @@ use yii\widgets\ActiveForm;
 					]
 				]) ?>
 			</div>
+
+			<div class="col-md-3">
+				<?= $form->field($model, 'textcolor')->widget(ColorInput::class, [
+					'options' => [
+						'placeholder' => 'Выбрать цвет текста'
+					],
+					'pluginOptions' => [
+						'showAlpha' => false,
+						'preferredFormat' => 'rgb'
+					]
+				]) ?>
+			</div>
+
 			<div class="col-md-2">
 				<?= $form->field($model, 'boss_flag')->widget(SwitchInput::class, [
 					'pluginOptions' => [
