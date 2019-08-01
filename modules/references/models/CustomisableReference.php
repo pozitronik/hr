@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection UndetectableTableInspection */
 declare(strict_types = 1);
 
 namespace app\modules\references\models;
@@ -22,12 +22,6 @@ class CustomisableReference extends Reference {
 
 	protected $_dataAttributes = ['color'];//todo font
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public static function tableName():string {
-		return parent::tableName();
-	}
 	/**
 	 * @inheritdoc
 	 */

@@ -55,7 +55,7 @@ class RefUserRoles extends CustomisableReference {
 			[['name'], 'unique'],
 			[['id', 'deleted', 'usedCount'], 'integer'],
 			[['name', 'color', 'font'], 'string', 'max' => 256],
-			['boss_flag', 'boolean'],
+			['boss_flag', 'boolean']
 		];
 	}
 
