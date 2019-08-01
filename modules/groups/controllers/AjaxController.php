@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\controllers;
 
+use app\models\user\CurrentUser;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersGroups;
@@ -84,5 +85,17 @@ class AjaxController extends BaseAjaxController {
 			$out['results'] = $results;
 		}
 		return $out;
+	}
+
+	/**
+	 * Глобальный поиск по группам/пользователям в скопе групп пользователя
+	 * @param string|null $term
+	 * @return array
+	 */
+	public function actionSearch(?string $term):array {
+		$this->answer->items = Groups::find()->select('name')->distinct()->where(['like', 'sys_groups.name', $term])
+			->andWhere(['not', ['sys_groups.id' => RelUsersGroups::find()->select('group_id')->where(['user_id' => CurrentUser::Id()])]])
+			->asArray()->all();
+		return $this->answer->items;
 	}
 }
