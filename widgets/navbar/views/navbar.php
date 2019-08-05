@@ -7,8 +7,9 @@ declare(strict_types = 1);
  */
 
 use app\modules\users\models\Users;
-use yii\web\View;
+use app\widgets\search\SearchWidget;
 
+use yii\web\View;
 ?>
 
 <header id="navbar">
@@ -36,7 +37,7 @@ use yii\web\View;
 			<?= $this->render('breadcrumbs') ?>
 
 			<ul class="nav navbar-top-links pull-right">
-
+				<?= SearchWidget::widget(); ?>
 				<?= $this->render('user_dropdown', [
 					'user' => $user
 				]) ?>
