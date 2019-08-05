@@ -63,6 +63,11 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'menu' => true,
+				'label' => IconsHelper::users_edit().'Редактировать',
+				'url' => UsersModule::to(['users/update', 'id' => $this->model->id])
+			],
+			[
+				'menu' => true,
 				'label' => IconsHelper::history().'История изменений',
 				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],

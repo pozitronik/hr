@@ -50,17 +50,31 @@ class UsersController extends WigetableController {
 	}
 
 	/**
+	 * Профиль пользователя
 	 * @param int $id
 	 * @return string|null
 	 * @throws Throwable
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		self::tryUpdate($user);
 
 		return $this->render('profile', [
 			'model' => $user
 		]);
+	}
+
+	/**
+	 * Редактирование пользователя
+	 * @param int $id
+	 * @return Response|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public function actionUpdate(int $id):?Response {
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		self::tryUpdate($user);
+
+		return $this->redirect(['users/profile', 'id' => $id]);
 	}
 
 	/**
