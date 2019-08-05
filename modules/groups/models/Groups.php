@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
-use app\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
