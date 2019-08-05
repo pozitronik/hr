@@ -29,8 +29,12 @@ class UsersController extends WigetableController {
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	private static function tryUpdate(Users $user):void {
-		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) $user->uploadAvatar();
+	private static function tryUpdate(Users $user):bool {
+		if ((null !== ($updateArray = Yii::$app->request->post($user->formName()))) && $user->updateModel($updateArray)) {
+			$user->uploadAvatar();
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -57,24 +61,32 @@ class UsersController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-
+		$searchModel = new UsersSearch();
+		$dataProvider = $searchModel->search(["UsersSearch" => [
+			'id' => $id
+		]]);
 		return $this->render('profile', [
-			'model' => $user
+			'model' => $user,
+			'dataProvider' => $dataProvider
 		]);
 	}
 
 	/**
 	 * Редактирование пользователя
 	 * @param int $id
-	 * @return Response|null
+	 * @return string|Response|null
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public function actionUpdate(int $id):?Response {
+	public function actionUpdate(int $id) {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		self::tryUpdate($user);
+		if (self::tryUpdate($user)) {
+			return $this->redirect(['users/profile', 'id' => $id]);
+		}
+		return $this->render('edit', [
+			'model' => $user,
+		]);
 
-		return $this->redirect(['users/profile', 'id' => $id]);
 	}
 
 	/**
