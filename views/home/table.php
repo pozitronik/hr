@@ -141,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							"badgeOptions" => [
 								'class' => "badge badge-info"
 							],
-							'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
+							'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
 						]);
 				}
 				$result = '';
