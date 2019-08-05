@@ -21,4 +21,8 @@ class TemplateWidgetAssets extends AssetBundle {
 	public $depends = [
 		AppAsset::class
 	];
+
+	public $publishOptions = [
+		'forceCopy' => YII_ENV_DEV
+	];
 }
