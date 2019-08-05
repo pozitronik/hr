@@ -4,103 +4,168 @@ declare(strict_types = 1);
 /**
  * @var Users $model
  * @var View $this
+ * @var ActiveDataProvider $dataProvider
  */
 
-use pozitronik\helpers\ArrayHelper;
-use app\modules\privileges\models\Privileges;
+use app\modules\groups\models\Groups;
+use app\modules\references\ReferencesModule;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use kartik\select2\Select2;
+use app\widgets\badge\BadgeWidget;
+use kartik\grid\DataColumn;
+use kartik\grid\GridView;
+use pozitronik\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
-use kartik\form\ActiveForm;
 use yii\helpers\Html;
-Use kartik\file\FileInput;
 
-$this->title = $model->isNewRecord?'Добавление пользователя':"Профиль пользователя {$model->username}";
+$this->title = "Профиль пользователя {$model->username}";
 $this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<?php $form = ActiveForm::begin(); ?>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="panel-control">
-				<?= UserNavigationMenuWidget::widget([
-					'model' => $model
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-control">
+			<?= UserNavigationMenuWidget::widget([
+				'model' => $model
+			]) ?>
+		</div>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+	</div>
+
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-2">
+				<?= Html::img(!empty($model->profile_image)?$model->avatar:false, ['class' => 'avatar pull-right ']); ?>
+			</div>
+			<div class="col-md-10">
+				<?= GridView::widget([
+					'dataProvider' => $dataProvider,
+					'filterModel' => false,
+					'panel' => false,
+					'summary' => false,
+					'showOnEmpty' => true,
+					'toolbar' => false,
+					'export' => false,
+					'resizableColumns' => true,
+					'responsive' => true,
+					'showHeader' => false,
+					'columns' => [
+						[
+							'class' => DataColumn::class,
+							'label' => 'Почта',
+							'attribute' => 'email',
+							'format' => 'email',
+						],
+						[
+							'class' => DataColumn::class,
+							'label' => 'Должность',
+							'attribute' => 'positions',
+							'value' => static function(Users $model) {
+								return BadgeWidget::widget([
+									'models' => $model->relRefUserPositions,
+									'useBadges' => true,
+									'attribute' => 'name',
+									'unbadgedCount' => 3,
+									'itemsSeparator' => false,
+									"optionsMap" => static function() {
+										return RefUserPositionTypes::colorStyleOptions();
+									},
+									'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
+								]);
+							},
+							'format' => 'raw',
+						],
+						[
+							'class' => DataColumn::class,
+							'attribute' => 'positionType',
+							'label' => 'Тип должности',
+							'value' => static function(Users $model) {
+								return BadgeWidget::widget([
+									'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+									'useBadges' => true,
+									'attribute' => 'name',
+									'unbadgedCount' => 3,
+									'itemsSeparator' => false,
+									"optionsMap" => static function() {
+										return RefUserPositionTypes::colorStyleOptions();
+									}
+								]);
+							},
+							'format' => 'raw'
+						],
+						[
+							'class' => DataColumn::class,
+							'attribute' => 'roles',
+							'label' => 'Роли в группах',
+							'value' => static function(Users $model) {
+								$badgeData = [];
+								/** @var Groups $userGroup */
+								foreach ((array)$model->relGroups as $userGroup) {
+									$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
+									$badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
+											'models' => $groupRoles,
+											'attribute' => 'name',
+											'itemsSeparator' => false,
+											"optionsMap" => static function() {
+												return RefUserRoles::colorStyleOptions();
+											}
+										])).' в '.BadgeWidget::widget([
+											'models' => $userGroup->name,
+											"badgeOptions" => [
+												'class' => "badge badge-info"
+											],
+											'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
+										]);
+								}
+								$result = '';
+								foreach ($badgeData as $badgeString) {
+									$result .= BadgeWidget::widget([
+										'models' => $badgeString,
+										"badgeOptions" => [
+											'class' => "badge",
+											'style' => 'margin-bottom:1px'
+										]
+									]);
+								}
+								return BadgeWidget::widget([
+									'models' => $result,
+									'useBadges' => true,
+									'itemsSeparator' => false,
+									"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), $model->relRefUserPositions->types, [])//Не сработает, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
+								]);
+							},
+							'format' => 'raw',
+						],
+						[
+							'label' => 'Подчинение',
+							'class' => DataColumn::class,
+							'attribute' => 'subordination',
+							'value' => static function(Users $model) {
+								return BadgeWidget::widget([
+									'models' => $model->getBosses(),
+									'attribute' => 'username',
+									'unbadgedCount' => false,
+									'itemsSeparator' => false,
+									'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
+								]);
+							},
+							'format' => 'raw'
+						]
+
+					]
 				]) ?>
 			</div>
-			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 		</div>
 
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-3">
-					<?= $form->field($model, 'upload_image')->widget(FileInput::class, [
-						'options' => [
-							'accept' => 'image/*',
-							'multiple' => false
-						],
-						'pluginOptions' => [
-							'initialPreview' => !empty($model->profile_image)?[
-								$model->avatar
-							]:false,
-							'initialPreviewConfig' => [['caption' => "Это вы"]],
-							'initialPreviewAsData' => true,
-							'browseClass' => 'btn btn-primary pull-right',
-							'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-							'browseLabel' => 'Выберите изображение',
-							'showCaption' => false
-						]
-					]) ?>
-				</div>
-				<div class="col-md-9">
-					<div class="row">
-						<div class="col-md-12">
-							<?= $form->field($model, 'username')->textInput(['maxlength' => 50]) ?>
-						</div>
-						<div class="col-md-6">
-							<?= $form->field($model, 'login')->textInput(['maxlength' => 50]) ?>
-						</div>
-						<div class="col-md-6">
-							<?php if ($model->isNewRecord): ?>
-								<?= $form->field($model, 'password')->textInput(['maxlength' => 50])->hint('При входе пользователю будет предложено сменить пароль.') ?>
-							<?php else: ?>
-								<?= $form->field($model, 'update_password')->textInput(['maxlength' => 50, 'value' => false])->hint('Пароль пользователя будет сброшен на введённый.') ?>
-							<?php endif; ?>
-						</div>
-						<div class="col-md-6">
-							<?= $form->field($model, 'email')->textInput(['maxlength' => 50]) ?>
-						</div>
-						<div class="col-md-6">
-							<?= $form->field($model, 'relPrivileges')->widget(Select2::class, [
-								'data' => ArrayHelper::map(Privileges::find()->active()->all(), 'id', 'name'),
-								'options' => ['placeholder' => 'Выберите привилегии пользователя'],
-								'pluginOptions' => [
-									'multiple' => true,
-									'allowClear' => true
-								]
-							]) ?>
-						</div>
-
-						<div class="col-md-12">
-							<?= $form->field($model, 'comment')->label('Комментарий пользователя') ?>
-						</div>
-
-
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="panel-footer">
-			<div class="btn-group">
-				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
-				<?php if ($model->isNewRecord): ?>
-					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
-				<?php endif ?>
-			</div>
-		</div>
 	</div>
-<?php ActiveForm::end(); ?>
+
+	<div class="panel-footer">
+	</div>
+</div>
