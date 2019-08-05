@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'referenceClass' => RefUserPositions::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			],
-			'format' => 'raw'
+			'format' => 'raw',
 		],
 		[
 			'class' => DataColumn::class,
@@ -141,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							"badgeOptions" => [
 								'class' => "badge badge-info"
 							],
-							'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't'=>1]
+							'linkScheme' => ['home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
 						]);
 				}
 				$result = '';
@@ -154,9 +154,15 @@ $this->params['breadcrumbs'][] = $this->title;
 						]
 					]);
 				}
-				return $result;
+//				return $result;
+				return BadgeWidget::widget([
+					'models' => $result,
+					'useBadges' => true,
+					'itemsSeparator' => false,
+					"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), $model->relRefUserPositions->types, [])//Здесь может упасть, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
+				]);
 			},
-			'format' => 'raw'
+			'format' => 'raw',
 		],
 		[
 			'label' => 'Подчинение',
