@@ -159,7 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'models' => $result,
 					'useBadges' => true,
 					'itemsSeparator' => false,
-					"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), $model->relRefUserPositions->types, [])//Здесь может упасть, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
+					"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), $model->relRefUserPositions->types, [])//Не сработает, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
 				]);
 			},
 			'format' => 'raw',
