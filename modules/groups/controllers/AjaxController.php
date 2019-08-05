@@ -89,17 +89,26 @@ class AjaxController extends BaseAjaxController {
 	}
 
 	/**
-	 * Глобальный поиск по группам/пользователям в скопе групп пользователя
+	 * Глобальный поиск по группам в скопе групп пользователя
 	 * @param string|null $term
 	 * @return array
 	 */
-	public function actionSearch(?string $term):array {
-		$groups = Groups::find()->select(['name', 'id', new Expression("'group' as 'type'")])->distinct()->where(['like', 'sys_groups.name', $term])
+	public function actionSearchGroups(?string $term):array {
+		$this->answer->items = Groups::find()->select(['name', 'id', new Expression("'group' as 'type'")])->distinct()->where(['like', 'sys_groups.name', $term])
 			->andWhere(['in', 'sys_groups.id', RelUsersGroups::find()->select('group_id')->where(['user_id' => CurrentUser::Id()])])
 			->asArray()->all();
-		$users = Users::find()->select(['username as name', 'id', new Expression("'user' as 'type'")])->distinct()->where(['like', 'sys_users.username', $term])
+
+		return $this->answer->items;
+	}
+
+	/**
+	 * Глобальный поиск по пользователям в скопе групп пользователя
+	 * @param string|null $term
+	 * @return array
+	 */
+	public function actionSearchUsers(?string $term):array {
+		$this->answer->items = Users::find()->select(['username as name', 'id', new Expression("'user' as 'type'")])->distinct()->where(['like', 'sys_users.username', $term])
 			->asArray()->all();
-		$this->answer->items = array_merge($groups, $users);
 		return $this->answer->items;
 	}
 }
