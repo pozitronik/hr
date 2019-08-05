@@ -140,6 +140,7 @@ class AttributePropertyPercent extends ActiveRecordExtended implements Attribute
 	 * @param ActiveForm $form
 	 * @param DynamicAttributeProperty $property
 	 * @return ActiveField
+	 * @throws Exception
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
 		return $form->field($property, (string)$property->id)->widget(RangeInput::class, [

@@ -37,7 +37,7 @@ use yii\web\View;
 			<?= $this->render('breadcrumbs') ?>
 
 			<ul class="nav navbar-top-links pull-right">
-				<?= SearchWidget::widget(); ?>
+				<?= SearchWidget::widget() ?>
 				<?= $this->render('user_dropdown', [
 					'user' => $user
 				]) ?>

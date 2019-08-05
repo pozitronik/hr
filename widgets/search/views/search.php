@@ -14,13 +14,13 @@ $template = '<div class="suggestion-item"><p class="suggestion-name">{{name}}</p
 ?>
 <?= Typeahead::widget([
 	'container' => [
-		'class' => 'pull-left search-box',
+		'class' => 'pull-left search-box'
 	],
 	'name' => 'search',
 	'options' => ['placeholder' => 'Поиск'],
 	'pluginOptions' => ['highlight' => true],
 	'pluginEvents' => [
-		"typeahead:select" => "function(e, o) {open_result(o)}",
+		"typeahead:select" => "function(e, o) {open_result(o)}"
 	],
 	'dataset' => [
 		[

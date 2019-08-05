@@ -143,6 +143,7 @@ class AttributePropertyDate extends ActiveRecordExtended implements AttributePro
 	 * @param ActiveForm $form
 	 * @param DynamicAttributeProperty $property
 	 * @return ActiveField
+	 * @throws Exception
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField {
 		return $form->field($property, (string)$property->id)->widget(DatePicker::class, [
