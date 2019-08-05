@@ -37,15 +37,24 @@ $dataProvider->pagination = false;
 	'name' => 'search',
 	'options' => ['placeholder' => 'Поиск в группах'],
 	'pluginOptions' => ['highlight' => true],
+	'pluginEvents' => [
+		"typeahead:select" => "function(e, o) {
+				let url;
+				switch (o.type) {
+				case 'user':
+					url = '/users/users/profile?id='+o.id;
+				break;
+				case 'group':
+					url = 'users?UsersSearch[groupId]='+o.id;
+				break'
+			}
+			window.open(url,'_blank');
+		}",
+	],
 	'dataset' => [
-//						[
-//							'local' => ArrayHelper::getColumn($dataProvider->models, 'name'),
-//							'limit' => 10
-//						],
 		[
 			'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('name')",
 			'display' => 'name',
-//						'prefetch' => $baseUrl.'/samples/countries.json',
 			'remote' => [
 				'url' => GroupsModule::to(['ajax/search']).'?term=%QUERY',
 				'wildcard' => '%QUERY'

@@ -12,6 +12,7 @@ use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
+use yii\db\Expression;
 
 /**
  * Class AjaxController
@@ -93,9 +94,12 @@ class AjaxController extends BaseAjaxController {
 	 * @return array
 	 */
 	public function actionSearch(?string $term):array {
-		$this->answer->items = Groups::find()->select('name')->distinct()->where(['like', 'sys_groups.name', $term])
-			->andWhere(['not', ['sys_groups.id' => RelUsersGroups::find()->select('group_id')->where(['user_id' => CurrentUser::Id()])]])
+		$groups = Groups::find()->select(['name', 'id', new Expression("'group' as 'type'")])->distinct()->where(['like', 'sys_groups.name', $term])
+			->andWhere(['in', 'sys_groups.id', RelUsersGroups::find()->select('group_id')->where(['user_id' => CurrentUser::Id()])])
 			->asArray()->all();
+		$users = Users::find()->select(['username as name', 'id', new Expression("'user' as 'type'")])->distinct()->where(['like', 'sys_users.username', $term])
+			->asArray()->all();
+		$this->answer->items = array_merge($groups, $users);
 		return $this->answer->items;
 	}
 }
