@@ -27,7 +27,7 @@ class UserAttributesSearch extends RelUsersAttributes {
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function search(array $params):ActiveDataProvider {
+	public function search(array $params = []):ActiveDataProvider {
 		$query = RelUsersAttributes::getUserAttributesScope($this->user_id);
 
 		$dataProvider = new ActiveDataProvider([
