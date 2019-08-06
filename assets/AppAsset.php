@@ -35,4 +35,8 @@ class AppAsset extends AssetBundle {
 		FontAwesomeProAsset::class,
 		GrowlAsset::class//preload notifier
 	];
+
+	public $publishOptions = [
+		'forceCopy' => YII_ENV_DEV
+	];
 }
