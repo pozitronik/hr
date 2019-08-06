@@ -149,3 +149,19 @@ a > i.fa {
 div.sp-replacer > div.sp-dd {
 	display: none;
 }
+
+.profile-avatar {
+	background-image: url('../img/menu.png');
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 100px;
+	height: 100px;
+	float:left;
+	border-radius: 50%;
+	margin-top: -25px;
+}
+
+.profile-panel {
+	margin-top:10px;
+}

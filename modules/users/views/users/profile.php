@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 use app\modules\groups\models\Groups;
 use app\modules\references\ReferencesModule;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
@@ -20,7 +19,6 @@ use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Url;
 use yii\web\View;
 use yii\helpers\Html;
 
@@ -29,22 +27,20 @@ $this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="panel panel-default">
+<div class="panel panel-default profile-panel">
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= UserNavigationMenuWidget::widget([
 				'model' => $model
 			]) ?>
 		</div>
+		<?= Html::img($model->avatar, ['class' => 'profile-avatar']); ?>
 		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-2">
-				<?= Html::img(!empty($model->profile_image)?$model->avatar:false, ['class' => 'avatar pull-right ']); ?>
-			</div>
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<?= GridView::widget([
 					'dataProvider' => $dataProvider,
 					'filterModel' => false,
@@ -57,12 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					'responsive' => true,
 					'showHeader' => false,
 					'columns' => [
-						[
-							'class' => DataColumn::class,
-							'label' => 'Почта',
-							'attribute' => 'email',
-							'format' => 'email',
-						],
 						[
 							'class' => DataColumn::class,
 							'label' => 'Должность',
@@ -144,21 +134,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							'format' => 'raw',
 						],
 						[
-							'label' => 'Подчинение',
 							'class' => DataColumn::class,
-							'attribute' => 'subordination',
-							'value' => static function(Users $model) {
-								return BadgeWidget::widget([
-									'models' => $model->getBosses(),
-									'attribute' => 'username',
-									'unbadgedCount' => false,
-									'itemsSeparator' => false,
-									'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
-								]);
-							},
-							'format' => 'raw'
-						]
-
+							'label' => 'Почта',
+							'attribute' => 'email',
+							'format' => 'email',
+						],
 					]
 				]) ?>
 			</div>
