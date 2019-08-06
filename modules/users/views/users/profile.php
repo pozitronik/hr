@@ -8,6 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
+use app\modules\graph\assets\VisjsAsset;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\Users;
@@ -21,7 +22,10 @@ use yii\helpers\Html;
 $this->title = "Профиль пользователя {$model->username}";
 $this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
+VisjsAsset::register($this);
 
+$this->registerJs("graphControl = new GraphControl(_.$('user-profile-tree-container'), '-1', $model->id); graphControl.network.on('afterDrawing', function() {graphControl.fitAnimated()})", View::POS_END);
+$this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}) ", View::POS_END);
 ?>
 <div class="panel panel-default profile-panel">
 	<div class="panel-heading">
@@ -70,19 +74,24 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="col-md-3"></div>
 		</div>
 		<div class="row">
-			<?= $this->render('profile/groups',[
-				'model' => $model,
-				'provider' => $dataProvider
-			]) ?>
+			<div class="col-md-8">
+				<?= $this->render('profile/groups', [
+					'model' => $model,
+					'provider' => $dataProvider
+				]) ?>
+			</div>
+			<div class="col-md-4">
+				<div id="user-profile-tree-container">
+				</div>
+			</div>
+
 		</div>
 		<div class="row">
-			<?= $this->render('profile/attributes',[
+			<?= $this->render('profile/attributes', [
 				'model' => $model,
 				'provider' => (new UserAttributesSearch(['user_id' => $model->id]))->search()
 			]) ?>
 		</div>
 	</div>
 
-	<div class="panel-footer">
-	</div>
 </div>
