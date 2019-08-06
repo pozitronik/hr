@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
 
 $this->registerJs("normalize_widths()", View::POS_END);
-$this->registerJs("$('.grid').masonry({columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
+$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
 ?>
 
 <div class="panel">
