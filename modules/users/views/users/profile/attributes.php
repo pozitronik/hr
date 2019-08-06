@@ -39,7 +39,8 @@ use yii\bootstrap\Html;
 		'colspan' => 2
 	],
 	'panel' => [
-		'heading' => 'Атрибуты'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['атрибут', 'атрибута', 'атрибутов']).")":" (нет атрибутов)")
+		'heading' => 'Атрибуты'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['атрибут', 'атрибута', 'атрибутов']).")":" (нет атрибутов)"),
+		'footer' => false
 	],
 	'toolbar' => false,
 	'export' => false,

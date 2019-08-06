@@ -28,7 +28,8 @@ use kartik\grid\GridView;
 	'showPageSummary' => false,
 	'summary' => Html::a('Редактор', UsersModule::to(['groups', 'id' => $model->id]), ['class' => 'btn btn-success summary-content']),
 	'panel' => [
-		'heading' => 'Группы'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет)")
+		'heading' => 'Группы'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет)"),
+		'footer' => false
 	],
 	'toolbar' => false,
 	'export' => false,
