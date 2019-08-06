@@ -22,7 +22,7 @@ use yii\web\View;
 ?>
 
 
-<div class="panel panel-card col-md-2" style="border-left: 7px solid rgb(236, 240, 245);border-right: 7px solid rgb(236, 240, 245);">
+<div class="panel panel-card">
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
