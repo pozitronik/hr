@@ -53,7 +53,8 @@
 		"pozitronik/yii2-arlogger": "*",
 		"pozitronik/yii2-helpers": "*",
 		"kartik-v/yii2-widget-touchspin": "dev-master",
-		"kartik-v/yii2-widget-typeahead": "dev-master"
+		"kartik-v/yii2-widget-typeahead": "dev-master",
+		"desandro/masonry": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -103,6 +104,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/pozitronik/yii2-helpers"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/desandro/masonry"
 		}
 	]
 }
