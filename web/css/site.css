@@ -171,8 +171,8 @@ div.sp-replacer > div.sp-dd {
 	z-index: 10000;
 	height:100%;
 	width: 100%;
-	min-height: 300px;
-	min-width: 300px;
+	min-height: 400px;
+	min-width: 400px;
 	background: transparent;
 	margin-bottom: 10px;
 	border: 1px solid #e7ecf3;
