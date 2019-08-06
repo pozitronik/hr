@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\group_card;
 
+use app\assets\MasonryAsset;
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
 
@@ -19,7 +20,8 @@ class GroupCardWidgetAssets extends AssetBundle {
 		'js/group_card.js'
 	];
 	public $depends = [
-		AppAsset::class
+		AppAsset::class,
+		MasonryAsset::class
 	];
 
 	public $publishOptions = [
