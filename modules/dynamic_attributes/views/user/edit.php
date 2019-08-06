@@ -22,7 +22,7 @@ use yii\helpers\Html;
 $this->title = "Изменение атрибута {$attribute->name} ";
 
 $this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
-$this->params['breadcrumbs'][] = DynamicAttributesModule::breadcrumbItem("Атрибуты пользователя {$user->username}", ['attributes/user', 'user_id' => $user->id]);
+$this->params['breadcrumbs'][] = DynamicAttributesModule::breadcrumbItem("Атрибуты пользователя {$user->username}", ['user', 'user_id' => $user->id]);
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
