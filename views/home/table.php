@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'referenceClass' => RefUserPositions::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			],
-			'format' => 'raw',
+			'format' => 'raw'
 		],
 		[
 			'class' => DataColumn::class,
@@ -165,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), $model->relRefUserPositions->types, [])//Не сработает, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
 				]);
 			},
-			'format' => 'raw',
+			'format' => 'raw'
 		],
 		[
 			'label' => 'Подчинение',

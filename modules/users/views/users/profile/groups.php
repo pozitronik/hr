@@ -8,14 +8,10 @@ declare(strict_types = 1);
 
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
-use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
-use app\modules\references\widgets\roles_select\RolesSelectWidget;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
-use kartik\grid\DataColumn;
-use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\web\View;

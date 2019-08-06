@@ -34,7 +34,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 				'model' => $model
 			]) ?>
 		</div>
-		<?= Html::img($model->avatar, ['class' => 'profile-avatar']); ?>
+		<?= Html::img($model->avatar, ['class' => 'profile-avatar']) ?>
 		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 	</div>
 	<div class="clearfix"></div>
@@ -52,7 +52,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 						return RefUserPositionTypes::colorStyleOptions();
 					},
 					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
-				]); ?>
+				]) ?>
 			</div>
 			<div class="col-md-3">
 				<label>Профиль:</label>
@@ -65,7 +65,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
 					}
-				]); ?>
+				]) ?>
 			</div>
 			<div class="col-md-3">
 				<label>Почта:</label>

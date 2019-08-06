@@ -26,6 +26,7 @@ class UsersController extends WigetableController {
 	/**
 	 * Макро обновления данных юзера
 	 * @param Users $user
+	 * @return bool
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */

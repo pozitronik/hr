@@ -8,18 +8,12 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $provider
  */
 
-use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
-use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
-use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use kartik\grid\DataColumn;
-use kartik\select2\Select2;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
