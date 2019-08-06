@@ -61,13 +61,10 @@ class UsersController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
-		$searchModel = new UsersSearch();
-		$dataProvider = $searchModel->search(["UsersSearch" => [
-			'id' => $id
-		]]);
+
 		return $this->render('profile', [
 			'model' => $user,
-			'dataProvider' => $dataProvider
+			'dataProvider' => new ActiveDataProvider(['query' => $user->getRelGroups()->orderBy('name')->active()])
 		]);
 	}
 
@@ -84,7 +81,7 @@ class UsersController extends WigetableController {
 			return $this->redirect(['users/profile', 'id' => $id]);
 		}
 		return $this->render('edit', [
-			'model' => $user,
+			'model' => $user
 		]);
 
 	}
@@ -139,7 +136,7 @@ class UsersController extends WigetableController {
 			return $this->redirect(['profile', 'id' => $newUser->id]);
 		}
 
-		return $this->render('profile', [
+		return $this->render('edit', [
 			'model' => $newUser
 		]);
 	}
