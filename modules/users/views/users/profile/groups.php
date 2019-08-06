@@ -5,14 +5,18 @@ declare(strict_types = 1);
  * @var Users $model
  * @var ActiveDataProvider $provider
  */
+
+use app\helpers\Utils;
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\references\widgets\roles_select\RolesSelectWidget;
+use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use pozitronik\helpers\ArrayHelper;
+use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -22,8 +26,10 @@ use kartik\grid\GridView;
 	'dataProvider' => $provider,
 	'showFooter' => false,
 	'showPageSummary' => false,
-	'summary' => '',
-	'panel' => false,
+	'summary' => Html::a('Редактор', UsersModule::to(['groups', 'id' => $model->id]), ['class' => 'btn btn-success summary-content']),
+	'panel' => [
+		'heading' => 'Группы'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['группа', 'группы', 'групп']).")":" (нет)")
+	],
 	'toolbar' => false,
 	'export' => false,
 	'resizableColumns' => true,
