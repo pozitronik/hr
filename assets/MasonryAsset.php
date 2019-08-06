@@ -10,10 +10,10 @@ use yii\web\AssetBundle;
  * @package app\assets
  */
 class MasonryAsset extends AssetBundle {
-	public $sourcePath = '@vendor/desandro/masonry';
+	public $sourcePath = '@vendor/desandro/masonry/dist';
 
 	public $js = [
-		'masonry.js',
+		'masonry.pkgd.js',
 //		'js/particles.js/particles.json'//config
 	];
 
