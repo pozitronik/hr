@@ -17,6 +17,9 @@ use yii\web\View;
 $this->title = 'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
+
+$this->registerJs("normalize_widths()", View::POS_END);
+$this->registerJs("$('.grid').masonry({columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
 ?>
 
 <div class="panel">
@@ -31,7 +34,11 @@ $dataProvider->pagination = false;
 		</h3>
 	</div>
 </div>
-<?php foreach ($dataProvider->models as $group): ?>
-	<?= GroupCardWidget::widget(['group' => $group]) ?>
-<?php endforeach; ?>
+<div class="grid">
+	<div class="grid-sizer"></div>
+	<?php foreach ($dataProvider->models as $group): ?>
+		<?= GroupCardWidget::widget(['group' => $group]) ?>
+	<?php endforeach; ?>
+</div>
+
 
