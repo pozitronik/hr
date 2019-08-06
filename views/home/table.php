@@ -32,6 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= GridView::widget([
+	'containerOptions' => [
+		'style' => 'overflow-x:inherit'//убираем скроллбар нахер
+	],
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
