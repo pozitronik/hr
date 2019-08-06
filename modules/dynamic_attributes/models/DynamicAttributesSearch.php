@@ -20,10 +20,10 @@ class DynamicAttributesSearch extends DynamicAttributes {
 	}
 
 	/**
-	 * @param $params
+	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function search($params):ActiveDataProvider {
+	public function search($params = []):ActiveDataProvider {
 		$query = DynamicAttributes::find()->active();
 
 		$dataProvider = new ActiveDataProvider([
