@@ -348,7 +348,7 @@ class Groups extends ActiveRecordExtended {
 	 * @return string
 	 */
 	public function getLogo():string {
-		return is_file(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY.$this->logotype))?"/group_logotypes/{$this->logotype}":"/img/group_logo.jpg";
+		return is_file(Yii::getAlias(self::LOGO_IMAGE_DIRECTORY.$this->logotype))?"/group_logotypes/{$this->logotype}":"/img/group_logo.png";
 	}
 
 	/**

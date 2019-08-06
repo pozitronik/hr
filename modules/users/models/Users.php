@@ -238,7 +238,7 @@ class Users extends ActiveRecordExtended {
 	 */
 	public function getAvatar():string {
 		$profile_image = $this->profile_image??$this->id.".png";
-		return is_file(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY.$profile_image))?"/profile_photos/{$profile_image}":"/img/avatar.jpg";
+		return is_file(Yii::getAlias(self::PROFILE_IMAGE_DIRECTORY.$profile_image))?"/profile_photos/{$profile_image}":"/img/avatar.png";
 	}
 
 	/**
