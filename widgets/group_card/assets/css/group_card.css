@@ -20,7 +20,7 @@
 /* ---- grid ---- */
 
 .grid {
-
+	width:100%!important;
 }
 
 /* clearfix */
