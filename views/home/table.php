@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var UsersSearch $searchModel
  * @var ActiveDataProvider $dataProvider
- * @var string $groupName
+ * @var Groups $group
  */
 
 use app\modules\groups\models\Groups;
@@ -27,7 +27,7 @@ use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 
-$this->title = "Сводка по сотрудникам {$groupName}";
+$this->title = "Сводка по сотрудникам {$group->name}";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

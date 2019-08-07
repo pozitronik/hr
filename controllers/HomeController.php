@@ -55,7 +55,7 @@ class HomeController extends Controller {
 		return $this->render('table', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
-			'groupName' => Groups::findModel($searchModel->groupId)->name
+			'group' => Groups::findModel($searchModel->groupId)
 		]);
 
 	}
