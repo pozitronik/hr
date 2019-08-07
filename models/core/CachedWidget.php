@@ -24,6 +24,7 @@ use yii\caching\Dependency;
  * @package app\models\core
  *
  * @todo: кешировать и ассеты
+ * Как вариант - использовать кеширование фрагментов
  */
 class CachedWidget extends Widget {
 	private $_duration;
@@ -34,6 +35,7 @@ class CachedWidget extends Widget {
 	 */
 	public function render($view, $params = []):string {
 		$cacheName = self::class.$view.sha1(json_encode($params));//unique enough
+
 		return Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params) {
 			return $this->getView()->render($view, $params, $this);
 		}, $this->_duration, $this->_dependency);
