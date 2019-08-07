@@ -13,6 +13,7 @@ use app\modules\groups\models\Groups;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
+use app\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
@@ -38,7 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title.Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
+		'heading' => $this->title.Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0])),
+		'before' => GroupCardWidget::widget(['group' => $group, 'short' => true])
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
