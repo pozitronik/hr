@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\widgets\group_card;
 
+use app\models\core\CachedWidget;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
-use yii\base\Widget;
 
 /**
  * Class GroupSelectWidget
@@ -16,7 +16,7 @@ use yii\base\Widget;
  *
  * @property Groups $group
  */
-class GroupCardWidget extends Widget {
+class GroupCardWidget extends CachedWidget {
 	public $group;
 
 	/**
