@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\bookmarks;
 
-use app\models\core\CachedWidget;
+use yii\base\Widget;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Bookmarks;
 use Throwable;
@@ -14,7 +14,7 @@ use yii\helpers\Url;
  * Class BookmarksWidget
  * @package app\widgets\bookmarks
  */
-class BookmarksWidget extends CachedWidget {
+class BookmarksWidget extends Widget {
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

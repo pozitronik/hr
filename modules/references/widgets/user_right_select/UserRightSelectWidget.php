@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\user_right_select;
 
-use app\models\core\CachedWidget;
+use yii\base\Widget;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
 use app\modules\privileges\models\DynamicUserRights;
@@ -24,7 +24,7 @@ use yii\db\ActiveRecord;
  * @property bool $orderByModule Группировать по модулю
  * @property int $mode Режим выбора прав
  */
-class UserRightSelectWidget extends CachedWidget {
+class UserRightSelectWidget extends Widget {
 	public const MODE_MODELS = 1;//только заданные кодом (в моделях)
 	public const MODE_DYNAMIC = 2;//только динамические
 	public const MODE_BOTH = 3;//объединять
