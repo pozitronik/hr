@@ -11,13 +11,14 @@ use Throwable;
 
 /**
  * Class GroupSelectWidget
- * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *GroupCard* на нужное нам имя, и работаем
  * @package app\components\group_card
  *
  * @property Groups $group
+ * @property bool $short
  */
 class GroupCardWidget extends Widget {
 	public $group;
+	public $short = false;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -38,7 +39,7 @@ class GroupCardWidget extends Widget {
 
 		/*Строим срез по типам должностей*/
 
-		return $this->render('group_card', [
+		return $this->render($this->short?'group_info':'group_card', [
 			'title' => $this->group->name,
 			'groupId' => $this->group->id,
 			'leader' => (null === $leader->id)?'N/A':$leader->username,
