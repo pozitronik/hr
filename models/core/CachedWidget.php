@@ -29,10 +29,6 @@ class CachedWidget extends Widget {
 	private $_duration;
 	private $_dependency;
 
-	public function init() {
-		parent::init();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
