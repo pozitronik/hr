@@ -22,10 +22,16 @@ use yii\caching\Dependency;
  * @param null|Dependency $dependency dependency of the cached item. If the dependency changes,
  * the corresponding value in the cache will be invalidated when it is fetched via [[get()]].
  * @package app\models\core
+ *
+ * @todo: кешировать и ассеты
  */
 class CachedWidget extends Widget {
 	private $_duration;
 	private $_dependency;
+
+	public function init() {
+		parent::init();
+	}
 
 	/**
 	 * {@inheritDoc}
