@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\user;
 
+use app\models\core\CachedWidget;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
-use yii\base\Widget;
 
 /**
  * Class UserWidget
@@ -14,7 +14,7 @@ use yii\base\Widget;
  * @property Groups $group
  * @propery string $view default view
  */
-class UserWidget extends Widget {
+class UserWidget extends CachedWidget {
 	public $user;
 	public $group;
 	public $view = 'user';

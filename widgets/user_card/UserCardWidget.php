@@ -3,16 +3,16 @@ declare(strict_types = 1);
 
 namespace app\widgets\user_card;
 
+use app\models\core\CachedWidget;
 use app\modules\users\models\Users;
 use Throwable;
-use yii\base\Widget;
 
 /**
  * @package app\components\user_card
  *
  * @property Users $user
  */
-class UserCardWidget extends Widget {
+class UserCardWidget extends CachedWidget {
 	public $user;
 	public $group;
 

@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\widgets\navigation_menu;
 
+use app\models\core\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\ReflectionHelper;
-use yii\base\Widget;
 use yii\db\ActiveRecord;
 
 /**
@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  *
  * Брать его текущую абсолютную позицию, менять position на fixed, возвращать позициюю
  */
-class BaseNavigationMenuWidget extends Widget {
+class BaseNavigationMenuWidget extends CachedWidget {
 	public const MODE_MENU = 0;
 	public const MODE_TABS = 1;
 	public const MODE_BOTH = 2;//Будут отрендерены вкладки, элементы, помеченные, как menu=>true будут отрендерены в меню

@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\widgets\badge;
 
+use app\models\core\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\DynamicModel;
 use yii\base\Model;
-use yii\base\Widget;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 
@@ -28,7 +28,7 @@ use yii\helpers\Html;
  * @property string $prefix
  *
  */
-class BadgeWidget extends Widget {
+class BadgeWidget extends CachedWidget {
 	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
 	public $attribute;//Атрибут модели, отображаемый в текст
 	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж

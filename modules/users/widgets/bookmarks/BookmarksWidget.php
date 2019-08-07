@@ -3,18 +3,18 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\bookmarks;
 
+use app\models\core\CachedWidget;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Bookmarks;
 use Throwable;
 use Yii;
-use yii\base\Widget;
 use yii\helpers\Url;
 
 /**
  * Class BookmarksWidget
  * @package app\widgets\bookmarks
  */
-class BookmarksWidget extends Widget {
+class BookmarksWidget extends CachedWidget {
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

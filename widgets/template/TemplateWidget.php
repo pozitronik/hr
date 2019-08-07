@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace app\widgets\template;
 
-use yii\base\Widget;
+use app\models\core\CachedWidget;
 
 /**
  * Class GroupSelectWidget
  * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *Template* на нужное нам имя, и работаем
  * @package app\components\template
  */
-class TemplateWidget extends Widget {
+class TemplateWidget extends CachedWidget {
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

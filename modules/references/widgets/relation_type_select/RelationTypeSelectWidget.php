@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\relation_type_select;
 
+use app\models\core\CachedWidget;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use app\models\relations\RelGroupsGroups;
 use Throwable;
-use yii\base\Widget;
 
 /**
  * @package app\components\relation_type_select
@@ -17,7 +17,7 @@ use yii\base\Widget;
  * @property int $childGroupId
  * @property bool $showStatus
  */
-class RelationTypeSelectWidget extends Widget {
+class RelationTypeSelectWidget extends CachedWidget {
 	public $data;
 	public $value;
 	public $parentGroupId;

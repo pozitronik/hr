@@ -6,9 +6,8 @@ namespace app\widgets\search;
 use yii\base\Widget;
 
 /**
- * Class GroupSelectWidget
- * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *Search* на нужное нам имя, и работаем
- * @package app\components\search
+ * Class SearchWidget
+ * @package app\widgets\search
  */
 class SearchWidget extends Widget {
 

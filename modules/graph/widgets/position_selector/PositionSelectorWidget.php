@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\graph\widgets\position_selector;
 
-use yii\base\Widget;
+use app\models\core\CachedWidget;
 
 /**
  * Временный виджет, обеспечивающий обработку контрола сохранения/загрузки позиций нод
  * Class PositionSelectorWidget
  * @package app\modules\graph\widgets\position_selector
  */
-class PositionSelectorWidget extends Widget {
+class PositionSelectorWidget extends CachedWidget {
 	public $positionConfigurations = [];
 	public $currentConfiguration = 'default';
 

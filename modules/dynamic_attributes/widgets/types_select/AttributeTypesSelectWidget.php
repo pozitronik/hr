@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\types_select;
 
+use app\models\core\CachedWidget;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
-use yii\base\Widget;
 
 /**
  * Class AttributeTypesSelectWidget
@@ -16,7 +16,7 @@ use yii\base\Widget;
  * @property int $userId
  * @property bool $showStatus
  */
-class AttributeTypesSelectWidget extends Widget {
+class AttributeTypesSelectWidget extends CachedWidget {
 	public $data;
 	public $value;
 	public $attributeId;
