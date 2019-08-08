@@ -6,25 +6,20 @@ namespace app\models\core;
 use Yii;
 use yii\base\Widget;
 use yii\caching\Dependency;
+use yii\web\AssetBundle;
 
 /**
  * Class CachedWidget
  * Enable rendering caching for widgets.
- * @example Usage example:
- * ```php
- * class MyWidget extends CachedWidget {
- * // iit is all, mostly
- * }
- * ```
- *
  * @param null|int $duration default duration in seconds before the cache will expire. If not set,
  * [[defaultDuration]] value will be used.
  * @param null|Dependency $dependency dependency of the cached item. If the dependency changes,
  * the corresponding value in the cache will be invalidated when it is fetched via [[get()]].
- * @package app\models\core
- *
- * @todo: кешировать и ассеты
- * Как вариант - использовать кеширование фрагментов
+ * @example Usage example:
+ * ```php
+ * class MyWidget extends CachedWidget {
+ * // it is all, mostly
+ * }
  */
 class CachedWidget extends Widget {
 	private $_duration;
@@ -35,10 +30,24 @@ class CachedWidget extends Widget {
 	 */
 	public function render($view, $params = []):string {
 		$cacheName = self::class.$view.sha1(json_encode($params));//unique enough
+		$unregisteredBundles = [];//Asset bundle names, that should be registered within included views/subviews
 
-		return Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params) {
-			return $this->getView()->render($view, $params, $this);
+		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName, &$unregisteredBundles) {
+			$currentlyRegisteredAssets = Yii::$app->assetManager->bundles;
+			$renderResult = $this->getView()->render($view, $params, $this);
+			$unregisteredBundles = array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets);
+			Yii::$app->cache->set($cacheName."bundles", $unregisteredBundles, $this->_duration, $this->_dependency);//remember all included bundles
+			return $renderResult;
 		}, $this->_duration, $this->_dependency);
+		if ([] === $unregisteredBundles) {//rendering result retrieved from cache => register linked asset bundles
+			/** @var AssetBundle[] $unregisteredBundles */
+			$unregisteredBundles = Yii::$app->cache->get($cacheName."bundles");
+			foreach ($unregisteredBundles as $key => $bundle) {
+				$bundle::register($this->getView());
+			}
+
+		}
+		return $result;
 	}
 
 	/**
