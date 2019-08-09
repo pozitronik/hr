@@ -11,10 +11,12 @@ use yii\web\AssetBundle;
 /**
  * Class CachedWidget
  * Enable rendering caching for widgets.
- * @param null|int $duration default duration in seconds before the cache will expire. If not set,
+ * @property null|int $duration default duration in seconds before the cache will expire. If not set,
  * [[defaultDuration]] value will be used.
- * @param null|Dependency $dependency dependency of the cached item. If the dependency changes,
+ * @property null|Dependency $dependency dependency of the cached item. If the dependency changes,
  * the corresponding value in the cache will be invalidated when it is fetched via [[get()]].
+ * @property-read null|bool $isResultFromCache Is rendering result retrieved from cache (null if not rendered yet)
+ *
  * @example Usage example:
  * ```php
  * class MyWidget extends CachedWidget {
@@ -23,61 +25,67 @@ use yii\web\AssetBundle;
  * @todo: checkIncluded
  */
 class CachedWidget extends Widget {
+	private $_isResultFromCache;
 	private $_duration;
 	private $_dependency;
+	//todo class
+	private $resources = [//enumerate all kind of View resources (assets, inline css/js, etc)
+		'metaTags' => [],
+		'linkTags' => [],
+		'css' => [],
+		'cssFiles' => [],
+		'js' => [],
+		'jsFiles' => [],
+		'assetBundles' => []
+	];
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function render($view, $params = []):string {
+		$this->_isResultFromCache = true;
 		$cacheName = self::class.$view.sha1(json_encode($params));//unique enough
-		$unregisteredBundles = [];//Asset bundle names, that should be registered within included views/subviews
-		$unregisteredJS = [];
-		$unregisteredJSFiles = [];
-		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName, &$unregisteredBundles, &$unregisteredJS, &$unregisteredJSFiles) {
+
+		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName) {
+			$this->_isResultFromCache = false;
 			$currentlyRegisteredAssets = Yii::$app->assetManager->bundles;
 			$currentlyRegisteredJS = $this->getView()->js;
 			$currentlyRegisteredJSFiles = $this->getView()->jsFiles;
 
 			$renderResult = $this->getView()->render($view, $params, $this);
 
-			$unregisteredBundles = array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets);
-			$unregisteredJS = array_diff_key($this->getView()->js, $currentlyRegisteredJS);
-			$unregisteredJSFiles = array_diff_key($this->getView()->jsFiles, $currentlyRegisteredJSFiles);
+			$this->resources = [
+				'metaTags' => '',
+				'linkTags' => '',
+				'css' => '',
+				'cssFiles' => '',
+				'js' => array_diff_key($this->getView()->js, $currentlyRegisteredJS),
+				'jsFiles' => array_diff_key($this->getView()->jsFiles, $currentlyRegisteredJSFiles),
+				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets),
+			];
 
-			Yii::$app->cache->set($cacheName."bundles", $unregisteredBundles, $this->_duration, $this->_dependency);//remember all included bundles
-			Yii::$app->cache->set($cacheName."js", $unregisteredJS, $this->_duration, $this->_dependency);//remember all included js
-			Yii::$app->cache->set($cacheName."jsfiles", $unregisteredJSFiles, $this->_duration, $this->_dependency);//remember all included js files
+			Yii::$app->cache->set($cacheName."resources", $this->resources, $this->_duration, $this->_dependency);//remember all included resources
+			unset($this->resources);
 			return $renderResult;
 		}, $this->_duration, $this->_dependency);
-		if ([] === $unregisteredBundles) {//rendering result retrieved from cache => register linked asset bundles
-			/** @var AssetBundle[] $unregisteredBundles */
-			$unregisteredBundles = Yii::$app->cache->get($cacheName."bundles");
-			foreach ($unregisteredBundles as $key => $bundle) {
+
+		if ($this->_isResultFromCache) {//rendering result retrieved from cache => register linked resources
+			$this->resources = Yii::$app->cache->get($cacheName."resources");
+			foreach ($this->resources['assetBundles'] as $key => $bundle) {
 				$bundle::register($this->getView());
 			}
 
-		}
-
-		if ([] === $unregisteredJS) {
-			$unregisteredJS = Yii::$app->cache->get($cacheName."js");
-			foreach ($unregisteredJS as $position => $js) {
+			foreach ($this->resources['js'] as $position => $js) {
 				foreach ($js as $hash => $jsString) {
 					$this->getView()->registerJs($jsString, $position, $hash);
 				}
-
 			}
 
-		}
-
-		if ([] === $unregisteredJSFiles) {
-			$unregisteredJSFiles = Yii::$app->cache->get($cacheName."jsfiles");
-			foreach ($unregisteredJSFiles as $position => $js) {
+			foreach ($this->resources['js'] as $position => $js) {
 				$this->getView()->registerJsFile($js, ['position' => $position]);
 			}
 
 		}
-
 		return $result;
 	}
 
@@ -93,5 +101,12 @@ class CachedWidget extends Widget {
 	 */
 	public function setDependency(?Dependency $dependency):void {
 		$this->_dependency = $dependency;
+	}
+
+	/**
+	 * @return null|boolean
+	 */
+	public function getIsResultFromCache() {
+		return $this->_isResultFromCache;
 	}
 }
