@@ -6,6 +6,7 @@ namespace app\models\core;
 use Yii;
 use yii\base\Widget;
 use yii\caching\Dependency;
+use yii\helpers\Html;
 use yii\web\AssetBundle;
 
 /**
@@ -43,48 +44,44 @@ class CachedWidget extends Widget {
 	 * {@inheritDoc}
 	 */
 	public function render($view, $params = []):string {
-		$this->_isResultFromCache = true;
 		$cacheName = self::class.$view.sha1(json_encode($params));//unique enough
-
-		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName) {
-			$this->_isResultFromCache = false;
-			$currentlyRegisteredAssets = Yii::$app->assetManager->bundles;
-
-			$renderResult = $this->getView()->render($view, $params, $this);
-
-			$this->resources = [
-				'css' => $this->getView()->css,
-				'cssFiles' => $this->getView()->cssFiles,
-				'js' => $this->getView()->js,
-				'jsFiles' => $this->getView()->jsFiles,
-				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets),
-			];
-
-			Yii::$app->cache->set($cacheName."resources", $this->resources, $this->_duration, $this->_dependency);//remember all included resources
-			unset($this->resources);
-			return $renderResult;
-		}, $this->_duration, $this->_dependency);
-
-		if ($this->_isResultFromCache) {//rendering result retrieved from cache => register linked resources
+		if (true === $this->_isResultFromCache = Yii::$app->cache->exists($cacheName)) {//rendering result retrieved from cache => register linked resources
 			$this->resources = Yii::$app->cache->get($cacheName."resources");
 
 			foreach ($this->resources['metaTags'] as $key => $metaTag) {
-				$this->getView()->registerMetaTag($metaTag, $key);//check this
+				if (is_numeric($key)) {
+					$this->getView()->metaTags[] = $metaTag;//tags registered as string, not as convertible array
+				} else {
+					$this->getView()->metaTags[$key] = $metaTag;
+				}
 			}
 
 			foreach ($this->resources['linkTags'] as $key => $linkTag) {
-				$this->getView()->registerLinkTag($linkTag, $key);//check this
+				if (is_numeric($key)) {
+					$this->getView()->linkTags[] = $linkTag;//tags registered as string, not as convertible array
+				} else {
+					$this->getView()->linkTags[$key] = $linkTag;
+				}
 			}
 
 			foreach ($this->resources['css'] as $key => $css) {
-				$this->getView()->registerCss($css, [], $key);//check this
+				if (is_numeric($key)) {
+					$this->getView()->css[] = $css;//inline css registered as string, not as convertible array
+				} else {
+					$this->getView()->css[$key] = $css;
+				}
+
 			}
 			foreach ($this->resources['cssFiles'] as $key => $cssFile) {
-				$this->getView()->registerCssFile($cssFile, [], $key);//check this
+				/**
+				 * $cssFile is already prepared html-string
+				 * If resource has registered with asset dependency, then it placed in assetBundles section, see \yii\web\View::registerCssFile
+				 */
+				$this->getView()->registerCssFile($cssFile, [], $key);
 			}
 
 			foreach ($this->resources['assetBundles'] as $key => $bundle) {
-				$bundle::register($this->getView());
+				$this->getView()->assetBundles[] = $bundle;
 			}
 
 			foreach ($this->resources['js'] as $position => $js) {
@@ -96,8 +93,27 @@ class CachedWidget extends Widget {
 			foreach ($this->resources['jsFiles'] as $position => $jsFile) {
 				$this->getView()->registerJsFile($jsFile, ['position' => $position]);
 			}
-
 		}
+
+		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName) {
+			$this->_isResultFromCache = false;
+			$currentlyRegisteredAssets = Yii::$app->assetManager->bundles;
+
+			$renderResult = $this->getView()->render($view, $params, $this);
+
+			$this->resources = [
+				'metaTags' => $this->getView()->metaTags,
+				'linkTags' => $this->getView()->linkTags,
+				'css' => $this->getView()->css,
+				'cssFiles' => $this->getView()->cssFiles,
+				'js' => $this->getView()->js,
+				'jsFiles' => $this->getView()->jsFiles,
+				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets),
+			];
+
+			Yii::$app->cache->set($cacheName."resources", $this->resources, $this->_duration, $this->_dependency);//remember all included resources
+			return $renderResult;
+		}, $this->_duration, $this->_dependency);
 		return $result;
 	}
 
