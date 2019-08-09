@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace app\widgets\admin_panel;
 
+use app\models\core\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\CoreController;
 use app\models\core\WigetableController;
 use Throwable;
 use yii\base\InvalidConfigException;
-use yii\base\Widget;
 
 /**
  * Class AdminPanelWidget
@@ -18,7 +18,7 @@ use yii\base\Widget;
  * @property integer $mode
  * @property string[]|string $controllers_directory
  */
-class AdminPanelWidget extends Widget {
+class AdminPanelWidget extends CachedWidget {
 	public const MODE_PANEL = 0;//Представление в виде панельки с иконками
 	public const MODE_MENU = 1;//Представление в виде дропдаун-меню
 	public const MODE_LIST = 2;//Представление в виде списка без иконок

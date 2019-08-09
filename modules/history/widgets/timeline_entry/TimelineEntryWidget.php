@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\history\widgets\timeline_entry;
 
+use app\models\core\CachedWidget;
 use app\modules\history\models\TimelineEntry;
-use yii\base\Widget;
 
 /**
  * Виджет элемента таймлайна
@@ -13,7 +13,7 @@ use yii\base\Widget;
  *
  * @property TimelineEntry $entry
  */
-class TimelineEntryWidget extends Widget {
+class TimelineEntryWidget extends CachedWidget {
 	public $entry;
 
 	/**

@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\roles_select;
 
+use app\models\core\CachedWidget;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
-use yii\base\Widget;
 
 /**
  * @package app\components\roles_select
@@ -16,7 +16,7 @@ use yii\base\Widget;
  * @property int $userId
  * @property bool $showStatus
  */
-class RolesSelectWidget extends Widget {
+class RolesSelectWidget extends CachedWidget {
 	public $data;
 	public $value;
 	public $groupId;

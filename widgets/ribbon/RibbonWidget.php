@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\widgets\ribbon;
 
+use app\models\core\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Model;
-use yii\base\Widget;
 
 /**
  * Ленточный контрол а-ля MS Word
@@ -16,7 +16,7 @@ use yii\base\Widget;
  * @property RibbonPage[] $pages
  * @property array $options -- set of HTML options of widget container
  */
-class RibbonWidget extends Widget {
+class RibbonWidget extends CachedWidget {
 	public $pages = [];
 	public $options = [];
 

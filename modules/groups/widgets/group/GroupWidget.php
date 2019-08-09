@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\group;
 
-use yii\base\Widget;
+use app\models\core\CachedWidget;
 use app\modules\groups\models\Groups;
 
 /**
@@ -11,7 +11,7 @@ use app\modules\groups\models\Groups;
  *
  * @property Groups $group
  */
-class GroupWidget extends Widget {
+class GroupWidget extends CachedWidget {
 	public $group;
 
 	/**

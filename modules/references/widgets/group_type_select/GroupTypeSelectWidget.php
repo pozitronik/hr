@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\group_type_select;
 
-use yii\base\Widget;
+use app\models\core\CachedWidget;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use Throwable;
@@ -17,7 +17,7 @@ use yii\web\NotFoundHttpException;
  * @property int $groupId
  * @property bool $showStatus
  */
-class GroupTypeSelectWidget extends Widget {
+class GroupTypeSelectWidget extends CachedWidget {
 	public $data;
 	public $value;
 	public $groupId;

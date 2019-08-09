@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\user_attribute;
 
+use app\models\core\CachedWidget;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use yii\base\Widget;
@@ -15,7 +16,7 @@ use yii\web\ServerErrorHttpException;
  * @property bool $show_category
  * @property bool $read_only
  */
-class UserAttributeWidget extends Widget {
+class UserAttributeWidget extends CachedWidget {
 	public $user_id;
 	public $attribute_id;
 	public $show_category = false;
