@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\widgets\search;
 
-use app\models\core\CachedWidget;
+use yii\base\Widget;
 
 /**
  * Class SearchWidget
  * @package app\widgets\search
  */
-class SearchWidget extends CachedWidget {
+class SearchWidget extends Widget {
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

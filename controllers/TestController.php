@@ -39,12 +39,12 @@ class TestController extends Controller {
 
 	public function behaviors():array {
 		return [
-//			[
-//				'class' => ContentNegotiator::class,
-//				'formats' => [
-//					'application/json' => \yii\web\Response::FORMAT_JSON,
-//				]
-//			],
+			[
+				'class' => ContentNegotiator::class,
+				'formats' => [
+					'application/json' => \yii\web\Response::FORMAT_JSON,
+				]
+			],
 		];
 	}
 
@@ -62,7 +62,9 @@ class TestController extends Controller {
 	 * @return string|Response
 	 */
 	public function actionIndex() {
-		return $this->render('index');
+		return Yii::$app->cache->getOrSet('index', function() {
+			return $this->render('index');
+		});
 	}
 
 	public function actionTest() {

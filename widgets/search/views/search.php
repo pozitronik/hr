@@ -49,13 +49,3 @@ $template = '<div class="suggestion-item"><p class="suggestion-name">{{name}}</p
 		]
 	]
 ]) ?>
-!delete this!
-<?php
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/myicon.png']);
-$this->registerMetaTag([
-	'name' => 'description',
-	'content' => 'This website is about funny raccoons.'
-]);
-$this->registerCss('body {background:red}', ['Хуй' => 'Говно']);
-$this->registerCssFile('fake.css', ['sosi' => 'zaloopu']);
-?>

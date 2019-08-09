@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\navbar;
 
-use app\models\core\CachedWidget;
+use yii\base\Widget;
 use app\modules\users\models\Users;
 
 /**
@@ -11,7 +11,7 @@ use app\modules\users\models\Users;
  * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *Navbar* на нужное нам имя, и работаем
  * @package app\components\navbar
  */
-class NavbarWidget extends CachedWidget {
+class NavbarWidget extends Widget {
 	public $user;
 
 	/**
