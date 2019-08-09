@@ -95,7 +95,7 @@ class CachedWidget extends Widget {
 			}
 		}
 
-		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName) {
+		return Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName) {
 			$this->_isResultFromCache = false;
 			$currentlyRegisteredAssets = Yii::$app->assetManager->bundles;
 
@@ -114,7 +114,6 @@ class CachedWidget extends Widget {
 			Yii::$app->cache->set($cacheName."resources", $this->resources, $this->_duration, $this->_dependency);//remember all included resources
 			return $renderResult;
 		}, $this->_duration, $this->_dependency);
-		return $result;
 	}
 
 	/**
