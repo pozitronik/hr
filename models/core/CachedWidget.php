@@ -28,10 +28,8 @@ class CachedWidget extends Widget {
 	private $_isResultFromCache;
 	private $_duration;
 	private $_dependency;
-	//todo class && resources caching options
+	//todo dynamic model && resources caching options
 	private $resources = [//enumerate all kind of View resources (assets, inline css/js, etc)
-		'metaTags' => [],
-		'linkTags' => [],
 		'css' => [],
 		'cssFiles' => [],
 		'js' => [],
@@ -53,10 +51,8 @@ class CachedWidget extends Widget {
 			$renderResult = $this->getView()->render($view, $params, $this);
 
 			$this->resources = [
-				'metaTags' => '',
-				'linkTags' => '',
-				'css' => '',
-				'cssFiles' => '',
+				'css' => $this->getView()->css,
+				'cssFiles' => $this->getView()->cssFiles,
 				'js' => $this->getView()->js,
 				'jsFiles' => $this->getView()->jsFiles,
 				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets),
@@ -69,6 +65,14 @@ class CachedWidget extends Widget {
 
 		if ($this->_isResultFromCache) {//rendering result retrieved from cache => register linked resources
 			$this->resources = Yii::$app->cache->get($cacheName."resources");
+
+			foreach ($this->resources['css'] as $key => $css) {
+				$this->getView()->registerCss($css, [], $key);//check this
+			}
+			foreach ($this->resources['cssFiles'] as $key => $cssFile) {
+				$this->getView()->registerCssFile($cssFile, [], $key);//check this
+			}
+
 			foreach ($this->resources['assetBundles'] as $key => $bundle) {
 				$bundle::register($this->getView());
 			}
@@ -79,8 +83,8 @@ class CachedWidget extends Widget {
 				}
 			}
 
-			foreach ($this->resources['jsFiles'] as $position => $js) {
-				$this->getView()->registerJsFile($js, ['position' => $position]);
+			foreach ($this->resources['jsFiles'] as $position => $jsFile) {
+				$this->getView()->registerJsFile($jsFile, ['position' => $position]);
 			}
 
 		}
