@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\group_card;
 
-use yii\base\Widget;
+use app\models\core\CachedWidget;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;
@@ -16,7 +16,7 @@ use Throwable;
  * @property Groups $group
  * @property bool $short
  */
-class GroupCardWidget extends Widget {
+class GroupCardWidget extends CachedWidget {
 	public $group;
 	public $short = false;
 
