@@ -6,8 +6,6 @@ namespace app\models\core;
 use Yii;
 use yii\base\Widget;
 use yii\caching\Dependency;
-use yii\helpers\Html;
-use yii\web\AssetBundle;
 
 /**
  * Class CachedWidget
@@ -108,7 +106,7 @@ class CachedWidget extends Widget {
 				'cssFiles' => $this->getView()->cssFiles,
 				'js' => $this->getView()->js,
 				'jsFiles' => $this->getView()->jsFiles,
-				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets),
+				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets)
 			];
 
 			Yii::$app->cache->set($cacheName."resources", $this->resources, $this->_duration, $this->_dependency);//remember all included resources
@@ -133,7 +131,7 @@ class CachedWidget extends Widget {
 	/**
 	 * @return null|boolean
 	 */
-	public function getIsResultFromCache() {
+	public function getIsResultFromCache():?bool {
 		return $this->_isResultFromCache;
 	}
 }

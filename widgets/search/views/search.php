@@ -5,6 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  */
 
+use app\assets\AppAsset;
 use app\modules\groups\GroupsModule;
 use kartik\typeahead\Typeahead;
 use yii\web\JsExpression;
