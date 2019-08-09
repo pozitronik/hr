@@ -22,13 +22,13 @@ use yii\web\AssetBundle;
  * class MyWidget extends CachedWidget {
  * // it is all, mostly
  * }
- * @todo: checkIncluded
+ * @todo: checkIncluded option
  */
 class CachedWidget extends Widget {
 	private $_isResultFromCache;
 	private $_duration;
 	private $_dependency;
-	//todo class
+	//todo class && resources caching options
 	private $resources = [//enumerate all kind of View resources (assets, inline css/js, etc)
 		'metaTags' => [],
 		'linkTags' => [],
@@ -49,8 +49,6 @@ class CachedWidget extends Widget {
 		$result = Yii::$app->cache->getOrSet($cacheName, function() use ($view, $params, $cacheName) {
 			$this->_isResultFromCache = false;
 			$currentlyRegisteredAssets = Yii::$app->assetManager->bundles;
-			$currentlyRegisteredJS = $this->getView()->js;
-			$currentlyRegisteredJSFiles = $this->getView()->jsFiles;
 
 			$renderResult = $this->getView()->render($view, $params, $this);
 
@@ -59,8 +57,8 @@ class CachedWidget extends Widget {
 				'linkTags' => '',
 				'css' => '',
 				'cssFiles' => '',
-				'js' => array_diff_key($this->getView()->js, $currentlyRegisteredJS),
-				'jsFiles' => array_diff_key($this->getView()->jsFiles, $currentlyRegisteredJSFiles),
+				'js' => $this->getView()->js,
+				'jsFiles' => $this->getView()->jsFiles,
 				'assetBundles' => array_diff_key(Yii::$app->assetManager->bundles, $currentlyRegisteredAssets),
 			];
 
@@ -81,7 +79,7 @@ class CachedWidget extends Widget {
 				}
 			}
 
-			foreach ($this->resources['js'] as $position => $js) {
+			foreach ($this->resources['jsFiles'] as $position => $js) {
 				$this->getView()->registerJsFile($js, ['position' => $position]);
 			}
 
