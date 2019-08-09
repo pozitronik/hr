@@ -40,7 +40,7 @@ class CachedWidget extends Widget {
 	 * {@inheritDoc}
 	 */
 	public function render($view, $params = []):string {
-		$cacheName = self::class.$view.sha1(json_encode($params));//unique enough
+		$cacheName = self::class.$view.sha1(json_encode($params, JSON_PARTIAL_OUTPUT_ON_ERROR));//unique enough
 		if (true === $this->_isResultFromCache = Yii::$app->cache->exists($cacheName)) {//rendering result retrieved from cache => register linked resources
 			$this->resources->attributes = Yii::$app->cache->get($cacheName."resources");
 
