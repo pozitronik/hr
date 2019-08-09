@@ -22,13 +22,12 @@ use yii\caching\Dependency;
  * class MyWidget extends CachedWidget {
  * // it is all, mostly
  * }
- * @todo: checkIncluded option
+ * ```
  */
 class CachedWidget extends Widget {
 	private $_isResultFromCache;
 	private $_duration;
 	private $_dependency;
-	//todo resources caching options
 	/** @var CachedResources|null $resources */
 	private $resources;
 
