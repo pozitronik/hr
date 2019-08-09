@@ -63,7 +63,7 @@ class CachedWidget extends Widget {
 			$unregisteredJS = Yii::$app->cache->get($cacheName."js");
 			foreach ($unregisteredJS as $position => $js) {
 				foreach ($js as $hash => $jsString) {
-					$this->getView()->registerJs($jsString, $position);
+					$this->getView()->registerJs($jsString, $position, $hash);
 				}
 
 			}
@@ -72,7 +72,7 @@ class CachedWidget extends Widget {
 
 		if ([] === $unregisteredJSFiles) {
 			$unregisteredJSFiles = Yii::$app->cache->get($cacheName."jsfiles");
-			foreach ($unregisteredJSFiles as $position => $js) {//todo position
+			foreach ($unregisteredJSFiles as $position => $js) {
 				$this->getView()->registerJsFile($js, ['position' => $position]);
 			}
 
