@@ -30,6 +30,8 @@ class CachedWidget extends Widget {
 	private $_dependency;
 	//todo dynamic model && resources caching options
 	private $resources = [//enumerate all kind of View resources (assets, inline css/js, etc)
+		'metaTags' => [],
+		'linkTags' => [],
 		'css' => [],
 		'cssFiles' => [],
 		'js' => [],
@@ -65,6 +67,14 @@ class CachedWidget extends Widget {
 
 		if ($this->_isResultFromCache) {//rendering result retrieved from cache => register linked resources
 			$this->resources = Yii::$app->cache->get($cacheName."resources");
+
+			foreach ($this->resources['metaTags'] as $key => $metaTag) {
+				$this->getView()->registerMetaTag($metaTag, $key);//check this
+			}
+
+			foreach ($this->resources['linkTags'] as $key => $linkTag) {
+				$this->getView()->registerLinkTag($linkTag, $key);//check this
+			}
 
 			foreach ($this->resources['css'] as $key => $css) {
 				$this->getView()->registerCss($css, [], $key);//check this
