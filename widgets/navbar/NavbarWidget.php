@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\navbar;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use app\modules\users\models\Users;
 
 /**

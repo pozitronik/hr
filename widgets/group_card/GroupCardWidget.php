@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\group_card;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use pozitronik\helpers\ArrayHelper;

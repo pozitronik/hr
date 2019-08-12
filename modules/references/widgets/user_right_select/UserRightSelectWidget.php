@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\user_right_select;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\core_module\PluginsSupport;
 use app\modules\privileges\models\DynamicUserRights;

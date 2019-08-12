@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\group_type_select;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use Throwable;

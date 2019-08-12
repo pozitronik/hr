@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\roles_select;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 

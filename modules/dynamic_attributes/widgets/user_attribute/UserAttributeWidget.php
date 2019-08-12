@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\user_attribute;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use yii\web\ServerErrorHttpException;

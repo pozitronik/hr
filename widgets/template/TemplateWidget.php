@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\template;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 
 /**
  * Class GroupSelectWidget

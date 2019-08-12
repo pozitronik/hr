@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\group;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use app\modules\groups\models\Groups;
 
 /**

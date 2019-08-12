@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\widgets\badge;
 
-use app\models\core\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
+use pozitronik\widgets\CachedWidget;
 use Throwable;
 use yii\base\DynamicModel;
 use yii\base\Model;

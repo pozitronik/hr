@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\navigation_menu;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\ReflectionHelper;
 use yii\db\ActiveRecord;

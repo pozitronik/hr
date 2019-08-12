@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\admin_panel;
 
-use app\models\core\CachedWidget;
+use pozitronik\widgets\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\CoreController;
 use app\models\core\WigetableController;
