@@ -132,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'models' => BadgeWidget::widget([
-						'models' => function() use ($model) {
+						'models' => static function() use ($model) {
 							$badgeData = [];
 							/** @var Groups $userGroup */
 							foreach ((array)$model->relGroups as $userGroup) {
