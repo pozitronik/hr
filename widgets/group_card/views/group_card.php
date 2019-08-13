@@ -17,7 +17,6 @@ use yii\web\View;
 
 ?>
 
-
 <div class="panel panel-card">
 	<div class="panel-heading">
 		<div class="panel-control">
