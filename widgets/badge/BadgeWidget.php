@@ -14,7 +14,7 @@ use yii\helpers\Html;
 /**
  * Class BadgeWidget
  * @package app\widgets\badge
- * @property string|array|object $models
+ * @property string|array|object|callable $models
  * @property string $attribute
  * @property boolean $useBadges
  * @property string|false $allBadgeClass
@@ -60,6 +60,8 @@ class BadgeWidget extends CachedWidget {
 		$moreBadge = '';
 
 //		if (null === $this->models) throw new InvalidConfigException('Model property not properly configured');
+
+		if (is_callable($this->models)) $this->models = call_user_func($this->models);
 
 		if (!is_array($this->models)) $this->models = [$this->models];
 
