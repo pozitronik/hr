@@ -40,6 +40,7 @@ class GroupCardWidget extends CachedWidget {
 		/*Строим срез по типам должностей*/
 
 		return $this->render($this->short?'group_info':'group_card', [
+			'group' => $this->group,
 			'title' => $this->group->name,
 			'groupId' => $this->group->id,
 			'leader' => (null === $leader->id)?'N/A':$leader->username,
