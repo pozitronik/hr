@@ -13,8 +13,7 @@ class MasonryAsset extends AssetBundle {
 	public $sourcePath = '@vendor/desandro/masonry/dist';
 
 	public $js = [
-		'masonry.pkgd.js',
-//		'js/particles.js/particles.json'//config
+		'masonry.pkgd.js'
 	];
 
 }
