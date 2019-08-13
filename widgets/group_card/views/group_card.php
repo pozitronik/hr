@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
+ * @var Groups $group
  * @var string $title
  * @var string $leader
  * @var string $logo
@@ -13,10 +14,12 @@ declare(strict_types = 1);
  * @var array $positionTypeData
  */
 
+use app\modules\groups\models\Groups;
+use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
-use yii\helpers\Html;
 use yii\web\View;
 
 ?>
@@ -34,7 +37,19 @@ use yii\web\View;
 
 			]) ?>
 		</div>
-		<h3 class="panel-title"><?= Html::encode($title) ?></h3>
+		<h3 class="panel-title"><?= BadgeWidget::widget([
+				'models' => $group,
+				'attribute' => 'name',
+				"badgeOptions" => [
+					'class' => "badge badge-info"
+				],
+				"optionsMap" => static function() {
+					return RefGroupTypes::colorStyleOptions();
+				},
+				"optionsMapAttribute" => 'type',
+				'linkScheme' => ['users', 'UsersSearch[groupId]' => $groupId]
+
+			]) ?></h3>
 	</div>
 
 	<div class="panel-body">
