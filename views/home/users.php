@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class' => DataColumn::class,
 			'label' => 'Должность',
 			'attribute' => 'positions',
-			'value' => static function(Users $model) use ($group) {
+			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'models' => $model->relRefUserPositions,
 					'useBadges' => true,
