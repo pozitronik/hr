@@ -44,7 +44,7 @@ use yii\db\ActiveQuery;
  *
  * @property ActiveQuery|Vacancy[] $relVacancy Релейшен к вакансиям группы
  *
- * @property-read Users[] $leaders Пользюки, прописанне в группе с релейшеном лидера (владелец/руководитель)
+ * @property-read Users[] $leaders Пользюки, прописанные в группе с релейшеном лидера (владелец/руководитель)
  * @property-read Users|null $leader Один пользователь из лидеров (для презентации)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader
