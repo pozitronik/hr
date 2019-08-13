@@ -41,13 +41,8 @@ class GroupCardWidget extends CachedWidget {
 
 		return $this->render($this->short?'group_info':'group_card', [
 			'group' => $this->group,
-			'title' => $this->group->name,
-			'groupId' => $this->group->id,
 			'leader' => (null === $leader->id)?'N/A':$leader->username,
 			'leader_role' => $leader_role,
-			'userCount' => count($this->group->relUsers),
-			'vacancyCount' => count($this->group->relVacancy),
-			'positionTypeData' => $this->group->getGroupPositionTypeData()
 		]);
 	}
 }

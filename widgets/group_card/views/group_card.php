@@ -4,19 +4,13 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
- * @var string $title
  * @var string $leader
  * @var string $logo
  * @var string $leader_role
- * @var int $groupId
- * @var int $userCount
- * @var int $vacancyCount
- * @var array $positionTypeData
  */
 
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
@@ -29,11 +23,11 @@ use yii\web\View;
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
-				'models' => $userCount,
+				'models' => count($group->relUsers),
 				"badgeOptions" => [
 					'class' => "badge badge-info"
 				],
-				'linkScheme' => ['users', 'UsersSearch[groupId]' => $groupId]
+				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
 
 			]) ?>
 		</div>
@@ -47,13 +41,13 @@ use yii\web\View;
 					return RefGroupTypes::colorStyleOptions();
 				},
 				"optionsMapAttribute" => 'type',
-				'linkScheme' => ['users', 'UsersSearch[groupId]' => $groupId]
+				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
 
 			]) ?></h3>
 	</div>
 
 	<div class="panel-body">
-		<?php foreach ($positionTypeData as $positionId => $positionCount): ?>
+		<?php foreach ($group->getGroupPositionTypeData() as $positionId => $positionCount): ?>
 			<?php /** @var RefUserPositionTypes $positionType */
 			$positionType = RefUserPositionTypes::findModel($positionId); ?>
 			<div class="row">
@@ -62,7 +56,7 @@ use yii\web\View;
 						"badgeOptions" => [
 							'style' => "float:left; background: {$positionType->color}; color: $positionType->textcolor"
 						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $group->id]
 
 					]) ?></div>
 				<div class="col-md-2 pad-no">
@@ -71,7 +65,7 @@ use yii\web\View;
 						"badgeOptions" => [
 							'style' => "float:right; background: {$positionType->color}; color: $positionType->textcolor"
 						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $groupId]
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $group->id]
 
 					]) ?>
 				</div>
@@ -85,15 +79,15 @@ use yii\web\View;
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-left"
 					],
-					'linkScheme' => [VacancyModule::to('groups'), 'id' => $groupId]
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 				]) ?></div>
 			<div class="col-md-2 pad-no">
 				<?= BadgeWidget::widget([
-					'models' => $vacancyCount,
+					'models' => count($group->relVacancy),
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-right"
 					],
-					'linkScheme' => [VacancyModule::to('groups'), 'id' => $groupId]
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 				]) ?>
 			</div>
 		</div>
