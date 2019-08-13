@@ -288,7 +288,7 @@ class Groups extends ActiveRecordExtended {
 	 * @throws Throwable
 	 */
 	public function getLeaders():array {
-		return $this->getRelUsers()->joinWith(['relRefUserRolesLeader'])->where(['rel_users_groups.group_id' => $this->id])->all();
+		return $this->getRelUsers()->joinWith(['relRefUserRolesLeader'], false)->where(['rel_users_groups.group_id' => $this->id])->all();
 	}
 
 	/**
