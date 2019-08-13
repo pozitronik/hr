@@ -36,7 +36,7 @@ class HomeController extends Controller {
 
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new GroupsSearch();
-		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'boss', [
+		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'dashboard', [
 			'dataProvider' => $searchModel->search($params, $stack),
 			'searchModel' => $searchModel
 		]);
