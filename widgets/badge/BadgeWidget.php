@@ -23,6 +23,7 @@ use yii\helpers\Html;
  * @property string $itemsSeparator
  * @property integer|false $unbadgedCount
  * @property array|callable $optionsMap
+ * @property null|string $optionsMapAttribute
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
  * @property string $prefix
@@ -37,7 +38,8 @@ class BadgeWidget extends CachedWidget {
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
 	public $linkScheme = false;//Url-схема, например ['/groups/groups/profile', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
 	public $itemsSeparator = ', ';//Разделитель объектов
-	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([id => options])"
+	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([optionsMapAttributeValue => options])"
+	public $optionsMapAttribute; //Имя аттрибута, используемого для подбора значения в $optionsMap, если null, то используется primaryKey (или id, если модель не имеет первичного ключа)
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
 	public $prefix = '';//строчка, добавляемая перед бейджами
@@ -80,11 +82,11 @@ class BadgeWidget extends CachedWidget {
 				}
 			}
 
-			if ($model->hasProperty('primaryKey')) {
+			if (null === $this->optionsMapAttribute && $model->hasProperty('primaryKey')) {
 				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
 			} else {
-				/** @noinspection PhpUndefinedFieldInspection */
-				$badgeHtmlOptions = $model->hasProperty('id')?ArrayHelper::getValue($this->optionsMap, $model->id, $this->badgeOptions):$this->badgeOptions;
+				if (null === $this->optionsMapAttribute && $model->hasProperty('id')) $this->optionsMapAttribute = 'id';
+				$badgeHtmlOptions = $model->hasProperty($this->optionsMapAttribute)?ArrayHelper::getValue($this->optionsMap, $model->{$this->optionsMapAttribute}, $this->badgeOptions):$this->badgeOptions;
 			}
 
 			if (!is_array($badgeHtmlOptions)) $badgeHtmlOptions = $this->badgeOptions;
