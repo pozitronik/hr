@@ -488,7 +488,7 @@ class Groups extends ActiveRecordExtended {
 	public static function getGroupScopePositionTypeData(array $scope):array {
 		$positionTypes = RefUserPositionTypes::find()
 			->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
-			->joinWith(['relGroups'])
+			->joinWith(['relGroups'], false)
 			->groupBy(['ref_user_position_types.id'])
 			->where(['sys_groups.id' => $scope])
 			->asArray()
