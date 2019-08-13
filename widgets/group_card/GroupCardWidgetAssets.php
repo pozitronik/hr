@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\widgets\group_card;
 
-use app\assets\MasonryAsset;
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
 
