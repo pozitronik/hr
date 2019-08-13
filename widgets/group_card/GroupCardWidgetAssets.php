@@ -20,8 +20,7 @@ class GroupCardWidgetAssets extends AssetBundle {
 		'js/group_card.js'
 	];
 	public $depends = [
-		AppAsset::class,
-		MasonryAsset::class
+		AppAsset::class
 	];
 
 	public $publishOptions = [

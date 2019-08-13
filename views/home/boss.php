@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\assets\MasonryAsset;
 use app\modules\groups\models\GroupsSearch;
 use app\widgets\group_card\GroupCardWidget;
 use yii\bootstrap\Html;
@@ -17,7 +18,7 @@ use yii\web\View;
 $this->title = 'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
-
+MasonryAsset::register($this);
 $this->registerJs("normalize_widths()", View::POS_END);
 $this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
 ?>
