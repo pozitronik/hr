@@ -149,20 +149,18 @@ $this->params['breadcrumbs'][] = $this->title;
 							'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
 						]);
 				}
-				$result = '';
-				foreach ($badgeData as $badgeString) {
-					$result .= BadgeWidget::widget([
-						'models' => $badgeString,
+				return BadgeWidget::widget([
+					'models' => BadgeWidget::widget([
+						'models' => $badgeData,
+						'unbadgedCount' => false,
+						'itemsSeparator' => false,
 						"badgeOptions" => [
 							'class' => "badge",
 							'style' => 'margin-bottom:1px'
 						]
-					]);
-				}
-//				return $result;
-				return BadgeWidget::widget([
-					'models' => $result,
+					]),
 					'useBadges' => true,
+					'unbadgedCount' => false,
 					'itemsSeparator' => false,
 					"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), ArrayHelper::getValue($model->relRefUserPositions, 'types'), [])//Не сработает, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
 				]);
