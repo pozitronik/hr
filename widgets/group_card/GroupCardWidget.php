@@ -24,6 +24,7 @@ class GroupCardWidget extends CachedWidget {
 	public function init() {
 		parent::init();
 		GroupCardWidgetAssets::register($this->getView());
+		$this->cacheNamePrefix = $this->group->id;
 	}
 
 	/**
