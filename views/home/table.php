@@ -130,28 +130,30 @@ $this->params['breadcrumbs'][] = $this->title;
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			],
 			'value' => static function(Users $model) {
-				$badgeData = [];
-				/** @var Groups $userGroup */
-				foreach ((array)$model->relGroups as $userGroup) {
-					$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
-					$badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
-							'models' => $groupRoles,
-							'attribute' => 'name',
-							'itemsSeparator' => false,
-							"optionsMap" => static function() {
-								return RefUserRoles::colorStyleOptions();
-							}
-						])).' в '.BadgeWidget::widget([
-							'models' => $userGroup->name,
-							"badgeOptions" => [
-								'class' => "badge badge-info"
-							],
-							'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
-						]);
-				}
 				return BadgeWidget::widget([
 					'models' => BadgeWidget::widget([
-						'models' => $badgeData,
+						'models' => function() use ($model) {
+							$badgeData = [];
+							/** @var Groups $userGroup */
+							foreach ((array)$model->relGroups as $userGroup) {
+								$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
+								$badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
+										'models' => $groupRoles,
+										'attribute' => 'name',
+										'itemsSeparator' => false,
+										"optionsMap" => static function() {
+											return RefUserRoles::colorStyleOptions();
+										}
+									])).' в '.BadgeWidget::widget([
+										'models' => $userGroup->name,
+										"badgeOptions" => [
+											'class' => "badge badge-info"
+										],
+										'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
+									]);
+							}
+							return $badgeData;
+						},
 						'unbadgedCount' => false,
 						'itemsSeparator' => false,
 						"badgeOptions" => [
