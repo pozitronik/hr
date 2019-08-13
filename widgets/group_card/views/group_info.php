@@ -64,8 +64,7 @@ use yii\web\View;
 						'attribute' => 'username',
 						'unbadgedCount' => 3,
 						'itemsSeparator' => false
-					]).': ',
-				'linkScheme' => [UsersModule::to(['users/groups']), 'id' => $leader->id]
+					]).': '
 			]);
 		}
 		return $result;
