@@ -158,7 +158,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'itemsSeparator' => false,
 						"badgeOptions" => [
 							'class' => "badge",
-							'style' => 'margin-bottom:1px'
+							'style' => 'margin:1px 0px 1px 0px; float:left;'
 						]
 					]),
 					'useBadges' => true,
