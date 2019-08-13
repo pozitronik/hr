@@ -53,7 +53,7 @@ class HomeController extends Controller {
 		//Проверяем доступы к списку юзеров
 
 		/** @noinspection RequireParameterInspection */
-		return $this->render('table', [
+		return $this->render('users', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
 			'group' => Groups::findModel($searchModel->groupId)
