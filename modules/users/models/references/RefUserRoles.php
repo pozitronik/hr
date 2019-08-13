@@ -109,7 +109,7 @@ class RefUserRoles extends CustomisableReference {
 	 * @return self[] array
 	 */
 	public static function getUserRolesInGroup(int $userId, int $groupId):array {
-		return self::find()->joinWith('relUsersGroups')->where(['user_id' => $userId, 'group_id' => $groupId])->all();
+		return self::find()->joinWith('relUsersGroups', false)->where(['user_id' => $userId, 'group_id' => $groupId])->all();
 	}
 
 	/**
