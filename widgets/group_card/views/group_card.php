@@ -4,14 +4,13 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
- * @var string $leader
- * @var string $logo
- * @var string $leader_role
  */
 
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\users\models\references\RefUserRoles;
+use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use yii\web\View;
@@ -92,12 +91,36 @@ use yii\web\View;
 			</div>
 		</div>
 	</div>
+
+
 	<div class="panel-footer">
 		<?= BadgeWidget::widget([
-			'models' => "{$leader_role}: {$leader}",
-			"badgeOptions" => [
-				'class' => "badge badge-info pull-right"
+			'models' => function() use ($group) {
+				$result = [];
+				foreach ($group->leaders as $leader) {
+					$result[] = BadgeWidget::widget([
+						'models' => RefUserRoles::getUserRolesInGroup($leader->id, $group->id),
+						'attribute' => 'name',
+						'useBadges' => true,
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return RefUserRoles::colorStyleOptions();
+						},
+						'prefix' => BadgeWidget::widget([
+								'models' => $group->leaders,
+								'useBadges' => false,
+								'attribute' => 'username',
+								'unbadgedCount' => 3,
+								'itemsSeparator' => false
+							]).': ',
+						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => $leader->id]
+					]);
+				}
+				return $result;
+			},
+			'badgeOptions' => [
+				'class' => "pull-right"
 			]
-		]) ?>
+		]); ?>
 	</div>
 </div>
