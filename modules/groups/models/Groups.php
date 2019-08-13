@@ -465,18 +465,12 @@ class Groups extends ActiveRecordExtended {
 	 * @return int[]
 	 */
 	public function getGroupPositionTypeData():array {
-		$positionTypes = RefUserPositionTypes::findBySql("SELECT `ref_user_position_types`.`id`, COUNT(ref_user_position_types.id) AS `count` FROM `ref_user_position_types` LEFT JOIN `rel_ref_user_positions_types` ON `ref_user_position_types`.`id` = `rel_ref_user_positions_types`.`position_type_id` LEFT JOIN `ref_user_positions` ON `rel_ref_user_positions_types`.`position_id` = `ref_user_positions`.`id` LEFT JOIN `sys_users` ON `ref_user_positions`.`id` = `sys_users`.`position` LEFT JOIN `rel_users_groups` ON `sys_users`.`id` = `rel_users_groups`.`user_id` LEFT JOIN `sys_groups` ON `rel_users_groups`.`group_id` = `sys_groups`.`id`
-				WHERE `sys_groups`.`id` = {$this->id}
-				GROUP BY `ref_user_position_types`.`id`")->asArray()
+		$positionTypes = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
+			->joinWith(['relGroups'], false)
+			->groupBy(['ref_user_position_types.id'])
+			->where(['sys_groups.id' => $this->id])
+			->asArray()
 			->all();
-		/*Несмотря на то, что этот код генерирует ровно тот же запрос, его выполнение медленнее в десятки раз - генератор запросов раскладывает связанные джойны в выборку через in, и тормозит, как сучка*/
-//		$q = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
-//			->joinWith(['relGroups'])
-//			->groupBy(['ref_user_position_types.id'])
-//			->where(['sys_groups.id' => $this->id])
-//			->asArray()
-//			->all();
-//		});
 
 		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
 		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
