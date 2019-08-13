@@ -59,16 +59,18 @@ use yii\web\View;
 					return RefUserRoles::colorStyleOptions();
 				},
 				'prefix' => BadgeWidget::widget([
-						'models' => $group->leaders,
+						'models' => $leader,
 						'useBadges' => false,
 						'attribute' => 'username',
 						'unbadgedCount' => 3,
-						'itemsSeparator' => false
+						'itemsSeparator' => false,
+						'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id],
 					]).': '
 			]);
 		}
 		return $result;
 	},
+	'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
 	'badgeOptions' => [
 		'class' => "pull-right"
 	]
