@@ -67,7 +67,7 @@ class BadgeWidget extends CachedWidget {
 
 		if (!is_array($this->models)) $this->models = [$this->models];
 
-		if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap);
+
 		/** @var Model|ActiveRecord $model */
 
 		foreach ($this->models as $model) {
@@ -81,6 +81,8 @@ class BadgeWidget extends CachedWidget {
 					$this->attribute = 'value';
 				}
 			}
+
+			if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap, $model);
 
 			if (null === $this->optionsMapAttribute && $model->hasProperty('primaryKey')) {
 				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
