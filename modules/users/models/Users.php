@@ -561,8 +561,10 @@ class Users extends ActiveRecordExtended {
 	/**
 	 * Возвращает список руководителей пользователя (пока только на уровень выше)
 	 * @return Users[]
+	 * Можно ускорить, переписав на выборку. Пока оставлено так, до выяснения необходимости.
 	 */
 	public function getBosses():array {
+
 		$result = [[]];
 		/** @var Groups $group */
 		foreach ((array)$this->relGroups as $group) {
