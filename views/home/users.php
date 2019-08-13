@@ -10,7 +10,6 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
-use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use app\widgets\group_card\GroupCardWidget;
@@ -23,6 +22,7 @@ use app\modules\users\models\UsersSearch;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class' => DataColumn::class,
 			'label' => 'Должность',
 			'attribute' => 'positions',
-			'value' => static function(Users $model) {
+			'value' => static function(Users $model) use ($group) {
 				return BadgeWidget::widget([
 					'models' => $model->relRefUserPositions,
 					'useBadges' => true,
@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
 					},
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
+					'linkScheme' => [Url::current(['UsersSearch[positions]' => $model->position])]
 				]);
 			},
 			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
@@ -105,7 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					'itemsSeparator' => false,
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
-					}
+					},
+//					'linkScheme' => ['UsersSearch[positionType][]' => 'id']//todo
 				]);
 			},
 			'filter' => ArrayHelper::getValue($searchModel, 'positionType'),
