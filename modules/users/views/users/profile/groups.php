@@ -1,5 +1,6 @@
 <?php
 declare(strict_types = 1);
+
 /**
  * @var View $this
  * @var Users $model
@@ -47,7 +48,6 @@ use kartik\grid\GridView;
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
 					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $group->id]
-
 				]);
 			}
 		],
@@ -59,9 +59,8 @@ use kartik\grid\GridView;
 					'models' => $groupRoles,
 					'attribute' => 'name',
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserRoles::colorStyleOptions();
-					}
+					"optionsMap" => RefUserRoles::colorStyleOptions(),
+					'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
 				]));
 			},
 			'format' => 'raw'

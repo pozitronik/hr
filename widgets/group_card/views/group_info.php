@@ -55,9 +55,7 @@ use yii\web\View;
 				'attribute' => 'name',
 				'useBadges' => true,
 				'itemsSeparator' => false,
-				"optionsMap" => static function() {
-					return RefUserRoles::colorStyleOptions();
-				},
+				"optionsMap" => RefUserRoles::colorStyleOptions(),
 				'prefix' => BadgeWidget::widget([
 						'models' => $leader,
 						'useBadges' => false,
@@ -65,7 +63,8 @@ use yii\web\View;
 						'unbadgedCount' => 3,
 						'itemsSeparator' => false,
 						'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
-					]).': '
+					]).': ',
+				'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
 			]);
 		}
 		return $result;

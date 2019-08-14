@@ -109,7 +109,8 @@ use yii\web\View;
 								'unbadgedCount' => 3,
 								'itemsSeparator' => false,
 								'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
-							]).': '
+							]).': ',
+						'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
 					]);
 				}
 				return $result;
