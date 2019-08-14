@@ -8,6 +8,7 @@ declare(strict_types = 1);
 
 use app\helpers\Utils;
 use app\modules\groups\models\Groups;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
@@ -38,13 +39,16 @@ use kartik\grid\GridView;
 			'label' => 'Группа',
 			'value' => static function(Groups $group) {
 				return BadgeWidget::widget([
-					'models' => $group->name,
+					'models' => $group,
+					'attribute' => 'name',
 					"badgeOptions" => [
 						'class' => "badge badge-info"
 					],
-					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $group->id, 't' => 1]
-				]);
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $group->id]
 
+				]);
 			}
 		],
 		[
