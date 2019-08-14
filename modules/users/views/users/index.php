@@ -10,13 +10,11 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
 use app\helpers\Utils;
-use app\modules\groups\GroupsModule;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\Privileges;
@@ -32,7 +30,7 @@ use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 
-if (null !== $searchModel) {//Учитываем вызов из поиска по атрибутам, пока используется одна вьюха на всё.
+if (null !== $searchModel) {//Учитываем вызов из поиска по атрибутам, пока используется одна вьюха на всё. todo разные вьюхи
 	$this->title = 'Люди';
 	$this->params['breadcrumbs'][] = $this->title;
 }
@@ -122,7 +120,8 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 		],
 		[
 			'class' => DataColumn::class,
-
+			'attribute' => 'positionType',
+			'label' => 'Тип должности',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
@@ -130,9 +129,17 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => RefUserPositionTypes::colorStyleOptions()
+					"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
+					'linkScheme' => ['', 'UsersSearch[positionType]' => 'id']
 				]);
 			},
+			'filter' => ArrayHelper::getValue($searchModel, 'positionType'),
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Выберите тип'],
+			'filterWidgetOptions' => [
+				'referenceClass' => RefUserPositionTypes::class,
+				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
+			],
 			'format' => 'raw'
 		],
 		[
@@ -161,7 +168,6 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 				'referenceClass' => RefUserRoles::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
 			],
-
 			'label' => 'Роли',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
@@ -172,7 +178,6 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"itemsSeparator" => false,
 					"optionsMap" => RefUserRoles::colorStyleOptions(),
 					'linkScheme' => ['', 'UsersSearch[roles]' =>  'id']
-//					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserRoles']
 				]);
 			},
 			'format' => 'raw'
