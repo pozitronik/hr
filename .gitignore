@@ -42,3 +42,4 @@ composer.lock
 #/config
 #config
 /web/adminer.php
+/config
