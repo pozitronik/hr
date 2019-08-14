@@ -9,6 +9,7 @@ declare(strict_types = 1);
  * @deprecated
  */
 
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
@@ -141,9 +142,12 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
 					'models' => $model->relGroups,
-					'useBadges' => false,
+					'useBadges' => true,
 					'attribute' => 'name',
-					'linkScheme' => [GroupsModule::to('groups/profile'), 'id' => 'id']
+					'itemsSeparator' => false,
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => 'id']
 				]);
 			},
 			'format' => 'raw'
