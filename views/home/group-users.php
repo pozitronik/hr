@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class' => DataColumn::class,
 			'attribute' => 'positionType',
 			'label' => 'Тип должности',
-			'value' => static function(Users $model) {
+			'value' => static function(Users $model) use ($searchModel) {
 				return BadgeWidget::widget([
 					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
 					'useBadges' => true,
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					"optionsMap" => static function() {
 						return RefUserPositionTypes::colorStyleOptions();
 					},
-//					'linkScheme' => ['UsersSearch[positionType][]' => 'id']//todo
+					'linkScheme' => ['', 'UsersSearch[groupId]' => $searchModel->groupId, 'UsersSearch[positionType][]' => 'id']
 				]);
 			},
 			'filter' => ArrayHelper::getValue($searchModel, 'positionType'),
