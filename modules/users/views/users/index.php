@@ -27,6 +27,7 @@ use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -107,7 +108,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
 					"optionsMap" => RefUserPositions::colorStyleOptions(),
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
+					'linkScheme' => [Url::current(['UsersSearch[positions]' => $model->position])]
 				]);
 			},
 			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
@@ -129,9 +130,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserPositionTypes::colorStyleOptions();
-					}
+					"optionsMap" => RefUserPositionTypes::colorStyleOptions()
 				]);
 			},
 			'format' => 'raw'
@@ -171,10 +170,9 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefUserRoles::colorStyleOptions();
-					},
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserRoles']
+					"optionsMap" => RefUserRoles::colorStyleOptions(),
+					'linkScheme' => ['', 'UsersSearch[roles]' =>  'id']
+//					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserRoles']
 				]);
 			},
 			'format' => 'raw'
