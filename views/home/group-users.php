@@ -77,9 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserPositionTypes::colorStyleOptions();
-					},
+					"optionsMap" => RefUserPositions::colorStyleOptions(),
 					'linkScheme' => [Url::current(['UsersSearch[positions]' => $model->position])]
 				]);
 			},

@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
 use app\modules\graph\assets\VisjsAsset;
 use app\modules\references\ReferencesModule;
+use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
@@ -49,7 +50,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
+					"optionsMap" => RefUserPositions::colorStyleOptions(),
 					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position]
 				]) ?>
 			</div>

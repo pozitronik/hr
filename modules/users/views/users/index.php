@@ -105,9 +105,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserPositionTypes::colorStyleOptions();
-					},
+					"optionsMap" => RefUserPositions::colorStyleOptions(),
 					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
 				]);
 			},
