@@ -12,6 +12,7 @@ use Throwable;
 use Yii;
 use yii\base\Response;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class HomeController
@@ -53,10 +54,10 @@ class HomeController extends Controller {
 		//Проверяем доступы к списку юзеров
 
 		/** @noinspection RequireParameterInspection */
-		return $this->render('users', [
+		return $this->render('group-users', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
-			'group' => Groups::findModel($searchModel->groupId)
+			'group' => Groups::findModel($searchModel->groupId, new NotFoundHttpException())
 		]);
 
 	}
