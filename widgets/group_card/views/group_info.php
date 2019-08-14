@@ -47,7 +47,7 @@ use yii\web\View;
 ]) ?>
 
 <?= BadgeWidget::widget([
-	'models' => function() use ($group) {
+	'models' => static function() use ($group) {
 		$result = [];
 		foreach ($group->leaders as $leader) {
 			$result[] = BadgeWidget::widget([
@@ -64,7 +64,7 @@ use yii\web\View;
 						'attribute' => 'username',
 						'unbadgedCount' => 3,
 						'itemsSeparator' => false,
-						'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id],
+						'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
 					]).': '
 			]);
 		}
@@ -74,4 +74,4 @@ use yii\web\View;
 	'badgeOptions' => [
 		'class' => "pull-right"
 	]
-]); ?>
+]) ?>

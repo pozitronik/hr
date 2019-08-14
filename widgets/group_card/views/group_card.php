@@ -91,7 +91,7 @@ use yii\web\View;
 
 	<div class="panel-footer">
 		<?= BadgeWidget::widget([
-			'models' => function() use ($group) {
+			'models' => static function() use ($group) {
 				$result = [];
 				foreach ($group->leaders as $leader) {
 					$result[] = BadgeWidget::widget([
@@ -118,6 +118,6 @@ use yii\web\View;
 			'badgeOptions' => [
 				'class' => "pull-right"
 			]
-		]); ?>
+		]) ?>
 	</div>
 </div>
