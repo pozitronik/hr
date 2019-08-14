@@ -26,7 +26,6 @@ use yii\web\View;
 					'class' => "badge badge-info"
 				],
 				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
-
 			]) ?>
 		</div>
 		<h3 class="panel-title"><?= BadgeWidget::widget([
@@ -35,9 +34,7 @@ use yii\web\View;
 				"badgeOptions" => [
 					'class' => "badge badge-info"
 				],
-				"optionsMap" => static function() {
-					return RefGroupTypes::colorStyleOptions();
-				},
+				"optionsMap" => RefGroupTypes::colorStyleOptions(),
 				"optionsMapAttribute" => 'type',
 				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
 
