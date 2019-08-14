@@ -16,6 +16,7 @@ use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\helpers\Html;
 
@@ -48,10 +49,8 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserPositionTypes::colorStyleOptions();
-					},
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositions']
+					"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
+					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position]
 				]) ?>
 			</div>
 			<div class="col-md-3">
@@ -62,9 +61,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserPositionTypes::colorStyleOptions();
-					}
+					"optionsMap" => RefUserPositionTypes::colorStyleOptions()
 				]) ?>
 			</div>
 			<div class="col-md-3">
