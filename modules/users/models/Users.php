@@ -580,4 +580,18 @@ class Users extends ActiveRecordExtended {
 		$result = array_merge(...$result);
 		return $result;
 	}
+
+	/**
+	 * временно
+	 * @param string $identifier
+	 * @return int[] Массив id групп, в которых числится юзер в формате
+	 */
+	public function getGroupsScope(string $identifier):array {
+		$values = ArrayHelper::getColumn($this->relGroups, 'id', []);
+		$resultArray = [];
+		foreach ($values as $key => $value) {
+			$resultArray["{$identifier}[{$key}]"] = $value;
+		}
+		return $resultArray;
+	}
 }
