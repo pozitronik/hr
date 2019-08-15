@@ -221,7 +221,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 
 		$labelsConfig = $this->getModelRules("eventConfig.eventLabels");
 
-		if (is_callable($labelsConfig)) {
+		if (ReflectionHelper::is_closure($labelsConfig)) {
 			$result->eventCaption = $labelsConfig($result->eventType, $result->eventTypeName);
 		} elseif (is_array($labelsConfig)) {
 			$result->eventCaption = ArrayHelper::getValue($labelsConfig, $result->eventType, $result->eventTypeName);
@@ -287,7 +287,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		if (null === $this->loadedModel) return $attributeValue;
 		if (null === $attributeConfig = $this->getModelRules("attributes.{$attributeName}")) return $attributeValue;
 		if (false === $attributeConfig) return false;//не показывать атрибут
-		if (is_callable($attributeConfig)) {
+		if (ReflectionHelper::is_closure($attributeConfig)) {
 			return $attributeConfig($attributeName, $attributeValue);
 		}
 		if (is_array($attributeConfig)) {//[className => valueAttribute]
@@ -322,7 +322,7 @@ class ActiveRecordLogger extends ActiveRecord implements ActiveRecordLoggerInter
 		foreach ($relationsRules as $relatedModelClassName => $relationRule) {/*Разбираем правила релейшенов в истории, собираем правила поиска по изменениям в связанных таблицах*/
 			/** @var ActiveRecord $relatedModel */
 			$relatedModel = ReflectionHelper::LoadClassByName($relatedModelClassName);
-			if (is_callable($relationRule)) {
+			if (ReflectionHelper::is_closure($relationRule)) {
 				$relationRule($findCondition, $relatedModel);
 			} elseif (is_array($relationRule)) {
 				if (null !== $requestModel = $this->loadedModel::findModel($modelKey)) {//null будет в случае, если объект уже совсем начисто удалён из БД, в этом случае пытаемся сделать хоть какое-то сопоставление

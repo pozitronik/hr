@@ -6,6 +6,7 @@ namespace app\modules\history\models;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\users\models\Users;
 use Exception;
+use pozitronik\helpers\ReflectionHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -47,7 +48,7 @@ class HistoryEvent extends Model implements HistoryEventInterface {
 			$content = self::ActionsFormatterDefault($this->actions);//default formatter
 		} elseif (is_string($this->actionsFormatter)) {
 			$content = $this->actionsFormatter;
-		} elseif (is_callable($this->actionsFormatter)) {
+		} elseif (ReflectionHelper::is_closure($this->actionsFormatter)) {
 			$content = call_user_func($this->actionsFormatter, $this->actions);
 		} elseif (is_array($this->actionsFormatter)) {//['view', parameters]
 			$view = ArrayHelper::getValue($this->actionsFormatter, 0, new InvalidConfigException('actionsFormatter array config must contain view path as first item'));

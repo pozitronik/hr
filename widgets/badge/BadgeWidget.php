@@ -81,7 +81,7 @@ class BadgeWidget extends CachedWidget {
 				}
 			}
 
-			if (is_callable($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap, $model);
+			if (ReflectionHelper::is_closure($this->optionsMap)) $this->optionsMap = call_user_func($this->optionsMap, $model);
 
 			if (null === $this->optionsMapAttribute && $model->hasProperty('primaryKey')) {
 				$badgeHtmlOptions = (null === $model->primaryKey)?$this->badgeOptions:ArrayHelper::getValue($this->optionsMap, $model->primaryKey, $this->badgeOptions);
