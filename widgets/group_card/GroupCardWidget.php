@@ -13,10 +13,12 @@ use Throwable;
  *
  * @property Groups $group
  * @property string $view
+ * @property array $options Массив произвольных параметров, передаваемых внутрь вьюхи, и учитываемый только ей.
  */
 class GroupCardWidget extends CachedWidget {
 	public $group;
 	public $view = 'group_card';
+	public $options = [];
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -34,7 +36,8 @@ class GroupCardWidget extends CachedWidget {
 	 */
 	public function run():string {
 		return $this->render($this->view, [
-			'group' => $this->group
+			'group' => $this->group,
+			'options' => $this->options
 		]);
 	}
 }
