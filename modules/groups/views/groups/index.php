@@ -17,6 +17,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
+use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -72,7 +73,16 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'name',
 			'value' => static function(Groups $model) {
-				return Html::a($model->name, ['profile', 'id' => $model->id]);
+				return BadgeWidget::widget([
+					'models' => $model,
+					'attribute' => 'name',
+					"badgeOptions" => [
+						'class' => "badge badge-info"
+					],
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => [GroupsModule::to('groups/profile'), 'id' => $model->id]
+				]);
 			},
 			'format' => 'raw'
 		],
