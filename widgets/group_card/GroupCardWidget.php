@@ -12,11 +12,11 @@ use Throwable;
  * @package app\components\group_card
  *
  * @property Groups $group
- * @property bool $short
+ * @property string $view
  */
 class GroupCardWidget extends CachedWidget {
 	public $group;
-	public $short = false;
+	public $view = 'group_card';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -33,7 +33,7 @@ class GroupCardWidget extends CachedWidget {
 	 * @throws Throwable
 	 */
 	public function run():string {
-		return $this->render($this->short?'group_info':'group_card', [
+		return $this->render($this->view, [
 			'group' => $this->group
 		]);
 	}

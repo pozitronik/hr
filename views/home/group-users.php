@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'filterModel' => $searchModel,
 	'panel' => [
 		'heading' => $this->title,
-		'before' => GroupCardWidget::widget(['group' => $group, 'short' => true])
+		'before' => GroupCardWidget::widget(['group' => $group, 'view' => 'group_info'])
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
