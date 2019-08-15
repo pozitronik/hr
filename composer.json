@@ -55,7 +55,7 @@
 		"kartik-v/yii2-widget-touchspin": "dev-master",
 		"kartik-v/yii2-widget-typeahead": "dev-master",
 		"desandro/masonry": "dev-master",
-		"metafizzy/masonry": "dev-master",
+		"metafizzy/isotope": "dev-master",
 		"pozitronik/yii2-cachedwidget": "*"
 	},
 	"require-dev": {
@@ -113,7 +113,7 @@
 		},
 		{
 			"type": "vcs",
-			"url": "https://github.com/metafizzy/isotope"
+			"url": "https://github.com/pozitronik/isotope"
 		},
 		{
 			"type": "vcs",
