@@ -89,7 +89,18 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'type',
-			'value' => 'relGroupTypes.name',
+			'value' => function (Groups $group) {
+				return BadgeWidget::widget([
+					'models' => $group->relGroupTypes,
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
+				]);
+			},
+			'format' => 'raw',
 			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Тип'],
 			'filterWidgetOptions' => [
