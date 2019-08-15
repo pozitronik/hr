@@ -62,11 +62,12 @@ trait ARExtended {
 
 	/**
 	 * По итерируемому списку ключей вернёт список подходящих моделей
-	 * @param int[] $keys Итерируемый список ключей
+	 * @param null|int[] $keys Итерируемый список ключей
 	 * @return self[]
 	 * @throws Throwable
 	 */
-	public static function findModels(array $keys):array {
+	public static function findModels(?array $keys):array {
+		if (null === $keys) return [];
 		$result = [];
 		foreach ($keys as $key) {
 			if (null !== $model = static::findModel($key)) $result[] = $model;
