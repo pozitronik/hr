@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -14,8 +15,8 @@ use yii\data\ActiveDataProvider;
  * @property int[] $positions Фильтр должностей
  * @property int[] $roles Фильтр ролей
  * @property int[] $privileges Фильтр привилегий
- * @property int $positionType Фильтр типов должностей
- * @property int $groupId Фильтр id групп
+ * @property int[] $positionType Фильтр типов должностей
+ * @property int[] $groupId Фильтр id групп
  */
 class UsersSearch extends Users {
 	public $groupName;
@@ -56,6 +57,7 @@ class UsersSearch extends Users {
 				'username',
 				'login',
 				'email',
+				'groupId',
 				'groupName' => [
 					'asc' => ['sys_groups.name' => SORT_ASC],
 					'desc' => ['sys_groups.name' => SORT_DESC]
@@ -98,9 +100,9 @@ class UsersSearch extends Users {
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges])
 			->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->positionType])
-			->andFilterWhere(['=', 'sys_groups.id', $this->groupId]);
+			->andFilterWhere(['in', 'sys_groups.id', $this->groupId]);
 
-//		Yii::debug($query->createCommand()->rawSql,'sql');
+		Yii::debug($query->createCommand()->rawSql,'sql');
 		return $dataProvider;
 	}
 }
