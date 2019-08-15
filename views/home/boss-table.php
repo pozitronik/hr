@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'header' => 'Сотрудники',
 			'format' => 'raw',
 			'value' => static function(Groups $model) {
-				return GroupCardWidget::widget(['group' => $model, 'view' => 'group_users']);
+				return GroupCardWidget::widget(['group' => $model, 'view' => 'group_users', 'options' => ['column_view' => true]]);
 			},
 			'pageSummary' => static function($summary, $data, $widget) use ($dataProvider) {
 				$groupsScope = ArrayHelper::getColumn($dataProvider->models, 'id');
