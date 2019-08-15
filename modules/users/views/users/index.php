@@ -6,9 +6,11 @@ declare(strict_types = 1);
  * @var View $this
  * @var UsersSearch $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var Groups[] $groupsScope Группы, в скоупе которых проводился поиск (не разрешённые, а выбранные)
  * @deprecated
  */
 
+use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
@@ -40,7 +42,17 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)")
+		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['пользователь', 'пользователя', 'пользователей']).")":" (нет пользователей)"),
+		'before' => ([] === $groupsScope)?false:BadgeWidget::widget([
+				'models' => $groupsScope,
+				'useBadges' => true,
+				'attribute' => 'name',
+				'unbadgedCount' => false,
+				'itemsSeparator' => false,
+				"optionsMap" => RefGroupTypes::colorStyleOptions(),
+				"optionsMapAttribute" => 'type',
+				'prefix' => 'Ищем в группах: '
+			]).Html::a('Очистить', UsersModule::to(), ['class' => 'btn btn-xs btn-info pull-right'])
 	],
 	'summary' => null !== $searchModel?Html::a('Новый пользователь', UsersModule::to(['users/create']), ['class' => 'btn btn-success summary-content']):null,
 	'showOnEmpty' => true,
@@ -127,7 +139,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 3,
+					'unbadgedCount' => false,
 					'itemsSeparator' => false,
 					"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
 					'linkScheme' => ['', 'UsersSearch[positionType]' => 'id']
@@ -153,6 +165,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'itemsSeparator' => false,
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
+					'unbadgedCount' => false,
 					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => 'id']
 				]);
 			},
@@ -174,10 +187,10 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					'models' => $model->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
+					'unbadgedCount' => false,
 					"itemsSeparator" => false,
 					"optionsMap" => RefUserRoles::colorStyleOptions(),
-					'linkScheme' => ['', 'UsersSearch[roles]' =>  'id']
+					'linkScheme' => ['', 'UsersSearch[roles]' => 'id']
 				]);
 			},
 			'format' => 'raw'
