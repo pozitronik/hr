@@ -156,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'usersCount',
 			'value' => function(Groups $group) {
-				return GroupCardWidget::widget(['group' => $group, 'view' => 'group_users']);
+				return GroupCardWidget::widget(['group' => $group, 'view' => 'group_users', 'options' =>['column_view' => true]]);
 			},
 			'label' => 'Сотрудники',
 			'headerOptions' => ['class' => 'text-center'],
