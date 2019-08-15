@@ -5,6 +5,7 @@ namespace app\modules\users\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
+use app\modules\groups\models\Groups;
 use app\modules\users\models\UsersSearch;
 use Throwable;
 use Yii;
@@ -41,6 +42,7 @@ class UsersController extends WigetableController {
 	/**
 	 * Основной список пользователей
 	 * @return string
+	 * @throws Throwable
 	 */
 	public function actionIndex():string {
 		$params = Yii::$app->request->queryParams;
@@ -48,10 +50,10 @@ class UsersController extends WigetableController {
 		$allowedGroups = [];
 		//Проверяем доступы к списку юзеров
 
-		return $this->render('index', [
-			'searchModel' => $searchModel,
-			'dataProvider' => $searchModel->search($params, $allowedGroups)
-		]);
+		$dataProvider = $searchModel->search($params, $allowedGroups);
+		$groupsScope = Groups::findModels($searchModel->groupId);
+
+		return $this->render('index', compact('searchModel', 'dataProvider', 'groupsScope'));
 	}
 
 	/**
