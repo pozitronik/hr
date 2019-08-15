@@ -30,6 +30,7 @@ class GroupsController extends WigetableController {
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new GroupsSearch();
 
+		/** @noinspection RequireParameterInspection */
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $searchModel->search($params)
