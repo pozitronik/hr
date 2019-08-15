@@ -16,7 +16,9 @@ use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
@@ -113,11 +115,36 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class' => DataColumn::class,
 			'attribute' => 'leaders',
 			'value' => static function(Groups $model) {
-				$users = [];
-				foreach ($model->leaders as $leader) {
-					$users[] = Users::a($leader->username, ['users/profile', 'id' => $leader->id]);
-				}
-				return implode(", ", $users);
+				return BadgeWidget::widget([
+					'models' => static function() use ($model) {
+						$result = [];
+						foreach ($model->leaders as $leader) {
+							$result[] = BadgeWidget::widget([
+								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
+								'attribute' => 'name',
+								'useBadges' => true,
+								'itemsSeparator' => false,
+								"optionsMap" => static function() {
+									return RefUserRoles::colorStyleOptions();
+								},
+								'prefix' => BadgeWidget::widget([
+										'models' => $leader,
+										'useBadges' => false,
+										'attribute' => 'username',
+										'unbadgedCount' => 3,
+										'itemsSeparator' => false,
+										'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
+									]).': ',
+								'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
+							]);
+						}
+						return $result;
+					},
+					'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
+					'badgeOptions' => [
+						'class' => "pull-right"
+					]
+				]);
 			},
 			'format' => 'raw',
 			'filterType' => GridView::FILTER_SELECT2,
