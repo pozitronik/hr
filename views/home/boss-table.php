@@ -51,9 +51,14 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Groups $model) {
 				return BadgeWidget::widget([
 					'models' => $model,
-					'useBadges' => false,
 					'attribute' => 'name',
-					'linkScheme' => [GroupsModule::to(['groups/groups']), 'id' => $model->id]
+					"badgeOptions" => [
+						'class' => "badge badge-info"
+					],
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => ['users', 'UsersSearch[groupId]' => $model->id]
+
 				]);
 			},
 			'format' => 'raw'
