@@ -11,5 +11,6 @@ use yii\web\View; ?>
 
 <?= $this->render('@app/modules/users/views/users/index', [
 	'searchModel' => null,
-	'dataProvider' => $dataProvider
+	'dataProvider' => $dataProvider,
+	'groupsScope' => []
 ]) ?>
