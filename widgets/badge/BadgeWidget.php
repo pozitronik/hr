@@ -67,7 +67,6 @@ class BadgeWidget extends CachedWidget {
 
 		if (!is_array($this->models)) $this->models = [$this->models];
 
-
 		/** @var Model|ActiveRecord $model */
 
 		foreach ($this->models as $model) {
@@ -94,9 +93,16 @@ class BadgeWidget extends CachedWidget {
 			if (!is_array($badgeHtmlOptions)) $badgeHtmlOptions = $this->badgeOptions;
 			if ($this->linkScheme) {
 				$currentLinkScheme = $this->linkScheme;
-				array_walk($currentLinkScheme, static function(&$value, $key) use ($model) {//подстановка в схему значений из модели
-					if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
+				$arrayedParameters = [];
+				array_walk($currentLinkScheme, static function(&$value, $key) use ($model, &$arrayedParameters) {//подстановка в схему значений из модели
+					if (is_array($value)) {//value passed as SomeParameter => [a,b,c,...] => convert to SomeParameter[1] => a, SomeParameter[2] => b, SomeParameter[3] => c
+						foreach ($value as $index => $item) {
+							$arrayedParameters["{$key}[{$index}]"] = $item;
+						}
+					} else if ($model->hasProperty($value) && false !== $attributeValue = ArrayHelper::getValue($model, $value, false)) $value = $attributeValue;
+
 				});
+				if ([] !== $arrayedParameters) array_merge($currentLinkScheme, $arrayedParameters);//если в схеме были переданы значения массивом, включаем их разбор в схему
 				$badgeContent = Html::a(ArrayHelper::getValue($model, $this->attribute), $currentLinkScheme);
 			} else {
 				$badgeContent = ArrayHelper::getValue($model, $this->attribute);
