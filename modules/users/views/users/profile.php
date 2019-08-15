@@ -15,6 +15,7 @@ use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
+use pozitronik\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\web\View;
 use yii\helpers\Html;
@@ -49,7 +50,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
 					"optionsMap" => RefUserPositions::colorStyleOptions(),
-					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position] + $model->getGroupsScope('UsersSearch[groupId]')
+					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position, 'UsersSearch[groupId]' => ArrayHelper::getColumn($model->relGroups, 'id', [])]
 				]) ?>
 			</div>
 			<div class="col-md-3">
