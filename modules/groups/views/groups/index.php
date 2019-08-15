@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'type',
-			'value' => function(Groups $group) {
+			'value' => static function(Groups $group) {
 				return BadgeWidget::widget([
 					'models' => $group->relGroupTypes,
 					'useBadges' => true,
@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'usersCount',
-			'value' => function(Groups $group) {
+			'value' => static function(Groups $group) {
 				return GroupCardWidget::widget(['group' => $group, 'view' => 'group_users', 'options' =>['column_view' => true]]);
 			},
 			'label' => 'Сотрудники',
@@ -165,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'childGroupsCount',
 			'label' => 'Подгруппы',
-			'value' =>  function(Groups $group) {
+			'value' =>  static function(Groups $group) {
 				return BadgeWidget::widget([
 					'models' => $group,
 					'attribute' => 'childGroupsCount',

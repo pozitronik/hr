@@ -14,7 +14,7 @@ use app\widgets\group_card\GroupCardWidget;
 use yii\web\View;
 
 ?>
-<?= GroupCardWidget::widget(['group' => $group, 'view' => 'group_users', 'options' => ['column_view' => false]]); ?>
+<?= GroupCardWidget::widget(['group' => $group, 'view' => 'group_users', 'options' => ['column_view' => false]]) ?>
 
 <?= BadgeWidget::widget([
 	'models' => static function() use ($group) {
