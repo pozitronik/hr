@@ -75,10 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefGroupTypes::colorStyleOptions();
-					},
-					'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefGroupTypes']
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					'linkScheme' => [Url::current(['GroupsSearch[type]' => $model->type])]
 				]);
 			},
 			'filterType' => ReferenceSelectWidget::class,
