@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Groups $group
  */
 
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositionTypes;
@@ -31,6 +32,15 @@ use yii\web\View;
 		<h3 class="panel-title"><?= BadgeWidget::widget([
 				'models' => $group,
 				'attribute' => 'name',
+				'prefix' => BadgeWidget::widget([
+					'models' => $group->relGroupTypes,
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
+				]),
 				"badgeOptions" => [
 					'class' => "badge badge-info"
 				],
