@@ -164,7 +164,16 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'childGroupsCount',
-			'header' => IconsHelper::subgroups(),
+			'label' => 'Подгруппы',
+			'value' =>  function(Groups $group) {
+				return BadgeWidget::widget([
+					'models' => $group,
+					'attribute' => 'childGroupsCount',
+					'badgeOptions' => ['class' => 'badge pull-right'],
+					'linkScheme' => [GroupsModule::to('groups/groups'), 'id' => 'id']
+				]);
+			},
+			'format' => 'raw',
 			'headerOptions' => ['class' => 'text-center']
 		],
 //				'comment',
