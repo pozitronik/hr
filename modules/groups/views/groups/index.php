@@ -20,6 +20,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
+use app\widgets\group_card\GroupCardWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -91,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'type',
-			'value' => function (Groups $group) {
+			'value' => function(Groups $group) {
 				return BadgeWidget::widget([
 					'models' => $group->relGroupTypes,
 					'useBadges' => true,
@@ -154,8 +155,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		[
 			'attribute' => 'usersCount',
-			'header' => IconsHelper::users(),
-			'headerOptions' => ['class' => 'text-center']
+			'value' => function(Groups $group) {
+				return GroupCardWidget::widget(['group' => $group, 'view' => 'group_users']);
+			},
+			'label' => 'Сотрудники',
+			'headerOptions' => ['class' => 'text-center'],
+			'format' => 'raw'
 		],
 		[
 			'attribute' => 'childGroupsCount',
