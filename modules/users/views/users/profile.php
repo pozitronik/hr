@@ -49,7 +49,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
 					"optionsMap" => RefUserPositions::colorStyleOptions(),
-					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position]
+					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position] + $model->getGroupsScope('UsersSearch[groupId]')
 				]) ?>
 			</div>
 			<div class="col-md-3">
