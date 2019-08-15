@@ -4,13 +4,13 @@ declare(strict_types = 1);
 namespace app\widgets\badge;
 
 use pozitronik\helpers\ArrayHelper;
+use pozitronik\helpers\ReflectionHelper;
 use pozitronik\widgets\CachedWidget;
 use Throwable;
 use yii\base\DynamicModel;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
-use yii\web\ServerErrorHttpException;
 
 /**
  * Class BadgeWidget
@@ -63,11 +63,7 @@ class BadgeWidget extends CachedWidget {
 		$moreBadge = '';
 
 //		if (null === $this->models) throw new InvalidConfigException('Model property not properly configured');
-		try {
-			if (is_callable($this->models)) $this->models = call_user_func($this->models);
-		} catch (Throwable $t) {
-			throw new ServerErrorHttpException("Cannot run {(string)$this->models}");
-		}
+		if (ReflectionHelper::is_closure ($this->models)) $this->models = call_user_func($this->models);
 
 		if (!is_array($this->models)) $this->models = [$this->models];
 
