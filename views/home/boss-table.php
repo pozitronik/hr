@@ -91,28 +91,36 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class' => DataColumn::class,
 			'attribute' => 'leaders',
 			'value' => static function(Groups $model) {
-				$items = [];
-				foreach ($model->leaders as $leader) {
-					$items[] = BadgeWidget::widget([
-						'models' => BadgeWidget::widget([
-							'prefix' => BadgeWidget::widget([
-									'models' => $leader,
-									'useBadges' => false,
-									'attribute' => 'username',
-									'unbadgedCount' => 3,
-									'itemsSeparator' => false
-								]).': ',
-							'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
-							'attribute' => 'name',
-							'useBadges' => true,
-							'itemsSeparator' => false,
-							"optionsMap" => RefUserRoles::colorStyleOptions()
-						]),
-						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => $leader->id]
-					]);
-				}
-
-				return implode('', $items);
+				return BadgeWidget::widget([
+					'models' => static function() use ($model) {
+						$result = [];
+						foreach ($model->leaders as $leader) {
+							$result[] = BadgeWidget::widget([
+								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
+								'attribute' => 'name',
+								'useBadges' => true,
+								'itemsSeparator' => false,
+								"optionsMap" => static function() {
+									return RefUserRoles::colorStyleOptions();
+								},
+								'prefix' => BadgeWidget::widget([
+										'models' => $leader,
+										'useBadges' => false,
+										'attribute' => 'username',
+										'unbadgedCount' => 3,
+										'itemsSeparator' => false,
+										'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
+									]).': ',
+								'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
+							]);
+						}
+						return $result;
+					},
+					'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
+					'badgeOptions' => [
+						'class' => "pull-right"
+					]
+				]);
 			},
 			'headerOptions' => ['class' => 'text-center'],
 			'format' => 'raw',
