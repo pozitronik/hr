@@ -139,9 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										'models' => $groupRoles,
 										'attribute' => 'name',
 										'itemsSeparator' => false,
-										"optionsMap" => static function() {
-											return RefUserRoles::colorStyleOptions();
-										}
+										"optionsMap" => RefUserRoles::colorStyleOptions()
 									])).' в '.BadgeWidget::widget([
 										'models' => $userGroup->name,
 										"badgeOptions" => [
