@@ -103,9 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							'attribute' => 'name',
 							'useBadges' => true,
 							'itemsSeparator' => false,
-							"optionsMap" => static function() {
-								return RefUserRoles::colorStyleOptions();
-							}
+							"optionsMap" => RefUserRoles::colorStyleOptions()
 						]),
 						'linkScheme' => [UsersModule::to(['users/groups']), 'id' => $leader->id]
 					]);
