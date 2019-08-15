@@ -19,6 +19,7 @@ use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
+use app\widgets\group_card\GroupCardWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;
@@ -135,37 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'header' => 'Сотрудники',
 			'format' => 'raw',
 			'value' => static function(Groups $model) {
-				$positionTypeData = $model->getGroupPositionTypeData();
-				$items[] = BadgeWidget::widget([
-					'models' => "Всего: {$model->usersCount}",
-					"badgeOptions" => [
-						'class' => "badge badge-info pull-left"
-					],
-					'linkScheme' => ['users', 'UsersSearch[groupId]' => $model->id]
-
-				]);
-				foreach ($positionTypeData as $positionId => $positionCount) {
-					/** @var RefUserPositionTypes $positionType */
-					$positionType = RefUserPositionTypes::findModel($positionId);
-					$items[] = BadgeWidget::widget([
-						'models' => "{$positionType->name}: $positionCount",
-						"badgeOptions" => [
-							'style' => "float:left; background: {$positionType->color}; color: $positionType->textcolor"
-						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $model->id]
-
-					]);
-				}
-				$items[] = BadgeWidget::widget([
-					'models' => "Вакансии: {$model->vacancyCount}",
-					"badgeOptions" => [
-						'class' => "badge badge-danger pull-right"
-					],
-					'linkScheme' => [VacancyModule::to('groups'), 'id' => $model->id]
-
-				]);
-
-				return implode('', $items);
+				return GroupCardWidget::widget(['group' => $model, 'view' => 'group_users']);
 			},
 			'pageSummary' => static function($summary, $data, $widget) use ($dataProvider) {
 				$groupsScope = ArrayHelper::getColumn($dataProvider->models, 'id');
