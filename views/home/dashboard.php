@@ -7,9 +7,12 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\assets\IsotopeAsset;
 use app\assets\MasonryAsset;
 use app\modules\groups\models\GroupsSearch;
 use app\widgets\group_card\GroupCardWidget;
+use yii\bootstrap\Button;
+use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -19,13 +22,22 @@ $this->title = 'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
 MasonryAsset::register($this);
+IsotopeAsset::register($this);
 $this->registerJs("normalize_widths()", View::POS_END);
 $this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
+$this->registerJs("init_isotope()", View::POS_END);
 ?>
 
 <div class="panel">
 	<div class="panel-heading">
 		<div class="panel-control">
+			<?= ButtonGroup::widget([
+				'buttons' => [
+					Button::widget(['label' => 'Тип','options' => [
+						'class' => 'btn btm-xs btn-info sort-by-type',
+					]])
+				]
+			]) ?>
 		</div>
 		<h3 class="panel-title">
 			<div class='pull-left'>
