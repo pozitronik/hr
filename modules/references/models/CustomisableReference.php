@@ -8,6 +8,7 @@ use app\widgets\badge\BadgeWidget;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\Expression;
 use yii\helpers\Html;
 
 /**
@@ -112,18 +113,7 @@ class CustomisableReference extends Reference {
 	 */
 	public static function colorStyleOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
-			$options = [];
-			/** @var self[] $items */
-			$items = self::find()->active()->all();
-			foreach ($items as $referenceItem) {
-				$color = empty($referenceItem->color)?'gray':$referenceItem->color;
-				$textColor = empty($referenceItem->textcolor)?'white':$referenceItem->textcolor;
-				$options[$referenceItem->id] = [
-					'style' => "background: {$color}; color: {$textColor}"
-				];
-			}
-
-			return $options;
+			return self::find()->select(new Expression('CONCAT ("background: " , IFNULL(color, "gray"), "; color: ", IFNULL(textcolor, "white")) AS style'))->active()->asArray()->all();
 		});
 
 	}
