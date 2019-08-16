@@ -177,3 +177,20 @@ div.sp-replacer > div.sp-dd {
 	margin-bottom: 10px;
 	border: 1px solid #e7ecf3;
 }
+
+table.panel-header-table {
+	width:100%;
+}
+
+.btn-group.round-borders label.btn:first {
+	border-radius: 5px 0px 0px 5px;
+}
+
+.btn-group.round-borders label.btn:last {
+	border-radius: 0px 5px 5px 0px;
+}
+
+
+input[type=radio]:checked+label.btn{
+	box-shadow: inset 0 2px 1px rgba(0,0,0,0.2);
+}

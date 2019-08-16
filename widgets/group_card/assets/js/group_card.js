@@ -45,6 +45,7 @@ function init_isotope() {
 	Iso = new Isotope('.grid', {
 		itemSelector: '.panel-card', layoutMode: 'fitRows', getSortData: {
 			count: '.count parseInt',
+			vacancyCount: '.vacancy-count parseInt',
 			type: '.group-type-name',
 			// weight: function(itemElem) {
 			// 	var weight = $('.weight').text();
@@ -53,26 +54,17 @@ function init_isotope() {
 		}
 	});
 
-// bind sort button click
 	$('.sort-by-type').bind('click', function(event) {
 		Iso.arrange({sortBy: 'type'});
-		// Msnry.layout();
+		$(this).addClass('active');
 	});
-
-// change is-checked class on buttons
-	var buttonGroups = document.querySelectorAll('.button-group');
-	for (var i = 0; i < buttonGroups.length; i++) {
-		buttonGroups[i].addEventListener('click', onButtonGroupClick);
-	}
-
-	function onButtonGroupClick(event) {
-		// only button clicks
-		if (!matchesSelector(event.target, '.button')) {
-			return;
-		}
-		var button = event.target;
-		button.parentNode.querySelector('.is-checked').classList.remove('is-checked');
-		button.classList.add('is-checked');
-	}
+	$('.sort-by-count').bind('click', function(event) {
+		Iso.arrange({sortBy: 'count'});
+		$(this).addClass('active');
+	});
+	$('.sort-by-vacancy').bind('click', function(event) {
+		Iso.arrange({sortBy: 'vacancy'});
+		$(this).addClass('active');
+	});
 
 }

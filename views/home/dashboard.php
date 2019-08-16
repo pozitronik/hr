@@ -30,26 +30,52 @@ $this->registerJs("init_isotope()", View::POS_END);
 
 <div class="panel">
 	<div class="panel-heading">
-		<div class="panel-control">
-			<?= ButtonGroup::widget([
-				'buttons' => [
-					Button::widget(['label' => 'Тип','options' => [
-						'class' => 'btn btm-xs btn-info sort-by-type',
-					]])
-				]
-			]) ?>
-		</div>
-		<h3 class="panel-title">
-			<div class='pull-left'>
-				<?= Html::encode($this->title) ?>
-			</div>
-			<?= Html::a("<div class='pull-right'>Таблица</div>", Url::current(['t' => 1])) ?>
-		</h3>
+		<table class="panel-header-table">
+			<tr>
+				<td style="width: 1%">
+					<h3 class="panel-title pull-left">
+						<?= Html::encode($this->title) ?>
+					</h3>
+				</td>
+				<td>
+					<div class="panel-center">
+						<?= Html::radioList('Сортировка', null, [
+							'sort-by-type' => 'По типу',
+							'sort-by-count' => 'По сотрудникам',
+							'sort-by-vacancy' => 'По вакансиям'
+						], [
+							'item' => function($index, $label, $name, $checked, $value) {
+								return Html::input('radio', $name, $value, ['id' => $value, 'class' => 'hidden']).Html::label($label, $value, ['class' => "btn btn-info $value"]);
+
+//								return Html::radio($name,
+//									$checked,
+//									[
+//										'label' => $label,
+//										'value' => $value,
+//										'labelOptions' => ['class' => "btn btn-info $value"]
+//									]);
+
+							},
+							'class' => 'round-borders btn-group'
+						]) ?>
+					</div>
+				</td>
+				<td>
+					<div class="panel-control">
+						<?= Html::a("Таблица", Url::current(['t' => 1]), [
+							'class' => 'btn btn-xs btn-info',
+						]) ?>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+
 	</div>
 </div>
 <div class="grid">
 	<div class="grid-sizer"></div>
-	<?php foreach ($dataProvider->models as $group): ?>
+	<?php foreach ($dataProvider->models  as $group): ?>
 		<?= GroupCardWidget::widget(['group' => $group]) ?>
 	<?php endforeach; ?>
 </div>
