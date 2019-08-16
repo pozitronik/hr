@@ -465,19 +465,22 @@ class Groups extends ActiveRecordExtended {
 	 * @return int[]
 	 */
 	public function getGroupPositionTypeData():array {
-		$positionTypes = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
-			->joinWith(['relGroups'], false)
-			->groupBy(['ref_user_position_types.id'])
-			->where(['sys_groups.id' => $this->id])
-			->asArray()
-			->all();
+		$id = $this->id;
+		return Yii::$app->cache->getOrSet(static::class."getGroupPositionTypeData{$id}", static function() use ($id) {
+			$positionTypes = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
+				->joinWith(['relGroups'], false)
+				->groupBy(['ref_user_position_types.id'])
+				->where(['sys_groups.id' => $id])
+				->asArray()
+				->all();
 
-		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
-		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
-		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
-			$value = ArrayHelper::getValue($positionTypes, $key, 0);
+			$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
+			$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->select('id')->active()->asArray()->all(), 'id'), 0);
+			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
+				$value = (int)ArrayHelper::getValue($positionTypes, $key, 0);
+			});
+			return $allPositionTypes;
 		});
-		return $allPositionTypes;
 	}
 
 	/**
