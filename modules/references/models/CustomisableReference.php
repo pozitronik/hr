@@ -18,6 +18,7 @@ use yii\helpers\Html;
  *
  * @property string $color -- html code in rgb(r,g,b) format
  * @property string $textcolor -- css font options
+ * @property-read string $style -- css style (combined font/background colors). It is preferred property, it work much faster!
  */
 class CustomisableReference extends Reference {
 
@@ -154,5 +155,16 @@ class CustomisableReference extends Reference {
 	 */
 	public function getFont():?string {
 		return null;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getStyle():string {
+		$id = $this->id;
+		return Yii::$app->cache->getOrSet(static::class."getStyle{$this->id}", static function() use ($id) {
+			$styleArray = self::find()->select(new Expression('CONCAT ("background: " , IFNULL(color, "gray"), "; color: ", IFNULL(textcolor, "white")) AS style'))->asArray()->where(['id' => $id])->one();
+			return $styleArray['style'];
+		});
 	}
 }
