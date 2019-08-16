@@ -25,6 +25,8 @@ class RefUserPositionTypes extends CustomisableReference {
 	public $menuCaption = 'Типы должностей';
 	public $menuIcon = false;
 
+	public $count = 0;//Псевдоаттрибут, заполняется при подсчёте среза по типам пользователей
+
 	/**
 	 * {@inheritDoc}
 	 */
