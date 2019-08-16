@@ -102,7 +102,7 @@ class UsersSearch extends Users {
 			->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->positionType])
 			->andFilterWhere(['in', 'sys_groups.id', $this->groupId]);
 
-		Yii::debug($query->createCommand()->rawSql,'sql');
+//		Yii::debug($query->createCommand()->rawSql,'sql');
 		return $dataProvider;
 	}
 }
