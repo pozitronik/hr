@@ -489,19 +489,22 @@ class Groups extends ActiveRecordExtended {
 	 * @return int[]
 	 */
 	public static function getGroupScopePositionTypeData(array $scope):array {
-		$positionTypes = RefUserPositionTypes::find()
-			->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
-			->joinWith(['relGroups'], false)
-			->groupBy(['ref_user_position_types.id'])
-			->where(['sys_groups.id' => $scope])
-			->asArray()
-			->all();
-		$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
-		$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->active()->all(), 'id'), 0);
-		array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
-			$value = ArrayHelper::getValue($positionTypes, $key, 0);
+		$cacheKey = json_encode($scope);
+		return Yii::$app->cache->getOrSet(static::class."getGroupScopePositionTypeData{$cacheKey}", static function() use ($scope) {
+			$positionTypes = RefUserPositionTypes::find()
+				->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
+				->joinWith(['relGroups'], false)
+				->groupBy(['ref_user_position_types.id'])
+				->where(['sys_groups.id' => $scope])
+				->asArray()
+				->all();
+			$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
+			$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->select('id')->active()->asArray()->all(), 'id'), 0);
+			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
+				$value = ArrayHelper::getValue($positionTypes, $key, 0);
+			});
+			return $allPositionTypes;
 		});
-		return $allPositionTypes;
 	}
 
 	/**
