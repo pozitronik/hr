@@ -462,23 +462,23 @@ class Groups extends ActiveRecordExtended {
 
 	/**
 	 * Строит срез по типам должностей, демо-прототип
-	 * @return int[]
+	 * @return RefUserPositionTypes[]
 	 * Нужно заморочиться и переписать это на голый SQL, но у меня не хватает мозгов, поэтому обхожусь кешированием
 	 */
 	public function getGroupPositionTypeData():array {
 		$id = $this->id;
 		return Yii::$app->cache->getOrSet(static::class."getGroupPositionTypeData{$id}", static function() use ($id) {
-			$positionTypes = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
-				->joinWith(['relGroups'], false)
+			$allPositionTypes = RefUserPositionTypes::find()->active()->all();//Все справочники
+
+			$positionTypesCount = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])//только использованные в указанной группе
+			->joinWith(['relGroups'], false)
 				->groupBy(['ref_user_position_types.id'])
 				->where(['sys_groups.id' => $id])
 				->asArray()
 				->all();
 
-			$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
-			$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->select('id')->active()->asArray()->all(), 'id'), 0);
-			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
-				$value = (int)ArrayHelper::getValue($positionTypes, $key, 0);
+			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypesCount) {/*Немного индустский способ заполнения каунта пустых типов нулями*/
+				if (0 !== $count = (int)ArrayHelper::getValue($positionTypesCount, "$key.count", 0)) $value->count = $count;
 			});
 			return $allPositionTypes;
 		});
@@ -492,17 +492,17 @@ class Groups extends ActiveRecordExtended {
 	public static function getGroupScopePositionTypeData(array $scope):array {
 		$cacheKey = json_encode($scope);
 		return Yii::$app->cache->getOrSet(static::class."getGroupScopePositionTypeData{$cacheKey}", static function() use ($scope) {
-			$positionTypes = RefUserPositionTypes::find()
-				->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])
-				->joinWith(['relGroups'], false)
+			$allPositionTypes = RefUserPositionTypes::find()->active()->all();//Все справочники
+
+			$positionTypesCount = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])//только использованные в указанной группе
+			->joinWith(['relGroups'], false)
 				->groupBy(['ref_user_position_types.id'])
 				->where(['sys_groups.id' => $scope])
 				->asArray()
 				->all();
-			$positionTypes = ArrayHelper::map($positionTypes, 'id', 'count');
-			$allPositionTypes = array_fill_keys(ArrayHelper::getColumn(RefUserPositionTypes::find()->select('id')->active()->asArray()->all(), 'id'), 0);
-			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypes) {/*Немного индустский способ заполнения пустых типов нулями*/
-				$value = ArrayHelper::getValue($positionTypes, $key, 0);
+
+			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypesCount) {/*Немного индустский способ заполнения каунта пустых типов нулями*/
+				if (0 !== $count = (int)ArrayHelper::getValue($positionTypesCount, "$key.count", 0)) $value->count = $count;
 			});
 			return $allPositionTypes;
 		});
