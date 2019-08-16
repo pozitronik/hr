@@ -52,26 +52,24 @@ use yii\web\View;
 	</div>
 
 	<div class="panel-body">
-		<?php foreach ($group->getGroupPositionTypeData() as $positionId => $positionCount): ?>
-			<?php /** @var RefUserPositionTypes $positionType */
-			$positionType = RefUserPositionTypes::findModel($positionId); ?>
+		<?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 			<div class="row">
 				<div class="col-md-10"><?= BadgeWidget::widget([
 						'models' => $positionType->name,
 						"badgeOptions" => [
 							'style' => $positionType->style,
 						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $group->id]
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
 
 					]) ?></div>
 				<div class="col-md-2 pad-no">
 					<?= BadgeWidget::widget([
-						'models' => $positionCount,
+						'models' => $positionType->count,
 						"badgeOptions" => [
 							'style' => $positionType->style,
 							'class' => "badge pull-right"
 						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $group->id]
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
 
 					]) ?>
 				</div>

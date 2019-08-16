@@ -146,11 +146,9 @@ $this->params['breadcrumbs'][] = $this->title;
 					]
 
 				]);
-				foreach ($positionTypeData as $positionId => $positionCount) {
-					/** @var RefUserPositionTypes $positionType */
-					$positionType = RefUserPositionTypes::findModel($positionId);
+				foreach ($positionTypeData as $key => $positionType) {
 					$items[] = BadgeWidget::widget([
-						'models' => "{$positionType->name}: $positionCount",
+						'models' => "{$positionType->name}: $positionType->count",
 						"badgeOptions" => [
 							'style' => $positionType->style,
 							'class' => 'pull-left'
