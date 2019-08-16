@@ -463,6 +463,7 @@ class Groups extends ActiveRecordExtended {
 	/**
 	 * Строит срез по типам должностей, демо-прототип
 	 * @return int[]
+	 * Нужно заморочиться и переписать это на голый SQL, но у меня не хватает мозгов, поэтому обхожусь кешированием
 	 */
 	public function getGroupPositionTypeData():array {
 		$id = $this->id;
