@@ -18,13 +18,13 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-card">
+<div class="panel panel-card" data-type="<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>">
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
 				'models' => count($group->relUsers),
 				"badgeOptions" => [
-					'class' => "badge badge-info"
+					'class' => "badge badge-info count"
 				],
 				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
 			]) ?>
@@ -39,6 +39,9 @@ use yii\web\View;
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"badgeOptions" => [
+						'class' => 'badge group-type-name'
+					],
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]),
 				"badgeOptions" => [
@@ -89,7 +92,7 @@ use yii\web\View;
 				<?= BadgeWidget::widget([
 					'models' => count($group->relVacancy),
 					"badgeOptions" => [
-						'class' => "badge badge-danger pull-right"
+						'class' => "badge badge-danger pull-right vacancy-count"
 					],
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 				]) ?>
