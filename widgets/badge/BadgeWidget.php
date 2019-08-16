@@ -39,7 +39,7 @@ class BadgeWidget extends CachedWidget {
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
 	public $linkScheme = false;//Url-схема, например ['/groups/groups/profile', 'id' => 'id'] (Значение id будет взято из аттрибута id текущей модели), если false - то не используем ссылки
 	public $itemsSeparator = ', ';//Разделитель объектов
-	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([optionsMapAttributeValue => options])". Если установлен, перекрывает параметр $badgeOptions
+	public $optionsMap = []; //Массив HTML-опций для каждого бейджа ([optionsMapAttributeValue => options])". Если установлен, мержится с $badgeOptions
 	public $optionsMapAttribute; //Имя аттрибута, используемого для подбора значения в $optionsMap, если null, то используется primaryKey (или id, если модель не имеет первичного ключа)
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
@@ -63,7 +63,7 @@ class BadgeWidget extends CachedWidget {
 		$moreBadge = '';
 
 //		if (null === $this->models) throw new InvalidConfigException('Model property not properly configured');
-		if (ReflectionHelper::is_closure ($this->models)) $this->models = call_user_func($this->models);
+		if (ReflectionHelper::is_closure($this->models)) $this->models = call_user_func($this->models);
 
 		if (!is_array($this->models)) $this->models = [$this->models];
 
@@ -90,7 +90,7 @@ class BadgeWidget extends CachedWidget {
 				$badgeHtmlOptions = $model->hasProperty($this->optionsMapAttribute)?ArrayHelper::getValue($this->optionsMap, $model->{$this->optionsMapAttribute}, $this->badgeOptions):$this->badgeOptions;
 			}
 
-			if (!is_array($badgeHtmlOptions)) $badgeHtmlOptions = $this->badgeOptions;
+			$badgeHtmlOptions = !is_array($badgeHtmlOptions)?$this->badgeOptions:array_merge($this->badgeOptions, $badgeHtmlOptions);
 			if ($this->linkScheme) {
 				$currentLinkScheme = $this->linkScheme;
 				$arrayedParameters = [];
