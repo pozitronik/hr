@@ -487,7 +487,7 @@ class Groups extends ActiveRecordExtended {
 	/**
 	 * Строит срез по типам должностей для перечисленного набора групп
 	 * @param int[] $scope
-	 * @return int[]
+	 * @return RefUserPositionTypes[]
 	 */
 	public static function getGroupScopePositionTypeData(array $scope):array {
 		$cacheKey = json_encode($scope);
