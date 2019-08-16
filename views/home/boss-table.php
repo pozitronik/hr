@@ -152,7 +152,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					$items[] = BadgeWidget::widget([
 						'models' => "{$positionType->name}: $positionCount",
 						"badgeOptions" => [
-							'style' => "float:left; background: {$positionType->color}; color: $positionType->textcolor"
+							'style' => $positionType->style,
+							'class' => 'pull-left'
 						]
 					]);
 				}

@@ -30,7 +30,7 @@ use yii\web\View;
 	<?= BadgeWidget::widget([
 		'models' => "{$positionType->name}: {$positionCount}",
 		"badgeOptions" => [
-			'style' => "background: {$positionType->color}; color: $positionType->textcolor",
+			'style' => $positionType->style,
 			'class' => 'badge pull-left'
 		],
 		'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionId, 'UsersSearch[groupId]' => $group->id]
