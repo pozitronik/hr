@@ -157,19 +157,19 @@ div.sp-replacer > div.sp-dd {
 	background-repeat: no-repeat;
 	width: 100px;
 	height: 100px;
-	float:left;
+	float: left;
 	border-radius: 50%;
 	margin-top: -25px;
 }
 
 .profile-panel {
-	margin-top:25px;
+	margin-top: 25px;
 }
 
 #user-profile-tree-container {
-	position:absolute;
+	position: absolute;
 	z-index: 10000;
-	height:100%;
+	height: 100%;
 	width: 100%;
 	min-height: 400px;
 	min-width: 400px;
@@ -179,9 +179,9 @@ div.sp-replacer > div.sp-dd {
 }
 
 table.panel-header-table {
-	width:100%;
+	width: 100%;
 }
-
+/*todo: утащит в виджет*/
 .btn-group.round-borders label.btn:first {
 	border-radius: 5px 0px 0px 5px;
 }
@@ -190,7 +190,29 @@ table.panel-header-table {
 	border-radius: 0px 5px 5px 0px;
 }
 
+input[type=radio] + label.button {
+	cursor: pointer;
+	background-color: #00b3ca;
+	color: inherit;
+	padding: 6px 12px;
+	border-radius: 0;
+	border-top-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border: 1px solid transparent;
+	font-size: 13px;
+	line-height: 1.42857;
+	vertical-align: middle;
+	transition: all .25s;
+	color: #fff;
+}
 
-input[type=radio]:checked+label.btn{
-	box-shadow: inset 0 2px 1px rgba(0,0,0,0.2);
+input[type=radio] + label.button:focus, input[type=radio] + label.button:hover {
+	color: #fff;
+	background-color: #269abc;
+	border-color: #1b6d85;
+}
+
+input[type=radio]:checked + label.button {
+	box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.2) !important;
 }

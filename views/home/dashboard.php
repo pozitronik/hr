@@ -45,7 +45,7 @@ $this->registerJs("init_isotope()", View::POS_END);
 							'sort-by-vacancy' => 'По вакансиям'
 						], [
 							'item' => function($index, $label, $name, $checked, $value) {
-								return Html::input('radio', $name, $value, ['id' => $value, 'class' => 'hidden']).Html::label($label, $value, ['class' => "btn btn-info $value"]);
+								return Html::input('radio', $name, $value, ['id' => $value, 'class' => 'hidden']).Html::label($label, $value, ['class' => "button $value"]);
 
 //								return Html::radio($name,
 //									$checked,
@@ -61,6 +61,7 @@ $this->registerJs("init_isotope()", View::POS_END);
 					</div>
 				</td>
 				<td>
+
 					<div class="panel-control">
 						<?= Html::a("Таблица", Url::current(['t' => 1]), [
 							'class' => 'btn btn-xs btn-info',
