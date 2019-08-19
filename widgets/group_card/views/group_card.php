@@ -9,7 +9,6 @@ declare(strict_types = 1);
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
@@ -18,7 +17,7 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-card" data-type="<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>">
+<div class="panel panel-card filter-type<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>">
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
