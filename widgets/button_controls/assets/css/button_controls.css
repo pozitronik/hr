@@ -1,4 +1,9 @@
-input[type=radio] + label.button { /*Стиль дефолтной псевдокнопки*/
+div.button-group {
+	margin-left: 5px;
+	float: left;
+}
+
+input[type=radio] + label.button, input[type=checkbox] + label.button { /*Стиль дефолтной псевдокнопки*/
 	cursor: pointer;
 	background-color: transparent;
 	color: inherit;
@@ -17,17 +22,17 @@ input[type=radio] + label.button { /*Стиль дефолтной псевдо�
 	touch-action: manipulation;
 }
 
-input[type=radio] + label.button:focus, input[type=radio] + label.button:hover { /*Стиль псевдокнопки при наведении*/
+input[type=radio] + label.button:focus, input[type=radio] + label.button:hover, input[type=checkbox] + label.button:focus, input[type=checkbox] + label.button:hover { /*Стиль псевдокнопки при наведении*/
 	/*color: #fff;*/
 	background-color: rgba(170, 160, 171, 0.1);
 	border-color: #1b6d85;
 }
 
-input[type=radio]:checked + label.button { /*Стиль утопленной псевдокнопки*/
+input[type=radio]:checked + label.button, input[type=checkbox]:checked + label.button { /*Стиль утопленной псевдокнопки*/
 	box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.2) !important;
 }
 
-input[type=radio].ascending:checked + label.button { /*Стиль активной утопленной псевдокнопки*/
+input[type=radio].ascending:checked + label.button, input[type=checkbox].ascending:checked + label.button { /*Стиль активной утопленной псевдокнопки*/
 }
 
 input[type=radio]:checked + label.button:after {
