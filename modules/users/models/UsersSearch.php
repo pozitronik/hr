@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use Yii;
 use yii\data\ActiveDataProvider;
 
 /**

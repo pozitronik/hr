@@ -77,7 +77,7 @@ $this->registerJs("init_isotope()", View::POS_END);
 
 					<div class="panel-control">
 						<?= Html::a("Таблица", Url::current(['t' => 1]), [
-							'class' => 'btn btn-xs btn-info',
+							'class' => 'btn btn-xs btn-info'
 						]) ?>
 					</div>
 				</td>

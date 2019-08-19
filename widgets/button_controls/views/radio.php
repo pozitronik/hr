@@ -15,8 +15,8 @@ use yii\web\View;
 ?>
 
 <?= Html::radioList($name, $selection, $items, $options + [
-		'item' => function($index, $label, $name, $checked, $value) {
+		'item' => static function($index, $label, $name, $checked, $value) {
 			return Html::input('radio', $name, $value, ['id' => $value, 'class' => 'hidden']).Html::label($label, $value, ['class' => "button $value"]);
-		},
+		}
 	]) ?>
 

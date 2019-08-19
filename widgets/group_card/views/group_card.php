@@ -59,7 +59,7 @@ use yii\web\View;
 				<div class="col-md-10"><?= BadgeWidget::widget([
 						'models' => $positionType->name,
 						"badgeOptions" => [
-							'style' => $positionType->style,
+							'style' => $positionType->style
 						],
 						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
 
