@@ -182,17 +182,10 @@ table.panel-header-table {
 	width: 100%;
 }
 /*todo: утащит в виджет*/
-.btn-group.round-borders label.btn:first {
-	border-radius: 5px 0px 0px 5px;
-}
 
-.btn-group.round-borders label.btn:last {
-	border-radius: 0px 5px 5px 0px;
-}
-
-input[type=radio] + label.button {
+input[type=radio] + label.button {/*Стиль дефолтной псевдокнопки*/
 	cursor: pointer;
-	background-color: #00b3ca;
+	background-color: transparent;
 	color: inherit;
 	padding: 6px 12px;
 	border-radius: 0;
@@ -200,19 +193,21 @@ input[type=radio] + label.button {
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 0px;
 	border: 1px solid transparent;
+	border-color: rgba(0,0,0,0.09);
 	font-size: 13px;
 	line-height: 1.42857;
 	vertical-align: middle;
 	transition: all .25s;
-	color: #fff;
+	float:left;
+	touch-action: manipulation;
 }
 
-input[type=radio] + label.button:focus, input[type=radio] + label.button:hover {
-	color: #fff;
-	background-color: #269abc;
+input[type=radio] + label.button:focus, input[type=radio] + label.button:hover {/*Стиль псевдокнопки при наведении*/
+	/*color: #fff;*/
+	background-color: rgba(170, 160, 171, 0.1);
 	border-color: #1b6d85;
 }
 
-input[type=radio]:checked + label.button {
+input[type=radio]:checked + label.button {/*Стиль утопленной псевдокнопки*/
 	box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.2) !important;
 }
