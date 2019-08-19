@@ -45,10 +45,32 @@ $this->registerJs("init_isotope()", View::POS_END);
 								'sort-by-count' => 'По сотрудникам',
 								'sort-by-vacancy' => 'По вакансиям'
 							],
-							'radioMode' => true,
-							'options' => ['class' => 'round-borders btn-group']
+							'radioMode' => true
 						]) ?>
-
+						<?= ButtonControlsWidget::widget([
+							'name' => 'filter',
+							'items' => [
+								'filter-chapter' => 'Чаптеры',
+								'filter-cluster' => 'Кластеры',
+								'filter-command' => 'Команды',
+								'filter-tribe' => 'Трайбы',
+								'filter-fb' => 'Функциональные блоки',
+								'filter-tribe-fb' => 'Функциональные блоки трайба',
+//								'filter-division-level1' => 'Подразделения первого уровня',
+//								'filter-division-level2' => 'Подразделения второго уровня',
+//								'filter-division-level3' => 'Подразделения третьего уровня',
+//								'filter-division-level4' => 'Подразделения четвёртого уровня',
+//								'filter-division-level5' => 'Подразделения пятого уровня'
+							],
+							'selection' => [
+								'filter-chapter',
+								'filter-cluster',
+								'filter-command',
+								'filter-tribe',
+								'filter-fb',
+								'filter-tribe-fb'
+							]
+						]) ?>
 					</div>
 				</td>
 				<td>

@@ -54,7 +54,7 @@ function init_isotope() {
 		}
 	});
 
-	$('#sort-by-type').bind('click', function(event) {
+	$('#sort-by-type').bind('click', function(event) {/*todo: move to widget actions*/
 		if ($(this).is('.ascending')) {
 			Iso.arrange({sortBy: 'type', sortAscending: false});
 			$(this).removeClass('ascending');
@@ -86,4 +86,11 @@ function init_isotope() {
 		}
 	});
 
+	$('#filter-chapter').bind('click', function(event) {
+		if ($(this).is(':checked')) {
+			Iso.arrange({filter: "[data-type='1']"});
+		} else {
+			Iso.arrange({filter: "*"});
+		}
+	});
 }
