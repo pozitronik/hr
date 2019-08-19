@@ -21,7 +21,7 @@ class ButtonControlsWidget extends CachedWidget {
 	public $radioMode = false;
 	public $name;
 	public $selection;
-	public $options = [];
+	public $options = ['class' => 'button-group'];
 	public $items = [];
 
 	/**
