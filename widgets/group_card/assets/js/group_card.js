@@ -40,6 +40,14 @@ $(window).smartresize(function() {
 	Msnry.layout();
 });
 
+function getFilters() {
+	var r = [];
+	$('input[type="checkbox"][name="filter[]"]:checked').each(function(i) {
+		r.push('.' + ($(this).attr('value')));
+	})
+	return r.join(', ');
+}
+
 
 function init_isotope() {
 	Iso = new Isotope('.grid', {
@@ -86,11 +94,7 @@ function init_isotope() {
 		}
 	});
 
-	$('#filter-chapter').bind('click', function(event) {
-		if ($(this).is(':checked')) {
-			Iso.arrange({filter: "[data-type='1']"});
-		} else {
-			Iso.arrange({filter: "*"});
-		}
+	$('input[type="checkbox"][name="filter[]"]').bind('click', function(event) {
+		Iso.arrange({filter: getFilters()})
 	});
 }
