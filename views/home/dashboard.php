@@ -10,9 +10,8 @@ declare(strict_types = 1);
 use app\assets\IsotopeAsset;
 use app\assets\MasonryAsset;
 use app\modules\groups\models\GroupsSearch;
+use app\widgets\button_controls\ButtonControlsWidget;
 use app\widgets\group_card\GroupCardWidget;
-use yii\bootstrap\Button;
-use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -39,25 +38,17 @@ $this->registerJs("init_isotope()", View::POS_END);
 				</td>
 				<td>
 					<div class="panel-center">
-						<?= Html::radioList('Сортировка', null, [
-							'sort-by-type' => 'По типу',
-							'sort-by-count' => 'По сотрудникам',
-							'sort-by-vacancy' => 'По вакансиям'
-						], [
-							'item' => function($index, $label, $name, $checked, $value) {
-								return Html::input('radio', $name, $value, ['id' => $value, 'class' => 'hidden']).Html::label($label, $value, ['class' => "button $value"]);
-
-//								return Html::radio($name,
-//									$checked,
-//									[
-//										'label' => $label,
-//										'value' => $value,
-//										'labelOptions' => ['class' => "btn btn-info $value"]
-//									]);
-
-							},
-							'class' => 'round-borders btn-group'
+						<?= ButtonControlsWidget::widget([
+							'name' => 'sorting',
+							'items' => [
+								'sort-by-type' => 'По типу',
+								'sort-by-count' => 'По сотрудникам',
+								'sort-by-vacancy' => 'По вакансиям'
+							],
+							'radioMode' => true,
+							'options' => ['class' => 'round-borders btn-group']
 						]) ?>
+
 					</div>
 				</td>
 				<td>
@@ -76,7 +67,7 @@ $this->registerJs("init_isotope()", View::POS_END);
 </div>
 <div class="grid">
 	<div class="grid-sizer"></div>
-	<?php foreach ($dataProvider->models  as $group): ?>
+	<?php foreach ($dataProvider->models as $group): ?>
 		<?= GroupCardWidget::widget(['group' => $group]) ?>
 	<?php endforeach; ?>
 </div>

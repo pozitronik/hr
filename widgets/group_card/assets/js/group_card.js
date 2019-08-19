@@ -54,17 +54,36 @@ function init_isotope() {
 		}
 	});
 
-	$('.sort-by-type').bind('click', function(event) {
-		Iso.arrange({sortBy: 'type'});
-		$(this).addClass('active');
+	$('#sort-by-type').bind('click', function(event) {
+		if ($(this).is('.ascending')) {
+			Iso.arrange({sortBy: 'type', sortAscending: false});
+			$(this).removeClass('ascending');
+		} else {
+			$(this).addClass('ascending');
+			Iso.arrange({sortBy: 'type', sortAscending: true});
+		}
+
+
 	});
-	$('.sort-by-count').bind('click', function(event) {
-		Iso.arrange({sortBy: 'count'});
-		$(this).addClass('active');
+	$('#sort-by-count').bind('click', function(event) {
+		if ($(this).is('.ascending')) {
+			Iso.arrange({sortBy: 'count', sortAscending: false});
+			$(this).removeClass('ascending');
+		} else {
+			$(this).addClass('ascending');
+			Iso.arrange({sortBy: 'count', sortAscending: true});
+		}
+
+
 	});
-	$('.sort-by-vacancy').bind('click', function(event) {
-		Iso.arrange({sortBy: 'vacancy'});
-		$(this).addClass('active');
+	$('#sort-by-vacancy').bind('click', function(event) {
+		if ($(this).is('.ascending')) {
+			Iso.arrange({sortBy: 'vacancy', sortAscending: false});
+			$(this).removeClass('ascending');
+		} else {
+			$(this).addClass('ascending');
+			Iso.arrange({sortBy: 'vacancy', sortAscending: true});
+		}
 	});
 
 }
