@@ -14,7 +14,9 @@ use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use yii\web\View;
-
+$this->registerJs("normalize_widths()", View::POS_END);
+$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
+$this->registerJs("Msnry.layout();", View::POS_LOAD);
 ?>
 
 <div class="panel panel-card" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
