@@ -28,7 +28,7 @@ use yii\helpers\Html;
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
  * @property string $prefix
- *
+ * @property string|null|false $emptyResult
  */
 class BadgeWidget extends CachedWidget {
 	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
@@ -44,6 +44,7 @@ class BadgeWidget extends CachedWidget {
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
 	public $prefix = '';//строчка, добавляемая перед бейджами
+	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -119,6 +120,7 @@ class BadgeWidget extends CachedWidget {
 			$moreBadge = Html::tag("span", "...ещё ".(count($result) - $this->unbadgedCount), $this->moreBadgeOptions);
 			array_splice($result, $this->unbadgedCount, count($result));
 		}
+		if ([] === $result && false !== $this->emptyResult) $result = [$this->emptyResult];
 		return $this->prefix.implode($this->itemsSeparator, $result).$moreBadge;
 
 	}
