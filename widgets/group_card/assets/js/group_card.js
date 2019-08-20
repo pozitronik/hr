@@ -37,5 +37,5 @@ function normalize_widths() {
 
 // usage:
 $(window).smartresize(function() {
-	Msnry.layout();
+	if ('undefined' !== typeof (Msnry)) Msnry.layout();
 });
