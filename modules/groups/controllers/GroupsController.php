@@ -38,16 +38,30 @@ class GroupsController extends WigetableController {
 	}
 
 	/**
-	 * Профиль группы
+	 * Изменение группы
 	 * @param integer $id
 	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function actionProfile(int $id):?string {
+	public function actionUpdate(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		if ((null !== ($updateArray = Yii::$app->request->post($group->formName()))) && $group->updateModel($updateArray)) $group->uploadLogotype();
-		return $this->render('profile', [
+		return $this->render('edit', [
 			'model' => $group
+		]);
+	}
+
+	/**
+	 * Просмотр профиля
+	 * @param int $id
+	 * @return string|null
+	 * @throws Throwable
+	 */
+	public function actionProfile(int $id):?string {
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
+
+		return $this->render('profile', [
+			'model' => $group,
 		]);
 	}
 

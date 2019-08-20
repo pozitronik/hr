@@ -90,6 +90,11 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'menu' => true,
+				'label' => IconsHelper::update().'Редактировать',
+				'url' => GroupsModule::to(['groups/update', 'id' => $this->model->id])
+			],
+			[
+				'menu' => true,
 				'label' => IconsHelper::history().'История изменений',
 				'url' => HistoryModule::to(['history/show', 'for' => $this->model->formName(), 'id' => $this->model->id])
 			],
