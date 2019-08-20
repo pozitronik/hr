@@ -10,11 +10,14 @@ declare(strict_types = 1);
 use app\assets\IsotopeAsset;
 use app\assets\MasonryAsset;
 use app\modules\groups\models\GroupsSearch;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\widgets\button_controls\ButtonControlsWidget;
 use app\widgets\group_card\GroupCardWidget;
+use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\web\View;
 
 $this->title = 'Мои группы';
@@ -25,6 +28,14 @@ IsotopeAsset::register($this);
 $this->registerJs("normalize_widths()", View::POS_END);
 $this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
 $this->registerJs("init_isotope()", View::POS_END);
+
+/*Временный код: генерируем список типов групп у пользюка в скопе*/
+
+$userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
+array_walk($userGroupTypes, function(&$value, &$key) {
+	$key = "filter-type{$value['id']}";
+	$value = $value['name'];
+});
 ?>
 
 <div class="panel">
@@ -41,7 +52,12 @@ $this->registerJs("init_isotope()", View::POS_END);
 						<?= ButtonControlsWidget::widget([
 							'name' => 'sorting',
 							'items' => [
-								'sort-by-type' => 'По типу',
+								'sort-by-type' => [
+									'label' => 'По типу',
+									'options' => [
+										'onclick' => new JsExpression("console.log($(this))")
+									]
+								],
 								'sort-by-count' => 'По сотрудникам',
 								'sort-by-vacancy' => 'По вакансиям'
 							],
@@ -49,19 +65,7 @@ $this->registerJs("init_isotope()", View::POS_END);
 						]) ?>
 						<?= ButtonControlsWidget::widget([
 							'name' => 'filter',
-							'items' => [
-								'filter-type1' => 'Чаптеры',
-								'filter-type2' => 'Кластеры',
-								'filter-type3' => 'Команды',
-								'filter-type11' => 'Трайбы',
-								'filter-type9' => 'Функциональные блоки',
-								'filter-type10' => 'Функциональные блоки трайба',
-//								'filter-division-level1' => 'Подразделения первого уровня',
-//								'filter-division-level2' => 'Подразделения второго уровня',
-//								'filter-division-level3' => 'Подразделения третьего уровня',
-//								'filter-division-level4' => 'Подразделения четвёртого уровня',
-//								'filter-division-level5' => 'Подразделения пятого уровня'
-							],
+							'items' => $userGroupTypes,
 							'selection' => [
 								'filter-chapter',
 								'filter-cluster',
@@ -89,7 +93,8 @@ $this->registerJs("init_isotope()", View::POS_END);
 </div>
 <div class="grid">
 	<div class="grid-sizer"></div>
-	<?php foreach ($dataProvider->models as $group): ?>
+	<?php foreach (/*$dataProvider->models*/
+		[] as $group): ?>
 		<?= GroupCardWidget::widget(['group' => $group]) ?>
 	<?php endforeach; ?>
 </div>
