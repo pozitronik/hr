@@ -19,13 +19,13 @@ class GraphControl {
 	 * @param groupId
 	 * @param userId
 	 */
-	constructor(container, groupId, userId) {
+	constructor(container, groupId, userId, downDepth, upDepth) {
 		let self = this;
 		this.groupId = groupId || _.get('id');
 		this.userId = userId || _.get('user_id');
 		this.container = container;
-		this._downDepth = 0;
-		this._upDepth = 0;
+		this._downDepth = downDepth || 0;
+		this._upDepth = upDepth || 0;
 		// this.loadGraph();
 
 		// this.loadNodesPositions(groupId);
