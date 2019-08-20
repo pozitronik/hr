@@ -81,7 +81,7 @@ use yii\web\View;
 			'class' => DataColumn::class,
 			'attribute' => 'positionType',
 			'label' => 'Тип должности',
-			'value' => static function(Users $user) use ($model) {
+			'value' => static function(Users $user) {
 				return BadgeWidget::widget([
 					'models' => $user->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
 					'useBadges' => true,
