@@ -12,34 +12,32 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
-use app\helpers\IconsHelper;
+use app\helpers\Utils;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\salary\models\references\RefUserPositions;
+use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
-use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use app\modules\users\widgets\user_select\UserSelectWidget;
-use app\modules\references\widgets\roles_select\RolesSelectWidget;
-use kartik\grid\CheckboxColumn;
+use app\modules\users\UsersModule;
+use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use pozitronik\helpers\ArrayHelper;
+use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\View;
 
 ?>
 
 <?= GridView::widget([
 	'dataProvider' => $provider,
+	'summary' => Html::a('Редактор', GroupsModule::to(['users', 'id' => $model->id]), ['class' => 'btn btn-success summary-content']),
 	'panel' => [
-		'after' => false,
-		'heading' => $heading,
-		'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false,
-		'before' => $showUserSelector?UserSelectWidget::widget([
-			'model' => $model,
-			'attribute' => 'relUsers',
-			'notData' => $model->relUsers,
-			'multiple' => true,
-			'mode' => UserSelectWidget::MODE_FIELD,
-			'dataMode' => UserSelectWidget::DATA_MODE_AJAX
-		]):false
+		'heading' => 'Сотрудники'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['сотрудник', 'сотрудника', 'сотрудников']).")":" (нет)"),
+		'footer' => false
 	],
 	'toolbar' => false,
 	'export' => false,
@@ -47,49 +45,73 @@ use yii\web\View;
 	'responsive' => true,
 	'columns' => [
 		[
-			'class' => DataColumn::class,
-			'filter' => false,
-			'header' => IconsHelper::menu(),
-			'mergeHeader' => true,
-			'headerOptions' => [
-				'class' => 'skip-export kv-align-center kv-align-middle'
-			],
-			'contentOptions' => [
-				'style' => 'width:50px',
-				'class' => 'skip-export kv-align-center kv-align-middle'
-			],
 			'value' => static function(Users $model) {
-				return UserNavigationMenuWidget::widget([
-					'model' => $model,
-					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+				return Html::img($model->avatar, ['class' => 'img-circle img-xs']);
+			},
+			'label' => 'Аватар',
+			'format' => 'raw',
+			'contentOptions' => ['class' => 'text-center'],
+			'options' => [
+				'style' => 'width: 40px;'
+			]
+		],
+		[
+			'attribute' => 'username',
+			'value' => static function(Users $model) {
+				return Users::a($model->username, ['users/profile', 'id' => $model->id]);
+			},
+			'format' => 'raw'
+		],
+		[
+			'class' => DataColumn::class,
+			'label' => 'Должность',
+			'attribute' => 'positions',
+			'value' => static function(Users $model) {
+				return BadgeWidget::widget([
+					'models' => $model->relRefUserPositions,
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
+					"optionsMap" => RefUserPositions::colorStyleOptions(),
+					'linkScheme' => [UsersModule::to(), 'UsersSearch[positions]' => $model->position, 'UsersSearch[groupId]' => ArrayHelper::getColumn($model->relGroups, 'id', [])]
 				]);
 			},
 			'format' => 'raw'
 		],
 		[
-			'format' => 'raw',
-			'attribute' => 'username',
-			'value' => static function(Users $user) {
-				return Users::a($user->username, ['/users/profile', 'id' => $user->id]);
-			}
-		],
-		[
-			'label' => 'Роли в группе',
+			'class' => DataColumn::class,
+			'attribute' => 'positionType',
+			'label' => 'Тип должности',
 			'value' => static function(Users $user) use ($model) {
-				return RolesSelectWidget::widget([
-					'groupId' => $model->id,
-					'userId' => $user->id
+				return BadgeWidget::widget([
+					'models' => $user->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
+					"optionsMap" => static function() {
+						return RefUserPositionTypes::colorStyleOptions();
+					},
+					'linkScheme' => [UsersModule::to(), 'UsersSearch[positionType]' => 'id', 'UsersSearch[groupId]' => ArrayHelper::getColumn($user->relGroups, 'id', [])]
 				]);
 			},
-			'format' => 'raw',
-			'visible' => $showRolesSelector
+			'format' => 'raw'
 		],
 		[
-			'class' => CheckboxColumn::class,
-			'headerOptions' => ['class' => 'kartik-sheet-style'],
-			'header' => IconsHelper::trash(),
-			'name' => $model->formName().'[dropUsers]',
-			'visible' => $showDropColumn
+			'class' => DataColumn::class,
+			'attribute' => 'roles',
+			'label' => 'Роль в группе',
+			'value' => static function(Users $user) use ($model) {
+				return BadgeWidget::widget([
+					'models' => RefUserRoles::getUserRolesInGroup($user->id, $model->id),
+					'attribute' => 'name',
+					'itemsSeparator' => false,
+					"optionsMap" => RefUserRoles::colorStyleOptions(),
+					'emptyResult' => 'Сотрудник'
+				]);
+			},
+			'format' => 'raw'
 		]
 	]
 ]) ?>
