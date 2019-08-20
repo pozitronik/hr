@@ -30,7 +30,7 @@ use yii\web\View;
 						'models' => $leader,
 						'useBadges' => false,
 						'attribute' => 'username',
-						'unbadgedCount' => 3,
+						'unbadgedCount' => false,
 						'itemsSeparator' => false,
 						'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
 					]).': ',
