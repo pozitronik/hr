@@ -42,8 +42,9 @@ class DashboardControl {
 	get filters() {/*return a filters selection string*/
 		var r = [];
 		$('input[name="filter[]"]:checked').each(function(i) {
-			r.push('.' + ($(this).attr('value')));
-		})
+			let filterAttribute = $(this).data('filter');
+			r.push("[data-filter='" + filterAttribute + "']");
+		});
 		return r.join(', ');
 	}
 }
