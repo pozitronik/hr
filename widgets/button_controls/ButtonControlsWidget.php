@@ -16,6 +16,7 @@ use pozitronik\widgets\CachedWidget;
  *    'value' => значение кнопки,
  *    'label' => подпись кнопки,
  *    'options' => массив html-опций для кнопки
+ * либо в формате 'label' => 'value'
  */
 class ButtonControlsWidget extends CachedWidget {
 	public $radioMode = false;
