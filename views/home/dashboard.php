@@ -31,7 +31,7 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
 $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
-array_walk($userGroupTypes, function(&$value, &$key) {
+array_walk($userGroupTypes, static function(&$value, &$key) {
 	$key = "filter-type{$value['id']}";
 	$value = [
 		'label' => $value['name'],
