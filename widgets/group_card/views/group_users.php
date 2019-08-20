@@ -16,7 +16,7 @@ use yii\web\View;
 
 ?>
 <?= BadgeWidget::widget([
-	'models' => "Всего: ".count($group->relUsers),
+	'models' => "Всего: ".$group->getRelUsers()->active()->countFromCache(),
 	"badgeOptions" => [
 		'class' => "badge badge-info pull-left"
 	],
