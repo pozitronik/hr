@@ -15,7 +15,6 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
@@ -27,7 +26,6 @@ use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Url;
 use yii\web\View;
 
 ?>
