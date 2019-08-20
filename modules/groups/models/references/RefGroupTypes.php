@@ -19,7 +19,6 @@ class RefGroupTypes extends CustomisableReference {
 	public $menuCaption = 'Типы групп';
 	public $menuIcon = false;
 
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -39,11 +38,22 @@ class RefGroupTypes extends CustomisableReference {
 		self::flushCache();
 	}
 
-
 	/**
 	 * @return int
 	 */
 	public function getUsedCount():int {
 		return (int)Groups::find()->where(['type' => $this->id])->count();
+	}
+
+	/**
+	 * Возващает массив всех типов групп в скоупе пользователя в формате
+	 * [
+	 *    'id' => 'typeName'
+	 * ]
+	 * @param int[] $scope -- массив айдишников групп скоупа (может быть уже известен)
+	 * @return array
+	 */
+	public static function getGroupsTypesScope(array $scope = []):array {
+		return self::find()->select(['id', 'name'])->distinct()->where(['id' => $scope])->asArray()->all();
 	}
 }
