@@ -20,7 +20,7 @@ use yii\web\View;
 			$inputOptions = [];
 			if (is_array($label)) {//если будем добавлять другие параметры, они пойдут сюда
 				$inputOptions = ArrayHelper::getValue($label, 'options', []);
-				$value = ArrayHelper::getValue($label, 'value');
+				$value = ArrayHelper::getValue($label, 'value', sha1(ArrayHelper::getValue($label, 'label')));
 				$label = ArrayHelper::getValue($label, 'label');
 			}
 			return Html::input('radio', $name, $value, ['id' => $value, 'class' => 'hidden'] + $inputOptions).Html::label($label, $value, ['class' => "button $value"]);
