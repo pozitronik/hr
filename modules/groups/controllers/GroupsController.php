@@ -117,7 +117,7 @@ class GroupsController extends WigetableController {
 			return $this->redirect(['profile', 'id' => $newGroup->id]);
 		}
 
-		return $this->render('profile', [
+		return $this->render('edit', [
 			'model' => $newGroup
 		]);
 	}
