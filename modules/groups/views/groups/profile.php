@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\modules\graph\assets\VisjsAsset;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -20,7 +21,9 @@ use yii\web\View;
 $this->title = $model->isNewRecord?'Добавление группы':"Профиль группы {$model->name}";
 $this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem('Группы');
 $this->params['breadcrumbs'][] = $this->title;
-
+VisjsAsset::register($this);
+$this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-container'), {$model->id}, -1, -1, -1); graphControl.autofit = true; graphControl.resizeContainer()", View::POS_END);
+//$this->registerJs("$('#group-profile-tree-container').css({'position':'relative'}) ", View::POS_END);
 ?>
 
 <div class="panel panel-default profile-panel">
@@ -36,13 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="clearfix"></div>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-1">
 				<label>Тип:</label>
 				<?= BadgeWidget::widget([
 					'models' => $model->relGroupTypes,
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 3,
+					'unbadgedCount' => false,
 					'itemsSeparator' => false,
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"badgeOptions" => [
@@ -51,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]) ?>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-11">
 				<?= GroupCardWidget::widget([
 					'group' => $model,
 					'view' => 'group_info'
@@ -59,18 +62,14 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<?= $this->render('profile/users', [
 					'model' => $model,
-					'provider' => $dataProvider,
-					'showUserSelector' => false,
-					'showRolesSelector' => false,
-					'showDropColumn' => false,
-					'heading' => false
+					'provider' => $dataProvider
 				]) ?>
 			</div>
-			<div class="col-md-4">
-				<div id="group-profile-tree-container">
+			<div class="col-md-5">
+				<div id="group-profile-tree-container" style="height: 500px">
 				</div>
 			</div>
 
