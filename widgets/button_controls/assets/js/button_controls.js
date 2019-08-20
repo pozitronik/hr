@@ -16,10 +16,12 @@ class DashboardControl {
 			}
 		})
 
-		$("[name='sorting']").each(function(index) {
-			$(this).bind('click', function(event) {
-				self.bindSorting($(this))
-			})
+		$("[name='sorting']").bind('click', function(event) {
+			self.bindSorting($(this))
+		});
+
+		$("[name='filter[]']").bind('click', function(event) {
+			self.isotope.arrange({filter: self.filters})
 		});
 
 
