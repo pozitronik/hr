@@ -62,6 +62,9 @@ class GroupsController extends WigetableController {
 
 		return $this->render('profile', [
 			'model' => $group,
+			'dataProvider' => new ActiveDataProvider([
+				'query' => $group->getRelUsers()->active()
+			])
 		]);
 	}
 
