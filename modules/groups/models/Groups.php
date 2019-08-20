@@ -474,6 +474,7 @@ class Groups extends ActiveRecordExtended {
 			->joinWith(['relGroups'], false)
 				->groupBy(['ref_user_position_types.id'])
 				->where(['sys_groups.id' => $id])
+				->andWhere(['sys_users.deleted' => false])//приходится выкручиваться так
 				->asArray()
 				->all();
 
