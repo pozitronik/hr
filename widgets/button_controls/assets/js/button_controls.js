@@ -45,6 +45,7 @@ class DashboardControl {
 			let filterAttribute = $(this).data('filter');
 			r.push("[data-filter='" + filterAttribute + "']");
 		});
+		if (0 === r.length) return 'empty-selection';
 		return r.join(', ');
 	}
 }
