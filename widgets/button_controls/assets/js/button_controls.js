@@ -1,10 +1,11 @@
 'use strict';
 
 class DashboardControl {
-	constructor(selector, itemSelector) {
+	constructor(selector, itemSelector, onArrangeComplete) {
 		var self = this;
 		this.selector = selector || '.grid';
 		this.itemSelector = itemSelector || '.panel-card';
+		this.onArrangeComplete = onArrangeComplete || null;
 
 		this.isotope = new Isotope(this.selector, {
 			itemSelector: this.itemSelector,
@@ -14,7 +15,9 @@ class DashboardControl {
 				vacancyCount: '.vacancy-count parseInt',
 				type: '.group-type-name'
 			}
-		})
+		});
+		if (null !== this.onArrangeComplete)
+			this.isotope.on('arrangeComplete', this.onArrangeComplete);
 
 		$("[name='sorting']").bind('click', function(event) {
 			self.bindSorting($(this))

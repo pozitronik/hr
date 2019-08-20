@@ -24,9 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
 MasonryAsset::register($this);
 IsotopeAsset::register($this);
-//$this->registerJs("normalize_widths()", View::POS_END);
-//$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
-$this->registerJs("var Controls = new DashboardControl()", View::POS_END);
+$this->registerJs("normalize_widths()", View::POS_END);
+$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
+$this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card', function() {Msnry.layout()})", View::POS_END);
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
 $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
