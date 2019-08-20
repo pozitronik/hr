@@ -134,13 +134,13 @@ $this->params['breadcrumbs'][] = $this->title;
 							$badgeData = [];
 							/** @var Groups $userGroup */
 							foreach ((array)$model->relGroups as $userGroup) {
-								$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id);
-								$badgeData[] = (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
-										'models' => $groupRoles,
+								$badgeData[] = BadgeWidget::widget([
+										'models' => RefUserRoles::getUserRolesInGroup($model->id, $userGroup->id),
 										'attribute' => 'name',
 										'itemsSeparator' => false,
-										"optionsMap" => RefUserRoles::colorStyleOptions()
-									])).' в '.BadgeWidget::widget([
+										"optionsMap" => RefUserRoles::colorStyleOptions(),
+										'emptyResult' => 'Сотрудник'
+									]).' в '.BadgeWidget::widget([
 										'models' => $userGroup->name,
 										"badgeOptions" => [
 											'class' => "badge badge-info"

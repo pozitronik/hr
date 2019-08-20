@@ -54,14 +54,14 @@ use kartik\grid\GridView;
 		[
 			'label' => 'Роли в группе',
 			'value' => static function(Groups $group) use ($model) {
-				$groupRoles = RefUserRoles::getUserRolesInGroup($model->id, $group->id);
-				return (empty($groupRoles)?'Сотрудник':BadgeWidget::widget([
-					'models' => $groupRoles,
+				return BadgeWidget::widget([
+					'models' => RefUserRoles::getUserRolesInGroup($model->id, $group->id),
 					'attribute' => 'name',
 					'itemsSeparator' => false,
 					"optionsMap" => RefUserRoles::colorStyleOptions(),
+					'emptyResult' => 'Сотрудник',
 					'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
-				]));
+				]);
 			},
 			'format' => 'raw'
 		]
