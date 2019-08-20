@@ -33,7 +33,7 @@ use yii\helpers\Html;
 class BadgeWidget extends CachedWidget {
 	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
 	public $attribute;//Атрибут модели, отображаемый в текст
-	public $unbadgedCount = 2;//Количество объектов, не сворачиваемых в бейдж
+	public $unbadgedCount = false;//Количество объектов, не сворачиваемых в бейдж
 	public $useBadges = true;//использовать бейджи для основного списка.
 
 	public $linkAttribute = 'id';//Атрибут, подставляемый в ссылку по схеме в $linkScheme. Строка, или массив строк (в этом случае подстановка идёт по порядку).
