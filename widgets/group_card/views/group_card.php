@@ -14,6 +14,7 @@ use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use yii\web\View;
+
 $this->registerJs("normalize_widths()", View::POS_END);
 $this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
 $this->registerJs("Msnry.layout();", View::POS_LOAD);
@@ -82,21 +83,26 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 		<?php endforeach; ?>
 
 		<div class="row">
-			<div class="col-md-10"><?= BadgeWidget::widget([
-					'models' => 'Вакансии',
+			<div class="col-md-2"><?= BadgeWidget::widget([
+					'models' => 'Вакансии: '.count($group->relVacancy),
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-left"
 					],
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 				]) ?></div>
-			<div class="col-md-2 pad-no">
-				<?= BadgeWidget::widget([
-					'models' => count($group->relVacancy),
-					"badgeOptions" => [
-						'class' => "badge badge-danger pull-right vacancy-count"
-					],
-					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
-				]) ?>
+			<div class="col-md-10 pad-no">
+				<?php foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus): ?>
+					<?= BadgeWidget::widget([
+						'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
+						"badgeOptions" => [
+							'style' => $vacancyStatus->style,
+							'class' => "badge pull-right"
+						],
+						'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
+					]) ?>
+				<?php endforeach; ?>
+
+
 			</div>
 		</div>
 	</div>
