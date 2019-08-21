@@ -279,7 +279,17 @@ class Utils {
 		$rgb = self::RGBToArray($rgbString);
 		$rgbContrast = self::RGBContrast($rgb);
 		return "rgb({$rgbContrast[0]},{$rgbContrast[1]},{$rgbContrast[2]})";
+	}
 
+	/**
+	 * Get latest
+	 * @return string
+	 */
+	public static function LastCommit():string {
+		preg_match('#^ref:(.+)$#', file_get_contents('.git/HEAD'), $matches);
+		$currentHead = trim($matches[1]);
+		if (false !== $hash = file_get_contents(sprintf($currentHead))) return $hash;
+		return 'unknown';
 	}
 
 }
