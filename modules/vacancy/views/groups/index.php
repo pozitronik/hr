@@ -12,7 +12,6 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\vacancy\VacancyModule;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html;
 use yii\web\View;
 
 $this->title = "Вакансии в группе {$group->name}";
@@ -41,15 +40,6 @@ $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->tot
 					'heading' => false
 				]) ?>
 			</div>
-		</div>
-	</div>
-
-	<div class="panel-footer">
-		<div class="btn-group">
-			<?= Html::submitButton($group->isNewRecord?'Сохранить':'Изменить', ['class' => $group->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
-			<?php if ($group->isNewRecord): ?>
-				<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
-			<?php endif ?>
 		</div>
 	</div>
 </div>
