@@ -7,6 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\assets\AppAsset;
+use app\helpers\Utils;
 use app\widgets\alert\Alert;
 use yii\helpers\Html;
 use app\widgets\navbar\NavbarWidget;
@@ -22,6 +23,7 @@ AppAsset::register($this);
 	<meta charset="<?= Yii::$app->charset ?>"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="commit" content="<?= Utils::LastCommit() ?>">
 	<?= Html::csrfMetaTags() ?>
 	<title><?= $this->title ?></title>
 	<?php $this->head(); ?>
