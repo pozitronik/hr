@@ -19,7 +19,7 @@ use yii\db\ActiveQuery;
  * @property-read integer $usedCount
  * @property-read array $searchSort
  */
-interface ReferenceInterface {
+interface ReferenceInterface {//todo: добавить миграцию на индексы color/textcolor всем справочникам
 
 	/**
 	 * Справочникам всегда нужно возвращать массив значений для выбиралок, вот эта функция у них универсальная
