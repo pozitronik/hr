@@ -22,7 +22,7 @@ class DeployController extends Controller {
 		$git_bin_path = 'git';
 		$migrate_command = 'php yii migrate up --interactive=0';
 		$flushing_cache = 'php yii cache/flush-all';
-		$commit_hash = 'git rev-parse HEAD > /var/www/hr/commit.hash';
+//		$commit_hash = 'git rev-parse HEAD > /var/www/hr/commit.hash';
 
 		$output = [];
 		exec("cd $repo_dir && $git_bin_path pull", $output);
@@ -39,7 +39,6 @@ class DeployController extends Controller {
 		$output = implode("\n", $output);
 		Utils::fileLog($output, 'Flushing cache:', "deploy.log");
 		echo $output."\n";
-		exec("cd $repo_dir && $commit_hash");
 	}
 
 	/**
