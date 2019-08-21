@@ -13,6 +13,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
+use yii\helpers\Html;
 use yii\web\View;
 
 $this->registerJs("normalize_widths()", View::POS_END);
@@ -84,7 +85,7 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 
 		<div class="row">
 			<div class="col-md-2"><?= BadgeWidget::widget([
-					'models' => 'Вакансии: '.count($group->relVacancy),
+					'models' => 'Вакансии: '.Html::tag('span', count($group->relVacancy), ['class' => 'vacancy-count']),
 					"badgeOptions" => [
 						'class' => "badge badge-danger pull-left"
 					],
