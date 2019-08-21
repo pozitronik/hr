@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\models;
 
 use app\modules\salary\models\references\RefUserPositionTypes;
+use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
@@ -508,6 +509,31 @@ class Groups extends ActiveRecordExtended {
 			return $allPositionTypes;
 		});
 	}
+
+	/**
+	 * Строит срез по статусам вакансий, демо-прототип
+	 * @return RefVacancyStatuses[]
+	 * Нужно заморочиться и переписать это на голый SQL, но у меня не хватает мозгов, поэтому обхожусь кешированием
+	 */
+	public function getGroupVacancyStatusData():array {
+		$id = $this->id;
+		return Yii::$app->cache->getOrSet(static::class."getGroupVacancyTypeData{$id}", static function() use ($id) {
+			$allVacancyStatuses = RefVacancyStatuses::find()->active()->all();//Все справочники
+
+			$vacancyStatusesCount = RefVacancyStatuses::find()->select(['ref_vacancy_statuses.id', 'count(ref_vacancy_statuses.id) as `count`'])//только использованные в указанной группе
+			->joinWith(['relGroups'], false)
+				->groupBy(['ref_vacancy_statuses.id'])
+				->where(['sys_groups.id' => $id])
+				->asArray()
+				->all();
+
+			array_walk($allVacancyStatuses, static function(&$value, &$key) use ($vacancyStatusesCount) {/*Немного индустский способ заполнения каунта пустых типов нулями*/
+				if (0 !== $count = (int)ArrayHelper::getValue($vacancyStatusesCount, "$key.count", 0)) $value->count = $count;
+			});
+			return $allVacancyStatuses;
+		});
+	}
+
 
 	/**
 	 * Возвращает статистику по количеству юзеров в указанных группах (уники и суммари)
