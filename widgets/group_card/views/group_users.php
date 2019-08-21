@@ -34,6 +34,8 @@ use yii\web\View;
 
 	]) ?>
 <?php endforeach; ?>
+
+
 <?= BadgeWidget::widget([
 	'models' => "Вакансии: ".count($group->relVacancy),
 	"badgeOptions" => [
@@ -41,3 +43,13 @@ use yii\web\View;
 	],
 	'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 ]) ?>
+<?php foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus): ?>
+	<?= BadgeWidget::widget([
+		'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
+		"badgeOptions" => [
+			'style' => $vacancyStatus->style,
+			'class' => "badge pull-left"
+		],
+		'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
+	]) ?>
+<?php endforeach; ?>
