@@ -13,6 +13,7 @@ use yii\db\ActiveQuery;
  * @package app\modules\salary\models\vacancy
  * @property Vacancy[]|ActiveQuery $relVacancy
  * @property Groups[]|ActiveQuery $relGroups
+ * @property-read int $count
  */
 class RefVacancyStatuses extends CustomisableReference {
 	public $menuCaption = 'Статусы вакансий';
