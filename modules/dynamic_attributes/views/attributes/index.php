@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\helpers\Utils;
+use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
@@ -35,8 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'class' => 'summary-content'
 		],
 		'buttons' => [
-			Html::a('Новый атрибут', 'create', ['class' => 'btn btn-success']),
-			Html::a('Поиск', 'search', ['class' => 'btn btn-info'])
+			DynamicAttributesModule::a('Новый атрибут', 'attributes/create', ['class' => 'btn btn-success']),
+			DynamicAttributesModule::a('Поиск', 'attributes/search', ['class' => 'btn btn-info'])
 		]
 	]),
 	'toolbar' => false,
