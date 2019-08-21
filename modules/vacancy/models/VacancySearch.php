@@ -77,7 +77,7 @@ class VacancySearch extends Vacancy {
 
 		if (!$this->validate()) return $dataProvider;
 //
-		$query->joinWith(['relGroup', 'relEmployer as employer', 'relTeamlead as teamlead']);
+		$query->joinWith(['relGroups', 'relEmployer as employer', 'relTeamlead as teamlead']);
 		$query->andFilterWhere(['like', 'sys_vacancy.id', $this->id]);
 		$query->andFilterWhere(['like', 'sys_groups.name', $this->groupName]);
 		$query->andFilterWhere(['like', 'employer.username', $this->employerName]);

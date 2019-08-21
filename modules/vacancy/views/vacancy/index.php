@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelGroup()->all(),
+					'models' => $vacancy->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
