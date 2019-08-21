@@ -34,8 +34,6 @@ AppAsset::register($this);
 	<?= NavbarWidget::widget([
 		'user' => CurrentUser::User()
 	]) ?>
-
-
 	<div class="boxed">
 		<div id="content-container">
 			<div id="page-content">
