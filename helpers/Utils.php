@@ -286,9 +286,9 @@ class Utils {
 	 * @return string
 	 */
 	public static function LastCommit():string {
-		preg_match('#^ref:(.+)$#', file_get_contents('.git/HEAD'), $matches);
+		preg_match('#^ref:(.+)$#', file_get_contents(Yii::getAlias('@app/.git/HEAD')), $matches);
 		$currentHead = trim($matches[1]);
-		if (false !== $hash = file_get_contents(sprintf($currentHead))) return $hash;
+		if (false !== $hash = file_get_contents(sprintf(Yii::getAlias("@app/.git/{$currentHead}")))) return $hash;
 		return 'unknown';
 	}
 
