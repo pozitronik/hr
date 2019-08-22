@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\modules\salary\models\references\RefGrades;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
@@ -81,14 +82,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'location',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelRefLocation()->all(),
+					'models' => $vacancy->getRelRefLocation()->active()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefLocations::colorStyleOptions();
-					}
+					"optionsMap" => RefLocations::colorStyleOptions()
 				]);
 			},
 			'format' => 'raw',
@@ -108,14 +106,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'recruiter',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelRefVacancyRecruiter()->all(),
+					'models' => $vacancy->getRelRefVacancyRecruiter()->active()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefVacancyRecruiters::colorStyleOptions();
-					}
+					"optionsMap" => RefVacancyRecruiters::colorStyleOptions()
 				]);
 			},
 			'format' => 'raw',
@@ -133,10 +128,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelEmployer()->all(),
+					'models' => $vacancy->getRelEmployer()->active()->all(),
 					'useBadges' => false,
 					'attribute' => 'username',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
 				]);
@@ -151,7 +145,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					'models' => $vacancy->relGroups,
 					'useBadges' => false,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => 'id']
 				]);
@@ -162,14 +155,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'position',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelRefUserPosition()->all(),
+					'models' => $vacancy->getRelRefUserPosition()->active()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefUserPositions::colorStyleOptions();
-					}
+					"optionsMap" => RefUserPositions::colorStyleOptions()
 				]);
 			},
 			'format' => 'raw',
@@ -186,14 +176,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'premium_group',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelRefSalaryPremiumGroup()->all(),
+					'models' => $vacancy->getRelRefSalaryPremiumGroup()->active()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefSalaryPremiumGroups::colorStyleOptions();
-					}
+					"optionsMap" => RefSalaryPremiumGroups::colorStyleOptions()
 				]);
 			},
 			'format' => 'raw'
@@ -201,7 +188,16 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'grade',
-			'value' => 'relRefGrade.name'
+//			'value' => 'relRefGrade.name'
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'models' => $vacancy->getRelRefGrade()->active()->all(),
+					'useBadges' => false,
+					'attribute' => 'name',
+//					"itemsSeparator" => false,
+//					"optionsMap" => RefGrades::colorStyleOptions()//справочник пока не поддерживает
+				]);
+			},
 		],
 		[
 			'class' => DataColumn::class,
@@ -209,14 +205,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelRefUserRoles()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
+					'models' => $vacancy->getRelRefUserRoles()->active()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefUserRoles::colorStyleOptions();
-					}
+					"optionsMap" => RefUserRoles::colorStyleOptions()
 				]);
 			}],
 		[
@@ -225,10 +218,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'format' => 'raw',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelTeamlead()->all(),
+					'models' => $vacancy->getRelTeamlead()->active()->all(),
 					'useBadges' => false,
 					'attribute' => 'username',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
 				]);
@@ -239,10 +231,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'attribute' => 'status',
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
-					'models' => $vacancy->getRelRefVacancyStatus()->all(),
+					'models' => $vacancy->getRelRefVacancyStatus()->active()->all(),
 					'useBadges' => true,
 					'attribute' => 'name',
-					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
 					"optionsMap" => static function() {
 						return RefVacancyStatuses::colorStyleOptions();
