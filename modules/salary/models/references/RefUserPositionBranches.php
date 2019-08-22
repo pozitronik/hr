@@ -19,4 +19,16 @@ class RefUserPositionBranches extends Reference {
 		return 'ref_user_position_branches';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function rules():array {
+		return [
+			[['name'], 'required'],
+			[['name'], 'unique'],
+			[['id', 'deleted', 'usedCount'], 'integer'],
+			[['name', 'color', 'textcolor'], 'string', 'max' => 256],
+		];
+	}
+
 }
