@@ -7,7 +7,6 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\modules\salary\models\references\RefGrades;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
@@ -197,7 +196,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //					"itemsSeparator" => false,
 //					"optionsMap" => RefGrades::colorStyleOptions()//справочник пока не поддерживает
 				]);
-			},
+			}
 		],
 		[
 			'class' => DataColumn::class,

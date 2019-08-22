@@ -27,7 +27,7 @@ class RefUserPositionBranches extends Reference {
 			[['name'], 'required'],
 			[['name'], 'unique'],
 			[['id', 'deleted', 'usedCount'], 'integer'],
-			[['name', 'color', 'textcolor'], 'string', 'max' => 256],
+			[['name', 'color', 'textcolor'], 'string', 'max' => 256]
 		];
 	}
 
