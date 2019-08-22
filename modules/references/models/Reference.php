@@ -195,7 +195,8 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 	public static function flushCache():void {
 		$class = static::class;
 		$cacheNames = [
-			"{$class}MapData",
+			"{$class}MapData1",
+			"{$class}MapData0",
 			"{$class}DataOptions"
 		];
 		foreach ($cacheNames as $className) {
