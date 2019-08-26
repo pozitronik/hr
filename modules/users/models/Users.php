@@ -578,6 +578,15 @@ class Users extends ActiveRecordExtended {
 			}
 		}
 		$result = array_merge(...$result);
-		return $result;
+		$uniqueKeys = [];
+		$uniqueUsers = [];
+		array_walk($result, static function(&$value, &$key) use (&$uniqueKeys, &$uniqueUsers) {
+			/** @var Users $value */
+			if (!in_array($value->id, $uniqueKeys)) {
+				$uniqueUsers[] = $value;
+				$uniqueKeys[] = $value->id;
+			}
+		});
+		return $uniqueUsers;
 	}
 }
