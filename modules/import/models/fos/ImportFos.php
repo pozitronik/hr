@@ -285,6 +285,9 @@ class ImportFos extends ActiveRecord {
 							'sd_id' => $row->sd_id,
 							'position_id' => ArrayHelper::getValue($position, 'id'),
 							'town_id' => ArrayHelper::getValue($town, 'id'),
+							'birthday' => $row->birthday,
+							'expert_area' => $row->expert_area,
+							'combined_role' => $row->combined_role,
 							'domain' => $row->domain
 						]);
 					} catch (ImportException $importException) {
