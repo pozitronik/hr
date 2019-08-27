@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property int $cluster_id
  * @property string $name
  * @property int $leader_id key to cluster product leader id
+ * @property int $leader_it_id key to cluster product leader it id
  * @property int $domain
  * @property null|int $hr_group_id
  *
@@ -38,7 +39,7 @@ class ImportFosClusterProduct extends ActiveRecord {
 			['cluster_id', 'integer'],
 			['cluster_id', 'required'],
 			['cluster_id', 'unique'],
-			[['leader_id'], 'integer'],
+			[['leader_id', 'leader_it_id'], 'integer'],
 			[['name'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
 			['hr_group_id', 'integer']
@@ -52,7 +53,8 @@ class ImportFosClusterProduct extends ActiveRecord {
 		return [
 			'cluster_id' => 'ID',
 			'name' => 'Name',
-			'leader_id' => 'key to cluster product leader id'
+			'leader_id' => 'key to cluster product leader id',
+			'leader_it_id' => 'key to cluster product leader it id'
 		];
 	}
 
