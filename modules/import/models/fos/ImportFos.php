@@ -111,7 +111,14 @@ class ImportFos extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['domain'], 'integer'],
-			[['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'functional_block', 'division_level_1', 'division_level_2', 'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id', 'tribe_code', 'tribe_name', 'tribe_leader_tn', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id', 'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_tn', 'cluster_product_leader_name', 'command_id', 'command_code', 'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code', 'chapter_name', 'chapter_leader_tn', 'chapter_leader_name', 'chapter_couch_tn', 'chapter_couch_name', 'email_sigma', 'email_alpha'], 'string', 'max' => 255]
+			[
+				['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'functional_block', 'division_level_1', 'division_level_2',
+					'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id',
+					'tribe_code', 'tribe_name', 'tribe_leader_tn', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id',
+					'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_tn', 'cluster_product_leader_name', 'command_id', 'command_code',
+					'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code',
+					'chapter_name', 'chapter_leader_tn', 'chapter_leader_name', 'chapter_couch_tn', 'chapter_couch_name', 'email_sigma', 'email_alpha']
+				, 'string', 'max' => 255]
 		];
 	}
 
@@ -167,6 +174,16 @@ class ImportFos extends ActiveRecord {
 	}
 
 	/**
+	 * Проверяет, является ли массив заголовком таблицы
+	 * @param array $row
+	 * @return bool
+	 * @throws Throwable
+	 */
+	private static function isHeaderRow(array $row):bool {
+		return ArrayHelper::getValue($row, 0) === ArrayHelper::getValue((new self())->attributeLabels(), 'num');
+	}
+
+	/**
 	 * @param string $filename
 	 * @param int|null $domain
 	 * @return bool
@@ -184,12 +201,22 @@ class ImportFos extends ActiveRecord {
 			throw new BaseException('Формат файла не поддерживается');
 		}
 		$domain = $domain??time();
-		$keys = array_keys((new self())->attributeLabels());
+		$labels = (new self())->attributeLabels();
+		$keys = array_keys($labels);
+		$headerProcessedFlag = false;
 		foreach ($dataArray as $importRow) {
-			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
-			if (count($keys) !== count($importRow)) {
-				throw new BaseException('Не соблюдено количество столбцов файла');
+
+			if (!$headerProcessedFlag && self::isHeaderRow($importRow)) {//однократно проверяем валидность таблицы
+				$columnHeaderIndex = 0;
+				foreach ($labels as $key => $value) {
+					if ($value !== $headerValue = ArrayHelper::getValue($importRow, $columnHeaderIndex)) {
+						throw new BaseException("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.\nМожно удалить эту колонку в файле и повторить импорт.");
+					}
+					$columnHeaderIndex++;
+				}
+				$headerProcessedFlag = true;
 			}
+			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
 			$data = array_combine($keys, $importRow);
 
 			$row = new self($data);
