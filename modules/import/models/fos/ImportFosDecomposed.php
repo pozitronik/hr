@@ -281,7 +281,8 @@ class ImportFosDecomposed extends ActiveRecord {
 	public static function Import(int $step = self::STEP_GROUPS, array &$errors = []):bool {
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 		switch ($step) {
-			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/ return self::DoStepGroups();
+			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
+				return self::DoStepGroups();
 			break;
 			case self::STEP_USERS:
 				return self::DoStepUsers($errors);
