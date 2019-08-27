@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos;
 
+use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -210,6 +211,12 @@ class ImportFosDecomposed extends ActiveRecord {
 				self::linkRole($cluster->hr_group_id, $clusterLeader->relUsers->hr_user_id, 'Лидер кластера');
 			}
 		}
+		foreach (ImportFosClusterProductLeaderIt::find()->all() as $clusterLeaderIt) {
+			/** @var ImportFosClusterProductLeaderIt $clusterLeaderIt */
+			foreach (ImportFosClusterProductLeader::findAll(['leader_it_id' => $clusterLeaderIt->user_id]) as $cluster) {
+				self::linkRole($cluster->hr_group_id, $clusterLeaderIt->relUsers->hr_user_id, 'IT-Лидер кластера');
+			}
+		}
 		foreach (ImportFosProductOwner::find()->all() as $productOwner) {
 			/** @var ImportFosProductOwner $productOwner */
 			foreach (ImportFosCommand::findAll(['owner_id' => $productOwner->user_id]) as $command) {
@@ -228,6 +235,7 @@ class ImportFosDecomposed extends ActiveRecord {
 				self::linkRole($tribe->hr_group_id, $tribeLeaderIt->relUsers->hr_user_id, 'IT-Лидер трайба');
 			}
 		}
+
 		return true;
 	}
 
