@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos;
 
+use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\traits\Upload;
 use app\modules\import\models\fos\activerecord\ImportFosChapter;
@@ -64,15 +65,15 @@ use yii\db\ActiveRecord;
  * @property string $cluster_product_leader_tn Лидер кластера/продукта ТН
  * @property string $cluster_product_leader_name Лидер кластера/продукта
  *
- * @property string $cluster_product_leader_it_tn IT-лидер кластера/продукта ТН //todo: новая сущность
- * @property string $cluster_product_leader_it_name IT-лидер кластера/продукта //todo: новая сущность
+ * @property string $cluster_product_leader_it_tn IT-лидер кластера/продукта ТН
+ * @property string $cluster_product_leader_it_name IT-лидер кластера/продукта
  *
  * @property string $command_id Команда ID
  * @property string $command_code Код команды
  * @property string $command_name Команда
  * @property string $command_type Тип команды
  *
- * @property string $owner_th ТН владельца продукта //todo: новая сущность
+ * @property string $owner_tn ТН владельца продукта
  *
  * @property string $owner_name Владелец продукта
  * @property string $command_position_id Позиция в команде ID
@@ -128,9 +129,9 @@ class ImportFos extends ActiveRecord {
 					'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id',
 					'tribe_code', 'tribe_name', 'tribe_leader_tn', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id',
 					'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_tn', 'cluster_product_leader_name', 'cluster_product_leader_it_tn', 'cluster_product_leader_it_name', 'command_id', 'command_code',
-					'command_name', 'command_type', 'owner_th', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'expert_area', 'combined_role', 'chapter_id', 'chapter_code',
-					'chapter_name', 'chapter_leader_tn', 'chapter_leader_name', 'chapter_couch_tn', 'chapter_couch_name', 'email_sigma', 'email_alpha']
-				, 'string', 'max' => 255]
+					'command_name', 'command_type', 'owner_tn', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'expert_area', 'combined_role', 'chapter_id', 'chapter_code',
+					'chapter_name', 'chapter_leader_tn', 'chapter_leader_name', 'chapter_couch_tn', 'chapter_couch_name', 'email_sigma', 'email_alpha'],
+				'string', 'max' => 255]
 		];
 	}
 
@@ -172,7 +173,7 @@ class ImportFos extends ActiveRecord {
 			'command_code' => 'Код команды',
 			'command_name' => 'Команда',
 			'command_type' => 'Тип команды',
-			'owner_th' => 'ТН владельца продукта',
+			'owner_tn' => 'ТН владельца продукта',
 			'owner_name' => 'Владелец продукта',
 			'command_position_id' => 'Роль Sbergile ID',
 			'command_position_code' => 'Код роли Sbergile',
@@ -338,13 +339,29 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 
-						/*Для владельцев продукта приведены только имена; их может не быть*/
-						if (null !== $product_owner_user = ImportFosUsers::find()->where(['name' => $row->owner_name])->one()) {
-							ImportFosProductOwner::addInstance(['user_id' => $product_owner_user->id], [
-								'user_id' => $product_owner_user->id,
-								'domain' => $row->domain
-							]);
-						}
+						$cluster_product_leader_it_user_id = ArrayHelper::getValue(ImportFosUsers::addInstance(['user_tn' => $row->cluster_product_leader_it_tn], [
+							'user_tn' => $row->cluster_product_leader_it_tn,
+							'name' => $row->cluster_product_leader_it_name,
+							'remote' => false,
+							'domain' => $row->domain
+						]), 'id');
+
+						ImportFosClusterProductLeaderIt::addInstance(['user_id' => $cluster_product_leader_it_user_id], [
+							'user_id' => $cluster_product_leader_it_user_id,
+							'domain' => $row->domain
+						]);
+
+						$product_owner_user_id = ArrayHelper::getValue(ImportFosUsers::addInstance(['user_tn' => $row->owner_tn], [
+							'user_tn' => $row->owner_tn,
+							'name' => $row->owner_name,
+							'remote' => false,
+							'domain' => $row->domain
+						]), 'id');
+
+						ImportFosProductOwner::addInstance(['user_id' => $product_owner_user_id], [
+							'user_id' => $product_owner_user_id,
+							'domain' => $row->domain
+						]);
 
 						$chapter_leader_user_id = ArrayHelper::getValue(ImportFosUsers::addInstance(['user_tn' => $row->chapter_leader_tn], [
 							'user_tn' => $row->chapter_leader_tn,
@@ -371,7 +388,8 @@ class ImportFos extends ActiveRecord {
 							'user_id' => $chapter_couch_user_id,
 							'domain' => $row->domain
 						]);
-					} catch (ImportException $importException) {
+					} catch
+					(ImportException $importException) {
 						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
@@ -379,7 +397,8 @@ class ImportFos extends ActiveRecord {
 				}
 
 			break;
-			case self::STEP_GROUPS:
+			case
+			self::STEP_GROUPS:
 				/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
 				foreach ($data as $row) {
 					try {
