@@ -26,7 +26,7 @@ class ServiceController extends WigetableController {
 	public function actionReset():string {
 //		Yii::$app->user->logout();
 		return $this->render('reset', [
-			'result' =>  Service::ResetDB()
+			'result' => Service::ResetDB()
 		]);
 
 	}
