@@ -22,6 +22,9 @@ use yii\db\ActiveRecord;
  * @property int $town_id key to town id
  * @property int $domain
  * @property null|int $hr_user_id
+ * @property string $birthday
+ * @property string $expert_area
+ * @property string $combined_role
  *
  * @property-read ImportFosDecomposed $relDecomposed
  * @property-read ImportFosPositions $relPosition
@@ -53,7 +56,7 @@ class ImportFosUsers extends ActiveRecord {
 			['user_tn', 'integer'],
 			['user_tn', 'unique'],
 			[['position_id', 'town_id'], 'integer'],
-			[['name', 'email_sigma', 'email_alpha', 'sd_id'], 'string', 'max' => 255],
+			[['name', 'email_sigma', 'email_alpha', 'sd_id', 'birthday', 'expert_area', 'combined_role'], 'string', 'max' => 255],
 			['remote', 'boolean'],
 			['domain', 'integer'], ['domain', 'required'],
 			['hr_user_id', 'integer']
@@ -72,7 +75,10 @@ class ImportFosUsers extends ActiveRecord {
 			'email_sigma' => 'Email Sigma',
 			'email_alpha' => 'Email Alpha',
 			'position_id' => 'key to position id',
-			'town_id' => 'key to town id'
+			'town_id' => 'key to town id',
+			'birthday' => 'birthday',
+			'expert_area' => 'expert_area',
+			'combined_role' => 'combined_role'
 		];
 	}
 
@@ -103,7 +109,6 @@ class ImportFosUsers extends ActiveRecord {
 	public function getRelDivisionLevel1() {
 		return $this->hasOne(ImportFosDivisionLevel1::class, ['id' => 'division_level_1_id'])->via('relDecomposed');
 	}
-
 
 	/**
 	 * @return ImportFosDivisionLevel2|ActiveQuery
