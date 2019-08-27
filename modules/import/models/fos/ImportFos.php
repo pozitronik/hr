@@ -41,6 +41,7 @@ use yii\db\ActiveRecord;
  * @property string $position_name Должность
  * @property string $user_tn ТН
  * @property string $user_name Ф.И.О. сотрудника
+ * @property string $birthday Дата рождения //todo: новая сущность, импорт в атрибуты
  * @property string $functional_block Функциональный блок
  * @property string $division_level_1 Подразделение 1 уровня
  * @property string $division_level_2 Подразделение 2 уровня
@@ -50,7 +51,7 @@ use yii\db\ActiveRecord;
  * @property string $remote_flag Признак УРМ
  * @property string $town Населенный пункт
  * @property string $functional_block_tribe Функциональный блок трайба
- * @property string $tribe_id Трайб ID
+ * @property string $tribe_id Трайб/Группа Agile команд ID
  * @property string $tribe_code Код трайба
  * @property string $tribe_name Трайб
  * @property string $tribe_leader_tn Лидер трайба ТН
@@ -62,14 +63,25 @@ use yii\db\ActiveRecord;
  * @property string $cluster_product_name Кластер/Продукт
  * @property string $cluster_product_leader_tn Лидер кластера/продукта ТН
  * @property string $cluster_product_leader_name Лидер кластера/продукта
+ *
+ * @property string $cluster_product_leader_it_tn IT-лидер кластера/продукта ТН //todo: новая сущность
+ * @property string $cluster_product_leader_it_name IT-лидер кластера/продукта //todo: новая сущность
+ *
  * @property string $command_id Команда ID
  * @property string $command_code Код команды
  * @property string $command_name Команда
  * @property string $command_type Тип команды
+ *
+ * @property string $owner_th ТН владельца продукта //todo: новая сущность
+ *
  * @property string $owner_name Владелец продукта
  * @property string $command_position_id Позиция в команде ID
  * @property string $command_position_code Код позиции в команде
  * @property string $command_position_name Позиция в команде
+ *
+ * @property string $expert_area Область экспертизы //todo: новая сущность
+ * @property string $combined_role Совмещаемая роль //todo: новая сущность
+ *
  * @property string $chapter_id Чаптер ID
  * @property string $chapter_code Код чаптера
  * @property string $chapter_name Чаптер
@@ -112,11 +124,11 @@ class ImportFos extends ActiveRecord {
 		return [
 			[['domain'], 'integer'],
 			[
-				['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'functional_block', 'division_level_1', 'division_level_2',
+				['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'birthday', 'functional_block', 'division_level_1', 'division_level_2',
 					'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id',
 					'tribe_code', 'tribe_name', 'tribe_leader_tn', 'tribe_leader_name', 'tribe_leader_it_id', 'tribe_leader_it_name', 'cluster_product_id',
-					'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_tn', 'cluster_product_leader_name', 'command_id', 'command_code',
-					'command_name', 'command_type', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'chapter_id', 'chapter_code',
+					'cluster_product_code', 'cluster_product_name', 'cluster_product_leader_tn', 'cluster_product_leader_name', 'cluster_product_leader_it_tn', 'cluster_product_leader_it_name', 'command_id', 'command_code',
+					'command_name', 'command_type', 'owner_th', 'owner_name', 'command_position_id', 'command_position_code', 'command_position_name', 'expert_area', 'combined_role', 'chapter_id', 'chapter_code',
 					'chapter_name', 'chapter_leader_tn', 'chapter_leader_name', 'chapter_couch_tn', 'chapter_couch_name', 'email_sigma', 'email_alpha']
 				, 'string', 'max' => 255]
 		];
@@ -132,6 +144,7 @@ class ImportFos extends ActiveRecord {
 			'position_name' => 'Должность',
 			'user_tn' => 'ТН',
 			'user_name' => 'Ф.И.О. сотрудника',
+			'birthday' => 'Дата рождения',
 			'functional_block' => 'Функциональный блок',
 			'division_level_1' => 'Подразделение 1 уровня',
 			'division_level_2' => 'Подразделение 2 уровня',
@@ -141,26 +154,31 @@ class ImportFos extends ActiveRecord {
 			'remote_flag' => 'Признак УРМ',
 			'town' => 'Населенный пункт',
 			'functional_block_tribe' => 'Функциональный блок трайба',
-			'tribe_id' => 'Трайб ID',
-			'tribe_code' => 'Код трайба',
-			'tribe_name' => 'Трайб',
-			'tribe_leader_tn' => 'Лидер трайба ТН',
-			'tribe_leader_name' => 'Лидер трайба',
-			'tribe_leader_it_tn' => 'IT-лидер трайба ТН',
-			'tribe_leader_it_name' => 'IT-лидер трайба',
+			'tribe_id' => 'Трайб/Группа Agile команд ID',
+			'tribe_code' => 'Код трайба/Группы Agile команд',
+			'tribe_name' => 'Трайб/Группа Agile команд',
+			'tribe_leader_tn' => 'Лидер трайба/Группы Agile команд ТН',
+			'tribe_leader_name' => 'Лидер трайба/Группы Agile команд',
+			'tribe_leader_it_tn' => 'IT-лидер трайба/Группы Agile команд ТН',
+			'tribe_leader_it_name' => 'IT-лидер трайба/Группы Agile команд',
 			'cluster_product_id' => 'Кластер/Продукт ID',
 			'cluster_product_code' => 'Код кластера/продукта',
 			'cluster_product_name' => 'Кластер/Продукт',
 			'cluster_product_leader_tn' => 'Лидер кластера/продукта ТН',
 			'cluster_product_leader_name' => 'Лидер кластера/продукта',
+			'cluster_product_leader_it_tn' => 'ИТ Лидер кластера/продукта ТН',
+			'cluster_product_leader_it_name' => 'ИТ Лидер кластера/продукта',
 			'command_id' => 'Команда ID',
 			'command_code' => 'Код команды',
 			'command_name' => 'Команда',
 			'command_type' => 'Тип команды',
+			'owner_th' => 'ТН владельца продукта',
 			'owner_name' => 'Владелец продукта',
-			'command_position_id' => 'Позиция в команде ID',
-			'command_position_code' => 'Код позиции в команде',
-			'command_position_name' => 'Позиция в команде',
+			'command_position_id' => 'Роль Sbergile ID',
+			'command_position_code' => 'Код роли Sbergile',
+			'command_position_name' => 'Роль Sbergile',
+			'expert_area' => 'Область экспертизы',
+			'combined_role' => 'Совмещаемая роль',
 			'chapter_id' => 'Чаптер ID',
 			'chapter_code' => 'Код чаптера',
 			'chapter_name' => 'Чаптер',
@@ -210,7 +228,7 @@ class ImportFos extends ActiveRecord {
 				$columnHeaderIndex = 0;
 				foreach ($labels as $key => $value) {
 					if ($value !== $headerValue = ArrayHelper::getValue($importRow, $columnHeaderIndex)) {
-						throw new BaseException("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.\nМожно удалить эту колонку в файле и повторить импорт.");
+						throw new BaseException("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
 					}
 					$columnHeaderIndex++;
 				}
