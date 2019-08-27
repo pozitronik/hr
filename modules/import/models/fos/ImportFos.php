@@ -42,7 +42,7 @@ use yii\db\ActiveRecord;
  * @property string $position_name Должность
  * @property string $user_tn ТН
  * @property string $user_name Ф.И.О. сотрудника
- * @property string $birthday Дата рождения //todo: новая сущность, импорт в атрибуты
+ * @property string $birthday Дата рождения
  * @property string $functional_block Функциональный блок
  * @property string $division_level_1 Подразделение 1 уровня
  * @property string $division_level_2 Подразделение 2 уровня
@@ -80,8 +80,8 @@ use yii\db\ActiveRecord;
  * @property string $command_position_code Код позиции в команде
  * @property string $command_position_name Позиция в команде
  *
- * @property string $expert_area Область экспертизы //todo: новая сущность
- * @property string $combined_role Совмещаемая роль //todo: новая сущность
+ * @property string $expert_area Область экспертизы
+ * @property string $combined_role Совмещаемая роль
  *
  * @property string $chapter_id Чаптер ID
  * @property string $chapter_code Код чаптера

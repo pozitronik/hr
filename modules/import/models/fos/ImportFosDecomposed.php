@@ -146,7 +146,15 @@ class ImportFosDecomposed extends ActiveRecord {
 		if ([] === $importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
 
 		foreach ($importFosUsers as $importFosUser) {
-			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importFosUser->remote], ['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importFosUser->relTown, 'name')], ['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importFosUser->email_sigma]], $errors)) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
+			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
+					['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importFosUser->remote],
+					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importFosUser->relTown, 'name')],
+					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importFosUser->email_sigma],
+					['attribute' => 'Дата рождения', 'type' => 'string', 'field' => 'Дата рождения', "value" => $importFosUser->birthday],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Область экспертизы', "value" => $importFosUser->expert_area],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Совмещаемая роль', "value" => $importFosUser->combined_role]
+				], $errors)
+			) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
 				$importFosUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный айдишник, чтобы на следующей итерации пропустился
 				continue; //пропустим засранца
 			}
