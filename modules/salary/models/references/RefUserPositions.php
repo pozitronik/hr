@@ -100,9 +100,9 @@ class RefUserPositions extends CustomisableReference {
 						'attribute' => 'name',
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
 						'itemsSeparator' => false,
-						"optionsMap" => static function() {
-							return self::colorStyleOptions();
-						}
+						"badgeOptions" => [
+							'style' => $model->style
+						]
 					]);
 				},
 				'format' => 'raw'
@@ -117,9 +117,9 @@ class RefUserPositions extends CustomisableReference {
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositionTypes'],
-						"optionsMap" => static function() {
-							return RefUserPositionTypes::colorStyleOptions();
-						}
+						"badgeOptions" => [
+							'style' => ArrayHelper::getValue($model->relRefUserPositionTypes, '0.style')//ну такое
+						]
 					]);
 				}
 			],
