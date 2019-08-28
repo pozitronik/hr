@@ -23,7 +23,6 @@ class DeployController extends Controller {
 	public function actionIndex():void {
 		$this->layout = false;
 //		$commit_hash = 'git rev-parse HEAD > /var/www/hr/commit.hash';
-
 		$output = [];
 		exec("cd self::REPO_DIR && self::GIT_BIN pull", $output);
 		$output = implode("\n", $output);
