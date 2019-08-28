@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\helpers\Utils;
-use Yii;
 use yii\web\Controller;
 
 /**
@@ -13,7 +12,7 @@ use yii\web\Controller;
  */
 class DeployController extends Controller {
 
-	const REPO_DIR = '/var/www/hr/',
+	public const REPO_DIR = '/var/www/hr/',
 		GIT_BIN = 'git',
 		MIGRATE_CMD = 'php yii migrate up --interactive=0',
 		FLUSH_CMD = 'php yii cache/flush-all';
@@ -42,7 +41,7 @@ class DeployController extends Controller {
 		echo $output."\n";
 	}
 
-	public function actionFlush() {
+	public function actionFlush():void {
 		$this->layout = false;
 		$output = [];
 		exec("cd self::REPO_DIR && self::FLUSH_CMD", $output);

@@ -75,7 +75,7 @@ class CustomisableReference extends Reference {
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
 						'itemsSeparator' => false,
 						"badgeOptions" => [
-							'style' => $model->style,
+							'style' => $model->style
 						]
 					]);
 				},
