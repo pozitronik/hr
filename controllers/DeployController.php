@@ -12,10 +12,10 @@ use yii\web\Controller;
  */
 class DeployController extends Controller {
 
-	public const REPO_DIR = '/var/www/hr/',
-		GIT_BIN = 'git',
-		MIGRATE_CMD = 'php yii migrate up --interactive=0',
-		FLUSH_CMD = 'php yii cache/flush-all';
+	private $REPO_DIR = '/var/www/hr/';
+	private $GIT_BIN = 'git';
+	private $MIGRATE_CMD = 'php yii migrate up --interactive=0';
+	private $FLUSH_CMD = 'php yii cache/flush-all';
 
 	/**
 	 * @return void
@@ -24,17 +24,17 @@ class DeployController extends Controller {
 		$this->layout = false;
 //		$commit_hash = 'git rev-parse HEAD > /var/www/hr/commit.hash';
 		$output = [];
-		exec("cd self::REPO_DIR && self::GIT_BIN pull", $output);
+		exec("cd $this->REPO_DIR && $this->GIT_BIN pull", $output);
 		$output = implode("\n", $output);
 		Utils::fileLog($output, 'Webhook triggered:', "deploy.log");
 		echo $output."\n";
 		$output = [];
-		exec("cd self::REPO_DIR && self::MIGRATE_CMD", $output);
+		exec("cd $this->REPO_DIR && $this->MIGRATE_CMD", $output);
 		$output = implode("\n", $output);
 		Utils::fileLog($output, 'Applying migrations:', "deploy.log");
 		echo $output."\n";
 		$output = [];
-		exec("cd self::REPO_DIR && self::FLUSH_CMD", $output);
+		exec("cd $this->REPO_DIR && $this->FLUSH_CMD", $output);
 		$output = implode("\n", $output);
 		Utils::fileLog($output, 'Flushing cache:', "deploy.log");
 		echo $output."\n";
@@ -43,7 +43,7 @@ class DeployController extends Controller {
 	public function actionFlush():void {
 		$this->layout = false;
 		$output = [];
-		exec("cd self::REPO_DIR && self::FLUSH_CMD", $output);
+		exec("cd $this->REPO_DIR && $this->FLUSH_CMD", $output);
 		$output = implode("\n", $output);
 		Utils::fileLog($output, 'Flushing cache:', "deploy.log");
 		echo $output."\n";
