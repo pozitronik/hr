@@ -14,7 +14,7 @@ use app\modules\references\models\Reference;
  * @var View $this ;
  * @var ActiveDataProvider $dataProvider
  * @var Reference|false $class
- * @var stdClass $searchModel
+ * @var Reference $searchModel
  */
 
 $this->title = $class->menuCaption;
