@@ -123,7 +123,6 @@ class RefUserPositions extends CustomisableReference {
 					]);
 				}
 			],
-
 			[
 				'attribute' => 'branchName'
 			],
