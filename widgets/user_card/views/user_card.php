@@ -42,7 +42,7 @@ $badgeData = [];
 				'models' => $user->username,
 				'linkScheme' => [UsersModule::to('users/groups'), 'id' => $user->id]
 			]) ?>: <?= BadgeWidget::widget([
-				'models' => $user->getRefUserPositionTypes()->all(),
+				'models' => $user->relRefUserPositionsTypesAny,
 				'attribute' => 'name',
 				'unbadgedCount' => false,
 				'itemsSeparator' => false,

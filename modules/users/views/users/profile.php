@@ -56,7 +56,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 			<div class="col-md-3">
 				<label>Профиль:</label>
 				<?= BadgeWidget::widget([
-					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'models' => $model->relRefUserPositionsTypesAny,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,

@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'label' => 'Тип должности',
 			'value' => static function(Users $model) use ($searchModel) {
 				return BadgeWidget::widget([
-					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'models' => $model->relRefUserPositionsTypesAny,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,

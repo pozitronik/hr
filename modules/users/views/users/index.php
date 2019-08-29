@@ -136,7 +136,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'label' => 'Тип должности',
 			'value' => static function(Users $model) {
 				return BadgeWidget::widget([
-					'models' => $model->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'models' => $model->relRefUserPositionsTypesAny,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => false,

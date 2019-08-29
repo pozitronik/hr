@@ -83,7 +83,7 @@ use yii\web\View;
 			'label' => 'Тип должности',
 			'value' => static function(Users $user) {
 				return BadgeWidget::widget([
-					'models' => $user->getRefUserPositionTypes()->all(),/*Именно так, иначе мы напоремся на отсечку атрибутов дистинктом (вспомни, как копали с Ваней)*/
+					'models' => $user->relRefUserPositionsTypesAny,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
