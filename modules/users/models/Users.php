@@ -536,10 +536,10 @@ class Users extends ActiveRecordExtended {
 
 	/**
 	 * Типы должностей пользователя, полученные через переопределения (не зависящие от привязок должности)
-	 * @return ActiveQuery|RelRefUserPositionsTypes
+	 * @return ActiveQuery|RefUserPositionTypes
 	 */
 	public function getRelRefUserPositionsTypesOwn() {
-		return $this->hasMany(RelRefUserPositionsTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
+		return $this->hasMany(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
 	}
 
 	/**
