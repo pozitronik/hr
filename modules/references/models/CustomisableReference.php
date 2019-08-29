@@ -5,7 +5,6 @@ namespace app\modules\references\models;
 
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
-use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -75,9 +74,7 @@ class CustomisableReference extends Reference {
 						'attribute' => 'name',
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => $model->formName()],
 						'itemsSeparator' => false,
-						"badgeOptions" => [
-							'style' => $model->style
-						]
+						"optionsMap" => self::colorStyleOptions()
 					]);
 				},
 				'format' => 'raw'
