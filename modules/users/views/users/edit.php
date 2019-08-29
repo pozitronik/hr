@@ -6,6 +6,8 @@ declare(strict_types = 1);
  * @var View $this
  */
 
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\salary\models\references\RefUserPositionTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\privileges\models\Privileges;
 use app\modules\users\models\Users;
@@ -83,8 +85,18 @@ $this->params['breadcrumbs'][] = $this->title;
 							]) ?>
 						</div>
 
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<?= $form->field($model, 'comment')->label('Комментарий пользователя') ?>
+						</div>
+						<div class="col-md-6">
+							<?= $form->field($model, 'relRefUserPositionsTypesOwn')->widget(ReferenceSelectWidget::class, [
+								'referenceClass' => RefUserPositionTypes::class,
+								'options' => ['placeholder' => 'Тип должности'],
+								'pluginOptions' => [
+									'allowClear' => true,
+									'multiple' => true
+								]
+							]) ?>
 						</div>
 
 

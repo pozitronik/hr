@@ -162,7 +162,7 @@ class Users extends ActiveRecordExtended {
 			[['login'], 'unique'],
 			[['email'], 'unique'],
 			[['upload_image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxSize' => 1048576],//Это только клиентская валидация, на сервере атрибут всегда будет валидироваться успешно
-			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges', 'relRefUserPositionTypes'], 'safe'],
+			[['relGroups', 'dropGroups', 'relDynamicAttributes', 'dropUsersAttributes', 'relPrivileges', 'dropPrivileges', 'relRefUserPositionTypes', 'relRefUserPositionsTypesOwn'], 'safe'],
 			/*Мы не можем переопределить или наследовать метод в трейте, поэтому ПОКА добавляю правила валидации атрибутов из трейта сюда. Но потом нужно придумать, как разделить код*/
 			[['relGrade', 'relPremiumGroup', 'relLocation'], 'safe'],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
@@ -196,7 +196,8 @@ class Users extends ActiveRecordExtended {
 			'relPremiumGroup' => 'Группа премирования',
 			'relLocation' => 'Расположение',
 			'relSalaryFork' => 'Зарплатная вилка',
-			'relRefUserPositionsTypes' => 'Тип должности'
+			'relRefUserPositionsTypes' => 'Тип должности',
+			'relRefUserPositionsTypesOwn' => 'Тип должности (прямой)',
 		];
 	}
 
