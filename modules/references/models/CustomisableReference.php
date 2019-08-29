@@ -5,6 +5,7 @@ namespace app\modules\references\models;
 
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -114,9 +115,15 @@ class CustomisableReference extends Reference {
 	 */
 	public static function colorStyleOptions():array {
 		return Yii::$app->cache->getOrSet(static::class."ColorStyleOptions", static function() {
-			return self::find()->select(new Expression('CONCAT ("background: " , IFNULL(color, "gray"), "; color: ", IFNULL(textcolor, "white")) AS style'))->active()->asArray()->all();
+			$selection = self::find()->select(['id', new Expression('CONCAT ("background: " , IFNULL(color, "gray"), "; color: ", IFNULL(textcolor, "white")) AS style')])->active()->asArray()->all();
+			$result = [];
+			foreach ($selection as $key => $value) {
+				$result[$value['id']] = [
+					'style' => $value['style']
+				];
+			}
+			return $result;
 		});
-
 	}
 
 	/**
