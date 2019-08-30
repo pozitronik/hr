@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\fos;
 
 use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
+use app\modules\users\models\relations\RelUserPositionsTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -366,7 +367,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
 		if (null !== $positionType) {//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
-			$user->relRefUserPositionsTypesOwn = [$positionType];
+			RelUserPositionsTypes::linkModels($user, $positionType);
 		}
 
 		if (null === $user->id) {
