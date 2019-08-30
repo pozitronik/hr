@@ -262,7 +262,18 @@ class ImportFos extends ActiveRecord {
 
 				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде. Таблицы декомпозиции не учитывают домен, наполняясь по мере новых импортов*/
 					/*Прямое соответствие типа должности пользователя тому, в каком он фунциональном блоке находится. После расширения условий нужно будет дополнить разбор*/
-					$currentUserPositionType = RefUserPositionTypes::addInstance(['name' => ('Розничный бизнес' === $row->functional_block)?'Бизнес':('Технологии' === $row->functional_block)?'IT':null]);
+					switch ($row->functional_block) {
+						case 'Розничный бизнес':
+							$positionTypeName = 'Бизнес';
+						break;
+						case 'Технологии':
+							$positionTypeName = 'IT';
+						break;
+						default: $positionTypeName = null;
+					}
+
+//					$positionTypeName = ('Розничный бизнес' === $row->functional_block)?'Бизнес':('Технологии' === $row->functional_block)?'IT':null;
+					$currentUserPositionType = RefUserPositionTypes::addInstance(['name' => $positionTypeName]);
 
 					try {
 						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
