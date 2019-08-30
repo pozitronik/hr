@@ -483,7 +483,7 @@ class Groups extends ActiveRecordExtended {
 		$cacheKey = json_encode($scope);
 		return Yii::$app->cache->getOrSet(static::class."getGroupScopePositionTypeData{$cacheKey}", static function() use ($scope) {
 			/*Временный и дубовый код. После того, как логика работы с типами должностей устаканится, нужно будет переписать, оптимальнее всего - в SQL-вью, возвращающую нужные данные без необходимости крутить циклы*/
-			$allPositionTypes = [];
+			$allPositionTypes = RefUserPositionTypes::find()->active()->all();//Все справочники
 			$countersArray = [];
 			$groupUsers = Users::find()->distinct()->active()->joinWith(['relGroups'], false)->where(['sys_groups.id' => $scope])->all();//get all active users ids in scope
 			foreach ($groupUsers as $user) {
@@ -492,11 +492,9 @@ class Groups extends ActiveRecordExtended {
 					$countersArray[$userPositionType->id] = ArrayHelper::getValue($countersArray, $userPositionType->id, 0) + 1;
 				}
 			}
-			foreach ($countersArray as $positionTypeId => $positionTypeCount) {
-				/** @var RefUserPositionTypes $positionType */
-				$positionType = RefUserPositionTypes::findModel($positionTypeId, new UnexpectedValueException());
-				$positionType->count = $positionTypeCount;
-				$allPositionTypes[] = $positionType;
+			/** @var RefUserPositionTypes[] $allPositionTypes */
+			foreach ($allPositionTypes as &$positionType) {
+				$positionType->count = ArrayHelper::getValue($countersArray, $positionType->id, 0);
 			}
 
 			return $allPositionTypes;
