@@ -572,7 +572,7 @@ class Users extends ActiveRecordExtended {
 	 * @return RefUserPositionTypes[]
 	 */
 	public function getRelRefUserPositionsTypesAny() {
-		if ([] === $result = $this->getRelRefUserPositionsTypesOwn()->all()) $result = $this->getRelRefUserPositionsTypes()->all();
+		if ([] === $result = $this->getRelRefUserPositionsTypesOwn()->all()) $result = $this->getRefUserPositionTypes()->all();
 		return $result;
 	}
 
