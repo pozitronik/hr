@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\controllers;
 
 use app\models\core\WigetableController;
+use app\modules\import\models\fos\ImportException;
 use app\modules\import\models\fos\ImportFos;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use app\modules\import\models\fos\ImportFosDecomposedSearch;
@@ -60,6 +61,7 @@ class FosController extends WigetableController {
 	 * @param int|null $domain
 	 * @param int $step
 	 * @return string|Response
+	 * @throws ImportException
 	 */
 	public function actionDecompose(?int $domain = null, int $step = ImportFos::STEP_REFERENCES) {
 		if (null === $domain) return $this->redirect(['upload']);

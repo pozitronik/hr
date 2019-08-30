@@ -252,6 +252,7 @@ class ImportFos extends ActiveRecord {
 	 * @param int $step
 	 * @param array $messages Массив сообщений
 	 * @return int текущий исполненный шаг
+	 * @throws ImportException
 	 */
 	public static function Decompose(int $domain, int $step = self::STEP_REFERENCES, array &$messages = []):int {
 		/** @var self[] $data */
