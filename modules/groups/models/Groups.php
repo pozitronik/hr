@@ -20,6 +20,7 @@ use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use Throwable;
+use UnexpectedValueException;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -469,20 +470,7 @@ class Groups extends ActiveRecordExtended {
 	public function getGroupPositionTypeData():array {
 		$id = $this->id;
 		return Yii::$app->cache->getOrSet(static::class."getGroupPositionTypeData{$id}", static function() use ($id) {
-			$allPositionTypes = RefUserPositionTypes::find()->active()->all();//Все справочники
-
-			$positionTypesCount = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])//только использованные в указанной группе
-			->joinWith(['relGroups'], false)
-				->groupBy(['ref_user_position_types.id'])
-				->where(['sys_groups.id' => $id])
-				->andWhere(['sys_users.deleted' => false])//приходится выкручиваться так
-				->asArray()
-				->all();
-
-			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypesCount) {/*Немного индустский способ заполнения каунта пустых типов нулями*/
-				if (0 !== $count = (int)ArrayHelper::getValue($positionTypesCount, "$key.count", 0)) $value->count = $count;
-			});
-			return $allPositionTypes;
+			return self::getGroupScopePositionTypeData([$id]);
 		});
 	}
 
@@ -494,18 +482,23 @@ class Groups extends ActiveRecordExtended {
 	public static function getGroupScopePositionTypeData(array $scope):array {
 		$cacheKey = json_encode($scope);
 		return Yii::$app->cache->getOrSet(static::class."getGroupScopePositionTypeData{$cacheKey}", static function() use ($scope) {
-			$allPositionTypes = RefUserPositionTypes::find()->active()->all();//Все справочники
+			/*Временный и дубовый код. После того, как логика работы с типами должностей устаканится, нужно будет переписать, оптимальнее всего - в SQL-вью, возвращающую нужные данные без необходимости крутить циклы*/
+			$allPositionTypes = [];
+			$countersArray = [];
+			$groupUsers = Users::find()->distinct()->active()->joinWith(['relGroups'], false)->where(['sys_groups.id' => $scope])->all();//get all active users ids in scope
+			foreach ($groupUsers as $user) {
+				$userPositionTypes = $user->relRefUserPositionsTypesAny;
+				foreach ($userPositionTypes as $userPositionType) {
+					$countersArray[$userPositionType->id] = ArrayHelper::getValue($countersArray, $userPositionType->id, 0) + 1;
+				}
+			}
+			foreach ($countersArray as $positionTypeId => $positionTypeCount) {
+				/** @var RefUserPositionTypes $positionType */
+				$positionType = RefUserPositionTypes::findModel($positionTypeId, new UnexpectedValueException());
+				$positionType->count = $positionTypeCount;
+				$allPositionTypes[] = $positionType;
+			}
 
-			$positionTypesCount = RefUserPositionTypes::find()->select(['ref_user_position_types.id', 'count(ref_user_position_types.id) as `count`'])//только использованные в указанной группе
-			->joinWith(['relGroups'], false)
-				->groupBy(['ref_user_position_types.id'])
-				->where(['sys_groups.id' => $scope])
-				->asArray()
-				->all();
-
-			array_walk($allPositionTypes, static function(&$value, &$key) use ($positionTypesCount) {/*Немного индустский способ заполнения каунта пустых типов нулями*/
-				if (0 !== $count = (int)ArrayHelper::getValue($positionTypesCount, "$key.count", 0)) $value->count = $count;
-			});
 			return $allPositionTypes;
 		});
 	}
@@ -533,7 +526,6 @@ class Groups extends ActiveRecordExtended {
 			return $allVacancyStatuses;
 		});
 	}
-
 
 	/**
 	 * Возвращает статистику по количеству юзеров в указанных группах (уники и суммари)
