@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\fos;
 
 use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
+use app\modules\salary\models\references\RefUserPositionTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\traits\Upload;
 use app\modules\import\models\fos\activerecord\ImportFosChapter;
@@ -260,6 +261,9 @@ class ImportFos extends ActiveRecord {
 			case self::STEP_REFERENCES:
 
 				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность, город, позиция в команде. Таблицы декомпозиции не учитывают домен, наполняясь по мере новых импортов*/
+					/*Прямое соответствие типа должности пользователя тому, в каком он фунциональном блоке находится. После расширения условий нужно будет дополнить разбор*/
+					$currentUserPositionType = RefUserPositionTypes::addInstance(['name' => ('Розничный бизнес' === $row->functional_block)?'Бизнес':('Технологии' === $row->functional_block)?'IT':null]);
+
 					try {
 						$position = ImportFosPositions::addInstance(['name' => $row->position_name], [
 							'name' => $row->position_name,
@@ -288,7 +292,8 @@ class ImportFos extends ActiveRecord {
 							'birthday' => $row->birthday,
 							'expert_area' => $row->expert_area,
 							'combined_role' => $row->combined_role,
-							'domain' => $row->domain
+							'domain' => $row->domain,
+							'position_type' => ArrayHelper::getValue($currentUserPositionType, 'id')
 						]);
 					} catch (ImportException $importException) {
 						$messages[] = ['row' => $row, 'error' => $importException->getName()];
