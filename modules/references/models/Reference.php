@@ -6,6 +6,7 @@ namespace app\modules\references\models;
 use app\models\core\ActiveRecordExtended;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
+use app\models\core\traits\ARExtended;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use Throwable;
@@ -41,6 +42,7 @@ use RuntimeException;
  *
  */
 class Reference extends ActiveRecordExtended implements ReferenceInterface {
+	use ARExtended;
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
 	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions
