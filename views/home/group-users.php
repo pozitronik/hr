@@ -158,7 +158,9 @@ $this->params['breadcrumbs'][] = $this->title;
 					'useBadges' => true,
 					'unbadgedCount' => false,
 					'itemsSeparator' => false,
-					"badgeOptions" => ArrayHelper::getValue(RefUserPositionTypes::colorStyleOptions(), ArrayHelper::getValue($model->relRefUserPositions, 'types'), ['style' => 'background:transparent'])//Не сработает, если у пользователя несколько типов должностей. Это запрещено логически, но доступно технически
+					'badgeOptions' => [
+						'style' => ArrayHelper::getValue($model->relRefUserPositionsTypesAny,'0.style','background:transparent')
+					]
 				]);
 			},
 			'format' => 'raw'
