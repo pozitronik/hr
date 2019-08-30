@@ -198,7 +198,7 @@ class Users extends ActiveRecordExtended {
 			'relLocation' => 'Расположение',
 			'relSalaryFork' => 'Зарплатная вилка',
 			'relRefUserPositionsTypes' => 'Тип должности',
-			'relRefUserPositionsTypesOwn' => 'Тип должности (прямой)',
+			'relRefUserPositionsTypesOwn' => 'Тип должности (прямой)'
 		];
 	}
 
@@ -571,7 +571,7 @@ class Users extends ActiveRecordExtended {
 	 * Типы должностей пользователя, полученные напрямую, или (в случае отсутствия прямых указаний) через должности
 	 * @return RefUserPositionTypes[]
 	 */
-	public function getRelRefUserPositionsTypesAny() {
+	public function getRelRefUserPositionsTypesAny():array {
 		if ([] === $result = $this->getRelRefUserPositionsTypesOwn()->all()) $result = $this->getRefUserPositionTypes()->all();
 		return $result;
 	}

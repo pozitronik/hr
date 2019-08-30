@@ -115,7 +115,7 @@ class RefUserPositions extends CustomisableReference {
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
 						'linkScheme' => [ReferencesModule::to(['references/update']), 'id' => 'id', 'class' => 'RefUserPositionTypes'],
-						"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
+						"optionsMap" => RefUserPositionTypes::colorStyleOptions()
 					]);
 				}
 			],

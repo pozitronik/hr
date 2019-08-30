@@ -20,7 +20,7 @@ use yii\db\ActiveQuery;
  * @property Users[]|ActiveQuery $relUsers
  * @property RelUsersGroups[]|ActiveQuery $relUserGroups
  * @property Groups[]|ActiveQuery $relGroups
- * @property-read int $count
+ * @property int $count
  */
 class RefUserPositionTypes extends CustomisableReference {
 	public $menuCaption = 'Типы должностей';
