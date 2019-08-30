@@ -365,7 +365,9 @@ class ImportFosDecomposed extends ActiveRecord {
 		$user->createModel(['username' => $name, 'login' => Utils::generateLogin(), 'password' => Utils::gen_uuid(5), 'salt' => null, 'email' => empty($email)?Utils::generateLogin()."@localhost":$email, 'deleted' => false]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
 
-		if (null !== $positionType) $user->relRefUserPositionsTypesOwn = [$positionType];//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
+		if (null !== $positionType) {//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
+			$user->relRefUserPositionsTypesOwn = [$positionType];
+		}
 
 		if (null === $user->id) {
 			Yii::debug($user, 'debug');
