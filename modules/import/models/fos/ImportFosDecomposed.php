@@ -146,7 +146,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		if ([] === $importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
 
 		foreach ($importFosUsers as $importFosUser) {
-			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->email_alpha, [
+			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->position_type, $importFosUser->email_alpha, [
 					['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importFosUser->remote],
 					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importFosUser->relTown, 'name')],
 					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importFosUser->email_sigma],
@@ -341,13 +341,14 @@ class ImportFosDecomposed extends ActiveRecord {
 	/**
 	 * @param string $name
 	 * @param string|null $position
+	 * @param int|null $positionType
 	 * @param string|null $email
 	 * @param array<array> $attributes
 	 * @param array $errors -- ошибки импорта (сообщить админу, пусть сам разбирается)
 	 * @return null|int
 	 * @throws Throwable
 	 */
-	public static function addUser(string $name, ?string $position, ?string $email, array $attributes = [], array &$errors = []):?int {
+	public static function addUser(string $name, ?string $position, ?int $positionType, ?string $email, array $attributes = [], array &$errors = []):?int {
 		if (empty($name)) return -1;
 		/** @var null|Users $user */
 		$user = Users::find()->where(['username' => $name])->one();
@@ -363,6 +364,8 @@ class ImportFosDecomposed extends ActiveRecord {
 		/** @noinspection IsEmptyFunctionUsageInspection */
 		$user->createModel(['username' => $name, 'login' => Utils::generateLogin(), 'password' => Utils::gen_uuid(5), 'salt' => null, 'email' => empty($email)?Utils::generateLogin()."@localhost":$email, 'deleted' => false]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
+
+		if (null !== $positionType) $user->relRefUserPositionsTypesOwn = [$positionType];//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
 
 		if (null === $user->id) {
 			Yii::debug($user, 'debug');
