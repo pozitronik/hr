@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $birthday
  * @property string $expert_area
  * @property string $combined_role
+ * @property int|null $position_type
  *
  * @property-read ImportFosDecomposed $relDecomposed
  * @property-read ImportFosPositions $relPosition
@@ -55,7 +56,7 @@ class ImportFosUsers extends ActiveRecord {
 		return [
 			['user_tn', 'integer'],
 			['user_tn', 'unique'],
-			[['position_id', 'town_id'], 'integer'],
+			[['position_id', 'town_id', 'position_type'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id', 'birthday', 'expert_area', 'combined_role'], 'string', 'max' => 255],
 			['remote', 'boolean'],
 			['domain', 'integer'], ['domain', 'required'],
@@ -78,7 +79,8 @@ class ImportFosUsers extends ActiveRecord {
 			'town_id' => 'key to town id',
 			'birthday' => 'birthday',
 			'expert_area' => 'expert_area',
-			'combined_role' => 'combined_role'
+			'combined_role' => 'combined_role',
+			'position_type' => 'Тип должности'
 		];
 	}
 
