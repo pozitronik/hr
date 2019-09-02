@@ -28,7 +28,7 @@
 }
 
 .panel.panel-card > .panel-body {
-	padding: 15px 20px 0px;
+	padding: 15px 20px 5px;
 }
 
 .panel.panel-card > .panel-footer, .panel.panel-card-small > .panel-footer {

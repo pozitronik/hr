@@ -109,8 +109,9 @@ use yii\web\View;
 
 			</div>
 		</div>
-		<div class="list-divider"></div>
+
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && count($group->relChildGroups) > 0): ?>
+			<div class="list-divider"></div>
 			<div class="row">
 				<div class="col-md-12">
 					<?php foreach ($group->relChildGroups as $childGroup): ?>
