@@ -44,7 +44,7 @@ use yii\web\View;
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]),
 				"badgeOptions" => [
-					'class' => "badge badge-info",
+					'class' => "badge badge-info"
 				],
 				"optionsMap" => RefGroupTypes::colorStyleOptions(),
 				"optionsMapAttribute" => 'type',

@@ -115,7 +115,7 @@ use yii\web\View;
 			<div class="row child-groups">
 				<div class="col-md-12">
 					<?php foreach ($group->relChildGroups as $childGroup): ?>
-						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small']); ?>
+						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small']) ?>
 					<?php endforeach; ?>
 				</div>
 			</div>

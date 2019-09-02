@@ -20,7 +20,6 @@ use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use Throwable;
-use UnexpectedValueException;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
