@@ -4,6 +4,10 @@
 	min-width: 200px;
 }
 
+.panel > .panel-heading > .row * .panel-control {
+	line-height: 50px;
+}
+
 .panel.panel-card-small {
 	min-width: 200px;
 	float: left;
@@ -50,6 +54,10 @@
 	background: rgba(144,135,145,0.23);
 	padding-top:5px;
 	border-radius: 5px;
+}
+
+.auto-height {
+	height: auto!important;
 }
 
 .badge.badge-unimportant {

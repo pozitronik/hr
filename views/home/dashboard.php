@@ -29,6 +29,7 @@ $this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card'/*,
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
 $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
+
 array_walk($userGroupTypes, static function(&$value, &$key) {
 	$key = "filter-type{$value['id']}";
 	$value = [
@@ -43,56 +44,53 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 ?>
 
 <div class="panel">
-	<div class="panel-heading">
-		<table class="panel-header-table">
-			<tr>
-				<td style="width: 1%">
-					<h3 class="panel-title pull-left">
-						<?= Html::encode($this->title) ?>
-					</h3>
-				</td>
-				<td>
-					<div class="panel-center">
-						<?= ButtonControlsWidget::widget([
-							'name' => 'sorting',
-							'items' => [
-								'sort-by-type' => [
-									'label' => 'По типу',
-									'options' => [
-										'data-sorting' => 'type'
-									]
-								],
-								'sort-by-count' => [
-									'label' => 'По сотрудникам',
-									'options' => [
-										'data-sorting' => 'count'
-									]
-								],
-								'sort-by-vacancy' => [
-									'label' => 'По вакансиям',
-									'options' => [
-										'data-sorting' => 'vacancy'
-									]
-								]
-							],
-							'radioMode' => true
-						]) ?>
-						<?= ButtonControlsWidget::widget([
-							'name' => 'filter',
-							'items' => $userGroupTypes
-						]) ?>
-					</div>
-				</td>
-				<td>
+	<div class="panel-heading auto-height">
+		<div class="row">
+			<div class="col-md-1">
+				<h3 class="panel-title pull-left">
+					<?= Html::encode($this->title) ?>
+				</h3>
+			</div>
+			<div class="col-md-10" style="margin-top:8px">
+				<?= ButtonControlsWidget::widget([
+					'name' => 'sorting',
+					'items' => [
+						'sort-by-type' => [
+							'label' => 'По типу',
+							'options' => [
+								'data-sorting' => 'type'
+							]
+						],
+						'sort-by-count' => [
+							'label' => 'По сотрудникам',
+							'options' => [
+								'data-sorting' => 'count'
+							]
+						],
+						'sort-by-vacancy' => [
+							'label' => 'По вакансиям',
+							'options' => [
+								'data-sorting' => 'vacancy'
+							]
+						]
+					],
+					'radioMode' => true,
+				]) ?>
+				<?= ButtonControlsWidget::widget([
+					'name' => 'filter',
+					'items' => $userGroupTypes,
+				]) ?>
 
-					<div class="panel-control">
-						<?= Html::a("Таблица", Url::current(['t' => 1]), [
-							'class' => 'btn btn-xs btn-info'
-						]) ?>
-					</div>
-				</td>
-			</tr>
-		</table>
+			</div>
+
+			<div class="col-md-1">
+				<div class="panel-control">
+					<?= Html::a("Таблица", Url::current(['t' => 1]), [
+						'class' => 'btn btn-xs btn-info'
+					]) ?>
+				</div>
+			</div>
+		</div>
 
 
 	</div>
