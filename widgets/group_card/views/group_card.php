@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
+ * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы
  */
 
 use app\modules\groups\GroupsModule;
@@ -13,6 +14,8 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
+use app\widgets\group_card\GroupCardWidget;
+use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -106,6 +109,15 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 
 			</div>
 		</div>
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true)): ?>
+			<div class="row">
+				<div class="col-md-12">
+					<?php foreach ($group->relChildGroups as $childGroup): ?>
+						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small']); ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		<?php endif; ?>
 	</div>
 
 
