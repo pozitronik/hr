@@ -17,7 +17,7 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-card-small">
+<div class="panel panel-card-small" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
@@ -39,7 +39,7 @@ use yii\web\View;
 					'itemsSeparator' => false,
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"badgeOptions" => [
-						'class' => 'badge'
+						'class' => 'badge group-type-name'
 					],
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]),

@@ -112,7 +112,7 @@ use yii\web\View;
 
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && count($group->relChildGroups) > 0): ?>
 			<div class="list-divider"></div>
-			<div class="row">
+			<div class="row child-groups">
 				<div class="col-md-12">
 					<?php foreach ($group->relChildGroups as $childGroup): ?>
 						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small']); ?>
