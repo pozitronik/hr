@@ -52,6 +52,10 @@
 	border-radius: 5px;
 }
 
+.badge.badge-unimportant {
+	background-color: #7776;
+}
+
 /* ---- grid ---- */
 
 .grid {

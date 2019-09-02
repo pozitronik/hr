@@ -67,7 +67,7 @@ use yii\web\View;
 		<?= BadgeWidget::widget([
 			'models' => 'Вакансии: '.count($group->relVacancy),
 			"badgeOptions" => [
-				'class' => "badge badge-danger"
+				'class' => "badge ".((count($group->relVacancy) > 0)?"badge-danger":"badge-unimportant")
 			],
 			'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 		]) ?>

@@ -90,7 +90,7 @@ use yii\web\View;
 			<div class="col-md-2"><?= BadgeWidget::widget([
 					'models' => 'Вакансии: '.Html::tag('span', count($group->relVacancy), ['class' => 'vacancy-count']),
 					"badgeOptions" => [
-						'class' => "badge badge-danger pull-left"
+						'class' => "badge pull-left ".((count($group->relVacancy) > 0)?"badge-danger":"badge-unimportant")
 					],
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 				]) ?></div>
