@@ -55,7 +55,7 @@ use yii\web\View;
 				],
 				"optionsMap" => RefGroupTypes::colorStyleOptions(),
 				"optionsMapAttribute" => 'type',
-				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
+				'linkScheme' => [GroupsModule::to(['groups/profile', 'id' => $group->id])]
 
 			]) ?></h3>
 	</div>
