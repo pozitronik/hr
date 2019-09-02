@@ -32,7 +32,7 @@ use yii\web\View;
 
 <?= GridView::widget([
 	'dataProvider' => $provider,
-	'summary' => Html::a('Редактор', GroupsModule::to(['users', 'id' => $model->id]), ['class' => 'btn btn-success summary-content']),
+	'summary' => Html::a('Редактор', GroupsModule::to(['groups/users', 'id' => $model->id]), ['class' => 'btn btn-success summary-content']),
 	'panel' => [
 		'heading' => 'Сотрудники'.(($provider->totalCount > 0)?" (".Utils::pluralForm($provider->totalCount, ['сотрудник', 'сотрудника', 'сотрудников']).")":" (нет)"),
 		'footer' => false

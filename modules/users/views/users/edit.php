@@ -19,7 +19,7 @@ use kartik\form\ActiveForm;
 use yii\helpers\Html;
 Use kartik\file\FileInput;
 
-$this->title = $model->isNewRecord?'Добавление пользователя':"Профиль пользователя {$model->username}";
+$this->title = $model->isNewRecord?'Добавление пользователя':"Изменение пользователя {$model->username}";
 $this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 

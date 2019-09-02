@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 use app\modules\groups\models\references\RefGroupTypes;
 use kartik\file\FileInput;
 
-$this->title = $model->isNewRecord?'Добавление группы':"Профиль группы {$model->name}";
+$this->title = $model->isNewRecord?'Добавление группы':"Изменение группы {$model->name}";
 $this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem('Группы');
 $this->params['breadcrumbs'][] = $this->title;
 
