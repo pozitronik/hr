@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -54,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => ['users', 'UsersSearch[groupId]' => $model->id]
+					'linkScheme' => [GroupsModule::to(['groups/profile', 'id' => $model->id])]
 
 				]);
 			},
