@@ -13,12 +13,11 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
-use yii\helpers\Html;
 use yii\web\View;
 
 ?>
 
-<div class="panel panel-card" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card-small" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
@@ -56,35 +55,22 @@ use yii\web\View;
 
 	<div class="panel-body">
 		<?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
-			<div class="row">
-				<div class="col-md-12"><?= BadgeWidget::widget([
-						'models' => $positionType->name,
-						"badgeOptions" => [
-							'style' => "{$positionType->style}: {$positionType->count}"
-						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
+			<?= BadgeWidget::widget([
+				'models' => "{$positionType->name}: {$positionType->count}",
+				"badgeOptions" => [
+					'style' => $positionType->style
+				],
+				'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
 
-					]) ?></div>
-			</div>
-			<div class="list-divider"></div>
+			]) ?>
 		<?php endforeach; ?>
-
-		<div class="row">
-			<div class="col-md-12 pad-no">
-				<?php foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus): ?>
-					<?= BadgeWidget::widget([
-						'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
-						"badgeOptions" => [
-							'style' => $vacancyStatus->style,
-							'class' => "badge pull-right"
-						],
-						'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
-					]) ?>
-				<?php endforeach; ?>
-
-
-			</div>
-		</div>
+		<?= BadgeWidget::widget([
+			'models' => 'Вакансии: '.count($group->relVacancy),
+			"badgeOptions" => [
+				'class' => "badge badge-danger"
+			],
+			'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
+		]) ?>
 	</div>
 
 
