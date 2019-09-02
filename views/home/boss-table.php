@@ -151,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'models' => "{$positionType->name}: $positionType->count",
 						"badgeOptions" => [
 							'style' => $positionType->style,
-							'class' => 'pull-left'
+							'class' => 'badge pull-left'
 						]
 					]);
 				}
@@ -160,7 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				$items[] = BadgeWidget::widget([
 					'models' => "Вакансии: {$vacancyCount}",
 					"badgeOptions" => [
-						'class' => "badge badge-danger pull-right"
+						'class' => "badge pull-right ".($vacancyCount > 0?"badge-danger":"badge-unimportant")
 					]
 				]);
 
