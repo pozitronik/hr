@@ -4,13 +4,41 @@
 	min-width: 200px;
 }
 
-.panel.panel-card > .panel-footer {
+.panel.panel-card-small {
+	min-width: 200px;
+	float: left;
+}
+
+.panel.panel-card-small > .panel-heading {
+	height: 30px;
+}
+
+.panel.panel-card-small > .panel-heading > .panel-control {
+	padding: 0 5px;
+}
+
+.panel.panel-card-small .panel-title {
+	line-height: 30px;
+	font-size: 12px;
+	padding: 0 5px;
+}
+
+.panel.panel-card-small > .panel-body {
+	padding: 5px 5px 5px;
+}
+
+.panel.panel-card > .panel-body {
+	padding: 15px 20px 0px;
+}
+
+.panel.panel-card > .panel-footer, .panel.panel-card-small > .panel-footer {
 	padding: 0 10px;
 	height: 1.7em;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
 
 .panel.panel-card .list-divider {
 	margin: 5px 0;
@@ -20,7 +48,7 @@
 /* ---- grid ---- */
 
 .grid {
-	width:100%!important;
+	width: 100% !important;
 }
 
 /* clearfix */
@@ -33,7 +61,7 @@
 /* ---- grid-item ---- */
 
 .grid-sizer {
-	width:20%;
+	width: 20%;
 }
 
 .grid-item--width1 {
