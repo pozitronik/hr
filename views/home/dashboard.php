@@ -74,11 +74,11 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 							]
 						]
 					],
-					'radioMode' => true,
+					'radioMode' => true
 				]) ?>
 				<?= ButtonControlsWidget::widget([
 					'name' => 'filter',
-					'items' => $userGroupTypes,
+					'items' => $userGroupTypes
 				]) ?>
 
 			</div>
