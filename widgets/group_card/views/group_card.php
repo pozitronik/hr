@@ -19,9 +19,9 @@ use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 
-$this->registerJs("normalize_widths()", View::POS_END);
-$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
-$this->registerJs("Msnry.layout();", View::POS_LOAD);
+//$this->registerJs("normalize_widths()", View::POS_END);
+//$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
+//$this->registerJs("Msnry.layout();", View::POS_LOAD);
 ?>
 
 <div class="panel panel-card" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
@@ -109,7 +109,8 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 
 			</div>
 		</div>
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true)): ?>
+		<div class="list-divider"></div>
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && count($group->relChildGroups) > 0): ?>
 			<div class="row">
 				<div class="col-md-12">
 					<?php foreach ($group->relChildGroups as $childGroup): ?>
