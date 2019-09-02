@@ -510,17 +510,22 @@ class Groups extends ActiveRecordExtended {
 		$id = $this->id;
 		return Yii::$app->cache->getOrSet(static::class."getGroupVacancyTypeData{$id}", static function() use ($id) {
 			$allVacancyStatuses = RefVacancyStatuses::find()->active()->all();//Все справочники
-
-			$vacancyStatusesCount = RefVacancyStatuses::find()->select(['ref_vacancy_statuses.id', 'count(ref_vacancy_statuses.id) as `count`'])//только использованные в указанной группе
+			$vacancyStatusesCount = [];
+			$vacancyStats = RefVacancyStatuses::find()->select(['ref_vacancy_statuses.id', 'count(ref_vacancy_statuses.id) as `count`'])//только использованные в указанной группе
 			->joinWith(['relGroups'], false)
 				->groupBy(['ref_vacancy_statuses.id'])
 				->where(['sys_groups.id' => $id])
 				->asArray()
 				->all();
 
-			array_walk($allVacancyStatuses, static function(&$value, &$key) use ($vacancyStatusesCount) {/*Немного индустский способ заполнения каунта пустых типов нулями*/
-				if (0 !== $count = (int)ArrayHelper::getValue($vacancyStatusesCount, "$key.count", 0)) $value->count = $count;
-			});
+			foreach ($vacancyStats as $key => $value) {
+				$vacancyStatusesCount[ArrayHelper::getValue($value, 'id')] = ArrayHelper::getValue($value, 'count');
+			}
+
+			foreach ($allVacancyStatuses as &$vacancyStatus) {
+				$vacancyStatus->count = ArrayHelper::getValue($vacancyStatusesCount, $vacancyStatus->id, 0);
+			}
+
 			return $allVacancyStatuses;
 		});
 	}
