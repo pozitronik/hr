@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => null === $userLink?Html::encode($this->title):Html::a($this->title, $userLink).Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
+		'heading' => (null === $userLink?Html::encode($this->title):Html::a($this->title, $userLink)).Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
