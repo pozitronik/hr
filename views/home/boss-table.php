@@ -5,6 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var GroupsSearch $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var string|null $title
  */
 
 use app\modules\groups\GroupsModule;
@@ -25,7 +26,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\View;
 
-$this->title = 'Мои группы';
+$this->title = $title??'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
