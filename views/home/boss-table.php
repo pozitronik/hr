@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var GroupsSearch $searchModel
  * @var ActiveDataProvider $dataProvider
  * @var string|null $title
+ * @var string|null $userLink
  */
 
 use app\modules\groups\GroupsModule;
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title.Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
+		'heading' => null === $userLink?Html::encode($this->title):Html::a($this->title, $userLink).Html::a("<div class='pull-right'>Дашборд</div>", Url::current(['t' => 0]))
 	],
 	'summary' => false,
 	'showOnEmpty' => true,

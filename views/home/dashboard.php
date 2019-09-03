@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var GroupsSearch $searchModel
  * @var ActiveDataProvider $dataProvider
  * @var string|null $title
+ * @var string|null $userLink
  */
 
 use app\assets\IsotopeAsset;
@@ -49,7 +50,7 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 		<div class="row">
 			<div class="col-md-3">
 				<h3 class="panel-title pull-left">
-					<?= $this->title ?>
+					<?= null === $userLink?Html::encode($this->title):Html::a($this->title, $userLink) ?>
 				</h3>
 			</div>
 			<div class="col-md-8" style="margin-top:8px">
