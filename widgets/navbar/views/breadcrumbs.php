@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 ?>
 
 <?= Breadcrumbs::widget([
+	'encodeLabels' => false,
 	'homeLink' => [
 		'label' => 'Домой',
 		'url' => Yii::$app->homeUrl

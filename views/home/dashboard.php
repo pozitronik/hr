@@ -49,7 +49,7 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 		<div class="row">
 			<div class="col-md-3">
 				<h3 class="panel-title pull-left">
-					<?= Html::encode($this->title) ?>
+					<?= $this->title ?>
 				</h3>
 			</div>
 			<div class="col-md-8" style="margin-top:8px">
