@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
+use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
@@ -23,23 +24,29 @@ class HomeController extends Controller {
 	/**
 	 * @return string|Response
 	 * @throws Throwable
+	 * @var null|int $u -- id пользователя, под которым смотрим
 	 */
-	public function actionIndex() {
+	public function actionIndex(?int $u = null) {
 		if (null === CurrentUser::User()) return $this->redirect(['site/login']);
-		$stack = ArrayHelper::getColumn(CurrentUser::User()->relLeadingGroups, 'id');
+
+		/** @var Users $user */
+		$user = (null === $u)?CurrentUser::User():Users::findModel($u, new NotFoundHttpException());
+
+		$stack = ArrayHelper::getColumn($user->relLeadingGroups, 'id');//группы, где ползователь лидер
 		/** @var Groups $leadingGroup */
 //		foreach ((array)CurrentUser::User()->relLeadingGroups as $leadingGroup) {
 //			$leadingGroup->buildHierarchyTree($stack);
 //		}
 
-		$commonGroupsIds = ArrayHelper::getColumn(CurrentUser::User()->relGroups, 'id');
+		$commonGroupsIds = ArrayHelper::getColumn($user->relGroups, 'id');//группы, где пользователь состоит
 		$stack = array_unique(array_merge($stack, $commonGroupsIds));
 
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new GroupsSearch();
 		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'dashboard', [
 			'dataProvider' => $searchModel->search($params, $stack),
-			'searchModel' => $searchModel
+			'searchModel' => $searchModel,
+			'title' => (null === $u)?null:"Группы для {$user->username}"
 		]);
 	}
 
