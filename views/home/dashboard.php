@@ -47,12 +47,12 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 <div class="panel">
 	<div class="panel-heading auto-height">
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<h3 class="panel-title pull-left">
 					<?= Html::encode($this->title) ?>
 				</h3>
 			</div>
-			<div class="col-md-9" style="margin-top:8px">
+			<div class="col-md-8" style="margin-top:8px">
 				<?= ButtonControlsWidget::widget([
 					'name' => 'sorting',
 					'items' => [
