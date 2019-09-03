@@ -48,6 +48,11 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => GraphModule::to(['graph/user', 'id' => $this->model->id])
 			],
 			[
+				'menu' => true,
+				'label' => IconsHelper::dashboard().'Дашборд',
+				'url' => ['/home/index', 'u' => $this->model->id]
+			],
+			[
 				'label' => IconsHelper::attributes().'Атрибуты',
 				'url' => DynamicAttributesModule::to(['user', 'user_id' => $this->model->id])
 			],
