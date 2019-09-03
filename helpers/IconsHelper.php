@@ -121,6 +121,12 @@ class IconsHelper {
 	public static function network():string {
 		return "<i class='fa fa-chart-network'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function dashboard():string {
+		return "<i class='fa fa-columns'></i>";
+	}
 
 	/**
 	 * @return string
