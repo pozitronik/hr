@@ -8,6 +8,8 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
+use app\modules\users\UsersModule;
+use kartik\helpers\Html;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
@@ -46,7 +48,7 @@ class HomeController extends Controller {
 		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'dashboard', [
 			'dataProvider' => $searchModel->search($params, $stack),
 			'searchModel' => $searchModel,
-			'title' => (null === $u)?null:"Группы для {$user->username}"
+			'title' => (null === $u)?null:"Группы для ".Html::a($user->username, UsersModule::to(['users/profile', 'id' => $user->id]))
 		]);
 	}
 
