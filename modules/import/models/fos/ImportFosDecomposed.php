@@ -5,6 +5,7 @@ namespace app\modules\import\models\fos;
 
 use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
 use app\modules\users\models\relations\RelUserPositionsTypes;
+use app\modules\users\models\UsersIdentifiers;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -146,8 +147,9 @@ class ImportFosDecomposed extends ActiveRecord {
 		/*Пользователи, с должностями, емайлами и атрибутами*/
 		if ([] === $importFosUsers = ImportFosUsers::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
 
+		/** @var ImportFosUsers[] $importFosUsers */
 		foreach ($importFosUsers as $importFosUser) {
-			if (null === $userId = self::addUser($importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->position_type, $importFosUser->email_alpha, [
+			if (null === $userId = self::addUser($importFosUser->user_tn, $importFosUser->name, ArrayHelper::getValue($importFosUser->relPosition, 'name'), $importFosUser->position_type, $importFosUser->email_alpha, [
 					['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importFosUser->remote],
 					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importFosUser->relTown, 'name')],
 					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importFosUser->email_sigma],
@@ -289,6 +291,7 @@ class ImportFosDecomposed extends ActiveRecord {
 
 	/**
 	 * Разбираем декомпозированные данные и вносим в боевую таблицу
+	 * @param int $domain
 	 * @param int $step
 	 * @param array $errors -- прокидывание ошибок
 	 * @return bool true - шаг выполнен, false - нужно повторить запрос (шаг разбит на подшаги)
@@ -340,6 +343,7 @@ class ImportFosDecomposed extends ActiveRecord {
 	}
 
 	/**
+	 * @param int $tn
 	 * @param string $name
 	 * @param string|null $position
 	 * @param int|null $positionType
@@ -349,11 +353,14 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @return null|int
 	 * @throws Throwable
 	 */
-	public static function addUser(string $name, ?string $position, ?int $positionType, ?string $email, array $attributes = [], array &$errors = []):?int {
+	public static function addUser(int $tn, string $name, ?string $position, ?int $positionType, ?string $email, array $attributes = [], array &$errors = []):?int {
 		if (empty($name)) return -1;
-		/** @var null|Users $user */
-		$user = Users::find()->where(['username' => $name])->one();
-		if ($user) return $user->id;
+
+		$userIdentifier = UsersIdentifiers::findModel(['tn' => $tn]);
+
+		if (null !== $userIdentifier) {//нашли пользователя по табельнику, апдейтим его
+			return self::updateUser($userIdentifier->user_id, $name, $position, $positionType, $email, $attributes, $errors);
+		}
 
 		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
 		if (!$userPosition) {
@@ -365,6 +372,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		/** @noinspection IsEmptyFunctionUsageInspection */
 		$user->createModel(['username' => $name, 'login' => Utils::generateLogin(), 'password' => Utils::gen_uuid(5), 'salt' => null, 'email' => empty($email)?Utils::generateLogin()."@localhost":$email, 'deleted' => false]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
+		(new UsersIdentifiers())->createModel(['user_id' => $user->id, 'tn' => $tn]);
 
 		if (null !== $positionType) {//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
 			RelUserPositionsTypes::linkModels($user, $positionType);
@@ -379,6 +387,41 @@ class ImportFosDecomposed extends ActiveRecord {
 		foreach ($attributes as $attribute) {
 			self::addAttributeProperty($attribute, $user->id);
 		}
+		return $user->id;
+	}
+
+	/**
+	 * @param int $id
+	 * @param string|null $position
+	 * @param int|null $positionType
+	 * @param string|null $email
+	 * @param array<array> $attributes
+	 * @param array $errors -- ошибки импорта (сообщить админу, пусть сам разбирается)
+	 * @return null|int
+	 * @throws Throwable
+	 */
+	public static function updateUser(int $id, string $name, ?string $position, ?int $positionType, ?string $email, array $attributes = [], array &$errors = []):?int {
+		if (null === $user = Users::findModel($id)) {
+			Yii::debug($user, 'debug');
+			$errors[] = [$name => ['id' => 'ID найден по внешнему идентификатору, но пользователь отсутствует в системной таблице']];
+			return null;
+		}
+
+		$userPosition = RefUserPositions::find()->where(['name' => $position])->one();
+		if (!$userPosition) {
+			$userPosition = new RefUserPositions(['name' => $position]);
+			$userPosition->save();
+		}
+		if (null !== $positionType) {//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
+			RelUserPositionsTypes::linkModels($user, $positionType);
+		}
+
+		$user->setAndSaveAttributes(['position' => $userPosition->id, 'email' => $email]);
+
+		foreach ($attributes as $attribute) {
+			self::addAttributeProperty($attribute, $user->id);
+		}
+
 		return $user->id;
 	}
 
