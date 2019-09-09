@@ -291,7 +291,6 @@ class ImportFosDecomposed extends ActiveRecord {
 
 	/**
 	 * Разбираем декомпозированные данные и вносим в боевую таблицу
-	 * @param int $domain
 	 * @param int $step
 	 * @param array $errors -- прокидывание ошибок
 	 * @return bool true - шаг выполнен, false - нужно повторить запрос (шаг разбит на подшаги)
