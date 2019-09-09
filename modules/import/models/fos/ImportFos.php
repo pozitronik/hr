@@ -500,7 +500,7 @@ class ImportFos extends ActiveRecord {
 						$decomposedRow = new ImportFosDecomposed([
 							'domain' => $row->domain,
 							'position_id' => ImportFosPositions::findModelAttribute(['name' => $row->position_name], 'id'),
-							'user_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->user_tn], 'id'),
+							'user_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->user_tn, 'domain' => $domain], 'id'),
 							'functional_block_id' => ImportFosFunctionalBlock::findModelAttribute(['name' => $row->functional_block], 'id'),
 							'division_level_1_id' => ImportFosDivisionLevel1::findModelAttribute(['name' => $row->division_level_1], 'id'),
 							'division_level_2_id' => ImportFosDivisionLevel2::findModelAttribute(['name' => $row->division_level_2], 'id'),
