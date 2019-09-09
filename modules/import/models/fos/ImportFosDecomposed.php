@@ -392,6 +392,7 @@ class ImportFosDecomposed extends ActiveRecord {
 
 	/**
 	 * @param int $id
+	 * @param string $name
 	 * @param string|null $position
 	 * @param int|null $positionType
 	 * @param string|null $email

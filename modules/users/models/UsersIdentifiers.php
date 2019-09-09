@@ -20,14 +20,6 @@ class UsersIdentifiers extends ActiveRecordExtended {
 	use Relations;
 
 	/**
-	 * @return array
-	 */
-	public function historyRules():array {
-		//todo
-		return [];
-	}
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
