@@ -270,7 +270,8 @@ class ImportFos extends ActiveRecord {
 						case 'Технологии':
 							$positionTypeName = 'IT';
 						break;
-						default: $positionTypeName = null;
+						default:
+							$positionTypeName = null;
 					}
 
 //					$positionTypeName = ('Розничный бизнес' === $row->functional_block)?'Бизнес':('Технологии' === $row->functional_block)?'IT':null;
@@ -292,7 +293,7 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain
 						]);
 						/*Сразу же декомпозируем сущность сотрудника, т.к. тут соответствие 1=1*/
-						ImportFosUsers::addInstance(['user_tn' => $row->user_tn], [
+						ImportFosUsers::addInstance(['user_tn' => $row->user_tn, 'domain' => $row->domain], [
 							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
 							'remote' => !empty($row->remote_flag),
