@@ -423,7 +423,7 @@ class ImportFos extends ActiveRecord {
 				/*Декомпозируем сущности групп: функциональный блок, подразделения (5 уровней), функциональный блок трайба, трайб, кластер, команда, чаптер*/
 				foreach ($data as $row) {
 					try {
-
+						//todo: Для обновления данных групп просто включаем forceUpdate
 						ImportFosFunctionalBlock::addInstance(['name' => $row->functional_block], [
 							'name' => $row->functional_block,
 							'domain' => $row->domain
