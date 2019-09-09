@@ -79,6 +79,9 @@ use yii\db\ActiveRecord;
  * Опции
  * @property Options $options
  * **************************
+ * Внешние идентификаторы
+ * @property UsersIdentifiers $relUsersIdentifiers
+ * **************************
  * Права в системе
  * @property RelUsersPrivileges[]|ActiveQuery $relUsersPrivileges Релейшен к таблице связей с привилегиями
  * @property Privileges[]|ActiveQuery $relPrivileges Релейшен к привилегиям
@@ -609,4 +612,14 @@ class Users extends ActiveRecordExtended {
 		});
 		return $uniqueUsers;
 	}
+
+	/********************************************************/
+
+	/**
+	 * @return UsersIdentifiers|ActiveQuery
+	 */
+	public function getRelUsersIdentifiers() {
+		return $this->hasOne(UsersIdentifiers::class, ['user_id' => 'id']);
+	}
+
 }
