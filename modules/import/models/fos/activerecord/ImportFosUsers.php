@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "import_fos_users".
  *
  * @property int $id
- * @property int $user_tn
+ * @property int|mixed $user_tn
  * @property string $name
  * @property string $sd_id - какой-то внутренний идентификатор НЕ УНИКАЛЬНЫЙ
  * @property int $remote
@@ -55,7 +55,7 @@ class ImportFosUsers extends ActiveRecord {
 	public function rules():array {
 		return [
 			['user_tn', 'integer'],
-			['user_tn', 'unique'],
+//			['user_tn', 'unique'],//это просто плоская таблица импорта, в ней не делаем уникальных ключей
 			[['position_id', 'town_id', 'position_type'], 'integer'],
 			[['name', 'email_sigma', 'email_alpha', 'sd_id', 'birthday', 'expert_area', 'combined_role'], 'string', 'max' => 255],
 			['remote', 'boolean'],
