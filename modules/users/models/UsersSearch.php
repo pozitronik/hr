@@ -72,10 +72,6 @@ class UsersSearch extends Users {
 				'privileges' => [
 					'asc' => ['sys_privileges.name' => SORT_ASC],
 					'desc' => ['sys_privileges.name' => SORT_DESC]
-				],
-				'positionType' => [
-					'asc' => ['ref_user_position_types.name' => SORT_ASC],
-					'desc' => ['ref_user_position_types.name' => SORT_DESC]
 				]
 			]
 		]);
@@ -102,7 +98,7 @@ class UsersSearch extends Users {
 			->orFilterWhere(['in', 'rel_user_position_types.position_type_id', $this->positionType])//таким образом решаем проблему фильтрации по типу должности, не вводя промежуточную вью.
 			->andFilterWhere(['in', 'sys_groups.id', $this->groupId]);
 
-		//Yii::debug($query->createCommand()->rawSql,'sql');
+//		Yii::debug($query->createCommand()->rawSql,'sql');
 		return $dataProvider;
 	}
 }
