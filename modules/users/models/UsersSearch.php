@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -94,11 +95,10 @@ class UsersSearch extends Users {
 			->andFilterWhere(['in', 'ref_user_positions.id', $this->positions])
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges])
-			->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->positionType])
-			->orFilterWhere(['in', 'rel_user_position_types.position_type_id', $this->positionType])//таким образом решаем проблему фильтрации по типу должности, не вводя промежуточную вью.
+			->andFilterWhere(['in', 'IFNULL(`rel_user_position_types`.`position_type_id`, `rel_ref_user_positions_types`.`position_type_id`)', $this->positionType])//таким образом решаем проблему фильтрации по типу должности, не вводя промежуточную вью.
 			->andFilterWhere(['in', 'sys_groups.id', $this->groupId]);
 
-//		Yii::debug($query->createCommand()->rawSql,'sql');
+		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
 	}
 }
