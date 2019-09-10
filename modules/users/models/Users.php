@@ -561,9 +561,9 @@ class Users extends ActiveRecordExtended {
 	 * @throws Throwable
 	 */
 	public function setRelRefUserPositionsTypesOwn($relRefUserPositionTypes):void {
-		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
+//		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
 
-		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
+		/*Чтобы не захламлять лог пересозданием, находим только реально удаляемые записи. */
 		$currentUserPositionTypesId = ArrayHelper::getColumn($this->relUserPositionsTypes, 'position_type_id');
 		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, (array)$relRefUserPositionTypes);
 		RelUserPositionsTypes::unlinkModels($this, $droppedUserPositionTypes);
