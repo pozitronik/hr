@@ -85,7 +85,7 @@ class UsersSearch extends Users {
 
 		if (!$this->validate()) return $dataProvider;
 
-		$query->joinWith(['relGroups', 'relRefUserPositions', 'relRefUserRoles', 'relPrivileges', 'refUserPositionTypes']);//todo: джойны в зависимости от прав
+		$query->joinWith(['relGroups', 'relRefUserPositions', 'relRefUserPositionsTypesOwn as x', 'relRefUserRoles', 'relPrivileges', 'refUserPositionTypes']);//todo: джойны в зависимости от прав
 
 		$query->distinct();
 
@@ -99,9 +99,10 @@ class UsersSearch extends Users {
 			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
 			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges])
 			->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->positionType])
+			->orFilterWhere(['in', 'rel_user_position_types.position_type_id', $this->positionType])//таким образом решаем проблему фильтрации по типу должности, не вводя промежуточную вью.
 			->andFilterWhere(['in', 'sys_groups.id', $this->groupId]);
 
-//		Yii::debug($query->createCommand()->rawSql,'sql');
+		//Yii::debug($query->createCommand()->rawSql,'sql');
 		return $dataProvider;
 	}
 }
