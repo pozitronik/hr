@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
@@ -142,9 +143,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Vacancy $vacancy) {
 				return BadgeWidget::widget([
 					'models' => $vacancy->relGroups,
-					'useBadges' => false,
+					'useBadges' => true,
 					'attribute' => 'name',
 					"itemsSeparator" => false,
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => 'id']
 				]);
 			}

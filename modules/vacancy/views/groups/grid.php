@@ -13,6 +13,9 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\modules\groups\models\Groups;
+use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefSalaryPremiumGroups;
+use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
@@ -71,22 +74,56 @@ use yii\web\View;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'position',
-			'value' => 'relRefUserPosition.name'
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'models' => $vacancy->getRelRefUserPosition()->active()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					"itemsSeparator" => false,
+					"optionsMap" => RefUserPositions::colorStyleOptions()
+				]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'premium_group',
-			'value' => 'relRefSalaryPremiumGroup.name'
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'models' => $vacancy->getRelRefSalaryPremiumGroup()->active()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					"itemsSeparator" => false,
+					"optionsMap" => RefSalaryPremiumGroups::colorStyleOptions()
+				]);
+			},
+			'format' => 'raw'
 		],
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'grade',
-			'value' => 'relRefGrade.name'
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'models' => $vacancy->getRelRefGrade()->active()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					"itemsSeparator" => false,
+//					"optionsMap" => RefGrades::colorStyleOptions()//not customizable
+				]);
+			}
 		],
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'location',
-			'value' => 'relRefLocation.name'
+			'value' => static function(Vacancy $vacancy) {
+				return BadgeWidget::widget([
+					'models' => $vacancy->getRelRefLocation()->active()->all(),
+					'useBadges' => true,
+					'attribute' => 'name',
+					"itemsSeparator" => false,
+					"optionsMap" => RefLocations::colorStyleOptions()
+				]);
+			}
 		],
 		[
 			'class' => DataColumn::class,
@@ -99,9 +136,7 @@ use yii\web\View;
 					'attribute' => 'name',
 					'unbadgedCount' => 6,
 					"itemsSeparator" => false,
-					"optionsMap" => static function() {
-						return RefUserRoles::colorStyleOptions();
-					}
+					"optionsMap" => RefUserRoles::colorStyleOptions()
 				]);
 			}
 		],
