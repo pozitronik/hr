@@ -17,6 +17,7 @@ class GraphController extends WigetableController {
 	public $menuIcon = "/img/admin/graph.png";
 	public $orderWeight = 2;
 	public $defaultRoute = 'graph/graph';
+	public $defaultAction = 'user';
 
 	/**
 	 * @param int $id -- id группы
@@ -40,14 +41,13 @@ class GraphController extends WigetableController {
 	}
 
 	/**
-	 * @param int $id -- id пользователя
+	 * @param null|int $id -- id пользователя
 	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionUser(int $id):string {
-
+	public function actionUser(?int $id = null):string {
 		return $this->render('user', [
-			'id' => $id,
+			'id' => $id??$id = CurrentUser::Id(),
 			'currentConfiguration' => 'default',
 			'positionConfigurations' => ['default' => 'default']
 		]);
