@@ -62,13 +62,13 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-8">
 				<?= $this->render('profile/users', [
 					'model' => $model,
 					'provider' => $dataProvider
 				]) ?>
 			</div>
-			<div class="col-md-5">
+			<div class="col-md-4">
 				<div id="group-profile-tree-container" style="height: 500px">
 				</div>
 			</div>
