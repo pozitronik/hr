@@ -15,6 +15,7 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
@@ -110,6 +111,24 @@ use yii\web\View;
 				]);
 			},
 			'format' => 'raw'
+		],
+		[
+			'class' => DataColumn::class,
+			'label' => 'Другие группы',
+			'value' => static function(Users $user) use ($model) {
+				$otherGroups = $user->getRelGroups()->andWhere(['<>', 'id', $model->id])->active()->all();
+				return BadgeWidget::widget([
+					'models' => $otherGroups,
+					'attribute' => 'name',
+					'itemsSeparator' => false,
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => ['/groups/groups/profile', 'id' => 'id'],
+					'emptyResult' => null
+				]);
+			},
+			'format' => 'raw'
 		]
+
 	]
 ]) ?>
