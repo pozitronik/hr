@@ -575,8 +575,11 @@ class Users extends ActiveRecordExtended {
 	 * @return RefUserPositionTypes[]
 	 */
 	public function getRelRefUserPositionsTypesAny():array {
-		if ([] === $result = $this->getRelRefUserPositionsTypesOwn()->all()) $result = $this->getRefUserPositionTypes()->all();
-		return $result;
+		return Yii::$app->cache->getOrSet("getRelRefUserPositionsTypesAny{$this->id}", function(){
+			if ([] === $result = $this->getRelRefUserPositionsTypesOwn()->all()) $result = $this->getRefUserPositionTypes()->all();
+			return $result;
+		});
+
 	}
 
 	/**************/
