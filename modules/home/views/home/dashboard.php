@@ -40,13 +40,15 @@ $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dat
 $userDashboardFilter = CurrentUser::User()->options->get('dashboardFilter');
 
 array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardFilter) {
+	$styleOptions = RefGroupTypes::colorStyleOptions();
 	$key = "filter-type{$value['id']}";
 	$value = [
 		'label' => $value['name'],
 		'value' => $key,
 		'options' => [
 			'data-filter' => $value['id'],
-			'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false
+			'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false,
+			'style' => ArrayHelper::getValue($styleOptions, $value['id'])
 		]
 	];
 });
@@ -65,7 +67,7 @@ array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardF
 					'name' => 'filter',
 					'items' => $userGroupTypes,
 					'options' => [
-						'onChange' => new JsExpression("set_option('dashboardFilter', Controls.filtersValues)")
+						'onChange' => new JsExpression("set_option('dashboardFilter', Controls.filtersValues)"),
 					]
 				]) ?>
 
