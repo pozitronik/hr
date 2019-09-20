@@ -13,6 +13,7 @@ use app\assets\IsotopeAsset;
 use app\assets\MasonryAsset;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\users\assets\UsersAsset;
 use app\widgets\button_controls\ButtonControlsWidget;
 use app\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
@@ -21,11 +22,14 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\View;
 
+UsersAsset::register($this);
+MasonryAsset::register($this);
+IsotopeAsset::register($this);
+
 $this->title = $title??'Мои группы';
 $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
-MasonryAsset::register($this);
-IsotopeAsset::register($this);
+
 $this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card'/*, function() {Msnry.layout()}*/)", View::POS_END);
 
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
