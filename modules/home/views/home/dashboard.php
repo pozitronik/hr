@@ -21,6 +21,7 @@ use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\web\View;
 
 UsersAsset::register($this);
@@ -64,7 +65,7 @@ array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardF
 					'name' => 'filter',
 					'items' => $userGroupTypes,
 					'options' => [
-						'onChange' => "set_option('dashboardFilter', Controls.filtersValues)"
+						'onChange' => new JsExpression("set_option('dashboardFilter', Controls.filtersValues)")
 					]
 				]) ?>
 
