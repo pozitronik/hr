@@ -46,9 +46,9 @@ array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardF
 		'label' => $value['name'],
 		'value' => $key,
 		'options' => [
-			'data-filter' => $value['id'],
-			'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false,
-		] +  ArrayHelper::getValue($styleOptions, $value['id'])
+				'data-filter' => $value['id'],
+				'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false,
+			] + ArrayHelper::getValue($styleOptions, $value['id'])
 	];
 });
 ?>
