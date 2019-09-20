@@ -27,7 +27,6 @@ class DashboardControl {
 			self.isotope.arrange({filter: self.filters})
 		});
 
-
 	}
 
 	bindSorting(element) {
@@ -50,5 +49,13 @@ class DashboardControl {
 		});
 		if (0 === r.length) return 'empty-selection';
 		return r.join(', ');
+	}
+
+	get filtersValues() {/*return a filters values as array*/
+		var r = [];
+		$('input[name="filter[]"]:checked').each(function(i) {
+			r.push($(this).data('filter'));
+		});
+		return r;
 	}
 }
