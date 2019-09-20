@@ -7,6 +7,5 @@ function set_option(key, value) {
 		},
 		method: 'POST'
 	}).done(function (data) {
-		console.log(data);
 	});
 }
