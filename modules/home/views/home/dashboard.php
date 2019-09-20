@@ -38,9 +38,9 @@ $this->registerJs("Controls.refresh()", View::POS_END);
 
 $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
 $userDashboardFilter = CurrentUser::User()->options->get('dashboardFilter');
+$styleOptions = RefGroupTypes::colorStyleOptions();
 
-array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardFilter) {
-	$styleOptions = RefGroupTypes::colorStyleOptions();
+array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardFilter, $styleOptions) {
 	$key = "filter-type{$value['id']}";
 	$value = [
 		'label' => $value['name'],
