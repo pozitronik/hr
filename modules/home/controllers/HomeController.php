@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\controllers;
+namespace app\modules\home\controllers;
 
+use app\models\core\WigetableController;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
@@ -13,14 +14,17 @@ use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\Response;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * Class HomeController
  * @package app\controllers
  */
-class HomeController extends Controller {
+class HomeController extends WigetableController {
+	public $menuDisabled = false;
+	public $orderWeight = 0;
+	public $menuCaption = "<i class='fa fa-home'></i>Домой";
+	public $defaultRoute = 'home/home';
 
 	/**
 	 * @return string|Response
