@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
 
 $this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card'/*, function() {Msnry.layout()}*/)", View::POS_END);
-
+$this->registerJs("Controls.refresh()", View::POS_END);
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
 $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
