@@ -116,6 +116,7 @@ class AjaxController extends BaseAjaxController {
 	/**
 	 * Разрывает связь между двумя группами
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionGroupsUnlink():array {
 		if ((null === $parentId = Yii::$app->request->post('parentId')) || (null === $childId = Yii::$app->request->post('childId'))) return $this->answer->addError('parameters', 'Not enough');
