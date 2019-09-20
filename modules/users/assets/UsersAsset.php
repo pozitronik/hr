@@ -12,10 +12,8 @@ use yii\web\AssetBundle;
 class UsersAsset extends AssetBundle {
 	public $sourcePath = '@app/modules/users/assets';
 
-	public $css = [
-	];
 	public $js = [
-		'js/users.js',
+		'js/users.js'
 	];
 
 	public $publishOptions = [

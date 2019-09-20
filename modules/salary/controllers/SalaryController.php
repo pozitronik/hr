@@ -9,7 +9,6 @@ use app\modules\salary\models\SalaryForkSearch;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -44,7 +43,6 @@ class SalaryController extends WigetableController {
 	 * @param int|null $premium_group
 	 * @param int|null $location
 	 * @return string|Response
-	 * @throws Exception
 	 * @throws InvalidConfigException
 	 */
 	public function actionCreate(?int $position = null, ?int $grade = null, ?int $premium_group = null, ?int $location = null) {

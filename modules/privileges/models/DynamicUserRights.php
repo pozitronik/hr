@@ -93,6 +93,7 @@ class DynamicUserRights extends ActiveRecordExtended implements UserRightInterfa
 	 */
 	public function setActionsAccessMap(array $actionsAccessMap):void {
 		foreach ($actionsAccessMap as $accessItem => $value) {
+			/** @var int $accessItem */
 			$this->_actionsAccessMap[$accessItem]->state = $value;
 		}
 	}

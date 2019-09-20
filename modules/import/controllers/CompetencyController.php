@@ -8,7 +8,6 @@ use app\modules\import\models\competency\ImportCompetency;
 use app\modules\import\models\fos\ImportException;
 use Throwable;
 use Yii;
-use yii\db\Exception;
 use yii\web\Response;
 
 /**
@@ -51,9 +50,8 @@ class CompetencyController extends WigetableController {
 
 	/**
 	 * @return string|Response
-	 * @throws Throwable
 	 * @throws ImportException
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function actionImport() {
 		$model = new ImportCompetency();

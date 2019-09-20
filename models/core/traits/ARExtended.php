@@ -15,7 +15,6 @@ use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
-use yii\db\Exception;
 
 /**
  * Trait ARExtended
@@ -231,7 +230,6 @@ trait ARExtended {
 	 *
 	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
 	 * @return bool - результат операции
-	 * @throws Exception
 	 */
 	public function createModel(?array $paramsArray):bool {
 		$saved = false;

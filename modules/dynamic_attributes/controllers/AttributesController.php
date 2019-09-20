@@ -13,7 +13,6 @@ use app\models\core\WigetableController;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use Throwable;
 use yii\base\InvalidConfigException;
-use yii\db\Exception;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -43,7 +42,6 @@ class AttributesController extends WigetableController {
 
 	/**
 	 * @return string|Response
-	 * @throws Exception
 	 * @throws InvalidConfigException
 	 */
 	public function actionCreate() {
