@@ -65,7 +65,7 @@ class IconsHelper {
 	 * @return string
 	 */
 	public static function unlink():string {
-		return "<i class='fa fa-unlink' title='Отвязать'></i>";
+		return "<i class='fa fa-unlink' style='color: Tomato;' title='Отвязать'></i>";
 	}
 
 	/**
