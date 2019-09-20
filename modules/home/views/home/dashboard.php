@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 use app\assets\IsotopeAsset;
 use app\assets\MasonryAsset;
+use app\models\user\CurrentUser;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\assets\UsersAsset;
@@ -35,15 +36,15 @@ $this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card'/*,
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
 $userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
-
-array_walk($userGroupTypes, static function(&$value, &$key) {
+$userDashboardFilter = CurrentUser::User()->options->get('dashboardFilter');
+array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardFilter) {
 	$key = "filter-type{$value['id']}";
 	$value = [
 		'label' => $value['name'],
 		'value' => $key,
 		'options' => [
 			'data-filter' => $value['id'],
-			'checked' => 'checked'
+			'checked' => in_array($value['id'], $userDashboardFilter)?'checked':''
 		]
 	];
 });
@@ -60,7 +61,10 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 			<div class="col-md-8" style="margin-top:8px">
 				<?= ButtonControlsWidget::widget([
 					'name' => 'filter',
-					'items' => $userGroupTypes
+					'items' => $userGroupTypes,
+					'options' => [
+						'onChange' => "set_option('dashboardFilter', Controls.filtersValues)"
+					]
 				]) ?>
 
 			</div>
