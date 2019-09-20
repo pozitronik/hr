@@ -8,6 +8,7 @@ use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
 use app\modules\graph\GraphModule;
 use app\modules\history\HistoryModule;
+use app\modules\home\HomeModule;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
@@ -50,7 +51,7 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'menu' => true,
 				'label' => IconsHelper::dashboard().'Дашборд',
-				'url' => ['/home/index', 'u' => $this->model->id]
+				'url' => HomeModule::to(['/home/index', 'u' => $this->model->id])
 			],
 			[
 				'label' => IconsHelper::attributes().'Атрибуты',

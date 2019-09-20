@@ -9,6 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Utils;
+use app\modules\home\HomeModule;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use yii\helpers\Html;
 use yii\web\View;
@@ -40,7 +41,7 @@ use yii\web\View;
 		<?php if ($step !== ImportFosDecomposed::LAST_STEP): ?>
 			<?= Html::a('Следующий шаг', ['import', 'step' => $step + 1, 'domain' => $domain], ['class' => 'btn btn-success pull-right']) ?>
 		<?php else: ?>
-			<?= Html::a('Готово, домой', ['/home/index', 'domain' => $domain], ['class' => 'btn btn-success pull-right']) ?>
+			<?= Html::a('Готово, домой',  HomeModule::to('home'), ['class' => 'btn btn-success pull-right']) ?>
 		<?php endif; ?>
 		<div class="clearfix"></div>
 	</div>
