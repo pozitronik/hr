@@ -48,7 +48,7 @@ class HomeController extends WigetableController {
 
 		$params = Yii::$app->request->queryParams;
 		$searchModel = new GroupsSearch();
-		return $this->render(ArrayHelper::getValue($params, 't', false)?'boss-table':'dashboard', [
+		return $this->render(ArrayHelper::getValue($params, 't', false)?'groups-table':'dashboard', [
 			'dataProvider' => $searchModel->search($params, $stack),
 			'searchModel' => $searchModel,
 			'title' => (null === $u)?null:"Группы для {$user->username}",
@@ -67,7 +67,7 @@ class HomeController extends WigetableController {
 		//Проверяем доступы к списку юзеров
 
 		/** @noinspection RequireParameterInspection */
-		return $this->render('group-users', [
+		return $this->render('users-table', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,
 			'group' => Groups::findModel($searchModel->groupId, new NotFoundHttpException())
