@@ -119,7 +119,7 @@ GroupsAsset::register($this);
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
 			'value' => static function(Groups $group) use ($model) {
-				return Html::button(IconsHelper::unlink(), ['onClick' => new JsExpression("unlink({$group->id},{$model->id})")]);
+				return Html::button(IconsHelper::unlink(), ['onClick' => new JsExpression("unlink({$group->id},{$model->id}); $('tr[data-key=\"{$group->id}\"]').fadeOut()")]);
 			}
 		]
 	]
