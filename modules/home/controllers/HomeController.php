@@ -21,7 +21,7 @@ use yii\web\NotFoundHttpException;
  * @package app\controllers
  */
 class HomeController extends WigetableController {
-	public $menuDisabled = false;
+	public $menuDisabled = true;
 	public $orderWeight = 0;
 	public $menuCaption = "<i class='fa fa-home'></i>Домой";
 	public $defaultRoute = 'home/home';
