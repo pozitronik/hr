@@ -24,7 +24,7 @@ class DashboardControl {
 		});
 
 		$("[name='filter[]']").bind('click', function(event) {
-			self.isotope.arrange({filter: self.filters})
+			self.refresh()
 		});
 
 	}
@@ -38,6 +38,10 @@ class DashboardControl {
 			element.addClass('ascending');
 			this.isotope.arrange({sortBy: sortingAttribute, sortAscending: true});
 		}
+	}
+
+	refresh() {
+		this.isotope.arrange({filter: this.filters});
 	}
 
 
