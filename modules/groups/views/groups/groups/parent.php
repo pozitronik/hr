@@ -17,9 +17,9 @@ use app\modules\references\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\references\widgets\relation_type_select\RelationTypeSelectWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
+use yii\web\JsExpression;
 use yii\web\View;
 use kartik\grid\GridView;
-use kartik\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -107,10 +107,17 @@ use yii\helpers\Url;
 			'footer' => Utils::pageTotal($provider, 'childGroupsCount')
 		],
 		[
-			'class' => CheckboxColumn::class,
-			'headerOptions' => ['class' => 'kartik-sheet-style'],
-			'header' => IconsHelper::trash(),
-			'name' => $model->formName().'[dropParentGroups]'
+			'format' => 'raw',
+			'headerOptions' => [
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'contentOptions' => [
+				'style' => 'width:50px',
+				'class' => 'skip-export kv-align-center kv-align-middle'
+			],
+			'value' => static function(Groups $group) use ($model) {
+				return Html::button(IconsHelper::unlink(), ['onClick' => new JsExpression("unlink({$model->id}, {$group->id})")]);
+			}
 		]
 	]
 
