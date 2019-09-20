@@ -9,10 +9,8 @@
 }
 
 .panel.panel-card-small {
-	min-width: 200px;
 	float: left;
 	margin-bottom: 5px;
-	margin-left: 2px;
 }
 
 .panel.panel-card-small > .panel-heading {

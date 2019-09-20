@@ -17,7 +17,7 @@ use yii\web\View;
 
 ?>
 
-<div class="panel panel-card-small" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card-small col-md-3" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
