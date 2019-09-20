@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\controllers;
 
+use app\models\relations\RelGroupsGroups;
 use app\models\user\CurrentUser;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
@@ -110,5 +111,18 @@ class AjaxController extends BaseAjaxController {
 		$this->answer->items = Users::find()->select(['username as name', 'id', new Expression("'user' as 'type'")])->distinct()->where(['like', 'sys_users.username', $term])
 			->asArray()->all();
 		return $this->answer->items;
+	}
+
+	/**
+	 * Разрывает связь между двумя группами
+	 * @return array
+	 */
+	public function actionGroupsUnlink():array {
+		if ((null === $parentId = Yii::$app->request->post('parentId')) || (null === $childId = Yii::$app->request->post('childId'))) return $this->answer->addError('parameters', 'Not enough');
+		if (null === $parentGroup = Groups::findModel($parentId)) return $this->answer->addError('parentId', 'Not found');
+		if (null === $childGroup = Groups::findModel($childId)) return $this->answer->addError('childId', 'Not found');
+		if (null === RelGroupsGroups::findOne(['parent_id' => $parentId, 'child_id' => $childId])) return $this->answer->addError('link', 'Not linked');
+		$parentGroup->setDropChildGroups([$childGroup]);
+		return $this->answer->answer;
 	}
 }

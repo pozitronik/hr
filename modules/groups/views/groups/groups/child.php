@@ -10,6 +10,7 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\helpers\Utils;
+use app\modules\groups\assets\GroupsAsset;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
@@ -21,6 +22,8 @@ use yii\web\JsExpression;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\helpers\Html;
+
+GroupsAsset::register($this);
 
 ?>
 <?= GridView::widget([
@@ -117,7 +120,7 @@ use yii\helpers\Html;
 				'class' => 'skip-export kv-align-center kv-align-middle'
 			],
 			'value' => static function(Groups $group) use ($model) {
-				return Html::button(IconsHelper::unlink(), ['onClick' => new JsExpression("unlink({$group->id}, {$model->id})")]);
+				return Html::button(IconsHelper::unlink(), ['onClick' => new JsExpression("unlink({$model->id},{$group->id})")]);
 			}
 		]
 	]
