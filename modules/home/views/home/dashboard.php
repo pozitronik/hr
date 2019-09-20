@@ -55,30 +55,6 @@ array_walk($userGroupTypes, static function(&$value, &$key) {
 			</div>
 			<div class="col-md-8" style="margin-top:8px">
 				<?= ButtonControlsWidget::widget([
-					'name' => 'sorting',
-					'items' => [
-						'sort-by-type' => [
-							'label' => 'По типу',
-							'options' => [
-								'data-sorting' => 'type'
-							]
-						],
-						'sort-by-count' => [
-							'label' => 'По сотрудникам',
-							'options' => [
-								'data-sorting' => 'count'
-							]
-						],
-						'sort-by-vacancy' => [
-							'label' => 'По вакансиям',
-							'options' => [
-								'data-sorting' => 'vacancy'
-							]
-						]
-					],
-					'radioMode' => true
-				]) ?>
-				<?= ButtonControlsWidget::widget([
 					'name' => 'filter',
 					'items' => $userGroupTypes
 				]) ?>
