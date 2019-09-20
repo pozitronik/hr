@@ -53,6 +53,34 @@ class AjaxController extends BaseAjaxController {
 	}
 
 	/**
+	 * Запоминает настройку пользователя
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionUserSetOption():array {
+		if (false !== $key = Yii::$app->request->post('key', false)) {
+			if (null === $user = CurrentUser::User()) $this->answer->addError('user', 'Unauthorized');
+			$value = Yii::$app->request->post('value', []);
+			$user->options->set((string)$key, (array)$value);
+			return $this->answer->answer;
+		}
+		return $this->answer->addError('key', 'Not specified');
+	}
+
+	/**
+	 * Возвращает настройку пользователя
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function actionUserGetOption():array {
+		if (false !== $key = Yii::$app->request->post('key', false)) {
+			if (null === $user = CurrentUser::User()) $this->answer->addError('user', 'Unauthorized');
+			return $user->options->get((string)$key);
+		}
+		return $this->answer->addError('key', 'Not specified');
+	}
+
+	/**
 	 * Поиск пользователя в Select2
 	 *
 	 * @param string|null $term Строка поиска
