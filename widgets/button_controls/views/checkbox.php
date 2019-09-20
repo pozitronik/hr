@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var array|string|null $selection
  * @var array $options
  * @var array $items
+ * @var bool $inheritStyle
  */
 
 use pozitronik\helpers\ArrayHelper;
@@ -16,7 +17,7 @@ use yii\web\View;
 ?>
 
 <?= Html::checkboxList($name, $selection, $items, $options + [
-		'item' => static function($index, $label, $name, $checked, $value) use ($options) {
+		'item' => static function($index, $label, $name, $checked, $value) use ($inheritStyle) {
 			$inputOptions = [];
 			if (is_array($label)) {//если будем добавлять другие параметры, они пойдут сюда
 				$inputOptions = ArrayHelper::getValue($label, 'options', []);
@@ -24,7 +25,7 @@ use yii\web\View;
 				$label = ArrayHelper::getValue($label, 'label');
 			}
 
-			return Html::input('checkbox', $name, $value, ['id' => $value, 'class' => 'hidden'] + $inputOptions).Html::label($label, $value, ['class' => "button $value", 'style' => ArrayHelper::getValue($inputOptions, 'style')]);
+			return Html::input('checkbox', $name, $value, ['id' => $value, 'class' => 'hidden'] + $inputOptions).Html::label($label, $value, ['class' => "button $value", 'style' => $inheritStyle?ArrayHelper::getValue($inputOptions, 'style'):null]);
 		}
 	]) ?>
 

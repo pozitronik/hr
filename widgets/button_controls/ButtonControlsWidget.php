@@ -17,6 +17,7 @@ use pozitronik\widgets\CachedWidget;
  *    'label' => подпись кнопки,
  *    'options' => массив html-опций для кнопки
  * либо в формате 'value' => 'label'
+ * @property bool $inheritStyle - Наследование кнопкой html-стиля, присвоенного контролу
  */
 class ButtonControlsWidget extends CachedWidget {
 	public $radioMode = false;
@@ -24,6 +25,7 @@ class ButtonControlsWidget extends CachedWidget {
 	public $selection;
 	public $options = ['class' => 'button-group'];
 	public $items = [];
+	public $inheritStyle = true;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -42,7 +44,8 @@ class ButtonControlsWidget extends CachedWidget {
 			'name' => $this->name,
 			'selection' => $this->selection,
 			'options' => $this->options,
-			'items' => $this->items
+			'items' => $this->items,
+			'inheritStyle' => $this->inheritStyle
 		]);
 
 	}
