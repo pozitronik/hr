@@ -65,14 +65,14 @@ class IconsHelper {
 	 * @return string
 	 */
 	public static function unlink():string {
-		return "<i class='fa fa-chain-broken' title='Отвязать'></i>";
+		return "<i class='fa fa-unlink' title='Отвязать'></i>";
 	}
 
 	/**
 	 * @return string
 	 */
 	public static function link():string {
-		return "<i class='fa fa-chain' title='Связать'></i>";
+		return "<i class='fa fa-link' title='Связать'></i>";
 	}
 
 	/**
