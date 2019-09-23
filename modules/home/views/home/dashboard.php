@@ -47,7 +47,7 @@ array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardF
 		'value' => $key,
 		'options' => [
 				'data-filter' => $value['id'],
-				'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false,
+				'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false
 			] + ArrayHelper::getValue($styleOptions, $value['id'])
 	];
 });
@@ -66,7 +66,7 @@ array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardF
 					'name' => 'filter',
 					'items' => $userGroupTypes,
 					'options' => [
-						'onChange' => new JsExpression("set_option('dashboardFilter', Controls.filtersValues)"),
+						'onChange' => new JsExpression("set_option('dashboardFilter', Controls.filtersValues)")
 					]
 				]) ?>
 
