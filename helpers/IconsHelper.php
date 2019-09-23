@@ -264,5 +264,17 @@ class IconsHelper {
 	public static function history():string {
 		return "<i class='fa fa-history'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function expand():string {
+		return "<i class='fa fa-angle-down'></i>";
+	}
+	/**
+	 * @return string
+	 */
+	public static function collapse():string {
+		return "<i class='fa fa-angle-up'></i>";
+	}
 
 }
