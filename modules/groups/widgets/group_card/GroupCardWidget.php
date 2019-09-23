@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\widgets\group_card;
+namespace app\modules\groups\widgets\group_card;
 
 use pozitronik\widgets\CachedWidget;
 use app\modules\groups\models\Groups;
@@ -12,13 +12,10 @@ use Throwable;
  * @package app\components\group_card
  *
  * @property Groups $group
- * @property string $view
  * @property array $options Массив произвольных параметров, передаваемых внутрь вьюхи, и учитываемый только ей.
- * @deprecated
  */
 class GroupCardWidget extends CachedWidget {
 	public $group;
-	public $view = 'group_card';
 	public $options = [];
 
 	/**
@@ -36,7 +33,7 @@ class GroupCardWidget extends CachedWidget {
 	 * @throws Throwable
 	 */
 	public function run():string {
-		return $this->render($this->view, [
+		return $this->render('group_card', [
 			'group' => $this->group,
 			'options' => $this->options
 		]);

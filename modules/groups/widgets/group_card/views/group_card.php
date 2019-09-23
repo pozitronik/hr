@@ -4,11 +4,9 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
- * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы; 'col-md' -- значение для модификатора колонк
+ * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы
  */
 
-use app\helpers\IconsHelper;
-use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -18,25 +16,15 @@ use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use app\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\web\View;
 
-$childGroupsCount = count($group->relChildGroups);
-switch ($childGroupsCount) {
-	case 1:
-		$mdValue = 12;
-	break;
-	case 2:
-		$mdValue = 6;
-	break;
-	case 3:
-	default:
-		$mdValue = 4;
-	break;
-
-}
+//$this->registerJs("normalize_widths()", View::POS_END);
+//$this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
+//$this->registerJs("Msnry.layout();", View::POS_LOAD);
 ?>
 
-<div class="panel panel-card-small col-md-<?= ArrayHelper::getValue($options, 'col-md', $mdValue) ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
@@ -47,8 +35,7 @@ switch ($childGroupsCount) {
 				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
 			]) ?>
 		</div>
-		<div class="panel-title">
-			<?= BadgeWidget::widget([
+		<h3 class="panel-title"><?= BadgeWidget::widget([
 				'models' => $group,
 				'attribute' => 'name',
 				'prefix' => BadgeWidget::widget([
@@ -61,8 +48,8 @@ switch ($childGroupsCount) {
 					"badgeOptions" => [
 						'class' => 'badge group-type-name'
 					],
-					'iconify' => true,
-					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
+					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id'],
+					'iconify' => true
 				]),
 				"badgeOptions" => [
 					'class' => "badge badge-info"
@@ -71,51 +58,71 @@ switch ($childGroupsCount) {
 				"optionsMapAttribute" => 'type',
 				'linkScheme' => [GroupsModule::to(['groups/profile', 'id' => $group->id])]
 
-			]) ?>
-		</div>
+			]) ?></h3>
 	</div>
 
 	<div class="panel-body">
 		<?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
-			<?= BadgeWidget::widget([
-				'models' => "{$positionType->name}: {$positionType->count}",
-				"badgeOptions" => [
-					'style' => $positionType->style
-				],
-				'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
+			<div class="row">
+				<div class="col-md-10"><?= BadgeWidget::widget([
+						'models' => $positionType->name,
+						"badgeOptions" => [
+							'style' => $positionType->style
+						],
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
 
-			]) ?>
+					]) ?></div>
+				<div class="col-md-2 pad-no">
+					<?= BadgeWidget::widget([
+						'models' => $positionType->count,
+						"badgeOptions" => [
+							'style' => $positionType->style,
+							'class' => "badge pull-right"
+						],
+						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
+
+					]) ?>
+				</div>
+			</div>
+			<div class="list-divider"></div>
 		<?php endforeach; ?>
-		<?= BadgeWidget::widget([
-			'models' => 'Вакансии: '.count($group->relVacancy),
-			"badgeOptions" => [
-				'class' => "badge ".((count($group->relVacancy) > 0)?"badge-danger":"badge-unimportant")
-			],
-			'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
-		]) ?>
 
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $childGroupsCount > 0): ?>
-			<button class="btn btn-xs btn-xxs collapsed pull-right" data-target="#childGroups-<?= $group->id ?>" data-toggle="collapse" aria-expanded="false">
-				<?= Utils::pluralForm($childGroupsCount, ['подгруппа', 'подгруппы', 'подгрупп']) ?> <?= IconsHelper::expand() ?>
-			</button>
-		<?php endif; ?>
-	</div>
+		<div class="row">
+			<div class="col-md-2"><?= BadgeWidget::widget([
+					'models' => 'Вакансии: '.Html::tag('span', count($group->relVacancy), ['class' => 'vacancy-count']),
+					"badgeOptions" => [
+						'class' => "badge pull-left ".((count($group->relVacancy) > 0)?"badge-danger":"badge-unimportant")
+					],
+					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
+				]) ?></div>
+			<div class="col-md-10 pad-no">
+				<?php foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus): ?>
+					<?= BadgeWidget::widget([
+						'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
+						"badgeOptions" => [
+							'style' => $vacancyStatus->style,
+							'class' => "badge pull-right"
+						],
+						'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
+					]) ?>
+				<?php endforeach; ?>
 
-	<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $childGroupsCount > 0): ?>
 
-		<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
+			</div>
+		</div>
+
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && count($group->relChildGroups) > 0): ?>
 			<div class="list-divider"></div>
 			<div class="row child-groups">
 				<div class="col-md-12">
 					<?php foreach ($group->relChildGroups as $childGroup): ?>
-						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small', 'options' => ['col-md' => 12]]) ?>
+						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small']) ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
-		</div>
+		<?php endif; ?>
+	</div>
 
-
-	<?php endif; ?>
 
 	<div class="panel-footer">
 		<?= BadgeWidget::widget([
