@@ -104,3 +104,7 @@
 .grid-item--height4 {
 	height: 360px;
 }
+
+.btn.btn-xxs {
+	padding: 0;
+}

@@ -4,8 +4,11 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
+ * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы; 'col-md' -- значение для модификатора колонк
  */
 
+use app\helpers\IconsHelper;
+use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -13,11 +16,14 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
+use app\widgets\group_card\GroupCardWidget;
+use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 
+$childGroupsCount = count($group->relChildGroups);
 ?>
 
-<div class="panel panel-card-small col-md-3" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card-small col-md-<?= ArrayHelper::getValue($options, 'col-md', 3) ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
 			<?= BadgeWidget::widget([
@@ -53,7 +59,7 @@ use yii\web\View;
 				'linkScheme' => [GroupsModule::to(['groups/profile', 'id' => $group->id])]
 
 			]) ?>
-			</div>
+		</div>
 	</div>
 
 	<div class="panel-body">
@@ -74,8 +80,29 @@ use yii\web\View;
 			],
 			'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 		]) ?>
+
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $childGroupsCount > 0): ?>
+			<button class="btn btn-xs btn-xxs collapsed pull-right" data-target="#childGroups-<?= $group->id ?>" data-toggle="collapse" aria-expanded="false">
+				<?= Utils::pluralForm($childGroupsCount, ['подгруппа', 'подгруппы', 'подгрупп']) ?> <?= IconsHelper::expand() ?>
+			</button>
+		<?php endif; ?>
 	</div>
 
+	<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $childGroupsCount > 0): ?>
+
+		<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
+			<div class="list-divider"></div>
+			<div class="row child-groups">
+				<div class="col-md-12">
+					<?php foreach ($group->relChildGroups as $childGroup): ?>
+						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small', 'options' => ['col-md' => 12]]) ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+
+
+	<?php endif; ?>
 
 	<div class="panel-footer">
 		<?= BadgeWidget::widget([
