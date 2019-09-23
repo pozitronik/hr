@@ -6,7 +6,6 @@ declare(strict_types = 1);
  * @var Groups $group
  */
 
-use app\helpers\IconsHelper;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
