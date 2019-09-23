@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Groups $group
  */
 
+use app\helpers\IconsHelper;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -28,7 +29,8 @@ use yii\web\View;
 				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
 			]) ?>
 		</div>
-		<div class="panel-title"><?= BadgeWidget::widget([
+		<div class="panel-title">
+			<?= BadgeWidget::widget([
 				'models' => $group,
 				'attribute' => 'name',
 				'prefix' => BadgeWidget::widget([
@@ -41,6 +43,7 @@ use yii\web\View;
 					"badgeOptions" => [
 						'class' => 'badge group-type-name'
 					],
+					'iconify' => true,
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]),
 				"badgeOptions" => [
@@ -50,7 +53,8 @@ use yii\web\View;
 				"optionsMapAttribute" => 'type',
 				'linkScheme' => [GroupsModule::to(['groups/profile', 'id' => $group->id])]
 
-			]) ?></div>
+			]) ?>
+			</div>
 	</div>
 
 	<div class="panel-body">

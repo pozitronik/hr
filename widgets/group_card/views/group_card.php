@@ -48,7 +48,8 @@ use yii\web\View;
 					"badgeOptions" => [
 						'class' => 'badge group-type-name'
 					],
-					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
+					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id'],
+					'iconify' => true
 				]),
 				"badgeOptions" => [
 					'class' => "badge badge-info"
