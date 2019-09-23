@@ -13,6 +13,32 @@ use app\modules\history\models\HistoryEventInterface;
 class IconsHelper {
 
 	/**
+	 * Берём строку, генерируем из неё HTML-аватар (кругляшок с буковками)
+	 * @param string $input -- вводимая строка
+	 * @param int $radius -- радиус иконки
+	 * @param string $color -- цвет текста
+	 * @param string $background -- цвет фона
+	 * @param int $borderRadius -- толщина каёмкм
+	 * @param string $borderColor -- цвет каёмки
+	 * @return string -- html-код иконки
+	 */
+	public static function iconifyString(string $input, int $radius = 15, string $color = 'black', string $background = 'white', int $borderRadius = 2, string $borderColor = "orange"):string {
+		$inputA = explode(' ', $input);
+		switch (count($inputA)) {
+			case 0:
+				$input = '?';
+			break;
+			case 1:
+				$input = substr($input, 0, 2);
+			break;
+			default:
+				$input = mb_strtoupper(substr($inputA[0], 0, 1) + substr($inputA[1], 0, 1));
+			break;
+		}
+		return "<div style='display: block; margin: {$borderRadius}px; text-align: center; line-height:{$radius}px;  width: {$radius}px; height: {$radius}px; color: $color; background: $background; border-radius: 50%; box-shadow: 0 0 0 {$borderRadius}px {$borderColor};'>{$input}</div>";
+	}
+
+	/**
 	 * @param int $eventType
 	 * @return string
 	 */
@@ -88,12 +114,14 @@ class IconsHelper {
 	public static function vacancy():string {
 		return "<i class='fa fa-user-check' title='Вакансии'></i>";
 	}
+
 	/**
 	 * @return string
 	 */
 	public static function vacancy_red():string {
 		return "<i class='fa fa-user-check' style='color: Tomato;' title='Создать вакансию'></i>";
 	}
+
 	/**
 	 * @return string
 	 */
@@ -135,6 +163,7 @@ class IconsHelper {
 	public static function network():string {
 		return "<i class='fa fa-chart-network'></i>";
 	}
+
 	/**
 	 * @return string
 	 */
