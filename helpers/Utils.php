@@ -292,4 +292,25 @@ class Utils {
 		return 'unknown';
 	}
 
+	/**
+	 * Return two first word letters of input (used for iconify text)
+	 * @param string $input
+	 * @return string
+	 */
+	public static function ShortifyString(string $input):string {
+		$inputA = explode(' ', $input);
+		switch (count($inputA)) {
+			case 0:
+				$input = '?';
+			break;
+			case 1:
+				$input = mb_substr($input, 0, 2);
+			break;
+			default:
+				$input = mb_strtoupper(substr($inputA[0], 0, 1) + substr($inputA[1], 0, 1));
+			break;
+		}
+		return $input;
+	}
+
 }

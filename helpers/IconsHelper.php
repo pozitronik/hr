@@ -23,18 +23,7 @@ class IconsHelper {
 	 * @return string -- html-код иконки
 	 */
 	public static function iconifyString(string $input, int $radius = 15, string $color = 'black', string $background = 'white', int $borderRadius = 2, string $borderColor = "orange"):string {
-		$inputA = explode(' ', $input);
-		switch (count($inputA)) {
-			case 0:
-				$input = '?';
-			break;
-			case 1:
-				$input = substr($input, 0, 2);
-			break;
-			default:
-				$input = mb_strtoupper(substr($inputA[0], 0, 1) + substr($inputA[1], 0, 1));
-			break;
-		}
+		$input = Utils::ShortifyString($input);
 		return "<div style='display: block; margin: {$borderRadius}px; text-align: center; line-height:{$radius}px;  width: {$radius}px; height: {$radius}px; color: $color; background: $background; border-radius: 50%; box-shadow: 0 0 0 {$borderRadius}px {$borderColor};'>{$input}</div>";
 	}
 

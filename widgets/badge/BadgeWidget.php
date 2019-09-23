@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\badge;
 
+use app\helpers\Utils;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\ReflectionHelper;
 use pozitronik\widgets\CachedWidget;
@@ -29,6 +30,7 @@ use yii\helpers\Html;
  * @property array $moreBadgeOptions
  * @property string $prefix
  * @property string|null|false $emptyResult
+ * @property bool $iconify
  */
 class BadgeWidget extends CachedWidget {
 	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
@@ -45,6 +47,7 @@ class BadgeWidget extends CachedWidget {
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
 	public $prefix = '';//строчка, добавляемая перед бейджами
 	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
+	public $iconify = false;//Свернуть содержимое бейджа в иконку
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -92,6 +95,8 @@ class BadgeWidget extends CachedWidget {
 			}
 
 			$badgeHtmlOptions = !is_array($badgeHtmlOptions)?$this->badgeOptions:array_merge($this->badgeOptions, $badgeHtmlOptions);
+			$badgeContent = $this->iconify?Utils::ShortifyString(ArrayHelper::getValue($model, $this->attribute)):ArrayHelper::getValue($model, $this->attribute);
+
 			if ($this->linkScheme) {
 				$currentLinkScheme = $this->linkScheme;
 				$arrayedParameters = [];
@@ -104,9 +109,7 @@ class BadgeWidget extends CachedWidget {
 
 				});
 				if ([] !== $arrayedParameters) array_merge($currentLinkScheme, $arrayedParameters);//если в схеме были переданы значения массивом, включаем их разбор в схему
-				$badgeContent = Html::a(ArrayHelper::getValue($model, $this->attribute), $currentLinkScheme);
-			} else {
-				$badgeContent = ArrayHelper::getValue($model, $this->attribute);
+				$badgeContent = Html::a($badgeContent, $currentLinkScheme);
 			}
 
 			if ($this->useBadges) {
