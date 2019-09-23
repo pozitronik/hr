@@ -16,7 +16,7 @@ use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\assets\UsersAsset;
 use app\widgets\button_controls\ButtonControlsWidget;
-use app\widgets\group_card\GroupCardWidget;
+use app\modules\groups\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;

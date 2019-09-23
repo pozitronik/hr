@@ -13,7 +13,7 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
-use app\widgets\group_card\GroupCardWidget;
+use app\modules\groups\widgets\group_card\GroupCardWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;

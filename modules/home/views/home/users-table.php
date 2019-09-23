@@ -12,7 +12,7 @@ declare(strict_types = 1);
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
-use app\widgets\group_card\GroupCardWidget;
+use app\modules\groups\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;

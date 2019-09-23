@@ -16,7 +16,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
-use app\widgets\group_card\GroupCardWidget;
+use app\modules\groups\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 

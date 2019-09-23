@@ -14,7 +14,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
-use app\widgets\group_card\GroupCardWidget;
+use app\modules\groups\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
@@ -116,7 +116,7 @@ use yii\web\View;
 			<div class="row child-groups">
 				<div class="col-md-12">
 					<?php foreach ($group->relChildGroups as $childGroup): ?>
-						<?= GroupCardWidget::widget(['group' => $childGroup, 'view' => 'group_small']) ?>
+						<?= GroupCardWidget::widget(['group' => $childGroup,/* 'view' => 'group_small' todo */]) ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
