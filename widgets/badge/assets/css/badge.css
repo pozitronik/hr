@@ -1,3 +1,7 @@
 .badge a {
 	color:inherit;
 }
+
+.badge {
+	display: inline;
+}
