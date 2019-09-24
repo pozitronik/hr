@@ -32,7 +32,7 @@ class GroupUsersWidget extends CachedWidget {
 	 * @throws Throwable
 	 */
 	public function run():string {
-		return $this->render('group_card', [
+		return $this->render('group_users', [
 			'group' => $this->group,
 			'options' => $this->options
 		]);
