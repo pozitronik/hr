@@ -12,6 +12,7 @@ use Throwable;
  * @package app\components\group_card
  *
  * @property Groups $group
+ * @property array $options
  */
 class GroupUsersWidget extends CachedWidget {
 	public $group;
