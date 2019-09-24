@@ -16,6 +16,8 @@ use app\widgets\badge\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 
+//$this->registerJs("var MsnrySmall = new Masonry('#childGroups-{$group->id}',{columnWidth: '33%', itemSelector: '.panel-card-small', percentPosition: true, fitWidth: true}); ", View::POS_END);
+//$this->registerJs("MsnrySmall.layout();", View::POS_LOAD);
 ?>
 
 <div class="panel panel-card-small col-md-<?= ArrayHelper::getValue($options, 'col-md', 4) ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>

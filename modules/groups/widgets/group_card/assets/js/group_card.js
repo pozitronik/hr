@@ -1,15 +1,4 @@
-function normalize_widths() {
-	let containerWidth = $('.grid').width(),
-		cardBaseWidth = containerWidth / 5;
-	$('.panel-card').each(function(index) {
-		let cardWidth = $(this).width();
-		let cardSizeMultiplier = Math.ceil(cardWidth / cardBaseWidth);
-		$(this).addClass('grid-item--width' + cardSizeMultiplier);
-	});
-}
-
-
-(function($, sr) {
+(function($, sr) {//регистрирует событие smartresize на любой ресайз окна
 	var debounce = function(func, threshold, execAsap) {
 		let timeout;
 		return function debounced() {
@@ -36,9 +25,9 @@ function normalize_widths() {
 
 
 // usage:
-$(window).smartresize(function() {
-	if ('undefined' !== typeof (Msnry)) Msnry.layout();
-});
+// $(window).smartresize(function() {
+// 	if ('undefined' !== typeof (Msnry)) Msnry.layout();
+// });
 
 function changeIcon(element) {
 	let i = element.find('i');

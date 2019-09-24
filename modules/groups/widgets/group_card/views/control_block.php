@@ -12,11 +12,18 @@ use yii\bootstrap\Html;
 use yii\web\JsExpression;
 use yii\web\View;
 
+$this->registerJs("$('#{$target}').on('hidden.bs.collapse', function(){
+    if ('undefined' !== typeof (Msnry)) Msnry.layout();
+  });");
+$this->registerJs("$('#{$target}').on('shown.bs.collapse', function(){
+   if ('undefined' !== typeof (Msnry)) Msnry.layout();
+  });");
 ?>
 <?= Html::button($expanded?IconsHelper::minimize():IconsHelper::maximize(), [
 	'class' => 'btn btn-default',
 	'data-toggle' => "collapse",
 	'data-target' => "#{$target}",
 	'aria-expanded' => $expanded?'true':'false',
-	'onClick' => new JsExpression("changeIcon($(this))")
+	'onClick' => new JsExpression("changeIcon($(this));")
 ]) ?>
+
