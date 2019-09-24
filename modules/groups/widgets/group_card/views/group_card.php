@@ -24,7 +24,7 @@ use yii\web\View;
 //$this->registerJs("Msnry.layout();", View::POS_LOAD);
 ?>
 
-<div class="panel panel-card" id="panel-card-<?= $group->id ?>" aria-expanded="true" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card" id="panel-card-<?= $group->id ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div class="panel-control">
@@ -127,7 +127,7 @@ use yii\web\View;
 
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div class="list-divider"></div>
-			<div class="row child-groups expanded" id="childGroups-<?= $group->id ?>" aria-expanded="true">
+			<div class="row child-groups collapse in" id="childGroups-<?= $group->id ?>" aria-expanded="true">
 				<div class="col-md-12">
 					<?php foreach ($childGroups as $childGroup): ?>
 						<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['showChildGroups' => true]]) ?>
