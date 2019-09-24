@@ -286,4 +286,11 @@ class IconsHelper {
 		return "<i class='fa fa-window-maximize'></i>";
 	}
 
+	/**
+	 * @return string
+	 */
+	public static function minimize():string {
+		return "<i class='fa fa-window-minimize'></i>";
+	}
+
 }
