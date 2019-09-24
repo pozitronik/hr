@@ -19,4 +19,4 @@ use yii\web\View;
 	'data-target' => "#{$target}",
 	'aria-expanded' => $expanded?'true':'false',
 	'onClick' => new JsExpression("changeIcon($(this))")
-]); ?>
+]) ?>

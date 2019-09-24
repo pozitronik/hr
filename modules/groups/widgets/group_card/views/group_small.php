@@ -65,7 +65,7 @@ use yii\web\View;
 				<div class="row child-groups">
 					<div class="col-md-12">
 						<?php foreach ($group->relChildGroups as $childGroup): ?>
-							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md' => 12]]); ?>
+							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md' => 12]]) ?>
 						<?php endforeach; ?>
 					</div>
 				</div>

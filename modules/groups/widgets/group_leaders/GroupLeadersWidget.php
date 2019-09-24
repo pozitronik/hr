@@ -34,8 +34,7 @@ class GroupLeadersWidget extends CachedWidget {
 	 */
 	public function run():string {
 		return $this->render('group_leaders', [
-			'group' => $this->group,
-			'options' => $this->options
+			'group' => $this->group
 		]);
 	}
 }
