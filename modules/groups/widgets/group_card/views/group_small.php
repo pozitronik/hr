@@ -20,13 +20,11 @@ use yii\web\View;
 
 <div class="panel panel-card-small col-md-<?= ArrayHelper::getValue($options, 'col-md', 4) ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
-		<div class="panel-control">
-			<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
-				<div class="panel-control">
-					<?= $this->render('control_block', ['target' => "childGroups-{$group->id}"]) ?>
-				</div>
-			<?php endif; ?>
-		</div>
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
+			<div class="panel-control">
+				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}"]) ?>
+			</div>
+		<?php endif; ?>
 		<div class="panel-title">
 			<?= BadgeWidget::widget([
 				'models' => $group,
@@ -67,7 +65,7 @@ use yii\web\View;
 				<div class="row child-groups">
 					<div class="col-md-12">
 						<?php foreach ($group->relChildGroups as $childGroup): ?>
-							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md'=>12]]); ?>
+							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md' => 12]]); ?>
 						<?php endforeach; ?>
 					</div>
 				</div>
