@@ -8,7 +8,6 @@ use app\modules\groups\models\Groups;
 use Throwable;
 
 /**
- * Class GroupSelectWidget
  * @package app\components\group_card
  *
  * @property Groups $group
