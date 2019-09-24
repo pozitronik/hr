@@ -54,7 +54,7 @@ use kartik\grid\GridView;
 					],
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $group->id]
+					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
 				]);
 			}
 		],
