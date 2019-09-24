@@ -34,6 +34,7 @@ class GroupCardWidget extends CachedWidget {
 	public function run():string {
 		return $this->render('group_card', [
 			'group' => $this->group,
+			'childGroups' => $this->group->relChildGroups,
 			'options' => $this->options
 		]);
 	}
