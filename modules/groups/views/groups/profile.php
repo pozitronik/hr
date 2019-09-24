@@ -13,6 +13,8 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use app\modules\users\models\references\RefUserRoles;
+use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -54,11 +56,42 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]) ?>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-6">
 				<?= GroupUsersWidget::widget([
 					'group' => $model
 				]) ?>
 			</div>
+			<div class="col-md-4">
+				<?= BadgeWidget::widget([
+					'models' => static function() use ($model) {//todo: можно вынести в отдельный виджет
+						$result = [];
+						foreach ($model->leaders as $leader) {
+							$result[] = BadgeWidget::widget([
+								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
+								'attribute' => 'name',
+								'useBadges' => true,
+								'itemsSeparator' => false,
+								"optionsMap" => RefUserRoles::colorStyleOptions(),
+								'prefix' => BadgeWidget::widget([
+										'models' => $leader,
+										'useBadges' => false,
+										'attribute' => 'username',
+										'unbadgedCount' => false,
+										'itemsSeparator' => false,
+										'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
+									]).': ',
+								'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
+							]);
+						}
+						return $result;
+					},
+					'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
+					'badgeOptions' => [
+						'class' => "pull-right"
+					]
+				]) ?>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="col-md-8">
