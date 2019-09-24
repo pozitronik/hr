@@ -39,3 +39,12 @@ function normalize_widths() {
 $(window).smartresize(function() {
 	if ('undefined' !== typeof (Msnry)) Msnry.layout();
 });
+
+function changeIcon(element) {
+	let i = element.find('i');
+	if ('true' === element.attr('aria-expanded')) {
+		i.removeClass('fa-window-minimize').addClass('fa-window-maximize')
+	} else {
+		i.removeClass('fa-window-maximize').addClass('fa-window-minimize')
+	}
+}

@@ -28,7 +28,7 @@ use yii\web\View;
 	<div class="panel-heading">
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div class="panel-control">
-				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}"]) ?>
+				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => true]) ?>
 			</div>
 		<?php endif; ?>
 		<h3 class="panel-title"><?= BadgeWidget::widget([
