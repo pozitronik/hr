@@ -26,7 +26,7 @@ class GroupLeadersWidget extends CachedWidget {
 		GroupLeadersWidgetAssets::register($this->getView());
 		$this->cacheNamePrefix = $this->group->id;
 	}
-
+//todo: баг для группы 102 некорректный рендер в плитке
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
