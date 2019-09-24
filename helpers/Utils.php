@@ -304,7 +304,7 @@ class Utils {
 				$input = '?';
 			break;
 			case 1:
-				$input = mb_substr($input, 0, 2);
+				$input = mb_substr($input, 0, 1);
 			break;
 			default:
 				$input = mb_strtoupper(mb_substr($inputA[0], 0, 1).mb_substr($inputA[1], 0, 1));
