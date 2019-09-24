@@ -14,13 +14,13 @@ use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
-use app\modules\groups\widgets\group_card\GroupCardWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -156,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'usersCount',
 			'value' => static function(Groups $group) {
-				return GroupCardWidget::widget(['group' => $group, 'view' => 'group_users', 'options' =>['column_view' => true]]);
+				return GroupUsersWidget::widget(['group' => $group, 'options' =>['column_view' => true]]);
 			},
 			'label' => 'Сотрудники',
 			'headerOptions' => ['class' => 'text-center'],

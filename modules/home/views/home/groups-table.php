@@ -13,6 +13,7 @@ use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
@@ -135,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'header' => 'Сотрудники',
 			'format' => 'raw',
 			'value' => static function(Groups $model) {
-				return GroupCardWidget::widget(['group' => $model, 'view' => 'group_users', 'options' => ['column_view' => true]]);
+				return GroupUsersWidget::widget(['group' => $model, 'options' => ['column_view' => true]]);
 			},
 			'pageSummary' => static function($summary, $data, $widget) use ($dataProvider) {
 				$groupsScope = ArrayHelper::getColumn($dataProvider->models, 'id');
