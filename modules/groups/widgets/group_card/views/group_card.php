@@ -70,7 +70,7 @@ use yii\web\View;
 				]) ?></div>
 			<div class="col-md-2 pad-no">
 				<?= BadgeWidget::widget([
-					'models' => count($group->relUsers),
+					'models' => $group->getRelUsers()->countFromCache(),
 					"badgeOptions" => [
 						'class' => "badge badge-info pull-right"
 					],
@@ -106,9 +106,9 @@ use yii\web\View;
 
 		<div class="row">
 			<div class="col-md-2"><?= BadgeWidget::widget([
-					'models' => 'Вакансии: '.Html::tag('span', count($group->relVacancy), ['class' => 'vacancy - count']),//может использовать countFromCache?
+					'models' => 'Вакансии: '.Html::tag('span', $group->getRelVacancy()->countFromCache(), ['class' => 'vacancy-count']),
 					"badgeOptions" => [
-						'class' => "badge pull-left ".((count($group->relVacancy) > 0)?"badge-danger":"badge-unimportant")
+						'class' => "badge pull-left ".(($group->getRelVacancy()->countFromCache() > 0)?"badge-danger":"badge-unimportant")
 					],
 					'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 				]) ?></div>
