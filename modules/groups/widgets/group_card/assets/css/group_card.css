@@ -17,6 +17,10 @@
 	height: 30px;
 }
 
+.panel.panel-card-small > .panel-heading > .panel-control button {
+	padding:0;
+}
+
 .panel.panel-card-small > .panel-heading > .panel-control {
 	padding: 0 5px;
 }
@@ -36,7 +40,7 @@
 }
 
 .panel.panel-card > .panel-footer, .panel.panel-card-small > .panel-footer {
-	padding: 0 10px;
+	padding: 0 5px;
 	height: 1.7em;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -49,13 +53,13 @@
 }
 
 .row.child-groups {
-	background: rgba(144,135,145,0.23);
-	padding-top:5px;
+	background: rgba(144, 135, 145, 0.23);
+	padding-top: 5px;
 	border-radius: 5px;
 }
 
 .auto-height {
-	height: auto!important;
+	height: auto !important;
 }
 
 .badge.badge-unimportant {
