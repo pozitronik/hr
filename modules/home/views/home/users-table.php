@@ -143,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									]).' в '.BadgeWidget::widget([
 										'models' => $userGroup->name,
 										"badgeOptions" => [
-											'class' => "badge badge-info"
+											'class' => "badge badge-info inline-block"
 										],
 										'linkScheme' => [HomeModule::to(['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1])]
 									]);
@@ -153,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'unbadgedCount' => false,
 						'itemsSeparator' => false,
 						"badgeOptions" => [
-							'class' => "badge",
+							'class' => "badge inline-block",
 							'style' => 'margin:1px 0px 1px 0px; float:left;'
 						]
 					]),
@@ -161,6 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'unbadgedCount' => false,
 					'itemsSeparator' => false,
 					'badgeOptions' => [
+						'class' => 'badge inline-block',
 						'style' => ArrayHelper::getValue($model->relRefUserPositionsTypesAny,'0.style','background:transparent')
 					]
 				]);
