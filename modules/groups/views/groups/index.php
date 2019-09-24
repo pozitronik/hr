@@ -14,6 +14,7 @@ use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
@@ -115,37 +116,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'leaders',
-			'value' => static function(Groups $model) {
-				return BadgeWidget::widget([
-					'models' => static function() use ($model) {
-						$result = [];
-						foreach ($model->leaders as $leader) {
-							$result[] = BadgeWidget::widget([
-								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
-								'attribute' => 'name',
-								'useBadges' => true,
-								'itemsSeparator' => false,
-								"optionsMap" => static function() {
-									return RefUserRoles::colorStyleOptions();
-								},
-								'prefix' => BadgeWidget::widget([
-										'models' => $leader,
-										'useBadges' => false,
-										'attribute' => 'username',
-										'unbadgedCount' => 3,
-										'itemsSeparator' => false,
-										'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
-									]).': ',
-								'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
-							]);
-						}
-						return $result;
-					},
-					'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
-					'badgeOptions' => [
-						'class' => "pull-right"
-					]
-				]);
+			'value' => static function(Groups $group) {
+				return GroupLeadersWidget::widget(['group' => $group]);
 			},
 			'format' => 'raw',
 			'filterType' => GridView::FILTER_SELECT2,
@@ -156,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'usersCount',
 			'value' => static function(Groups $group) {
-				return GroupUsersWidget::widget(['group' => $group, 'options' =>['column_view' => true]]);
+				return GroupUsersWidget::widget(['group' => $group, 'options' => ['column_view' => true]]);
 			},
 			'label' => 'Сотрудники',
 			'headerOptions' => ['class' => 'text-center'],
@@ -165,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'childGroupsCount',
 			'label' => 'Подгруппы',
-			'value' =>  static function(Groups $group) {
+			'value' => static function(Groups $group) {
 				return BadgeWidget::widget([
 					'models' => $group,
 					'attribute' => 'childGroupsCount',

@@ -11,6 +11,7 @@ use app\modules\graph\assets\VisjsAsset;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\users\models\references\RefUserRoles;
@@ -62,33 +63,8 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 				]) ?>
 			</div>
 			<div class="col-md-4">
-				<?= BadgeWidget::widget([
-					'models' => static function() use ($model) {//todo: можно вынести в отдельный виджет
-						$result = [];
-						foreach ($model->leaders as $leader) {
-							$result[] = BadgeWidget::widget([
-								'models' => RefUserRoles::getUserRolesInGroup($leader->id, $model->id),
-								'attribute' => 'name',
-								'useBadges' => true,
-								'itemsSeparator' => false,
-								"optionsMap" => RefUserRoles::colorStyleOptions(),
-								'prefix' => BadgeWidget::widget([
-										'models' => $leader,
-										'useBadges' => false,
-										'attribute' => 'username',
-										'unbadgedCount' => false,
-										'itemsSeparator' => false,
-										'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
-									]).': ',
-								'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
-							]);
-						}
-						return $result;
-					},
-					'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
-					'badgeOptions' => [
-						'class' => "pull-right"
-					]
+				<?= GroupLeadersWidget::widget([
+					'group' => $model
 				]) ?>
 			</div>
 

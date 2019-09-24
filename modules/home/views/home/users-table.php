@@ -10,10 +10,11 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
+use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
+use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\home\HomeModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
-use app\modules\groups\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
@@ -40,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'filterModel' => $searchModel,
 	'panel' => [
 		'heading' => $this->title,
-		'before' => GroupCardWidget::widget(['group' => $group, /*'view' => 'group_info'*/])
+		'before' => GroupUsersWidget::widget(['group' => $group]).GroupLeadersWidget::widget(['group' => $group])
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
