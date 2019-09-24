@@ -24,11 +24,13 @@ use yii\web\View;
 //$this->registerJs("Msnry.layout();", View::POS_LOAD);
 ?>
 
-<div class="panel panel-card" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card" id="panel-card-<?= $group->id ?>" aria-expanded="true" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
-		<div class="panel-control">
-			<?= $this->render('control_block', ['target' => "panel-card-{$group->id}"]) ?>
-		</div>
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
+			<div class="panel-control">
+				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => true]) ?>
+			</div>
+		<?php endif; ?>
 		<h3 class="panel-title"><?= BadgeWidget::widget([
 				'models' => $group,
 				'attribute' => 'name',
@@ -43,7 +45,7 @@ use yii\web\View;
 						'class' => 'badge group-type-name'
 					],
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id'],
-					'iconify' => true
+					'iconify' => false
 				]),
 				"badgeOptions" => [
 					'class' => "badge badge-info"
@@ -125,7 +127,7 @@ use yii\web\View;
 
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div class="list-divider"></div>
-			<div class="row child-groups">
+			<div class="row child-groups expanded" id="childGroups-<?= $group->id ?>" aria-expanded="true">
 				<div class="col-md-12">
 					<?php foreach ($childGroups as $childGroup): ?>
 						<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['showChildGroups' => true]]) ?>

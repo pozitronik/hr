@@ -16,25 +16,31 @@ use app\widgets\badge\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 
-$childGroupsCount = count($group->relChildGroups);
-switch ($childGroupsCount) {
-	case 1:
-		$mdValue = 12;
-	break;
-	case 2:
-		$mdValue = 6;
-	break;
-	case 3:
-	default:
-		$mdValue = 4;
-	break;
+//switch ($group->getChildGroupsCount() ) {
+//	case 1:
+//		$mdValue = 12;
+//	break;
+//	case 2:
+//		$mdValue = 6;
+//	break;
+//	case 3:
+//	default:
+//		$mdValue = 4;
+//	break;
+//
+//}
 
-}
+$mdValue = 4;
 ?>
 
 <div class="panel panel-card-small col-md-<?= ArrayHelper::getValue($options, 'col-md', $mdValue) ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
+			<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
+				<div class="panel-control">
+					<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => false]) ?>
+				</div>
+			<?php endif; ?>
 		</div>
 		<div class="panel-title">
 			<?= BadgeWidget::widget([
@@ -66,9 +72,7 @@ switch ($childGroupsCount) {
 
 	<div class="panel-body">
 		<?= GroupUsersWidget::widget(['group' => $group, 'options' => ['column_view' => true]]) ?>
-
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $childGroupsCount > 0): ?>
-
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
 				<div class="list-divider"></div>
 				<div class="row child-groups">
