@@ -10,6 +10,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
+use app\modules\home\HomeModule;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use app\modules\groups\widgets\group_card\GroupCardWidget;
@@ -39,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	'filterModel' => $searchModel,
 	'panel' => [
 		'heading' => $this->title,
-		'before' => GroupCardWidget::widget(['group' => $group, 'view' => 'group_info'])
+		'before' => GroupCardWidget::widget(['group' => $group, /*'view' => 'group_info'*/])
 	],
 	'summary' => false,
 	'showOnEmpty' => true,
@@ -143,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										"badgeOptions" => [
 											'class' => "badge badge-info"
 										],
-										'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1]
+										'linkScheme' => [HomeModule::to(['/home/users', 'UsersSearch[groupId]' => $userGroup->id, 't' => 1])]
 									]);
 							}
 							return $badgeData;
