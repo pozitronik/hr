@@ -38,7 +38,7 @@ $mdValue = 4;
 		<div class="panel-control">
 			<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 				<div class="panel-control">
-					<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => false]) ?>
+					<?= $this->render('control_block', ['target' => "childGroups-{$group->id}"]) ?>
 				</div>
 			<?php endif; ?>
 		</div>
@@ -71,10 +71,15 @@ $mdValue = 4;
 	</div>
 
 	<div class="panel-body">
-		<?= GroupUsersWidget::widget(['group' => $group, 'options' => ['column_view' => true]]) ?>
+		<div class="row">
+			<div class="col-md-12">
+				<?= GroupUsersWidget::widget(['group' => $group, 'options' => ['column_view' => true]]) ?>
+			</div>
+		</div>
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
+			<div class="list-divider"></div>
 			<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
-				<div class="list-divider"></div>
+
 				<div class="row child-groups">
 					<div class="col-md-12">
 						<?php foreach ($group->relChildGroups as $childGroup): ?>
