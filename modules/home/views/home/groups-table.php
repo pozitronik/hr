@@ -19,7 +19,6 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
-use app\modules\groups\widgets\group_card\GroupCardWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;

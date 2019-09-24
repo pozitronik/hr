@@ -56,7 +56,7 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 			</div>
 			<div class="col-md-10">
 				<?= GroupUsersWidget::widget([
-					'group' => $model,
+					'group' => $model
 				]) ?>
 			</div>
 		</div>
