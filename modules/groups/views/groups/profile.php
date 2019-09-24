@@ -11,9 +11,9 @@ use app\modules\graph\assets\VisjsAsset;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
-use app\modules\groups\widgets\group_card\GroupCardWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -39,7 +39,7 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 	<div class="clearfix"></div>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-1">
+			<div class="col-md-2">
 				<label>Тип:</label>
 				<?= BadgeWidget::widget([
 					'models' => $model->relGroupTypes,
@@ -54,10 +54,9 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]) ?>
 			</div>
-			<div class="col-md-11">
-				<?= GroupCardWidget::widget([
+			<div class="col-md-10">
+				<?= GroupUsersWidget::widget([
 					'group' => $model,
-					'view' => 'group_info'
 				]) ?>
 			</div>
 		</div>
