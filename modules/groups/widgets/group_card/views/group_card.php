@@ -61,14 +61,13 @@ use yii\web\View;
 
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-10"><?= BadgeWidget::widget([
+			<div class="col-md-12"><?= BadgeWidget::widget([
 					'models' => 'Сотрудники:',
 					"badgeOptions" => [
 						'class' => "badge badge-info"
 					],
 					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
-				]) ?></div>
-			<div class="col-md-2 pad-no">
+				]) ?>
 				<?= BadgeWidget::widget([
 					'models' => $group->getRelUsers()->countFromCache(),
 					"badgeOptions" => [
@@ -81,15 +80,14 @@ use yii\web\View;
 		<div class="list-divider"></div>
 		<?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 			<div class="row">
-				<div class="col-md-10"><?= BadgeWidget::widget([
+				<div class="col-md-12"><?= BadgeWidget::widget([
 						'models' => $positionType->name,
 						"badgeOptions" => [
 							'style' => $positionType->style
 						],
 						'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id])]
 
-					]) ?></div>
-				<div class="col-md-2 pad-no">
+					]) ?>
 					<?= BadgeWidget::widget([
 						'models' => $positionType->count,
 						"badgeOptions" => [
