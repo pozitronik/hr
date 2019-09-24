@@ -120,18 +120,18 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 						'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 					]) ?>
 				<?php endforeach; ?>
-
-
 			</div>
 		</div>
 
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
-			<div class="list-divider"></div>
-			<div class="row child-groups collapse in" id="childGroups-<?= $group->id ?>" aria-expanded="true">
-				<div class="col-md-12">
-					<?php foreach ($childGroups as $childGroup): ?>
-						<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['showChildGroups' => true]]) ?>
-					<?php endforeach; ?>
+			<div class="collapse in" id="childGroups-<?= $group->id ?>" aria-expanded="true">
+				<div class="list-divider"></div>
+				<div class="row child-groups">
+					<div class="col-md-12">
+						<?php foreach ($childGroups as $childGroup): ?>
+							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['showChildGroups' => true]]) ?>
+						<?php endforeach; ?>
+					</div>
 				</div>
 			</div>
 		<?php endif; ?>
