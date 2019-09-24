@@ -4,12 +4,15 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
+ * @var Groups[] $childGroups
  * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы
  */
 
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
+use app\modules\home\HomeModule;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
@@ -27,13 +30,7 @@ use yii\web\View;
 <div class="panel panel-card" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
 		<div class="panel-control">
-			<?= BadgeWidget::widget([
-				'models' => count($group->relUsers),
-				"badgeOptions" => [
-					'class' => "badge badge-info count"
-				],
-				'linkScheme' => ['users', 'UsersSearch[groupId]' => $group->id]
-			]) ?>
+			<?= $this->render('control_block', ['target' => "panel-card-{$group->id}"]) ?>
 		</div>
 		<h3 class="panel-title"><?= BadgeWidget::widget([
 				'models' => $group,
@@ -59,9 +56,29 @@ use yii\web\View;
 				'linkScheme' => [GroupsModule::to(['groups/profile', 'id' => $group->id])]
 
 			]) ?></h3>
+
 	</div>
 
 	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-10"><?= BadgeWidget::widget([
+					'models' => 'Сотрудники:',
+					"badgeOptions" => [
+						'class' => "badge badge-info"
+					],
+					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
+				]) ?></div>
+			<div class="col-md-2 pad-no">
+				<?= BadgeWidget::widget([
+					'models' => count($group->relUsers),
+					"badgeOptions" => [
+						'class' => "badge badge-info pull-right"
+					],
+					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
+				]) ?>
+			</div>
+		</div>
+		<div class="list-divider"></div>
 		<?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 			<div class="row">
 				<div class="col-md-10"><?= BadgeWidget::widget([
@@ -69,7 +86,7 @@ use yii\web\View;
 						"badgeOptions" => [
 							'style' => $positionType->style
 						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
+						'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id])]
 
 					]) ?></div>
 				<div class="col-md-2 pad-no">
@@ -79,7 +96,7 @@ use yii\web\View;
 							'style' => $positionType->style,
 							'class' => "badge pull-right"
 						],
-						'linkScheme' => ['users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id]
+						'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id])]
 
 					]) ?>
 				</div>
@@ -89,7 +106,7 @@ use yii\web\View;
 
 		<div class="row">
 			<div class="col-md-2"><?= BadgeWidget::widget([
-					'models' => 'Вакансии: '.Html::tag('span', count($group->relVacancy), ['class' => 'vacancy-count']),
+					'models' => 'Вакансии: '.Html::tag('span', count($group->relVacancy), ['class' => 'vacancy - count']),//может использовать countFromCache?
 					"badgeOptions" => [
 						'class' => "badge pull-left ".((count($group->relVacancy) > 0)?"badge-danger":"badge-unimportant")
 					],
@@ -111,12 +128,12 @@ use yii\web\View;
 			</div>
 		</div>
 
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && count($group->relChildGroups) > 0): ?>
+		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div class="list-divider"></div>
 			<div class="row child-groups">
 				<div class="col-md-12">
-					<?php foreach ($group->relChildGroups as $childGroup): ?>
-						<?= GroupCardWidget::widget(['group' => $childGroup,/* 'view' => 'group_small' todo */]) ?>
+					<?php foreach ($childGroups as $childGroup): ?>
+						<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['showChildGroups' => true]]) ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -125,35 +142,6 @@ use yii\web\View;
 
 
 	<div class="panel-footer">
-		<?= BadgeWidget::widget([
-			'models' => static function() use ($group) {
-				$result = [];
-				foreach ($group->leaders as $leader) {
-					$result[] = BadgeWidget::widget([
-						'models' => RefUserRoles::getUserRolesInGroup($leader->id, $group->id),
-						'attribute' => 'name',
-						'useBadges' => true,
-						'itemsSeparator' => false,
-						"optionsMap" => static function() {
-							return RefUserRoles::colorStyleOptions();
-						},
-						'prefix' => BadgeWidget::widget([
-								'models' => $leader,
-								'useBadges' => false,
-								'attribute' => 'username',
-								'unbadgedCount' => 3,
-								'itemsSeparator' => false,
-								'linkScheme' => [UsersModule::to(['users/profile']), 'id' => $leader->id]
-							]).': ',
-						'linkScheme' => [UsersModule::to(), 'UsersSearch[roles]' => 'id']
-					]);
-				}
-				return $result;
-			},
-			'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
-			'badgeOptions' => [
-				'class' => "pull-right"
-			]
-		]) ?>
+		<?= GroupLeadersWidget::widget(['group' => $group]) ?>
 	</div>
 </div>
