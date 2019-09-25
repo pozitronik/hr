@@ -1,12 +1,20 @@
 .panel.panel-card {
 	padding: 0;
 	float: left;
-	width:20%;/*by default*/
+	width: 20%; /*by default*/
 	min-width: 200px;
 }
 
 .panel.panel-card[data-subitems="1"] {
 	width: 100%;
+}
+
+.panel.panel-card > .panel-heading {
+	padding: 0 10px;
+}
+
+.panel.panel-card > .panel-heading > .panel-title, .panel.panel-card > .panel-heading > .panel-control {
+	padding: 0px;
 }
 
 .panel > .panel-heading > .row * .panel-control {
@@ -16,6 +24,7 @@
 .panel.panel-card-small {
 	float: left;
 	margin-bottom: 5px;
+	padding: 0 5px;
 }
 
 .panel.panel-card-small > .panel-heading {
@@ -23,7 +32,7 @@
 }
 
 .panel.panel-card-small > .panel-heading > .panel-control button {
-	padding:0;
+	padding: 0;
 }
 
 .panel.panel-card-small > .panel-heading > .panel-control {
@@ -41,7 +50,7 @@
 }
 
 .panel.panel-card > .panel-body {
-	padding: 15px 20px 5px;
+	padding: 5px 10px 5px;
 }
 
 .panel.panel-card > .panel-footer, .panel.panel-card-small > .panel-footer {
