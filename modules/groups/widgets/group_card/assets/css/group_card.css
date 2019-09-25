@@ -1,7 +1,12 @@
 .panel.panel-card {
 	padding: 0;
 	float: left;
+	width:20%;/*by default*/
 	min-width: 200px;
+}
+
+.panel.panel-card[data-subitems="1"] {
+	width: 100%;
 }
 
 .panel > .panel-heading > .row * .panel-control {

@@ -22,11 +22,13 @@ use yii\web\View;
 //$this->registerJs("normalize_widths()", View::POS_END);
 $this->registerJs("var Msnry = new Masonry('.grid',{columnWidth: '.grid-sizer', itemSelector: '.panel-card', percentPosition: true, fitWidth: true}); ", View::POS_END);
 $this->registerJs("Msnry.layout();", View::POS_LOAD);
+
+$showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0);
 ?>
 
-<div class="panel panel-card" id="panel-card-<?= $group->id ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
+<div class="panel panel-card" data-subitems="<?= $showSubitems ?>" id="panel-card-<?= $group->id ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
 	<div class="panel-heading">
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
+		<?php if ($showSubitems): ?>
 			<div class="panel-control">
 				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => true]) ?>
 			</div>
@@ -123,7 +125,7 @@ $this->registerJs("Msnry.layout();", View::POS_LOAD);
 			</div>
 		</div>
 
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
+		<?php if ($showSubitems): ?>
 			<div class="collapse in" id="childGroups-<?= $group->id ?>" aria-expanded="true">
 				<div class="list-divider"></div>
 				<div class="row child-groups">
