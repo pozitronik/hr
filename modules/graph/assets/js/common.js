@@ -11,20 +11,23 @@ const _ = {
 	},
 
 	removeClass: function(selectors, cssClass) {
+		var el;
+		var i;
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
-		for (let i = 0; i < l; i++) {
-			const el = nodes[i];
+		for (i = 0; i < l; i++) {
+			el = nodes[i];
 			// Bootstrap compatibility
 			el.className = el.className.replace(cssClass, '');
 		}
 	},
 
 	addClass: function(selectors, cssClass) {
+		var el;
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
 		for (i = 0; i < l; i++) {
-			const el = nodes[i];
+			el = nodes[i];
 			// Bootstrap compatibility
 			if (-1 === el.className.indexOf(cssClass)) {
 				el.className += ' ' + cssClass;
@@ -41,10 +44,11 @@ const _ = {
 	},
 
 	toggle: function(selectors, cssClass = 'hidden') {
+		var el;
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
 		for (i = 0; i < l; i++) {
-			const el = nodes[i];
+			el = nodes[i];
 			//el.style.display = (el.style.display != 'none' ? 'none' : '' );
 			// Bootstrap compatibility
 			if (-1 === el.className.indexOf(cssClass)) {
@@ -91,11 +95,10 @@ function isChecked(element) {
 }
 
 ajax = function() {
+	var names, i;
 	if (window.XMLHttpRequest)
 		return new XMLHttpRequest();
 
-	let names,
-		i;
 
 	if (window.ActiveXObject) {
 		names = [
@@ -117,13 +120,15 @@ ajax = function() {
 
 getJSON = function(url, parameters) {
 	return new Promise(function(resolve, reject) {
+		var error;
+		var key;
 		const request = ajax();
 		if (!request) {
-			const error = new Error('XMLHttpRequest not supported');
+			error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
 		url += '?';
-		for (let key in parameters) {
+		for (key in parameters) {
 			url += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
 		}
 
@@ -148,13 +153,16 @@ postJSON = function(url, json) {
 
 postUrlEncoded = function(url, parameters) {
 	return new Promise(function(resolve, reject) {
+		var error;
+		var postString;
+		var key;
 		const request = ajax();
 		if (!request) {
-			const error = new Error('XMLHttpRequest not supported');
+			error = new Error('XMLHttpRequest not supported');
 			reject(error);
 		}
-		let postString = '';
-		for (let key in parameters) {
+		postString = '';
+		for (key in parameters) {
 			postString += encodeURIComponent(key) + '=' + encodeURIComponent(parameters[key]) + '&';
 		}
 		request.open('POST', url, true);

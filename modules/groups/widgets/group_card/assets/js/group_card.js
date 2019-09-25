@@ -8,14 +8,13 @@
 			function delayed() {
 				if (!execAsap) func.apply(obj, args);
 				timeout = null;
-			};
-
+			}
 			if (timeout) clearTimeout(timeout);
 			else if (execAsap) func.apply(obj, args);
 
 			timeout = setTimeout(delayed, threshold || 300);
 		};
-	}
+	};
 	// smartresize
 	jQuery.fn[sr] = function(fn) {
 		return fn?this.bind('resize', debounce(fn)):this.trigger(sr);
@@ -36,7 +35,7 @@ function changeIcon(element) {
 		i.removeClass('fa-window-minimize').addClass('fa-window-maximize');
 		parentPanelSmall.removeClass('expanded');
 	} else {
-		i.removeClass('fa-window-maximize').addClass('fa-window-minimize')
+		i.removeClass('fa-window-maximize').addClass('fa-window-minimize');
 		parentPanelSmall.addClass('expanded');
 	}
 }

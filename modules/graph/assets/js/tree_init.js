@@ -18,6 +18,10 @@ class GraphControl {
 	 * @param container
 	 * @param groupId
 	 * @param userId
+	 * @param downDepth
+	 * @param upDepth
+	 * @param downDepth
+	 * @param upDepth
 	 */
 	constructor(container, groupId, userId, downDepth, upDepth) {
 		let self = this;
