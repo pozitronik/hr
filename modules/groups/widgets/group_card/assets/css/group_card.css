@@ -25,6 +25,11 @@
 	float: left;
 	margin-bottom: 5px;
 	padding: 0 5px;
+	/*width: 33%;*/
+}
+
+.panel.panel-card-small.expanded {
+	width:100%;
 }
 
 .panel.panel-card-small > .panel-heading {

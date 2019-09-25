@@ -31,9 +31,12 @@
 
 function changeIcon(element) {
 	let i = element.find('i');
+	let parentPanelSmall = element.parents('.panel-card-small');
 	if ('true' === element.attr('aria-expanded')) {
-		i.removeClass('fa-window-minimize').addClass('fa-window-maximize')
+		i.removeClass('fa-window-minimize').addClass('fa-window-maximize');
+		parentPanelSmall.removeClass('expanded');
 	} else {
 		i.removeClass('fa-window-maximize').addClass('fa-window-minimize')
+		parentPanelSmall.addClass('expanded');
 	}
 }
