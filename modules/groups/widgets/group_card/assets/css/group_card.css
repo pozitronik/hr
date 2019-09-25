@@ -104,6 +104,10 @@
 	width: 20%;
 }
 
+.grid-sizer-small {
+	width: 33%;
+}
+
 .grid-item--width1 {
 	width: 20%;
 }
