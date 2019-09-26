@@ -575,7 +575,7 @@ class Users extends ActiveRecordExtended {
 	 * @return RefUserPositionTypes[]
 	 */
 	public function getRelRefUserPositionsTypesAny():array {
-		return Yii::$app->cache->getOrSet("getRelRefUserPositionsTypesAny{$this->id}", function(){
+		return Yii::$app->cache->getOrSet("getRelRefUserPositionsTypesAny{$this->id}", function() {
 			if ([] === $result = $this->getRelRefUserPositionsTypesOwn()->all()) $result = $this->getRefUserPositionTypes()->all();
 			return $result;
 		});
@@ -623,6 +623,15 @@ class Users extends ActiveRecordExtended {
 	 */
 	public function getRelUsersIdentifiers() {
 		return $this->hasOne(UsersIdentifiers::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * Вернуть всех пользователей в скопе. Лучше использовать UsersSearch, но потом (todo)
+	 * @param array $scope
+	 * @return LCQuery
+	 */
+	public static function getUsersFromGroupScope(array $scope):LCQuery {
+		return self::find()->distinct()->joinWith('relUsersGroups')->where(['group_id' => $scope])->active();
 	}
 
 }
