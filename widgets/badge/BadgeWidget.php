@@ -82,14 +82,17 @@ class BadgeWidget extends CachedWidget {
 
 		/** @var Model|ActiveRecord $model */
 
-		foreach ($this->models as $model) {
+		foreach ($this->models as $index => $model) {
 			if (null === $model) continue;
 
 			if (!is_object($model)) {
 				if (is_array($model)) {
 					$model = new DynamicModel($model);
 				} else {
-					$model = new DynamicModel(['value' => $model]);
+					$model = new DynamicModel([
+						'id' => $index,
+						'value' => $model
+					]);
 					$this->attribute = 'value';
 				}
 			}
