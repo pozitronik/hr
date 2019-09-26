@@ -4,11 +4,12 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
- * @var array $options 'column_view':bool -- применить форматирование под "колоночный режим":'compactVacancy':bool -- не показывать разрез по вакансиям в бейджи (будет свёрнут в тултип)
+ * @var array $options 'column_view':bool -- применить форматирование под "колоночный режим";'compactVacancy':bool -- не показывать разрез по вакансиям в бейджи (будет свёрнут в тултип);'showChildStats':bool -- показывать тултип со статистикой подгрупп
  */
 
 use app\modules\groups\models\Groups;
 use app\modules\home\HomeModule;
+use app\modules\users\models\Users;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
@@ -17,6 +18,12 @@ use yii\web\View;
 ?>
 <?= BadgeWidget::widget([
 	'models' => "Всего: ".$group->getRelUsers()->active()->countFromCache(),
+	'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(function($model) use ($group) {
+		return BadgeWidget::widget([
+			'models' => 'С подгруппами: '.Users::getUsersFromGroupScope($group->collectRecursiveIds())->countFromCache(),
+			'useBadges' => false,
+		]);
+	}):null,
 	"badgeOptions" => [
 		'class' => "badge badge-info pull-left"
 	],
@@ -26,6 +33,13 @@ use yii\web\View;
 <?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 	<?= BadgeWidget::widget([
 		'models' => (0 === $positionType->count)?null:"{$positionType->name}: {$positionType->count}",
+		'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(function($model) use ($group, $key) {
+			return BadgeWidget::widget([
+				'models' => 'С подгруппами: '.ArrayHelper::getValue(Groups::getGroupScopePositionTypeData($group->collectRecursiveIds()), "{$key}.count"),
+				'useBadges' => false,
+			]);
+		}):null,
+
 		"badgeOptions" => [
 			'style' => $positionType->style,
 			'class' => 'badge pull-left'
