@@ -42,6 +42,9 @@ use yii\web\View;
 						'class' => 'badge group-type-name'
 					],
 					'iconify' => true,
+					'tooltip' => static function (RefGroupTypes $model) {
+						return $model->name;
+					},
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
 				]),
 				"badgeOptions" => [
@@ -62,16 +65,16 @@ use yii\web\View;
 			</div>
 		</div>
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
-			<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
-				<div class="list-divider"></div>
-				<div class="row child-groups">
-					<div class="col-md-12">
-						<?php foreach ($group->relChildGroups as $childGroup): ?>
+		<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
+			<div class="list-divider"></div>
+			<div class="row child-groups">
+				<div class="col-md-12">
+					<?php foreach ($group->relChildGroups as $childGroup): ?>
 							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md' => 12]]) ?>
 						<?php endforeach; ?>
-					</div>
 				</div>
 			</div>
+		</div>
 
 
 		<?php endif; ?>
