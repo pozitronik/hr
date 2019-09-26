@@ -31,7 +31,7 @@ use yii\helpers\Html;
  * @property string $prefix
  * @property string|null|false $emptyResult
  * @property bool $iconify
- * @property null|string $tooltip
+ * @property null|string|callable $tooltip
  * @property string $tooltipPlacement
  */
 class BadgeWidget extends CachedWidget {
@@ -55,7 +55,7 @@ class BadgeWidget extends CachedWidget {
 	public $prefix = '';//строчка, добавляемая перед бейджами
 	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
 	public $iconify = false;//Свернуть содержимое бейджа в иконку
-	public $tooltip;//если не null, то на бейдж навешивается тултип
+	public $tooltip;//если не null, то на бейдж навешивается тултип. Можно задавать замыканием user_func($model):string
 	public $tooltipPlacement = self::TP_TOP;
 
 	/**
@@ -107,7 +107,7 @@ class BadgeWidget extends CachedWidget {
 			/*add bootstrap tooltips, if necessary*/
 			if (null !== $this->tooltip) {
 				/** @noinspection SlowArrayOperationsInLoopInspection */
-
+				if (ReflectionHelper::is_closure($this->tooltip)) $this->tooltip = call_user_func($this->tooltip, $model);
 				$badgeHtmlOptions = ArrayHelper::mergeImplode(' ', $badgeHtmlOptions, [
 					'class' => 'add-tooltip badge',
 					'data-toggle' => 'tooltip',
