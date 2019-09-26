@@ -32,7 +32,7 @@ use yii\web\View;
 ]) ?>
 <?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 	<?= BadgeWidget::widget([
-		'models' => (0 === $positionType->count)?null:"{$positionType->name}: {$positionType->count}",
+		'models' => /*(0 === $positionType->count && (!ArrayHelper::getValue($options, 'showChildStats', false)))?null:*/ "{$positionType->name}: {$positionType->count}",
 		'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(function($model) use ($group, $key) {
 			return BadgeWidget::widget([
 				'models' => 'С подгруппами: '.ArrayHelper::getValue(Groups::getGroupScopePositionTypeData($group->collectRecursiveIds()), "{$key}.count"),
