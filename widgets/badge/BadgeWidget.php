@@ -28,7 +28,7 @@ use yii\helpers\Html;
  * @property null|string $optionsMapAttribute
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
- * @property string $prefix
+ * @property string|callable $prefix
  * @property string|null|false $emptyResult
  * @property bool $iconify
  * @property null|string|callable $tooltip
@@ -52,7 +52,7 @@ class BadgeWidget extends CachedWidget {
 	public $optionsMapAttribute; //Имя аттрибута, используемого для подбора значения в $optionsMap, если null, то используется primaryKey (или id, если модель не имеет первичного ключа)
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
-	public $prefix = '';//строчка, добавляемая перед бейджами
+	public $prefix = '';//строчка, добавляемая перед бейджами, может задаваться замыканием
 	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
 	public $iconify = false;//Свернуть содержимое бейджа в иконку
 	public $tooltip;//если не null, то на бейдж навешивается тултип. Можно задавать замыканием user_func($model):string
@@ -145,6 +145,9 @@ class BadgeWidget extends CachedWidget {
 			array_splice($result, $this->unbadgedCount, count($result));
 		}
 		if ([] === $result && false !== $this->emptyResult) $result = [$this->emptyResult];
+
+		if (ReflectionHelper::is_closure($this->prefix)) $this->prefix = call_user_func($this->prefix, $model);
+
 		return $this->prefix.implode($this->itemsSeparator, $result).$moreBadge;
 
 	}
