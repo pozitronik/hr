@@ -120,7 +120,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 
 					<?= BadgeWidget::widget([
 						'models' => $positionType->count,
-						'tooltip' => 'В этой группе',
+						'tooltip' => $showSubitems?'В этой группе':null,
 						"badgeOptions" => [
 							'style' => $positionType->style,
 							'class' => "badge pull-right"
