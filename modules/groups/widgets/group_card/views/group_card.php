@@ -73,6 +73,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 				<?php if ($showSubitems): ?>
 					<?= BadgeWidget::widget([
 						'models' => Users::getUsersFromGroupScope($group->collectRecursiveIds())->countFromCache(),
+						'tooltip' => 'Для всех групп',
 						"badgeOptions" => [
 							'class' => "badge badge-info pull-right"
 						],
@@ -81,6 +82,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 				<? endif; ?>
 				<?= BadgeWidget::widget([
 					'models' => $group->getRelUsers()->countFromCache(),
+					'tooltip' => 'В этой группе',
 					"badgeOptions" => [
 						'class' => "badge badge-info pull-right"
 					],
@@ -106,6 +108,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 					<?php if (null !== $subitemsPositionData): ?>
 						<?= BadgeWidget::widget([
 							'models' => ArrayHelper::getValue($subitemsPositionData, "{$key}.count"),
+							'tooltip' => 'Для всех групп',
 							"badgeOptions" => [
 								'style' => $positionType->style,
 								'class' => "badge pull-right"
@@ -117,6 +120,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 
 					<?= BadgeWidget::widget([
 						'models' => $positionType->count,
+						'tooltip' => 'В этой группе',
 						"badgeOptions" => [
 							'style' => $positionType->style,
 							'class' => "badge pull-right"
