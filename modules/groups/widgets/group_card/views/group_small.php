@@ -24,7 +24,7 @@ use yii\web\View;
 	<div class="panel-heading">
 		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
 			<div class="panel-control">
-				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => false]) ?>
+				<?= $this->render('control_block', ['targetId' => "childGroups-{$group->id}", 'expanded' => false]) ?>
 			</div>
 		<?php endif; ?>
 		<div class="panel-title">
