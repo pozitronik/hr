@@ -82,7 +82,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 				<?php endif; ?>
 				<?= BadgeWidget::widget([
 					'models' => $group->getRelUsers()->countFromCache(),
-					'tooltip' => 'В этой группе',
+					'tooltip' => $showSubitems?'В этой группе':null,
 					"badgeOptions" => [
 						'class' => "badge badge-info pull-right"
 					],
