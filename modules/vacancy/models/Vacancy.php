@@ -25,6 +25,7 @@ use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "sys_vacancy".
@@ -289,5 +290,16 @@ class Vacancy extends ActiveRecordExtended {
 	 */
 	public function setOpened(bool $opened):void {
 		$this->setAndSaveAttribute('close_date', $opened?null:DateHelper::lcDate());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function beforeSave($insert):bool {
+		if (parent::beforeSave($insert)) {
+			if (null !== $group = Groups::findModel($this->group)) $group->dropCaches();
+			return true;
+		}
+		return false;
 	}
 }
