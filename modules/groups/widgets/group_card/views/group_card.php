@@ -116,7 +116,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 							'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id])]
 
 						]) ?>
-					<? endif; ?>
+					<?php endif; ?>
 
 					<?= BadgeWidget::widget([
 						'models' => $positionType->count,
