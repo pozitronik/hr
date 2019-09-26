@@ -6,6 +6,7 @@ namespace app\modules\groups\models\references;
 use app\modules\groups\models\Groups;
 use app\modules\references\models\CustomisableReference;
 use Throwable;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "ref_group_types".
@@ -14,6 +15,7 @@ use Throwable;
  * @property string $name Название
  * @property int $deleted
  * @property-read integer $usedCount Количество объектов, использующих это значение справочника
+ * @property Groups $relGroups
  */
 class RefGroupTypes extends CustomisableReference {
 	public $menuCaption = 'Типы групп';
@@ -55,5 +57,12 @@ class RefGroupTypes extends CustomisableReference {
 	 */
 	public static function getGroupsTypesScope(array $scope = []):array {
 		return self::find()->select(['id', 'name'])->distinct()->where(['id' => $scope])->asArray()->all();
+	}
+
+	/**
+	 * @return Groups|ActiveQuery
+	 */
+	public function getRelGroups() {
+		return $this->hasMany(Groups::class, ['type' => 'id']);
 	}
 }
