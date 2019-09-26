@@ -13,6 +13,7 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\home\HomeModule;
+use app\modules\users\models\Users;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
@@ -69,6 +70,15 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 					],
 					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
 				]) ?>
+				<?php if ($showSubitems): ?>
+					<?= BadgeWidget::widget([
+						'models' => Users::getUsersFromGroupScope($group->collectRecursiveIds())->countFromCache(),
+						"badgeOptions" => [
+							'class' => "badge badge-info pull-right"
+						],
+						'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
+					]) ?>
+				<? endif; ?>
 				<?= BadgeWidget::widget([
 					'models' => $group->getRelUsers()->countFromCache(),
 					"badgeOptions" => [
@@ -76,6 +86,8 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 					],
 					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
 				]) ?>
+
+
 			</div>
 		</div>
 		<div class="list-divider"></div>
@@ -91,8 +103,20 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 						'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id])]
 
 					]) ?>
+					<?php if (null !== $subitemsPositionData): ?>
+						<?= BadgeWidget::widget([
+							'models' => ArrayHelper::getValue($subitemsPositionData, "{$key}.count"),
+							"badgeOptions" => [
+								'style' => $positionType->style,
+								'class' => "badge pull-right"
+							],
+							'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[positionType]' => $positionType->id, 'UsersSearch[groupId]' => $group->id])]
+
+						]) ?>
+					<? endif; ?>
+
 					<?= BadgeWidget::widget([
-						'models' => $positionType->count.(null === $subitemsPositionData?'':'/'.ArrayHelper::getValue($subitemsPositionData, "{$key}.count")),
+						'models' => $positionType->count,
 						"badgeOptions" => [
 							'style' => $positionType->style,
 							'class' => "badge pull-right"
