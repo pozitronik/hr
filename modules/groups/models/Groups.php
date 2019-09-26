@@ -423,9 +423,10 @@ class Groups extends ActiveRecordExtended {
 	/**
 	 * Удаляет все кеши, связанные с группой
 	 */
-	private function dropCaches():void {
-		Yii::$app->cache->delete(static::class."CollectRecursiveIds".$this->id);
+	public function dropCaches():void {
+		Yii::$app->cache->delete(static::class."CollectRecursiveIds{.$this->id}");
 		Yii::$app->cache->delete(static::class."DataOptions");
+		Yii::$app->cache->delete(static::class."getGroupVacancyTypeData{$this->id}");
 //		Yii::$app->cache->delete(static::class."HierarchyTree".$this->id);
 	}
 
