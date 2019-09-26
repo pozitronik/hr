@@ -36,7 +36,7 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|Users[] $relUsers Пользователи в группе
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Связь с релейшеном пользователей
  * @property ActiveQuery|Groups[] $relChildGroups Группы, дочерние по отношению к текущей
- * @property-write array $dropChildGroups Свойство для передачи массива отлинкуемых дочерних групп
+ * @property-write array $dropChildGroups Свойство для передачи массива отлинкуемых дочерних групп//todo: подозрительно, проверить & документировать
  * @property ActiveQuery|RelGroupsGroups[] $relGroupsGroupsParent Релейшен групп для получения дочерних групп
  * @property array $dropParentGroups Свойство для передачи массива отлинкуемых родительских групп
  * @property ActiveQuery|RelGroupsGroups[] $relGroupsGroupsChild Релейшен групп для получения родительских групп
@@ -550,6 +550,21 @@ class Groups extends ActiveRecordExtended {
 	 */
 	public static function getGroupScopeVacancyCount(array $scope):int {
 		return Vacancy::find()->joinWith(['relGroups'])->where(['sys_groups.id' => $scope])->countFromCache();
+	}
+
+	/**
+	 * Аггрегатор статистики по количеству типов групп в скоупе
+	 * @param array $scope
+	 * @return array
+	 */
+	public static function getGroupScopeTypesData(array $scope):array {
+		return RefGroupTypes::find()
+			->leftJoin('sys_groups', 'sys_groups.type = ref_group_types.id')
+			->where(['sys_groups.id' => $scope])->active()
+			->select(['COUNT(ref_group_types.name) as count', 'ref_group_types.name as name'])
+			->groupBy('name')
+			->asArray()
+			->all();
 	}
 
 }
