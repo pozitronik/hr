@@ -70,6 +70,14 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 			<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
 				<div class="list-divider"></div>
 				<div class="row child-groups">
+					<div class="child-groups-summary">
+						<?= BadgeWidget::widget([
+							'models' => ArrayHelper::cmap(Groups::getGroupScopeTypesData(array_diff($group->collectRecursiveIds(), [$group->id])), 'id', ['name', 'count'], ': '),//Как я круто придумал
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'id',
+							'itemsSeparator' => false
+						]) ?>
+					</div>
 					<div class="col-md-12">
 						<?php foreach ($group->relChildGroups as $childGroup): ?>
 							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md' => 12]]) ?>
