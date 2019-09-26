@@ -13,7 +13,6 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\home\HomeModule;
-use app\modules\users\models\Users;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
@@ -72,7 +71,8 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 				]) ?>
 				<?php if ($showSubitems): ?>
 					<?= BadgeWidget::widget([
-						'models' => Users::getUsersFromGroupScope($group->collectRecursiveIds())->countFromCache(),
+						'models' => Groups::getGroupScopeUsersCount($group->collectRecursiveIds()),
+						'attribute' => 'dcount',
 						'tooltip' => 'Для всех групп',
 						"badgeOptions" => [
 							'class' => "badge badge-info pull-right"

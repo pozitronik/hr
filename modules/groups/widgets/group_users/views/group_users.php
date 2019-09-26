@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 use app\modules\groups\models\Groups;
 use app\modules\home\HomeModule;
-use app\modules\users\models\Users;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\badge\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
@@ -20,7 +19,9 @@ use yii\web\View;
 	'models' => "Всего: ".$group->getRelUsers()->active()->countFromCache(),
 	'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(static function($model) use ($group) {
 		return BadgeWidget::widget([
-			'models' => 'С подгруппами: '.Users::getUsersFromGroupScope($group->collectRecursiveIds())->countFromCache(),
+			'models' => Groups::getGroupScopeUsersCount($group->collectRecursiveIds()),
+			'attribute' => 'dcount',
+			'prefix' => 'С подгруппами:',
 			'useBadges' => false
 		]);
 	}):null,

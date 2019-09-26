@@ -625,13 +625,4 @@ class Users extends ActiveRecordExtended {
 		return $this->hasOne(UsersIdentifiers::class, ['user_id' => 'id']);
 	}
 
-	/**
-	 * Вернуть всех пользователей в скопе. Лучше использовать UsersSearch, но потом (todo)
-	 * @param array $scope
-	 * @return LCQuery
-	 */
-	public static function getUsersFromGroupScope(array $scope):LCQuery {
-		return self::find()->distinct()->joinWith('relUsersGroups')->where(['group_id' => $scope])->active();
-	}
-
 }
