@@ -160,14 +160,14 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 			<div class="collapse in" id="childGroups-<?= $group->id ?>" aria-expanded="true">
 				<div class="list-divider"></div>
 				<div class="row child-groups">
-				<div class="child-groups-summary">
-					<?= BadgeWidget::widget([
-						'models' => ArrayHelper::cmap(Groups::getGroupScopeTypesData($group->collectRecursiveIds()), 'id', ['name', 'count'], ': '),//Как я круто придумал
-						"optionsMap" => RefGroupTypes::colorStyleOptions(),
-						"optionsMapAttribute" => 'id',
-						'itemsSeparator' => false
-					]) ?>
-				</div>
+					<div class="child-groups-summary">
+						<?= BadgeWidget::widget([
+							'models' => ArrayHelper::cmap(Groups::getGroupScopeTypesData(array_diff($group->collectRecursiveIds(), [$group->id])), 'id', ['name', 'count'], ': '),//Как я круто придумал
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'id',
+							'itemsSeparator' => false
+						]) ?>
+					</div>
 					<div class="col-md-12">
 						<?php foreach ($childGroups as $childGroup): ?>
 							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['showChildGroups' => true]]) ?>
