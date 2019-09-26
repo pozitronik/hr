@@ -28,6 +28,13 @@
 	/*width: 33%;*/
 }
 
+.child-groups-summary {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 5px;
+}
+
 .panel.panel-card-small.expanded {
 	width:100%;
 }
