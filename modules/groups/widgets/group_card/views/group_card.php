@@ -79,7 +79,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 						],
 						'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
 					]) ?>
-				<? endif; ?>
+				<?php endif; ?>
 				<?= BadgeWidget::widget([
 					'models' => $group->getRelUsers()->countFromCache(),
 					'tooltip' => 'В этой группе',
