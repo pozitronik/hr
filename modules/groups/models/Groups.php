@@ -561,8 +561,8 @@ class Groups extends ActiveRecordExtended {
 		return RefGroupTypes::find()
 			->leftJoin('sys_groups', 'sys_groups.type = ref_group_types.id')
 			->where(['sys_groups.id' => $scope])->active()
-			->select(['COUNT(ref_group_types.name) as count', 'ref_group_types.name as name'])
-			->groupBy('name')
+			->select(['COUNT(ref_group_types.name) as count', 'ref_group_types.name as name', 'ref_group_types.id as id'])
+			->groupBy('name, id')
 			->asArray()
 			->all();
 	}
