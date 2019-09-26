@@ -18,6 +18,8 @@ use yii\web\View;
 
 //$this->registerJs("var MsnrySmall = new Masonry('.panel-card-small',{columnWidth: '.grid-sizer-small', itemSelector: '.panel-card-small', percentPosition: true, fitWidth: true}); ", View::POS_END);
 //$this->registerJs("MsnrySmall.layout();", View::POS_LOAD);
+
+$showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0);
 ?>
 <div class="grid-sizer-small" style="width: 33%"></div>
 <div class="panel panel-card-small col-md-<?= ArrayHelper::getValue($options, 'col-md', 4) ?>" data-filter='<?= BadgeWidget::widget(['models' => $group->relGroupTypes, 'useBadges' => false, 'attribute' => 'id']) ?>'>
@@ -42,7 +44,7 @@ use yii\web\View;
 						'class' => 'badge group-type-name'
 					],
 					'iconify' => true,
-					'tooltip' => static function (RefGroupTypes $model) {
+					'tooltip' => static function(RefGroupTypes $model) {
 						return $model->name;
 					},
 					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
@@ -61,20 +63,20 @@ use yii\web\View;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				<?= GroupUsersWidget::widget(['group' => $group, 'options' => ['column_view' => true]]) ?>
+				<?= GroupUsersWidget::widget(['group' => $group, 'options' => ['column_view' => true, 'showChildStats' => $showSubitems]]) ?>
 			</div>
 		</div>
-		<?php if (ArrayHelper::getValue($options, 'showChildGroups', true) && $group->getChildGroupsCount() > 0): ?>
-		<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
-			<div class="list-divider"></div>
-			<div class="row child-groups">
-				<div class="col-md-12">
-					<?php foreach ($group->relChildGroups as $childGroup): ?>
+		<?php if ($showSubitems): ?>
+			<div id="childGroups-<?= $group->id ?>" class="collapse" aria-expanded="false" style="height: 0px;">
+				<div class="list-divider"></div>
+				<div class="row child-groups">
+					<div class="col-md-12">
+						<?php foreach ($group->relChildGroups as $childGroup): ?>
 							<?= $this->render('group_small', ['group' => $childGroup, 'options' => ['col-md' => 12]]) ?>
 						<?php endforeach; ?>
+					</div>
 				</div>
 			</div>
-		</div>
 
 
 		<?php endif; ?>
