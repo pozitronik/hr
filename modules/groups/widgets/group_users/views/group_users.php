@@ -18,10 +18,10 @@ use yii\web\View;
 ?>
 <?= BadgeWidget::widget([
 	'models' => "Всего: ".$group->getRelUsers()->active()->countFromCache(),
-	'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(function($model) use ($group) {
+	'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(static function($model) use ($group) {
 		return BadgeWidget::widget([
 			'models' => 'С подгруппами: '.Users::getUsersFromGroupScope($group->collectRecursiveIds())->countFromCache(),
-			'useBadges' => false,
+			'useBadges' => false
 		]);
 	}):null,
 	"badgeOptions" => [
@@ -33,10 +33,10 @@ use yii\web\View;
 <?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 	<?= BadgeWidget::widget([
 		'models' => /*(0 === $positionType->count && (!ArrayHelper::getValue($options, 'showChildStats', false)))?null:*/ "{$positionType->name}: {$positionType->count}",
-		'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(function($model) use ($group, $key) {
+		'tooltip' => (ArrayHelper::getValue($options, 'showChildStats', false))?(static function($model) use ($group, $key) {
 			return BadgeWidget::widget([
 				'models' => 'С подгруппами: '.ArrayHelper::getValue(Groups::getGroupScopePositionTypeData($group->collectRecursiveIds()), "{$key}.count"),
-				'useBadges' => false,
+				'useBadges' => false
 			]);
 		}):null,
 
@@ -54,7 +54,7 @@ use yii\web\View;
 	"badgeOptions" => [
 		'class' => (ArrayHelper::getValue($options, 'column_view', false)?"badge pull-right ":"badge pull-left mar-lft ").(count($group->relVacancy) > 0?"badge-danger":"badge-unimportant")
 	],
-	'tooltip' => ((ArrayHelper::getValue($options, 'compactVacancy', true) & (count($group->relVacancy) > 0)))?(function($model) use ($group) {
+	'tooltip' => ((ArrayHelper::getValue($options, 'compactVacancy', true) & (count($group->relVacancy) > 0)))?(static function($model) use ($group) {
 		$hintData = [];
 		foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus) {
 			$hintData[] = BadgeWidget::widget([
