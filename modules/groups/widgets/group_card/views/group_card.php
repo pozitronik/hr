@@ -8,7 +8,6 @@ declare(strict_types = 1);
  * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы
  */
 
-use app\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
