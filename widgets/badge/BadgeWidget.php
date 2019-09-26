@@ -31,8 +31,15 @@ use yii\helpers\Html;
  * @property string $prefix
  * @property string|null|false $emptyResult
  * @property bool $iconify
+ * @property null|string $tooltip
+ * @property string $tooltipPlacement
  */
 class BadgeWidget extends CachedWidget {
+	public const TP_TOP = 'top';
+	public const TP_RIGHT = 'right';
+	public const TP_BOTTOM = 'bottom';
+	public const TP_LEFT = 'left';
+
 	public $models;//Обрабатываемое значение/массив значений. Допускаются любые комбинации
 	public $attribute;//Атрибут модели, отображаемый в текст
 	public $unbadgedCount = false;//Количество объектов, не сворачиваемых в бейдж
@@ -48,6 +55,8 @@ class BadgeWidget extends CachedWidget {
 	public $prefix = '';//строчка, добавляемая перед бейджами
 	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
 	public $iconify = false;//Свернуть содержимое бейджа в иконку
+	public $tooltip;//если не null, то на бейдж навешивается тултип
+	public $tooltipPlacement = self::TP_TOP;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -95,6 +104,18 @@ class BadgeWidget extends CachedWidget {
 			}
 
 			$badgeHtmlOptions = !is_array($badgeHtmlOptions)?$this->badgeOptions:array_merge($this->badgeOptions, $badgeHtmlOptions);
+			/*add bootstrap tooltips, if necessary*/
+			if (null !== $this->tooltip) {
+				/** @noinspection SlowArrayOperationsInLoopInspection */
+
+				$badgeHtmlOptions = ArrayHelper::mergeImplode(' ', $badgeHtmlOptions, [
+					'class' => 'add-tooltip badge',
+					'data-toggle' => 'tooltip',
+					'data-original-title' => $this->tooltip,
+					'data-placement' => $this->tooltipPlacement
+				]);
+			}
+
 			$badgeContent = $this->iconify?Utils::ShortifyString(ArrayHelper::getValue($model, $this->attribute)):ArrayHelper::getValue($model, $this->attribute);
 
 			if ($this->linkScheme) {
