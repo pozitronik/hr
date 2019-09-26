@@ -30,7 +30,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 	<div class="panel-heading">
 		<?php if ($showSubitems): ?>
 			<div class="panel-control">
-				<?= $this->render('control_block', ['target' => "childGroups-{$group->id}", 'expanded' => true]) ?>
+				<?= $this->render('control_block', ['targetId' => "childGroups-{$group->id}", 'expanded' => true]) ?>
 			</div>
 		<?php endif; ?>
 		<h3 class="panel-title"><?= BadgeWidget::widget([
@@ -79,6 +79,8 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 			</div>
 		</div>
 		<div class="list-divider"></div>
+		<?php $subitemsPositionData = ($showSubitems)?Groups::getGroupScopePositionTypeData($group->collectRecursiveIds()):null; ?>
+
 		<?php foreach ($group->getGroupPositionTypeData() as $key => $positionType): ?>
 			<div class="row">
 				<div class="col-md-12"><?= BadgeWidget::widget([
@@ -90,7 +92,7 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 
 					]) ?>
 					<?= BadgeWidget::widget([
-						'models' => $positionType->count,
+						'models' => $positionType->count.(null === $subitemsPositionData?'':'/'.ArrayHelper::getValue($subitemsPositionData, "{$key}.count")),
 						"badgeOptions" => [
 							'style' => $positionType->style,
 							'class' => "badge pull-right"
