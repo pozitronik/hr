@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
- * @var array $options
+ * @var array $options 'column_view':bool -- применить форматирование под "колоночный режим":'compactVacancy':bool -- не показывать разрез по вакансиям в бейджи (будет свёрнут в тултип)
  */
 
 use app\modules\groups\models\Groups;
@@ -40,15 +40,27 @@ use yii\web\View;
 	"badgeOptions" => [
 		'class' => (ArrayHelper::getValue($options, 'column_view', false)?"badge pull-right ":"badge pull-left mar-lft ").(count($group->relVacancy) > 0?"badge-danger":"badge-unimportant")
 	],
+	'tooltip' => ((ArrayHelper::getValue($options, 'compactVacancy', true) & (count($group->relVacancy) > 0)))?(function($model) use ($group) {
+		$hintData = [];
+		foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus) {
+			$hintData[] = BadgeWidget::widget([
+				'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
+				'useBadges' => false
+			]);
+		}
+		return implode(', ', $hintData);
+	}):null,
 	'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
 ]) ?>
-<?php foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus): ?>
-	<?= BadgeWidget::widget([
-		'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
-		"badgeOptions" => [
-			'style' => $vacancyStatus->style,
-			'class' => "badge pull-left"
-		],
-		'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
-	]) ?>
-<?php endforeach; ?>
+<?php if (!ArrayHelper::getValue($options, 'compactVacancy', true)): ?>
+	<?php foreach ($group->getGroupVacancyStatusData() as $key => $vacancyStatus): ?>
+		<?= BadgeWidget::widget([
+			'models' => (0 === $vacancyStatus->count)?null:"{$vacancyStatus->name}: {$vacancyStatus->count}",
+			"badgeOptions" => [
+				'style' => $vacancyStatus->style,
+				'class' => "badge pull-left"
+			],
+			'linkScheme' => [VacancyModule::to('groups'), 'id' => $group->id]
+		]) ?>
+	<?php endforeach; ?>
+<?php endif; ?>
