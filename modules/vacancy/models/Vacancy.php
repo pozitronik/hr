@@ -25,7 +25,6 @@ use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
-use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "sys_vacancy".
