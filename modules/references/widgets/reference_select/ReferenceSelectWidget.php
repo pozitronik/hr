@@ -22,7 +22,7 @@ use yii\web\JsExpression;
  * @package app\components\reference_select
  *
  * @property ReferenceInterface $referenceClass Модель справочника, к которой интегрируется виджет
- * @property bool $showEditAddon Включает кнпоку перехода к редактированию справочника
+ * @property bool $showEditAddon Включает кнопку перехода к редактированию справочника
  */
 class ReferenceSelectWidget extends Select2 {
 	public $referenceClass;
