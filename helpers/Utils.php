@@ -286,9 +286,13 @@ class Utils {
 	 * @return string
 	 */
 	public static function LastCommit():string {
-		preg_match('#^ref:(.+)$#', file_get_contents(Yii::getAlias('@app/.git/HEAD')), $matches);
+		$headFileName = Yii::getAlias('@app/.git/HEAD');
+		if (!file_exists($headFileName)) return 'unknown';
+		preg_match('#^ref:(.+)$#', file_get_contents($headFileName), $matches);
+
 		$currentHead = trim($matches[1]);
-		if (false !== $hash = file_get_contents(sprintf(Yii::getAlias("@app/.git/{$currentHead}")))) return $hash;
+		$currentHeadFileName = sprintf(Yii::getAlias("@app/.git/{$currentHead}"));
+		if (file_exists($currentHeadFileName) && (false !== $hash = file_get_contents($currentHeadFileName))) return $hash;
 		return 'unknown';
 	}
 
