@@ -66,9 +66,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 				'attribute' => 'name',
 				'unbadgedCount' => 3,
 				'itemsSeparator' => false,
-				"optionsMap" => static function() {
-					return RefAttributesTypes::colorStyleOptions();
-				}
+				"optionsMap" => RefAttributesTypes::colorStyleOptions()
 
 			]) ?>
 		</div>
