@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\user_attribute;
 
+use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use pozitronik\widgets\CachedWidget;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
@@ -14,12 +15,14 @@ use yii\web\ServerErrorHttpException;
  * @property int $attribute_id
  * @property bool $show_category
  * @property bool $read_only
+ * @property null|int[] $property_id -- если указан, то id свойств, которые должны быть показаны (остальные скипаются)
  */
 class UserAttributeWidget extends CachedWidget {
 	public $user_id;
 	public $attribute_id;
 	public $show_category = false;
 	public $read_only = true;
+	public $property_id;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -41,13 +44,18 @@ class UserAttributeWidget extends CachedWidget {
 
 		$userProperties = $attribute->getUserProperties($this->user_id);
 
+		if (null !== $this->property_id) {
+			$userProperties = array_filter($userProperties, function(DynamicAttributeProperty $property) {
+				return in_array($property->id, $this->property_id);
+			});
+		}
+
 		$fieldsCount = count($userProperties);//В зависимости от количества СВОЙСТВ в атрибуте высчитываем подходящее количество колонок
 		if (1 === $fieldsCount) {
 			$mdClass = "col-md-12";
 		} elseif (2 === $fieldsCount) {
 			$mdClass = "col-md-6";
 		} else $mdClass = "col-md-4";
-
 
 		return $this->render('attribute', [
 			'dynamicAttribute' => $attribute,
