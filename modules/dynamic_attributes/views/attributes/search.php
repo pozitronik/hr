@@ -142,14 +142,14 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-footer">
 			<div class="btn-group">
 				<?= Html::button("Поиск", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'search', 'value' => true]) ?>
-
+				<?= Html::button("Сохранить набор", ['class' => 'btn btn-info'])//todo ?>
 			</div>
 		</div>
 	</div>
 <?php ActiveForm::end(); ?>
 
 <?php if (null !== $dataProvider): ?>
-	<?= /** @noinspection RequireParameterInspection (ругается на локальную переменную внутри замыкания)*/
+	<?= /** @noinspection RequireParameterInspection (ругается на локальную переменную внутри замыкания) */
 	$this->render('search/search_result', [
 		'dataProvider' => $dataProvider,
 		'searchCollection' => $model
