@@ -62,4 +62,11 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField;
+
+	/**
+	 * Прототип агрегатора
+	 * @param AttributePropertyInterface[] $models
+	 * @return int|null
+	 */
+	public static function getAverageValue(array $models);
 }
