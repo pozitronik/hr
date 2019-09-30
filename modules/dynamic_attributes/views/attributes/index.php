@@ -16,6 +16,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
+use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
@@ -87,15 +88,18 @@ $this->params['breadcrumbs'][] = $this->title;
 			'header' => IconsHelper::users(),
 			'headerOptions' => ['class' => 'text-center'],
 			'value' => static function(DynamicAttributes $model) {
-				return DynamicAttributesModule::a((string)$model->usersCount, 'attributes/search', [
-					'data-method' => 'POST',
-					'data-params' => [
-						'DynamicAttributesSearchCollection[searchScope][0]' => 0,
-						'DynamicAttributesSearchCollection[searchTree]' => 1,
-						'DynamicAttributesSearchCollection[searchItems][0][union]' => 0,
-						'DynamicAttributesSearchCollection[searchItems][0][attribute]' => $model->id
-					]
+				return BadgeWidget::widget([//Нет способа генерировать ссылки со свойствами в BadgeWidget, поэтому оформляем так
+					'models' => DynamicAttributesModule::a((string)$model->usersCount, 'attributes/search', [
+						'data-method' => 'POST',
+						'data-params' => [
+							'DynamicAttributesSearchCollection[searchScope][0]' => 0,
+							'DynamicAttributesSearchCollection[searchTree]' => 1,
+							'DynamicAttributesSearchCollection[searchItems][0][union]' => 0,
+							'DynamicAttributesSearchCollection[searchItems][0][attribute]' => $model->id
+						]
+					])
 				]);
+
 			},
 			'format' => 'raw'
 		]
