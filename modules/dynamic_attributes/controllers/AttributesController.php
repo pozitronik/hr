@@ -153,6 +153,11 @@ class AttributesController extends WigetableController {
 		if (null !== Yii::$app->request->post('remove')) {/*Нажали кнопку "убрать поле", догенерируем набор условий*/
 			$searchSet->removeItem();
 		}
+		if (null !== Yii::$app->request->post('clear')) {/*Нажали кнопку "очистить поиск", сбросим набор условий*/
+			$user->options->set('previous_attribute_search',[]);//забыли предыдущий поиск и обновились
+			$this->refresh();
+			return '...';
+		}
 
 		if (null !== ArrayHelper::getValue($search, 'search')) {/*Нажали поиск, нужно сгенерировать запрос, поискать, отдать результат*/
 			$searchCondition = $searchSet->searchCondition();

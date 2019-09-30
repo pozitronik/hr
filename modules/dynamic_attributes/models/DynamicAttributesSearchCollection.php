@@ -69,7 +69,6 @@ class DynamicAttributesSearchCollection extends Model {
 		} else {
 			ArrayHelper::remove($this->searchItems, $index);
 		}
-
 	}
 
 	/**
@@ -276,7 +275,5 @@ class DynamicAttributesSearchCollection extends Model {
 	public function getSearchTree():bool {
 		return $this->searchTree;
 	}
-
-
 
 }
