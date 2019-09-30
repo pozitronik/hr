@@ -286,4 +286,14 @@ class DynamicAttributeProperty extends Model {
 		return ArrayHelper::getValue(ArrayHelper::getColumn(self::PROPERTY_TYPES, 'label'), $this->type);
 	}
 
+	/**
+	 * prototype fixme
+	 * @param array $models
+	 * @return mixed
+	 * @throws Throwable
+	 */
+	public function getAverageValue(array $models) {
+		return self::getTypeClass($this->getType())::getAverageValue($models);
+	}
+
 }
