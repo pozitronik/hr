@@ -12,8 +12,6 @@ use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
-use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
 use app\widgets\badge\BadgeWidget;

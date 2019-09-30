@@ -97,7 +97,7 @@ use yii\web\View; ?>
 			'value' => static function(Users $model) use ($searchCollection) {
 				$result = [];
 				$items = [];
-				ArrayHelper::getColumn($searchCollection->searchItems, function(DynamicAttributesSearchItem $element) use (&$items) {
+				ArrayHelper::getColumn($searchCollection->searchItems, static function(DynamicAttributesSearchItem $element) use (&$items) {
 					if (ArrayHelper::keyExists($element->attribute, $items)) {
 						$items[$element->property][] = $element->property;
 					} else $items[$element->attribute] = (null === $element->property)?null:[$element->property];

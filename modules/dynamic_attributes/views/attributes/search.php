@@ -149,7 +149,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php ActiveForm::end(); ?>
 
 <?php if (null !== $dataProvider): ?>
-	<?= $this->render('search/search_result', [
+	<?= /** @noinspection RequireParameterInspection (ругается на локальную переменную внутри замыкания)*/
+	$this->render('search/search_result', [
 		'dataProvider' => $dataProvider,
 		'searchCollection' => $model
 	]) ?>
