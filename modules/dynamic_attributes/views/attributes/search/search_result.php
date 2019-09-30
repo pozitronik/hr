@@ -76,23 +76,6 @@ use yii\web\View; ?>
 		],
 		[
 			'class' => DataColumn::class,
-			'label' => 'Должность',
-			'attribute' => 'positions',
-			'value' => static function(Users $model) {
-				return BadgeWidget::widget([
-					'models' => $model->relRefUserPositions,
-					'useBadges' => true,
-					'attribute' => 'name',
-					'unbadgedCount' => 3,
-					'itemsSeparator' => false,
-					"optionsMap" => RefUserPositions::colorStyleOptions(),
-					'linkScheme' => [Url::current(['UsersSearch[positions]' => $model->position])]
-				]);
-			},
-			'format' => 'raw'
-		],
-		[
-			'class' => DataColumn::class,
 			'label' => 'Результат',
 			'value' => static function(Users $model) use ($searchCollection) {
 				$result = [];
