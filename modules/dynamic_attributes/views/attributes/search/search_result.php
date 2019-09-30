@@ -100,7 +100,7 @@ use yii\web\View; ?>
 				ArrayHelper::getColumn($searchCollection->searchItems, function(DynamicAttributesSearchItem $element) use (&$items) {
 					if (ArrayHelper::keyExists($element->attribute, $items)) {
 						$items[$element->property][] = $element->property;
-					} else $items[$element->attribute] = [$element->property];
+					} else $items[$element->attribute] = (null === $element->property)?null:[$element->property];
 				});
 				foreach ($items as $attribute_id => $property_id) {
 					if (!empty($attribute_id)) {
