@@ -12,6 +12,8 @@ use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
+use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
 use kartik\grid\DataColumn;
@@ -83,7 +85,19 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'attribute' => 'usersCount',
 			'header' => IconsHelper::users(),
-			'headerOptions' => ['class' => 'text-center']
+			'headerOptions' => ['class' => 'text-center'],
+			'value' => static function(DynamicAttributes $model) {
+				return DynamicAttributesModule::a((string)$model->usersCount, 'attributes/search', [
+					'data-method' => 'POST',
+					'data-params' => [
+						'DynamicAttributesSearchCollection[searchScope][0]' => 0,
+						'DynamicAttributesSearchCollection[searchTree]' => 1,
+						'DynamicAttributesSearchCollection[searchItems][0][union]' => 0,
+						'DynamicAttributesSearchCollection[searchItems][0][attribute]' => $model->id
+					]
+				]);
+			},
+			'format' => 'raw'
 		]
 	]
 
