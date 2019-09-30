@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use app\helpers\IconsHelper;
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
+use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\Users;
@@ -17,6 +18,7 @@ use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -94,11 +96,18 @@ use yii\web\View; ?>
 			'label' => 'Атрибут',
 			'value' => static function(Users $model) use ($searchCollection) {
 				$result = [];
-				foreach ($searchCollection->searchItems as $searchItem) {
-					if (null !==$searchItem->attribute ) {
+				$items = [];
+				ArrayHelper::getColumn($searchCollection->searchItems, function(DynamicAttributesSearchItem $element) use (&$items) {
+					if (ArrayHelper::keyExists($element->attribute, $items)) {
+						$items[$element->property][] = $element->property;
+					} else $items[$element->attribute] = [$element->property];
+				});
+				foreach ($items as $attribute_id => $property_id) {
+					if (!empty($attribute_id)) {
 						$result[] = UserAttributeWidget::widget([
 							'user_id' => $model->id,
-							'attribute_id' => $searchItem->attribute
+							'attribute_id' => $attribute_id,
+							'property_id' => $property_id
 						]);
 					}
 
