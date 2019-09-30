@@ -93,7 +93,7 @@ use yii\web\View; ?>
 		],
 		[
 			'class' => DataColumn::class,
-			'label' => 'Атрибут',
+			'label' => 'Результат',
 			'value' => static function(Users $model) use ($searchCollection) {
 				$result = [];
 				$items = [];
