@@ -300,4 +300,18 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	public static function viewField(array $config = []):string {
 		return ScoreWidget::widget($config);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function getAverageValue(array $models) {
+		$values = [];
+		/** @var DynamicAttributeProperty $model */
+		foreach ($models as $model) {
+			$values[] = self::getValue($model->attributeId, $model->id, $model->userId);
+		}
+		$averageScore = ScoreProperty::add($values);
+		$averageScore->div((float)count($models));
+		return $averageScore;
+	}
 }
