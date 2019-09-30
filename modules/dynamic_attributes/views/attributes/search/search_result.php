@@ -114,7 +114,8 @@ use yii\web\View; ?>
 				}
 				return BadgeWidget::widget([
 					'models' => $result,
-					'useBadges' => false
+					'useBadges' => false,
+					'itemsSeparator' => false
 				]);
 			},
 			'format' => 'raw'
