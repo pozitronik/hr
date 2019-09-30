@@ -95,10 +95,13 @@ use yii\web\View; ?>
 			'value' => static function(Users $model) use ($searchCollection) {
 				$result = [];
 				foreach ($searchCollection->searchItems as $searchItem) {
-					$result[] = UserAttributeWidget::widget([
-						'user_id' => $model->id,
-						'attribute_id' => $searchItem->attribute
-					]);
+					if (null !==$searchItem->attribute ) {
+						$result[] = UserAttributeWidget::widget([
+							'user_id' => $model->id,
+							'attribute_id' => $searchItem->attribute
+						]);
+					}
+
 				}
 				return BadgeWidget::widget([
 					'models' => $result,
