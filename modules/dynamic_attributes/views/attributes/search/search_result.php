@@ -12,7 +12,6 @@ use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
-use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\widgets\badge\BadgeWidget;
@@ -21,7 +20,6 @@ use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Url;
 use yii\web\View; ?>
 
 
