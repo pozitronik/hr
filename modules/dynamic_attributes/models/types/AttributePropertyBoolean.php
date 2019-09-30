@@ -149,4 +149,11 @@ class AttributePropertyBoolean extends ActiveRecordExtended implements Attribute
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function getAverageValue(array $models):?int {
+		return null;
+	}
 }

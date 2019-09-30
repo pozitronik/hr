@@ -156,4 +156,11 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function getAverageValue(array $models):?int {
+		return null;
+	}
 }
