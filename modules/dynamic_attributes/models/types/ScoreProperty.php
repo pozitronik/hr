@@ -171,4 +171,37 @@ class ScoreProperty extends Model {
 		}
 		return implode(",\n", $data);
 	}
+
+	/**
+	 * Сложение моделей (числовых признаков)
+	 * @param self[] $items
+	 * @return static
+	 */
+	public static function add(array $items):self {
+		$resultScore = new self([
+			'selfScoreValue' => 0,
+			'tlScoreValue' => 0,
+			'alScoreValue' => 0,
+			'selfScoreComment' => null,
+			'tlScoreComment' => null,
+			'alScoreComment' => null
+		]);
+		foreach ($items as $item) {
+			$resultScore->selfScoreValue += (int)$item->selfScoreValue;
+			$resultScore->tlScoreValue += (int)$item->tlScoreValue;
+			$resultScore->alScoreValue += (int)$item->alScoreValue;
+		}
+		return $resultScore;
+	}
+
+	/**
+	 * Деление числовых покзателей
+	 * @param float $value
+	 * @todo поменять тип параметров на float (но валидацию оставить int) для того, чтобы аггрегаторы могли оперировать с нецелыми значениями
+	 */
+	public function div(float $value) {
+		$this->selfScoreValue = ($this->selfScoreValue / $value);
+		$this->tlScoreValue = ($this->tlScoreValue / $value);
+		$this->alScoreValue = ($this->alScoreValue / $value);
+	}
 }
