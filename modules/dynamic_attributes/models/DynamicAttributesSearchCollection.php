@@ -201,7 +201,7 @@ class DynamicAttributesSearchCollection extends Model {
 		]);
 
 		$dataProvider->setSort([
-			'defaultOrder' => ['id' => SORT_ASC],
+			'defaultOrder' => ['username' => SORT_ASC],
 			'attributes' => [
 				'id',
 				'username'
@@ -276,5 +276,7 @@ class DynamicAttributesSearchCollection extends Model {
 	public function getSearchTree():bool {
 		return $this->searchTree;
 	}
+
+
 
 }

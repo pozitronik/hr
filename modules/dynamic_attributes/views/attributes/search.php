@@ -148,7 +148,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php ActiveForm::end(); ?>
 
 <?php if (null !== $dataProvider): ?>
-	<?= $this->render('search_result', [
-		'dataProvider' => $dataProvider
+	<?= $this->render('search/search_result', [
+		'dataProvider' => $dataProvider,
+		'searchCollection' => $model
 	]) ?>
 <?php endif; ?>
