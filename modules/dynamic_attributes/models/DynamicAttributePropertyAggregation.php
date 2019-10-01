@@ -15,7 +15,7 @@ use yii\base\Model;
  */
 class DynamicAttributePropertyAggregation extends Model {
 
-	public const AGGREGATION_UNSUPPORTED = false;
+	public const AGGREGATION_UNSUPPORTED = null;
 
 	public const AGGREGATION_AVG = 1;//Среднее арифметическое
 	public const AGGREGATION_HARMONIC = 2;//среднее гармоническое
