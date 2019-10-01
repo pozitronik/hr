@@ -198,7 +198,7 @@ class AttributePropertyInteger extends ActiveRecordExtended implements Attribute
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
-	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):DynamicAttributePropertyAggregation {
-		// TODO: Implement applyAggregation() method.
+	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
+		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 	}
 }
