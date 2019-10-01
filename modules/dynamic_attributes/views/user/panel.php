@@ -10,7 +10,7 @@ use pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\users\models\Users;
-use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
+use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use kartik\select2\Select2;
 use yii\web\View;
 
@@ -31,7 +31,7 @@ use yii\web\View;
 	</div>
 
 	<?php foreach (RelUsersAttributes::getUserAttributes($user->id) as $model): ?>
-		<?= UserAttributeWidget::widget([
+		<?= DynamicAttributeWidget::widget([
 			'user_id' => $user->id,
 			'attribute_id' => $model->attribute_id
 		]) ?>

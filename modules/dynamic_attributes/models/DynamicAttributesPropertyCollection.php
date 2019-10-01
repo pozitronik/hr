@@ -56,7 +56,7 @@ class DynamicAttributesPropertyCollection extends Model {
 					/** @var AttributePropertyInterface $classObject */
 					$classObject = new $class;
 					$classObject->setValue($value);
-					$averages[$attributeId][$propertyId] = $classObject::viewField(['model' => $classObject, 'attribute' => 'property']);
+					$averages[$attributeId][$propertyId] = $classObject::viewField(['model' => $classObject, 'attribute' => 'value']);
 
 				}
 

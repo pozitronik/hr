@@ -14,7 +14,7 @@ use app\models\relations\RelUsersAttributes;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
-use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
+use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use kartik\grid\DataColumn;
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								],
 								'value' => static function($model) use ($user) {
 									/** @var RelUsersAttributes $model */
-									return UserAttributeWidget::widget([
+									return DynamicAttributeWidget::widget([
 										'user_id' => $user->id,
 										'attribute_id' => $model->attribute_id
 									]);

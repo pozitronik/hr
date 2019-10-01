@@ -11,7 +11,7 @@ declare(strict_types = 1);
 use app\helpers\Utils;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
-use app\modules\dynamic_attributes\widgets\user_attribute\UserAttributeWidget;
+use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\users\models\Users;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
@@ -55,7 +55,7 @@ use yii\bootstrap\Html;
 			'attribute' => 'type',
 			'label' => 'Сортировать по типу отношения атрибута',
 			'value' => static function(RelUsersAttributes $attribute) use ($model) {
-				return UserAttributeWidget::widget([
+				return DynamicAttributeWidget::widget([
 					'user_id' => $model->id,
 					'attribute_id' => $attribute->attribute_id
 				]);

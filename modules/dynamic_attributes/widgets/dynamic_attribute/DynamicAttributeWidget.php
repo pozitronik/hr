@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\dynamic_attributes\widgets\user_attribute;
+namespace app\modules\dynamic_attributes\widgets\dynamic_attribute;
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use pozitronik\widgets\CachedWidget;
@@ -20,7 +20,7 @@ use yii\web\ServerErrorHttpException;
  * @property bool $read_only
  * @property null|int[] $property_id -- если указан, то id свойств, которые должны быть показаны (остальные скипаются)
  */
-class UserAttributeWidget extends CachedWidget {
+class DynamicAttributeWidget extends CachedWidget {
 	public $user_id;
 	public $attribute_id;
 	public $attribute;
@@ -33,7 +33,7 @@ class UserAttributeWidget extends CachedWidget {
 	 */
 	public function init() {
 		parent::init();
-		UserAttributeWidgetAssets::register($this->getView());
+		DynamicAttributeWidgetAssets::register($this->getView());
 	}
 
 	/**
