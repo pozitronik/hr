@@ -162,4 +162,18 @@ class AttributePropertyText extends ActiveRecordExtended implements AttributePro
 	public static function getAverageValue(array $models):?int {
 		return null;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getValue():string {
+		return $this->value;
+	}
+
+	/**
+	 * @param string $value
+	 */
+	public function setValue($value):void {
+		$this->value = $value;
+	}
 }

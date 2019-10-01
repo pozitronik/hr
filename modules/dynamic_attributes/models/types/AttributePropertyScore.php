@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
  * @property string $al_score_comment [varchar(255)]  Комментарий к оценке ареалида
  *
  * @property-read array $valueArray
- * @property-read ScoreProperty $scoreValue
+ * @property-read ScoreProperty $value
  */
 class AttributePropertyScore extends ActiveRecordExtended implements AttributePropertyInterface {
 
@@ -180,7 +180,14 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @inheritDoc
 	 */
 	public function getValue() {
-		return $this->scoreValue;
+		return new ScoreProperty([
+			'selfScoreValue' => $this->self_score_value,
+			'tlScoreValue' => $this->tl_score_value,
+			'alScoreValue' => $this->al_score_value,
+			'selfScoreComment' => $this->self_score_comment,
+			'tlScoreComment' => $this->tl_score_comment,
+			'alScoreComment' => $this->al_score_comment
+		]);
 	}
 
 	/**
@@ -193,7 +200,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 */
 	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id) {
-			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
+			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->value:new ScoreProperty();
 		});
 	}
 
@@ -229,7 +236,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 		}
 
 		if ($record->save()) {
-			Yii::$app->cache->set(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", $record->scoreValue);
+			Yii::$app->cache->set(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", $record->value);
 			return true;
 		}
 		return false;
@@ -277,20 +284,6 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			]
 		];
 
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getScoreValue() {
-		return new ScoreProperty([
-			'selfScoreValue' => $this->self_score_value,
-			'tlScoreValue' => $this->tl_score_value,
-			'alScoreValue' => $this->al_score_value,
-			'selfScoreComment' => $this->self_score_comment,
-			'tlScoreComment' => $this->tl_score_comment,
-			'alScoreComment' => $this->al_score_comment
-		]);
 	}
 
 	/**

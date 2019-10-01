@@ -156,4 +156,18 @@ class AttributePropertyBoolean extends ActiveRecordExtended implements Attribute
 	public static function getAverageValue(array $models):?int {
 		return null;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getValue():int {
+		return $this->value;
+	}
+
+	/**
+	 * @param int $value
+	 */
+	public function setValue($value):void {
+		$this->value = $value;
+	}
 }

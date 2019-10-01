@@ -163,4 +163,18 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	public static function getAverageValue(array $models):?int {
 		return null;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getValue():string {
+		return $this->value;
+	}
+
+	/**
+	 * @param string $value
+	 */
+	public function setValue($value):void {
+		$this->value = $value;
+	}
 }
