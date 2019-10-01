@@ -89,6 +89,6 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
-	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):DynamicAttributePropertyAggregation;
+	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation;
 
 }
