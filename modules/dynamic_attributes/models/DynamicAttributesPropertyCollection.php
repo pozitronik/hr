@@ -45,23 +45,22 @@ class DynamicAttributesPropertyCollection extends Model {
 	 * @return DynamicAttributes[]
 	 * @throws Throwable
 	 */
-	public function getAverage() {
-		$averages = [];
+	public function applyAggregation(int $aggregation, bool $dropNullValues = false) {
+		$aggregatedDynamicAttributes = [];
 		foreach ($this->_dataArray as $attributeId => $propertyData) {
 			/** @var DynamicAttributes $attributeModel */
 			$attributeModel = DynamicAttributes::findModel($attributeId, new Exception("Can't load dynamic attribute!"));
 			/** @var DynamicAttributeProperty[] $userAttributePropertyArray */
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($this->_dataArray, "{$attributeId}.{$propertyId}.type"));
-				if (null !== $value = $propertyClass::getAverageValue($userAttributePropertyArray)) {
-					$attributeModel->setVirtualProperty($propertyId, $value);
+				if (in_array($aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation($userAttributePropertyArray, $aggregation, $dropNullValues)) {
+					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue);
 				}
 
 			}
-			$averages[$attributeId] = $attributeModel;
-
+			$aggregatedDynamicAttributes[$attributeId] = $attributeModel;
 		}
-		return ($averages);
+		return ($aggregatedDynamicAttributes);
 	}
 
 }
