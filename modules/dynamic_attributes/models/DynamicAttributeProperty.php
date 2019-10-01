@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
  *
  * @property boolean $isNewRecord
  * @property DynamicAttributes $dynamicAttribute
- * @property mixed $value
+ * @property mixed $value -- атрибут для обращения к виртуальному (не хранящемуся в БД) значению
  * @property-read string $categoryName
  */
 class DynamicAttributeProperty extends Model {
@@ -220,17 +220,17 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * Вернёт значение атрибута свойства для указанного пользователя
+	 * Если пользователь не задан (нет привязки к БД), считаем, что атрибут виртуальный,
 	 * @param bool $formatted
 	 * @return mixed
 	 * @throws Throwable
 	 */
 	public function loadValue(bool $formatted = false) {
-
 		return null === $this->user_id?$this->value:self::getTypeClass($this->type)::loadValue($this->attribute_id, $this->id, $this->user_id, $formatted);
 	}
 
 	/**
-	 * todo: написано по наитию, документирую
+	 * Вернёт виртуальное (установленное без привязки ) значение
 	 * @throws Throwable
 	 */
 	public function getValue() {
