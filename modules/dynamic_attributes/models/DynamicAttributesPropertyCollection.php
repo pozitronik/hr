@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
@@ -20,7 +19,6 @@ class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
 	private $_userScope = [];
 	public $dataArray = [];
-	public $classArray = [];
 
 	private function fill() {
 		foreach ($this->_userScope as $user) {
@@ -28,8 +26,8 @@ class DynamicAttributesPropertyCollection extends Model {
 			foreach ($userAttributes as $attributeKey => $userAttribute) {
 				foreach ($userAttribute->properties as $propertyKey => $userAttributeProperty) {
 					$userAttributeProperty->userId = $user->id;
-					$this->dataArray[$userAttributeProperty->attributeId][$userAttributeProperty->id][] = $userAttributeProperty;
-					$this->classArray[$userAttributeProperty->attributeId][$userAttributeProperty->id] = $userAttributeProperty::getTypeClass($userAttributeProperty->type);
+					$this->dataArray[$userAttributeProperty->attributeId][$userAttributeProperty->id]['values'][] = $userAttributeProperty;
+					ArrayHelper::initValue($this->dataArray, "{$userAttributeProperty->attributeId}.{$userAttributeProperty->id}.type", $userAttributeProperty->type);
 				}
 			}
 		}
@@ -52,10 +50,9 @@ class DynamicAttributesPropertyCollection extends Model {
 		foreach ($this->dataArray as $attributeId => $propertyData) {
 			/** @var DynamicAttributes $attributeModel */
 			$attributeModel = DynamicAttributes::findModel($attributeId, new Exception("Can't load dynamic attribute!"));
-
 			/** @var DynamicAttributeProperty[] $userAttributePropertyArray */
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
-				$propertyClass = ArrayHelper::getValue($this->classArray, "{$attributeId}.{$propertyId}");
+				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($this->dataArray, "{$attributeId}.{$propertyId}.type"));
 				if (null !== $value = $propertyClass::getAverageValue($userAttributePropertyArray)) {
 					$attributeModel->setVirtualProperty($propertyId, $value);
 				}
