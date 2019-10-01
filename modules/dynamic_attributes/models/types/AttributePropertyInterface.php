@@ -35,6 +35,7 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param int $user_id
 	 * @param bool $formatted true возвращает форматированное значение, false - как есть
 	 * @return mixed
+	 * @todo rename to loadValue
 	 */
 	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false);
 
@@ -45,6 +46,7 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param int $user_id
 	 * @param mixed $value
 	 * @return bool
+	 * @todo: rename to saveValue
 	 */
 	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
 
@@ -62,6 +64,20 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField;
+
+	/**
+	 * Прототип: устанавливает значение свойства
+	 * @param mixed $property
+	 * @todo: rename to setValue
+	 */
+	public function setProperty($property):void;
+
+	/**
+	 * Прототип: возвращает значение свойства
+	 * @return mixed
+	 * @todo rename to loadValue
+	 */
+	public function getProperty();
 
 	/**
 	 * Прототип агрегатора
