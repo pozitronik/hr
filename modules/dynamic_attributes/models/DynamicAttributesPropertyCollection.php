@@ -18,7 +18,7 @@ use yii\base\Model;
 class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
 	private $_userScope = [];
-	public $dataArray = [];
+	private $_dataArray = [];
 
 	private function fill() {
 		foreach ($this->_userScope as $user) {
@@ -26,8 +26,8 @@ class DynamicAttributesPropertyCollection extends Model {
 			foreach ($userAttributes as $attributeKey => $userAttribute) {
 				foreach ($userAttribute->properties as $propertyKey => $userAttributeProperty) {
 					$userAttributeProperty->userId = $user->id;
-					$this->dataArray[$userAttributeProperty->attributeId][$userAttributeProperty->id]['values'][] = $userAttributeProperty;
-					ArrayHelper::initValue($this->dataArray, "{$userAttributeProperty->attributeId}.{$userAttributeProperty->id}.type", $userAttributeProperty->type);
+					$this->_dataArray[$userAttributeProperty->attributeId][$userAttributeProperty->id]['values'][] = $userAttributeProperty;
+					ArrayHelper::initValue($this->_dataArray, "{$userAttributeProperty->attributeId}.{$userAttributeProperty->id}.type", $userAttributeProperty->type);
 				}
 			}
 		}
@@ -47,12 +47,12 @@ class DynamicAttributesPropertyCollection extends Model {
 	 */
 	public function getAverage() {
 		$averages = [];
-		foreach ($this->dataArray as $attributeId => $propertyData) {
+		foreach ($this->_dataArray as $attributeId => $propertyData) {
 			/** @var DynamicAttributes $attributeModel */
 			$attributeModel = DynamicAttributes::findModel($attributeId, new Exception("Can't load dynamic attribute!"));
 			/** @var DynamicAttributeProperty[] $userAttributePropertyArray */
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
-				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($this->dataArray, "{$attributeId}.{$propertyId}.type"));
+				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($this->_dataArray, "{$attributeId}.{$propertyId}.type"));
 				if (null !== $value = $propertyClass::getAverageValue($userAttributePropertyArray)) {
 					$attributeModel->setVirtualProperty($propertyId, $value);
 				}
