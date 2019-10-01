@@ -165,6 +165,25 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public function setProperty($property):void {
+		$this->self_score_value = ArrayHelper::getValue($property, 'selfScoreValue');
+		$this->self_score_comment = ArrayHelper::getValue($property, 'selfScoreComment');
+		$this->tl_score_value = ArrayHelper::getValue($property, 'tlScoreValue');
+		$this->tl_score_comment = ArrayHelper::getValue($property, 'tlScoreComment');
+		$this->al_score_value = ArrayHelper::getValue($property, 'alScoreValue');
+		$this->al_score_comment = ArrayHelper::getValue($property, 'alScoreComment');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getProperty():ScoreProperty {
+		return $this->scoreValue;
+	}
+
+	/**
 	 * Вернуть из соответствующей таблицы значение поля для этого поля этого атрибута этого юзера
 	 * @param int $attribute_id
 	 * @param int $property_id
@@ -176,7 +195,6 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id) {
 			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
 		});
-
 	}
 
 	/**
