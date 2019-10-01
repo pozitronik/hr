@@ -245,6 +245,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 
 	/**
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function getVirtualProperties():array {
 		$virtualProperties = [];
