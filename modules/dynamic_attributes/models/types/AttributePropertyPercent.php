@@ -5,6 +5,7 @@ namespace app\modules\dynamic_attributes\models\types;
 
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use Exception;
 use kartik\range\RangeInput;
@@ -177,13 +178,6 @@ class AttributePropertyPercent extends ActiveRecordExtended implements Attribute
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	public static function getAverageValue(array $models):?int {
-		return null;
-	}
-
-	/**
 	 * @return int
 	 */
 	public function getValue():int {
@@ -195,5 +189,32 @@ class AttributePropertyPercent extends ActiveRecordExtended implements Attribute
 	 */
 	public function setValue($value):void {
 		$this->value = $value;
+	}
+
+	/**
+	 * Конфигурация поддерживаемых типом агрегаторов
+	 * @return array
+	 */
+	public static function aggregationConfig():array {
+		return [
+			DynamicAttributePropertyAggregation::AGGREGATION_AVG,
+			DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC,
+			DynamicAttributePropertyAggregation::AGGREGATION_MODA,
+			DynamicAttributePropertyAggregation::AGGREGATION_AVG_TRUNC,
+			DynamicAttributePropertyAggregation::AGGREGATION_COUNT,
+			DynamicAttributePropertyAggregation::AGGREGATION_MIN,
+			DynamicAttributePropertyAggregation::AGGREGATION_MAX
+		];
+	}
+
+	/**
+	 * Применяет агрегатор к набору значений атрибутов
+	 * @param self[] $models -- набор значений атрибутов
+	 * @param int $aggregation -- выбранный агрегатор
+	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
+	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 */
+	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):DynamicAttributePropertyAggregation {
+		// TODO: Implement applyAggregation() method.
 	}
 }

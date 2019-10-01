@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models\types;
 
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -157,13 +158,6 @@ class AttributePropertyText extends ActiveRecordExtended implements AttributePro
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	public static function getAverageValue(array $models):?int {
-		return null;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getValue():string {
@@ -175,5 +169,27 @@ class AttributePropertyText extends ActiveRecordExtended implements AttributePro
 	 */
 	public function setValue($value):void {
 		$this->value = $value;
+	}
+
+	/**
+	 * Конфигурация поддерживаемых типом агрегаторов
+	 * @return array
+	 */
+	public static function aggregationConfig():array {
+		return [
+			DynamicAttributePropertyAggregation::AGGREGATION_MODA,
+			DynamicAttributePropertyAggregation::AGGREGATION_COUNT
+		];
+	}
+
+	/**
+	 * Применяет агрегатор к набору значений атрибутов
+	 * @param self[] $models -- набор значений атрибутов
+	 * @param int $aggregation -- выбранный агрегатор
+	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
+	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 */
+	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):DynamicAttributePropertyAggregation {
+		// TODO: Implement applyAggregation() method.
 	}
 }
