@@ -7,13 +7,18 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
+use app\widgets\badge\BadgeWidget;
 use yii\web\View;
 use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 
 $collection = new DynamicAttributesPropertyCollection(['userScope' => $model->relUsers]);
 
-foreach ($collection->getAverage() as $averages ) {
-	echo $averages;
+foreach ($collection->getAverage() as $averages) {
+	echo BadgeWidget::widget([
+		'models' => $averages,
+		'useBadges' => false,
+		'itemsSeparator' => false
+	]);
 }
 
 ?>
