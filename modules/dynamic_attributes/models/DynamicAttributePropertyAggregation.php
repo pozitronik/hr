@@ -8,10 +8,10 @@ use yii\base\Model;
 
 /**
  * Class DynamicAttributePropertyAggregation
- * Все аггрегаторы по умолчанию работают на всём массиве данных. Отсеивание null-значений указываем дополнительным параметром.
+ * Все агрегаторы по умолчанию работают на всём массиве данных. Отсеивание null-значений указываем дополнительным параметром.
  * @package app\modules\dynamic_attributes\models
- * @property string $type -- тип свойства, полученного в результате аггрегации (может не совпадать с типами аггрегирующих свойств, навпример вернётся строка или процент или null)
- * @property AttributePropertyInterface $value -- значение свойства, полученного в результате аггрегации
+ * @property string $type -- тип свойства, полученного в результате агрегации (может не совпадать с типами аггрегирующих свойств, навпример вернётся строка или процент или null)
+ * @property AttributePropertyInterface $value -- значение свойства, полученного в результате агрегации
  */
 class DynamicAttributePropertyAggregation extends Model {
 	public const AGGREGATION_AVG = 1;//Среднее арифметическое

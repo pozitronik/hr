@@ -553,7 +553,7 @@ class Groups extends ActiveRecordExtended {
 	}
 
 	/**
-	 * Аггрегатор статистики по количеству типов групп в скоупе
+	 * Агрегатор статистики по количеству типов групп в скоупе
 	 * @param array $scope
 	 * @return array
 	 */
