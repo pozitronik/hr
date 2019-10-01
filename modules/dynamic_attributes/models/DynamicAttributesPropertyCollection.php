@@ -57,9 +57,6 @@ class DynamicAttributesPropertyCollection extends Model {
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$propertyClass = ArrayHelper::getValue($this->classArray, "{$attributeId}.{$propertyId}");
 				if (null !== $value = $propertyClass::getAverageValue($userAttributePropertyArray)) {
-					/** @var AttributePropertyInterface $propertyModel */
-//					$propertyModel = new $propertyClass;
-//					$propertyModel->setValue($value);
 					$attributeModel->setVirtualProperty($propertyId, $value);
 				}
 
