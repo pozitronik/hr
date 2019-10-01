@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
+use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
@@ -53,11 +53,10 @@ class DynamicAttributesPropertyCollection extends Model {
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$class = ArrayHelper::getValue($this->classArray, "{$attributeId}.{$propertyId}");
 				if (null !== $value = $class::getAverageValue($userAttributePropertyArray)) {
-					/** @var DynamicAttributeProperty $classObject */
+					/** @var AttributePropertyInterface $classObject */
 					$classObject = new $class;
-					if ('score' === $classObject->type) {
-						$averages[$attributeId][$propertyId] = ScoreWidget::widget();
-					}
+					$classObject->setProperty($value);
+					$averages[$attributeId][$propertyId] = $classObject::viewField(['model' => $classObject, 'attribute' => 'property']);
 
 				}
 
