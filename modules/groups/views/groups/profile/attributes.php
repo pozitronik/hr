@@ -22,5 +22,4 @@ foreach ($collection->getAverage() as $attribute) {
 
 }
 
-?>
 

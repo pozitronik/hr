@@ -70,7 +70,7 @@ class DynamicAttributeWidget extends CachedWidget {
 		return null === $this->user_id?$this->render('virtual_attribute', [
 			'dynamicAttribute' => $this->attribute,
 			'propertiesCollection' => $propertiesCollection,
-			'mdClass' => $mdClass,
+			'mdClass' => $mdClass
 		]):$this->render('attribute', [
 			'dynamicAttribute' => $this->attribute,
 			'propertiesCollection' => $propertiesCollection,

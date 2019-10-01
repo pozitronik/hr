@@ -199,7 +199,7 @@ class ScoreProperty extends Model {
 	 * @param float $value
 	 * @todo поменять тип параметров на float (но валидацию оставить int) для того, чтобы аггрегаторы могли оперировать с нецелыми значениями
 	 */
-	public function div(float $value) {
+	public function div(float $value):void {
 		$this->selfScoreValue /= $value;
 		$this->tlScoreValue /= $value;
 		$this->alScoreValue /= $value;

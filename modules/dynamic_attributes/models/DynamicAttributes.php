@@ -235,6 +235,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 	/**
 	 * @param int $property_id
 	 * @return mixed -- значение запрошенного виртуального свойства
+	 * @throws Throwable
 	 */
 	public function getVirtualProperty(int $property_id) {
 		$property = $this->getPropertyById($property_id);

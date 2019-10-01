@@ -20,7 +20,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	private $_userScope = [];
 	private $_dataArray = [];
 
-	private function fill() {
+	private function fill():void {
 		foreach ($this->_userScope as $user) {
 			$userAttributes = $user->relDynamicAttributes;
 			foreach ($userAttributes as $attributeKey => $userAttribute) {
@@ -36,16 +36,18 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param Users[] $userScope
 	 */
-	public function setUserScope(array $userScope) {
+	public function setUserScope(array $userScope):void {
 		$this->_userScope = $userScope;
 		$this->fill();
 	}
 
 	/**
+	 * @param int $aggregation
+	 * @param bool $dropNullValues
 	 * @return DynamicAttributes[]
 	 * @throws Throwable
 	 */
-	public function applyAggregation(int $aggregation, bool $dropNullValues = false) {
+	public function applyAggregation(int $aggregation, bool $dropNullValues = false):array {
 		$aggregatedDynamicAttributes = [];
 		foreach ($this->_dataArray as $attributeId => $propertyData) {
 			/** @var DynamicAttributes $attributeModel */
