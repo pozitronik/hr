@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use yii\db\ActiveRecordInterface;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
@@ -19,6 +20,12 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @return array
 	 */
 	public static function conditionConfig():array;
+
+	/**
+	 * Конфигурация поддерживаемых типом агрегаторов
+	 * @return array
+	 */
+	public static function aggregationConfig():array;
 
 	/**
 	 * Поиск соответствующей записи по подходящим параметрам
@@ -76,9 +83,12 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	public function getValue();
 
 	/**
-	 * Прототип агрегатора
-	 * @param AttributePropertyInterface[] $models
-	 * @return int|null
+	 * Применяет агрегатор к набору значений атрибутов
+	 * @param self[] $models -- набор значений атрибутов
+	 * @param int $aggregation -- выбранный агрегатор
+	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
+	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
-	public static function getAverageValue(array $models);
+	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):DynamicAttributePropertyAggregation;
+
 }
