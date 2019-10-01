@@ -46,6 +46,8 @@ use yii\db\ActiveQuery;
 class DynamicAttributes extends ActiveRecordExtended {
 	use PluginTrait;
 
+	private $_virtualPropertyValues = [];//Хранение виртуальных значений атрибутов
+
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',
 		1 => 'Обучение',
@@ -219,6 +221,36 @@ class DynamicAttributes extends ActiveRecordExtended {
 			AlertModel::ErrorsNotify([$typeClass => "Attribute property type {$property->type} not implemented or not configured."]);
 		}
 		Yii::$app->cache->delete(static::class."GetUser{$this->id}Properties".$user_id);
+	}
+
+	/**
+	 * Устанавливает свойству виртуальное значение атрибута, которое не привязано ни к чему, и существует только вместе с самим объектом динамического атрибута
+	 * @param int $property_id
+	 * @param $property_value
+	 */
+	public function setVirtualProperty(int $property_id, $property_value):void {
+		ArrayHelper::setValue($this->_virtualPropertyValues, $property_id, $property_value);
+	}
+
+	/**
+	 * @param int $property_id
+	 * @return mixed -- значение запрошенного виртуального свойства
+	 */
+	public function getVirtualProperty(int $property_id) {
+		$property = $this->getPropertyById($property_id);
+		$property->value = ArrayHelper::getValue($this->_virtualPropertyValues, $property_id);
+		return $property;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getVirtualProperties():array {
+		$virtualProperties = [];
+		foreach ($this->properties as $property) {
+			$virtualProperties[] = $this->getVirtualProperty($property->id);
+		}
+		return $virtualProperties;
 	}
 
 	/**

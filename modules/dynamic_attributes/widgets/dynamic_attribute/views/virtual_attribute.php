@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use yii\web\View;
 
 ?>
@@ -27,6 +28,7 @@ use yii\web\View;
 			<?php foreach ($propertiesCollection as $userProperty): ?>
 				<div class="<?= $mdClass ?>">
 					<?= $userProperty->viewField([//Каждое свойство атрибута может само определять, каким виджетом его выводить
+//						'model' => $userProperty,
 						'attribute' => 'value',
 						'readOnly' => true,
 						'showEmpty' => true

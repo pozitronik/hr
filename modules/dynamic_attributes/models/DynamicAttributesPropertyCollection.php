@@ -7,6 +7,7 @@ use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
+use yii\base\Exception;
 use yii\base\Model;
 
 /**
@@ -43,24 +44,27 @@ class DynamicAttributesPropertyCollection extends Model {
 	}
 
 	/**
-	 * @return array
+	 * @return DynamicAttributes[]
 	 * @throws Throwable
 	 */
 	public function getAverage() {
 		$averages = [];
 		foreach ($this->dataArray as $attributeId => $propertyData) {
+			/** @var DynamicAttributes $attributeModel */
+			$attributeModel = DynamicAttributes::findModel($attributeId, new Exception("Can't load dynamic attribute!"));
+
 			/** @var DynamicAttributeProperty[] $userAttributePropertyArray */
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
-				$class = ArrayHelper::getValue($this->classArray, "{$attributeId}.{$propertyId}");
-				if (null !== $value = $class::getAverageValue($userAttributePropertyArray)) {
-					/** @var AttributePropertyInterface $classObject */
-					$classObject = new $class;
-					$classObject->setValue($value);
-					$averages[$attributeId][$propertyId] = $classObject::viewField(['model' => $classObject, 'attribute' => 'value']);
-
+				$propertyClass = ArrayHelper::getValue($this->classArray, "{$attributeId}.{$propertyId}");
+				if (null !== $value = $propertyClass::getAverageValue($userAttributePropertyArray)) {
+					/** @var AttributePropertyInterface $propertyModel */
+//					$propertyModel = new $propertyClass;
+//					$propertyModel->setValue($value);
+					$attributeModel->setVirtualProperty($propertyId, $value);
 				}
 
 			}
+			$averages[$attributeId] = $attributeModel;
 
 		}
 		return ($averages);

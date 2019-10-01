@@ -125,7 +125,7 @@ class ExportAttributes extends Model {
 			foreach ($properties as $property) {
 				$col++;
 				$property->userId = $user->id;
-				$value = $property->getValue();
+				$value = $property->loadValue();
 				$worksheet->setCellValueByColumnAndRow($col, $row, $property->name);
 				if ($formatting) $worksheet->getStyleByColumnAndRow($col, $row)->applyFromArray($AttributeFieldStyleArray);
 				$worksheet->setCellValueByColumnAndRow($col, $row + $startRowIndex, $value);

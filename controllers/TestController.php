@@ -92,7 +92,7 @@ class TestController extends Controller {
 
 					foreach ($properties as $property) {
 						$property->userId = $id;
-						$value = $property->getValue();
+						$value = $property->loadValue();
 					}
 				}
 			}

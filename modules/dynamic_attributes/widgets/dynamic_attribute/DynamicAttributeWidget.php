@@ -49,6 +49,9 @@ class DynamicAttributeWidget extends CachedWidget {
 			if (null === $this->attribute = DynamicAttributes::findModel($this->attribute_id, new ServerErrorHttpException("Dynamic attribute {$this->attribute_id} not found"))) return null;
 			if (empty($this->attribute->structure)) return "Атрибут не имеет свойств";
 			$propertiesCollection = $this->attribute->getUserProperties($this->user_id);
+		} else {
+			if (empty($this->attribute->structure)) return "Атрибут не имеет свойств";
+			$propertiesCollection = $this->attribute->getVirtualProperties();
 		}
 
 		if (null !== $this->property_id) {

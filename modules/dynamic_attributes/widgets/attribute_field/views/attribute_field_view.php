@@ -14,7 +14,7 @@ use yii\web\View;
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				<?= $model->name ?>: <?= $model->getValue(true) ?>
+				<?= $model->name ?>: <?= $model->loadValue(true) ?>
 			</div>
 		</div>
 	</div>

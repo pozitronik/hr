@@ -42,7 +42,7 @@ class RadarWidget extends Widget {
 		foreach ($properties as $property) {
 			if ('percent' === $property->type) {
 				$labels[] = $property->name;
-				$data[] = $property->getValue();
+				$data[] = $property->loadValue();
 				$this->reference[] = random_int(10, 90);
 			}
 		}
