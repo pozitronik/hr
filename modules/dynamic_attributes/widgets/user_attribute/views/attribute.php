@@ -4,9 +4,9 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var DynamicAttributes $dynamicAttribute
- * @var DynamicAttributeProperty[] $userProperties
+ * @var DynamicAttributeProperty[] $propertiesCollection
  * @var string $mdClass
- * @var int $user_id
+ * @var int|null $user_id
  * @var bool $read_only
  */
 
@@ -74,7 +74,7 @@ if ($dynamicAttribute->hasIntegerProperties) $items[] = [
 
 	<div class="panel-body">
 		<div class="row">
-			<?php foreach ($userProperties as $userProperty): ?>
+			<?php foreach ($propertiesCollection as $userProperty): ?>
 				<div class="<?= $mdClass ?>">
 					<?= $userProperty->viewField([//Каждое свойство атрибута может само определять, каким виджетом его выводить
 						'attribute' => 'value',
