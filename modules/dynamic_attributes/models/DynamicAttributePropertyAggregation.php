@@ -3,10 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
+use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
+
 /**
  * Class DynamicAttributePropertyAggregation
  * Все аггрегаторы по умолчанию работают на всём массиве данных. Отсеивание null-значений указываем дополнительным параметром.
  * @package app\modules\dynamic_attributes\models
+ * @property string $type -- тип свойства, полученного в результате аггрегации (может не совпадать с типами аггрегирующих свойств, навпример вернётся строка или процент или null)
+ * @property AttributePropertyInterface $value -- значение свойства, полученного в результате аггрегации
  */
 class DynamicAttributePropertyAggregation {
 	public const AGGREGATION_AVG = 1;//Среднее арифметическое
@@ -17,4 +21,36 @@ class DynamicAttributePropertyAggregation {
 	public const AGGREGATION_MIN = 6;//минимальное значение
 	public const AGGREGATION_MAX = 7;//максимальное значение
 	public const AGGREGATION_SUM = 8;//сумма всех значений
+
+	private $_type;
+	private $_value;
+
+	/**
+	 * @return string
+	 */
+	public function getType():string {
+		return $this->_type;
+	}
+
+	/**
+	 * @param string $type
+	 */
+	public function setType(string $type):void {
+		$this->_type = $type;
+	}
+
+	/**
+	 * @return AttributePropertyInterface
+	 */
+	public function getValue():AttributePropertyInterface {
+		return $this->_value;
+	}
+
+	/**
+	 * @param AttributePropertyInterface $value
+	 */
+	public function setValue(AttributePropertyInterface $value):void {
+		$this->_value = $value;
+	}
+
 }
