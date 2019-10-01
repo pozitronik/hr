@@ -200,8 +200,8 @@ class ScoreProperty extends Model {
 	 * @todo поменять тип параметров на float (но валидацию оставить int) для того, чтобы аггрегаторы могли оперировать с нецелыми значениями
 	 */
 	public function div(float $value) {
-		$this->selfScoreValue = ($this->selfScoreValue / $value);
-		$this->tlScoreValue = ($this->tlScoreValue / $value);
-		$this->alScoreValue = ($this->alScoreValue / $value);
+		$this->selfScoreValue /= $value;
+		$this->tlScoreValue /= $value;
+		$this->alScoreValue /= $value;
 	}
 }
