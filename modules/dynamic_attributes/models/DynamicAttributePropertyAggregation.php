@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models;
 
 use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
+use yii\base\Model;
 
 /**
  * Class DynamicAttributePropertyAggregation
@@ -12,7 +13,7 @@ use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
  * @property string $type -- тип свойства, полученного в результате аггрегации (может не совпадать с типами аггрегирующих свойств, навпример вернётся строка или процент или null)
  * @property AttributePropertyInterface $value -- значение свойства, полученного в результате аггрегации
  */
-class DynamicAttributePropertyAggregation {
+class DynamicAttributePropertyAggregation extends Model {
 	public const AGGREGATION_AVG = 1;//Среднее арифметическое
 	public const AGGREGATION_HARMONIC = 2;//среднее гармоническое
 	public const AGGREGATION_MODA = 3;//наиболее распространённое значение
