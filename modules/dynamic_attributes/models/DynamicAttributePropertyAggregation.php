@@ -14,6 +14,9 @@ use yii\base\Model;
  * @property AttributePropertyInterface $value -- значение свойства, полученного в результате агрегации
  */
 class DynamicAttributePropertyAggregation extends Model {
+
+	public const AGGREGATION_UNSUPPORTED = false;
+
 	public const AGGREGATION_AVG = 1;//Среднее арифметическое
 	public const AGGREGATION_HARMONIC = 2;//среднее гармоническое
 	public const AGGREGATION_MODA = 3;//наиболее распространённое значение
