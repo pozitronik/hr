@@ -208,7 +208,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 		$property = $this->getPropertyById($property_id);
 		$typeClass = DynamicAttributeProperty::getTypeClass($property->type);
 		try {
-			if ($typeClass::setValue($this->id, $property_id, $user_id, $property_value)) {
+			if ($typeClass::saveValue($this->id, $property_id, $user_id, $property_value)) {
 				AlertModel::SuccessNotify();
 			} else {
 				AlertModel::ErrorsNotify([$typeClass => 'not saved!']);

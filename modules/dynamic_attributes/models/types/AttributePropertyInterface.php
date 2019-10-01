@@ -35,9 +35,8 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param int $user_id
 	 * @param bool $formatted true возвращает форматированное значение, false - как есть
 	 * @return mixed
-	 * @todo rename to loadValue
 	 */
-	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false);
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false);
 
 	/**
 	 * Записать в соответствующую таблицу значение свойства этого атрибута этого юзера
@@ -46,9 +45,8 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 	 * @param int $user_id
 	 * @param mixed $value
 	 * @return bool
-	 * @todo: rename to saveValue
 	 */
-	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
 
 	/**
 	 * Рендер поля просмотра значения свойства
@@ -67,17 +65,15 @@ interface AttributePropertyInterface extends ActiveRecordInterface {
 
 	/**
 	 * Прототип: устанавливает значение свойства
-	 * @param mixed $property
-	 * @todo: rename to setValue
+	 * @param $value
 	 */
-	public function setProperty($property):void;
+	public function setValue($value):void;
 
 	/**
 	 * Прототип: возвращает значение свойства
 	 * @return mixed
-	 * @todo rename to loadValue
 	 */
-	public function getProperty();
+	public function getValue();
 
 	/**
 	 * Прототип агрегатора

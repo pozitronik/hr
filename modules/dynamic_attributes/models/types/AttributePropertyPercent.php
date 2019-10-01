@@ -96,7 +96,7 @@ class AttributePropertyPercent extends ActiveRecordExtended implements Attribute
 	 * @param bool $formatted
 	 * @return mixed
 	 */
-	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id, $formatted) {
 			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?($formatted?Yii::$app->formatter->asPercent($record->value / 100):$record->value):null;
 		});
@@ -110,7 +110,7 @@ class AttributePropertyPercent extends ActiveRecordExtended implements Attribute
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		} else {

@@ -167,19 +167,19 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	/**
 	 * @inheritDoc
 	 */
-	public function setProperty($property):void {
-		$this->self_score_value = ArrayHelper::getValue($property, 'selfScoreValue');
-		$this->self_score_comment = ArrayHelper::getValue($property, 'selfScoreComment');
-		$this->tl_score_value = ArrayHelper::getValue($property, 'tlScoreValue');
-		$this->tl_score_comment = ArrayHelper::getValue($property, 'tlScoreComment');
-		$this->al_score_value = ArrayHelper::getValue($property, 'alScoreValue');
-		$this->al_score_comment = ArrayHelper::getValue($property, 'alScoreComment');
+	public function setValue($value):void {
+		$this->self_score_value = ArrayHelper::getValue($value, 'selfScoreValue');
+		$this->self_score_comment = ArrayHelper::getValue($value, 'selfScoreComment');
+		$this->tl_score_value = ArrayHelper::getValue($value, 'tlScoreValue');
+		$this->tl_score_comment = ArrayHelper::getValue($value, 'tlScoreComment');
+		$this->al_score_value = ArrayHelper::getValue($value, 'alScoreValue');
+		$this->al_score_comment = ArrayHelper::getValue($value, 'alScoreComment');
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getProperty():ScoreProperty {
+	public function getValue() {
 		return $this->scoreValue;
 	}
 
@@ -191,7 +191,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @param bool $formatted
 	 * @return mixed
 	 */
-	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id) {
 			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->scoreValue:new ScoreProperty();
 		});
@@ -206,7 +206,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
@@ -326,7 +326,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 		$values = [];
 		/** @var DynamicAttributeProperty $model */
 		foreach ($models as $model) {
-			$values[] = self::getValue($model->attributeId, $model->id, $model->userId);
+			$values[] = self::loadValue($model->attributeId, $model->id, $model->userId);
 		}
 		$averageScore = ScoreProperty::add($values);
 		$averageScore->div((float)count($models));

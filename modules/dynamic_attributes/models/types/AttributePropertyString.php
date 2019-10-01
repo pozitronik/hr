@@ -96,7 +96,7 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	 * @return mixed
 	 * @throws Throwable
 	 */
-	public static function getValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id, $formatted) {
 			$value = ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
 			return $formatted?Yii::$app->formatter->asText($value):$value;
@@ -111,7 +111,7 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static function setValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		} else {
