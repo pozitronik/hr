@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
+use pozitronik\helpers\ArrayHelper;
 use yii\base\Model;
 
 /**
@@ -57,20 +58,12 @@ class DynamicAttributePropertyAggregation extends Model {
 	}
 
 	/**
-	 * @param array $array
-	 * @return array
-	 */
-	public static function dropEmptyValues(array $array):array {//todo move to ArrayHelper
-		return (array_filter($array, 'strlen'));// removes all NULL, FALSE and Empty Strings but leaves 0 (zero) values
-	}
-
-	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
 	 * @return int|null
 	 */
 	public static function AggregateIntAvg(array $values, bool $dropNullValues = false):?int {
-		$values = $dropNullValues?self::dropEmptyValues($values):$values;
+		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$summary = self::AggregateIntSum($values, $dropNullValues);
 		return $summary / count($values);
 	}
@@ -126,7 +119,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @return int|null
 	 */
 	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?int {
-		$values = $dropNullValues?self::dropEmptyValues($values):$values;
+		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		return array_reduce($values, static function($carry, $item) {
 			return $carry + $item;
 		});
