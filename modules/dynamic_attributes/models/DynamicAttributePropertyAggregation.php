@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use yii\base\Model;
 
 /**
@@ -128,7 +127,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 */
 	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?int {
 		$values = $dropNullValues?self::dropNullValues($values):$values;
-		return array_reduce($values, function($carry, $item) {
+		return array_reduce($values, static function($carry, $item) {
 			return $carry + $item;
 		});
 	}
