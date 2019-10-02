@@ -11,7 +11,7 @@ use yii\base\Model;
  * Все агрегаторы по умолчанию работают на всём массиве данных. Отсеивание null-значений указываем дополнительным параметром.
  * @package app\modules\dynamic_attributes\models
  * @property string $type -- тип свойства, полученного в результате агрегации (может не совпадать с типами аггрегирующих свойств, навпример вернётся строка или процент или null)
- * @property AttributePropertyInterface $value -- значение свойства, полученного в результате агрегации
+ * @property mixed $value -- значение свойства, полученного в результате агрегации
  */
 class DynamicAttributePropertyAggregation extends Model {
 
@@ -44,16 +44,16 @@ class DynamicAttributePropertyAggregation extends Model {
 	}
 
 	/**
-	 * @return AttributePropertyInterface
+	 * @return mixed
 	 */
-	public function getValue():AttributePropertyInterface {
+	public function getValue() {
 		return $this->_value;
 	}
 
 	/**
-	 * @param AttributePropertyInterface $value
+	 * @param mixed $value
 	 */
-	public function setValue(AttributePropertyInterface $value):void {
+	public function setValue($value):void {
 		$this->_value = $value;
 	}
 
