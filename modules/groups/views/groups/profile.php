@@ -70,13 +70,6 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 
 		</div>
 		<div class="row">
-			<div class="col-md-12">
-				<?= $this->render('profile/attributes', [
-					'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $model->relUsers]))->applyAggregation(DynamicAttributePropertyAggregation::AGGREGATION_AVG)
-				]) ?>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-md-8">
 				<?= $this->render('profile/users', [
 					'model' => $model,
@@ -88,6 +81,13 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 				</div>
 			</div>
 
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<?= $this->render('profile/attributes', [
+					'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $model->relUsers]))->applyAggregation(DynamicAttributePropertyAggregation::AGGREGATION_AVG)
+				]) ?>
+			</div>
 		</div>
 	</div>
 
