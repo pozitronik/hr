@@ -18,6 +18,6 @@ use yii\web\View;
 	<?php if ([] !== $attribute->getVirtualProperties()): ?>
 		<?= DynamicAttributeWidget::widget([
 			'attribute' => $attribute
-		]); ?>
+		]) ?>
 	<?php endif; ?>
 <?php endforeach; ?>

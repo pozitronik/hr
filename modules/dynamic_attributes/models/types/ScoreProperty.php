@@ -66,14 +66,14 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * @return int
+	 * @return float|null
 	 */
 	public function getSelfScoreValue():?float {
 		return $this->_self_score_value;
 	}
 
 	/**
-	 * @param int $self_score_value
+	 * @param float|null $self_score_value
 	 */
 	public function setSelfScoreValue(?float $self_score_value):void {
 		$this->_self_score_value = $self_score_value;
@@ -94,14 +94,14 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * @return int
+	 * @return float|null
 	 */
 	public function getTlScoreValue():?float {
 		return $this->_tl_score_value;
 	}
 
 	/**
-	 * @param int $tl_score_value
+	 * @param float|null $tl_score_value
 	 */
 	public function setTlScoreValue(?float $tl_score_value):void {
 		$this->_tl_score_value = $tl_score_value;
@@ -122,14 +122,14 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * @return int
+	 * @return float|null
 	 */
 	public function getAlScoreValue():?float {
 		return $this->_al_score_value;
 	}
 
 	/**
-	 * @param int $al_score_value
+	 * @param float|null $al_score_value
 	 */
 	public function setAlScoreValue(?float $al_score_value):void {
 		$this->_al_score_value = $al_score_value;
