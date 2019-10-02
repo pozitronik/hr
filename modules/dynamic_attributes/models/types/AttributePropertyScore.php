@@ -359,6 +359,12 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 					'value' => self::getAverageValue($models, $dropNullValues)
 				]);
 			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
+				return new DynamicAttributePropertyAggregation([
+					'type' => 'int',
+					'value' => count($models)
+				]);
+			break;
 			default:
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}
