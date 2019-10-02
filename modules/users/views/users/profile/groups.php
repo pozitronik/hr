@@ -8,13 +8,16 @@ declare(strict_types = 1);
  */
 
 use app\helpers\Utils;
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\home\HomeModule;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
+use kartik\grid\DataColumn;
 use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
@@ -57,6 +60,29 @@ use kartik\grid\GridView;
 					'linkScheme' => [HomeModule::to(['home/users', 'UsersSearch[groupId]' => $group->id])]
 				]);
 			}
+		],
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'type',
+			'value' => static function(Groups $group) {
+				return BadgeWidget::widget([
+					'models' => $group->relGroupTypes,
+					'useBadges' => true,
+					'attribute' => 'name',
+					'unbadgedCount' => 3,
+					'itemsSeparator' => false,
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					'linkScheme' => [GroupsModule::to(), 'GroupsSearch[type]' => 'id']
+				]);
+			},
+			'format' => 'raw',
+			'filterType' => ReferenceSelectWidget::class,
+			'filterInputOptions' => ['placeholder' => 'Тип'],
+			'filterWidgetOptions' => [
+				/*В картиковском гриде захардкожено взаимодействие с собственными фильтрами, в частности использование filter. В нашем виджете обходимся так*/
+				'referenceClass' => RefGroupTypes::class,
+				'pluginOptions' => ['allowClear' => true]
+			]
 		],
 		[
 			'label' => 'Роли в группе',
