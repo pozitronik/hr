@@ -68,14 +68,14 @@ class ScoreProperty extends Model {
 	/**
 	 * @return int
 	 */
-	public function getSelfScoreValue():?int {
+	public function getSelfScoreValue():?float {
 		return $this->_self_score_value;
 	}
 
 	/**
 	 * @param int $self_score_value
 	 */
-	public function setSelfScoreValue(?int $self_score_value):void {
+	public function setSelfScoreValue(?float $self_score_value):void {
 		$this->_self_score_value = $self_score_value;
 	}
 
@@ -96,14 +96,14 @@ class ScoreProperty extends Model {
 	/**
 	 * @return int
 	 */
-	public function getTlScoreValue():?int {
+	public function getTlScoreValue():?float {
 		return $this->_tl_score_value;
 	}
 
 	/**
 	 * @param int $tl_score_value
 	 */
-	public function setTlScoreValue(?int $tl_score_value):void {
+	public function setTlScoreValue(?float $tl_score_value):void {
 		$this->_tl_score_value = $tl_score_value;
 	}
 
@@ -124,14 +124,14 @@ class ScoreProperty extends Model {
 	/**
 	 * @return int
 	 */
-	public function getAlScoreValue():?int {
+	public function getAlScoreValue():?float {
 		return $this->_al_score_value;
 	}
 
 	/**
 	 * @param int $al_score_value
 	 */
-	public function setAlScoreValue(?int $al_score_value):void {
+	public function setAlScoreValue(?float $al_score_value):void {
 		$this->_al_score_value = $al_score_value;
 	}
 
@@ -197,7 +197,6 @@ class ScoreProperty extends Model {
 	/**
 	 * Деление числовых покзателей
 	 * @param float $value
-	 * @todo поменять тип параметров на float (но валидацию оставить int) для того, чтобы аггрегаторы могли оперировать с нецелыми значениями
 	 */
 	public function div(float $value):void {
 		$this->selfScoreValue /= $value;
