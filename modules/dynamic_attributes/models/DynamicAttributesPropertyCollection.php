@@ -57,13 +57,14 @@ class DynamicAttributesPropertyCollection extends Model {
 				if (in_array($aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $aggregation, $dropNullValues)) {
 					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value);
 				} else {
-					$attributeModel->setVirtualProperty($propertyId, (new $propertyClass())->value);//fill by empty attribute
+//					$attributeModel->setVirtualProperty($propertyId, (new $propertyClass())->value);//fill by empty attribute
+					$attributeModel = null;//Пустое значение в массиве, в случае, если запрошенный агрегатор явно не поддерживается атрибутом
 				}
 
 			}
 			$aggregatedDynamicAttributes[$attributeId] = $attributeModel;
 		}
-		return ($aggregatedDynamicAttributes);
+		return (ArrayHelper::filterValues($aggregatedDynamicAttributes, [null]));//убираем пустые значения
 	}
 
 }
