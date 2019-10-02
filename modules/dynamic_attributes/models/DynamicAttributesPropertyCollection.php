@@ -56,7 +56,9 @@ class DynamicAttributesPropertyCollection extends Model {
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($this->_dataArray, "{$attributeId}.{$propertyId}.type"));
 				if (in_array($aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation($userAttributePropertyArray, $aggregation, $dropNullValues)) {
-					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue);
+					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value);
+				} else {
+					$attributeModel->setVirtualProperty($propertyId, (new $propertyClass())->value);//fill by empty attribute
 				}
 
 			}
