@@ -6,9 +6,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\GroupsModule;
-use app\modules\home\HomeModule;
 use kartik\typeahead\Typeahead;
-use yii\bootstrap\Html;
 use yii\web\JsExpression;
 use yii\web\View;
 
@@ -25,7 +23,7 @@ $userTemplate = '<div class="suggestion-item"><div class="suggestion-name">{{nam
 	'pluginOptions' => ['highlight' => true],
 	'pluginEvents' => [
 		"typeahead:select" => "function(e, o) {open_result(o)}",
-		"typeahead:close" => "function(e, o) {open_result(o)}",
+		"typeahead:close" => "function(e, o) {open_result(o)}"
 	],
 	'dataset' => [
 		[
