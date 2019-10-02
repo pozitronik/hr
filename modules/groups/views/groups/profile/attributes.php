@@ -4,23 +4,20 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $model
+ * @var DynamicAttributes[] $aggregatedAttributes
  */
 
-use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
+use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\groups\models\Groups;
 use yii\web\View;
-use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 
-$collection = new DynamicAttributesPropertyCollection(['userScope' => $model->relUsers]);
+?>
 
-foreach ($collection->applyAggregation(DynamicAttributePropertyAggregation::AGGREGATION_AVG) as $attribute) {
-	if ([] !== $attribute->getVirtualProperties()) {
-		echo DynamicAttributeWidget::widget([
+<?php foreach ($aggregatedAttributes as $attribute): ?>
+	<?php if ([] !== $attribute->getVirtualProperties()): ?>
+		<?= DynamicAttributeWidget::widget([
 			'attribute' => $attribute
-		]);
-	}
-
-}
-
-
+		]); ?>
+	<?php endif; ?>
+<?php endforeach; ?>

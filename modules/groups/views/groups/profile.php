@@ -7,6 +7,8 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
+use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\graph\assets\VisjsAsset;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
@@ -70,7 +72,7 @@ $this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-c
 		<div class="row">
 			<div class="col-md-12">
 				<?= $this->render('profile/attributes', [
-					'model' => $model
+					'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $model->relUsers]))->applyAggregation(DynamicAttributePropertyAggregation::AGGREGATION_AVG)
 				]) ?>
 			</div>
 		</div>
