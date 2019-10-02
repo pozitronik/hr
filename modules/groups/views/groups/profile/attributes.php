@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Groups $model
  */
 
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\groups\models\Groups;
 use yii\web\View;
@@ -13,7 +14,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 
 $collection = new DynamicAttributesPropertyCollection(['userScope' => $model->relUsers]);
 
-foreach ($collection->getAverage() as $attribute) {
+foreach ($collection->applyAggregation(DynamicAttributePropertyAggregation::AGGREGATION_AVG) as $attribute) {
 	if ([] !== $attribute->getVirtualProperties()) {
 		echo DynamicAttributeWidget::widget([
 			'attribute' => $attribute
