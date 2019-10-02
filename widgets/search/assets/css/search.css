@@ -1,14 +1,23 @@
 .search-box {
-	margin:3px 5px 0px 5px;
-	width:300px
+	margin: 3px 5px 0px 5px;
+	min-width: 500px;
 }
 
 .suggestion-item {
-	white-space: normal!important;
+	white-space: normal !important;
+	padding: 3px 10px;
 }
 
 .suggestion-header {
 	border-bottom: 1px solid #CCCCCC;
 	margin: 0 !important;
 	padding: 10px;
+}
+
+.suggestion-name {
+	float: left;
+}
+
+.suggestion-links {
+	float: right;
 }

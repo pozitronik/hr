@@ -6,11 +6,15 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\GroupsModule;
+use app\modules\home\HomeModule;
 use kartik\typeahead\Typeahead;
+use yii\bootstrap\Html;
 use yii\web\JsExpression;
 use yii\web\View;
 
-$template = '<div class="suggestion-item"><p class="suggestion-name">{{name}}</p>';
+//Html::a('Дашборд', HomeModule::to(['/home', 'u' => '{{id}}']), ['class' => 'btn btn-info summary-content'])
+$groupTemplate = '<div class="suggestion-item"><div class="suggestion-name">{{name}}</div><div class="clearfix"></div></div>';
+$userTemplate = '<div class="suggestion-item"><div class="suggestion-name">{{name}}</div><div class="suggestion-links"><a href="/users/users/profile?id={{id}}" class="dashboard-button btn btn-xs btn-info pull-left">Профиль<a/><a href="/home?u={{id}}" class="dashboard-button btn btn-xs btn-info pull-left">Дашборд<a/></div><div class="clearfix"></div></div>';
 ?>
 <?= Typeahead::widget([
 	'container' => [
@@ -20,14 +24,15 @@ $template = '<div class="suggestion-item"><p class="suggestion-name">{{name}}</p
 	'options' => ['placeholder' => 'Поиск'],
 	'pluginOptions' => ['highlight' => true],
 	'pluginEvents' => [
-		"typeahead:select" => "function(e, o) {open_result(o)}"
+		"typeahead:select" => "function(e, o) {open_result(o)}",
+		"typeahead:close" => "function(e, o) {open_result(o)}",
 	],
 	'dataset' => [
 		[
 			'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('name')",
 			'display' => 'name',
 			'templates' => [
-				'suggestion' => new JsExpression("Handlebars.compile('{$template}')"),
+				'suggestion' => new JsExpression("Handlebars.compile('{$groupTemplate}')"),
 				'header' => '<h3 class="suggestion-header">Группы</h3>'
 			],
 			'remote' => [
@@ -39,7 +44,7 @@ $template = '<div class="suggestion-item"><p class="suggestion-name">{{name}}</p
 			'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('name')",
 			'display' => 'name',
 			'templates' => [
-				'suggestion' => new JsExpression("Handlebars.compile('{$template}')"),
+				'suggestion' => new JsExpression("Handlebars.compile('{$userTemplate}')"),
 				'header' => '<h3 class="suggestion-header">Пользователи</h3>'
 			],
 			'remote' => [
