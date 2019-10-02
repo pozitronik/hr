@@ -316,7 +316,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	/**
 	 * @inheritDoc
 	 */
-	public static function getAverageValue(array $models) {
+	public static function getAverageValue(array $models, bool $dropNullValues = false) {
 		$values = [];
 		/** @var DynamicAttributeProperty $model */
 		foreach ($models as $model) {
@@ -352,6 +352,16 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
-		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		switch ($aggregation) {
+			case DynamicAttributePropertyAggregation::AGGREGATION_AVG:
+				return new DynamicAttributePropertyAggregation([
+					'type' => 'score',
+					'value' => self::getAverageValue($models, $dropNullValues)
+				]);
+			break;
+			default:
+				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		}
+
 	}
 }
