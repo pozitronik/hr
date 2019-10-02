@@ -12,6 +12,7 @@ declare(strict_types = 1);
 use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use kartik\rating\StarRating;
+use yii\web\JsExpression;
 use yii\web\View;
 
 ?>
@@ -33,16 +34,18 @@ use yii\web\View;
 						'stars' => 5,
 						'min' => 0,
 						'max' => 5,
-						'step' => 1,
+						'step' => 0.1,
 						'clearCaption' => 'N/A',
-						'starCaptions' => [
-							0 => 'N/A',
-							1 => '1/5',
-							2 => '2/5',
-							3 => '3/5',
-							4 => '4/5',
-							5 => '5/5'
-						]
+//						'defaultCaption' => '{rating} hearts',
+						'starCaptions' => new JsExpression("function(val){return val}")
+//						'starCaptions' => [
+//							0 => 'N/A',
+//							1 => '1/5',
+//							2 => '2/5',
+//							3 => '3/5',
+//							4 => '4/5',
+//							5 => '5/5'
+//						]
 					]
 				]) ?>
 			</div>
