@@ -57,4 +57,80 @@ class DynamicAttributePropertyAggregation extends Model {
 		$this->_value = $value;
 	}
 
+	/**
+	 * @param array $array
+	 * @return array
+	 */
+	private static function dropNullValues(array $array):array {
+		return (array_filter($array, 'strlen'));// removes all NULL, FALSE and Empty Strings but leaves 0 (zero) values
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntAvg(array $values, bool $dropNullValues = false):?int {
+		$values = $dropNullValues?self::dropNullValues($values):$values;
+		$summary = self::AggregateIntSum($values, $dropNullValues);
+		return $summary / count($values);
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntHarmonic(array $values, bool $dropNullValues = false):?int {
+
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false):?int {
+
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntCount(array $values, bool $dropNullValues = false):?int {
+
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntMin(array $values, bool $dropNullValues = false):?int {
+
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntMax(array $values, bool $dropNullValues = false):?int {
+
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
+	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?int {
+		$values = $dropNullValues?self::dropNullValues($values):$values;
+		return array_reduce($values, function($carry, $item) {
+			return $carry + $item;
+		});
+	}
+
 }
