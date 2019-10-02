@@ -60,7 +60,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param array $array
 	 * @return array
 	 */
-	private static function dropNullValues(array $array):array {
+	public static function dropEmptyValues(array $array):array {
 		return (array_filter($array, 'strlen'));// removes all NULL, FALSE and Empty Strings but leaves 0 (zero) values
 	}
 
@@ -70,7 +70,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @return int|null
 	 */
 	public static function AggregateIntAvg(array $values, bool $dropNullValues = false):?int {
-		$values = $dropNullValues?self::dropNullValues($values):$values;
+		$values = $dropNullValues?self::dropEmptyValues($values):$values;
 		$summary = self::AggregateIntSum($values, $dropNullValues);
 		return $summary / count($values);
 	}
@@ -126,7 +126,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @return int|null
 	 */
 	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?int {
-		$values = $dropNullValues?self::dropNullValues($values):$values;
+		$values = $dropNullValues?self::dropEmptyValues($values):$values;
 		return array_reduce($values, static function($carry, $item) {
 			return $carry + $item;
 		});
