@@ -135,7 +135,7 @@ class DynamicAttributeProperty extends Model {
 			throw new InvalidCallException('Getting write-only property: '.get_class($this).'::'.$name);
 		}
 		if ((int)$name === $this->id) {/*Хачим геттер метода для совместимости с ActiveForm::field*/
-			return $this->loadValue();
+			return $this->getValue();
 		}
 
 		throw new UnknownPropertyException('Getting unknown property: '.get_class($this).'::'.$name);
@@ -225,16 +225,8 @@ class DynamicAttributeProperty extends Model {
 	 * @return mixed
 	 * @throws Throwable
 	 */
-	public function loadValue(bool $formatted = false) {
-		return null === $this->user_id?$this->value:self::getTypeClass($this->type)::loadValue($this->attribute_id, $this->id, $this->user_id, $formatted);
-	}
-
-	/**
-	 * Вернёт виртуальное (установленное без привязки ) значение
-	 * @throws Throwable
-	 */
-	public function getValue() {
-		return $this->_virtualValue;
+	public function getValue(bool $formatted = false) {
+		return null === $this->user_id?$this->_virtualValue:self::getTypeClass($this->type)::loadValue($this->attribute_id, $this->id, $this->user_id, $formatted);
 	}
 
 	/**
