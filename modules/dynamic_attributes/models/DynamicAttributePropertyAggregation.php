@@ -60,7 +60,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param array $array
 	 * @return array
 	 */
-	public static function dropEmptyValues(array $array):array {
+	public static function dropEmptyValues(array $array):array {//todo move to ArrayHelper
 		return (array_filter($array, 'strlen'));// removes all NULL, FALSE and Empty Strings but leaves 0 (zero) values
 	}
 
