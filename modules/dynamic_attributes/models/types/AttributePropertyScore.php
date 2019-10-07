@@ -355,13 +355,13 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 		switch ($aggregation) {
 			case DynamicAttributePropertyAggregation::AGGREGATION_AVG:
 				return new DynamicAttributePropertyAggregation([
-					'type' => 'score',
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getAverageValue($models)
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
 				return new DynamicAttributePropertyAggregation([
-					'type' => 'int',
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
 					'value' => count($models)
 				]);
 			break;
