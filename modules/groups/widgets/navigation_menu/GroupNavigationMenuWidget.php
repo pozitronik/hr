@@ -55,7 +55,7 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			],
 			[
 				'label' => IconsHelper::statistic().'Статистика',
-				'url' => GraphModule::to(['groups/attributes-statistics', 'id' => $this->model->id])
+				'url' => GroupsModule::to(['groups/attributes-statistics', 'id' => $this->model->id])
 			],
 			[
 				'menu' => true,
