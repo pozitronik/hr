@@ -106,7 +106,7 @@ class DynamicAttributePropertyAggregation extends Model {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$modaArray = [];
 		foreach ($values as $iValue) {
-			ArrayHelper::initValue($modaArray, $iValue, ArrayHelper::getValue($modaArray, $iValue, 0) + 1);
+			ArrayHelper::setValue($modaArray, $iValue, ArrayHelper::getValue($modaArray, $iValue, 0) + 1);
 		}
 		$maxValue = max($modaArray);
 		//требуется проверка
