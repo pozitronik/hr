@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models;
 
 use pozitronik\helpers\ArrayHelper;
+use Throwable;
 use yii\base\Model;
 
 /**
@@ -98,6 +99,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param int[] $values
 	 * @param bool $dropNullValues
 	 * @return int|null
+	 * @throws Throwable
 	 * @todo: требуется проверка
 	 */
 	public static function AggregateIntModa(array $values, bool $dropNullValues = false):?int {
@@ -121,7 +123,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, $truncPercent = 20):?int {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		sort($values, SORT_NUMERIC);
-		$truncCount = (int)(count($values) * $truncPercent) / 100;
+		$truncCount = (count($values) * $truncPercent) / 100;
 		$values = array_slice($values, $truncCount, -$truncCount, true);
 		return self::AggregateIntAvg($values);
 	}
