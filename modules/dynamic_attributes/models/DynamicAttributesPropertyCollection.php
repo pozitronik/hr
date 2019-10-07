@@ -22,7 +22,6 @@ class DynamicAttributesPropertyCollection extends Model {
 	private $_aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG;
 	private $_dropNullValues = false;
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -94,7 +93,7 @@ class DynamicAttributesPropertyCollection extends Model {
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
 				if (in_array($this->aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
-					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value);
+					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value, $aggregatedValue->type);
 				} else {
 //					$attributeModel->setVirtualProperty($propertyId, (new $propertyClass())->value);//fill by empty attribute
 					$attributeModel = null;//Пустое значение в массиве, в случае, если запрошенный агрегатор явно не поддерживается атрибутом
