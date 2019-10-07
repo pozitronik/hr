@@ -12,6 +12,7 @@ use app\modules\groups\models\GroupsSearch;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
+use yii\base\DynamicModel;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
@@ -170,15 +171,18 @@ class GroupsController extends WigetableController {
 	/**
 	 * @param int $id
 	 * @param int $aggregation
+	 * @param bool $dropNullValues
 	 * @return string|null
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public function actionAttributesStatistics(int $id, int $aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG):?string {
+	public function actionAttributesStatistics(int $id, int $aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG, bool $dropNullValues = false):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateModel($updateArray);
+
 		return $this->render('attributes-statistics', [
-			'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $group->relUsers]))->applyAggregation($aggregation)
+			'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $group->relUsers]))->applyAggregation($aggregation),
+			'parametersModel' => new DynamicModel(['aggregation' => $aggregation, 'dropNullValues' => $dropNullValues, 'statistics' => true]),
 		]);
 	}
 }
