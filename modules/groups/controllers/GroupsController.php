@@ -5,6 +5,7 @@ namespace app\modules\groups\controllers;
 
 use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyFilter;
 use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
@@ -170,19 +171,21 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * @param int $id
-	 * @param int $aggregation
-	 * @param bool $dropNullValues
 	 * @return string|null
 	 * @throws InvalidConfigException
 	 * @throws Throwable
 	 */
-	public function actionAttributesStatistics(int $id, int $aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG, bool $dropNullValues = false):?string {
+	public function actionAttributesStatistics(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
-		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateModel($updateArray);
+
+		$parametersModel = new DynamicAttributesPropertyCollection(['userScope' => $group->relUsers]);
+
+		$parametersModel->load(Yii::$app->request->post());
 
 		return $this->render('attributes-statistics', [
-			'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $group->relUsers]))->applyAggregation($aggregation),
-			'parametersModel' => new DynamicModel(['aggregation' => $aggregation, 'dropNullValues' => $dropNullValues, 'statistics' => true]),
+			'model' => $group,
+			'aggregatedAttributes' => $parametersModel->applyAggregation(),
+			'parametersModel' => $parametersModel
 		]);
 	}
 }
