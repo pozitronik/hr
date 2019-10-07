@@ -47,6 +47,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 	use PluginTrait;
 
 	private $_virtualPropertyValues = [];//Хранение виртуальных значений атрибутов
+	private $_virtualPropertyTypes = [];//Хранение виртуальных типов атрибутов
 
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',
@@ -228,8 +229,9 @@ class DynamicAttributes extends ActiveRecordExtended {
 	 * @param int $property_id
 	 * @param $property_value
 	 */
-	public function setVirtualProperty(int $property_id, $property_value):void {
+	public function setVirtualProperty(int $property_id, $property_value, $property_type):void {
 		ArrayHelper::setValue($this->_virtualPropertyValues, $property_id, $property_value);
+		ArrayHelper::setValue($this->_virtualPropertyTypes, $property_id, $property_type);
 	}
 
 	/**
@@ -240,6 +242,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 	public function getVirtualProperty(int $property_id) {
 		$property = $this->getPropertyById($property_id);
 		$property->value = ArrayHelper::getValue($this->_virtualPropertyValues, $property_id);
+		$property->type = ArrayHelper::getValue($this->_virtualPropertyTypes, $property_id);
 		return $property;
 	}
 
