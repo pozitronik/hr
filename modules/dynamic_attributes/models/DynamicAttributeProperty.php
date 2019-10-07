@@ -50,36 +50,45 @@ class DynamicAttributeProperty extends Model {
 	private $user_id;
 	private $_virtualValue;
 
+	public const PROPERTY_INTEGER = 'integer';
+	public const PROPERTY_BOOLEAN = 'boolean';
+	public const PROPERTY_STRING = 'string';
+	public const PROPERTY_DATE = 'date';
+	public const PROPERTY_TIME = 'time';
+	public const PROPERTY_PERCENT = 'percent';
+	public const PROPERTY_TEXT = 'text';
+	public const PROPERTY_SCORE = 'score';
+
 	public const PROPERTY_TYPES = [
-		'integer' => [/*Название (индекс) типа данных*/
+		self::PROPERTY_INTEGER => [/*Название (индекс) типа данных*/
 			'label' => 'Число',/*Отображаемое в интефейсах имя*/
 			'model' => AttributePropertyInteger::class,/*Имя класса, реализующего взаимоделйствие с типом данных, обязательно имплементация AttributePropertyInterface. Поле названо model, потому что на class ругается инспектор*/
 		],
-		'boolean' => [
+		self::PROPERTY_BOOLEAN => [
 			'label' => 'Логический тип',
 			'model' => AttributePropertyBoolean::class
 		],
-		'string' => [
+		self::PROPERTY_STRING => [
 			'label' => 'Строка',
 			'model' => AttributePropertyString::class
 		],
-		'date' => [
+		self::PROPERTY_DATE => [
 			'label' => 'Дата',
 			'model' => AttributePropertyDate::class
 		],
-		'time' => [
+		self::PROPERTY_TIME => [
 			'label' => 'Время',
 			'model' => AttributePropertyTime::class
 		],
-		'percent' => [
+		self::PROPERTY_PERCENT => [
 			'label' => 'Проценты',
 			'model' => AttributePropertyPercent::class
 		],
-		'text' => [
+		self::PROPERTY_TEXT => [
 			'label' => 'Текст',
 			'model' => AttributePropertyText::class
 		],
-		'score' => [
+		self::PROPERTY_SCORE => [
 			'label' => 'Оценка',
 			'model' => AttributePropertyScore::class
 		]
