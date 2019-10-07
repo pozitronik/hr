@@ -71,6 +71,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php ActiveForm::end(); ?>
 
+<?php if ([] === $aggregatedAttributes): ?>
+	<div>Ни один атрибут сотрудников в группе не поддерживает выбранный тип статистики.</div>
+<?php endif; ?>
+
 <?php foreach ($aggregatedAttributes as $attribute): ?>
 	<?php if ([] !== $attribute->getVirtualProperties()): ?>
 		<?= DynamicAttributeWidget::widget([
