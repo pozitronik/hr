@@ -120,7 +120,7 @@ use yii\web\View;
 				return BadgeWidget::widget([
 					'models' => $otherGroups,
 					'attribute' => 'name',
-					'itemsSeparator' => false,
+					'itemsSeparator' => '<br />',
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
 					'linkScheme' => ['/groups/groups/profile', 'id' => 'id'],
