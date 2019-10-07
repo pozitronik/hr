@@ -104,10 +104,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 */
 	public static function AggregateIntModa(array $values, bool $dropNullValues = false):?int {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
-		$modaArray = [];
-		foreach ($values as $iValue) {
-			ArrayHelper::setValue($modaArray, $iValue, ArrayHelper::getValue($modaArray, $iValue, 0) + 1);
-		}
+		$modaArray = array_count_values($values);
 		$maxValue = max($modaArray);
 		//требуется проверка
 		return array_search($maxValue, $modaArray);//наиболее часто встречаемое значение

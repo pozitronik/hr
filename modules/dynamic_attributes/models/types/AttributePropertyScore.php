@@ -335,12 +335,19 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @throws Throwable
 	 */
 	public static function getModaValue(array $models, bool $dropNullValues = true):ScoreProperty {
+		/**
+		 * @param $value
+		 * @return int|string
+		 */
+		$intFunc = function($value) {
+			return null === $value?'':(int)$value;
+		};
+
 		$modaArray = [];
-		foreach ($models as $model) {
-			ArrayHelper::setValue($modaArray, "selfScoreValue.{$model->value->selfScoreValue}", ArrayHelper::getValue($modaArray, "selfScoreValue.{$model->value->selfScoreValue}", 0) + 1);
-			ArrayHelper::setValue($modaArray, "alScoreValue.{$model->value->alScoreValue}", ArrayHelper::getValue($modaArray, "alScoreValue.{$model->value->alScoreValue}", 0) + 1);
-			ArrayHelper::setValue($modaArray, "tlScoreValue.{$model->value->tlScoreValue}", ArrayHelper::getValue($modaArray, "tlScoreValue.{$model->value->tlScoreValue}", 0) + 1);
-		}
+		$modaArray['selfScoreValue'] = array_count_values(array_map($intFunc, ArrayHelper::getColumn($models, 'value.selfScoreValue')));
+		$modaArray['alScoreValue'] = array_count_values(array_map($intFunc, ArrayHelper::getColumn($models, 'value.alScoreValue')));
+		$modaArray['tlScoreValue'] = array_count_values(array_map($intFunc, ArrayHelper::getColumn($models, 'value.tlScoreValue')));
+
 		if ($dropNullValues) {
 			unset($modaArray['selfScoreValue'][''], $modaArray['alScoreValue'][''], $modaArray['tlScoreValue']['']);
 		}
