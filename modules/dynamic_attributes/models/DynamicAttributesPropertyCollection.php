@@ -14,6 +14,8 @@ use yii\base\Model;
  * Модель, содержащая набор свойств динамических атрибутов (с взаимными ссылками), и позволяющая производить над ними всякие извращения, допускаемые этими типами атрибутов (всякие агрегации)
  *
  * @package app\modules\dynamic_attributes\models
+ * @property int $aggregation -- выбранный тип просматриваемой агрегации
+ * @property bool $dropNullValues -- отсеивание пустых значений, если возможно
  */
 class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
