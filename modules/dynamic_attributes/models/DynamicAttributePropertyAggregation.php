@@ -99,6 +99,22 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param bool $dropNullValues
 	 * @return int|null
 	 */
+	public static function AggregateIntModa(array $values, bool $dropNullValues = false):?int {
+		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
+		$modaArray = [];
+		foreach ($values as $iValue) {
+			ArrayHelper::initValue($modaArray, $iValue, ArrayHelper::getValue($modaArray, $iValue, 0) + 1);
+		}
+		$maxValue = max($modaArray);
+		//требуется проверка
+		return array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return int|null
+	 */
 	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false):?int {
 
 	}
