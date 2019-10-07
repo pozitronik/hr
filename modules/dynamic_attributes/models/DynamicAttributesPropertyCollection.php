@@ -19,6 +19,47 @@ class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
 	private $_userScope = [];
 	private $_dataArray = [];
+	private $_aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG;
+	private $_dropNullValues = false;
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function rules() {
+		return [
+			[['aggregation'], 'integer'],
+			[['dropNullValues'], 'boolean']
+		];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getAggregation():int {
+		return $this->_aggregation;
+	}
+
+	/**
+	 * @param int $aggregation
+	 */
+	public function setAggregation(int $aggregation):void {
+		$this->_aggregation = $aggregation;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getDropNullValues():bool {
+		return $this->_dropNullValues;
+	}
+
+	/**
+	 * @param bool $dropNullValues
+	 */
+	public function setDropNullValues(bool $dropNullValues):void {
+		$this->_dropNullValues = $dropNullValues;
+	}
 
 	private function fill():void {
 		foreach ($this->_userScope as $user) {
@@ -42,19 +83,17 @@ class DynamicAttributesPropertyCollection extends Model {
 	}
 
 	/**
-	 * @param int $aggregation
-	 * @param bool $dropNullValues
 	 * @return DynamicAttributes[]
 	 * @throws Throwable
 	 */
-	public function applyAggregation(int $aggregation, bool $dropNullValues = false):array {
+	public function applyAggregation():array {
 		$aggregatedDynamicAttributes = [];
 		foreach ($this->_dataArray as $attributeId => $propertyData) {
 			/** @var DynamicAttributes $attributeModel */
 			$attributeModel = DynamicAttributes::findModel($attributeId, new Exception("Can't load dynamic attribute!"));
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
-				if (in_array($aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $aggregation, $dropNullValues)) {
+				if (in_array($this->aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
 					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value);
 				} else {
 //					$attributeModel->setVirtualProperty($propertyId, (new $propertyClass())->value);//fill by empty attribute
