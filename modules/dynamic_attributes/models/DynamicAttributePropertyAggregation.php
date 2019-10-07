@@ -26,6 +26,17 @@ class DynamicAttributePropertyAggregation extends Model {
 	public const AGGREGATION_MAX = 7;//максимальное значение
 	public const AGGREGATION_SUM = 8;//сумма всех значений
 
+	public const AGGREGATION_LABELS = [
+		self::AGGREGATION_AVG => 'Среднее арифметическое',
+		self::AGGREGATION_HARMONIC => 'Среднее гармоническое',
+		self::AGGREGATION_MODA => 'Наиболее распространённое значение',
+		self::AGGREGATION_AVG_TRUNC => 'Среднее усечённое (60%)',
+		self::AGGREGATION_COUNT => 'Количество значений',
+		self::AGGREGATION_MIN => 'Минимальное значение',
+		self::AGGREGATION_MAX => 'Максимальное значение',
+		self::AGGREGATION_SUM => 'Сумма всех значений',
+	];
+
 	private $_type;
 	private $_value;
 
