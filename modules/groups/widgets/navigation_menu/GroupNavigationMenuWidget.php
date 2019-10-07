@@ -54,6 +54,10 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => GraphModule::to(['graph/group', 'id' => $this->model->id])
 			],
 			[
+				'label' => IconsHelper::statistic().'Статистика',
+				'url' => GraphModule::to(['groups/attributes-statistics', 'id' => $this->model->id])
+			],
+			[
 				'menu' => true,
 				'label' => IconsHelper::hierarchy().'Иерархия пользователей',
 				'url' => GroupsModule::to(['groups/users-hierarchy', 'id' => $this->model->id])
