@@ -292,5 +292,11 @@ class IconsHelper {
 	public static function minimize():string {
 		return "<i class='fa fa-window-minimize'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function statistic():string {
+		return "<i class='fa fa-abacus'></i>";
+	}
 
 }
