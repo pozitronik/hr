@@ -27,7 +27,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['aggregation'], 'integer'],
 			[['dropNullValues'], 'boolean']

@@ -228,6 +228,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 	 * Устанавливает свойству виртуальное значение атрибута, которое не привязано ни к чему, и существует только вместе с самим объектом динамического атрибута
 	 * @param int $property_id
 	 * @param $property_value
+	 * @param $property_type
 	 */
 	public function setVirtualProperty(int $property_id, $property_value, $property_type):void {
 		ArrayHelper::setValue($this->_virtualPropertyValues, $property_id, $property_value);

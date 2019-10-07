@@ -34,7 +34,7 @@ class DynamicAttributePropertyAggregation extends Model {
 		self::AGGREGATION_COUNT => 'Количество значений',
 		self::AGGREGATION_MIN => 'Минимальное значение',
 		self::AGGREGATION_MAX => 'Максимальное значение',
-		self::AGGREGATION_SUM => 'Сумма всех значений',
+		self::AGGREGATION_SUM => 'Сумма всех значений'
 	];
 
 	private $_type;
