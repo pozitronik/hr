@@ -314,9 +314,10 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	}
 
 	/**
-	 * @inheritDoc
+	 * @param DynamicAttributeProperty[] $models
+	 * @return ScoreProperty
 	 */
-	public static function getAverageValue(array $models) {
+	public static function getAverageValue(array $models):ScoreProperty {
 		$values = [];
 		/** @var DynamicAttributeProperty $model */
 		foreach ($models as $model) {
@@ -325,6 +326,35 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 		$averageScore = ScoreProperty::add($values);
 		$averageScore->div((float)count($models));
 		return $averageScore;
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
+	 * @param bool $dropNullValues
+	 * @return ScoreProperty
+	 * @throws Throwable
+	 */
+	public static function getModaValue(array $models, bool $dropNullValues = true):ScoreProperty {
+		$modaArray = [];
+		foreach ($models as $model) {
+			ArrayHelper::setValue($modaArray, "selfScoreValue.{$model->value->selfScoreValue}", ArrayHelper::getValue($modaArray, "selfScoreValue.{$model->value->selfScoreValue}", 0) + 1);
+			ArrayHelper::setValue($modaArray, "alScoreValue.{$model->value->alScoreValue}", ArrayHelper::getValue($modaArray, "alScoreValue.{$model->value->alScoreValue}", 0) + 1);
+			ArrayHelper::setValue($modaArray, "tlScoreValue.{$model->value->tlScoreValue}", ArrayHelper::getValue($modaArray, "tlScoreValue.{$model->value->tlScoreValue}", 0) + 1);
+		}
+		if ($dropNullValues) {
+			unset($modaArray['selfScoreValue'][''], $modaArray['alScoreValue'][''], $modaArray['tlScoreValue']['']);
+		}
+
+		$maxSelfScoreValue = (count($modaArray['selfScoreValue']))?max($modaArray['selfScoreValue']):null;
+		$maxAlScoreValue = count($modaArray['alScoreValue'])?max($modaArray['alScoreValue']):null;
+		$maxTlScoreValue = count($modaArray['tlScoreValue'])?max($modaArray['tlScoreValue']):null;
+
+		return new ScoreProperty([
+			'selfScoreValue' => (int)array_search($maxSelfScoreValue, $modaArray['selfScoreValue']),
+			'alScoreValue' => (int)array_search($maxAlScoreValue, $modaArray['alScoreValue']),
+			'tlScoreValue' => (int)array_search($maxTlScoreValue, $modaArray['tlScoreValue'])
+
+		]);
 	}
 
 	/**
@@ -350,6 +380,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @throws Throwable
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		switch ($aggregation) {
@@ -357,6 +388,12 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getAverageValue($models)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getModaValue($models, $dropNullValues)
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
