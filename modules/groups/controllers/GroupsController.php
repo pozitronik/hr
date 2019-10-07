@@ -4,12 +4,15 @@ declare(strict_types = 1);
 namespace app\modules\groups\controllers;
 
 use app\helpers\Utils;
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
+use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use Throwable;
 use Yii;
 use app\models\core\WigetableController;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -153,7 +156,6 @@ class GroupsController extends WigetableController {
 		]);
 	}
 
-
 	/**
 	 * @param int $id
 	 * @throws Throwable
@@ -163,5 +165,20 @@ class GroupsController extends WigetableController {
 		$map = [0 => 1];
 		$group->getGraphMap($map);
 		Utils::log($map);
+	}
+
+	/**
+	 * @param int $id
+	 * @param int $aggregation
+	 * @return string|null
+	 * @throws InvalidConfigException
+	 * @throws Throwable
+	 */
+	public function actionAttributesStatistics(int $id, int $aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG):?string {
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
+		if (null !== ($updateArray = Yii::$app->request->post($group->formName()))) $group->updateModel($updateArray);
+		return $this->render('attributes-statistics', [
+			'aggregatedAttributes' => (new DynamicAttributesPropertyCollection(['userScope' => $group->relUsers]))->applyAggregation($aggregation)
+		]);
 	}
 }
