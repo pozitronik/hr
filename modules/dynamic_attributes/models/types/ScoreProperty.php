@@ -176,6 +176,8 @@ class ScoreProperty extends Model {
 	 * Сложение моделей (числовых признаков)
 	 * @param self[] $items
 	 * @return static
+	 * @unused
+	 * @deprecated
 	 */
 	public static function add(array $items):self {
 		$resultScore = new self([
@@ -197,6 +199,8 @@ class ScoreProperty extends Model {
 	/**
 	 * Деление числовых покзателей
 	 * @param float $value
+	 * @unused
+	 * @deprecated
 	 */
 	public function div(float $value):void {
 		$this->selfScoreValue /= $value;
