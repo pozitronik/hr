@@ -40,6 +40,18 @@ class DynamicAttributePropertyAggregation extends Model {
 		self::AGGREGATION_MEDIAN => 'Медиана'
 	];
 
+	public const AGGREGATION_HINTS = [
+		self::AGGREGATION_AVG => 'Сумма всех значений, делённая на их количество',
+		self::AGGREGATION_HARMONIC => 'Корректное усреднение измеряемых величин',
+		self::AGGREGATION_MODA => 'Значение, встречающееся в выборке наиболее часто',
+		self::AGGREGATION_AVG_TRUNC => 'Отбрасываем по 20% наименьших и наибольших значений, по остатку считаем среднее',
+		self::AGGREGATION_COUNT => 'Количество значений',
+		self::AGGREGATION_MIN => 'Минимальное значение',
+		self::AGGREGATION_MAX => 'Максимальное значение',
+		self::AGGREGATION_SUM => 'Сумма всех значений',
+		self::AGGREGATION_MEDIAN => 'Половина выборки меньше медианного значения, другая половина - больше'
+	];
+
 	private $_type;
 	private $_value;
 
