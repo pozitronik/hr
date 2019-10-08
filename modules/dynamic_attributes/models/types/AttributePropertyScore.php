@@ -42,6 +42,12 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 */
 	public static function conditionConfig():array {
 		return [
+			//todo: функция условия должна уметь модифицировать выборку для возврата агрегаторов, вроде MAX/MIN
+//			['наибольшая самооценка', static function($tableAlias, $searchValue) {
+////				return ['=', "$tableAlias.self_score_value", $searchValue];
+//				return new Expression("MAX($tableAlias.self_score_value)");
+//			}],
+
 			['самооценка равна', static function($tableAlias, $searchValue) {
 				return ['=', "$tableAlias.self_score_value", $searchValue];
 			}],
