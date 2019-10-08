@@ -85,9 +85,9 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param bool $dropNullValues
 	 * @return int|null
 	 */
-	public static function AggregateIntHarmonic(array $values, bool $dropNullValues = false):?int {
-		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
+	public static function AggregateIntHarmonic(array $values):?int {
 		$num_args = count($values);
+		$values = ArrayHelper::filterValues($values, ['', false, null, 0]);
 		$sum = 0;
 		foreach ($values as $iValue) {
 			$sum += 1 / $iValue;
