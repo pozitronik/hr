@@ -347,35 +347,12 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @param DynamicAttributeProperty[] $models
 	 * @param bool $dropNullValues
 	 * @return ScoreProperty
-	 * @throws Throwable
 	 */
 	public static function getModaValue(array $models, bool $dropNullValues = true):ScoreProperty {
-		/**
-		 * @param $value
-		 * @return int|string
-		 */
-		$intFunc = function($value) {
-			return null === $value?'':(int)$value;
-		};
-
-		$modaArray = [];
-		$modaArray['selfScoreValue'] = array_count_values(array_map($intFunc, ArrayHelper::getColumn($models, 'value.selfScoreValue')));
-		$modaArray['alScoreValue'] = array_count_values(array_map($intFunc, ArrayHelper::getColumn($models, 'value.alScoreValue')));
-		$modaArray['tlScoreValue'] = array_count_values(array_map($intFunc, ArrayHelper::getColumn($models, 'value.tlScoreValue')));
-
-		if ($dropNullValues) {
-			unset($modaArray['selfScoreValue'][''], $modaArray['alScoreValue'][''], $modaArray['tlScoreValue']['']);
-		}
-
-		$maxSelfScoreValue = (count($modaArray['selfScoreValue']))?max($modaArray['selfScoreValue']):null;
-		$maxAlScoreValue = count($modaArray['alScoreValue'])?max($modaArray['alScoreValue']):null;
-		$maxTlScoreValue = count($modaArray['tlScoreValue'])?max($modaArray['tlScoreValue']):null;
-
 		return new ScoreProperty([
-			'selfScoreValue' => (int)array_search($maxSelfScoreValue, $modaArray['selfScoreValue']),
-			'alScoreValue' => (int)array_search($maxAlScoreValue, $modaArray['alScoreValue']),
-			'tlScoreValue' => (int)array_search($maxTlScoreValue, $modaArray['tlScoreValue'])
-
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
 		]);
 	}
 
