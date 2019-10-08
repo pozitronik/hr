@@ -26,6 +26,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	public const AGGREGATION_MIN = 6;//минимальное значение
 	public const AGGREGATION_MAX = 7;//максимальное значение
 	public const AGGREGATION_SUM = 8;//сумма всех значений
+	public const AGGREGATION_MEDIAN = 9;
 
 	public const AGGREGATION_LABELS = [
 		self::AGGREGATION_AVG => 'Среднее арифметическое',
@@ -35,7 +36,8 @@ class DynamicAttributePropertyAggregation extends Model {
 		self::AGGREGATION_COUNT => 'Количество значений',
 		self::AGGREGATION_MIN => 'Минимальное значение',
 		self::AGGREGATION_MAX => 'Максимальное значение',
-		self::AGGREGATION_SUM => 'Сумма всех значений'
+		self::AGGREGATION_SUM => 'Сумма всех значений',
+		self::AGGREGATION_MEDIAN => 'Медиана'
 	];
 
 	private $_type;
@@ -78,6 +80,26 @@ class DynamicAttributePropertyAggregation extends Model {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$summary = self::AggregateIntSum($values, $dropNullValues);
 		return count($values)?$summary / count($values):null;
+	}
+
+	/**
+	 * @param int[] $values
+	 * @param bool $dropNullValues
+	 * @return float|null
+	 */
+	public static function AggregateIntMedian(array $values, bool $dropNullValues = false):?float {
+		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
+		sort($values, SORT_NUMERIC);
+		$count = count($values); //total numbers in array
+		$middleVal = (int)floor(($count - 1) / 2); // find the middle value, or the lowest middle value
+		if ($count % 2) { // odd number, middle is the median
+			$median = $values[$middleVal];
+		} else { // even number, calculate avg of 2 medians
+			$low = $values[$middleVal];
+			$high = $values[$middleVal + 1];
+			$median = (($low + $high) / 2);
+		}
+		return $median;
 	}
 
 	/**
