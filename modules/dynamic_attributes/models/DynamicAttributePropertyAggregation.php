@@ -72,9 +72,9 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
-	 * @return int|null
+	 * @return float|null
 	 */
-	public static function AggregateIntAvg(array $values, bool $dropNullValues = false):?int {
+	public static function AggregateIntAvg(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$summary = self::AggregateIntSum($values, $dropNullValues);
 		return $summary / count($values);
@@ -83,9 +83,9 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
-	 * @return int|null
+	 * @return float|null
 	 */
-	public static function AggregateIntHarmonic(array $values):?int {
+	public static function AggregateIntHarmonic(array $values):?float {
 		$num_args = count($values);
 		$values = ArrayHelper::filterValues($values, ['', false, null, 0]);
 		$sum = 0;
@@ -114,10 +114,10 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param int[] $values
 	 * @param bool $dropNullValues
 	 * @param int $truncPercent -- процент отбрасываемых минимальных и максимальных значений
-	 * @return int|null
+	 * @return float|null
 	 * @todo: требуется проверка
 	 */
-	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, $truncPercent = 20):?int {
+	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, $truncPercent = 20):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		sort($values, SORT_NUMERIC);
 		$truncCount = (count($values) * $truncPercent) / 100;
@@ -138,9 +138,9 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
-	 * @return int|null
+	 * @return float|null
 	 */
-	public static function AggregateIntMin(array $values, bool $dropNullValues = false):?int {
+	public static function AggregateIntMin(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		return min($values);
 	}
@@ -148,9 +148,9 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
-	 * @return int|null
+	 * @return float|null
 	 */
-	public static function AggregateIntMax(array $values, bool $dropNullValues = false):?int {
+	public static function AggregateIntMax(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		return max($values);
 	}
@@ -158,9 +158,9 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
-	 * @return int|null
+	 * @return float|null
 	 */
-	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?int {
+	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		return array_sum($values);
 //		return array_reduce($values, static function($carry, $item) {
