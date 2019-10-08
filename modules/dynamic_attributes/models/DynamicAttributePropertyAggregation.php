@@ -82,7 +82,6 @@ class DynamicAttributePropertyAggregation extends Model {
 
 	/**
 	 * @param int[] $values
-	 * @param bool $dropNullValues
 	 * @return float|null
 	 */
 	public static function AggregateIntHarmonic(array $values):?float {
@@ -103,7 +102,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 */
 	public static function AggregateIntModa(array $values, bool $dropNullValues = true):?int {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
-		$modaArray = array_count_values(array_map(function($value) {
+		$modaArray = array_count_values(array_map(static function($value) {
 			return null === $value?'':(int)$value;
 		}, $values));
 		if ($dropNullValues) unset ($modaArray['']);
