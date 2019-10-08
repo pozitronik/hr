@@ -360,8 +360,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * Конфигурация поддерживаемых типом агрегаторов
 	 * @return array
 	 */
-	public
-	static function aggregationConfig():array {
+	public static function aggregationConfig():array {
 		return [//аггрегаторы применяются только к числовым значениям
 			DynamicAttributePropertyAggregation::AGGREGATION_AVG,
 			DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC,
@@ -382,8 +381,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 * @throws Throwable
 	 */
-	public
-	static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
+	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		switch ($aggregation) {
 			case DynamicAttributePropertyAggregation::AGGREGATION_AVG:
 				return new DynamicAttributePropertyAggregation([
