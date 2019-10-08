@@ -89,8 +89,8 @@ class DynamicAttributePropertyAggregation extends Model {
 	 */
 	public static function AggregateIntMedian(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
+		if (0 === $count = count($values)) return null;
 		sort($values, SORT_NUMERIC);
-		$count = count($values); //total numbers in array
 		$middleVal = (int)floor(($count - 1) / 2); // find the middle value, or the lowest middle value
 		if ($count % 2) { // odd number, middle is the median
 			$median = $values[$middleVal];
