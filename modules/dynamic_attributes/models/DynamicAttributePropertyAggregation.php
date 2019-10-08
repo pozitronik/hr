@@ -92,7 +92,7 @@ class DynamicAttributePropertyAggregation extends Model {
 		foreach ($values as $iValue) {
 			$sum += 1 / $iValue;
 		}
-		return $num_args / $sum;
+		return (0 === $sum)?INF:$num_args / $sum;
 	}
 
 	/**

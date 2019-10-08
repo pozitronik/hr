@@ -336,6 +336,30 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 
 	/**
 	 * @param DynamicAttributeProperty[] $models
+	 * @return ScoreProperty
+	 */
+	public static function getHarmonicValue(array $models):ScoreProperty {
+		$mCount = count($models);
+		$sum = [
+			'selfScoreValue' => 0,
+			'alScoreValue' => 0,
+			'tlScoreValue' => 0
+		];
+		/** @var DynamicAttributeProperty $model */
+		foreach ($models as $model) {//мы вынуждены отбрасывать пустые и нулевые значения
+			if (!empty($model->value->selfScoreValue)) $sum['selfScoreValue'] += 1 / $model->value->selfScoreValue;
+			if (!empty($model->value->alScoreValue)) $sum['alScoreValue'] += 1 / $model->value->alScoreValue;
+			if (!empty($model->value->tlScoreValue)) $sum['tlScoreValue'] += 1 / $model->value->tlScoreValue;
+		}
+		return new ScoreProperty([
+			'selfScoreValue' => (0 === $sum['selfScoreValue'])?INF:$mCount / $sum['selfScoreValue'],
+			'alScoreValue' => (0 === $sum['alScoreValue'])?INF:$mCount / $sum['alScoreValue'],
+			'tlScoreValue' => (0 === $sum['tlScoreValue'])?INF:$mCount / $sum['tlScoreValue'],
+		]);
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
 	 * @param bool $dropNullValues
 	 * @return ScoreProperty
 	 * @throws Throwable
@@ -374,7 +398,8 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * Конфигурация поддерживаемых типом агрегаторов
 	 * @return array
 	 */
-	public static function aggregationConfig():array {
+	public
+	static function aggregationConfig():array {
 		return [//аггрегаторы применяются только к числовым значениям
 			DynamicAttributePropertyAggregation::AGGREGATION_AVG,
 			DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC,
@@ -395,12 +420,19 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 * @throws Throwable
 	 */
-	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
+	public
+	static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		switch ($aggregation) {
 			case DynamicAttributePropertyAggregation::AGGREGATION_AVG:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getAverageValue($models)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getHarmonicValue($models)
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
