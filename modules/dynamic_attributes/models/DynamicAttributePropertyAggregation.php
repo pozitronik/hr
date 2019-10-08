@@ -77,7 +77,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	public static function AggregateIntAvg(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$summary = self::AggregateIntSum($values, $dropNullValues);
-		return $summary / count($values);
+		return count($values)?$summary / count($values):null;
 	}
 
 	/**
@@ -117,14 +117,13 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param bool $dropNullValues
 	 * @param int $truncPercent -- процент отбрасываемых минимальных и максимальных значений
 	 * @return float|null
-	 * @todo: требуется проверка
 	 */
 	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, $truncPercent = 20):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		sort($values, SORT_NUMERIC);
-		$truncCount = (count($values) * $truncPercent) / 100;
+		$truncCount = (int)((count($values) * $truncPercent) / 100);
 		$values = array_slice($values, $truncCount, -$truncCount, true);
-		return self::AggregateIntAvg($values);
+		return self::AggregateIntAvg($values, $dropNullValues);
 	}
 
 	/**
