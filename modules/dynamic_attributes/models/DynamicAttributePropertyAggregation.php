@@ -100,16 +100,16 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param bool $dropNullValues
 	 * @return int|null
 	 * @throws Throwable
-	 * @todo: требуется проверка
 	 */
 	public static function AggregateIntModa(array $values, bool $dropNullValues = true):?int {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$modaArray = array_count_values(array_map(function($value) {
 			return null === $value?'':(int)$value;
 		}, $values));
-		$maxValue = max($modaArray);
-		//требуется проверка
-		return array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
+		if ($dropNullValues) unset ($modaArray['']);
+
+		$maxValue = count($modaArray)?max($modaArray):null;
+		return (int)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
 	}
 
 	/**
