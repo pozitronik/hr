@@ -420,6 +420,18 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues)
 		]);
 	}
+	/**
+	 * @param DynamicAttributeProperty[] $models
+	 * @param bool $dropNullValues
+	 * @return ScoreProperty
+	 */
+	public static function getMedianValue(array $models, bool $dropNullValues = true):ScoreProperty {
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMedian(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMedian(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMedian(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues)
+		]);
+	}
 
 	/**
 	 * Конфигурация поддерживаемых типом агрегаторов
@@ -434,7 +446,8 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			DynamicAttributePropertyAggregation::AGGREGATION_COUNT,
 			DynamicAttributePropertyAggregation::AGGREGATION_MIN,
 			DynamicAttributePropertyAggregation::AGGREGATION_MAX,
-			DynamicAttributePropertyAggregation::AGGREGATION_SUM
+			DynamicAttributePropertyAggregation::AGGREGATION_SUM,
+			DynamicAttributePropertyAggregation::AGGREGATION_MEDIAN
 		];
 	}
 
@@ -494,6 +507,12 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getSumValue($models)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MEDIAN:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getMedianValue($models)
 				]);
 			break;
 			default:
