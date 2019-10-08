@@ -27,25 +27,14 @@ use yii\web\View;
 			<div class="col-md-12">
 				<?= StarRating::widget([
 					'name' => "DynamicAttributeProperty[$model->id][$scoreAttributeName]",
-					'value' => ArrayHelper::getValue($model->$attribute, $scoreAttributeName),
+					'value' => $value = ArrayHelper::getValue($model->$attribute, $scoreAttributeName),
 					'pluginOptions' => [
-						'size' => StarRating::SIZE_SMALL,
+						'size' => (INF === $value)?StarRating::SIZE_TINY:StarRating::SIZE_SMALL,
 						'displayOnly' => true,
 						'stars' => 5,
-						'min' => 0,
-						'max' => 5,
 						'step' => 0.1,
-						'clearCaption' => 'N/A',
-//						'defaultCaption' => '{rating} hearts',
+						'clearCaption' => (INF === $value)?'Infinite':'N/A',
 						'starCaptions' => new JsExpression("function(val){return val}")
-//						'starCaptions' => [
-//							0 => 'N/A',
-//							1 => '1/5',
-//							2 => '2/5',
-//							3 => '3/5',
-//							4 => '4/5',
-//							5 => '5/5'
-//						]
 					]
 				]) ?>
 			</div>
