@@ -177,6 +177,7 @@ class AttributePropertyInteger extends ActiveRecordExtended implements Attribute
 	/**
 	 * Конфигурация поддерживаемых типом агрегаторов
 	 * @return array
+	 * @todo: возвращать поддерживаемые агрегатором параметры (отброс пустых как минимум)
 	 */
 	public static function aggregationConfig():array {
 		return [
