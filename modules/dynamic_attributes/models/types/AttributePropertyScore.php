@@ -324,14 +324,11 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return ScoreProperty
 	 */
 	public static function getAverageValue(array $models):ScoreProperty {
-		$values = [];
-		/** @var DynamicAttributeProperty $model */
-		foreach ($models as $model) {
-			$values[] = self::loadValue($model->attributeId, $model->id, $model->userId);
-		}
-		$averageScore = ScoreProperty::add($values);
-		$averageScore->div((float)count($models));
-		return $averageScore;
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.selfScoreValue')),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.alScoreValue')),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.tlScoreValue')),
+		]);
 	}
 
 	/**
