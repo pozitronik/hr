@@ -321,13 +321,27 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 
 	/**
 	 * @param DynamicAttributeProperty[] $models
+	 * @param bool $dropNullValues
 	 * @return ScoreProperty
 	 */
-	public static function getAverageValue(array $models):ScoreProperty {
+	public static function getAverageValue(array $models, bool $dropNullValues = false):ScoreProperty {
 		return new ScoreProperty([
-			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.selfScoreValue')),
-			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.alScoreValue')),
-			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.tlScoreValue')),
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvg(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
+		]);
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
+	 * @param bool $dropNullValues
+	 * @return ScoreProperty
+	 */
+	public static function getAverageTruncValue(array $models, bool $dropNullValues = false):ScoreProperty {
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvgTrunc(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvgTrunc(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntAvgTrunc(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
 		]);
 	}
 
@@ -345,6 +359,30 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 
 	/**
 	 * @param DynamicAttributeProperty[] $models
+	 * @return ScoreProperty
+	 */
+	public static function getCountValue(array $models):ScoreProperty {
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntCount(ArrayHelper::getColumn($models, 'value.selfScoreValue')),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntCount(ArrayHelper::getColumn($models, 'value.alScoreValue')),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntCount(ArrayHelper::getColumn($models, 'value.tlScoreValue')),
+		]);
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
+	 * @return ScoreProperty
+	 */
+	public static function getSumValue(array $models):ScoreProperty {
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntSum(ArrayHelper::getColumn($models, 'value.selfScoreValue')),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntSum(ArrayHelper::getColumn($models, 'value.alScoreValue')),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntSum(ArrayHelper::getColumn($models, 'value.tlScoreValue')),
+		]);
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
 	 * @param bool $dropNullValues
 	 * @return ScoreProperty
 	 */
@@ -353,6 +391,32 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
 			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
 			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
+		]);
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
+	 * @param bool $dropNullValues
+	 * @return ScoreProperty
+	 */
+	public static function getMinValue(array $models, bool $dropNullValues = true):ScoreProperty {
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
+		]);
+	}
+
+	/**
+	 * @param DynamicAttributeProperty[] $models
+	 * @param bool $dropNullValues
+	 * @return ScoreProperty
+	 */
+	public static function getMaxValue(array $models, bool $dropNullValues = true):ScoreProperty {
+		return new ScoreProperty([
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
 		]);
 	}
 
@@ -386,7 +450,13 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			case DynamicAttributePropertyAggregation::AGGREGATION_AVG:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
-					'value' => self::getAverageValue($models)
+					'value' => self::getAverageValue($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_AVG_TRUNC:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getAverageTruncValue($models, $dropNullValues)
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC:
@@ -403,8 +473,26 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
 				return new DynamicAttributePropertyAggregation([
-					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
-					'value' => count($models)
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getCountValue($models)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MIN:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getMinValue($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MAX:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getMaxValue($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_SUM:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
+					'value' => self::getSumValue($models)
 				]);
 			break;
 			default:
