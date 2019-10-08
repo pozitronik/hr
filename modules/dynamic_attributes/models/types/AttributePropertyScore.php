@@ -339,22 +339,10 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	 * @return ScoreProperty
 	 */
 	public static function getHarmonicValue(array $models):ScoreProperty {
-		$mCount = count($models);
-		$sum = [
-			'selfScoreValue' => 0,
-			'alScoreValue' => 0,
-			'tlScoreValue' => 0
-		];
-		/** @var DynamicAttributeProperty $model */
-		foreach ($models as $model) {//мы вынуждены отбрасывать пустые и нулевые значения
-			if (!empty($model->value->selfScoreValue)) $sum['selfScoreValue'] += 1 / $model->value->selfScoreValue;
-			if (!empty($model->value->alScoreValue)) $sum['alScoreValue'] += 1 / $model->value->alScoreValue;
-			if (!empty($model->value->tlScoreValue)) $sum['tlScoreValue'] += 1 / $model->value->tlScoreValue;
-		}
 		return new ScoreProperty([
-			'selfScoreValue' => (0 === $sum['selfScoreValue'])?INF:$mCount / $sum['selfScoreValue'],
-			'alScoreValue' => (0 === $sum['alScoreValue'])?INF:$mCount / $sum['alScoreValue'],
-			'tlScoreValue' => (0 === $sum['tlScoreValue'])?INF:$mCount / $sum['tlScoreValue'],
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntHarmonic(ArrayHelper::getColumn($models, 'value.selfScoreValue')),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntHarmonic(ArrayHelper::getColumn($models, 'value.alScoreValue')),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntHarmonic(ArrayHelper::getColumn($models, 'value.tlScoreValue')),
 		]);
 	}
 
