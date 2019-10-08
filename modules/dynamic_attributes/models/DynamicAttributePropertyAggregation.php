@@ -143,7 +143,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 */
 	public static function AggregateIntMin(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
-		return min($values);
+		return count($values)?min($values):null;
 	}
 
 	/**
@@ -153,7 +153,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 */
 	public static function AggregateIntMax(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
-		return max($values);
+		return count($values)?max($values):null;
 	}
 
 	/**
