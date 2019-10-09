@@ -1,10 +1,36 @@
 <?php
 declare(strict_types = 1);
 
-use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
-use yii\web\View;
 /**
  * @var View $this
- * @var DynamicAttributeProperty $model
- * @var string $attribute
- **/
+ * @var ArrayDataProvider $provider
+ */
+
+use kartik\grid\DataColumn;
+use kartik\grid\GridView;
+use yii\data\ArrayDataProvider;
+use yii\i18n\Formatter;
+use yii\web\View;
+
+?>
+
+<?= GridView::widget([
+	'dataProvider' => $provider,
+	'summary' => false,
+	'formatter' => [
+		'class' => Formatter::class,
+//		'nullDisplay' => '<Не указано>'
+	],
+	'columns' => [
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'value',
+			'label' => 'Значение'
+		],
+		[
+			'class' => DataColumn::class,
+			'attribute' => 'frequency',
+			'label' => 'Частота'
+		]
+	]
+]) ?>
