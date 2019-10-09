@@ -197,9 +197,6 @@ class DynamicAttributePropertyAggregation extends Model {
 	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		return array_sum($values);
-//		return array_reduce($values, static function($carry, $item) {
-//			return $carry + $item;
-//		});
 	}
 
 }
