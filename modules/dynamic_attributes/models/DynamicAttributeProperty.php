@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
+use app\modules\dynamic_attributes\models\types\AttributePropertyUnknown;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
 use app\modules\dynamic_attributes\models\types\AttributePropertyDate;
@@ -30,7 +31,7 @@ use yii\widgets\ActiveForm;
  * @property integer $attributeId
  * @property integer $id
  * @property string $name
- * @property string $type
+ * @property string|null $type -- null as unsetted
  * @property boolean $required
  *
  * @property integer $userId;
@@ -50,6 +51,7 @@ class DynamicAttributeProperty extends Model {
 	private $user_id;
 	private $_virtualValue;
 
+	public const PROPERTY_UNKNOWN = null;
 	public const PROPERTY_INTEGER = 'integer';
 	public const PROPERTY_BOOLEAN = 'boolean';
 	public const PROPERTY_STRING = 'string';
@@ -60,9 +62,13 @@ class DynamicAttributeProperty extends Model {
 	public const PROPERTY_SCORE = 'score';
 
 	public const PROPERTY_TYPES = [
+		self::PROPERTY_UNKNOWN => [
+			'label' => 'Тип не задан',
+			'model' => AttributePropertyUnknown::class
+		],
 		self::PROPERTY_INTEGER => [/*Название (индекс) типа данных*/
 			'label' => 'Число',/*Отображаемое в интефейсах имя*/
-			'model' => AttributePropertyInteger::class,/*Имя класса, реализующего взаимоделйствие с типом данных, обязательно имплементация AttributePropertyInterface. Поле названо model, потому что на class ругается инспектор*/
+			'model' => AttributePropertyInteger::class,/*Имя класса, реализующего взаимодействие с типом данных, обязательно имплементация AttributePropertyInterface. Поле названо model, потому что на class ругается инспектор*/
 		],
 		self::PROPERTY_BOOLEAN => [
 			'label' => 'Логический тип',
