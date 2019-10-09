@@ -179,7 +179,8 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	public static function aggregationConfig():array {
 		return [
 			DynamicAttributePropertyAggregation::AGGREGATION_MODA,
-			DynamicAttributePropertyAggregation::AGGREGATION_COUNT
+			DynamicAttributePropertyAggregation::AGGREGATION_COUNT,
+			DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY
 		];
 	}
 
@@ -197,6 +198,12 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_STRING,
 					'value' => self::getModaValue(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_DICTIONARY,
+					'value' => DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
@@ -225,4 +232,5 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 		$maxValue = count($modaArray)?max($modaArray):null;
 		return (string)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
 	}
+
 }
