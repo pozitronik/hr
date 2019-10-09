@@ -6,6 +6,7 @@ namespace app\modules\dynamic_attributes\models\types;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
+use Exception;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
@@ -39,6 +40,7 @@ class AttributePropertyUnknown implements AttributePropertyInterface {
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
+	 * @return null
 	 */
 	public static function getRecord(int $attribute_id, int $property_id, int $user_id) {
 		return null;
@@ -72,6 +74,7 @@ class AttributePropertyUnknown implements AttributePropertyInterface {
 	 * Рендер поля просмотра значения свойства
 	 * @param array $config Опциональные параметры виджета/поля
 	 * @return string
+	 * @throws Exception
 	 */
 	public static function viewField(array $config = []):string {
 		return AttributeFieldWidget::widget($config);
