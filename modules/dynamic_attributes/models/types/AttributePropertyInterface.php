@@ -5,7 +5,6 @@ namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
-use yii\db\ActiveRecordInterface;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
@@ -13,7 +12,7 @@ use yii\widgets\ActiveForm;
  * Interface AttributePropertyInterface
  * @package app\models\dynamic_attributes\types
  */
-interface AttributePropertyInterface extends ActiveRecordInterface {
+interface AttributePropertyInterface {
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.
