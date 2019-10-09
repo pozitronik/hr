@@ -41,7 +41,8 @@ class DictionaryWidget extends InputWidget {
 		]);
 
 		return $this->render('dictionary', [
-			'provider' => $dataProvider
+			'provider' => $dataProvider,
+			'title' => $this->model->name
 		]);
 	}
 }
