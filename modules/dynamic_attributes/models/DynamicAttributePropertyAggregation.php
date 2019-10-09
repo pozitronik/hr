@@ -40,7 +40,7 @@ class DynamicAttributePropertyAggregation extends Model {
 		self::AGGREGATION_MAX => 'Максимальное значение',
 		self::AGGREGATION_SUM => 'Сумма всех значений',
 		self::AGGREGATION_MEDIAN => 'Медиана',
-		self::AGGREGATION_FREQUENCY => 'Частотное распредение'
+		self::AGGREGATION_FREQUENCY => 'Частотное распределение'
 	];
 
 	public const AGGREGATION_HINTS = [
