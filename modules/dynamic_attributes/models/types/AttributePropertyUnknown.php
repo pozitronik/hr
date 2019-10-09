@@ -5,6 +5,7 @@ namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
+use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
@@ -73,7 +74,7 @@ class AttributePropertyUnknown implements AttributePropertyInterface {
 	 * @return string
 	 */
 	public static function viewField(array $config = []):string {
-		return 'unknown!';
+		return AttributeFieldWidget::widget($config);
 	}
 
 	/**
