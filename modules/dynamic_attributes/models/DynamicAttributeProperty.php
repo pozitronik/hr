@@ -51,7 +51,7 @@ class DynamicAttributeProperty extends Model {
 	private $user_id;
 	private $_virtualValue;
 
-	public const PROPERTY_UNKNOWN = null;
+	public const PROPERTY_UNSUPPORTED = null;
 	public const PROPERTY_INTEGER = 'integer';
 	public const PROPERTY_BOOLEAN = 'boolean';
 	public const PROPERTY_STRING = 'string';
@@ -62,7 +62,7 @@ class DynamicAttributeProperty extends Model {
 	public const PROPERTY_SCORE = 'score';
 
 	public const PROPERTY_TYPES = [
-		self::PROPERTY_UNKNOWN => [
+		self::PROPERTY_UNSUPPORTED => [
 			'label' => 'Тип не задан',
 			'model' => AttributePropertyUnknown::class
 		],
