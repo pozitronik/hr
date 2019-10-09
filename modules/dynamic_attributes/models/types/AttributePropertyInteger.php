@@ -188,7 +188,9 @@ class AttributePropertyInteger extends ActiveRecordExtended implements Attribute
 			DynamicAttributePropertyAggregation::AGGREGATION_COUNT,
 			DynamicAttributePropertyAggregation::AGGREGATION_MIN,
 			DynamicAttributePropertyAggregation::AGGREGATION_MAX,
-			DynamicAttributePropertyAggregation::AGGREGATION_SUM
+			DynamicAttributePropertyAggregation::AGGREGATION_SUM,
+			DynamicAttributePropertyAggregation::AGGREGATION_MEDIAN
+
 		];
 	}
 
@@ -200,6 +202,63 @@ class AttributePropertyInteger extends ActiveRecordExtended implements Attribute
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
-		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		switch ($aggregation) {
+			case DynamicAttributePropertyAggregation::AGGREGATION_AVG:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntAvg($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_AVG_TRUNC:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntAvgTrunc($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntHarmonic($models)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntModa($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntCount($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MIN:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntMin($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MAX:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntMax($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_SUM:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntSum($models, $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_MEDIAN:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntMedian($models, $dropNullValues)
+				]);
+			break;
+			default:
+				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		}
 	}
 }
