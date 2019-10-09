@@ -35,7 +35,7 @@ class DictionaryWidget extends InputWidget {
 			'allModels' => $this->model->{$this->attribute},
 			'sort' => [
 				'attributes' => ['id', 'value', 'frequency'],
-				'defaultOrder' => ['frequency' => SORT_DESC],
+				'defaultOrder' => ['frequency' => SORT_DESC]
 			],
 			'pagination' => false
 		]);

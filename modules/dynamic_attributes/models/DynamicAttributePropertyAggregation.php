@@ -213,14 +213,14 @@ class DynamicAttributePropertyAggregation extends Model {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$frequencies = [];
 		foreach ($values as $key => $value) {
-			if (!isset($frequencies[$value])) {
+			if (isset($frequencies[$value])) {
+				$frequencies[$value]['frequency']++;
+			} else {
 				$frequencies[$value] = [
 					'id' => $key,
 					'value' => $value,
 					'frequency' => 1
 				];
-			} else {
-				$frequencies[$value]['frequency']++;
 			}
 		}
 		return $frequencies;
