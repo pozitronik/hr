@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
  * @property integer $attributeId
  * @property integer $id
  * @property string $name
- * @property string|null $type -- null as unsetted
+ * @property string|null $type -- null as unsupported
  * @property boolean $required
  *
  * @property integer $userId;
