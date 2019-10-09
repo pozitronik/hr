@@ -1,0 +1,45 @@
+.panel.panel-dictionary {
+	margin: 0px;
+	border: none;
+	box-shadow: none;
+}
+
+.panel.panel-dictionary .panel-heading {
+	height: auto;
+	border-color: white;
+}
+
+.panel.panel-dictionary .panel-title {
+	font-size: 1em;
+	padding: 0 5px;
+	line-height: normal;
+	background-color: #fafafa;
+	border-color: #d1d9de;
+	color: #758697;
+}
+
+.panel.panel-dictionary .panel-body {
+	padding: 0 5px;
+}
+
+.panel.panel-dictionary-summary {
+	margin: 0px;
+	border: none;
+
+}
+
+.panel.panel-dictionary-summary .panel-heading {
+	height: auto;
+}
+
+.panel.panel-dictionary-summary > .panel-heading > .panel-title {
+	line-height: 26px;
+	background-color: #00b3ca;
+	border-color: #00bcd4;
+	color: #fff;
+
+}
+
+.panel.panel-dictionary-summary > .panel-body {
+	padding: 0px;
+}
