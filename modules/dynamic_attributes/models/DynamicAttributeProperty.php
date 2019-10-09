@@ -101,11 +101,11 @@ class DynamicAttributeProperty extends Model {
 	];
 
 	/**
-	 * @param string $type
+	 * @param null|string $type
 	 * @return AttributePropertyInterface|string
 	 * @throws Throwable
 	 */
-	public static function getTypeClass(string $type):string {
+	public static function getTypeClass(?string $type):string {
 		if (null === $value = ArrayHelper::getValue(self::PROPERTY_TYPES, "$type.model")) {
 			SysExceptions::log(new InvalidConfigException("$type.model AttributePropertyInterface not set or not properly configured"), true);
 		}
@@ -171,16 +171,16 @@ class DynamicAttributeProperty extends Model {
 	}
 
 	/**
-	 * @return string
+	 * @return null|string
 	 */
-	public function getType():string {
+	public function getType():?string {
 		return $this->type;
 	}
 
 	/**
 	 * @param string $type
 	 */
-	public function setType(string $type):void {
+	public function setType(?string $type):void {
 		$this->type = $type;
 	}
 
