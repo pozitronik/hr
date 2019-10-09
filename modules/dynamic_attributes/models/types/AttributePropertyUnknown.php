@@ -111,6 +111,6 @@ class AttributePropertyUnknown implements AttributePropertyInterface {
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
-		return new DynamicAttributePropertyAggregation(['type' => DynamicAttributeProperty::PROPERTY_UNKNOWN, 'value' => null]);
+		return new DynamicAttributePropertyAggregation(['type' => DynamicAttributeProperty::PROPERTY_UNSUPPORTED, 'value' => null]);
 	}
 }
