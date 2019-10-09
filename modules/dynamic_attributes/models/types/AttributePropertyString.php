@@ -191,6 +191,38 @@ class AttributePropertyString extends ActiveRecordExtended implements AttributeP
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
-		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		switch ($aggregation) {
+
+			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_STRING,
+					'value' => self::getModaValue(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntCount($models, $dropNullValues)
+				]);
+			break;
+			default:
+				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		}
+	}
+
+	/**
+	 * @param array $values
+	 * @param bool $dropNullValues
+	 * @return string|null
+	 */
+	public static function getModaValue(array $values, bool $dropNullValues = true):?string {
+		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
+		$modaArray = array_count_values(array_map(static function($value) {
+			return null === $value?'':(string)$value;
+		}, $values));
+		if ($dropNullValues) unset ($modaArray['']);
+
+		$maxValue = count($modaArray)?max($modaArray):null;
+		return (string)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
 	}
 }
