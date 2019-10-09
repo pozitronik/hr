@@ -27,6 +27,8 @@ class DynamicAttributePropertyAggregation extends Model {
 	public const AGGREGATION_MAX = 7;//максимальное значение
 	public const AGGREGATION_SUM = 8;//сумма всех значений
 	public const AGGREGATION_MEDIAN = 9;
+	public const AGGREGATION_FREQUENCY = 10;
+
 
 	public const AGGREGATION_LABELS = [
 		self::AGGREGATION_AVG => 'Среднее арифметическое',
@@ -37,7 +39,8 @@ class DynamicAttributePropertyAggregation extends Model {
 		self::AGGREGATION_MIN => 'Минимальное значение',
 		self::AGGREGATION_MAX => 'Максимальное значение',
 		self::AGGREGATION_SUM => 'Сумма всех значений',
-		self::AGGREGATION_MEDIAN => 'Медиана'
+		self::AGGREGATION_MEDIAN => 'Медиана',
+		self::AGGREGATION_FREQUENCY => 'Частотное распредение'
 	];
 
 	public const AGGREGATION_HINTS = [
@@ -49,7 +52,8 @@ class DynamicAttributePropertyAggregation extends Model {
 		self::AGGREGATION_MIN => 'Минимальное значение',
 		self::AGGREGATION_MAX => 'Максимальное значение',
 		self::AGGREGATION_SUM => 'Сумма всех значений',
-		self::AGGREGATION_MEDIAN => 'Половина выборки меньше медианного значения, другая половина - больше'
+		self::AGGREGATION_MEDIAN => 'Половина выборки меньше медианного значения, другая половина - больше',
+		self::AGGREGATION_FREQUENCY => 'Статистика по частоте всех значений'
 	];
 
 	private $_type;
@@ -197,6 +201,29 @@ class DynamicAttributePropertyAggregation extends Model {
 	public static function AggregateIntSum(array $values, bool $dropNullValues = false):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		return array_sum($values);
+	}
+
+	/**
+	 * Возвращает массив частоты распределений значений
+	 * @param array $values
+	 * @param bool $dropNullValues
+	 * @return array
+	 */
+	public static function FrequencyDistribution(array $values, bool $dropNullValues = true):array {
+		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
+		$frequencies = [];
+		foreach ($values as $key => $value) {
+			if (!isset($frequencies[$value])) {
+				$frequencies[$value] = [
+					'id' => $key,
+					'value' => $value,
+					'frequency' => 1
+				];
+			} else {
+				$frequencies[$value]['frequency']++;
+			}
+		}
+		return $frequencies;
 	}
 
 }
