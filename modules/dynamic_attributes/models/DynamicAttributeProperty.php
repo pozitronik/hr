@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
+use app\modules\dynamic_attributes\models\types\AttributePropertyDictionary;
 use app\modules\dynamic_attributes\models\types\AttributePropertyUnknown;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
@@ -60,6 +61,7 @@ class DynamicAttributeProperty extends Model {
 	public const PROPERTY_PERCENT = 'percent';
 	public const PROPERTY_TEXT = 'text';
 	public const PROPERTY_SCORE = 'score';
+	public const PROPERTY_DICTIONARY = 'dictionary';
 
 	public const PROPERTY_TYPES = [
 		self::PROPERTY_UNSUPPORTED => [
@@ -97,6 +99,10 @@ class DynamicAttributeProperty extends Model {
 		self::PROPERTY_SCORE => [
 			'label' => 'Оценка',
 			'model' => AttributePropertyScore::class
+		],
+		self::PROPERTY_DICTIONARY => [
+			'label' => 'Словарь',//пока прототипирую, потом поменять
+			'model' => AttributePropertyDictionary::class
 		]
 	];
 
