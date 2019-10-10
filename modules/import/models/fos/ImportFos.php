@@ -98,6 +98,13 @@ use yii\db\ActiveRecord;
 class ImportFos extends ActiveRecord {
 	use Upload;
 
+	//unused fields
+	public $x1;
+	public $x2;
+	public $x3;
+	public $x4;
+	public $x5;
+
 	public const STEP_REFERENCES = 0;
 	public const STEP_USERS = 1;
 	public const STEP_GROUPS = 2;
@@ -125,6 +132,7 @@ class ImportFos extends ActiveRecord {
 	public function rules():array {
 		return [
 			[['domain'], 'integer'],
+			[['x1', 'x2', 'x3', 'x4', 'x5'], 'safe'],//unused
 			[
 				['num', 'sd_id', 'position_name', 'user_tn', 'user_name', 'birthday', 'functional_block', 'division_level_1', 'division_level_2',
 					'division_level_3', 'division_level_4', 'division_level_5', 'remote_flag', 'town', 'functional_block_tribe', 'tribe_id',
@@ -144,6 +152,8 @@ class ImportFos extends ActiveRecord {
 			'num' => '№ п/п',
 			'sd_id' => 'ШД ID',//!Это не ID должности! Это какойто внутренний идентификатор
 			'position_name' => 'Должность',
+			'x1' => 'Ставка должности',//10.09.2019 - новое, неиспользуемое поле
+			'x2' => 'Заполнение',//10.09.2019 - новое, неиспользуемое поле
 			'user_tn' => 'ТН',
 			'user_name' => 'Ф.И.О. сотрудника',
 			'birthday' => 'Дата рождения',
@@ -156,20 +166,22 @@ class ImportFos extends ActiveRecord {
 			'remote_flag' => 'Признак УРМ',
 			'town' => 'Населенный пункт',
 			'functional_block_tribe' => 'Функциональный блок трайба',
-			'tribe_id' => 'Трайб/Группа Agile команд ID',
-			'tribe_code' => 'Код трайба/Группы Agile команд',
-			'tribe_name' => 'Трайб/Группа Agile команд',
-			'tribe_leader_tn' => 'Лидер трайба/Группы Agile команд ТН',
-			'tribe_leader_name' => 'Лидер трайба/Группы Agile команд',
-			'tribe_leader_it_tn' => 'IT-лидер трайба/Группы Agile команд ТН',
-			'tribe_leader_it_name' => 'IT-лидер трайба/Группы Agile команд',
-			'cluster_product_id' => 'Кластер/Продукт ID',
-			'cluster_product_code' => 'Код кластера/продукта',
-			'cluster_product_name' => 'Кластер/Продукт',
-			'cluster_product_leader_tn' => 'Лидер кластера/продукта ТН',
-			'cluster_product_leader_name' => 'Лидер кластера/продукта',
-			'cluster_product_leader_it_tn' => 'ИТ Лидер кластера/продукта ТН',
-			'cluster_product_leader_it_name' => 'ИТ Лидер кластера/продукта',
+			'tribe_id' => 'Трайб ID',
+			'tribe_code' => 'Код трайба',
+			'tribe_name' => 'Трайб',
+			'x3' => 'Тип верхнеуровнего объекта Sbergile',//10.09.2019 - новое, неиспользуемое поле
+			'tribe_leader_tn' => 'Лидер трайба ТН',
+			'tribe_leader_name' => 'Лидер трайба',
+			'tribe_leader_it_tn' => 'IT-лидер трайба ТН',
+			'tribe_leader_it_name' => 'IT-лидер трайба',
+			'cluster_product_id' => 'Кластер ID',
+			'cluster_product_code' => 'Код кластера',
+			'cluster_product_name' => 'Кластер',
+			'x4' => 'Тип группировки команд',//10.09.2019 - новое, неиспользуемое поле
+			'cluster_product_leader_tn' => 'Лидер кластера ТН',
+			'cluster_product_leader_name' => 'Лидер кластера',
+			'cluster_product_leader_it_tn' => 'IT-лидер кластера ТН',
+			'cluster_product_leader_it_name' => 'IT-лидер кластера',
 			'command_id' => 'Команда ID',
 			'command_code' => 'Код команды',
 			'command_name' => 'Команда',
@@ -181,11 +193,11 @@ class ImportFos extends ActiveRecord {
 			'command_position_name' => 'Роль Sbergile',
 			'expert_area' => 'Область экспертизы',
 			'combined_role' => 'Совмещаемая роль',
-			'chapter_id' => 'Чаптер ID',
-			'chapter_code' => 'Код чаптера',
-			'chapter_name' => 'Чаптер',
-			'chapter_leader_tn' => 'Лидер чаптера ТН',
-			'chapter_leader_name' => 'Лидер чаптера',
+			'chapter_id' => 'Функциональная группа ID',
+			'chapter_code' => 'Код функциональной группы',
+			'chapter_name' => 'Функциональная группа',
+			'chapter_leader_tn' => 'Team lead ТН',
+			'chapter_leader_name' => 'Team lead',
 			'chapter_couch_tn' => 'Agile-коуч ТН',
 			'chapter_couch_name' => 'Agile-коуч',
 			'email_sigma' => 'Адрес электронной почты (sigma)',
@@ -224,8 +236,8 @@ class ImportFos extends ActiveRecord {
 		$labels = (new self())->attributeLabels();
 		$keys = array_keys($labels);
 		$headerProcessedFlag = false;
+		$cKeys = count($keys);
 		foreach ($dataArray as $importRow) {
-
 			if (!$headerProcessedFlag && self::isHeaderRow($importRow)) {//однократно проверяем валидность таблицы
 				$columnHeaderIndex = 0;
 				foreach ($labels as $key => $value) {
@@ -237,6 +249,7 @@ class ImportFos extends ActiveRecord {
 				$headerProcessedFlag = true;
 			}
 			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
+			$importRow = array_slice($importRow, 0, $cKeys);//в выгрузке может быть до хера пустых столбцов
 			$data = array_combine($keys, $importRow);
 
 			$row = new self($data);
