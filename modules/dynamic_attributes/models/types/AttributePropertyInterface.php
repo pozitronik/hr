@@ -39,10 +39,9 @@ interface AttributePropertyInterface {
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @param bool $formatted true возвращает форматированное значение, false - как есть
 	 * @return mixed
 	 */
-	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false);
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id);
 
 	/**
 	 * Записать в соответствующую таблицу значение свойства этого атрибута этого юзера
@@ -68,18 +67,6 @@ interface AttributePropertyInterface {
 	 * @return ActiveField
 	 */
 	public static function editField(ActiveForm $form, DynamicAttributeProperty $property):ActiveField;
-
-	/**
-	 * Прототип: устанавливает значение свойства
-	 * @param $value
-	 */
-	public function setValue($value):void;
-
-	/**
-	 * Прототип: возвращает значение свойства
-	 * @return mixed
-	 */
-	public function getValue();
 
 	/**
 	 * Применяет агрегатор к набору значений атрибутов

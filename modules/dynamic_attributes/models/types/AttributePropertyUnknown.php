@@ -40,10 +40,8 @@ class AttributePropertyUnknown implements AttributePropertyInterface {
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @return null|void
 	 */
-	public static function getRecord(int $attribute_id, int $property_id, int $user_id) {
-		return null;
+	public static function getRecord(int $attribute_id, int $property_id, int $user_id):void {
 	}
 
 	/**

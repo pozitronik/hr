@@ -5,13 +5,11 @@ namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\ActiveRecordExtended;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Exception;
 use Throwable;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
@@ -34,7 +32,7 @@ use yii\widgets\ActiveForm;
  * @property-read array $valueArray
  * @property-read ScoreProperty $value
  */
-class AttributePropertyScore extends ActiveRecordExtended implements AttributePropertyInterface {
+class AttributePropertyScore extends AttributeProperty {
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.
@@ -186,7 +184,7 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 	/**
 	 * @inheritDoc
 	 */
-	public function getValue() {
+	public function getValue():ScoreProperty {
 		return new ScoreProperty([
 			'selfScoreValue' => $this->self_score_value,
 			'tlScoreValue' => $this->tl_score_value,
@@ -247,17 +245,6 @@ class AttributePropertyScore extends ActiveRecordExtended implements AttributePr
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Поиск соответствующей записи по подходящим параметрам
-	 * @param int $attribute_id
-	 * @param int $property_id
-	 * @param int $user_id
-	 * @return self|ActiveRecord|null
-	 */
-	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
-		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
 	}
 
 	/**

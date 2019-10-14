@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
  * @package app\modules\dynamic_attributes\models\types
  * Словарь ключ-значение, прототипируем, например, для вывода
  */
-class AttributePropertyDictionary implements AttributePropertyInterface{
+class AttributePropertyDictionary implements AttributePropertyInterface {
 
 	/**
 	 * Конфигурация поддерживаемых типом поисковых условий.
@@ -38,10 +38,8 @@ class AttributePropertyDictionary implements AttributePropertyInterface{
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @return null|void
 	 */
-	public static function getRecord(int $attribute_id, int $property_id, int $user_id) {
-		return null;
+	public static function getRecord(int $attribute_id, int $property_id, int $user_id):void {
 	}
 
 	/**
