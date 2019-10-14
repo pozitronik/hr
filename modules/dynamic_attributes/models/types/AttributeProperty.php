@@ -149,6 +149,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	}
 
 	/**
+	 * @param $value
 	 * @return mixed
 	 */
 	public static function format($value) {

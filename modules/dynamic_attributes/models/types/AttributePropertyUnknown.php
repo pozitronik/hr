@@ -114,4 +114,12 @@ class AttributePropertyUnknown implements AttributePropertyInterface {
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		return new DynamicAttributePropertyAggregation(['type' => DynamicAttributeProperty::PROPERTY_UNSUPPORTED, 'value' => null]);
 	}
+
+	/**
+	 * @param mixed $value -- value to be formatted
+	 * @return mixed -- formatted output
+	 */
+	public static function format($value) {
+		return $value;
+	}
 }

@@ -508,10 +508,4 @@ class AttributePropertyScore extends AttributeProperty {
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public static function format($value) {
-		return $value;
-	}
 }

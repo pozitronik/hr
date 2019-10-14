@@ -7,7 +7,6 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\attribute_field_dictionary\DictionaryWidget;
 use Exception;
-use Yii;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
