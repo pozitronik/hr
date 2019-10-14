@@ -25,7 +25,6 @@ use yii\widgets\ActiveForm;
  * @property int $property_id ID поля
  * @property int $user_id ID пользователя
  * @property mixed|null $value Значение
- * @todo: formattedValue via Yii formatter
  */
 class AttributeProperty extends ActiveRecord implements AttributePropertyInterface {
 
@@ -149,4 +148,10 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 		return false;
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public static function format($value) {
+		return $value;//не форматирует по умолчанию
+	}
 }

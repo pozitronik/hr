@@ -247,7 +247,8 @@ class DynamicAttributeProperty extends Model {
 	 * @throws Throwable
 	 */
 	public function getValue(bool $formatted = false) {
-		return null === $this->user_id?$this->_virtualValue:self::getTypeClass($this->type)::loadValue($this->attribute_id, $this->id, $this->user_id, $formatted);
+		$value = (null === $this->user_id?$this->_virtualValue:self::getTypeClass($this->type)::loadValue($this->attribute_id, $this->id, $this->user_id));
+		return ($formatted)?self::getTypeClass($this->type)::format($value):$value;
 	}
 
 	/**

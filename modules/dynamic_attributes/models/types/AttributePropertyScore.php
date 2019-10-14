@@ -200,10 +200,9 @@ class AttributePropertyScore extends AttributeProperty {
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @param bool $formatted
 	 * @return mixed
 	 */
-	public static function loadValue(int $attribute_id, int $property_id, int $user_id, bool $formatted = false) {
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id) {
 			return (null !== $record = self::getRecord($attribute_id, $property_id, $user_id))?$record->value:new ScoreProperty();
 		});
@@ -407,6 +406,7 @@ class AttributePropertyScore extends AttributeProperty {
 			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues)
 		]);
 	}
+
 	/**
 	 * @param DynamicAttributeProperty[] $models
 	 * @param bool $dropNullValues
@@ -506,5 +506,12 @@ class AttributePropertyScore extends AttributeProperty {
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function format($value) {
+		return $value;
 	}
 }

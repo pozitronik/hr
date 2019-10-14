@@ -7,6 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\attribute_field_dictionary\DictionaryWidget;
 use Exception;
+use Yii;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 
@@ -111,5 +112,12 @@ class AttributePropertyDictionary implements AttributePropertyInterface {
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function format($value) {
+		return $value;
 	}
 }

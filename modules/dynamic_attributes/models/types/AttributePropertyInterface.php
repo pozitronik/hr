@@ -77,4 +77,9 @@ interface AttributePropertyInterface {
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation;
 
+	/**
+	 * @param mixed $value -- value to be formatted
+	 * @return mixed -- formatted output
+	 */
+	public static function format($value);
 }

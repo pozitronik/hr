@@ -7,6 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use Exception;
 use kartik\date\DatePicker;
+use Yii;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
@@ -110,5 +111,12 @@ class AttributePropertyDate extends AttributeProperty {
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function format($value) {
+		return Yii::$app->formatter->asDate($value);
 	}
 }

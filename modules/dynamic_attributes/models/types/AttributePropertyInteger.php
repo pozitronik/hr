@@ -6,6 +6,7 @@ namespace app\modules\dynamic_attributes\models\types;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use Throwable;
+use Yii;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
@@ -168,5 +169,12 @@ class AttributePropertyInteger extends AttributeProperty {
 			default:
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function format($value) {
+		return Yii::$app->formatter->asInteger($value);
 	}
 }

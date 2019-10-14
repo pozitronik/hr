@@ -7,6 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use Exception;
 use kartik\range\RangeInput;
+use Yii;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
@@ -128,5 +129,12 @@ class AttributePropertyPercent extends AttributeProperty {
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function format($value) {
+		return Yii::$app->formatter->asPercent($value);
 	}
 }
