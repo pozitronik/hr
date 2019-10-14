@@ -103,9 +103,13 @@ class AttributePropertyBoolean extends AttributeProperty {
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY:
+				$values = DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), false);
+				foreach ($values as $key => &$value) {
+					$value['value'] = self::format($value['value']);
+				}
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_DICTIONARY,
-					'value' => DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), false)
+					'value' => $values
 				]);
 			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
