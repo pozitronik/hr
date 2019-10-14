@@ -108,8 +108,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param int $user_id
 	 * @return self|ActiveRecord|null
 	 */
-	public
-	static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
+	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
 	}
 
@@ -121,8 +120,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @return mixed
 	 * @throws Throwable
 	 */
-	public
-	static function loadValue(int $attribute_id, int $property_id, int $user_id) {
+	public static function loadValue(int $attribute_id, int $property_id, int $user_id) {
 		return Yii::$app->cache->getOrSet(static::class."GetValue{$attribute_id},{$property_id},{$user_id}", static function() use ($attribute_id, $property_id, $user_id) {
 			return ArrayHelper::getValue(self::getRecord($attribute_id, $property_id, $user_id), 'value');
 		});
@@ -136,8 +134,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param mixed $value
 	 * @return boolean
 	 */
-	public
-	static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new static(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		} else {
