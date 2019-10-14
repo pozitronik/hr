@@ -88,7 +88,6 @@ class AttributePropertyString extends AttributeProperty {
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		switch ($aggregation) {
-
 			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_STRING,

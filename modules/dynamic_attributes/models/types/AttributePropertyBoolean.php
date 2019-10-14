@@ -7,6 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use Exception;
 use kartik\switchinput\SwitchInput;
+use pozitronik\helpers\ArrayHelper;
 use Yii;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
@@ -79,7 +80,11 @@ class AttributePropertyBoolean extends AttributeProperty {
 	 * @return array
 	 */
 	public static function aggregationConfig():array {
-		return [DynamicAttributePropertyAggregation::AGGREGATION_MODA, DynamicAttributePropertyAggregation::AGGREGATION_COUNT, DynamicAttributePropertyAggregation::AGGREGATION_SUM];
+		return [
+			DynamicAttributePropertyAggregation::AGGREGATION_MODA,
+			DynamicAttributePropertyAggregation::AGGREGATION_COUNT,
+			DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY
+		];
 	}
 
 	/**
@@ -90,7 +95,44 @@ class AttributePropertyBoolean extends AttributeProperty {
 	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
-		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		switch ($aggregation) {
+			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_BOOLEAN,
+					'value' => self::getModaValue(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_DICTIONARY,
+					'value' => DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), false)
+				]);
+			break;
+			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
+				return new DynamicAttributePropertyAggregation([
+					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
+					'value' => DynamicAttributePropertyAggregation::AggregateIntCount($models, $dropNullValues)
+				]);
+			break;
+			default:
+				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+		}
+	}
+
+	/**
+	 * @param array $values
+	 * @param bool $dropNullValues
+	 * @return string|null
+	 */
+	public static function getModaValue(array $values, bool $dropNullValues = true):?string {
+		$values = $dropNullValues?ArrayHelper::filterValues($values, ['', null]):$values;
+		$modaArray = array_count_values(array_map(static function($value) {
+			return null === $value?'':(string)$value;
+		}, $values));
+		if ($dropNullValues) unset ($modaArray['']);
+
+		$maxValue = count($modaArray)?max($modaArray):null;
+		return (string)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
 	}
 
 	/**
