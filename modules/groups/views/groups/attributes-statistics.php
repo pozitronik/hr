@@ -6,9 +6,9 @@ declare(strict_types = 1);
  * @var Groups $model
  * @var DynamicAttributes[] $aggregatedAttributes
  * @var Model $parametersModel
+ * @var array $supportedAggregations
  */
 
-use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\groups\GroupsModule;
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div class="col-md-9">
 
 						<?= $form->field($parametersModel, 'aggregation')->widget(Select2::class, [
-							'data' => DynamicAttributePropertyAggregation::AGGREGATION_LABELS,
+							'data' => $supportedAggregations,
 							'options' => [
 								'multiple' => false,
 								'placeholder' => 'Выберите статистику'

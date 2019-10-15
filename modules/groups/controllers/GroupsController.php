@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\controllers;
 
 use app\helpers\Utils;
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
@@ -169,6 +170,8 @@ class GroupsController extends WigetableController {
 	 * @param int $id
 	 * @return string|null
 	 * @throws Throwable
+	 * @todo: добавляем параметры attributeid & propertyid & stattype для детального включения в статку
+	 * @todo: стартовая статка -> сводка по атрибутам в скоупе
 	 */
 	public function actionAttributesStatistics(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
@@ -177,8 +180,11 @@ class GroupsController extends WigetableController {
 
 		$parametersModel->load(Yii::$app->request->post());
 
+		$supportedAggregations = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($parametersModel->scopeAggregations));
+
 		return $this->render('attributes-statistics', [
 			'model' => $group,
+			'supportedAggregations' => $supportedAggregations,
 			'aggregatedAttributes' => $parametersModel->applyAggregation(),
 			'parametersModel' => $parametersModel
 		]);
