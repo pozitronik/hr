@@ -16,6 +16,8 @@ use yii\base\Model;
  * @package app\modules\dynamic_attributes\models
  * @property int $aggregation -- выбранный тип просматриваемой агрегации
  * @property bool $dropNullValues -- отсеивание пустых значений, если возможно
+ * @property-read int[] $scopeAttributes -- id всех атрибутов в скоупе пользователей
+ * @property-read int[] $scopeAggregations -- id всех агрегаций, поддерживаемых атрибутами в скоупе
  */
 class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
@@ -84,6 +86,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	}
 
 	/**
+	 * Возвращает массив атрибутов, содержащий агрегированые свойства по заданному скоупу
 	 * @return DynamicAttributes[]
 	 * @throws Throwable
 	 */
@@ -106,6 +109,28 @@ class DynamicAttributesPropertyCollection extends Model {
 
 		}
 		return (ArrayHelper::filterValues($aggregatedDynamicAttributes, [null]));//убираем пустые значения
+	}
+
+	/**
+	 * @return int[]
+	 */
+	public function getScopeAttributes():array {
+		return array_keys($this->_dataArray);
+	}
+
+	/**
+	 * @return int[]
+	 */
+	public function getScopeAggregations():array {
+		$aggregations = [];
+		foreach ($this->_dataArray as $attributeId => $propertyData) {
+			/** @var DynamicAttributes $attributeModel */
+			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
+				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
+				$aggregations[] = $propertyClass::aggregationConfig();
+			}
+		}
+		return array_unique(array_merge([], ...$aggregations));
 	}
 
 }
