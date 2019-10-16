@@ -14,16 +14,22 @@ use yii\base\Model;
  * Модель, содержащая набор свойств динамических атрибутов (с взаимными ссылками), и позволяющая производить над ними всякие извращения, допускаемые этими типами атрибутов (всякие агрегации)
  *
  * @package app\modules\dynamic_attributes\models
- * @property int $aggregation -- выбранный тип просматриваемой агрегации
+ * @property int|null $aggregation -- выбранный тип просматриваемой агрегации
+ * @property int|null $attributeId -- выбранный атрибут
+ * @property int|null $propertyId -- выбранное свойство выбранного атрибута
  * @property bool $dropNullValues -- отсеивание пустых значений, если возможно
  * @property-read int[] $scopeAttributes -- id всех атрибутов в скоупе пользователей
+ * @property-read array $scopeAttributesLabels -- массив id=>label для атрибутов в скоупе (для выбиралок)
  * @property-read int[] $scopeAggregations -- id всех агрегаций, поддерживаемых атрибутами в скоупе
+ * @property-read array $scopeAggregationsLabels -- массив id=>label для агрегаций, поддерживаемых атрибутами в скоупе
  */
 class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
 	private $_userScope = [];
 	private $_dataArray = [];
-	private $_aggregation = DynamicAttributePropertyAggregation::AGGREGATION_AVG;
+	private $_aggregation = DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
+	private $_attributeId;
+	private $_propertyId;
 	private $_dropNullValues = false;
 
 	/**
@@ -31,16 +37,29 @@ class DynamicAttributesPropertyCollection extends Model {
 	 */
 	public function rules():array {
 		return [
-			[['aggregation'], 'integer'],
+			[['aggregation', 'attributeId', 'propertyId'], 'integer'],
+			[['aggregation'], 'required'],
 			[['dropNullValues'], 'boolean']
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function attributeLabels() {
+		return [
+			'aggregation' => 'Тип статистики',
+			'attributeId' => 'Атрибут',
+			'propertyId' => 'Свойство',
+			'dropNullValues' => 'Отбросить пустые значения'
 		];
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getAggregation():int {
-		return $this->_aggregation;
+	public function getAggregation():?int {
+		return empty($this->_aggregation)?null:$this->_aggregation;
 	}
 
 	/**
@@ -64,9 +83,9 @@ class DynamicAttributesPropertyCollection extends Model {
 		$this->_dropNullValues = $dropNullValues;
 	}
 
-	private function fill():void {
+	public function fill():void {
 		foreach ($this->_userScope as $user) {
-			$userAttributes = $user->relDynamicAttributes;
+			$userAttributes = (null === $this->attributeId)?$user->relDynamicAttributes:[DynamicAttributes::findModel($this->attributeId)];
 			foreach ($userAttributes as $attributeKey => $userAttribute) {
 				foreach ($userAttribute->properties as $propertyKey => $userAttributeProperty) {
 					$userAttributeProperty->userId = $user->id;
@@ -82,7 +101,6 @@ class DynamicAttributesPropertyCollection extends Model {
 	 */
 	public function setUserScope(array $userScope):void {
 		$this->_userScope = $userScope;
-		$this->fill();
 	}
 
 	/**
@@ -131,6 +149,49 @@ class DynamicAttributesPropertyCollection extends Model {
 			}
 		}
 		return array_unique(array_merge([], ...$aggregations));
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function getAttributeId():?int {
+		return empty($this->_attributeId)?null:(int)$this->_attributeId;
+	}
+
+	/**
+	 * @param int|null $attributeId
+	 */
+	public function setAttributeId($attributeId):void {
+		$this->_attributeId = $attributeId;
+	}
+
+	/**
+	 * @return int|null
+	 */
+	public function getPropertyId():?int {
+		return empty($this->_propertyId)?null:(int)$this->_propertyId;
+	}
+
+	/**
+	 * @param int|null $propertyId
+	 */
+	public function setPropertyId($propertyId):void {
+		$this->_propertyId = $propertyId;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getScopeAggregationsLabels():array {
+		return array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($this->scopeAggregations));
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getScopeAttributesLabels():array {
+		$attributes = DynamicAttributes::findModels($this->scopeAttributes);
+		return ArrayHelper::map($attributes, 'id', 'name');
 	}
 
 }

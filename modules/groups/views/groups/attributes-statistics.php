@@ -5,11 +5,12 @@ declare(strict_types = 1);
  * @var View $this
  * @var Groups $model
  * @var DynamicAttributes[] $aggregatedAttributes
- * @var Model $parametersModel
+ * @var DynamicAttributesPropertyCollection $parametersModel
  * @var array $supportedAggregations
  */
 
 use app\modules\dynamic_attributes\models\DynamicAttributes;
+use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
@@ -18,7 +19,6 @@ use kartik\form\ActiveForm;
 use kartik\helpers\Html;
 use kartik\select2\Select2;
 use kartik\switchinput\SwitchInput;
-use yii\base\Model;
 use yii\web\View;
 
 $this->title = 'Статистика по атрибутам';
@@ -40,10 +40,27 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-xs-12">
-					<div class="col-md-9">
-
+					<div class="col-md-3">
+						<?= $form->field($parametersModel, 'attributeId')->widget(Select2::class, [
+							'data' => $parametersModel->scopeAttributesLabels,
+							'options' => [
+								'multiple' => false,
+								'placeholder' => 'Все атрибуты'
+							]
+						])->label('Атрибут') ?>
+					</div>
+					<div class="col-md-3">
+						<?= $form->field($parametersModel, 'propertyId')->widget(Select2::class, [
+							'data' => $parametersModel->scopeAttributesLabels,
+							'options' => [
+								'multiple' => false,
+								'placeholder' => 'Все свойства'
+							]
+						])->label('Свойство') ?>
+					</div>
+					<div class="col-md-3">
 						<?= $form->field($parametersModel, 'aggregation')->widget(Select2::class, [
-							'data' => $supportedAggregations,
+							'data' => $parametersModel->scopeAggregationsLabels,
 							'options' => [
 								'multiple' => false,
 								'placeholder' => 'Выберите статистику'

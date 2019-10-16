@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\groups\controllers;
 
 use app\helpers\Utils;
-use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
@@ -180,11 +179,9 @@ class GroupsController extends WigetableController {
 
 		$parametersModel->load(Yii::$app->request->post());
 
-		$supportedAggregations = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($parametersModel->scopeAggregations));
-
+		$parametersModel->fill();
 		return $this->render('attributes-statistics', [
 			'model' => $group,
-			'supportedAggregations' => $supportedAggregations,
 			'aggregatedAttributes' => $parametersModel->applyAggregation(),
 			'parametersModel' => $parametersModel
 		]);
