@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							],
 							'options' => [
 								'multiple' => false,
-								'placeholder' => 'Все свойства',
+								'placeholder' => 'Все свойства'
 							]
 						]) ?>
 
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							],
 							'options' => [
 								'multiple' => false,
-								'placeholder' => 'Выберите статистику',
+								'placeholder' => 'Выберите статистику'
 							]
 						]) ?>
 

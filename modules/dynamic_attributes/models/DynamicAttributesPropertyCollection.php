@@ -46,7 +46,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'aggregation' => 'Тип статистики',
 			'attributeId' => 'Атрибут',
@@ -123,6 +123,7 @@ class DynamicAttributesPropertyCollection extends Model {
 
 	/**
 	 * @return int[]
+	 * @throws Throwable
 	 */
 	public function getScopeAggregations():array {
 		$aggregations = [];
@@ -173,6 +174,7 @@ class DynamicAttributesPropertyCollection extends Model {
 
 	/**
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function getScopeAttributesLabels():array {
 		$attributes = DynamicAttributes::findModels($this->scopeAttributes);
@@ -222,12 +224,17 @@ class DynamicAttributesPropertyCollection extends Model {
 		return [];
 	}
 
+	/**
+	 * Высчитывает агрегаторы, доступные свойству атрибута при выборе. В целом макрос, который стоит оптимизировать
+	 * @param int|null $attributeId
+	 * @param int|null $propertyId
+	 * @return array
+	 * @throws Throwable
+	 */
 	public function propertyAggregations(?int $attributeId, ?int $propertyId):array {
-		if (null !== $attributeId && null !== $propertyId && null !== $attribute = DynamicAttributes::findModel($attributeId)) {
-			if (null !== $property = $attribute->getPropertyById($propertyId)) {
-				$aggregations = DynamicAttributeProperty::getTypeClass($property->type)::aggregationConfig();
-				return array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($aggregations));
-			}
+		if (null !== $attributeId && null !== $propertyId && (null !== $attribute = DynamicAttributes::findModel($attributeId)) && (null !== $property = $attribute->getPropertyById($propertyId))) {
+			$aggregations = DynamicAttributeProperty::getTypeClass($property->type)::aggregationConfig();
+			return array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($aggregations));
 		}
 		return $this->scopeAggregationsLabels;
 	}

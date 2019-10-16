@@ -317,6 +317,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 	/**
 	 * Возвращает массив всех доступных агрегаторов для свойств атрибута
 	 * @return int[]
+	 * @throws Throwable
 	 */
 	public function getPossibleAggregations():array {
 		$aggregations = [];

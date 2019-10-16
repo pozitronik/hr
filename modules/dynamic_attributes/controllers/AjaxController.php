@@ -94,6 +94,7 @@ class AjaxController extends BaseAjaxController {
 	/**
 	 * Возвращает набор агрегаторов, поддерживаемых этим свойством
 	 * @return array
+	 * @throws Throwable
 	 */
 	public function actionAttributeGetPropertyAggregations():array {
 		$attribute_id = (int)ArrayHelper::getValue(Yii::$app->request->post('depdrop_params'), 0);
