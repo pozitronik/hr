@@ -47,15 +47,15 @@ use yii\db\ActiveQuery;
 class DynamicAttributes extends ActiveRecordExtended {
 	use PluginTrait;
 
-	private $_virtualPropertyValues = [];//Хранение виртуальных значений атрибутов
-	private $_virtualPropertyTypes = [];//Хранение виртуальных типов атрибутов
-
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',
 		1 => 'Обучение',
 		2 => 'Навык',
 		3 => 'Область экспертизы'
-	];
+	];//Хранение виртуальных значений атрибутов
+
+	private $_virtualPropertyValues = [];//Хранение виртуальных типов атрибутов
+	private $_virtualPropertyTypes = [];
 
 	/**
 	 * {@inheritdoc}
@@ -146,19 +146,6 @@ class DynamicAttributes extends ActiveRecordExtended {
 	}
 
 	/**
-	 * Ищет свойство по индексу
-	 * @param int $id
-	 * @param null $throw
-	 * @return DynamicAttributeProperty|null
-	 * @throws Throwable
-	 */
-	public function getPropertyById(int $id, $throw = null):?DynamicAttributeProperty {
-		if (null !== $data = ArrayHelper::getValue($this->structure, $id)) return new DynamicAttributeProperty(array_merge($data, ['attributeId' => $this->id]));
-		if (null !== $throw) SysExceptions::log($throw, true, true);
-		return null;
-	}
-
-	/**
 	 * Массив атрибутов пользователя
 	 * @param int $user_id
 	 * @return DynamicAttributeProperty[]
@@ -191,17 +178,6 @@ class DynamicAttributes extends ActiveRecordExtended {
 	}
 
 	/**
-	 * Очищает значения всех свойств атрибута у пользователя
-	 * @param int $user_id
-	 * @throws Throwable
-	 */
-	public function clearUserProperties(int $user_id):void {
-		foreach ($this->properties as $property) {
-			$this->setUserProperty($user_id, $property->id, null);
-		}
-	}
-
-	/**
 	 * Устанавливает значение свойства атрибута для пользователя
 	 * @param int $user_id
 	 * @param int $property_id
@@ -226,6 +202,30 @@ class DynamicAttributes extends ActiveRecordExtended {
 	}
 
 	/**
+	 * Ищет свойство по индексу
+	 * @param int $id
+	 * @param null $throw
+	 * @return DynamicAttributeProperty|null
+	 * @throws Throwable
+	 */
+	public function getPropertyById(int $id, $throw = null):?DynamicAttributeProperty {
+		if (null !== $data = ArrayHelper::getValue($this->structure, $id)) return new DynamicAttributeProperty(array_merge($data, ['attributeId' => $this->id]));
+		if (null !== $throw) SysExceptions::log($throw, true, true);
+		return null;
+	}
+
+	/**
+	 * Очищает значения всех свойств атрибута у пользователя
+	 * @param int $user_id
+	 * @throws Throwable
+	 */
+	public function clearUserProperties(int $user_id):void {
+		foreach ($this->properties as $property) {
+			$this->setUserProperty($user_id, $property->id, null);
+		}
+	}
+
+	/**
 	 * Устанавливает свойству виртуальное значение атрибута, которое не привязано ни к чему, и существует только вместе с самим объектом динамического атрибута
 	 * @param int $property_id
 	 * @param $property_value
@@ -234,6 +234,21 @@ class DynamicAttributes extends ActiveRecordExtended {
 	public function setVirtualProperty(int $property_id, $property_value, $property_type):void {
 		ArrayHelper::setValue($this->_virtualPropertyValues, $property_id, $property_value);
 		ArrayHelper::setValue($this->_virtualPropertyTypes, $property_id, $property_type);
+	}
+
+	/**
+	 * @return array
+	 * @throws Throwable
+	 */
+	public function getVirtualProperties():array {
+		$virtualProperties = [];
+		foreach ($this->properties as $property) {
+			$virtualProperty = $this->getVirtualProperty($property->id);
+			if (null !== $virtualProperty->type) {//собираем только установленные свойства. Сделано для возможности просмотра статистики не по всему атрибуту, а только по одному свойству
+				$virtualProperties[] = $virtualProperty;
+			}
+		}
+		return $virtualProperties;
 	}
 
 	/**
@@ -246,25 +261,6 @@ class DynamicAttributes extends ActiveRecordExtended {
 		$property->value = ArrayHelper::getValue($this->_virtualPropertyValues, $property_id);
 		$property->type = ArrayHelper::getValue($this->_virtualPropertyTypes, $property_id);
 		return $property;
-	}
-
-	/**
-	 * @return array
-	 * @throws Throwable
-	 */
-	public function getVirtualProperties():array {
-		$virtualProperties = [];
-		foreach ($this->properties as $property) {
-			$virtualProperties[] = $this->getVirtualProperty($property->id);
-		}
-		return $virtualProperties;
-	}
-
-	/**
-	 * @return Users|ActiveQuery
-	 */
-	public function getRelUsers() {
-		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersAttributes');
 	}
 
 	/**
@@ -308,6 +304,13 @@ class DynamicAttributes extends ActiveRecordExtended {
 	 */
 	public function getUsersCount():int {
 		return (int)$this->getRelUsers()->count();
+	}
+
+	/**
+	 * @return Users|ActiveQuery
+	 */
+	public function getRelUsers() {
+		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersAttributes');
 	}
 
 	/**
