@@ -9,12 +9,14 @@ declare(strict_types = 1);
  * @var array $supportedAggregations
  */
 
+use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
+use kartik\depdrop\DepDrop;
 use kartik\form\ActiveForm;
 use kartik\helpers\Html;
 use kartik\select2\Select2;
@@ -47,25 +49,40 @@ $this->params['breadcrumbs'][] = $this->title;
 								'multiple' => false,
 								'placeholder' => 'Все атрибуты'
 							]
-						])->label('Атрибут') ?>
+						]) ?>
 					</div>
 					<div class="col-md-3">
-						<?= $form->field($parametersModel, 'propertyId')->widget(Select2::class, [
-							'data' => $parametersModel->scopeAttributesLabels,
+						<?= $form->field($parametersModel, 'propertyId')->widget(DepDrop::class, [
+							'data' => $parametersModel->attributeProperties($parametersModel->attributeId),
+							'type' => DepDrop::TYPE_SELECT2,
+							'pluginOptions' => [
+								'depends' => ["dynamicattributespropertycollection-attributeid"],
+								'url' => DynamicAttributesModule::to(['ajax/attribute-get-properties']),
+								'loadingText' => 'Загружаю свойства'
+							],
 							'options' => [
 								'multiple' => false,
-								'placeholder' => 'Все свойства'
+								'placeholder' => 'Все свойства',
 							]
-						])->label('Свойство') ?>
+						]) ?>
+
 					</div>
 					<div class="col-md-3">
-						<?= $form->field($parametersModel, 'aggregation')->widget(Select2::class, [
-							'data' => $parametersModel->scopeAggregationsLabels,
+						<?= $form->field($parametersModel, 'aggregation')->widget(DepDrop::class, [
+							'data' => $parametersModel->propertyAggregations($parametersModel->attributeId, $parametersModel->propertyId),
+							'type' => DepDrop::TYPE_SELECT2,
+							'pluginOptions' => [
+								'params' => ["dynamicattributespropertycollection-attributeid"],
+								'depends' => ["dynamicattributespropertycollection-propertyid"],
+								'url' => DynamicAttributesModule::to(['ajax/attribute-get-property-aggregations']),
+								'loadingText' =>  'Загружаю агрегаторы'
+							],
 							'options' => [
 								'multiple' => false,
-								'placeholder' => 'Выберите статистику'
+								'placeholder' => 'Выберите статистику',
 							]
-						])->label('Тип статистики') ?>
+						]) ?>
+
 					</div>
 					<div class="col-md-2">
 						<?= $form->field($parametersModel, "dropNullValues")->widget(SwitchInput::class, [
@@ -76,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'onColor' => 'danger',
 								'offColor' => 'primary'
 							]
-						])->label('Отбросить пустые значения') ?>
+						]) ?>
 					</div>
 					<div class="col-md-1">
 						<?= Html::submitButton("Показать", ['class' => 'btn btn-success pull-right']) ?>
