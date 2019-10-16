@@ -18,6 +18,7 @@ class DynamicAttributePropertyAggregation extends Model {
 
 	public const AGGREGATION_UNSUPPORTED = null;
 
+	public const AGGREGATION_UNSELECTED = 0;//не выбрано
 	public const AGGREGATION_AVG = 1;//Среднее арифметическое
 	public const AGGREGATION_HARMONIC = 2;//среднее гармоническое
 	public const AGGREGATION_MODA = 3;//наиболее распространённое значение
@@ -31,6 +32,7 @@ class DynamicAttributePropertyAggregation extends Model {
 
 
 	public const AGGREGATION_LABELS = [
+		self::AGGREGATION_UNSELECTED => 'Не выбрано',
 		self::AGGREGATION_AVG => 'Среднее арифметическое',
 		self::AGGREGATION_HARMONIC => 'Среднее гармоническое',
 		self::AGGREGATION_MODA => 'Наиболее распространённое значение',
