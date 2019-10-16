@@ -26,7 +26,7 @@ use yii\base\Model;
 class DynamicAttributesPropertyCollection extends Model {
 	/** @var Users[] $_userScope */
 	private $_userScope = [];
-	private $_dataArray = [];
+	private $_scopeArray = [];//массив с конфигурацией атрибутов, свойств и агрегаторов на скоупе.
 	private $_aggregation = DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 	private $_attributeId;
 	private $_propertyId;
@@ -56,51 +56,24 @@ class DynamicAttributesPropertyCollection extends Model {
 	}
 
 	/**
-	 * @return int
-	 */
-	public function getAggregation():?int {
-		return empty($this->_aggregation)?null:$this->_aggregation;
-	}
-
-	/**
-	 * @param int $aggregation
-	 */
-	public function setAggregation(int $aggregation):void {
-		$this->_aggregation = $aggregation;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function getDropNullValues():bool {
-		return $this->_dropNullValues;
-	}
-
-	/**
-	 * @param bool $dropNullValues
-	 */
-	public function setDropNullValues(bool $dropNullValues):void {
-		$this->_dropNullValues = $dropNullValues;
-	}
-
-	public function fill():void {
-		foreach ($this->_userScope as $user) {
-			$userAttributes = (null === $this->attributeId)?$user->relDynamicAttributes:[DynamicAttributes::findModel($this->attributeId)];
-			foreach ($userAttributes as $attributeKey => $userAttribute) {
-				foreach ($userAttribute->properties as $propertyKey => $userAttributeProperty) {
-					$userAttributeProperty->userId = $user->id;
-					$this->_dataArray[$userAttributeProperty->attributeId][$userAttributeProperty->id]['values'][] = $userAttributeProperty;
-					ArrayHelper::initValue($this->_dataArray, "{$userAttributeProperty->attributeId}.{$userAttributeProperty->id}.type", $userAttributeProperty->type);
-				}
-			}
-		}
-	}
-
-	/**
 	 * @param Users[] $userScope
 	 */
 	public function setUserScope(array $userScope):void {
 		$this->_userScope = $userScope;
+		$this->fillScope();
+	}
+
+	private function fillScope():void {
+		foreach ($this->_userScope as $user) {
+			$userAttributes = $user->relDynamicAttributes;
+			foreach ($userAttributes as $attributeKey => $userAttribute) {
+				foreach ($userAttribute->properties as $propertyKey => $userAttributeProperty) {
+					$userAttributeProperty->userId = $user->id;
+					$this->_scopeArray[$userAttributeProperty->attributeId][$userAttributeProperty->id]['values'][] = $userAttributeProperty;
+					ArrayHelper::initValue($this->_scopeArray, "{$userAttributeProperty->attributeId}.{$userAttributeProperty->id}.type", $userAttributeProperty->type);
+				}
+			}
+		}
 	}
 
 	/**
@@ -110,15 +83,27 @@ class DynamicAttributesPropertyCollection extends Model {
 	 */
 	public function applyAggregation():array {
 		$aggregatedDynamicAttributes = [];
-		foreach ($this->_dataArray as $attributeId => $propertyData) {
+		if (null === $this->aggregation) return [];
+		if (null !== $this->attributeId) {//если выбран атрибут, считаем только его. Свойства не фильтруем, они будут заполняться null для последующей фильтрации
+			$aggregatedArray = [$this->attributeId => $this->_scopeArray[$this->attributeId]];
+		} else {//иначе считаем на выборке по умолчанию
+			$aggregatedArray = $this->_scopeArray;
+		}
+
+		foreach ($aggregatedArray as $attributeId => $propertyData) {
 			/** @var DynamicAttributes $attributeModel */
 			$attributeModel = DynamicAttributes::findModel($attributeId, new Exception("Can't load dynamic attribute!"));
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
-				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
-				if (in_array($this->aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
-					$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value, $aggregatedValue->type);
+				if (null !== $this->propertyId && $propertyId !== $this->propertyId) {
+					$attributeModel->setVirtualProperty($propertyId, null, null);//skip property aggregation
 				} else {
-					$attributeModel->setVirtualProperty($propertyId, 'Не поддерживается', DynamicAttributeProperty::PROPERTY_UNSUPPORTED);//fill by empty attribute
+					$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
+					if (in_array($this->aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
+						$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value, $aggregatedValue->type);
+					} else {
+						$attributeModel->setVirtualProperty($propertyId, 'Не поддерживается', DynamicAttributeProperty::PROPERTY_UNSUPPORTED);//fill by empty attribute
+					}
+
 				}
 
 			}
@@ -133,7 +118,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	 * @return int[]
 	 */
 	public function getScopeAttributes():array {
-		return array_keys($this->_dataArray);
+		return array_keys($this->_scopeArray);
 	}
 
 	/**
@@ -141,7 +126,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	 */
 	public function getScopeAggregations():array {
 		$aggregations = [];
-		foreach ($this->_dataArray as $attributeId => $propertyData) {
+		foreach ($this->_scopeArray as $attributeId => $propertyData) {//todo => via getAttributeAggregations
 			/** @var DynamicAttributes $attributeModel */
 			foreach ($propertyData as $propertyId => $userAttributePropertyArray) {
 				$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
@@ -192,6 +177,59 @@ class DynamicAttributesPropertyCollection extends Model {
 	public function getScopeAttributesLabels():array {
 		$attributes = DynamicAttributes::findModels($this->scopeAttributes);
 		return ArrayHelper::map($attributes, 'id', 'name');
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getAggregation():?int {
+		return empty($this->_aggregation)?null:(int)$this->_aggregation;
+	}
+
+	/**
+	 * @param int $aggregation
+	 */
+	public function setAggregation($aggregation):void {
+		$this->_aggregation = $aggregation;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getDropNullValues():bool {
+		return $this->_dropNullValues;
+	}
+
+	/**
+	 * @param bool $dropNullValues
+	 */
+	public function setDropNullValues(bool $dropNullValues):void {
+		$this->_dropNullValues = $dropNullValues;
+	}
+
+	/**
+	 * Для предвыбранного атрибута нужно отдать его поля
+	 * @param null|integer $index
+	 * @return array
+	 * @throws Throwable
+	 *
+	 * todo: идентичный метод есть в DynamicAttributesSearchCollection
+	 */
+	public function attributeProperties(?int $index):array {
+		if (null !== $attribute = DynamicAttributes::findModel($index)) {
+			return ArrayHelper::map($attribute->structure, 'id', 'name');
+		}
+		return [];
+	}
+
+	public function propertyAggregations(?int $attributeId, ?int $propertyId):array {
+		if (null !== $attributeId && null !== $propertyId && null !== $attribute = DynamicAttributes::findModel($attributeId)) {
+			if (null !== $property = $attribute->getPropertyById($propertyId)) {
+				$aggregations = DynamicAttributeProperty::getTypeClass($property->type)::aggregationConfig();
+				return array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($aggregations));
+			}
+		}
+		return $this->scopeAggregationsLabels;
 	}
 
 }

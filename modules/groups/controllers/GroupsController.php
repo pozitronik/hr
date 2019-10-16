@@ -179,7 +179,6 @@ class GroupsController extends WigetableController {
 
 		$parametersModel->load(Yii::$app->request->post());
 
-		$parametersModel->fill();
 		return $this->render('attributes-statistics', [
 			'model' => $group,
 			'aggregatedAttributes' => $parametersModel->applyAggregation(),
