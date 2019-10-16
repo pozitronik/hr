@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 					</div>
 					<div class="col-md-2">
-						<?= $form->field($parametersModel, "dropNullValues")->widget(SwitchInput::class, [
+						<?= $form->field($parametersModel, "dropNullValues")->widget(SwitchInput::class, [//todo: поддержка настройки через depdrop
 							'pluginOptions' => [
 								'size' => 'mini',
 								'onText' => 'Да',
