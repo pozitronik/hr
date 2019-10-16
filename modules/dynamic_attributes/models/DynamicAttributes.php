@@ -42,6 +42,7 @@ use yii\db\ActiveQuery;
  * @property-read bool $hasIntegerProperties
  * @property int $userProperties
  * @property-read int $usersCount
+ * @property-read int[] $possibleAggregations -- все доступные агрегаторы свойств атрибута
  */
 class DynamicAttributes extends ActiveRecordExtended {
 	use PluginTrait;
@@ -307,5 +308,19 @@ class DynamicAttributes extends ActiveRecordExtended {
 	 */
 	public function getUsersCount():int {
 		return (int)$this->getRelUsers()->count();
+	}
+
+	/**
+	 * Возвращает массив всех доступных агрегаторов для свойств атрибута
+	 * @return int[]
+	 */
+	public function getPossibleAggregations():array {
+		$aggregations = [];
+		$types = array_unique(ArrayHelper::getColumn($this->properties, 'type'));
+		foreach ($types as $type) {
+			$propertyClass = DynamicAttributeProperty::getTypeClass($type);
+			$aggregations[] = $propertyClass::aggregationConfig();
+		}
+		return (array_merge([], ...$aggregations));
 	}
 }
