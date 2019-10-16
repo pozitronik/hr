@@ -185,7 +185,8 @@ class DynamicAttributes extends ActiveRecordExtended {
 	 * @throws Throwable
 	 */
 	public function setUserProperty(int $user_id, int $property_id, $property_value):void {
-		$property = $this->getPropertyById($property_id);
+		if (null === $property = $this->getPropertyById($property_id)) throw new RuntimeException("Property id {$property_id} not exist in {$this->name}");
+
 		$typeClass = DynamicAttributeProperty::getTypeClass($property->type);
 		try {
 			if ($typeClass::saveValue($this->id, $property_id, $user_id, $property_value)) {
@@ -257,7 +258,7 @@ class DynamicAttributes extends ActiveRecordExtended {
 	 * @throws Throwable
 	 */
 	public function getVirtualProperty(int $property_id) {
-		$property = $this->getPropertyById($property_id);
+		if (null === $property = $this->getPropertyById($property_id)) throw new RuntimeException("Property id {$property_id} not exist in {$this->name}");
 		$property->value = ArrayHelper::getValue($this->_virtualPropertyValues, $property_id);
 		$property->type = ArrayHelper::getValue($this->_virtualPropertyTypes, $property_id);
 		return $property;
