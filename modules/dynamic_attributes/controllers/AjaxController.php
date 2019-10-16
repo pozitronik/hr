@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
+use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersAttributes;
@@ -85,6 +86,30 @@ class AjaxController extends BaseAjaxController {
 		}
 
 		$out = ArrayHelper::mapEx($className::conditionConfig(), ['id' => 'key', 'name' => 0]);
+
+		return ['output' => $out, 'selected' => ArrayHelper::getValue($out, '0.id')];
+
+	}
+
+	/**
+	 * Возвращает набор агрегаторов, поддерживаемых этим свойством
+	 * @return array
+	 */
+	public function actionAttributeGetPropertyAggregations():array {
+		$attribute_id = (int)ArrayHelper::getValue(Yii::$app->request->post('depdrop_params'), 0);
+		$property_id = (int)ArrayHelper::getValue(Yii::$app->request->post('depdrop_parents'), 0);
+		/*Выбран атрибут, не выбрано|не существует свойство => нужны все агрегаторы всех атрибутов свойства*/
+		if ((null !== $attribute = DynamicAttributes::findModel($attribute_id)) && ((null === $property = $attribute->getPropertyById($property_id)) || (null === $className = DynamicAttributeProperty::getTypeClass($property->type)))) {
+			$outputLabels = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($attribute->possibleAggregations));
+		} elseif (null === $attribute) {//ничего не выбрано => ничего не возвращаем. Теоретически, нужно вернуть все агрегаторы всех типов скоупа, но здесь мы о скопе ничего не знаем
+			return [
+				'output' => []
+			];
+		} else {
+			$outputLabels = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($className::aggregationConfig()));
+		}
+
+		$out = ArrayHelper::mapEx($outputLabels, ['id' => 'key', 'name' => 'value']);
 
 		return ['output' => $out, 'selected' => ArrayHelper::getValue($out, '0.id')];
 
