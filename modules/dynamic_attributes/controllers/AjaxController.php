@@ -101,16 +101,15 @@ class AjaxController extends BaseAjaxController {
 		$property_id = (int)ArrayHelper::getValue(Yii::$app->request->post('depdrop_parents'), 0);
 		/*Выбран атрибут, не выбрано|не существует свойство => нужны все агрегаторы всех атрибутов свойства*/
 		if (null !== $attribute = DynamicAttributes::findModel($attribute_id)) {
-			if ((null === $property = $attribute->getPropertyById($property_id)) || (null === $className = DynamicAttributeProperty::getTypeClass($property->type))) {
+			if ((null !== $property = $attribute->getPropertyById($property_id)) && (null !== $className = DynamicAttributeProperty::getTypeClass($property->type))) {
+				$outputLabels = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($className::aggregationConfig()));
+			} else {//не нашли свойство - возвращаем все агрегаторы атрибута
 				$outputLabels = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($attribute->possibleAggregations));
-			} else {//ничего не выбрано => ничего не возвращаем. Теоретически, нужно вернуть все агрегаторы всех типов скоупа, но здесь мы о скопе ничего не знаем
-				return [
-					'output' => []
-				];
 			}
-		} else {
-			/** @var string $className -- всегда будет заполнено, но стоит переписать условие*/
-			$outputLabels = array_intersect_key(DynamicAttributePropertyAggregation::AGGREGATION_LABELS, array_flip($className::aggregationConfig()));
+		} else {//ничего не выбрано => ничего не возвращаем. Теоретически, нужно вернуть все агрегаторы всех типов скоупа, но здесь мы о скопе ничего не знаем
+			return [
+				'output' => []
+			];
 		}
 
 		$out = ArrayHelper::mapEx($outputLabels, ['id' => 'key', 'name' => 'value']);
