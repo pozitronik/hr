@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models\types;
 
+use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -375,9 +376,12 @@ class AttributePropertyScore extends AttributeProperty {
 	 */
 	public static function getModaValue(array $models, bool $dropNullValues = true):ScoreProperty {
 		return new ScoreProperty([
-			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
-			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
-			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues)
+			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues, $maxCounter),
+			'selfScoreComment' => Utils::pluralForm($maxCounter, ['пользователь', 'пользователя', 'пользователей']),
+			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues, $maxCounter),
+			'alScoreComment' => Utils::pluralForm($maxCounter, ['пользователь', 'пользователя', 'пользователей']),
+			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntModa(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues, $maxCounter),
+			'tlScoreComment' => Utils::pluralForm($maxCounter, ['пользователь', 'пользователя', 'пользователей'])
 		]);
 	}
 
