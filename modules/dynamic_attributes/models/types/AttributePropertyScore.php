@@ -392,9 +392,12 @@ class AttributePropertyScore extends AttributeProperty {
 	 */
 	public static function getMinValue(array $models, bool $dropNullValues = true):ScoreProperty {
 		return new ScoreProperty([
-			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
-			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
-			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues)
+			'selfScoreValue' => $minValue = DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'selfScoreComment' => Utils::pluralForm(ArrayHelper::countValue(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $minValue), ['пользователь', 'пользователя', 'пользователей']),
+			'alScoreValue' => $minValue = DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'alScoreComment' => Utils::pluralForm(ArrayHelper::countValue(ArrayHelper::getColumn($models, 'value.alScoreValue'), $minValue), ['пользователь', 'пользователя', 'пользователей']),
+			'tlScoreValue' => $minValue = DynamicAttributePropertyAggregation::AggregateIntMin(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
+			'tlScoreComment' => Utils::pluralForm(ArrayHelper::countValue(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $minValue), ['пользователь', 'пользователя', 'пользователей']),
 		]);
 	}
 
@@ -405,9 +408,12 @@ class AttributePropertyScore extends AttributeProperty {
 	 */
 	public static function getMaxValue(array $models, bool $dropNullValues = true):ScoreProperty {
 		return new ScoreProperty([
-			'selfScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
-			'alScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
-			'tlScoreValue' => DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues)
+			'selfScoreValue' => $maxValue = DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $dropNullValues),
+			'selfScoreComment' => Utils::pluralForm(ArrayHelper::countValue(ArrayHelper::getColumn($models, 'value.selfScoreValue'), $maxValue), ['пользователь', 'пользователя', 'пользователей']),
+			'alScoreValue' => $maxValue = DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.alScoreValue'), $dropNullValues),
+			'alScoreComment' => Utils::pluralForm(ArrayHelper::countValue(ArrayHelper::getColumn($models, 'value.alScoreValue'), $maxValue), ['пользователь', 'пользователя', 'пользователей']),
+			'tlScoreValue' => $maxValue = DynamicAttributePropertyAggregation::AggregateIntMax(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $dropNullValues),
+			'tlScoreComment' => Utils::pluralForm(ArrayHelper::countValue(ArrayHelper::getColumn($models, 'value.tlScoreValue'), $maxValue), ['пользователь', 'пользователя', 'пользователей']),
 		]);
 	}
 
