@@ -169,15 +169,18 @@ class GroupsController extends WigetableController {
 	 * @param int $id
 	 * @return string|null
 	 * @throws Throwable
-	 * @todo: добавляем параметры attributeid & propertyid & stattype для детального включения в статку
-	 * @todo: стартовая статка -> сводка по атрибутам в скоупе
 	 */
 	public function actionAttributesStatistics(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 
-		$parametersModel = new DynamicAttributesPropertyCollection(['userScope' => $group->relUsers]);
+		$parametersModel = new DynamicAttributesPropertyCollection();
 
 		$parametersModel->load(Yii::$app->request->post());
+
+		if (false !== $attribute = Yii::$app->request->get('attribute', false)) $parametersModel->attributeId = $attribute;
+		if (false !== $property = Yii::$app->request->get('property', false)) $parametersModel->propertyId = $property;
+		if (false !== $stattype = Yii::$app->request->get('stattype', false)) $parametersModel->aggregation = $stattype;
+		$parametersModel->userScope = $group->relUsers;
 
 		return $this->render('attributes-statistics', [
 			'model' => $group,
