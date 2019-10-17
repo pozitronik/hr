@@ -30,7 +30,6 @@ class DynamicAttributePropertyAggregation extends Model {
 	public const AGGREGATION_MEDIAN = 9;
 	public const AGGREGATION_FREQUENCY = 10;
 
-
 	public const AGGREGATION_LABELS = [
 		self::AGGREGATION_UNSELECTED => 'Не выбрано',
 		self::AGGREGATION_AVG => 'Среднее арифметическое',
@@ -137,18 +136,19 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param int[] $values
 	 * @param bool $dropNullValues
+	 * @param int|null $maxValueCount -- вернёт количество раз, которое встретилось значение
 	 * @return int|null
 	 * @throws Throwable
 	 */
-	public static function AggregateIntModa(array $values, bool $dropNullValues = true):?int {
+	public static function AggregateIntModa(array $values, bool $dropNullValues = true, ?int &$maxValueCount = null):?int {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		$modaArray = array_count_values(array_map(static function($value) {
 			return null === $value?'':(int)$value;
 		}, $values));
 		if ($dropNullValues) unset ($modaArray['']);
 
-		$maxValue = count($modaArray)?max($modaArray):null;
-		return (int)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
+		$maxValueCount = count($modaArray)?max($modaArray):null;
+		return (int)array_search($maxValueCount, $modaArray);//наиболее часто встречаемое значение
 	}
 
 	/**
