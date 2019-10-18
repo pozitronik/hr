@@ -3,23 +3,23 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var Groups $group
- * @var array $options
+ * @var Users[] $leaders
+ * @var int $groupId
  */
 
-use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
+use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use yii\web\View;
 
 ?>
 <?= BadgeWidget::widget([
-	'models' => static function() use ($group) {//todo: можно вынести в отдельный виджет
+	'models' => static function() use ($leaders, $groupId) {//todo: можно вынести в отдельный виджет
 		$result = [];
-		foreach ($group->leaders as $leader) {
+		foreach ($leaders as $leader) {
 			$result[] = BadgeWidget::widget([
-				'models' => RefUserRoles::getUserRolesInGroup($leader->id, $group->id),
+				'models' => RefUserRoles::getUserRolesInGroup($leader->id, $groupId),
 				'attribute' => 'name',
 				'useBadges' => true,
 				'itemsSeparator' => false,

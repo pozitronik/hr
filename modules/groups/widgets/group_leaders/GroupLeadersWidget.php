@@ -12,11 +12,11 @@ use Throwable;
  * @package app\modules\groups\widgets\group_users
  *
  * @property Groups $group
- * @property array $options
+ * @property bool $showImportant -- кроме лидеров показывать и важных юзеров
  */
 class GroupLeadersWidget extends CachedWidget {
 	public $group;
-	public $options = [];
+	public $showImportant = false;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -24,16 +24,22 @@ class GroupLeadersWidget extends CachedWidget {
 	public function init() {
 		parent::init();
 		GroupLeadersWidgetAssets::register($this->getView());
-		$this->cacheNamePrefix = $this->group->id;
+		$this->cacheNamePrefix = $this->group->id.'-'.$this->showImportant;
 	}
+
 	/**
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 * @throws Throwable
 	 */
 	public function run():string {
+		$leaders = $this->group->leaders;
+		if ($this->showImportant) {
+			$leaders = array_merge($leaders, $this->group->important);
+		}
 		return $this->render('group_leaders', [
-			'group' => $this->group
+			'leaders' => $leaders,
+			'groupId' => $this->group->id
 		]);
 	}
 }
