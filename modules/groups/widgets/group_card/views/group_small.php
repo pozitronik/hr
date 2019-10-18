@@ -92,6 +92,6 @@ $showSubitems = (ArrayHelper::getValue($options, 'showChildGroups', true) && $gr
 
 
 	<div class="panel-footer">
-		<?= GroupLeadersWidget::widget(['group' => $group]) ?>
+		<?= GroupLeadersWidget::widget(['group' => $group, 'showImportant' => true]) ?>
 	</div>
 </div>
