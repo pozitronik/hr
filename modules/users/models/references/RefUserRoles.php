@@ -5,6 +5,7 @@ namespace app\modules\users\models\references;
 
 use app\modules\references\models\CustomisableReference;
 use app\modules\references\ReferencesModule;
+use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\GridView;
 use app\modules\groups\models\Groups;
@@ -187,7 +188,23 @@ class RefUserRoles extends CustomisableReference {
 				},
 				'format' => 'raw'
 			],
-			'usedCount'
+			[
+				'attribute' => 'usedCount',
+				'filter' => false,
+				'value' => static function($model) {
+					/** @var self $model */
+					return BadgeWidget::widget([
+						'models' => $model,
+						'attribute' => 'usedCount',
+						'linkScheme' => [UsersModule::to(['users/index']), 'UsersSearch[roles][]' => $model->id],
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
+					]);
+				},
+				'format' => 'raw'
+			],
 		];
 	}
 
@@ -213,6 +230,5 @@ class RefUserRoles extends CustomisableReference {
 	public function getUsedCount():int {
 		return (int)RelUsersGroupsRoles::find()->where(['role' => $this->id])->count();
 	}
-
 
 }
