@@ -93,6 +93,7 @@ use yii\db\ActiveRecord;
  * @property integer[] $dropUsersAttributes
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader Релейшен к ролям пользователей с флагом босса
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRolesImportant Релейшен к ролям пользователей с флагом важной шишки
  * @property DynamicAttributes[]|ActiveQuery $relDynamicAttributes Релейшен к атрибутам
  * @property ActiveQuery|Groups[] $relLeadingGroups Группы, в которых пользователь лидер
  * @property RelUsersAttributesTypes[]|ActiveQuery $relUsersAttributesTypes Релейшен к таблице связей с типами атрибутов
@@ -296,6 +297,14 @@ class Users extends ActiveRecordExtended {
 	 */
 	public function getRelRefUserRolesLeader() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
+	}
+
+	/**
+	 * Все роли этого пользователя с флагом важной шишки
+	 * @return ActiveQuery|RefUserRoles[]
+	 */
+	public function getRelRefUserRolesImportant() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
 	}
 
 	/**

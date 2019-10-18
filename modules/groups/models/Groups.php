@@ -46,9 +46,11 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|Vacancy[] $relVacancy Релейшен к вакансиям группы
  *
  * @property-read Users[] $leaders Пользюки, прописанные в группе с релейшеном лидера (владелец/руководитель)
+ * @property-read Users[] $important Пользюки, прописанные в группе с релейшеном важности (продуктовнер)
  * @property-read Users|null $leader Один пользователь из лидеров (для презентации)
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader
+ * @property ActiveQuery|RefUserRoles[] $relRefUserRolesImportant
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property array $rolesInGroup
  * @property array $dropUsers
@@ -197,6 +199,13 @@ class Groups extends ActiveRecordExtended {
 	public function getRelRefUserRolesLeader() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
 	}
+	/**
+	 * Все роли важных шишек в этой группе
+	 * @return ActiveQuery|RefUserRoles[]
+	 */
+	public function getRelRefUserRolesImportant() {
+		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
+	}
 
 	/**
 	 * @return ActiveQuery|RelGroupsGroups[]
@@ -290,6 +299,14 @@ class Groups extends ActiveRecordExtended {
 	 */
 	public function getLeaders():array {
 		return $this->getRelUsers()->joinWith(['relRefUserRolesLeader'], false)->where(['rel_users_groups.group_id' => $this->id])->all();
+	}
+	/**
+	 * Вернёт всех пользователей в группе с меткой важной шишки
+	 * @return Users[]
+	 * @throws Throwable
+	 */
+	public function getImportant():array {
+		return $this->getRelUsers()->joinWith(['relRefUserRolesImportant'], false)->where(['rel_users_groups.group_id' => $this->id])->all();
 	}
 
 	/**
