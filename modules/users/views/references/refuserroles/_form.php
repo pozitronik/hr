@@ -55,8 +55,19 @@ use yii\widgets\ActiveForm;
 				]) ?>
 			</div>
 
-			<div class="col-md-2">
+			<div class="col-md-1">
 				<?= $form->field($model, 'boss_flag')->widget(SwitchInput::class, [
+					'pluginOptions' => [
+						'size' => 'mini',
+						'onText' => 'ДА',
+						'offText' => 'НЕТ',
+						'onColor' => 'primary',
+						'offColor' => 'default'
+					]
+				]) ?>
+			</div>
+			<div class="col-md-1">
+				<?= $form->field($model, 'importance_flag')->widget(SwitchInput::class, [
 					'pluginOptions' => [
 						'size' => 'mini',
 						'onText' => 'ДА',

@@ -24,6 +24,7 @@ use yii\helpers\Html;
  *
  * custom properties:
  * @property bool $boss_flag
+ * @property bool $importance_flag
  * @property string $color
  * @property int $usedCount Количество объектов, использующих это значение справочника
  *
@@ -55,7 +56,7 @@ class RefUserRoles extends CustomisableReference {
 			[['name'], 'unique'],
 			[['id', 'deleted', 'usedCount'], 'integer'],
 			[['name', 'color', 'textcolor'], 'string', 'max' => 256],
-			['boss_flag', 'boolean']
+			[['boss_flag', 'importance_flag'], 'boolean']
 		];
 	}
 
@@ -68,6 +69,7 @@ class RefUserRoles extends CustomisableReference {
 			'name' => 'Название',
 			'deleted' => 'Deleted',
 			'boss_flag' => 'Лидер',
+			'importance_flag' => 'Важная шишка',
 			'color' => 'Цвет фона',
 			'textcolor' => 'Цвет текста',
 			'usedCount' => 'Использований'
@@ -153,6 +155,21 @@ class RefUserRoles extends CustomisableReference {
 				'filterType' => GridView::FILTER_CHECKBOX_X
 			],
 			[
+				'attribute' => 'importance_flag',
+				'value' => static function($model) {
+					/** @var self $model */
+					return $model->importance_flag?Html::tag('i', false, ['class' => 'fa fa-badge-check']):false;
+				},
+				'format' => 'raw',
+				'options' => [
+					'style' => 'width:30px;'
+				],
+				'headerOptions' => ['style' => 'text-align:center'],
+				'filterOptions' => ['style' => 'text-align:center'],
+				'contentOptions' => ['style' => 'text-align:center; vertical-align: middle;'],
+				'filterType' => GridView::FILTER_CHECKBOX_X
+			],
+			[
 				'attribute' => 'name',
 				'value' => static function($model) {
 					/** @var self $model */
@@ -185,6 +202,7 @@ class RefUserRoles extends CustomisableReference {
 		$this->load($params);
 		$query->andFilterWhere(['LIKE', 'name', $this->name]);
 		$query->andFilterWhere(['=', 'boss_flag', $this->boss_flag]);
+		$query->andFilterWhere(['=', 'importance_flag', $this->importance_flag]);
 
 		return $query;
 	}
@@ -195,4 +213,6 @@ class RefUserRoles extends CustomisableReference {
 	public function getUsedCount():int {
 		return (int)RelUsersGroupsRoles::find()->where(['role' => $this->id])->count();
 	}
+
+
 }
