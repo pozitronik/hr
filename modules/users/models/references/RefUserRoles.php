@@ -204,7 +204,7 @@ class RefUserRoles extends CustomisableReference {
 					]);
 				},
 				'format' => 'raw'
-			],
+			]
 		];
 	}
 
