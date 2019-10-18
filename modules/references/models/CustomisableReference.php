@@ -176,9 +176,26 @@ class CustomisableReference extends Reference {
 	/**
 	 * Фейкосеттер для реализации поиска
 	 * @param int $count
-	 * @todo: фильтр во вьюхе
 	 */
 	public function setUsedCount(int $count):void {
 		$this->_usedCount = $count;
+	}
+
+	/**
+	 * @return array|false
+	 */
+	public function getSearchSort():?array {
+		$sortAttributes = [[]];
+		foreach ($this->rules() as $rule) {//Сортировать по всему, что вписано в рулесы
+			$sortAttributes[] = is_array($rule[0])?$rule[0]:[$rule[0]];
+		}
+		$sortAttributes = array_unique(array_merge(...$sortAttributes));
+		unset($sortAttributes[array_search('usedCount', $sortAttributes)]);//сортировка по виртуальному атрибуту не нужна
+		return [
+			'defaultOrder' => [
+				'id' => SORT_ASC
+			],
+			'attributes' => $sortAttributes
+		];
 	}
 }
