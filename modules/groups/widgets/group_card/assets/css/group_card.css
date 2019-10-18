@@ -67,7 +67,7 @@
 
 .panel.panel-card > .panel-footer, .panel.panel-card-small > .panel-footer {
 	padding: 0 5px;
-	height: 1.7em;
+	min-height: 1.7em;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

@@ -37,7 +37,7 @@ use yii\web\View;
 		}
 		return $result;
 	},
-	'itemsSeparator' => "<span class='pull-right'>,&nbsp;</span>",
+	'itemsSeparator' => false,
 	'badgeOptions' => [
 		'class' => "pull-right"
 	]
