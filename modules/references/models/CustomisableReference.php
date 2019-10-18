@@ -23,6 +23,7 @@ use yii\helpers\Html;
 class CustomisableReference extends Reference {
 
 	protected $_dataAttributes = ['color', 'textcolor'];
+	protected $_usedCount;//для поиска
 
 	/**
 	 * @inheritdoc
@@ -170,5 +171,14 @@ class CustomisableReference extends Reference {
 			$styleArray = self::find()->select(new Expression('CONCAT ("background: " , IFNULL(color, "gray"), "; color: ", IFNULL(textcolor, "white")) AS style'))->asArray()->where(['id' => $id])->one();
 			return $styleArray['style'];
 		});
+	}
+
+	/**
+	 * Фейкосеттер для реализации поиска
+	 * @param int $count
+	 * @todo: фильтр во вьюхе
+	 */
+	public function setUsedCount(int $count):void {
+		$this->_usedCount = $count;
 	}
 }
