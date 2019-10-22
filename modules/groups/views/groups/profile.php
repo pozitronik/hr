@@ -23,7 +23,7 @@ $this->title = $model->isNewRecord?'Добавление группы':"Проф
 $this->params['breadcrumbs'][] = GroupsModule::breadcrumbItem('Группы');
 $this->params['breadcrumbs'][] = $this->title;
 VisjsAsset::register($this);
-$this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-container'), {$model->id}, -1, -1, -1); graphControl.autofit = true; graphControl.resizeContainer()", View::POS_END);
+$this->registerJs("var graphControl = new GraphControl(_.$('group-profile-tree-container'), {$model->id}, -1, -1, -1); graphControl.physics = false; graphControl.autofit = true; graphControl.resizeContainer()", View::POS_END);
 //$this->registerJs("$('#group-profile-tree-container').css({'position':'relative'}) ", View::POS_END);
 ?>
 
