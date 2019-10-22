@@ -49,7 +49,7 @@ class GraphControl {
 
 		this.network.on("doubleClick", function(params) {
 			let nodeId = params.nodes[0];
-			let id = nodeId.substring(7);
+			let id = nodeId.substring(6);
 			window.open(URL_GROUPS_PROFILE+'?id='+id,'_blank');
 		})
 
