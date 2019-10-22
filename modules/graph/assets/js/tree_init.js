@@ -48,9 +48,10 @@ class GraphControl {
 		this.loadData();
 
 		this.network.on("doubleClick", function(params) {
+			if (0 === params.nodes.length) return;
 			let nodeId = params.nodes[0];
 			let id = nodeId.substring(6);
-			window.open(URL_GROUPS_PROFILE+'?id='+id,'_blank');
+			window.open(URL_GROUPS_PROFILE + '?id=' + id, '_blank');
 		})
 
 		this.network.on('beforeDrawing', function() {
