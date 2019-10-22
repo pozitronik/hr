@@ -10,7 +10,8 @@ const URL_LOAD_GRAPH = '/graph/groups/graph',//загрузка структур
 	URL_DELETE_OPTIONS = '',//удаление ----
 	URL_LOAD_POSITIONS = '/graph/groups/load-positions',//загрузка позиций
 	URL_SAVE_POSITIONS = '/graph/groups/save-positions',//сохранение ----
-	URL_DELETE_POSITIONS = '/graph/groups/delete-positions';//удаление ----
+	URL_DELETE_POSITIONS = '/graph/groups/delete-positions',//удаление ----
+	URL_GROUPS_PROFILE = '/groups/groups/profile';//профиль группы
 
 class GraphControl {
 
@@ -45,6 +46,12 @@ class GraphControl {
 		});
 
 		this.loadData();
+
+		this.network.on("doubleClick", function(params) {
+			let nodeId = params.nodes[0];
+			let id = nodeId.substring(7);
+			window.open(URL_GROUPS_PROFILE+'?id='+id,'_blank');
+		})
 
 		this.network.on('beforeDrawing', function() {
 			self.resizeContainer();
