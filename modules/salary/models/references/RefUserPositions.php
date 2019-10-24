@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
+use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\references\models\CustomisableReference;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\UsersModule;
+use kartik\select2\Select2;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
@@ -36,11 +39,12 @@ use yii\helpers\Html;
  * @property null|int $branch
  * @property null|int[] $types
  *
- * @property-read null|string $branchName
  */
 class RefUserPositions extends CustomisableReference {
 	public $menuCaption = 'Должности';
 	public $menuIcon = false;
+
+	public $branch;//search attributes
 
 	/**
 	 * {@inheritdoc}
@@ -121,7 +125,26 @@ class RefUserPositions extends CustomisableReference {
 				}
 			],
 			[
-				'attribute' => 'branchName'
+				'attribute' => 'branch',
+				'format' => 'raw',
+				'filterType' => ReferenceSelectWidget::class,
+				'filterInputOptions' => ['placeholder' => 'Фильтр по ветви'],
+				'filterWidgetOptions' => [
+					'referenceClass' => RefUserPositionBranches::class,
+					'pluginOptions' => [
+						'allowClear' => true, 'multiple' => false
+					]
+				],
+				'value' => static function(self $model) {
+					return BadgeWidget::widget([
+						'models' => $model->relRefUserPositionBranch,
+						'attribute' => 'name',
+						'unbadgedCount' => 10,
+						'itemsSeparator' => false,
+						'linkScheme' => false,
+						"optionsMap" => false
+					]);
+				}
 			],
 			[
 				'label' => 'Грейды',
@@ -154,6 +177,44 @@ class RefUserPositions extends CustomisableReference {
 				'format' => 'raw'
 			]
 
+		];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function search(array $params):ActiveQuery {
+		/** @var ActiveQuery $query */
+		$query = self::find();
+		$this->load($params);
+		$query->joinWith(['relRefUserPositionBranch', 'relRefUserPositionsBranches']);
+		$query->andFilterWhere(['LIKE', 'name', $this->name]);
+		$query->andFilterWhere(['=', 'rel_ref_user_positions_branches.id', $this->branch]);
+
+		return $query;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getSearchSort():?array {
+		return [
+			'defaultOrder' => ['id' => SORT_ASC],
+			'attributes' => [
+				'id',
+//				'typeName' => [
+//					'asc' => ['ref_user_positions.name' => SORT_ASC],
+//					'desc' => ['ref_user_positions.name' => SORT_DESC]
+//				],
+				'branch' => [
+					'asc' => ['ref_user_position_branches.name' => SORT_ASC],
+					'desc' => ['ref_user_position_branches.name' => SORT_DESC]
+				],
+//				'gradeName' => [
+//					'asc' => ['ref_salary_premium_group.name' => SORT_ASC],
+//					'desc' => ['ref_salary_premium_group.name' => SORT_DESC]
+//				],
+			]
 		];
 	}
 
@@ -198,15 +259,6 @@ class RefUserPositions extends CustomisableReference {
 	 */
 	public function getRelRefUserPositionBranch() {
 		return $this->hasOne(RefUserPositionBranches::class, ['id' => 'position_branch_id'])->via('relRefUserPositionsBranches');
-	}
-
-	/**
-	 * @return null|string
-	 * @throws Throwable
-	 * @temporary
-	 */
-	public function getBranchName():?string {
-		return ArrayHelper::getValue($this->relRefUserPositionBranch, 'name');
 	}
 
 	/**
