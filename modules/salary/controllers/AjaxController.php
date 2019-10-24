@@ -22,7 +22,7 @@ class AjaxController extends BaseAjaxController {
 	public function actionGetPositionGrades():array {
 
 		$position_id = ArrayHelper::getValue(Yii::$app->request->post('depdrop_parents'), 0);
-		if ((null === $position = RefUserPositions::findModel($position_id)) || empty($grades = $position->relGrades)) {//Неправильной должности тут быть не может, значит не заданы грейды
+		if ((null === $position = RefUserPositions::findModel($position_id)) || empty($grades = $position->relRefGrades)) {//Неправильной должности тут быть не может, значит не заданы грейды
 			return [
 				'output' => [/*['id' => -1, 'name' => 'Не заполнен список грейдов']*/]
 			];
