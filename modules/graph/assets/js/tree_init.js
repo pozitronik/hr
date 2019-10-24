@@ -52,7 +52,7 @@ class GraphControl {
 			let nodeId = params.nodes[0];
 			let id = nodeId.substring(6);
 			window.open(URL_GROUPS_PROFILE + '?id=' + id, '_blank');
-		})
+		});
 
 		this.network.on('beforeDrawing', function() {
 			self.resizeContainer();

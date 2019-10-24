@@ -3,7 +3,7 @@ function formatUser(item) {
 }
 
 function submit_toggle(select) {
-	var input = jQuery(select.target).parent().find(':submit');
+	let input = jQuery(select.target).parent().find(':submit');
 	if (0 < jQuery(select.target).val().length) {
 		input.removeAttr('disabled');
 	} else {
@@ -12,7 +12,7 @@ function submit_toggle(select) {
 }
 
 function ajax_submit_toggle(select, button_id) {
-	var input = jQuery('#' + button_id);
+	let input = jQuery('#' + button_id);
 	if (0 < jQuery(select.target).val().length) {
 		input.removeAttr('disabled');
 	} else {
@@ -21,8 +21,8 @@ function ajax_submit_toggle(select, button_id) {
 }
 
 function ajax_post(postUrl, button_id, group_id) {
-	var input = jQuery('#' + button_id);
-	var values = input.parent().parent().find('select').val();
+	let input = jQuery('#' + button_id);
+	let values = input.parent().parent().find('select').val();
 
 	if (0 < values.length) {
 		input.attr('disabled', 'disabled');

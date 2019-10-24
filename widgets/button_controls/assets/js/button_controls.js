@@ -2,7 +2,7 @@
 
 class DashboardControl {
 	constructor(selector, itemSelector, onArrangeComplete) {
-		var self = this;
+		let self = this;
 		this.selector = selector || '.grid';
 		this.itemSelector = itemSelector || '.panel-card';
 		this.onArrangeComplete = onArrangeComplete || null;
@@ -46,7 +46,7 @@ class DashboardControl {
 
 
 	get filters() {/*return a filters selection string*/
-		var r = [];
+		let r = [];
 		$('input[name="filter[]"]:checked').each(function(i) {
 			let filterAttribute = $(this).data('filter');
 			r.push("[data-filter='" + filterAttribute + "']");
@@ -56,7 +56,7 @@ class DashboardControl {
 	}
 
 	get filtersValues() {/*return a filters values as array*/
-		var r = [];
+		let r = [];
 		$('input[name="filter[]"]:checked').each(function(i) {
 			r.push($(this).data('filter'));
 		});

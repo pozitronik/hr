@@ -1,5 +1,5 @@
 function submit_toggle(select) {
-	var input = jQuery(select.target).parent().find(':submit');
+	let input = jQuery(select.target).parent().find(':submit');
 	if (0 < jQuery(select.target).val().length) {
 		input.removeAttr('disabled');
 	} else {

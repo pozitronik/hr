@@ -11,8 +11,8 @@ const _ = {
 	},
 
 	removeClass: function(selectors, cssClass) {
-		var el;
-		var i;
+		let el;
+		let i;
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
 		for (i = 0; i < l; i++) {
@@ -23,7 +23,7 @@ const _ = {
 	},
 
 	addClass: function(selectors, cssClass) {
-		var el;
+		let el;
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
 		for (i = 0; i < l; i++) {
@@ -44,7 +44,7 @@ const _ = {
 	},
 
 	toggle: function(selectors, cssClass = 'hidden') {
-		var el;
+		let el;
 		const nodes = document.querySelectorAll(selectors);
 		const l = nodes.length;
 		for (i = 0; i < l; i++) {
@@ -95,7 +95,7 @@ function isChecked(element) {
 }
 
 ajax = function() {
-	var names, i;
+	let names, i;
 	if (window.XMLHttpRequest)
 		return new XMLHttpRequest();
 
@@ -120,8 +120,8 @@ ajax = function() {
 
 getJSON = function(url, parameters) {
 	return new Promise(function(resolve, reject) {
-		var error;
-		var key;
+		let error;
+		let key;
 		const request = ajax();
 		if (!request) {
 			error = new Error('XMLHttpRequest not supported');
@@ -153,9 +153,9 @@ postJSON = function(url, json) {
 
 postUrlEncoded = function(url, parameters) {
 	return new Promise(function(resolve, reject) {
-		var error;
-		var postString;
-		var key;
+		let error;
+		let postString;
+		let key;
 		const request = ajax();
 		if (!request) {
 			error = new Error('XMLHttpRequest not supported');

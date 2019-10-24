@@ -1,5 +1,5 @@
 (function($, sr) {//регистрирует событие smartresize на любой ресайз окна
-	var debounce = function(func, threshold, execAsap) {
+	let debounce = function(func, threshold, execAsap) {
 		let timeout;
 		return function debounced() {
 			let obj = this,

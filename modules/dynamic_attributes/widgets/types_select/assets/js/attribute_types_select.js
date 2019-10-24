@@ -1,6 +1,6 @@
 function set_types(userId, attributeId, types) {
-	var csrfParam = jQuery('meta[name="csrf-param"]').attr("content");
-	var csrfToken = jQuery('meta[name="csrf-token"]').attr("content");
+	let csrfParam = jQuery('meta[name="csrf-param"]').attr("content");
+	let csrfToken = jQuery('meta[name="csrf-token"]').attr("content");
 	jQuery('#' + userId + '-' + attributeId + '-types-progress').show();
 	jQuery.ajax({
 		url: '/attributes/ajax/set-attribute-types-for-user',
