@@ -40,7 +40,6 @@ class RefGroupRelationTypes extends CustomisableReference {
 		self::flushCache();
 	}
 
-
 	/**
 	 * @return int
 	 */
