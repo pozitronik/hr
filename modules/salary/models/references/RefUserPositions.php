@@ -83,6 +83,7 @@ class RefUserPositions extends CustomisableReference {
 			'usedCount' => 'Использований',
 			'branchName' => 'Ветвь',
 			'branch' => 'Ветвь',
+			'branchId' => 'Ветвь',
 			'types' => 'Типы',
 			'relRefGrades' => 'Разрешённые грейды',
 			'grades' => 'Грейды'
