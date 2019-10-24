@@ -34,17 +34,20 @@ use yii\helpers\Html;
  * @property RelRefUserPositionsTypes[]|ActiveQuery $relRefUserPositionsTypes
  * @property RefUserPositionTypes[]|ActiveQuery $relRefUserPositionTypes
  * @property RelGradesPositionsRules[]|ActiveQuery $relGradesPositionsRules
- * @property RefGrades[]|ActiveQuery $relGrades Грейды, разрешённые для этой должности
- *
+ * @property RefGrades[]|ActiveQuery $relRefGrades Грейды, разрешённые для этой должности
+ * @property $relGrades
  * @property null|int $branch
  * @property null|int[] $types
+ * @property null|int[] $grades
  *
  */
 class RefUserPositions extends CustomisableReference {
 	public $menuCaption = 'Должности';
 	public $menuIcon = false;
 
-	public $branch;//search attributes
+	public $branchId;//search attributes
+	public $typesId;
+	public $gradesId;
 
 	/**
 	 * {@inheritdoc}
@@ -63,7 +66,8 @@ class RefUserPositions extends CustomisableReference {
 			[['id'], 'integer'],
 			[['deleted'], 'boolean'],
 			[['name', 'color'], 'string', 'max' => 256],
-			[['branch', 'types', 'relGrades'], 'safe'],//relational attributes
+			[['branch', 'types', 'grades', 'relRefGrades'], 'safe'],//relational attributes
+			[['branchId', 'typesId', 'gradesId'], 'safe'],//search attributes
 		];
 	}
 
@@ -80,7 +84,8 @@ class RefUserPositions extends CustomisableReference {
 			'branchName' => 'Ветвь',
 			'branch' => 'Ветвь',
 			'types' => 'Типы',
-			'relGrades' => 'Разрешённые грейды'
+			'relRefGrades' => 'Разрешённые грейды',
+			'grades' => 'Грейды'
 		];
 	}
 
@@ -112,7 +117,16 @@ class RefUserPositions extends CustomisableReference {
 			],
 			[
 				'label' => 'Тип должности',
+				'attribute' => 'typesId',
 				'format' => 'raw',
+				'filterType' => ReferenceSelectWidget::class,
+				'filterInputOptions' => ['placeholder' => 'Фильтр по типу'],
+				'filterWidgetOptions' => [
+					'referenceClass' => RefUserPositionTypes::class,
+					'pluginOptions' => [
+						'allowClear' => true, 'multiple' => false//todo #issue 49
+					]
+				],
 				'value' => static function(self $model) {
 					return BadgeWidget::widget([
 						'models' => $model->relRefUserPositionTypes,
@@ -125,7 +139,7 @@ class RefUserPositions extends CustomisableReference {
 				}
 			],
 			[
-				'attribute' => 'branch',
+				'attribute' => 'branchId',
 				'format' => 'raw',
 				'filterType' => ReferenceSelectWidget::class,
 				'filterInputOptions' => ['placeholder' => 'Фильтр по ветви'],
@@ -148,10 +162,19 @@ class RefUserPositions extends CustomisableReference {
 			],
 			[
 				'label' => 'Грейды',
+				'attribute' => 'gradesId',
 				'format' => 'raw',
+				'filterType' => ReferenceSelectWidget::class,
+				'filterInputOptions' => ['placeholder' => 'Фильтр по грейду'],
+				'filterWidgetOptions' => [
+					'referenceClass' => RefGrades::class,
+					'pluginOptions' => [
+						'allowClear' => true, 'multiple' => false//todo #issue 49
+					]
+				],
 				'value' => static function(self $model) {
 					return BadgeWidget::widget([
-						'models' => $model->relGrades,
+						'models' => $model->relRefGrades,
 						'attribute' => 'name',
 						'unbadgedCount' => 10,
 						'itemsSeparator' => false,
@@ -187,9 +210,11 @@ class RefUserPositions extends CustomisableReference {
 		/** @var ActiveQuery $query */
 		$query = self::find();
 		$this->load($params);
-		$query->joinWith(['relRefUserPositionBranch', 'relRefUserPositionsBranches']);
+		$query->joinWith(['relRefUserPositionBranch', 'relRefUserPositionsBranches', 'relRefUserPositionTypes', 'relRefUserPositionsTypes', 'relRefGrades']);
 		$query->andFilterWhere(['LIKE', 'name', $this->name]);
-		$query->andFilterWhere(['=', 'rel_ref_user_positions_branches.id', $this->branch]);
+		$query->andFilterWhere(['=', 'rel_ref_user_positions_branches.id', $this->branchId]);
+		$query->andFilterWhere(['=', 'rel_ref_user_positions_types.position_type_id', $this->typesId]);
+		$query->andFilterWhere(['=', 'rel_grades_positions_rules', $this->gradesId]);
 
 		return $query;
 	}
@@ -202,18 +227,18 @@ class RefUserPositions extends CustomisableReference {
 			'defaultOrder' => ['id' => SORT_ASC],
 			'attributes' => [
 				'id',
-//				'typeName' => [
-//					'asc' => ['ref_user_positions.name' => SORT_ASC],
-//					'desc' => ['ref_user_positions.name' => SORT_DESC]
-//				],
-				'branch' => [
+				'typesId' => [
+					'asc' => ['ref_user_position_types.name' => SORT_ASC],
+					'desc' => ['ref_user_position_types.name' => SORT_DESC]
+				],
+				'branchId' => [
 					'asc' => ['ref_user_position_branches.name' => SORT_ASC],
 					'desc' => ['ref_user_position_branches.name' => SORT_DESC]
 				],
-//				'gradeName' => [
-//					'asc' => ['ref_salary_premium_group.name' => SORT_ASC],
-//					'desc' => ['ref_salary_premium_group.name' => SORT_DESC]
-//				],
+				'gradesId' => [
+					'asc' => ['ref_salary_grades.name' => SORT_ASC],
+					'desc' => ['ref_salary_grades.name' => SORT_DESC]
+				],
 			]
 		];
 	}
@@ -223,8 +248,8 @@ class RefUserPositions extends CustomisableReference {
 	 * @return array
 	 */
 	public static function mapByGrade():array {
-		return ['Грейды заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where(['not', ['ref_salary_grades.id' => null]])->active()->all(), "id", "name"),
-			'Грейды не заданы' => ArrayHelper::map(self::find()->joinWith('relGrades')->where(['ref_salary_grades.id' => null])->active()->all(), 'id', 'name')
+		return ['Грейды заданы' => ArrayHelper::map(self::find()->joinWith('relRefGrades')->where(['not', ['ref_salary_grades.id' => null]])->active()->all(), "id", "name"),
+			'Грейды не заданы' => ArrayHelper::map(self::find()->joinWith('relRefGrades')->where(['ref_salary_grades.id' => null])->active()->all(), 'id', 'name')
 		];
 	}
 
@@ -312,7 +337,7 @@ class RefUserPositions extends CustomisableReference {
 	/**
 	 * @return RefGrades[]|ActiveQuery
 	 */
-	public function getRelGrades() {
+	public function getRelRefGrades() {
 		return $this->hasMany(RefGrades::class, ['id' => 'grade_id'])->via('relGradesPositionsRules');
 	}
 
@@ -327,7 +352,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @param mixed $relGrades
 	 * @throws Throwable
 	 */
-	public function setRelGrades($relGrades):void {
+	public function setRelRefGrades($relGrades):void {
 		RelGradesPositionsRules::deleteAllEx(['position_id' => $this->id]);
 		RelGradesPositionsRules::linkModels($relGrades, $this->id);
 	}
