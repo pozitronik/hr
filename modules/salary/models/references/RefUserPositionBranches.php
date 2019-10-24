@@ -5,6 +5,8 @@ namespace app\modules\salary\models\references;
 
 use app\modules\references\models\Reference;
 use app\modules\references\ReferencesModule;
+use app\modules\salary\models\relations\RelRefUserPositionsBranches;
+use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\widgets\badge\BadgeWidget;
 use yii\helpers\Html;
 
@@ -76,5 +78,12 @@ class RefUserPositionBranches extends Reference {
 				'format' => 'raw'
 			]
 		];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsedCount():int {
+		return (int)RelRefUserPositionsBranches::find()->where(['position_branch_id' => $this->id])->count();
 	}
 }
