@@ -7,6 +7,7 @@ use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
 use app\modules\references\models\CustomisableReference;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
+use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
@@ -68,6 +69,13 @@ class RefUserPositionTypes extends CustomisableReference {
 	 */
 	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUserGroups');
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getUsedCount():int {
+		return (int)RelUserPositionsTypes::find()->where(['position_type_id' => $this->id])->count();
 	}
 
 }
