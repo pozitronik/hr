@@ -71,7 +71,7 @@ class RefUserPositionBranches extends Reference {
 					return BadgeWidget::widget([
 						'models' => $model,
 						'attribute' => 'usedCount',
-						'linkScheme' => [ReferencesModule::to(['references/index']), 'class' => 'RefUserPositions', 'RefUserPositions[branch]' => 'id'],
+						'linkScheme' => [ReferencesModule::to(['references/index']), 'class' => 'RefUserPositions', 'RefUserPositions[branchId]' => 'id'],
 						'itemsSeparator' => false
 					]);
 				},
