@@ -120,10 +120,7 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 						'models' => $model,
 						'attribute' => 'usedCount',
 						'linkScheme' => false,
-						'itemsSeparator' => false,
-						"optionsMap" => static function() {
-							return self::colorStyleOptions();
-						}
+						'itemsSeparator' => false
 					]);
 				},
 				'format' => 'raw'
