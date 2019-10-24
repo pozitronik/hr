@@ -10,7 +10,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
-use app\models\relations\RelUsersAttributes;
+use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
@@ -98,11 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
 									'referenceClass' => RefAttributesTypes::class,
 									'size' => Select2::SMALL,
 									'pluginOptions' => [
-										'allowClear' => true, 'multiple' => true
+										'allowClear' => true, 'multiple' => false//fixme: грид падает, если фильтр множественный. Почему - я не смог разобраться с лёту, нужна свежая голове.
 									]
 								],
 								'value' => static function($model) use ($user) {
-									/** @var RelUsersAttributes $model */
+									/** @var RelUserAttributesSearch $model */
 									return DynamicAttributeWidget::widget([
 										'user_id' => $user->id,
 										'attribute_id' => $model->attribute_id
