@@ -80,7 +80,23 @@ class CustomisableReference extends Reference {
 				},
 				'format' => 'raw'
 			],
-			'usedCount'
+			[
+				'attribute' => 'usedCount',
+				'filter' => false,
+				'value' => static function($model) {
+					/** @var self $model */
+					return BadgeWidget::widget([
+						'models' => $model,
+						'attribute' => 'usedCount',
+						'linkScheme' => false,
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
+					]);
+				},
+				'format' => 'raw'
+			]
 		];
 	}
 
