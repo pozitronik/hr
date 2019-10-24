@@ -199,6 +199,7 @@ class Groups extends ActiveRecordExtended {
 	public function getRelRefUserRolesLeader() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
 	}
+
 	/**
 	 * Все роли важных шишек в этой группе
 	 * @return ActiveQuery|RefUserRoles[]
@@ -288,7 +289,7 @@ class Groups extends ActiveRecordExtended {
 	/**
 	 * @return RefGroupTypes|ActiveQuery
 	 */
-	public function getRelGroupTypes() {
+	public function getRelGroupTypes() {//todo: Большое количество повторных запросов, посмотреть
 		return $this->hasOne(RefGroupTypes::class, ['id' => 'type']);
 	}
 
@@ -300,6 +301,7 @@ class Groups extends ActiveRecordExtended {
 	public function getLeaders():array {
 		return $this->getRelUsers()->joinWith(['relRefUserRolesLeader'], false)->where(['rel_users_groups.group_id' => $this->id])->all();
 	}
+
 	/**
 	 * Вернёт всех пользователей в группе с меткой важной шишки
 	 * @return Users[]
@@ -433,8 +435,11 @@ class Groups extends ActiveRecordExtended {
 	/**
 	 * @return int
 	 */
-	public function getChildGroupsCount():int {
-		return (int)$this->getRelChildGroups()->count();
+	public function getChildGroupsCount():int {//todo: торможение, разобраться
+		$id = $this->id;
+		return Yii::$app->cache->getOrSet(static::class."ChildGroupsCount{$this->id}", static function() use ($id) {
+			return (int)self::find()->leftJoin('rel_groups_groups', 'rel_groups_groups.parent_id = sys_groups.id')->where(['rel_groups_groups.parent_id' => $id])->count();
+		});
 	}
 
 	/**
