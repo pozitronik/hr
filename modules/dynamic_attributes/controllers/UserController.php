@@ -5,7 +5,7 @@ namespace app\modules\dynamic_attributes\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
+use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
 use Throwable;
 use Yii;
 use app\modules\users\models\Users;
@@ -28,7 +28,7 @@ class UserController extends WigetableController {
 	 */
 	public function actionIndex(int $user_id):?string {
 		$params = Yii::$app->request->queryParams;
-		$searchModel = new UserAttributesSearch(['user_id' => $user_id]);
+		$searchModel = new RelUserAttributesSearch(['user_id' => $user_id]);
 
 		return $this->render('index', [
 			'user' => Users::findModel($user_id, new NotFoundHttpException()),

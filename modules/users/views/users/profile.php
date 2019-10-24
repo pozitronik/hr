@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\modules\dynamic_attributes\models\user_attributes\UserAttributesSearch;
+use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
 use app\modules\graph\assets\VisjsAsset;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
@@ -87,7 +87,7 @@ $this->registerJs("$('#user-profile-tree-container').css({'position':'relative'}
 		<div class="row">
 			<?= $this->render('profile/attributes', [
 				'model' => $model,
-				'provider' => (new UserAttributesSearch(['user_id' => $model->id]))->search()
+				'provider' => (new RelUserAttributesSearch(['user_id' => $model->id]))->search()
 			]) ?>
 		</div>
 	</div>

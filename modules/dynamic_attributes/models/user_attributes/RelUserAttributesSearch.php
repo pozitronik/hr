@@ -8,10 +8,10 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Поисковая модель атрибутов пользователя
- * Class UserAttributesSearch
+ * Class RelUserAttributesSearch
  * @package app\modules\dynamic_attributes\models\user_attributes
  */
-class UserAttributesSearch extends RelUsersAttributes {
+class RelUserAttributesSearch extends RelUsersAttributes {
 	public $type;
 
 	/**
