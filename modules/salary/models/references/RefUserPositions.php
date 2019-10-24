@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\salary\models\references;
 
 use app\modules\references\models\CustomisableReference;
+use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
@@ -136,7 +137,21 @@ class RefUserPositions extends CustomisableReference {
 				}
 			],
 			[
-				'attribute' => 'usedCount'
+				'attribute' => 'usedCount',
+				'filter' => false,
+				'value' => static function($model) {
+					/** @var self $model */
+					return BadgeWidget::widget([
+						'models' => $model,
+						'attribute' => 'usedCount',
+						'linkScheme' => [UsersModule::to(['users/index']), 'UsersSearch[positions][]' => $model->id],
+						'itemsSeparator' => false,
+						"optionsMap" => static function() {
+							return self::colorStyleOptions();
+						}
+					]);
+				},
+				'format' => 'raw'
 			]
 
 		];
