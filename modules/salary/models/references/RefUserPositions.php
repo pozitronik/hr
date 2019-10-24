@@ -3,11 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\references\models\CustomisableReference;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\UsersModule;
-use kartik\select2\Select2;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
@@ -239,7 +237,7 @@ class RefUserPositions extends CustomisableReference {
 				'gradesId' => [
 					'asc' => ['ref_salary_grades.name' => SORT_ASC],
 					'desc' => ['ref_salary_grades.name' => SORT_DESC]
-				],
+				]
 			]
 		];
 	}
