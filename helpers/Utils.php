@@ -324,7 +324,7 @@ class Utils {
 	 * @return string
 	 */
 	public static function MaskString(string $input, int $unmasked = 2):string {
-		$keywords = preg_split("/[\s.@]/", $input);
+		$keywords = preg_split("/[\s.@\-:()\/]/", $input);
 		$keywords = array_map(static function($value, $key) use ($unmasked) {
 			$vLength = mb_strlen($value);
 			if ($vLength <= $unmasked) return $value;
