@@ -8,6 +8,7 @@ use app\models\core\Service;
 use app\models\core\WigetableController;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
+use Throwable;
 use yii\base\Response;
 
 /**
@@ -36,9 +37,11 @@ class ServiceController extends WigetableController {
 
 	/**
 	 * Необратимо маскирует
-	 * @return string
+	 * @param int $step
+	 * @return Response|string
+	 * @throws Throwable
 	 */
-	public function actionMaskAndShit($step = 0):string {
+	public function actionMaskAndShit($step = 0) {
 		switch ($step) {
 			case 0:
 				$users = Users::find()->all();
@@ -47,7 +50,7 @@ class ServiceController extends WigetableController {
 					$user->email = Utils::MaskString($user->email);
 					$user->save();
 				}
-				$this->redirect(['service/mask-and-shit', 'step' => $step + 1]);
+				return $this->redirect(['service/mask-and-shit', 'step' => $step + 1]);
 			break;
 			case 1:
 				$users = Users::find()->all();
@@ -62,7 +65,7 @@ class ServiceController extends WigetableController {
 						}
 					}
 				}
-				$this->redirect(['service/mask-and-shit', 'step' => $step + 1]);
+				return $this->redirect(['service/mask-and-shit', 'step' => $step + 1]);
 			break;
 			case 2:
 				$groups = Groups::find()->all();
@@ -70,9 +73,9 @@ class ServiceController extends WigetableController {
 					$group->name = Utils::MaskString($group->name);
 					$group->save();
 				}
-				$this->redirect(['service/mask-and-shit', 'step' => $step + 1]);
+				return 'finished';
 			break;
 		}
-
+		return 'wtf';
 	}
 }
