@@ -325,10 +325,10 @@ class Utils {
 	 */
 	public static function MaskString(string $input, int $unmasked = 2):string {
 		$keywords = preg_split("/[\s.@]/", $input);
-		$keywords = array_map(function($value, $key) use ($unmasked) {
+		$keywords = array_map(static function($value, $key) use ($unmasked) {
 			$vLength = mb_strlen($value);
 			if ($vLength <= $unmasked) return $value;
-			return mb_substr($value, 0, $unmasked).str_repeat('*', $vLength - $unmasked * 2).mb_substr($value, $vLength - $unmasked, $unmasked);
+			return mb_substr($value, 0, $unmasked).(($vLength < $unmasked * 2)?'*':str_repeat('*', $vLength - $unmasked * 2)).mb_substr($value, $vLength - $unmasked, $unmasked);
 		}, $keywords, array_keys($keywords));
 		return implode(' ', $keywords);
 	}
