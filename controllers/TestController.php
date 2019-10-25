@@ -54,8 +54,7 @@ class TestController extends Controller {
 	}
 
 	public function actionDebug() {
-//		Utils::log(Yii::$app->request->headers, 'headers');
-		return Yii::$app->request->post();
+		return Utils::MaskString('abrakadabra@usenet.ru');
 	}
 
 	/**
