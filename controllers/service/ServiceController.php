@@ -50,7 +50,7 @@ class ServiceController extends WigetableController {
 					$user->email = Utils::MaskString($user->email);
 					$user->save();
 				}
-				return $this->redirect(['/service/mask-and-shit', 'step' => $step + 1]);
+				return $this->redirect(['/service/service/mask-and-shit', 'step' => $step + 1]);
 			break;
 			case 1:
 				$users = Users::find()->all();
@@ -65,7 +65,7 @@ class ServiceController extends WigetableController {
 						}
 					}
 				}
-				return $this->redirect(['/service/mask-and-shit', 'step' => $step + 1]);
+				return $this->redirect(['/service/service/mask-and-shit', 'step' => $step + 1]);
 			break;
 			case 2:
 				$groups = Groups::find()->all();
