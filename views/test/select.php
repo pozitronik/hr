@@ -16,7 +16,6 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
-use kartik\select2\Select2;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -82,7 +81,7 @@ use yii\web\View;
 			'filterWidgetOptions' => [
 				'referenceClass' => RefUserPositionTypes::class,
 				'pluginOptions' => [
-					'allowClear' => true, 'multiple' => true//todo #issue 49
+					'allowClear' => true, 'multiple' => true
 				]
 			],
 			'value' => static function(RefUserPositions $model) {
