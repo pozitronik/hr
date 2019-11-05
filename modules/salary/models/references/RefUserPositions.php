@@ -214,9 +214,9 @@ class RefUserPositions extends CustomisableReference {
 		$this->load($params);
 		$query->joinWith(['relRefUserPositionBranch', 'relRefUserPositionsBranches', 'relRefUserPositionTypes', 'relRefUserPositionsTypes', 'relRefGrades']);
 		$query->andFilterWhere(['LIKE', 'name', $this->name]);
-		$query->andFilterWhere(['in', 'rel_ref_user_positions_branches.position_branch_id', $this->branchId]);//мог ошибиться с подстановкой верного поля, если будут косяки с фильтрацией - это так
-		$query->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->typesId]);
-		$query->andFilterWhere(['in', 'rel_grades_positions_rules.grade_id', $this->gradesId]);
+		$query->andFilterWhere(['rel_ref_user_positions_branches.position_branch_id' => $this->branchId]);//мог ошибиться с подстановкой верного поля, если будут косяки с фильтрацией - это так
+		$query->andFilterWhere(['rel_ref_user_positions_types.position_type_id' => $this->typesId]);
+		$query->andFilterWhere(['rel_grades_positions_rules.grade_id' => $this->gradesId]);
 
 		return $query;
 	}
