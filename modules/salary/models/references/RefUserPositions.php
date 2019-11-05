@@ -143,10 +143,11 @@ class RefUserPositions extends CustomisableReference {
 				'format' => 'raw',
 				'filterType' => ReferenceSelectWidget::class,
 				'filterInputOptions' => ['placeholder' => 'Фильтр по ветви'],
+				'filter' => RefUserPositionBranches::mapData(),
 				'filterWidgetOptions' => [
 					'referenceClass' => RefUserPositionBranches::class,
 					'pluginOptions' => [
-						'allowClear' => true, 'multiple' => false
+						'allowClear' => true, 'multiple' => true
 					]
 				],
 				'value' => static function(self $model) {
@@ -166,10 +167,11 @@ class RefUserPositions extends CustomisableReference {
 				'format' => 'raw',
 				'filterType' => ReferenceSelectWidget::class,
 				'filterInputOptions' => ['placeholder' => 'Фильтр по грейду'],
+				'filter' => RefGrades::mapData(),
 				'filterWidgetOptions' => [
 					'referenceClass' => RefGrades::class,
 					'pluginOptions' => [
-						'allowClear' => true, 'multiple' => true//todo #issue 49
+						'allowClear' => true, 'multiple' => true
 					]
 				],
 				'value' => static function(self $model) {
@@ -212,9 +214,9 @@ class RefUserPositions extends CustomisableReference {
 		$this->load($params);
 		$query->joinWith(['relRefUserPositionBranch', 'relRefUserPositionsBranches', 'relRefUserPositionTypes', 'relRefUserPositionsTypes', 'relRefGrades']);
 		$query->andFilterWhere(['LIKE', 'name', $this->name]);
-		$query->andFilterWhere(['=', 'rel_ref_user_positions_branches.id', $this->branchId]);
+		$query->andFilterWhere(['in', 'rel_ref_user_positions_branches.position_branch_id', $this->branchId]);//мог ошибиться с подстановкой верного поля, если будут косяки с фильтрацией - это так
 		$query->andFilterWhere(['in', 'rel_ref_user_positions_types.position_type_id', $this->typesId]);
-		$query->andFilterWhere(['=', 'rel_grades_positions_rules', $this->gradesId]);
+		$query->andFilterWhere(['in', 'rel_grades_positions_rules.grade_id', $this->gradesId]);
 
 		return $query;
 	}
