@@ -93,12 +93,13 @@ $this->params['breadcrumbs'][] = $this->title;
 								'attribute' => 'type',
 								'label' => 'Сортировать по типу отношения атрибута',
 								'filterType' => ReferenceSelectWidget::class,
+								'filter' => RefAttributesTypes::mapData(),
 								'filterInputOptions' => ['placeholder' => 'Фильтр по типу'],
 								'filterWidgetOptions' => [
 									'referenceClass' => RefAttributesTypes::class,
 									'size' => Select2::SMALL,
 									'pluginOptions' => [
-										'allowClear' => true, 'multiple' => false//fixme: грид падает, если фильтр множественный. Почему - я не смог разобраться с лёту, нужна свежая голове.
+										'allowClear' => true, 'multiple' => true,
 									]
 								],
 								'value' => static function($model) use ($user) {
