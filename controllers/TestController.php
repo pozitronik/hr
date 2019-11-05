@@ -7,7 +7,9 @@ namespace app\controllers;
 use app\models\core\core_module\PluginsSupport;
 use app\modules\export\models\attributes\ExportAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
+use app\modules\references\models\ReferenceLoader;
 use app\modules\salary\models\references\RefLocations;
+use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\SalaryModule;
 use app\modules\users\UsersModule;
 use app\widgets\admin_panel\AdminPanelWidget;
@@ -25,8 +27,10 @@ use app\modules\users\models\UsersOptions;
 use app\widgets\alert\Alert;
 use app\widgets\alert\AlertModel;
 use kartik\growl\Growl;
+use yii\base\InvalidConfigException;
 use yii\base\Response;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
 use yii\web\Controller;
@@ -41,9 +45,9 @@ class TestController extends Controller {
 		return [
 			[
 				'class' => ContentNegotiator::class,
-				'formats' => [
-					'application/json' => \yii\web\Response::FORMAT_JSON,
-				]
+//				'formats' => [
+//					'application/json' => \yii\web\Response::FORMAT_JSON,
+//				]
 			],
 		];
 	}
@@ -55,6 +59,21 @@ class TestController extends Controller {
 
 	public function actionDebug() {
 		return Utils::MaskString('abrakadabra@usenet.ru');
+	}
+
+	public function actionSelect() {
+
+		$reference = new RefUserPositions();
+		$dataProvider = new ActiveDataProvider([
+			'query' => $reference->search(Yii::$app->request->queryParams),
+			'sort' => $reference->searchSort
+		]);
+
+		return $this->render('select', [
+			'searchModel' => $reference,
+			'dataProvider' => $dataProvider,
+			'class' => $reference
+		]);
 	}
 
 	/**
