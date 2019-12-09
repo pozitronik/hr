@@ -159,18 +159,18 @@ class Utils {
 
 	/**
 	 * Переводит десятичный индекс в число позиционной системы счисления
-	 * @param integer|float $N - десятичный индекс
+	 * @param integer|float|false $n - десятичный индекс
 	 * @param string $alphabet - позиционный алфавит
 	 * @return string - строка с числом в указанном алфавите.
 	 */
-	public static function DecToPos(int $N, string $alphabet):string {
+	public static function DecToPos(int $n, string $alphabet):string {
 		$q = strlen($alphabet);
 		$ret = '';
 		while (true) {
-			$i = $N % $q;
-			$N = floor($N / $q);
+			$i = $n % $q;
+			$n = floor($n / $q);
 			$ret = $alphabet[$i].$ret;
-			if ($N < 1) break;
+			if ($n < 1) break;
 		}
 		return $ret;
 	}
