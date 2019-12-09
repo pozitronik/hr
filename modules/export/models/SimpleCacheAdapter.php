@@ -1,5 +1,4 @@
 <?php
-/** @noinspection MissingPropertyAnnotationsInspection */
 declare(strict_types = 1);
 
 namespace app\modules\export\models;

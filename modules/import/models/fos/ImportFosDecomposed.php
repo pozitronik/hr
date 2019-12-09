@@ -368,7 +368,6 @@ class ImportFosDecomposed extends ActiveRecord {
 		}
 
 		$user = new Users();
-		/** @noinspection IsEmptyFunctionUsageInspection */
 		$user->createModel(['username' => $name, 'login' => Utils::generateLogin(), 'password' => Utils::gen_uuid(5), 'salt' => null, 'email' => empty($email)?Utils::generateLogin()."@localhost":$email, 'deleted' => false]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
 		(new UsersIdentifiers())->createModel(['user_id' => $user->id, 'tn' => $tn]);
@@ -461,7 +460,6 @@ class ImportFosDecomposed extends ActiveRecord {
 		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
 			$user->relGroups = $group;
 		}
-		/** @noinspection IsEmptyFunctionUsageInspection */
 		if (!empty($roleName)) {
 			RelUsersGroupsRoles::setRoleInGroup(self::addUserRole($roleName), $groupId, $userId);
 		}

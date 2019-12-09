@@ -5,7 +5,6 @@ namespace app\modules\users;
 
 use app\models\core\core_module\CoreModule;
 
-/** @noinspection EmptyClassInspection */
 
 /**
  * Class UsersModule

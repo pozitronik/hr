@@ -5,7 +5,6 @@ namespace app\modules\privileges;
 
 use app\models\core\core_module\CoreModule;
 
-/** @noinspection EmptyClassInspection */
 
 /**
  * Class PrivilegesModule

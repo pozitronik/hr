@@ -5,8 +5,6 @@ namespace app\modules\dynamic_attributes;
 
 use app\models\core\core_module\CoreModule;
 
-/** @noinspection EmptyClassInspection */
-
 /**
  * Class DynamicAttributesModule
  * @package app\modules\dynamic_attributes

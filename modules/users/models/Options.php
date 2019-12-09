@@ -6,8 +6,6 @@ namespace app\modules\users\models;
 use pozitronik\helpers\ArrayHelper;
 use yii\base\Model;
 
-/** @noinspection MissingPropertyAnnotationsInspection */
-
 /**
  * Class Options
  * Set of accessible user options in option<string>=>value<array> format

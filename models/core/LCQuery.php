@@ -29,7 +29,6 @@ class LCQuery extends ActiveQuery {
 	public function active(bool $deleted = false):self {
 		/** @var ActiveRecord $class */
 		$class = new $this->modelClass;//Хак для определения вызывающего трейт класса (для определения имени связанной таблицы)
-		/** @noinspection PhpUndefinedMethodInspection */ //придётся давить, корректной проверки тут быть не может
 		$tableName = $class::tableName();
 		return $class->hasAttribute('deleted')?$this->andOnCondition([$tableName.'.deleted' => $deleted]):$this;
 	}

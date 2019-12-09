@@ -109,7 +109,6 @@ class BadgeWidget extends CachedWidget {
 			$badgeHtmlOptions = !is_array($badgeHtmlOptions)?$this->badgeOptions:array_merge($this->badgeOptions, $badgeHtmlOptions);
 			/*add bootstrap tooltips, if necessary*/
 			if (null !== $this->tooltip) {
-				/** @noinspection SlowArrayOperationsInLoopInspection */
 				if (ReflectionHelper::is_closure($this->tooltip)) $this->tooltip = call_user_func($this->tooltip, $model);
 				$badgeHtmlOptions = ArrayHelper::mergeImplode(' ', $badgeHtmlOptions, [
 					'class' => 'add-tooltip badge',
