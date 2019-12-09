@@ -142,7 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-footer">
 			<div class="btn-group">
 				<?= Html::button("Поиск", ['class' => 'btn btn-success', 'type' => 'submit', 'name' => 'search', 'value' => true]) ?>
-				<?= Html::button("Сохранить набор", ['class' => 'btn btn-info'])//todo ?>
+				<!-- <?= Html::button("Сохранить набор", ['class' => 'btn btn-info'])//todo ?> -->
 			</div>
 		</div>
 	</div>
