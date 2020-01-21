@@ -28,12 +28,12 @@ use kartik\select2\Select2;
 			'placeholder' => 'Добавить пользователя'
 		] + $options,
 	'pluginOptions' => [
-		'allowClear' => true,
-		'multiple' => $multiple,
-		'language' => 'ru',
-		'templateResult' => new JsExpression('function(item) {return formatUser(item)}'),
-		'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
-	] + ((UserSelectWidget::DATA_MODE_AJAX === $data_mode)?[//Для аяксового режима добавляем код подгрузки
+			'allowClear' => true,
+			'multiple' => $multiple,
+			'language' => 'ru',
+			'templateResult' => new JsExpression('function(item) {return formatUser(item)}'),
+			'escapeMarkup' => new JsExpression('function (markup) { return markup; }')
+		] + ((UserSelectWidget::DATA_MODE_AJAX === $data_mode)?[//Для аяксового режима добавляем код подгрузки
 			'minimumInputLength' => 1,
 			'ajax' => [
 				'url' => $ajax_search_url,
