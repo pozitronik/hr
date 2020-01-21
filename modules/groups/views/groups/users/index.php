@@ -28,7 +28,7 @@ $countLabel = (($provider->totalCount > 0)?" (".Utils::pluralForm($provider->tot
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="panel-control">
-				<?=  GroupNavigationMenuWidget::widget([
+				<?= GroupNavigationMenuWidget::widget([
 					'model' => $model
 				]) ?>
 			</div>
