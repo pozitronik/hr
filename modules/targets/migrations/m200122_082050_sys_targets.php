@@ -13,11 +13,9 @@ class m200122_082050_sys_targets extends Migration {
 		$this->createTable('sys_targets', [
 			'id' => $this->primaryKey(),
 			'type' => $this->integer()->notNull()->comment('id типа цели'),
-			'result' => $this->integer()->null()->comment('id оценки/результата'),
+			'result_type' => $this->integer()->null()->comment('id типа результата'),
 			'group_id' => $this->integer()->notNull(),
 			'name' => $this->string(512)->notNull(),
-			'interval' => $this->integer()->null()->comment('id уникального интервала этой цели'),
-			'budget' => $this->integer()->null()->comment('id бюджета'),
 			'comment' => $this->text()->null()->comment('Описание цели'),
 			'create_date' => $this->dateTime()->notNull()->comment('Дата создания'),
 			'daddy' => $this->integer()->null()->comment('ID зарегистрировавшего/проверившего пользователя'),
@@ -25,10 +23,8 @@ class m200122_082050_sys_targets extends Migration {
 		]);
 
 		$this->createIndex('type','sys_targets','type');
-		$this->createIndex('result','sys_targets','result');
+		$this->createIndex('result_type','sys_targets','result_type');
 		$this->createIndex('group_id','sys_targets','group_id');
-		$this->createIndex('interval','sys_targets','interval');
-		$this->createIndex('budget','sys_targets','budget');
 		$this->createIndex('deleted','sys_targets','deleted');
 		$this->createIndex('daddy','sys_targets','daddy');
 	}
