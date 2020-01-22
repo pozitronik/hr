@@ -17,7 +17,11 @@ class m200122_082050_sys_targets extends Migration {
 			'group_id' => $this->integer()->notNull(),
 			'name' => $this->string(512)->notNull(),
 			'interval' => $this->integer()->null()->comment('id уникального интервала этой цели'),
-			'budget' => $this->integer()->null()->comment('id бюджета')
+			'budget' => $this->integer()->null()->comment('id бюджета'),
+			'comment' => $this->text()->null()->comment('Описание цели'),
+			'create_date' => $this->dateTime()->notNull()->comment('Дата создания'),
+			'daddy' => $this->integer()->null()->comment('ID зарегистрировавшего/проверившего пользователя'),
+			'deleted' => $this->boolean()->defaultValue(0)->comment('Флаг удаления')
 		]);
 
 		$this->createIndex('type','sys_targets','type');
@@ -25,6 +29,8 @@ class m200122_082050_sys_targets extends Migration {
 		$this->createIndex('group_id','sys_targets','group_id');
 		$this->createIndex('interval','sys_targets','interval');
 		$this->createIndex('budget','sys_targets','budget');
+		$this->createIndex('deleted','sys_targets','deleted');
+		$this->createIndex('daddy','sys_targets','daddy');
 	}
 
 	/**
