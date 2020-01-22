@@ -13,6 +13,8 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 
+$this->title = 'Целеполагание';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="panel">
