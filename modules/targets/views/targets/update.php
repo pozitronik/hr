@@ -12,7 +12,7 @@ use yii\data\ArrayDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
-$this->title = 'Изменить цель';
+$this->title = 'Изменить задачу целеполагания';
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

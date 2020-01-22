@@ -10,7 +10,7 @@ use app\modules\targets\TargetsModule;
 use yii\db\ActiveRecord;
 use yii\web\View;
 
-$this->title = 'Создать цель';
+$this->title = 'Создать задачу целеполагания';
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
