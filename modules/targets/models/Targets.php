@@ -6,6 +6,8 @@ namespace app\modules\targets\models;
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\user\CurrentUser;
+use app\modules\targets\models\relations\RelTargetsTargets;
+use yii\db\ActiveQuery;
 
 /**
  * Class Targets
@@ -19,6 +21,10 @@ use app\models\user\CurrentUser;
  * @property string $create_date Дата регистрации
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property boolean $deleted Флаг удаления
+ *
+ * @property
+ * @property ActiveQuery|Targets|null $relParentTarget -- вышестоящая задача целеполагания (если есть)
+ * @property ActiveQuery|Targets[] $relChildTarget -- нижестоящие задачи целеполагания
  */
 class Targets extends ActiveRecordExtended {
 
@@ -38,7 +44,7 @@ class Targets extends ActiveRecordExtended {
 			[['type', 'result_type', 'group_id', 'daddy'], 'integer'],
 			[['name'], 'string', 'max' => 512],
 			[['comment'], 'string'],
-			[['create_date'], 'safe'],
+			[['create_date', 'relParentTarget', 'relChildTargets'], 'safe'],
 			[['deleted'], 'boolean'],
 			[['deleted'], 'default', 'value' => false],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
@@ -53,13 +59,59 @@ class Targets extends ActiveRecordExtended {
 		return [
 			'type' => 'Тип цели',
 			'result_type' => 'Тип результата цели',
-			'group_id' => 'Группа',
+			'group_id' => 'Исполняющая группа',
 			'name' => 'Название',
 			'comment' => 'Описание',
 			'create_date' => 'Дата создания',
 			'daddy' => 'Создатель',
-			'deleted' => 'Флаг удаления'
+			'deleted' => 'Флаг удаления',
+			'relParentTarget' => 'Родительское задание',
+			'relChildTargets' => 'Входящие задание'
 		];
+	}
+
+	/**
+	 * @return ActiveQuery|RelTargetsTargets[]
+	 */
+	public function getRelTargetsTargetsChild() {
+		return $this->hasMany(RelTargetsTargets::class, ['parent_id' => 'id']);
+	}
+
+	/**
+	 * @return ActiveQuery|RelTargetsTargets|null
+	 */
+	public function getRelTargetsTargetsParent() {
+		return $this->hasOne(RelTargetsTargets::class, ['child_id' => 'id']);
+	}
+
+	/**
+	 * Вернёт вышестоящую задачу целеполагания, если есть
+	 * @return Targets|ActiveQuery|null
+	 */
+	public function getRelParentTarget() {
+		return $this->hasOne(self::class, ['id' => 'parent_id'])->via('relTargetsTargetsParent');
+	}
+
+	/**
+	 * Установка родительской задачи
+	 * @param Targets|ActiveQuery|null $parentTarget
+	 */
+	public function setRelParentTarget($parentTarget):void {
+		RelTargetsTargets::linkModels($parentTarget, $this);
+		if (null !== $parentTarget) {
+			if (null === $model = self::findModel($parentTarget)) $model->dropCaches();
+		}
+	}
+
+	/**
+	 * Удаление родительской задачи
+	 * @param Targets|ActiveQuery|null $parentTarget
+	 */
+	public function setDropParentTarget($dropParentTarget):void {
+		RelTargetsTargets::unlinkModels($dropParentTarget, $this);
+		if (null !== $dropParentTarget) {
+			if (null === $model = self::findModel($dropParentTarget)) $model->dropCaches();
+		}
 	}
 
 }
