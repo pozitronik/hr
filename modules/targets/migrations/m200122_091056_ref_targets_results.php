@@ -15,7 +15,6 @@ class m200122_091056_ref_targets_results extends Migration
 		$this->createTable('ref_targets_results', [
 			'id' => $this->primaryKey(),
 			'name' => $this->string(256)->notNull()->comment('Название'),
-			'value' => $this->string(512)->notNull()->comment('Описание'),
 			'deleted' => $this->boolean()->notNull()->defaultValue(false)
 		]);
     }
