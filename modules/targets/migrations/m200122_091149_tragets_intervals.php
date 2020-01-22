@@ -20,10 +20,10 @@ class m200122_091149_tragets_intervals extends Migration {
 			'daddy' => $this->integer()->null()->comment('ID зарегистрировавшего пользователя'),
 		]);
 
-		$this->createIndex('target', 'sys_targets_results', 'target');
-		$this->createIndex('daddy', 'sys_targets_results', 'daddy');
-		$this->createIndex('start_date', 'sys_targets_results', 'start_date');
-		$this->createIndex('finish_date', 'sys_targets_results', 'finish_date');
+		$this->createIndex('target', 'sys_targets_intervals', 'target');
+		$this->createIndex('daddy', 'sys_targets_intervals', 'daddy');
+		$this->createIndex('start_date', 'sys_targets_intervals', 'start_date');
+		$this->createIndex('finish_date', 'sys_targets_intervals', 'finish_date');
 	}
 
 	/**
