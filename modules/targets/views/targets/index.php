@@ -4,8 +4,10 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var ActiveDataProvider $dataProvider
+ * @var TargetsSearch $searchModel
  */
 
+use app\modules\targets\models\TargetsSearch;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -22,7 +24,7 @@ use yii\web\View;
 	</div>
 	<div class="panel-body">
 		<?= GridView::widget([
-//			'filterModel' => $searchModel,
+			'filterModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 //			'columns' => $columns,
 			'rowOptions' => static function($record) {
