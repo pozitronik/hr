@@ -18,12 +18,10 @@ class m200122_091149_tragets_intervals extends Migration {
 			'start_date' => $this->dateTime()->notNull()->comment('Дата начала интервала'),
 			'finish_date' => $this->dateTime()->notNull()->comment('Дата конца интервала'),
 			'daddy' => $this->integer()->null()->comment('ID зарегистрировавшего пользователя'),
-			'status' => $this->integer()->null()->comment('Тип статуса исполнения'),
 		]);
 
 		$this->createIndex('target', 'sys_targets_results', 'target');
 		$this->createIndex('daddy', 'sys_targets_results', 'daddy');
-		$this->createIndex('status', 'sys_targets_results', 'status');
 		$this->createIndex('start_date', 'sys_targets_results', 'start_date');
 		$this->createIndex('finish_date', 'sys_targets_results', 'finish_date');
 	}
