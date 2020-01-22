@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\relations;
+namespace app\modules\targets\models\relations;
 
+use app\models\relations\Relations;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ActiveRecordExtended;
 use Throwable;
