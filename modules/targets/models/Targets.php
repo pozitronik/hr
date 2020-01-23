@@ -40,7 +40,7 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function rules():array {
 		return [
-			[['type', 'group_id', 'name', 'create_date'], 'required'],
+			[['type', 'group_id', 'name'], 'required'],
 			[['type', 'result_type', 'group_id', 'daddy'], 'integer'],
 			[['name'], 'string', 'max' => 512],
 			[['comment'], 'string'],
