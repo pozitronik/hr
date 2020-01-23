@@ -94,22 +94,22 @@ class Targets extends ActiveRecordExtended {
 
 	/**
 	 * Установка родительской задачи
-	 * @param Targets|ActiveQuery|null $parentTarget
+	 * @param Targets|ActiveQuery|null|string $parentTarget
 	 */
 	public function setRelParentTarget($parentTarget):void {
 		RelTargetsTargets::linkModels($parentTarget, $this);
-		if (null !== $parentTarget) {
+		if (!empty($parentTarget)) {
 			if (null === $model = self::findModel($parentTarget)) $model->dropCaches();
 		}
 	}
 
 	/**
 	 * Удаление родительской задачи
-	 * @param Targets|ActiveQuery|null $parentTarget
+	 * @param Targets|ActiveQuery|null|string $parentTarget
 	 */
 	public function setDropParentTarget($dropParentTarget):void {
 		RelTargetsTargets::unlinkModels($dropParentTarget, $this);
-		if (null !== $dropParentTarget) {
+		if (!empty($dropParentTarget)) {
 			if (null === $model = self::findModel($dropParentTarget)) $model->dropCaches();
 		}
 	}
