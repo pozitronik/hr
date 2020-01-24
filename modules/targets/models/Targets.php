@@ -5,7 +5,6 @@ namespace app\modules\targets\models;
 
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
-use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsResults;
@@ -14,6 +13,7 @@ use app\modules\targets\models\relations\RelTargetsGroups;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use app\modules\targets\models\relations\RelTargetsUsers;
 use app\modules\users\models\Users;
+use Throwable;
 use yii\db\ActiveQuery;
 
 /**
@@ -110,23 +110,21 @@ class Targets extends ActiveRecordExtended {
 	/**
 	 * Установка родительской задачи
 	 * @param Targets|ActiveQuery|null|string $parentTarget
+	 * @throws Throwable
 	 */
 	public function setRelParentTarget($parentTarget):void {
 		RelTargetsTargets::linkModels($parentTarget, $this);
-		if (!empty($parentTarget)) {
-			if (null === $model = self::findModel($parentTarget)) $model->dropCaches();
-		}
+		if (!empty($parentTarget) && null === $model = self::findModel($parentTarget)) $model->dropCaches();
 	}
 
 	/**
 	 * Удаление родительской задачи
-	 * @param Targets|ActiveQuery|null|string $parentTarget
+	 * @param $dropParentTarget
+	 * @throws Throwable
 	 */
 	public function setDropParentTarget($dropParentTarget):void {
 		RelTargetsTargets::unlinkModels($dropParentTarget, $this);
-		if (!empty($dropParentTarget)) {
-			if (null === $model = self::findModel($dropParentTarget)) $model->dropCaches();
-		}
+		if (!empty($dropParentTarget) && null === $model = self::findModel($dropParentTarget)) $model->dropCaches();
 	}
 
 	/**
@@ -159,6 +157,7 @@ class Targets extends ActiveRecordExtended {
 
 	/**
 	 * @param Groups[]|ActiveQuery $relTargetsGroups
+	 * @throws Throwable
 	 */
 	public function setRelGroups($relTargetsGroups):void {
 		RelTargetsGroups::linkModels($this, $relTargetsGroups);
@@ -180,6 +179,7 @@ class Targets extends ActiveRecordExtended {
 
 	/**
 	 * @param Users[]|ActiveQuery $relTargetsUsers
+	 * @throws Throwable
 	 */
 	public function setRelUsers($relTargetsUsers):void {
 		RelTargetsGroups::linkModels($this, $relTargetsUsers);
