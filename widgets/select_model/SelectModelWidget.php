@@ -11,6 +11,7 @@ use Exception;
 use kartik\base\InputWidget;
 use kartik\select2\Select2;
 use pozitronik\helpers\ArrayHelper;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\web\JsExpression;
@@ -33,6 +34,7 @@ use yii\web\JsExpression;
 class SelectModelWidget extends InputWidget implements SelectionWidgetInterface {
 	//private $data = [];//calculated/evaluated/received data array
 	private $ajaxPluginOptions = [];//calculated select2 ajax parameters
+	private $loadedClass;
 
 	public $pkName;//primary key name for selectModel
 	public $selectModel;
@@ -52,11 +54,16 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 	public function init() {
 		parent::init();
 		SelectModelWidgetAssets::register($this->getView());
-		if (!$this->selectModel instanceof ActiveRecordExtended) {
+		if (null === $this->selectModel) {
+			throw new InvalidConfigException('$selectModel parameter is required');
+		}
+
+		$this->loadedClass = Yii::createObject($this->selectModel);
+		if (!($this->loadedClass instanceof ActiveRecordExtended)) {
 			throw new InvalidConfigException("{$this->selectModel} must be a instance of ActiveRecordExtended");
 		}
-		$this->pkName = null === $this->pkName??$this->selectModel->primaryKey;
-		if (null === $this->selectModel->primaryKey || is_array($this->pkName)) {
+		$this->pkName = $this->pkName??$this->loadedClass::pkName();
+		if (null === $this->pkName) {
 			throw new InvalidConfigException("{$this->selectModel} must have primary key and it should not be composite");
 		}
 
@@ -80,7 +87,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 			];
 
 		} else {
-			$selectionQuery = $this->selectModel::find()->active();
+			$selectionQuery = $this->loadedClass::find()->active();
 			if (is_array($this->exclude)) {
 				if ([] !== $this->exclude) {
 					if ($this->exclude[0] instanceof ActiveRecordExtended) {
@@ -95,16 +102,20 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 			$this->data = ArrayHelper::map($selectionQuery->all(), $this->pkName, $this->mapAttribute);
 		}
 
-		if (is_callable([$this->model, 'dataOptions'])) {//если у модели есть опции для выбиралки, присунем их к стандартным опциям
-			$this->options = array_merge($this->options, $this->model::dataOptions());
+		if (is_callable([$this->loadedClass, 'dataOptions'], true)) {//если у модели есть опции для выбиралки, присунем их к стандартным опциям
+			$this->options = array_merge($this->options, $this->loadedClass::dataOptions());
 		}
 
 		$pluginOptions = [//во всех вариантах одинаково
 				'allowClear' => true,
 				'multiple' => $this->multiple,
 				'language' => 'ru',
-				'templateResult' => (self::DATA_MODE_AJAX === $this->loadingMode)?new JsExpression('function(item) {return templateResultAJAX(item)}'):new JsExpression('function(item) {return templateResult(item)}'),
-				'escapeMarkup' => new JsExpression('function (markup) { return escapeMarkup(markup); }')
+				'templateResult' => (self::DATA_MODE_AJAX === $this->loadingMode)?new JsExpression('function(item) {
+				return templateResultAJAX(item)}'):new JsExpression('function(item) {
+				return templateResult(item)}'),
+				'escapeMarkup' => new JsExpression('function(markup) {
+				return escapeMarkup(markup);
+			}')
 			] + $this->ajaxPluginOptions;
 
 		switch ($this->renderingMode) {
@@ -140,7 +151,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 					],
 					'addon' => [
 						'append' => [
-							'content' => Html::button(IconsHelper::add(), ['id' => 'ajax_post_button', 'class' => 'btn btn-primary', 'disabled' => 'disabled', 'onclick' => "ajax_post('$this->postUrl', 'ajax_post_button', {$this->pkName})"]),
+							'content' => Html::button(IconsHelper::add(), ['id' => 'ajax_post_button', 'class' => 'btn btn - primary', 'disabled' => 'disabled', 'onclick' => "ajax_post('$this->postUrl', 'ajax_post_button', {$this->pkName})"]),
 							'asButton' => true
 						]
 					],
