@@ -11,6 +11,17 @@ use yii\data\ActiveDataProvider;
  * @package app\modules\targets\models
  */
 class TargetsSearch extends Targets {
+	public $targetType;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function rules():array {
+		return [
+			[['id'], 'integer'],
+			[['name', 'comment', 'type', 'result_type'], 'safe'],
+		];
+	}
 
 	/**
 	 * @param array $params
