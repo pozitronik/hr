@@ -6,6 +6,7 @@ namespace app\modules\targets\models;
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\user\CurrentUser;
+use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use yii\db\ActiveQuery;
@@ -16,7 +17,6 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property int $type
  * @property int $result_type
- * @property int $group_id
  * @property string $name
  * @property string $comment
  * @property string $create_date Дата регистрации
@@ -28,6 +28,7 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|Targets[] $relChildTarget -- нижестоящие задачи целеполагания
  *
  * @property ActiveQuery|RefTargetsTypes $relTargetsTypes Тип задания через релейшен
+ * @property ActiveQuery|RefTargetsResults $relTargetsResults Тип результата задания через релейшен
  */
 class Targets extends ActiveRecordExtended {
 
@@ -43,8 +44,8 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function rules():array {
 		return [
-			[['type', 'group_id', 'name'], 'required'],
-			[['type', 'result_type', 'group_id', 'daddy'], 'integer'],
+			[['type', 'name'], 'required'],
+			[['type', 'result_type', 'daddy'], 'integer'],
 			[['name'], 'string', 'max' => 512],
 			[['comment'], 'string'],
 			[['create_date', 'relParentTarget', 'relChildTargets'], 'safe'],
@@ -62,7 +63,6 @@ class Targets extends ActiveRecordExtended {
 		return [
 			'type' => 'Тип цели',
 			'result_type' => 'Тип результата цели',
-			'group_id' => 'Исполняющая группа',
 			'name' => 'Название',
 			'comment' => 'Описание',
 			'create_date' => 'Дата создания',
@@ -122,6 +122,13 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function getRelTargetsTypes() {
 		return $this->hasOne(RefTargetsTypes::class, ['id' => 'type']);
+	}
+
+	/**
+	 * @return RefTargetsResults|ActiveQuery
+	 */
+	public function getRelTargetsResults() {
+		return $this->hasOne(RefTargetsResults::class, ['id' => 'result_type']);
 	}
 
 }
