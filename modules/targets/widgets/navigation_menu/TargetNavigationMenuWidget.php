@@ -32,7 +32,7 @@ class TargetNavigationMenuWidget extends BaseNavigationMenuWidget {
 				'url' => TargetsModule::to(['targets/profile', 'id' => $this->model->id])
 			],
 			[
-				'label' => IconsHelper::subtargets().'Иерархия',
+				'label' => IconsHelper::subgroups().'Иерархия',
 				'url' => TargetsModule::to(['targets/targets', 'id' => $this->model->id])
 			],
 			[
