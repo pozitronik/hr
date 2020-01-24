@@ -7,13 +7,11 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\models\Groups;
-use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\users\models\Users;
-use app\modules\users\widgets\user_select\UserSelectWidget;
 use kartik\select2\Select2;
 use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -67,7 +65,7 @@ use yii\widgets\ActiveForm;
 							'allowClear' => true,
 							'multiple' => true
 						],
-					]); ?>
+					]) ?>
 				</div>
 			</div>
 			<div class="row">
@@ -79,7 +77,7 @@ use yii\widgets\ActiveForm;
 							'allowClear' => true,
 							'multiple' => true
 						],
-					]); ?>
+					]) ?>
 				</div>
 			</div>
 			<div class="row">
