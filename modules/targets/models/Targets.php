@@ -5,10 +5,15 @@ namespace app\modules\targets\models;
 
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
+use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
+use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
+use app\modules\targets\models\relations\RelTargetsGroups;
 use app\modules\targets\models\relations\RelTargetsTargets;
+use app\modules\targets\models\relations\RelTargetsUsers;
+use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
 /**
@@ -29,6 +34,11 @@ use yii\db\ActiveQuery;
  *
  * @property ActiveQuery|RefTargetsTypes $relTargetsTypes Тип задания через релейшен
  * @property ActiveQuery|RefTargetsResults $relTargetsResults Тип результата задания через релейшен
+ *
+ * @property ActiveQuery|RelTargetsGroups[] $relTargetsGroups
+ * @property ActiveQuery|Groups[] $relGroups
+ * @property ActiveQuery|RelTargetsUsers[] $relTargetsUsers
+ * @property ActiveQuery|Users[] $relUsers
  */
 class Targets extends ActiveRecordExtended {
 
@@ -48,7 +58,7 @@ class Targets extends ActiveRecordExtended {
 			[['type', 'result_type', 'daddy'], 'integer'],
 			[['name'], 'string', 'max' => 512],
 			[['comment'], 'string'],
-			[['create_date', 'relParentTarget', 'relChildTargets'], 'safe'],
+			[['create_date', 'relParentTarget', 'relChildTargets', 'relGroups', 'relUsers'], 'safe'],
 			[['deleted'], 'boolean'],
 			[['deleted'], 'default', 'value' => false],
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],
@@ -69,7 +79,9 @@ class Targets extends ActiveRecordExtended {
 			'daddy' => 'Создатель',
 			'deleted' => 'Флаг удаления',
 			'relParentTarget' => 'Родительское задание',
-			'relChildTargets' => 'Входящие задание'
+			'relChildTargets' => 'Входящие задание',
+			'relGroups' => 'Группа назначения',
+			'relUsers' => 'Ответственный сотрудник'
 		];
 	}
 
@@ -131,4 +143,45 @@ class Targets extends ActiveRecordExtended {
 		return $this->hasOne(RefTargetsResults::class, ['id' => 'result_type']);
 	}
 
+	/**
+	 * @return RelTargetsGroups[]|ActiveQuery
+	 */
+	public function getRelTargetsGroups() {
+		return $this->hasMany(RelTargetsGroups::class, ['target_id' => 'id']);
+	}
+
+	/**
+	 * @return Groups[]|ActiveQuery
+	 */
+	public function getRelGroups() {
+		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relTargetsGroups');
+	}
+
+	/**
+	 * @param Groups[]|ActiveQuery $relTargetsGroups
+	 */
+	public function setRelGroups($relTargetsGroups):void {
+		RelTargetsGroups::linkModels($this, $relTargetsGroups);
+	}
+
+	/**
+	 * @return RelTargetsUsers[]|ActiveQuery
+	 */
+	public function getRelTargetsUsers() {
+		return $this->hasMany(RelTargetsUsers::class, ['target_id' => 'id']);
+	}
+
+	/**
+	 * @return Users[]|ActiveQuery
+	 */
+	public function getRelUsers() {
+		return $this->hasMany(Users::class, ['id' => 'users_id'])->via('relTargetsUsers');
+	}
+
+	/**
+	 * @param Users[]|ActiveQuery $relTargetsUsers
+	 */
+	public function setRelUsers($relTargetsUsers):void {
+		RelTargetsGroups::linkModels($this, $relTargetsUsers);
+	}
 }
