@@ -69,6 +69,15 @@ trait ARExtended {
 	}
 
 	/**
+	 * Получение имени первичного ключа в лоб. Для составных ключей работать не будет. Нужно для тупой оптимизации SelectModelWidget, а может и не нужно и надо будет переписать
+	 * @return string|null
+	 */
+	public static function pkName():?string {
+		$primaryKeys = static::primaryKey();
+		return (isset($primaryKeys[0]))?$primaryKeys[0]:null;
+	}
+
+	/**
 	 * По итерируемому списку ключей вернёт список подходящих моделей
 	 * @param null|int[] $keys Итерируемый список ключей
 	 * @return self[]
