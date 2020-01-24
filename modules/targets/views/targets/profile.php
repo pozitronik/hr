@@ -41,7 +41,7 @@ $this->registerJs("var graphControl = new GraphControl(_.$('target-profile-tree-
 			<div class="col-md-2">
 				<label>Тип:</label>
 				<?= BadgeWidget::widget([
-					'models' => $model->relTargetTypes,
+					'models' => $model->relTargetsTypes,
 					'useBadges' => true,
 					'attribute' => 'name',
 					'unbadgedCount' => false,
