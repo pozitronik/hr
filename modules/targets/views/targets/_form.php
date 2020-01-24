@@ -6,10 +6,13 @@ declare(strict_types = 1);
  * @var Targets $model
  */
 
+use app\modules\groups\widgets\group_select\GroupSelectWidget;
+use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\targets\models\references\RefTargetsResults;
+use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
-use pozitronik\helpers\ArrayHelper;
+use app\modules\users\widgets\user_select\UserSelectWidget;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -29,18 +32,53 @@ use yii\widgets\ActiveForm;
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-2">
+					<?= $form->field($model, 'type')->widget(ReferenceSelectWidget::class, [//todo: depdrop
+						'referenceClass' => RefTargetsTypes::class
+					]) ?>
 				</div>
-				<div class="col-md-2">
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'result_type')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefTargetsResults::class
+					]) ?>
 				</div>
-				<div class="col-md-2">
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'name')->textInput(['maxlength' => 512]) ?>
 				</div>
-				<div class="col-md-2">
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'comment')->textarea() ?>
 				</div>
-				<div class="col-md-2">
-				</div>
-				<div class="col-md-2">
-				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'relGroups')->widget(GroupSelectWidget::class, [
+						'notData' => $model->relGroups,
+						'multiple' => true,
+						'mode' => GroupSelectWidget::MODE_FIELD,
+						'dataMode' => GroupSelectWidget::DATA_MODE_AJAX
+					]) ?>
 
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class, [
+						'notData' => $model->relUsers,
+						'multiple' => true,
+						'mode' => GroupSelectWidget::MODE_FIELD,
+						'dataMode' => GroupSelectWidget::DATA_MODE_AJAX
+					]) ?>
+				</div>
 			</div>
 		</div>
 
