@@ -24,6 +24,8 @@ use yii\db\ActiveRecord;
  * @property string|array $formAction Свойство для переопределения экшона формы постинга (при MODE_FORM)
  * @property int $mode
  * @property int $dataMode Режим загрузки данных
+ *
+ * @deprecated
  */
 class AttributeSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;

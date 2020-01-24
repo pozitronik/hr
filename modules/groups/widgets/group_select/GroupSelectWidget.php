@@ -28,6 +28,7 @@ use yii\db\ActiveRecord;
  * @property int $dataMode Режим загрузки данных
  *
  * @todo: см. тудуху в UserSelectWidget, здесь те же ошибки
+ * @deprecated
  */
 class GroupSelectWidget extends InputWidget implements SelectionWidgetInterface {
 	public $mode = self::MODE_FIELD;
