@@ -10,6 +10,7 @@ declare(strict_types = 1);
 use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsSearch;
@@ -94,6 +95,29 @@ $this->params['breadcrumbs'][] = $this->title;
 					'filterWidgetOptions' => [
 						/*В картиковском гриде захардкожено взаимодействие с собственными фильтрами, в частности использование filter. В нашем виджете обходимся так*/
 						'referenceClass' => RefTargetsTypes::class,
+						'pluginOptions' => ['allowClear' => true]
+					]
+				],
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'result_type',
+					'value' => static function(Targets $target) {
+						return BadgeWidget::widget([
+							'models' => $target->relTargetsResults,
+							'useBadges' => true,
+							'attribute' => 'name',
+							'unbadgedCount' => 3,
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsResults::colorStyleOptions(),
+							'linkScheme' => [TargetsModule::to(), 'TargetsSearch[result_type]' => 'id']
+						]);
+					},
+					'format' => 'raw',
+					'filterType' => ReferenceSelectWidget::class,
+					'filterInputOptions' => ['placeholder' => 'Результат'],
+					'filterWidgetOptions' => [
+						/*В картиковском гриде захардкожено взаимодействие с собственными фильтрами, в частности использование filter. В нашем виджете обходимся так*/
+						'referenceClass' => RefTargetsResults::class,
 						'pluginOptions' => ['allowClear' => true]
 					]
 				],
