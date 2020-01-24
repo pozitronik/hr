@@ -6,6 +6,7 @@ namespace app\modules\targets\models;
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 use app\models\user\CurrentUser;
+use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use yii\db\ActiveQuery;
 
@@ -25,6 +26,8 @@ use yii\db\ActiveQuery;
  * @property
  * @property ActiveQuery|Targets|null $relParentTarget -- вышестоящая задача целеполагания (если есть)
  * @property ActiveQuery|Targets[] $relChildTarget -- нижестоящие задачи целеполагания
+ *
+ * @property ActiveQuery|RefTargetsTypes $relTargetsTypes Тип задания через релейшен
  */
 class Targets extends ActiveRecordExtended {
 
@@ -112,6 +115,13 @@ class Targets extends ActiveRecordExtended {
 		if (!empty($dropParentTarget)) {
 			if (null === $model = self::findModel($dropParentTarget)) $model->dropCaches();
 		}
+	}
+
+	/**
+	 * @return RefTargetsTypes|ActiveQuery
+	 */
+	public function getRelTargetsTypes() {
+		return $this->hasOne(RefTargetsTypes::class, ['id' => 'type']);
 	}
 
 }
