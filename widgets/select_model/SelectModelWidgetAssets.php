@@ -16,6 +16,7 @@ class SelectModelWidgetAssets extends AssetBundle {
 		'css/select_model.css'
 	];
 	public $js = [
+		'js/common.js',
 		'js/select_model.js'
 	];
 	public $depends = [
