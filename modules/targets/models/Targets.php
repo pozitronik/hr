@@ -13,7 +13,9 @@ use app\modules\targets\models\relations\RelTargetsGroups;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use app\modules\targets\models\relations\RelTargetsUsers;
 use app\modules\users\models\Users;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
+use Yii;
 use yii\db\ActiveQuery;
 
 /**
@@ -183,5 +185,27 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function setRelUsers($relTargetsUsers):void {
 		RelTargetsGroups::linkModels($this, $relTargetsUsers);
+	}
+
+	/**
+	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
+	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
+	 * @return array
+	 */
+	public static function dataOptions():array {
+		return Yii::$app->cache->getOrSet(static::class."DataOptions", static function() {
+			$items = self::find()->active()->all();
+			$result = [];
+
+			foreach ($items as $key => $item) {
+				/** @var Targets $item */
+				$result[$item->id] = [
+					'data-typename' => ArrayHelper::getValue($item->relTargetsTypes, 'name'),
+					'data-typecolor' => ArrayHelper::getValue($item->relTargetsTypes, 'color'),
+					'data-textcolor' => ArrayHelper::getValue($item->relTargetsTypes, 'textcolor')
+				];
+			}
+			return $result;
+		});
 	}
 }
