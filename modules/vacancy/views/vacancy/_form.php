@@ -92,8 +92,8 @@ use yii\widgets\ActiveForm;
 					<div class="col-md-3">
 						<?= $form->field($model, 'employer')->widget(UserSelectWidget::class, [
 							'multiple' => false,
-							'mode' => GroupSelectWidget::MODE_FIELD,
-							'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+							'renderingMode' => GroupSelectWidget::MODE_FIELD,
+							'loadingMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
 						]) ?>
 					</div>
 
@@ -101,14 +101,14 @@ use yii\widgets\ActiveForm;
 						<?php if (null === $model->group): ?>
 							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 								'multiple' => false,
-								'mode' => GroupSelectWidget::MODE_FIELD,
-								'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+								'renderingMode' => GroupSelectWidget::MODE_FIELD,
+								'loadingMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
 							])->label('Группа (подразделение)') ?>
 						<?php else: ?>
 							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 								'multiple' => false,
-								'mode' => GroupSelectWidget::MODE_FIELD,
-								'dataMode' => GroupSelectWidget::DATA_MODE_LOAD
+								'renderingMode' => GroupSelectWidget::MODE_FIELD,
+								'loadingMode' => GroupSelectWidget::DATA_MODE_LOAD
 							])->label('Группа (подразделение)') ?>
 						<?php endif; ?>
 					</div>
@@ -126,8 +126,8 @@ use yii\widgets\ActiveForm;
 					<div class="col-md-3">
 						<?= $form->field($model, 'teamlead')->widget(UserSelectWidget::class, [
 							'multiple' => false,
-							'mode' => GroupSelectWidget::MODE_FIELD,
-							'dataMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+							'renderingMode' => GroupSelectWidget::MODE_FIELD,
+							'loadingMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
 						]) ?>
 					</div>
 				</div>

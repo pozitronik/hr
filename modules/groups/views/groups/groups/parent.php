@@ -37,9 +37,9 @@ GroupsAsset::register($this);
 		'before' => GroupSelectWidget::widget([
 			'model' => $model,
 			'attribute' => 'relParentGroups',
-			'notData' => $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
+			'exclude'  =>  $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
 			'multiple' => true,
-			'mode' => GroupSelectWidget::MODE_FORM
+			'renderingMode' => GroupSelectWidget::MODE_FORM
 		])
 	],
 	'toolbar' => false,
