@@ -16,7 +16,6 @@ use app\modules\users\widgets\user_select\UserSelectWidget;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\Html;
-use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -64,6 +63,11 @@ use yii\widgets\ActiveForm;
 			<div class="row">
 				<div class="col-md-12">
 					<?= $form->field($model, 'relGroups')->widget(GroupSelectWidget::class) ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class) ?>
 				</div>
 			</div>
 			<div class="row">
