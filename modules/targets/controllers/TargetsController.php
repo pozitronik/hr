@@ -67,6 +67,20 @@ class TargetsController extends WigetableController {
 
 	/**
 	 * @param int $id
+	 * @return string|null
+	 * @throws Throwable
+	 */
+	public function actionProfile(int $id):?string {
+		if (null === $target = Targets::findModel($id, new NotFoundHttpException())) return null;
+
+
+		return $this->render('profile', [
+			'model' => $target
+		]);
+	}
+
+	/**
+	 * @param int $id
 	 * @return Response|null
 	 * @throws Throwable
 	 */
