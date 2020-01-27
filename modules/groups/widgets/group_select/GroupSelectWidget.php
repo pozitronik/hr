@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\group_select;
 
+use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\widgets\select_model\SelectModelWidget;
 
@@ -14,7 +15,6 @@ use app\widgets\select_model\SelectModelWidget;
  */
 class GroupSelectWidget extends SelectModelWidget {
 	public $selectModel = Groups::class;
-	public $ajaxSearchUrl = '/groups/ajax/group-search';//todo: динамическая ссылка
 	public $groupByType = true;//todo: Добавить обработчик сюда, либо доопределить в базовой модели
 
 	/**
@@ -23,6 +23,8 @@ class GroupSelectWidget extends SelectModelWidget {
 	public function init() {
 		parent::init();
 		GroupSelectWidgetAssets::register($this->getView());
+		$this->options['placeholder'] = 'Выберите группу';
+		$this->ajaxSearchUrl = GroupsModule::to('ajax/group-search');
 	}
 
 
