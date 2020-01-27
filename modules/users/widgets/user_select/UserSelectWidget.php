@@ -13,7 +13,6 @@ use app\widgets\select_model\SelectModelWidget;
  */
 class UserSelectWidget extends SelectModelWidget {
 	public $selectModel = Users::class;
-	public $multiple = false;
 	public $ajaxSearchUrl = '/users/ajax/user-search';
 	public $mapAttribute = 'username';
 
