@@ -9,6 +9,7 @@ use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\references\widgets\roles_select\RolesSelectWidget;
+use app\widgets\select_model\SelectModelWidget;
 use kartik\form\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -26,20 +27,20 @@ $this->params['breadcrumbs'][] = UsersModule::breadcrumbItem('Люди');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $form = ActiveForm::begin(); ?>
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="panel-control">
-				<?= UserNavigationMenuWidget::widget([
-					'model' => $model
-				]) ?>
-			</div>
-			<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="panel-control">
+			<?= UserNavigationMenuWidget::widget([
+				'model' => $model
+			]) ?>
 		</div>
+		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+	</div>
 
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-xs-12">
-					<?= GridView::widget([
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-xs-12">
+				<?= GridView::widget([
 						'dataProvider' => $provider,
 						'showFooter' => false,
 						'showPageSummary' => false,
@@ -50,11 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							'before' => GroupSelectWidget::widget([
 								'model' => $model,
 								'attribute' => 'relGroups',
-								'notData' => $model->relGroups,
+								'exclude' => $model->relGroups,
 								'multiple' => true,
-								'mode' => GroupSelectWidget::MODE_FIELD,
-								'dataMode' => GroupSelectWidget::DATA_MODE_AJAX
-							]),
+								'renderingMode' => SelectModelWidget::MODE_FIELD,
+								'loadingMode' => SelectModelWidget::DATA_MODE_LOAD
+								]),
 							'heading' => false,
 							'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
 						],
@@ -109,16 +110,16 @@ $this->params['breadcrumbs'][] = $this->title;
 						]
 
 					]) ?>
-				</div>
-			</div>
-		</div>
-		<div class="panel-footer">
-			<div class="btn-group">
-				<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
-				<?php if ($model->isNewRecord): ?>
-					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
-				<?php endif ?>
 			</div>
 		</div>
 	</div>
+	<div class="panel-footer">
+		<div class="btn-group">
+			<?= Html::submitButton($model->isNewRecord?'Сохранить':'Изменить', ['class' => $model->isNewRecord?'btn btn-success':'btn btn-primary']) ?>
+				<?php if ($model->isNewRecord): ?>
+					<?= Html::input('submit', 'more', 'Сохранить и добавить ещё', ['class' => 'btn btn-primary']) ?>
+				<?php endif ?>
+		</div>
+	</div>
+</div>
 <?php ActiveForm::end(); ?>
