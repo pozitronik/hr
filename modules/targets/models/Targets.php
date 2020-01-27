@@ -176,7 +176,7 @@ class Targets extends ActiveRecordExtended {
 	 * @return Users[]|ActiveQuery
 	 */
 	public function getRelUsers() {
-		return $this->hasMany(Users::class, ['id' => 'users_id'])->via('relTargetsUsers');
+		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relTargetsUsers');
 	}
 
 	/**
@@ -184,7 +184,7 @@ class Targets extends ActiveRecordExtended {
 	 * @throws Throwable
 	 */
 	public function setRelUsers($relTargetsUsers):void {
-		RelTargetsGroups::linkModels($this, $relTargetsUsers);
+		RelTargetsUsers::linkModels($this, $relTargetsUsers);
 	}
 
 	/**
