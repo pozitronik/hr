@@ -42,7 +42,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 	public $selectModel;
 	public $exclude = [];
 	public $mapAttribute = 'name';
-	public $postUrl;
+	public $postUrl = '';
 	public $ajaxMinimumInputLength = 1;
 	public $ajaxSearchUrl;
 
