@@ -30,6 +30,8 @@ use yii\web\JsExpression;
  * @property int $loadingMode self::DATA_MODE_AJAX -- фоновая загрузка, DATA_MODE_LOAD -- вычисляемые данные
  * @property int $renderingMode see SelectionWidgetInterface modes constants
  * @property boolean $multiple true by default
+ *
+ * @todo: в случае, если виджет используется для редактирования в режиме DATA_MODE_AJAX, то имеющиеся связи будут отображены, как айдишники. Это нужно поправить.
  */
 class SelectModelWidget extends InputWidget implements SelectionWidgetInterface {
 	//private $data = [];//calculated/evaluated/received data array
