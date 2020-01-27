@@ -4,7 +4,17 @@
  * @returns {*}
  */
 function TargetsTemplateResult(item) {
-	return item.text;
+	if (item.loading || item.hasOwnProperty('children')) {
+		return item.text;
+	}
+
+	return '<div class="select-item">' +
+			'<div class="row" style="padding: 0 10px;">' +
+				'<div class="col-sm-8">' + item.text +'</div>' +
+					'<div class="col-sm-4 text-overflow" ' + 'style="background: ' + ($(item.element).data('typecolor') || 'inherit') + ';color:' + ($(item.element).data('textcolor') || 'inherit') + '">' + ($(item.element).data('typename') || '')+ '</div>' +
+				'</div>' +
+			'</div>' +
+		'</div>' ;
 }
 
 /**

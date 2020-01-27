@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
 						'referenceClass' => RefTargetsTypes::class
 					]) ?>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<?= $form->field($model, 'relParentTarget')->widget(TargetSelectWidget::class) ?>
 				</div>
 			</div>
