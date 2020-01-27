@@ -64,6 +64,26 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format' => 'raw'
 				],
 				[
+					'class' => DataColumn::class,
+					'attribute' => 'parent_name',
+					'label' => 'Родительское задание',
+					'value' => static function(Targets $model) {
+						return BadgeWidget::widget([
+							'models' => $model->relParentTarget,
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-info"
+							],
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/profile'), 'id' => 'id']
+						]);
+					},
+					'format' => 'raw',
+					'group' => true
+				],
+				[
+					'class' => DataColumn::class,
 					'attribute' => 'name',
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([

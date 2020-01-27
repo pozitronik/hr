@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-
 use yii\data\ActiveDataProvider;
 
 /**
@@ -11,6 +10,7 @@ use yii\data\ActiveDataProvider;
  * @package app\modules\targets\models
  */
 class TargetsSearch extends Targets {
+	public $parent_name;
 	public $group_name;
 	public $user_name;
 
@@ -20,7 +20,7 @@ class TargetsSearch extends Targets {
 	public function rules():array {
 		return [
 			[['id'], 'integer'],
-			[['name', 'comment', 'type', 'result_type', 'group_name', 'user_name'], 'safe'],
+			[['name', 'comment', 'type', 'result_type', 'parent_name', 'group_name', 'user_name'], 'safe']
 		];
 	}
 
@@ -38,7 +38,22 @@ class TargetsSearch extends Targets {
 		$dataProvider->setSort([
 			'defaultOrder' => ['id' => SORT_ASC],
 			'attributes' => [
-
+				'id',
+				'name',
+				'type',
+				'result_type',
+				'parent_name' => [
+					'asc' => ['sys_groups.name' => SORT_ASC],
+					'desc' => ['sys_groups.name' => SORT_DESC]
+				],
+				'group_name' => [
+					'asc' => ['sys_groups.name' => SORT_ASC],
+					'desc' => ['sys_groups.name' => SORT_DESC]
+				],
+				'user_name' => [
+					'asc' => ['sys_groups.name' => SORT_ASC],
+					'desc' => ['sys_groups.name' => SORT_DESC]
+				]
 			]
 		]);
 
