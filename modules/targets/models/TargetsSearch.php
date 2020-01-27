@@ -11,7 +11,8 @@ use yii\data\ActiveDataProvider;
  * @package app\modules\targets\models
  */
 class TargetsSearch extends Targets {
-	public $targetType;
+	public $group_name;
+	public $user_name;
 
 	/**
 	 * {@inheritDoc}
@@ -19,7 +20,7 @@ class TargetsSearch extends Targets {
 	public function rules():array {
 		return [
 			[['id'], 'integer'],
-			[['name', 'comment', 'type', 'result_type'], 'safe'],
+			[['name', 'comment', 'type', 'result_type', 'group_name', 'user_name'], 'safe'],
 		];
 	}
 
