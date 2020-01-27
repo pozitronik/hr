@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\users\widgets\user_select;
 
 use app\modules\users\models\Users;
+use app\modules\users\UsersModule;
 use app\widgets\select_model\SelectModelWidget;
 
 /**
@@ -22,7 +23,8 @@ class UserSelectWidget extends SelectModelWidget {
 	public function init() {
 		parent::init();
 		UserSelectWidgetAssets::register($this->getView());
-		$this->postUrl = $this->renderingMode === self::MODE_AJAX?'/users/ajax/users-add-to-group':$this->postUrl;//todo: динамическая ссылка
+		$this->postUrl = $this->renderingMode === self::MODE_AJAX?UsersModule::to('ajax/users-add-to-group'):$this->postUrl;//todo: динамическая ссылка
+		$this->options['placeholder'] = 'Выберите пользователя';
 	}
 
 }
