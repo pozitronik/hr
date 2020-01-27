@@ -43,6 +43,10 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|Users[] $relUsers
  */
 class Targets extends ActiveRecordExtended {
+	public $startQuarter;
+	public $finishQuarter;
+	public $startYear;
+	public $finishYear;
 
 	/**
 	 * {@inheritdoc}
@@ -83,7 +87,11 @@ class Targets extends ActiveRecordExtended {
 			'relParentTarget' => 'Родительское задание',
 			'relChildTargets' => 'Входящие задание',
 			'relGroups' => 'Группа назначения',
-			'relUsers' => 'Ответственный сотрудник'
+			'relUsers' => 'Ответственный сотрудник',
+			'startQuarter' => 'Начальный квартал',
+			'finishQuarter' => 'Конечный квартал',
+			'startYear' => 'Год',
+			'finishYear' => 'Год'
 		];
 	}
 

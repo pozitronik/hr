@@ -13,7 +13,10 @@ use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\widgets\target_select\TargetSelectWidget;
 use app\modules\users\widgets\user_select\UserSelectWidget;
+use kartik\date\DatePicker;
+use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -64,8 +67,43 @@ use yii\widgets\ActiveForm;
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
-					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class) ?>
+				<div class="col-md-3">
+					<?= $form->field($model, 'startQuarter')->widget(Select2::class, [
+						'data' => [
+							0 => 'Первый квартал',
+							1 => 'Второй квартал',
+							2 => 'Третий квартал',
+							3 => 'Четвёртый квартал'
+						]
+					]) ?>
+				</div>
+				<div class="col-md-3">
+					<?= $form->field($model, 'startYear')->widget(DatePicker::class, [
+						'pluginOptions' => [
+							'autoclose' => true,
+							'format' => 'yyyy',
+							'minViewMode' => 'years'
+						]
+					]) ?>
+				</div>
+				<div class="col-md-3">
+					<?= $form->field($model, 'finishQuarter')->widget(Select2::class, [
+						'data' => [
+							0 => 'Первый квартал',
+							1 => 'Второй квартал',
+							2 => 'Третий квартал',
+							3 => 'Четвёртый квартал'
+						]
+					]) ?>
+				</div>
+				<div class="col-md-3">
+					<?= $form->field($model, 'finishYear')->widget(DatePicker::class, [
+						'pluginOptions' => [
+							'autoclose' => true,
+							'format' => 'yyyy',
+							'minViewMode' => 'years'
+						]
+					]) ?>
 				</div>
 			</div>
 			<div class="row">
