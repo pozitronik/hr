@@ -11,7 +11,7 @@ use app\models\core\ActiveRecordExtended;
  *
  * @property int $id
  * @property int $target_id
- * @property int $users_id
+ * @property int $user_id
  */
 class RelTargetsUsers extends ActiveRecordExtended {
 	use Relations;
@@ -28,9 +28,9 @@ class RelTargetsUsers extends ActiveRecordExtended {
 	 */
 	public function rules():array {
 		return [
-			[['target_id', 'users_id'], 'required'],
-			[['target_id', 'users_id'], 'integer'],
-			[['target_id', 'users_id'], 'unique', 'targetAttribute' => ['target_id', 'users_id']]
+			[['target_id', 'user_id'], 'required'],
+			[['target_id', 'user_id'], 'integer'],
+			[['target_id', 'user_id'], 'unique', 'targetAttribute' => ['target_id', 'user_id']]
 		];
 	}
 
@@ -41,7 +41,7 @@ class RelTargetsUsers extends ActiveRecordExtended {
 		return [
 			'id' => 'ID',
 			'target_id' => 'Задание',
-			'users_id' => 'Исполняющий сотрудник',
+			'user_id' => 'Исполняющий сотрудник',
 		];
 	}
 
