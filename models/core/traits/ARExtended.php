@@ -74,7 +74,7 @@ trait ARExtended {
 	 */
 	public static function pkName():?string {
 		$primaryKeys = static::primaryKey();
-		return (isset($primaryKeys[0]))?$primaryKeys[0]:null;
+		return $primaryKeys[0]??null;
 	}
 
 	/**
