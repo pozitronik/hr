@@ -1,9 +1,27 @@
-function submit_toggle(select) {
-	let input = jQuery(select.target).parent().find(':submit');
-	if (0 < jQuery(select.target).val().length) {
-		input.removeAttr('disabled');
-	} else {
-		input.attr('disabled', 'disabled');
+/**
+ * Форматирование элемента списка по умолчанию
+ * @param item
+ * @returns {*}
+ */
+function templateResult(item) {
+	return item.text;
+}
 
-	}
+/**
+ * Форматирование элемента списка при AJAX-запросе
+ * @param item
+ * @returns {*}
+ */
+function templateResultAJAX(item) {
+	return item.text;
+}
+
+
+/**
+ * Форматирование <не помню для чего>
+ * @param markup
+ * @returns {*}
+ */
+function escapeMarkup(markup) {
+	return markup;
 }
