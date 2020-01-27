@@ -14,7 +14,7 @@ use app\widgets\select_model\SelectModelWidget;
  */
 class GroupSelectWidget extends SelectModelWidget {
 	public $selectModel = Groups::class;
-	public $ajaxSearchUrl = '/groups/ajax/group-search';
+	public $ajaxSearchUrl = '/groups/ajax/group-search';//todo: динамическая ссылка
 	public $groupByType = true;//todo: Добавить обработчик сюда, либо доопределить в базовой модели
 
 	/**

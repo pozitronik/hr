@@ -23,7 +23,7 @@ class UserSelectWidget extends SelectModelWidget {
 	public function init() {
 		parent::init();
 		UserSelectWidgetAssets::register($this->getView());
-		$this->postUrl = $this->renderingMode === self::MODE_AJAX?'/users/ajax/users-add-to-group':$this->postUrl;
+		$this->postUrl = $this->renderingMode === self::MODE_AJAX?'/users/ajax/users-add-to-group':$this->postUrl;//todo: динамическая ссылка
 	}
 
 }
