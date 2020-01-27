@@ -43,16 +43,16 @@ class TargetsSearch extends Targets {
 				'type',
 				'result_type',
 				'parent_name' => [
-					'asc' => ['sys_groups.name' => SORT_ASC],
-					'desc' => ['sys_groups.name' => SORT_DESC]
+					'asc' => ['parentTarget.name' => SORT_ASC],
+					'desc' => ['parentTarget.name' => SORT_DESC]
 				],
 				'group_name' => [
 					'asc' => ['sys_groups.name' => SORT_ASC],
 					'desc' => ['sys_groups.name' => SORT_DESC]
 				],
 				'user_name' => [
-					'asc' => ['sys_groups.name' => SORT_ASC],
-					'desc' => ['sys_groups.name' => SORT_DESC]
+					'asc' => ['sys_users.name' => SORT_ASC],
+					'desc' => ['sys_users.name' => SORT_DESC]
 				]
 			]
 		]);
@@ -61,21 +61,17 @@ class TargetsSearch extends Targets {
 
 		if (!$this->validate()) return $dataProvider;
 
-//		$query->joinWith(['relGroups', 'relRefUserPositions', 'relRefUserPositionsTypesOwn as x', 'relRefUserRoles', 'relPrivileges', 'refUserPositionTypes']);
+		$query->joinWith(['relGroups', 'relUsers', 'relParentTarget as parentTarget', 'relTargetsTypes', 'relTargetsResults']);
 
 //		$query->distinct();
 
-//		$query->andFilterWhere(['sys_users.id' => $this->id])
-//			->andFilterWhere(['group_id' => $allowedGroups])
-//			->andFilterWhere(['like', 'sys_users.username', $this->username])
-//			->andFilterWhere(['like', 'login', $this->login])
-//			->andFilterWhere(['like', 'email', $this->email])
-//			->andFilterWhere(['like', 'sys_groups.name', $this->groupName])
-//			->andFilterWhere(['in', 'ref_user_positions.id', $this->positions])
-//			->andFilterWhere(['in', 'ref_user_roles.id', $this->roles])
-//			->andFilterWhere(['in', 'sys_privileges.id', $this->privileges])
+		$query->andFilterWhere(['sys_users.id' => $this->id])
+			->andFilterWhere(['like', 'parentTarget.name', $this->parent_name])
+			->andFilterWhere(['like', 'sys_users.username', $this->user_name])
+			->andFilterWhere(['like', 'sys_groups.name', $this->group_name])
 //			->andFilterWhere(['in', 'IFNULL(`rel_user_position_types`.`position_type_id`, `rel_ref_user_positions_types`.`position_type_id`)', $this->positionType])//таким образом решаем проблему фильтрации по типу должности, не вводя промежуточную вью.
-//			->andFilterWhere(['in', 'sys_groups.id', $this->groupId]);
+			->andFilterWhere(['in', 'ref_targets_types.id', $this->type])
+			->andFilterWhere(['in', 'ref_targets_results.id', $this->result_type]);
 
 //		Yii::debug($query->createCommand()->rawSql, 'sql');
 		return $dataProvider;
