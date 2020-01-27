@@ -31,6 +31,8 @@ use yii\web\JsExpression;
  * @property int $renderingMode see SelectionWidgetInterface modes constants
  * @property boolean $multiple true by default
  *
+ * @property string $jsPrefix костыль для призыва нужных JS-функций в ассетах потомков
+ *
  * @todo: в случае, если виджет используется для редактирования в режиме DATA_MODE_AJAX, то имеющиеся связи будут отображены, как айдишники. Это нужно поправить.
  * @todo: добавить перечисление допустимых режимов потомка, чтобы виджеты, не поддурживающие аяксовый поиск сообщали об этом
  */
@@ -38,6 +40,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 	//private $data = [];//calculated/evaluated/received data array
 	private $ajaxPluginOptions = [];//calculated select2 ajax parameters
 	protected $loadedClass;
+
 
 	public $pkName;//primary key name for selectModel
 	public $selectModel;
@@ -50,6 +53,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 	public $loadingMode = self::DATA_MODE_LOAD;
 	public $renderingMode = self::MODE_FIELD;
 	public $multiple = true;
+	public $jsPrefix = '';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -114,10 +118,10 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 				'multiple' => $this->multiple,
 				'language' => 'ru',
 				'templateResult' => (self::DATA_MODE_AJAX === $this->loadingMode)?new JsExpression('function(item) {
-				return templateResultAJAX(item)}'):new JsExpression('function(item) {
-				return templateResult(item)}'),
+				return '.$this->jsPrefix.'TemplateResultAJAX(item)}'):new JsExpression('function(item) {
+				return '.$this->jsPrefix.'TemplateResult(item)}'),
 				'escapeMarkup' => new JsExpression('function(markup) {
-				return escapeMarkup(markup);
+				return '.$this->jsPrefix.'EscapeMarkup(markup);
 			}')
 			] + $this->ajaxPluginOptions;
 

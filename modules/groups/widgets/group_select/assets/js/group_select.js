@@ -3,7 +3,7 @@
  * @param item
  * @returns {*}
  */
-function templateResult(item) {
+function GroupsTemplateResult(item) {
 	if (item.loading || item.hasOwnProperty('children')) {
 		return item.text;
 	}
@@ -19,7 +19,7 @@ function templateResult(item) {
  * @param item
  * @returns {*}
  */
-function templateResultAJAX(item) {
+function GroupsTemplateResultAJAX(item) {
 	if (item.loading || item.hasOwnProperty('children')) {
 		return item.text;
 	}
@@ -34,6 +34,6 @@ function templateResultAJAX(item) {
  * @param markup
  * @returns {*}
  */
-function escapeMarkup(markup) {
+function GroupsEscapeMarkup(markup) {
 	return markup;
 }

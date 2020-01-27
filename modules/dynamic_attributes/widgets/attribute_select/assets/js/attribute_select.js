@@ -3,7 +3,7 @@
  * @param item
  * @returns {*}
  */
-function templateResult(item) {
+function DynamicAttributesTemplateResult(item) {
 	return item.text;
 }
 
@@ -12,7 +12,7 @@ function templateResult(item) {
  * @param item
  * @returns {*}
  */
-function templateResultAJAX(item) {
+function DynamicAttributesTemplateResultAJAX(item) {
 	return item.text;
 }
 
@@ -22,6 +22,6 @@ function templateResultAJAX(item) {
  * @param markup
  * @returns {*}
  */
-function escapeMarkup(markup) {
+function DynamicAttributesEscapeMarkup(markup) {
 	return markup;
 }

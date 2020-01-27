@@ -15,6 +15,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributes;
  */
 class AttributeSelectWidget extends SelectModelWidget {
 	public $selectModel = DynamicAttributes::class;
+	public $jsPrefix = 'DynamicAttributes';
 
 
 	/**

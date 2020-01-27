@@ -13,6 +13,7 @@ use app\widgets\select_model\SelectModelWidget;
  */
 class TargetSelectWidget extends SelectModelWidget {
 	public $selectModel = Targets::class;
+	public $jsPrefix = 'Targets';
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета

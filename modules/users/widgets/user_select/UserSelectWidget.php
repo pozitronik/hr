@@ -14,7 +14,7 @@ use app\widgets\select_model\SelectModelWidget;
  */
 class UserSelectWidget extends SelectModelWidget {
 	public $selectModel = Users::class;
-	public $ajaxSearchUrl = '/users/ajax/user-search';
+	public $jsPrefix = 'Users';
 	public $mapAttribute = 'username';
 
 	/**
@@ -23,7 +23,8 @@ class UserSelectWidget extends SelectModelWidget {
 	public function init() {
 		parent::init();
 		UserSelectWidgetAssets::register($this->getView());
-		$this->postUrl = $this->renderingMode === self::MODE_AJAX?UsersModule::to('ajax/users-add-to-group'):$this->postUrl;//todo: динамическая ссылка
+		$this->ajaxSearchUrl = UsersModule::to('ajax/user-search');
+		$this->postUrl = $this->renderingMode === self::MODE_AJAX?UsersModule::to('ajax/users-add-to-group'):$this->postUrl;
 		$this->options['placeholder'] = 'Выберите пользователя';
 	}
 

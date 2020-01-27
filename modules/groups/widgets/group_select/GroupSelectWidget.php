@@ -15,6 +15,7 @@ use app\widgets\select_model\SelectModelWidget;
  */
 class GroupSelectWidget extends SelectModelWidget {
 	public $selectModel = Groups::class;
+	public $jsPrefix = 'Groups';
 	public $groupByType = true;//todo: Добавить обработчик сюда, либо доопределить в базовой модели
 
 	/**

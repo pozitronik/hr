@@ -3,7 +3,7 @@
  * @param item
  * @returns {*}
  */
-function templateResult(item) {
+function UsersTemplateResult(item) {
 	return item.text;
 }
 
@@ -12,7 +12,7 @@ function templateResult(item) {
  * @param item
  * @returns {*}
  */
-function templateResultAJAX(item) {
+function UsersTemplateResultAJAX(item) {
 	return item.text;
 }
 
@@ -22,6 +22,6 @@ function templateResultAJAX(item) {
  * @param markup
  * @returns {*}
  */
-function escapeMarkup(markup) {
+function UsersEscapeMarkup(markup) {
 	return markup;
 }
