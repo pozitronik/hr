@@ -35,10 +35,8 @@ use yii\web\View;
 		'before' => $showUserSelector?UserSelectWidget::widget([
 			'model' => $model,
 			'attribute' => 'relUsers',
-			'notData' => $model->relUsers,
+			'exclude' => $model->relUsers,
 			'multiple' => true,
-			'mode' => UserSelectWidget::MODE_FIELD,
-			'dataMode' => UserSelectWidget::DATA_MODE_AJAX
 		]):false
 	],
 	'toolbar' => false,
