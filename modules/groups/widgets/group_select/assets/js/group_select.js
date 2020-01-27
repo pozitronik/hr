@@ -1,4 +1,9 @@
-function formatGroup(item) {
+/**
+ * Форматирование элемента списка по умолчанию
+ * @param item
+ * @returns {*}
+ */
+function templateResult(item) {
 	if (item.loading || item.hasOwnProperty('children')) {
 		return item.text;
 	}
@@ -9,7 +14,12 @@ function formatGroup(item) {
 		+ '</div></div></div>';
 }
 
-function formatGroupAJAX(item) {
+/**
+ * Форматирование элемента списка при AJAX-запросе
+ * @param item
+ * @returns {*}
+ */
+function templateResultAJAX(item) {
 	if (item.loading || item.hasOwnProperty('children')) {
 		return item.text;
 	}
@@ -19,12 +29,11 @@ function formatGroupAJAX(item) {
 		'style="background: ' + (item.typecolor || 'inherit') + ';"' + '>' + item.typename || '' + '</div></div></div>';
 }
 
-function submit_toggle(select) {
-	let input = jQuery(select.target).parent().find(':submit');
-	if (0 < jQuery(select.target).val().length) {
-		input.removeAttr('disabled');
-	} else {
-		input.attr('disabled', 'disabled');
-
-	}
+/**
+ * Форматирование <не помню для чего>
+ * @param markup
+ * @returns {*}
+ */
+function escapeMarkup(markup) {
+	return markup;
 }
