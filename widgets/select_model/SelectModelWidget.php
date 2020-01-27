@@ -104,7 +104,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 			$this->data = ArrayHelper::map($selectionQuery->all(), $this->pkName, $this->mapAttribute);
 		}
 
-		if (is_callable([$this->loadedClass, 'dataOptions'], true)) {//если у модели есть опции для выбиралки, присунем их к стандартным опциям
+		if (method_exists($this->loadedClass, 'dataOptions')) {//если у модели есть опции для выбиралки, присунем их к стандартным опциям
 			$this->options = array_merge($this->options, $this->loadedClass::dataOptions());
 		}
 
