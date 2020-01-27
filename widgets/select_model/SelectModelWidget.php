@@ -116,12 +116,8 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 				'allowClear' => true,
 				'multiple' => $this->multiple,
 				'language' => 'ru',
-				'templateResult' => (self::DATA_MODE_AJAX === $this->loadingMode)?new JsExpression('function(item) {
-				return '.$this->jsPrefix.'TemplateResultAJAX(item)}'):new JsExpression('function(item) {
-				return '.$this->jsPrefix.'TemplateResult(item)}'),
-				'escapeMarkup' => new JsExpression('function(markup) {
-				return '.$this->jsPrefix.'EscapeMarkup(markup);
-			}')
+				'templateResult' => (self::DATA_MODE_AJAX === $this->loadingMode)?new JsExpression('function(item) {return '.$this->jsPrefix.'TemplateResultAJAX(item)}'):new JsExpression('function(item) {return '.$this->jsPrefix.'TemplateResult(item)}'),
+				'escapeMarkup' => new JsExpression('function(markup) {return '.$this->jsPrefix.'EscapeMarkup(markup);}')
 			] + $this->ajaxPluginOptions;
 
 		switch ($this->renderingMode) {
