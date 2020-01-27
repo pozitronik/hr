@@ -11,6 +11,7 @@ use Exception;
 use kartik\base\InputWidget;
 use kartik\select2\Select2;
 use pozitronik\helpers\ArrayHelper;
+use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\Html;
@@ -80,6 +81,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 	 * Функция возврата результата рендеринга виджета
 	 * @return string
 	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function run():string {
 		if (self::DATA_MODE_AJAX === $this->loadingMode) {
