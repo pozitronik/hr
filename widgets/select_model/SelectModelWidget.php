@@ -36,7 +36,7 @@ use yii\web\JsExpression;
 class SelectModelWidget extends InputWidget implements SelectionWidgetInterface {
 	//private $data = [];//calculated/evaluated/received data array
 	private $ajaxPluginOptions = [];//calculated select2 ajax parameters
-	private $loadedClass;
+	protected $loadedClass;
 
 	public $pkName;//primary key name for selectModel
 	public $selectModel;
