@@ -32,6 +32,7 @@ use yii\web\JsExpression;
  * @property boolean $multiple true by default
  *
  * @todo: в случае, если виджет используется для редактирования в режиме DATA_MODE_AJAX, то имеющиеся связи будут отображены, как айдишники. Это нужно поправить.
+ * @todo: добавить перечисление допустимых режимов потомка, чтобы виджеты, не поддурживающие аяксовый поиск сообщали об этом
  */
 class SelectModelWidget extends InputWidget implements SelectionWidgetInterface {
 	//private $data = [];//calculated/evaluated/received data array
