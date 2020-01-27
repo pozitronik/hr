@@ -41,7 +41,6 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 	private $ajaxPluginOptions = [];//calculated select2 ajax parameters
 	protected $loadedClass;
 
-
 	public $pkName;//primary key name for selectModel
 	public $selectModel;
 	public $exclude = [];
@@ -110,7 +109,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 		}
 
 		if (method_exists($this->loadedClass, 'dataOptions')) {//если у модели есть опции для выбиралки, присунем их к стандартным опциям
-			$this->options = array_merge($this->options, $this->loadedClass::dataOptions());
+			$this->options['options'] = ArrayHelper::merge(ArrayHelper::getValue($this->options, 'options', []), $this->loadedClass::dataOptions());
 		}
 
 		$pluginOptions = [//во всех вариантах одинаково
