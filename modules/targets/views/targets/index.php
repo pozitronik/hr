@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						]);
 					},
 					'format' => 'raw',
-					'group' => true
+//					'group' => true
 				],
 				[
 					'class' => DataColumn::class,
