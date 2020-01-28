@@ -41,12 +41,14 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|Groups[] $relGroups
  * @property ActiveQuery|RelTargetsUsers[] $relTargetsUsers
  * @property ActiveQuery|Users[] $relUsers
+ *
+ * @property ActiveQuery|TargetsIntervals $relTargetsIntervals
+ *
  */
 class Targets extends ActiveRecordExtended {
 	public $startQuarter;
 	public $finishQuarter;
-	public $startYear;
-	public $finishYear;
+	public $year;
 
 	/**
 	 * {@inheritdoc}
@@ -61,7 +63,7 @@ class Targets extends ActiveRecordExtended {
 	public function rules():array {
 		return [
 			[['type', 'name'], 'required'],
-			[['type', 'result_type', 'daddy'], 'integer'],
+			[['type', 'result_type', 'daddy', 'startQuarter', 'finishQuarter', 'year'], 'integer'],
 			[['name'], 'string', 'max' => 512],
 			[['comment'], 'string'],
 			[['create_date', 'relParentTarget', 'relChildTargets', 'relGroups', 'relUsers'], 'safe'],
@@ -90,8 +92,7 @@ class Targets extends ActiveRecordExtended {
 			'relUsers' => 'Ответственный сотрудник',
 			'startQuarter' => 'Начальный квартал',
 			'finishQuarter' => 'Конечный квартал',
-			'startYear' => 'Год',
-			'finishYear' => 'Год'
+			'year' => 'Год',
 		];
 	}
 
@@ -216,4 +217,12 @@ class Targets extends ActiveRecordExtended {
 			return $result;
 		});
 	}
+
+	/**
+	 * @return TargetsIntervals|ActiveQuery
+	 */
+	public function getRelTargetsIntervals() {
+		return $this->hasOne(TargetsIntervals::class, ['target' => 'id']);//пока делаю hasOne, далее посмотрим
+	}
+
 }

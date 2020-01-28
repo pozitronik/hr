@@ -5,6 +5,7 @@ namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\targets\models\Targets;
+use app\modules\targets\models\TargetsIntervals;
 use app\modules\targets\models\TargetsSearch;
 use Throwable;
 use Yii;
@@ -39,9 +40,13 @@ class TargetsController extends WigetableController {
 	 */
 	public function actionCreate() {
 		$newTarget = new Targets();
-		if ($newTarget->createModel(Yii::$app->request->post($newTarget->formName()))) {
-			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
-			return $this->redirect(['update', 'id' => $newTarget->id]);
+
+		if ($newTarget->createModel(Yii::$app->request->post($newTarget->formName()))) {//todo: в таком режиме сохранение происходит потапно в разных транзакциях. Нужно предусмотреть механизм, в котором связанные объекты смогут сохраняться как единое целое. Возможно, это будет составная супермодель, не знаю.
+			$newTargetInterval = new TargetsIntervals(['target' => $newTarget->id]);
+			if ($newTargetInterval->createModel(Yii::$app->request->post($newTargetInterval->formName()))) {
+				if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
+				return $this->redirect(['update', 'id' => $newTarget->id]);
+			}
 		}
 
 		return $this->render('create', [
@@ -72,7 +77,6 @@ class TargetsController extends WigetableController {
 	 */
 	public function actionProfile(int $id):?string {
 		if (null === $target = Targets::findModel($id, new NotFoundHttpException())) return null;
-
 
 		return $this->render('profile', [
 			'model' => $target

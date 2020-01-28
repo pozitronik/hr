@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
+use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
 
 /**
@@ -12,8 +13,11 @@ use app\models\core\ActiveRecordExtended;
  * @property int $target id цели
  * @property string|null $comment Описание интервала
  * @property string $create_date Дата создания
- * @property string $start_date Дата начала интервала
- * @property string $finish_date Дата конца интервала
+ * @property string|null $start_date Дата начала интервала
+ * @property string|null $finish_date Дата конца интервала
+ * @property int|null $start_quarter Начальный квартал
+ * @property int|null $finish_quarter Конечный квартал
+ * @property int|null $year Год
  * @property int|null $daddy ID зарегистрировавшего пользователя
  */
 class TargetsIntervals extends ActiveRecordExtended {
@@ -29,10 +33,11 @@ class TargetsIntervals extends ActiveRecordExtended {
 	 */
 	public function rules():array {
 		return [
-			[['target', 'create_date', 'start_date', 'finish_date'], 'required'],
-			[['target', 'daddy'], 'integer'],
+			[['target'], 'required'],
+			[['target', 'daddy', 'start_quarter', 'finish_quarter', 'year'], 'integer'],
 			[['comment'], 'string'],
 			[['create_date', 'start_date', 'finish_date'], 'safe'],
+			[['create_date'], 'default', 'value' => DateHelper::lcDate()]
 		];
 	}
 
@@ -47,7 +52,7 @@ class TargetsIntervals extends ActiveRecordExtended {
 			'create_date' => 'Дата создания',
 			'start_date' => 'Дата начала интервала',
 			'finish_date' => 'Дата конца интервала',
-			'daddy' => 'ID зарегистрировавшего пользователя',
+			'daddy' => 'ID зарегистрировавшего пользователя'
 		];
 	}
 }
