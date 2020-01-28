@@ -5,7 +5,7 @@ namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\import\models\fos\ImportException;
-use app\modules\targets\models\ImportTargets;
+use app\modules\targets\models\import\ImportTargets;
 use Throwable;
 use Yii;
 use yii\web\Response;
@@ -39,10 +39,9 @@ class ImportController extends WigetableController {
 		$model = new ImportTargets();
 		if (Yii::$app->request->isPost && null !== $fileName = $model->uploadFile()) {
 			$domain = time();
-			$model->Decompose($fileName, $domain);
-			$this->redirect(['import', 'domain' => $domain]);
+			$model::Import($fileName, $domain);
+			$this->redirect(['index', 'domain' => $domain]);
 		}
-
 		return $this->render('upload', [
 			'model' => $model
 		]);
@@ -56,9 +55,9 @@ class ImportController extends WigetableController {
 	public function actionImport() {
 		$model = new ImportTargets();
 		$errors = [];
-		return $model->Import($errors)?$this->render('done', [
-			'messages' => $errors
-		]):$this->refresh();
+//		return $model->Import($errors)?$this->render('done', [
+//			'messages' => $errors
+//		]):$this->refresh();
 
 	}
 }
