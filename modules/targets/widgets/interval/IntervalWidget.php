@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\widgets\interval;
 
-use pozitronik\widgets\CachedWidget;
+use kartik\base\InputWidget;
 
 /**
- * Class GroupSelectWidget
- * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *Interval* на нужное нам имя, и работаем
- * @package app\components\interval
+ * Class IntervalWidget
+ * @package app\modules\targets\widgets\interval
  */
-class IntervalWidget extends CachedWidget {
+class IntervalWidget extends InputWidget {
+	public $form;
 
 	/**
 	 * Функция инициализации и нормализации свойств виджета
@@ -25,6 +25,9 @@ class IntervalWidget extends CachedWidget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('interval');
+		return $this->render('interval',[
+			'model' => $this->model->{$this->attribute},
+			'form' => $this->form
+		]);
 	}
 }
