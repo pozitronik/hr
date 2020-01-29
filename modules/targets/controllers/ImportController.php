@@ -9,6 +9,7 @@ use app\modules\targets\models\import\ImportTargets;
 use app\modules\targets\models\import\ImportTargetsSearch;
 use Throwable;
 use Yii;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -60,18 +61,40 @@ class ImportController extends WigetableController {
 	 * @param int $step
 	 * @return string|Response
 	 */
-	public function actionDecompose(?int $domain = null, int $step = ImportTargets::STEP_GROUPS) {
+	public function actionDecompose(?int $domain = null) {
 		if (null === $domain) return $this->redirect(['upload']);
 
 		$messages = [];
-		$step = ImportTargets::Decompose($domain, $step, $messages);
-		if ([] === $messages && $step !== ImportTargets::LAST_STEP) {//если нет ошибок, сразу переходим к следующему шагу
+		ImportTargets::Decompose($domain, $messages);
+		if ([] === $messages) {//если нет ошибок, сразу переходим к следующему шагу
 			return $this->redirect(['decompose',
 				'domain' => $domain,
 				'messages' => $messages,
-				'step' => $step + 1
 			]);
 		}
-		return $this->render('decompose', compact('step', 'messages', 'domain'));
+		return $this->render('decompose', compact('messages', 'domain'));
+	}
+
+	/**
+	 * @param int|null $domain
+	 * @param int $step
+	 * @return string|Response
+	 * @throws Throwable
+	 * @throws NotFoundHttpException
+	 */
+	public function actionDbImport(?int $domain = null, int $step = ImportTargets::STEP_GROUPS) {
+		$cachedErrorsName = "ImportErrors".($domain??'');
+		if (false === $errors = Yii::$app->cache->get($cachedErrorsName)) $errors = [];
+		if (ImportTargets::LAST_STEP === $step) {
+			return $this->render('db_import', compact('step', 'domain', 'errors'));
+		}
+
+		$importResult = ImportTargets::ImportToDB($step);
+		Yii::$app->cache->set($cachedErrorsName, $errors);
+		return $this->redirect(['db_import',
+			'domain' => $domain,
+			'step' => $importResult?$step + 1:$step
+		]);
+
 	}
 }
