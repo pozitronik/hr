@@ -337,7 +337,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		if ($group) return $group->id;
 
 		$group = new Groups();
-		$group->createModel(['name' => $name, 'type' => $groupType->id, 'deleted' => false]);
+		$group->createModel(['name' => $name, 'type' => $groupType->id, 'deleted' => false], false);
 		return $group->id;
 	}
 
@@ -370,7 +370,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		$user = new Users();
 		$user->createModel(['username' => $name, 'login' => Utils::generateLogin(), 'password' => Utils::gen_uuid(5), 'salt' => null, 'email' => empty($email)?Utils::generateLogin()."@localhost":$email, 'deleted' => false]);
 		$user->setAndSaveAttribute('position', $userPosition->id);
-		(new UsersIdentifiers())->createModel(['user_id' => $user->id, 'tn' => $tn]);
+		(new UsersIdentifiers())->createModel(['user_id' => $user->id, 'tn' => $tn], false);
 
 		if (null !== $positionType) {//линкуем с типом должности. Должность уже создана во время декомпозиции, ее id записан в таблицу декомпозиции пользователя
 			RelUserPositionsTypes::linkModels($user, $positionType);

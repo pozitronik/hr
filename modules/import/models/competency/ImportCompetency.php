@@ -223,7 +223,7 @@ class ImportCompetency extends Model {
 			'salt' => null,
 			'email' => Utils::generateLogin()."@import",
 			'deleted' => false
-		]);
+		], false);
 
 		$group = Groups::addInstance(['name' => 'Проблемы импорта компетенций'], [
 			'name' => 'Проблемы импорта компетенций',
@@ -249,7 +249,7 @@ class ImportCompetency extends Model {
 	private function addUserProperty(int $user_id, string $attributeName, string $attributeFieldName, string $attributeFieldValue, string $fieldType = 'score'):void {
 		if (null === $attribute = DynamicAttributes::find()->where(['name' => $attributeName])->one()) {
 			$attribute = new DynamicAttributes();
-			$attribute->createModel(['name' => $attributeName, 'category' => 0]);
+			$attribute->createModel(['name' => $attributeName, 'category' => 0], false);
 		}
 		if (null === $field = $attribute->getPropertyByName($attributeFieldName)) {
 			$field = new DynamicAttributeProperty([
