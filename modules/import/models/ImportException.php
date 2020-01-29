@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\import\models\fos;
+namespace app\modules\import\models;
 
 use Exception;
 use yii\base\Model;
