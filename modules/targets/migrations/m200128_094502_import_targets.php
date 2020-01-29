@@ -17,7 +17,7 @@ class m200128_094502_import_targets extends Migration {
 			'commandCode' => $this->string()->null(),
 			'subInit' => $this->string()->null(),
 			'milestone' => $this->string()->null(),
-			'target' => $this->string()->null(),
+			'target' => $this->text()->null(),
 			'targetResult' => $this->string()->null(),
 			'resultValue' => $this->string()->null(),
 			'period' => $this->string()->null(),
@@ -25,7 +25,7 @@ class m200128_094502_import_targets extends Migration {
 			'isLK' => $this->string()->null(),
 			'isLT' => $this->string()->null(),
 			'isCurator' => $this->string()->null(),
-			'comment' => $this->string()->null(),
+			'comment' => $this->text()->null(),
 			'domain' => $this->integer()->notNull()
 		]);
 
