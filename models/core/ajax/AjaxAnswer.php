@@ -121,14 +121,13 @@ class AjaxAnswer extends Model {
 	 * @return array
 	 */
 	public function getAnswer():array {
-		$result = [
+		return [
 			'result' => $this->resultCode,
 			'errors' => ([] === $this->errors)?null:$this->errors,
 			'count' => $this->count,
 			'items' => $this->items,
 			'content' => $this->content
 		];
-		return $result;
 	}
 
 
