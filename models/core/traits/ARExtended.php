@@ -238,9 +238,10 @@ trait ARExtended {
 	 * Если требуется выполнить какую-то логику в процессе создания - используем стандартные методы, вроде beforeValidate/beforeSave (по ситуации).
 	 *
 	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
+	 * @param bool $alerts -- false отключит создание алертов (полезно при импортах)
 	 * @return bool - результат операции
 	 */
-	public function createModel(?array $paramsArray):bool {
+	public function createModel(?array $paramsArray, bool $alerts = true):bool {
 		$saved = false;
 		if ($this->loadArray($paramsArray)) {
 			$transaction = static::getDb()->beginTransaction();
@@ -251,11 +252,11 @@ trait ARExtended {
 				if (true === $saved = $this->save()) {
 					$transaction->commit();
 					$this->refresh();
-					AlertModel::SuccessNotify();
+					if ($alerts) AlertModel::SuccessNotify();
 				}
 			}
 			if (!$saved) {
-				AlertModel::ErrorsNotify($this->errors);
+				if ($alerts) AlertModel::ErrorsNotify($this->errors);
 				$transaction->rollBack();
 			}
 		}
