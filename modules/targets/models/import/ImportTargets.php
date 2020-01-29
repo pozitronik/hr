@@ -26,7 +26,7 @@ use yii\db\ActiveRecord;
  * @property string|null $isYear
  * @property string|null $isLK
  * @property string|null $isLT
- * @property string|null $curator
+ * @property string|null $isCurator
  * @property string|null $comment
  */
 class ImportTargets extends ActiveRecord {
@@ -44,7 +44,7 @@ class ImportTargets extends ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['clusterName', 'commandName', 'commandCode', 'subInit', 'milestone', 'target', 'targetResult', 'resultValue', 'period', 'isYear', 'isLK', 'isLT', 'curator', 'comment'], 'string', 'max' => 255],
+			[['clusterName', 'commandName', 'commandCode', 'subInit', 'milestone', 'target', 'targetResult', 'resultValue', 'period', 'isYear', 'isLK', 'isLT', 'isCurator', 'comment'], 'string', 'max' => 255],
 			[['domain'], 'integer'],
 			[['domain'], 'required']
 		];
@@ -55,22 +55,20 @@ class ImportTargets extends ActiveRecord {
 	 */
 	public function attributeLabels() {
 		return [
-			'id' => 'ID',
-			'clusterName' => 'Cluster Name',
-			'commandName' => 'Command Name',
-			'commandCode' => 'Command Code',
-			'subInit' => 'Sub Init',
-			'milestone' => 'Milestone',
-			'target' => 'Target',
-			'targetResult' => 'Target Result',
-			'resultValue' => 'Result Value',
-			'period' => 'Period',
-			'isYear' => 'Is Year',
-			'isLK' => 'Is Lk',
-			'isLT' => 'Is Lt',
-			'curator' => 'Curator',
-			'comment' => 'Comment',
-			'domain' => 'domain'
+			'clusterName' => 'Кластер',
+			'commandName' => 'Команда',
+			'commandCode' => 'Код команды',
+			'subInit' => 'Субинициатива',
+			'milestone' => 'Вехи',
+			'target' => 'Цель',
+			'targetResult' => 'Тип цели',
+			'resultValue' => 'Величина метрики',
+			'period' => 'Период',
+			'isYear' => "Годовая\nда/нет",
+			'isLK' => 'Цель ЛК?',
+			'isLT' => 'Цель ЛТ?',
+			'isCurator' => 'Цель у Куратора Блока?',
+			'comment' => 'Комментарии',
 		];
 	}
 
@@ -81,7 +79,7 @@ class ImportTargets extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	private static function isHeaderRow(array $row):bool {
-		return ArrayHelper::getValue($row, 0) === ArrayHelper::getValue((new self())->attributeLabels(), 'num');
+		return ArrayHelper::getValue($row, 0) === ArrayHelper::getValue((new self())->attributeLabels(), 'clusterName');
 	}
 
 	/**
@@ -108,6 +106,7 @@ class ImportTargets extends ActiveRecord {
 		$headerProcessedFlag = false;
 		$cKeys = count($keys);
 		foreach ($dataArray as $importRow) {
+			if ([] === array_filter($importRow)) continue;//ignore empty rows
 			if (!$headerProcessedFlag && self::isHeaderRow($importRow)) {//однократно проверяем валидность таблицы
 				$columnHeaderIndex = 0;
 				foreach ($labels as $key => $value) {
@@ -117,8 +116,9 @@ class ImportTargets extends ActiveRecord {
 					$columnHeaderIndex++;
 				}
 				$headerProcessedFlag = true;
+				continue;
 			}
-			if (!is_numeric(ArrayHelper::getValue($importRow, "0"))) continue;//В первой ячейке строки должна быть цифра, если нет - это заголовок, его нужно пропустить
+			if (!$headerProcessedFlag) continue;
 			$importRow = array_slice($importRow, 0, $cKeys);//в выгрузке может быть до хера пустых столбцов
 			$data = array_combine($keys, $importRow);
 
