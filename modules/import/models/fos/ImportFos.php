@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\fos;
 
 use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
+use app\modules\import\models\ImportException;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\traits\Upload;

@@ -17,7 +17,7 @@ use app\modules\import\models\competency\activerecord\ICAttributes;
 use app\modules\import\models\competency\activerecord\ICFields;
 use app\modules\import\models\competency\activerecord\ICRelUsersFields;
 use app\modules\import\models\competency\activerecord\ICUsers;
-use app\modules\import\models\fos\ImportException;
+use app\modules\import\models\ImportException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Model;

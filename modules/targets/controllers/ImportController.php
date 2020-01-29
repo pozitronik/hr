@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
+use app\modules\import\models\ImportException;
 use app\modules\targets\models\import\ImportTargets;
 use app\modules\targets\models\import\ImportTargetsSearch;
 use Throwable;
@@ -59,7 +60,7 @@ class ImportController extends WigetableController {
 	 * @param int $step
 	 * @return string|Response
 	 */
-	public function actionDecompose(?int $domain = null, int $step = ImportTargets::STEP_REFERENCES) {
+	public function actionDecompose(?int $domain = null, int $step = ImportTargets::STEP_GROUPS) {
 		if (null === $domain) return $this->redirect(['upload']);
 
 		$messages = [];

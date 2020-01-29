@@ -7,7 +7,7 @@ use pozitronik\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
-use app\modules\import\models\fos\ImportException;
+use app\modules\import\models\ImportException;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
 use yii\base\InvalidConfigException;

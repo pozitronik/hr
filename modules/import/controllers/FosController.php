@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\controllers;
 
 use app\models\core\WigetableController;
-use app\modules\import\models\fos\ImportException;
+use app\modules\import\models\ImportException;
 use app\modules\import\models\fos\ImportFos;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use app\modules\import\models\fos\ImportFosDecomposedSearch;
