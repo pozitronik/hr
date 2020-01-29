@@ -164,12 +164,10 @@ class ImportTargets extends ActiveRecord {
 	/**
 	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
 	 * @param int $domain
-	 * @param int $step
 	 * @param array $messages Массив сообщений
-	 * @return int текущий исполненный шаг
 	 * @throws ImportException
 	 */
-	public static function Decompose(int $domain, $step = self::STEP_START, array &$messages = []):int {
+	public static function Decompose(int $domain, array &$messages = []):void {
 		/** @var self[] $data */
 		$data = self::find()->where(['domain' => $domain])->all();
 
@@ -220,7 +218,6 @@ class ImportTargets extends ActiveRecord {
 			}
 
 		}
-		return $step;
 	}
 
 	/**

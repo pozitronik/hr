@@ -58,8 +58,8 @@ class ImportController extends WigetableController {
 
 	/**
 	 * @param int|null $domain
-	 * @param int $step
 	 * @return string|Response
+	 * @throws ImportException
 	 */
 	public function actionDecompose(?int $domain = null) {
 		if (null === $domain) return $this->redirect(['upload']);
