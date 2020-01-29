@@ -133,8 +133,8 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 					'pluginOptions' => $pluginOptions
 				]);
 			break;
-			case self::MODE_FORM:
-				return $this->render('form', [
+			case self::MODE_FORM://fixme: не используем режим формы, он глючит. Пока такой фикс
+				return $this->render('@app/widgets/select_model/views/form', [
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $this->data,
