@@ -24,7 +24,7 @@ class m200128_094502_import_targets extends Migration {
 			'isYear' => $this->string()->null(),
 			'isLK' => $this->string()->null(),
 			'isLT' => $this->string()->null(),
-			'curator' => $this->string()->null(),
+			'isCurator' => $this->string()->null(),
 			'comment' => $this->string()->null(),
 			'domain' => $this->integer()->notNull()
 		]);
