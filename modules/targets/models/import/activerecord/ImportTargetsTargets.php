@@ -16,12 +16,14 @@ use yii\db\ActiveRecord;
  * @property int|null $result_id
  * @property string|null $value
  * @property string|null $period
- * @property int $isYear
- * @property int $isLK
- * @property int $isLT
- * @property int $isCurator
+ * @property bool $isYear
+ * @property bool $isLK
+ * @property bool $isLT
+ * @property bool $isCurator
  * @property string|null $comment
  * @property int|null $hr_target_id
+ * @property null|int $command_id
+ * @property null|int $cluster_id
  *
  * @property ImportTargetsCommands $relCommands
  * @property ImportTargetsMilestones $relMilestones
@@ -43,7 +45,8 @@ class ImportTargetsTargets extends ActiveRecord {
 		return [
 			[['target', 'domain'], 'required'],
 			[['target', 'comment'], 'string'],
-			[['domain', 'result_id', 'isYear', 'isLK', 'isLT', 'isCurator', 'hr_target_id', 'milestone_id', 'cluster_id', 'group_id'], 'integer'],
+			[['domain', 'result_id', 'hr_target_id', 'milestone_id', 'cluster_id', 'command_id'], 'integer'],
+			[['isYear', 'isLK', 'isLT', 'isCurator'], 'boolean'],
 			[['value', 'period'], 'string', 'max' => 255],
 		];
 	}
@@ -66,8 +69,8 @@ class ImportTargetsTargets extends ActiveRecord {
 			'comment' => 'Comment',
 			'hr_target_id' => 'Hr Target ID',
 			'milestone_id' => 'Milestone_id',
-			'cluster_id' => 'cluster_id',
-			'group_id' => 'group_id',
+			'cluster_id' => 'cluster id',
+			'command_id' => 'command id',
 
 		];
 	}
@@ -76,7 +79,7 @@ class ImportTargetsTargets extends ActiveRecord {
 	 * @return ImportTargetsCommands|ActiveQuery
 	 */
 	public function getRelCommands() {
-		return $this->hasOne(ImportTargetsCommands::class, ['id' => 'group_id']);
+		return $this->hasOne(ImportTargetsCommands::class, ['id' => 'command_id']);
 	}
 
 	/**

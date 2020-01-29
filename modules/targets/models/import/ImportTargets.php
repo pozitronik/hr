@@ -53,14 +53,14 @@ class ImportTargets extends ActiveRecord {
 	public const STEP_GROUPS = 1;
 	public const STEP_LINKING_GROUPS = 2;
 	public const STEP_TARGETS = 3;
-	public const STEP_LINKING_TARGETS = 3;
-	public const STEP_FINISH = 4;
-	public const LAST_STEP = self::STEP_FINISH + 1;
+	public const STEP_LINKING_TARGETS = 4;
+	public const LAST_STEP = self::STEP_LINKING_TARGETS + 1;
 
 	public const step_labels = [
 		self::STEP_TARGETS => 'Декомпозиция целей',
+		self::STEP_LINKING_TARGETS => 'Линковка целей',
 		self::STEP_GROUPS => 'Декомпозиция групп',
-		self::STEP_FINISH => 'Итоговая сверка',
+		self::STEP_LINKING_GROUPS => 'Линковка групп',
 		self::LAST_STEP => 'Готово!'
 	];
 
@@ -176,16 +176,18 @@ class ImportTargets extends ActiveRecord {
 
 			try {
 				$cluster = ImportTargetsClusters::addInstance(['cluster_name' => $row->clusterName], [
-					'name' => $row->clusterName,
+					'cluster_name' => $row->clusterName,
 //					'hr_group_id' => (null === $group = Groups::findModel(['name' => $row->clusterName]))?null:$group->id,
 					'domain' => $row->domain
 				]);
-				$command = ImportTargetsCommands::addInstance(['command_id' => $row->commandCode], [
-					'command_name' => $row->commandName,
-					'command_id' => $row->commandCode,
+				if (is_numeric($row->commandCode)) {
+					$command = ImportTargetsCommands::addInstance(['command_id' => $row->commandCode], [
+						'command_name' => $row->commandName,
+						'command_id' => $row->commandCode,
 //					'hr_group_id' => (null === $group = Groups::findModel(['name' => $row->commandName]))?null:$group->id,
-					'domain' => $row->domain
-				]);
+						'domain' => $row->domain
+					]);
+				}
 				$subInitiative = ImportTargetsSubinitiatives::addInstance(['initiative' => $row->subInit], [
 					'initiative' => $row->subInit,
 					'domain' => $row->domain
@@ -264,7 +266,7 @@ class ImportTargets extends ActiveRecord {
 
 		$target = new Targets();
 		$target->createModel([
-			'name' => $name,
+			'name' => mb_substr($name, 0, 512),
 			'type' => $targetType->id,
 			'result_type' => $result_type_id,
 			'comment' => $name,
@@ -296,7 +298,7 @@ class ImportTargets extends ActiveRecord {
 			case self::STEP_LINKING_GROUPS:
 				foreach (ImportTargetsCommands::find()->all() as $command) {
 					/** @var ImportTargetsCommands $command */
-					foreach ($command->relCluster as $cluster) {
+					foreach ($command->getRelCluster()->all() as $cluster) {
 						/** @var ImportTargetsCommands $command */
 						RelGroupsGroups::linkModels($command->hr_group_id, $cluster->hr_group_id);
 					}
@@ -322,13 +324,15 @@ class ImportTargets extends ActiveRecord {
 				foreach (ImportTargetsTargets::find()->all() as $target) {
 					/** @var ImportTargetsTargets $target */
 					RelTargetsTargets::linkModels($target->relMilestones->hr_target_id, $target->hr_target_id);
-					RelTargetsGroups::linkModels($target->hr_target_id, $target->relCommand->hr_group_id);
+					RelTargetsGroups::linkModels($target->hr_target_id, $target->relCommands->hr_group_id);
 				}
 
 			break;
-
+			default:
+				throw new NotFoundHttpException('Step not found');
+			break;
 		}
-		throw new NotFoundHttpException('Step not found');
+		return true;
 
 	}
 }

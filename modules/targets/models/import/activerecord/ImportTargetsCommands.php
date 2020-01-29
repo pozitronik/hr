@@ -64,6 +64,6 @@ class ImportTargetsCommands extends ActiveRecord {
 	 * @return ImportTargetsTargets[]|array|ActiveQuery
 	 */
 	public function getRelTargets() {
-		return $this->hasMany(ImportTargetsTargets::class, ['group_id' => 'id']);
+		return $this->hasMany(ImportTargetsTargets::class, ['command_id' => 'id']);
 	}
 }

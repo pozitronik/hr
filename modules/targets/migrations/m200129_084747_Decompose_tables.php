@@ -44,7 +44,7 @@ class m200129_084747_Decompose_tables extends Migration {
 			'id' => $this->primaryKey(),
 			'milestone_id' => $this->integer()->null(),
 			'cluster_id' => $this->integer()->null(),
-			'group_id' => $this->integer()->null(),
+			'command_id' => $this->integer()->null(),
 			'target' => $this->text()->notNull(),
 			'domain' => $this->integer()->notNull(),
 			'result_id' => $this->integer()->null(),
@@ -58,22 +58,12 @@ class m200129_084747_Decompose_tables extends Migration {
 			'hr_target_id' => $this->integer()->null()
 		]);
 
-		$this->createTable('import_targets_decomposed', [
-			'id' => $this->primaryKey(),
-			'cluster_id' => $this->integer()->null(),
-			'command_id' => $this->integer()->null(),
-			'initiative_id' => $this->integer()->null(),
-			'milestone_id' => $this->integer()->null(),
-			'target_id' => $this->integer()->null(),
-			'domain' => $this->integer()->notNull()
-		]);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropTable('import_targets_decomposed');
 		$this->dropTable('import_targets_targets');
 		$this->dropTable('import_targets_milestones');
 		$this->dropTable('import_targets_subinitiatives');

@@ -67,7 +67,7 @@ class ImportController extends WigetableController {
 		$messages = [];
 		ImportTargets::Decompose($domain, $messages);
 		if ([] === $messages) {//если нет ошибок, сразу переходим к следующему шагу
-			return $this->redirect(['decompose',
+			return $this->redirect(['db-import',
 				'domain' => $domain,
 				'messages' => $messages,
 			]);
@@ -86,12 +86,12 @@ class ImportController extends WigetableController {
 		$cachedErrorsName = "ImportErrors".($domain??'');
 		if (false === $errors = Yii::$app->cache->get($cachedErrorsName)) $errors = [];
 		if (ImportTargets::LAST_STEP === $step) {
-			return $this->render('db_import', compact('step', 'domain', 'errors'));
+			return $this->render('db-import', compact('step', 'domain', 'errors'));
 		}
 
 		$importResult = ImportTargets::ImportToDB($step);
 		Yii::$app->cache->set($cachedErrorsName, $errors);
-		return $this->redirect(['db_import',
+		return $this->redirect(['db-import',
 			'domain' => $domain,
 			'step' => $importResult?$step + 1:$step
 		]);
