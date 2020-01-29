@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models\import\activerecord;
 
 use app\models\core\traits\ARExtended;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -14,9 +15,13 @@ use yii\db\ActiveRecord;
  * @property string $command_id
  * @property int $domain
  * @property int|null $hr_group_id
+ *
+ * @property ImportTargetsTargets[] $relTargets
+ * @property ImportTargetsClusters[] $relCluster
  */
 class ImportTargetsCommands extends ActiveRecord {
 	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -46,5 +51,19 @@ class ImportTargetsCommands extends ActiveRecord {
 			'domain' => 'Domain',
 			'hr_group_id' => 'Hr Group ID',
 		];
+	}
+
+	/**
+	 * @return ImportTargetsClusters|ActiveQuery
+	 */
+	public function getRelCluster() {
+		return $this->hasOne(ImportTargetsClusters::class, ['id' => 'cluster_id'])->via('relTargets');
+	}
+
+	/**
+	 * @return ImportTargetsTargets[]|array|ActiveQuery
+	 */
+	public function getRelTargets() {
+		return $this->hasMany(ImportTargetsTargets::class, ['group_id' => 'id']);
 	}
 }

@@ -4,13 +4,14 @@ declare(strict_types = 1);
 namespace app\modules\targets\models\import\activerecord;
 
 use app\models\core\traits\ARExtended;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_targets_targets".
  *
  * @property int $id
- * @property string $targets
+ * @property string $target
  * @property int $domain
  * @property int|null $result_id
  * @property string|null $value
@@ -21,6 +22,9 @@ use yii\db\ActiveRecord;
  * @property int $isCurator
  * @property string|null $comment
  * @property int|null $hr_target_id
+ *
+ * @property ImportTargetsCommands $relCommands
+ * @property ImportTargetsMilestones $relMilestones
  */
 class ImportTargetsTargets extends ActiveRecord {
 	use ARExtended;
@@ -66,5 +70,19 @@ class ImportTargetsTargets extends ActiveRecord {
 			'group_id' => 'group_id',
 
 		];
+	}
+
+	/**
+	 * @return ImportTargetsCommands|ActiveQuery
+	 */
+	public function getRelCommands() {
+		return $this->hasOne(ImportTargetsCommands::class, ['id' => 'group_id']);
+	}
+
+	/**
+	 * @return ImportTargetsMilestones|ActiveQuery
+	 */
+	public function getRelMilestones() {
+		return $this->hasOne(ImportTargetsMilestones::class, ['id' => 'milestone_id']);
 	}
 }

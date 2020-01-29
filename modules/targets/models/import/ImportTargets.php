@@ -4,18 +4,27 @@ declare(strict_types = 1);
 namespace app\modules\targets\models\import;
 
 use app\models\core\traits\Upload;
-use app\modules\import\models\fos\ImportException;
+use app\models\relations\RelGroupsGroups;
+use app\modules\groups\models\Groups;
+use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\import\models\ImportException;
 use app\modules\targets\models\import\activerecord\ImportTargetsClusters;
 use app\modules\targets\models\import\activerecord\ImportTargetsCommands;
 use app\modules\targets\models\import\activerecord\ImportTargetsMilestones;
 use app\modules\targets\models\import\activerecord\ImportTargetsSubinitiatives;
 use app\modules\targets\models\import\activerecord\ImportTargetsTargets;
 use app\modules\targets\models\references\RefTargetsResults;
+use app\modules\targets\models\references\RefTargetsTypes;
+use app\modules\targets\models\relations\RelTargetsGroups;
+use app\modules\targets\models\relations\RelTargetsTargets;
+use app\modules\targets\models\Targets;
+use Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Exception as BaseException;
 use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "import_targets".
@@ -40,14 +49,15 @@ use yii\db\ActiveRecord;
 class ImportTargets extends ActiveRecord {
 	use Upload;
 
-	public const STEP_REFERENCES = 0;
+	public const STEP_START = 0;
 	public const STEP_GROUPS = 1;
-	public const STEP_TARGETS = 2;
-	public const STEP_FINISH = 3;
+	public const STEP_LINKING_GROUPS = 2;
+	public const STEP_TARGETS = 3;
+	public const STEP_LINKING_TARGETS = 3;
+	public const STEP_FINISH = 4;
 	public const LAST_STEP = self::STEP_FINISH + 1;
 
 	public const step_labels = [
-		self::STEP_REFERENCES => 'Декомпозиция справочных данных',
 		self::STEP_TARGETS => 'Декомпозиция целей',
 		self::STEP_GROUPS => 'Декомпозиция групп',
 		self::STEP_FINISH => 'Итоговая сверка',
@@ -159,7 +169,7 @@ class ImportTargets extends ActiveRecord {
 	 * @return int текущий исполненный шаг
 	 * @throws ImportException
 	 */
-	public static function Decompose(int $domain, int $step = self::STEP_REFERENCES, array &$messages = []):int {
+	public static function Decompose(int $domain, $step = self::STEP_START, array &$messages = []):int {
 		/** @var self[] $data */
 		$data = self::find()->where(['domain' => $domain])->all();
 
@@ -187,6 +197,7 @@ class ImportTargets extends ActiveRecord {
 					'initiative_id' => ArrayHelper::getValue($subInitiative, 'id'),
 					'domain' => $row->domain
 				]);
+				/*Данные не требуют такой жёсткой декомпозиции, как ФОС, поэтому разобранные данные более-менее будут находиться здесь*/
 				ImportTargetsTargets::addInstance(['target' => $row->target], [
 					'target' => $row->target,
 					'result_id' => ArrayHelper::getValue($currentTargetResult, 'id'),
@@ -210,5 +221,117 @@ class ImportTargets extends ActiveRecord {
 
 		}
 		return $step;
+	}
+
+	/**
+	 * @param string $name
+	 * @param string $type
+	 * @return int
+	 * @throws Exception
+	 */
+	public static function addGroup(string $name, string $type):int {
+		if (empty($name)) return -1;
+
+		$groupType = RefGroupTypes::find()->where(['name' => $type])->one();
+		if (!$groupType) {
+			$groupType = new RefGroupTypes(['name' => $type]);
+			$groupType->save();
+		}
+
+		/** @var null|Groups $group */
+		$group = Groups::find()->where(['name' => $name, 'type' => $groupType->id])->one();
+		if ($group) return $group->id;
+
+		$group = new Groups();
+		$group->createModel(['name' => $name, 'type' => $groupType->id, 'deleted' => false]);
+		return $group->id;
+	}
+
+	/**
+	 * @param string $name
+	 * @param string $type
+	 * @param int|null $result_type_id
+	 * @return int
+	 */
+	public static function addTarget(string $name, string $type, ?int $result_type_id = null):int {
+		if (empty($name)) return -1;
+
+		$targetType = RefTargetsTypes::find()->where(['name' => $type])->one();
+		if (!$targetType) {
+			$targetType = new RefGroupTypes(['name' => $type]);
+			$targetType->save();
+		}
+
+		$target = Targets::find()->where(['name' => $name, 'type' => $targetType->id])->one();
+		if ($target) return $target->id;
+
+		$target = new Targets();
+		$target->createModel([
+			'name' => $name,
+			'type' => $targetType->id,
+			'result_type' => $result_type_id,
+			'comment' => $name,
+			'deleted' => false
+		]);
+		return $target->id;
+	}
+
+	/**
+	 * Разбираем декомпозированные данные и вносим в боевую таблицу
+	 * @param int $step
+	 * @return bool true - шаг выполнен, false - нужно повторить запрос (шаг разбит на подшаги)
+	 * @throws NotFoundHttpException
+	 * @throws Throwable
+	 */
+	public static function ImportToDB(int $step = self::STEP_GROUPS):bool {//todo: добавить учёт домена для скорости?
+		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
+		switch ($step) {
+			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
+				foreach (ImportTargetsClusters::findAll(['hr_group_id' => null]) as $cluster) {
+					/** @var ImportTargetsClusters $cluster */
+					$cluster->setAndSaveAttribute('hr_group_id', self::addGroup($cluster->cluster_name, 'Кластер'));
+				}
+				foreach (ImportTargetsCommands::findAll(['hr_group_id' => null]) as $command) {
+					/** @var ImportTargetsCommands $command */
+					$command->setAndSaveAttribute('hr_group_id', self::addGroup($command->command_name, 'Команда'));
+				}
+			break;
+			case self::STEP_LINKING_GROUPS:
+				foreach (ImportTargetsCommands::find()->all() as $command) {
+					/** @var ImportTargetsCommands $command */
+					foreach ($command->relCluster as $cluster) {
+						/** @var ImportTargetsCommands $command */
+						RelGroupsGroups::linkModels($command->hr_group_id, $cluster->hr_group_id);
+					}
+				}
+			break;
+			case self::STEP_TARGETS:
+				foreach (ImportTargetsSubinitiatives::findAll(['hr_target_id' => null]) as $subInitiative) {
+					$subInitiative->setAndSaveAttribute('hr_target_id', self::addTarget($subInitiative->initiative, 'Субинициатива'));
+				}
+				foreach (ImportTargetsMilestones::findAll(['hr_target_id' => null]) as $milestone) {
+					$milestone->setAndSaveAttribute('hr_target_id', self::addTarget($milestone->milestone, 'Веха'));
+				}
+				foreach (ImportTargetsTargets::findAll(['hr_target_id' => null]) as $target) {
+					$target->setAndSaveAttribute('hr_target_id', self::addTarget($target->target, 'Цель', $target->result_id));
+				}
+			break;
+			case self::STEP_LINKING_TARGETS:
+				foreach (ImportTargetsMilestones::find()->all() as $milestone) {
+					/** @var ImportTargetsMilestones $milestone */
+					RelTargetsTargets::linkModels($milestone->relSubInitiatives->hr_target_id, $milestone->hr_target_id);
+				}
+
+				foreach (ImportTargetsTargets::find()->all() as $target) {
+					/** @var ImportTargetsTargets $target */
+					RelTargetsTargets::linkModels($target->relMilestones->hr_target_id, $target->hr_target_id);
+					RelTargetsGroups::linkModels($target->hr_target_id, $target->relCommand->hr_group_id);
+				}
+
+			break;
+
+		}
+		throw new NotFoundHttpException('Step not found');
+
 	}
 }

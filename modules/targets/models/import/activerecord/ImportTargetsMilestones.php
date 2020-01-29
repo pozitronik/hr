@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models\import\activerecord;
 
 use app\models\core\traits\ARExtended;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -13,6 +14,9 @@ use yii\db\ActiveRecord;
  * @property string $milestone
  * @property int $domain
  * @property int|null $hr_target_id
+ * @property int|null $initiative_id
+ *
+ * @property ImportTargetsSubinitiatives $relSubInitiatives
  */
 class ImportTargetsMilestones extends ActiveRecord {
 	use ARExtended;
@@ -46,5 +50,12 @@ class ImportTargetsMilestones extends ActiveRecord {
 			'hr_target_id' => 'Hr Target ID',
 			'initiative_id' => 'subInitiative id'
 		];
+	}
+
+	/**
+	 * @return ImportTargetsSubinitiatives|ActiveQuery
+	 */
+	public function getRelSubInitiatives() {
+		return $this->hasOne(ImportTargetsSubinitiatives::class, ['id' => 'initiative_id']);
 	}
 }
