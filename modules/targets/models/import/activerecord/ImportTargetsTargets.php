@@ -1,0 +1,69 @@
+<?php
+
+namespace app\modules\targets\models\import\activerecord;
+
+use app\models\core\traits\ARExtended;
+use Yii;
+
+/**
+ * This is the model class for table "import_targets_targets".
+ *
+ * @property int $id
+ * @property string $targets
+ * @property int $domain
+ * @property int|null $result_id
+ * @property string|null $value
+ * @property string|null $period
+ * @property int $isYear
+ * @property int $isLK
+ * @property int $isLT
+ * @property int $isCurator
+ * @property string|null $comment
+ * @property int|null $hr_target_id
+ */
+class ImportTargetsTargets extends \yii\db\ActiveRecord {
+	use ARExtended;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tableName() {
+		return 'import_targets_targets';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function rules() {
+		return [
+			[['target', 'domain'], 'required'],
+			[['target', 'comment'], 'string'],
+			[['domain', 'result_id', 'isYear', 'isLK', 'isLT', 'isCurator', 'hr_target_id', 'milestone_id', 'cluster_id', 'group_id'], 'integer'],
+			[['value', 'period'], 'string', 'max' => 255],
+		];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function attributeLabels() {
+		return [
+			'id' => 'ID',
+			'target' => 'Targets',
+			'domain' => 'Domain',
+			'result_id' => 'Result ID',
+			'value' => 'Value',
+			'period' => 'Period',
+			'isYear' => 'Is Year',
+			'isLK' => 'Is Lk',
+			'isLT' => 'Is Lt',
+			'isCurator' => 'Is Curator',
+			'comment' => 'Comment',
+			'hr_target_id' => 'Hr Target ID',
+			'milestone_id' => 'Milestone_id',
+			'cluster_id' => 'cluster_id',
+			'group_id' => 'group_id',
+
+		];
+	}
+}
