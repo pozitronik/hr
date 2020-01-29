@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
-use app\modules\import\models\fos\ImportException;
 use app\modules\targets\models\import\ImportTargets;
+use app\modules\targets\models\import\ImportTargetsSearch;
 use Throwable;
 use Yii;
 use yii\web\Response;
@@ -28,7 +28,14 @@ class ImportController extends WigetableController {
 	public function actionIndex(?int $domain = null) {
 		if (null === $domain) return $this->redirect(['upload']);
 
-		return $this->render('index');
+		$params = Yii::$app->request->queryParams;
+		$searchModel = new ImportTargetsSearch();
+
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $searchModel->search($params, $domain),
+			'domain' => $domain
+		]);
 	}
 
 	/**
@@ -48,16 +55,22 @@ class ImportController extends WigetableController {
 	}
 
 	/**
+	 * @param int|null $domain
+	 * @param int $step
 	 * @return string|Response
-	 * @throws ImportException
-	 * @throws Throwable
 	 */
-	public function actionImport() {
-		$model = new ImportTargets();
-		$errors = [];
-//		return $model->Import($errors)?$this->render('done', [
-//			'messages' => $errors
-//		]):$this->refresh();
+	public function actionDecompose(?int $domain = null, int $step = ImportTargets::STEP_REFERENCES) {
+		if (null === $domain) return $this->redirect(['upload']);
 
+		$messages = [];
+		$step = ImportTargets::Decompose($domain, $step, $messages);
+		if ([] === $messages && $step !== ImportTargets::LAST_STEP) {//если нет ошибок, сразу переходим к следующему шагу
+			return $this->redirect(['decompose',
+				'domain' => $domain,
+				'messages' => $messages,
+				'step' => $step + 1
+			]);
+		}
+		return $this->render('decompose', compact('step', 'messages', 'domain'));
 	}
 }

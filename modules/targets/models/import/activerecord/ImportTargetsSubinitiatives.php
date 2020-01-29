@@ -1,9 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\modules\targets\models\import\activerecord;
 
 use app\models\core\traits\ARExtended;
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "import_targets_subinitiatives".
@@ -13,20 +14,20 @@ use Yii;
  * @property int $domain
  * @property int|null $hr_target_id
  */
-class ImportTargetsSubinitiatives extends \yii\db\ActiveRecord {
+class ImportTargetsSubinitiatives extends ActiveRecord {
 	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName() {
+	public static function tableName():string {
 		return 'import_targets_subinitiatives';
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function rules() {
+	public function rules():array {
 		return [
 			[['initiative', 'domain'], 'required'],
 			[['domain', 'hr_target_id'], 'integer'],
@@ -37,7 +38,7 @@ class ImportTargetsSubinitiatives extends \yii\db\ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function attributeLabels() {
+	public function attributeLabels():array {
 		return [
 			'id' => 'ID',
 			'initiative' => 'Initiative',
