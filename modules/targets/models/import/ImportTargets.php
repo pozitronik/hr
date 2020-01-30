@@ -273,9 +273,6 @@ class ImportTargets extends ActiveRecord {
 			'comment' => $name,
 			'deleted' => false
 		], false);
-		if ([] !== $target->errors) {
-			print_r ($target->errors);
-		}
 		return $target->id;
 	}
 
