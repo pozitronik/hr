@@ -63,6 +63,7 @@ class TargetsIntervals extends ActiveRecordExtended {
 	/**
 	 * Из вариантов, приведённых в файле импорта пытаемся создать период
 	 * @param string $period -- может быть в формате Q1 - Q4 или цифра года
+	 * @param int $target_id
 	 * @return static
 	 */
 	public static function fromFilePeriod(string $period, int $target_id):self {

@@ -188,6 +188,8 @@ class ImportTargets extends ActiveRecord {
 //					'hr_group_id' => (null === $group = Groups::findModel(['name' => $row->commandName]))?null:$group->id,
 						'domain' => $row->domain
 					]);
+				} else {
+					$command = null;
 				}
 				$subInitiative = ImportTargetsSubinitiatives::addInstance(['initiative' => $row->subInit], [
 					'initiative' => $row->subInit,
@@ -211,7 +213,7 @@ class ImportTargets extends ActiveRecord {
 					'comment' => $row->comment,
 					'milestone_id' => ArrayHelper::getValue($milestone, 'id'),
 					'cluster_id' => ArrayHelper::getValue($cluster, 'id'),
-					'command_id' => ArrayHelper::getValue($command, 'id'),
+					'command_id' => null === $command?null:ArrayHelper::getValue($command, 'id'),
 					'domain' => $row->domain
 				]);
 			} catch (ImportException $importException) {
