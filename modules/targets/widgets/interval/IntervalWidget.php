@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\widgets\interval;
 
+use app\modules\targets\models\TargetsIntervals;
 use kartik\base\InputWidget;
 
 /**
@@ -25,9 +26,13 @@ class IntervalWidget extends InputWidget {
 	 * @return string
 	 */
 	public function run():string {
-		return $this->render('interval',[
-			'model' => $this->model->{$this->attribute},
-			'form' => $this->form
-		]);
+		return (null === $modelValue = $this->model->{$this->attribute})?
+			$this->render('interval', [
+				'model' => new TargetsIntervals(['target' => $this->model->id]),
+				'form' => $this->form
+			]):$this->render('interval', [
+				'model' => $modelValue,
+				'form' => $this->form
+			]);
 	}
 }
