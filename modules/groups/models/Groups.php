@@ -375,6 +375,8 @@ class Groups extends ActiveRecordExtended {
 	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
 	 * @param int|null $initialId Параметр для учёта рекурсии
 	 * @return array<int>
+	 * @fixme: вохникает рекурсия, если пользователь находится в группах, разнесённых по дереву наследований
+	 * @fixme собирать рекурсий массивом!
 	 */
 	public function collectRecursiveIds(?int $initialId = null):array {
 		return Yii::$app->cache->getOrSet(static::class."CollectRecursiveIds".$this->id, function() use ($initialId) {
@@ -394,6 +396,27 @@ class Groups extends ActiveRecordExtended {
 
 	}
 
+/*
+	public function collectRecursiveIds(array &$stackedId = []):array {
+		return Yii::$app->cache->getOrSet(static::class."CollectRecursiveIds".$this->id, function() use ($stackedId) {
+			if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
+			$groupsId = [[]];//Сюда соберём айдишники всех обходимых групп
+			foreach ((array)$this->relChildGroups as $childGroup) {
+				if (in_array($childGroup->id, $stackedId)) {//избегаем рекурсии
+					return [];
+				} else {
+					$stackedId[] = $childGroup->id;
+					$groupsId[] = $childGroup->collectRecursiveIds($stackedId);
+				}
+
+			}
+			$groupsId = array_merge(...$groupsId);
+			$groupsId[] = $this->id;
+			return $groupsId;
+		});
+
+	}
+*/
 	/**
 	 * Возвращает набор параметров в виде data-опций, которые виджет выбиралки присунет в селект.
 	 * Рекомендуемый способ получения опций через аякс не менее геморроен, но ещё и не работает
