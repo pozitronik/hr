@@ -92,7 +92,7 @@ class TargetsSearch extends Targets {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
 		$userCommandsId = [];
 		if (null !== $commandId = RefGroupTypes::findId('Команда')) {
-			$userCommands = $user->relGroups->where(['sys_groups.type' => $commandId]);
+			$userCommands = $user->getRelGroups()->where(['sys_groups.type' => $commandId])->all();
 			$userCommandsId = ArrayHelper::getColumn($userCommands, 'id');
 		}
 
@@ -108,7 +108,7 @@ class TargetsSearch extends Targets {
 
 		$query->joinWith(['relGroups', 'relUsers']);
 		$query->andFilterWhere(['sys_groups.id' => $userCommandsId]);
-		$query->andFilterWhere(['sys_users.id' => $userId]);
+		$query->orFilterWhere(['sys_users.id' => $userId]);
 
 		return $dataProvider;
 	}

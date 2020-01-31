@@ -98,7 +98,7 @@ class TargetsController extends WigetableController {
 	 * Временно тут: экшен отображения персональных целей.
 	 * @param int|null $id -- id пользователя
 	 */
-	public function actionHome(?int $id) {
+	public function actionHome(?int $id = null) {
 		$id = $id??CurrentUser::Id();
 		$searchModel = new TargetsSearch();
 		$dataProvider = $searchModel->findUserTargets($id, Yii::$app->request->queryParams);
