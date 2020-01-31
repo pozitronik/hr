@@ -1,4 +1,5 @@
 <?php
+/** @noinspection BadExceptionsProcessingInspection */
 declare(strict_types = 1);
 
 namespace app\modules\targets\models\import;
@@ -131,7 +132,7 @@ class ImportTargets extends ActiveRecord {
 			$spreadsheet->setActiveSheetIndex(0);
 			$dataArray = $spreadsheet->getActiveSheet()->toArray(null, false);
 		} catch (Throwable $t) {
-			throw new BaseException('Формат файла не поддерживается');
+			throw new BaseException('Формат файла не поддерживается. Ошибка '.$t->getMessage());
 		}
 		$domain = $domain??time();
 		$labels = (new self())->attributeLabels();
