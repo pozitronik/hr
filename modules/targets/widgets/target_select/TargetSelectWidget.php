@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\widgets\target_select;
 
 use app\modules\targets\models\Targets;
+use app\modules\targets\TargetsModule;
 use app\widgets\select_model\SelectModelWidget;
 
 /**
@@ -21,7 +22,7 @@ class TargetSelectWidget extends SelectModelWidget {
 	public function init() {
 		parent::init();
 		TargetSelectWidgetAssets::register($this->getView());
-		$this->ajaxSearchUrl = self::DATA_MODE_AJAX === $this->loadingMode?Targets::to('ajax/target-search'):$this->ajaxSearchUrl;
+		$this->ajaxSearchUrl = self::DATA_MODE_AJAX === $this->loadingMode?TargetsModule::to('ajax/target-search'):$this->ajaxSearchUrl;
 	}
 
 }
