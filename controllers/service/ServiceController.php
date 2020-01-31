@@ -43,6 +43,7 @@ class ServiceController extends WigetableController {
 	 */
 	public function actionMaskAndShit($step = 0) {
 		switch ($step) {
+			default:
 			case 0:
 				$users = Users::find()->all();
 				foreach ($users as $user) {
