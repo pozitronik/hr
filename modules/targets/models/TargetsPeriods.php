@@ -3,8 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-use app\models\core\ActiveRecordExtended;
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * Прототипирую период исполнения цели + связанные методы
@@ -23,7 +24,8 @@ use yii\db\ActiveQuery;
  *
  * @property Targets $relTargets
  */
-class TargetsPeriods extends ActiveRecordExtended {
+class TargetsPeriods extends ActiveRecord {
+	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
@@ -40,7 +42,8 @@ class TargetsPeriods extends ActiveRecordExtended {
 			[['target_id'], 'required'],
 			[['target_id', 'id'], 'integer'],
 			[['target_id'], 'unique'],//на текущий момент у одной цели один интервал
-			[['q1', 'q2', 'q3', 'q4', 'is_year'], 'boolean']
+			[['q1', 'q2', 'q3', 'q4', 'is_year'], 'boolean'],
+			[['q1', 'q2', 'q3', 'q4', 'is_year'], 'default', 'value' => false]
 		];
 	}
 
