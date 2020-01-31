@@ -6,6 +6,7 @@ namespace app\modules\targets\models;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
+use Throwable;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -87,6 +88,7 @@ class TargetsSearch extends Targets {
 	 * @param int $userId
 	 * @param array $params
 	 * @return ActiveDataProvider
+	 * @throws Throwable
 	 */
 	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
