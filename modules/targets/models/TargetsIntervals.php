@@ -19,6 +19,8 @@ use app\models\core\ActiveRecordExtended;
  * @property int|null $finish_quarter Конечный квартал [1..4]
  * @property int|null $year Год
  * @property int|null $daddy ID зарегистрировавшего пользователя
+ *
+ * @deprecated
  */
 class TargetsIntervals extends ActiveRecordExtended {
 	/**
