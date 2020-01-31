@@ -142,7 +142,7 @@ class ImportTargets extends ActiveRecord {
 			if ([] === array_filter($importRow)) continue;//ignore empty rows
 			if (!$headerProcessedFlag && self::isHeaderRow($importRow)) {//однократно проверяем валидность таблицы
 				$columnHeaderIndex = 0;
-				foreach ($labels as $key => $value) {
+				foreach ($labels as $value) {
 					if ($value !== $headerValue = ArrayHelper::getValue($importRow, $columnHeaderIndex)) {
 						throw new BaseException("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
 					}
