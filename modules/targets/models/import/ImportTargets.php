@@ -19,7 +19,7 @@ use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\relations\RelTargetsGroups;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use app\modules\targets\models\Targets;
-use app\modules\targets\models\TargetsIntervals;
+use app\modules\targets\models\TargetsPeriods;
 use Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use pozitronik\helpers\ArrayHelper;
@@ -317,7 +317,7 @@ class ImportTargets extends ActiveRecord {
 				}
 				foreach (ImportTargetsTargets::findAll(['hr_target_id' => null]) as $target) {
 					$target->setAndSaveAttribute('hr_target_id', $hrTargetId = self::addTarget($target->target, 'Цель', $target->result_id));
-					TargetsIntervals::fromFilePeriod($target->period, $hrTargetId);
+					TargetsPeriods::fromFilePeriod($target->period, $hrTargetId);
 				}
 			break;
 			case self::STEP_LINKING_TARGETS:

@@ -3,17 +3,13 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
-use app\modules\groups\GroupsModule;
-use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
-use app\modules\salary\models\references\RefUserPositions;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsSearch;
 use app\modules\targets\TargetsModule;
 use app\modules\targets\widgets\navigation_menu\TargetNavigationMenuWidget;
-use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
@@ -26,6 +22,10 @@ use yii\web\View;
  * @var ActiveDataProvider $dataProvider
  * @var TargetsSearch $searchModel
  */
+
+$this->title = 'Мои цели';
+$this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="panel">
@@ -63,7 +63,7 @@ use yii\web\View;
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'parent_name',
-					'label' => 'Родительское задание',
+					'label' => 'Веха',
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model->relParentTarget,
@@ -77,7 +77,7 @@ use yii\web\View;
 						]);
 					},
 					'format' => 'raw',
-//					'group' => true
+					'group' => true
 				],
 				[
 					'class' => DataColumn::class,
@@ -98,26 +98,17 @@ use yii\web\View;
 				],
 				[
 					'class' => DataColumn::class,
-					'attribute' => 'type',
-					'value' => static function(Targets $target) {
+					'attribute' => 'relTargetsIntervals',
+					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
-							'models' => $target->relTargetsTypes,
-							'useBadges' => true,
-							'attribute' => 'name',
-							'unbadgedCount' => 3,
-							'itemsSeparator' => false,
-							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-							'linkScheme' => [TargetsModule::to(), 'TargetsSearch[type]' => 'id']
+							'models' => $model,
+							'attribute' => 'relTargetsIntervals.start_quarter',
+							"badgeOptions" => [
+								'class' => "badge badge-info"
+							]
 						]);
 					},
-					'format' => 'raw',
-					'filterType' => ReferenceSelectWidget::class,
-					'filterInputOptions' => ['placeholder' => 'Тип'],
-					'filterWidgetOptions' => [
-						/*В картиковском гриде захардкожено взаимодействие с собственными фильтрами, в частности использование filter. В нашем виджете обходимся так*/
-						'referenceClass' => RefTargetsTypes::class,
-						'pluginOptions' => ['allowClear' => true]
-					]
+					'format' => 'raw'
 				],
 				[
 					'class' => DataColumn::class,
@@ -141,38 +132,6 @@ use yii\web\View;
 						'referenceClass' => RefTargetsResults::class,
 						'pluginOptions' => ['allowClear' => true]
 					]
-				],
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'group_name',
-					'label' => 'Ответственная группа',
-					'value' => static function(Targets $target) {
-						return BadgeWidget::widget([
-							'models' => $target->relGroups,
-							'useBadges' => true,
-							'attribute' => 'name',
-							'itemsSeparator' => false,
-							"optionsMap" => RefGroupTypes::colorStyleOptions(),
-							'linkScheme' => [GroupsModule::to('groups/profile'), 'id' => 'id']
-						]);
-					},
-					'format' => 'raw'
-				],
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'user_name',
-					'label' => 'Ответственный сотрудник',
-					'value' => static function(Targets $target) {
-						return BadgeWidget::widget([
-							'models' => $target->relUsers,
-							'useBadges' => true,
-							'attribute' => 'username',
-							'itemsSeparator' => false,
-							"optionsMap" => RefUserPositions::colorStyleOptions(),
-							'linkScheme' => [UsersModule::to('users/profile'), 'id' => 'id']
-						]);
-					},
-					'format' => 'raw'
 				],
 			],
 
