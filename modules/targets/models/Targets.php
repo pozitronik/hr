@@ -42,7 +42,7 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|RelTargetsUsers[] $relTargetsUsers
  * @property ActiveQuery|Users[] $relUsers
  *
- * @property ActiveQuery|TargetsIntervals $relTargetsIntervals
+ * @property ActiveQuery|TargetsPeriods $relTargetsPeriods
  *
  */
 class Targets extends ActiveRecordExtended {
@@ -215,10 +215,11 @@ class Targets extends ActiveRecordExtended {
 	}
 
 	/**
-	 * @return TargetsIntervals|ActiveQuery
+	 * @return TargetsPeriods|ActiveQuery
 	 */
-	public function getRelTargetsIntervals() {
-		return $this->hasOne(TargetsIntervals::class, ['target' => 'id']);//пока делаю hasOne, далее посмотрим
+	public function getRelTargetsPeriods() {
+		/* todo: возможно, цели стоит вынести в отдельный класс - только у них есть периоды фактические, у остальных задач это будут виртуальные периоды, складывающиеся из периодов целей. */
+		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);//пока делаю hasOne, далее посмотрим
 	}
 
 }
