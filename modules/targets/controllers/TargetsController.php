@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
+use app\models\user\CurrentUser;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsIntervals;
 use app\modules\targets\models\TargetsSearch;
@@ -91,6 +92,17 @@ class TargetsController extends WigetableController {
 	public function actionDelete(int $id):?Response {
 		if (null !== $target = Targets::findModel($id, new NotFoundHttpException())) $target->safeDelete();
 		return $this->redirect('index');
+	}
+
+	/**
+	 * Временно тут: экшен отображения персональных целей.
+	 * @param int|null $id -- id пользователя
+	 */
+	public function actionHome(?int $id) {
+		$id = $id??CurrentUser::Id();
+		$searchModel = new TargetsSearch();
+		$dataProvider = $searchModel->findUserTargets($id, Yii::$app->request->queryParams);
+		return $this->render('home', compact('searchModel', 'dataProvider'));
 	}
 
 }

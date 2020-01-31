@@ -3,7 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
+use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\users\models\Users;
+use pozitronik\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class TargetsSearch
@@ -74,6 +78,38 @@ class TargetsSearch extends Targets {
 			->andFilterWhere(['in', 'ref_targets_results.id', $this->result_type]);
 
 //		Yii::debug($query->createCommand()->rawSql, 'sql');
+		return $dataProvider;
+	}
+
+	/**
+	 * Поиск целей пользователя
+	 * Логика: все цели всех команд пользователя + все цели, назначенные пользователю непосредственно
+	 * @param int $userId
+	 * @param array $params
+	 * @return ActiveDataProvider
+	 */
+	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
+		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
+		$userCommandsId = [];
+		if (null !== $commandId = RefGroupTypes::findId('Команда')) {
+			$userCommands = $user->relGroups->where(['sys_groups.type' => $commandId]);
+			$userCommandsId = ArrayHelper::getColumn($userCommands, 'id');
+		}
+
+		$query = Targets::find()->active();
+
+		$this->load($params);
+
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query
+		]);
+
+		if (!$this->validate()) return $dataProvider;
+
+		$query->joinWith(['relGroups', 'relUsers']);
+		$query->andFilterWhere(['sys_groups.id' => $userCommandsId]);
+		$query->andFilterWhere(['sys_users.id' => $userId]);
+
 		return $dataProvider;
 	}
 }
