@@ -59,7 +59,7 @@ class Targets extends ActiveRecordExtended {
 	public function rules():array {
 		return [
 			[['type', 'name'], 'required'],
-			[['type', 'result_type', 'daddy', 'startQuarter', 'finishQuarter', 'year'], 'integer'],
+			[['type', 'result_type', 'daddy'], 'integer'],
 			[['name'], 'string', 'max' => 512],
 			[['comment'], 'string'],
 			[['create_date', 'relParentTarget', 'relChildTargets', 'relGroups', 'relUsers'], 'safe'],
@@ -86,9 +86,7 @@ class Targets extends ActiveRecordExtended {
 			'relChildTargets' => 'Входящие задание',
 			'relGroups' => 'Группа назначения',
 			'relUsers' => 'Ответственный сотрудник',
-			'startQuarter' => 'Начальный квартал',
-			'finishQuarter' => 'Конечный квартал',
-			'year' => 'Год',
+			'relTargetsPeriods' => 'Сроки'
 		];
 	}
 
@@ -219,7 +217,9 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function getRelTargetsPeriods() {
 		/* todo: возможно, цели стоит вынести в отдельный класс - только у них есть периоды фактические, у остальных задач это будут виртуальные периоды, складывающиеся из периодов целей. */
-		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);//пока делаю hasOne, далее посмотрим
+		$periods = $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
+		return (null === $periods->one())?new TargetsPeriods(['target_id' => $this->id]):$periods;
+
 	}
 
 }

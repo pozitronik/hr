@@ -15,6 +15,7 @@ use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
+use yii\i18n\Formatter;
 use yii\web\View;
 
 /**
@@ -39,6 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= GridView::widget([
 			'filterModel' => $searchModel,
 			'dataProvider' => $dataProvider,
+			'formatter' => [
+				'class' => Formatter::class,
+				'nullDisplay' => '',
+			],
 			'columns' => [
 				[
 					'class' => DataColumn::class,
@@ -73,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							],
 							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 							"optionsMapAttribute" => 'type',
-							'linkScheme' => [TargetsModule::to('targets/profile'), 'id' => 'id']
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 						]);
 					},
 					'format' => 'raw',
@@ -81,58 +86,131 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				[
 					'class' => DataColumn::class,
-					'attribute' => 'name',
+					'attribute' => 'is_year',
+					'label' => 'Годовая цель',
 					'value' => static function(Targets $model) {
-						return BadgeWidget::widget([
-							'models' => $model,
-							'attribute' => 'name',
-							"badgeOptions" => [
-								'class' => "badge badge-info"
-							],
-							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-							"optionsMapAttribute" => 'type',
-							'linkScheme' => [TargetsModule::to('targets/profile'), 'id' => $model->id]
-						]);
+						if ($model->relTargetsPeriods->is_year) {
+							return BadgeWidget::widget([
+								'models' => $model,
+								'attribute' => 'name',
+								"badgeOptions" => [
+									'class' => "badge badge-info"
+								],
+								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+							]);
+						}
+						return null;
+
 					},
 					'format' => 'raw'
 				],
 				[
 					'class' => DataColumn::class,
-					'attribute' => 'relTargetsIntervals',
+					'attribute' => 'q1',
 					'value' => static function(Targets $model) {
-						return BadgeWidget::widget([
-							'models' => $model,
-							'attribute' => 'relTargetsIntervals.start_quarter',
-							"badgeOptions" => [
-								'class' => "badge badge-info"
-							]
-						]);
+						if ($model->relTargetsPeriods->q1) {
+							return BadgeWidget::widget([
+								'models' => $model,
+								'attribute' => 'name',
+								"badgeOptions" => [
+									'class' => "badge badge-info"
+								],
+								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+							]);
+						}
+						return null;
+
 					},
 					'format' => 'raw'
 				],
 				[
 					'class' => DataColumn::class,
-					'attribute' => 'result_type',
-					'value' => static function(Targets $target) {
-						return BadgeWidget::widget([
-							'models' => $target->relTargetsResults,
-							'useBadges' => true,
-							'attribute' => 'name',
-							'unbadgedCount' => 3,
-							'itemsSeparator' => false,
-							"optionsMap" => RefTargetsResults::colorStyleOptions(),
-							'linkScheme' => [TargetsModule::to(), 'TargetsSearch[result_type]' => 'id']
-						]);
+					'attribute' => 'q2',
+					'value' => static function(Targets $model) {
+						if ($model->relTargetsPeriods->q2) {
+							return BadgeWidget::widget([
+								'models' => $model,
+								'attribute' => 'name',
+								"badgeOptions" => [
+									'class' => "badge badge-info"
+								],
+								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+							]);
+						}
+						return null;
+
 					},
-					'format' => 'raw',
-					'filterType' => ReferenceSelectWidget::class,
-					'filterInputOptions' => ['placeholder' => 'Результат'],
-					'filterWidgetOptions' => [
-						/*В картиковском гриде захардкожено взаимодействие с собственными фильтрами, в частности использование filter. В нашем виджете обходимся так*/
-						'referenceClass' => RefTargetsResults::class,
-						'pluginOptions' => ['allowClear' => true]
-					]
+					'format' => 'raw'
 				],
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'q3',
+					'value' => static function(Targets $model) {
+						if ($model->relTargetsPeriods->q3) {
+							return BadgeWidget::widget([
+								'models' => $model,
+								'attribute' => 'name',
+								"badgeOptions" => [
+									'class' => "badge badge-info"
+								],
+								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+							]);
+						}
+						return null;
+
+					},
+					'format' => 'raw'
+				],
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'q4',
+					'value' => static function(Targets $model) {
+						if ($model->relTargetsPeriods->q4) {
+							return BadgeWidget::widget([
+								'models' => $model,
+								'attribute' => 'name',
+								"badgeOptions" => [
+									'class' => "badge badge-info"
+								],
+								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+							]);
+						}
+						return null;
+
+					},
+					'format' => 'raw'
+				],
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'N/A',
+					'value' => static function(Targets $model) {
+						if ($model->relTargetsPeriods->notSet) {
+							return BadgeWidget::widget([
+								'models' => $model,
+								'attribute' => 'name',
+								"badgeOptions" => [
+									'class' => "badge badge-info"
+								],
+								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+							]);
+						}
+						return null;
+
+					},
+					'format' => 'raw'
+				]
 			],
 
 			'rowOptions' => static function($record) {

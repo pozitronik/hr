@@ -20,9 +20,10 @@ use yii\db\ActiveRecord;
  * @property bool $q2 -- ...второй квартал
  * @property bool $q3 -- ...третий квартал
  * @property bool $q4 -- ...четвёртый квартал
- * @property bool $isYear -- годовая цель
+ * @property bool $is_year -- годовая цель
  *
  * @property Targets $relTargets
+ * @property-read bool $notSet
  */
 class TargetsPeriods extends ActiveRecord {
 	use ARExtended;
@@ -91,5 +92,12 @@ class TargetsPeriods extends ActiveRecord {
 			], false);
 		}
 		return $result;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getNotSet():bool {
+		return !($this->q1 || $this->q2 || $this->q3 || $this->q4 || $this->is_year);
 	}
 }
