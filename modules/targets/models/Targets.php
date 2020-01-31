@@ -46,10 +46,6 @@ use yii\db\ActiveQuery;
  *
  */
 class Targets extends ActiveRecordExtended {
-	public $startQuarter;
-	public $finishQuarter;
-	public $year;
-
 	/**
 	 * {@inheritdoc}
 	 */
