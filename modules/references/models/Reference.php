@@ -294,4 +294,13 @@ class Reference extends ActiveRecordExtended implements ReferenceInterface {
 		return (null === $this->pluginId)?null:PluginsSupport::GetPluginById($this->pluginId);
 	}
 
+	/**
+	 * Поиск id записи по имени
+	 * @param string $name
+	 * @return int|null
+	 */
+	public static function findId(string $name):?int {
+		return (null === $record = static::find()->where(['name' => $name])->one())?null:$record->id;
+	}
+
 }
