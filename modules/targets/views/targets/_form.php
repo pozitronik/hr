@@ -39,7 +39,9 @@ use yii\widgets\ActiveForm;
 					]) ?>
 				</div>
 				<div class="col-md-4">
-					<?= $form->field($model, 'relParentTarget')->widget(TargetSelectWidget::class) ?>
+					<?= $form->field($model, 'relParentTarget')->widget(TargetSelectWidget::class, [
+						'loadingMode' => TargetSelectWidget::DATA_MODE_AJAX
+					]) ?>
 				</div>
 			</div>
 			<div class="row">
@@ -61,17 +63,21 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $form->field($model, 'relGroups')->widget(GroupSelectWidget::class) ?>
+					<?= $form->field($model, 'relGroups')->widget(GroupSelectWidget::class, [
+						'loadingMode' => GroupSelectWidget::DATA_MODE_AJAX
+					]) ?>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class) ?>
+					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class, [
+						'loadingMode' => UserSelectWidget::DATA_MODE_AJAX
+					]) ?>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<?= $form->field($model, 'relTargetsIntervals')->widget(IntervalWidget::class, [
+					<?= $form->field($model, 'relTargetsPeriods')->widget(IntervalWidget::class, [
 						'form' => $form
 					]) ?>
 				</div>
