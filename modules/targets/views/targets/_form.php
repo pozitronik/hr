@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
 				</div>
 				<div class="col-md-4">
 					<?= $form->field($model, 'relParentTarget')->widget(TargetSelectWidget::class, [
-						'loadingMode' => TargetSelectWidget::DATA_MODE_AJAX
+						'loadingMode' => TargetSelectWidget::DATA_MODE_LOAD
 					]) ?>
 				</div>
 			</div>
@@ -64,14 +64,14 @@ use yii\widgets\ActiveForm;
 			<div class="row">
 				<div class="col-md-12">
 					<?= $form->field($model, 'relGroups')->widget(GroupSelectWidget::class, [
-						'loadingMode' => GroupSelectWidget::DATA_MODE_AJAX
+						'loadingMode' => GroupSelectWidget::DATA_MODE_LOAD
 					]) ?>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class, [
-						'loadingMode' => UserSelectWidget::DATA_MODE_AJAX
+						'loadingMode' => UserSelectWidget::DATA_MODE_LOAD
 					]) ?>
 				</div>
 			</div>
