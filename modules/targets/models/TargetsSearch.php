@@ -89,12 +89,17 @@ class TargetsSearch extends Targets {
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 * @throws Throwable
+	 *
+	 * Логика: находим все ВЕХИ через справочник (их вес на единицу больше ЦЕЛЕЙ, вес которых нулевой).
+	 * Фильтруем по пользователям и группам целей (where relTargets.groups => $userCommandId...)
+	 * Отдаём целив во вьюху
+	 * Во вьюхе выводим цели в колонке через релейшены $model->q1->targets (логику релейшенов надо написать).
 	 */
-	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
+	public function findUserTargets(int $userId, $targetLevel = 1, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
 		$userCommandsId = [];
-		if (null !== $commandId = RefGroupTypes::findId('Команда')) {//todo: RefGroupTypes::findTerminalRecordId();
-			$userCommands = $user->getRelGroups()->where(['sys_groups.type' => $commandId])->all();
+		if (null !== $targetTypeId = RefGroupTypes::findId('Веха')) {//todo: RefGroupTypes::findTerminalRecordId($targetLevel);
+			$userCommands = $user->getRelGroups()->where(['sys_groups.type' => $targetTypeId])->all();
 			$userCommandsId = ArrayHelper::getColumn($userCommands, 'id');
 		}
 
@@ -114,4 +119,5 @@ class TargetsSearch extends Targets {
 
 		return $dataProvider;
 	}
+
 }
