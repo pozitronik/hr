@@ -93,7 +93,7 @@ class TargetsSearch extends Targets {
 	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
 		$userCommandsId = [];
-		if (null !== $commandId = RefGroupTypes::findId('Команда')) {
+		if (null !== $commandId = RefGroupTypes::findId('Команда')) {//todo: RefGroupTypes::findTerminalRecordId();
 			$userCommands = $user->getRelGroups()->where(['sys_groups.type' => $commandId])->all();
 			$userCommandsId = ArrayHelper::getColumn($userCommands, 'id');
 		}
