@@ -117,7 +117,7 @@ class Service extends Model {
 			'sys_seats',
 			'sys_targets',
 			'sys_targets_budgets',
-			'sys_targets_intervals',
+			'sys_targets_periods',
 			'sys_targets_results',
 			'sys_user_rights',
 			'sys_users',
@@ -167,7 +167,7 @@ class Service extends Model {
 			'rel_targets_users',
 			'sys_targets',
 			'sys_targets_budgets',
-			'sys_targets_intervals',
+			'sys_targets_periods',
 			'sys_targets_results',
 		];
 
