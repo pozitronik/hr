@@ -9,7 +9,10 @@ use app\models\core\WigetableController;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use Throwable;
+use yii\base\InvalidConfigException;
+use yii\base\NotSupportedException;
 use yii\base\Response;
+use yii\db\Exception;
 
 /**
  * Class ServiceController
@@ -34,8 +37,12 @@ class ServiceController extends WigetableController {
 		]);
 
 	}
+
 	/**
 	 * @return string
+	 * @throws InvalidConfigException
+	 * @throws NotSupportedException
+	 * @throws Exception
 	 */
 	public function actionResetTargets():string {
 //		Yii::$app->user->logout();
