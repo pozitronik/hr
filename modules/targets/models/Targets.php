@@ -5,6 +5,7 @@ namespace app\modules\targets\models;
 
 use app\helpers\DateHelper;
 use app\models\core\ActiveRecordExtended;
+use app\models\core\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsResults;
@@ -16,6 +17,7 @@ use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\db\ActiveQuery;
 
 /**
@@ -133,6 +135,14 @@ class Targets extends ActiveRecordExtended {
 	}
 
 	/**
+	 * Вернёт нижестоящую задачу целеполагания, если есть
+	 * @return Targets|ActiveQuery|null
+	 */
+	public function getRelChildTarget() {
+		return $this->hasOne(self::class, ['id' => 'child_id'])->via('relTargetsTargetsChild');
+	}
+
+	/**
 	 * @return RefTargetsTypes|ActiveQuery
 	 */
 	public function getRelTargetsTypes() {
@@ -217,9 +227,33 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function getRelTargetsPeriods() {
 		/* todo: возможно, цели стоит вынести в отдельный класс - только у них есть периоды фактические, у остальных задач это будут виртуальные периоды, складывающиеся из периодов целей. */
-		$periods = $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
-		return (null === $periods->one())?new TargetsPeriods(['target_id' => $this->id]):$periods;
+		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
+//		return (null === $periods->one())?new TargetsPeriods(['target_id' => $this->id]):$periods;
+	}
 
+	/**
+	 * @param int $quarter
+	 * @return LCQuery
+	 */
+	public function getQuarterTargets(?int $quarter = 0):LCQuery {
+		$query = self::find()->active()->joinWith(['relTargetsTargetsParent parent', 'relTargetsPeriods'])->where(['parent_id' => $this->id]);
+		switch ($quarter) {
+			default:
+				if (!in_array($quarter, [1, 2, 3, 4])) throw new InvalidArgumentException('Only four quarters in year');
+				$query->andWhere(["sys_targets_periods.q{$quarter}" => true]);
+			break;
+			case 0:
+				$query->andWhere(["sys_targets_periods.is_year" => true]);
+			break;
+			case null:
+				$query->andWhere(["sys_targets_periods.is_year" => false])
+					->andWhere(["sys_targets_periods.q1" => false])
+					->andWhere(["sys_targets_periods.q2" => false])
+					->andWhere(["sys_targets_periods.q3" => false])
+					->andWhere(["sys_targets_periods.q4" => false]);
+			break;
+		}
+		return $query;
 	}
 
 }
