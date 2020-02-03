@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models;
 
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
@@ -95,27 +96,27 @@ class TargetsSearch extends Targets {
 	 * Отдаём целив во вьюху
 	 * Во вьюхе выводим цели в колонке через релейшены $model->q1->targets (логику релейшенов надо написать).
 	 */
-	public function findUserTargets(int $userId, $targetLevel = 1, array $params):ActiveDataProvider {
+	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
 		$userCommandsId = [];
-		if (null !== $targetTypeId = RefGroupTypes::findId('Веха')) {//todo: RefGroupTypes::findTerminalRecordId($targetLevel);
+		if (null !== $targetTypeId = RefTargetsTypes::findId('Цель')) {//todo: RefTargetsTypes::findTerminalRecordId($targetLevel);
 			$userCommands = $user->getRelGroups()->where(['sys_groups.type' => $targetTypeId])->all();
 			$userCommandsId = ArrayHelper::getColumn($userCommands, 'id');
 		}
 
-		$query = Targets::find()->active();
+		$allUserTargets = Targets::find()->active()->joinWith(['relGroups', 'relUsers'])->andFilterWhere(['sys_groups.id' => $userCommandsId])->orFilterWhere(['sys_users.id' => $userId])->all();
+		$allUserMilestones = [];
+		foreach ($allUserTargets as $userTarget) {
+			$allUserMilestones[] = $userTarget->relParentTarget;
+		}
 
 		$this->load($params);
 
 		$dataProvider = new ActiveDataProvider([
-			'query' => $query
+			'query' => Targets::find()->active()->where(['id' => ArrayHelper::getColumn($allUserMilestones, 'id')])
 		]);
 
 		if (!$this->validate()) return $dataProvider;
-
-		$query->joinWith(['relGroups', 'relUsers']);
-		$query->andFilterWhere(['sys_groups.id' => $userCommandsId]);
-		$query->orFilterWhere(['sys_users.id' => $userId]);
 
 		return $dataProvider;
 	}
