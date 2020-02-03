@@ -327,9 +327,14 @@ class ImportTargets extends ActiveRecord {
 				}
 
 				foreach (ImportTargetsTargets::find()->all() as $target) {
-					/** @var ImportTargetsTargets $target */
-					RelTargetsTargets::linkModels($target->relMilestones->hr_target_id, $target->hr_target_id);
-					RelTargetsGroups::linkModels($target->hr_target_id, $target->relCommands->hr_group_id);
+					try {
+						/** @var ImportTargetsTargets $target */
+						RelTargetsTargets::linkModels($target->relMilestones->hr_target_id, $target->hr_target_id);
+						RelTargetsGroups::linkModels($target->hr_target_id, ArrayHelper::getValue($target,'relCommands.hr_group_id'));//в файле может быть цель без команды
+					} catch (Throwable $t) {
+						echo $t->getMessage();
+					}
+
 				}
 
 			break;
