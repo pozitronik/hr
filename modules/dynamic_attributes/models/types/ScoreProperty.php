@@ -197,7 +197,7 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * Деление числовых покзателей
+	 * Деление числовых показателей
 	 * @param float $value
 	 * @unused
 	 * @deprecated

@@ -375,7 +375,7 @@ class Groups extends ActiveRecordExtended {
 	 * Собираем рекурсивно айдишники всех групп вниз по иерархии
 	 * @param int|null $initialId Параметр для учёта рекурсии
 	 * @return array<int>
-	 * @fixme: вохникает рекурсия, если пользователь находится в группах, разнесённых по дереву наследований
+	 * @fixme: возникает рекурсия, если пользователь находится в группах, разнесённых по дереву наследований
 	 * @fixme собирать рекурсий массивом!
 	 */
 	public function collectRecursiveIds(?int $initialId = null):array {

@@ -69,7 +69,7 @@ class DynamicAttributeProperty extends Model {
 			'model' => AttributePropertyUnknown::class
 		],
 		self::PROPERTY_INTEGER => [/*Название (индекс) типа данных*/
-			'label' => 'Число',/*Отображаемое в интефейсах имя*/
+			'label' => 'Число',/*Отображаемое в интерфейсах имя*/
 			'model' => AttributePropertyInteger::class,/*Имя класса, реализующего взаимодействие с типом данных, обязательно имплементация AttributePropertyInterface. Поле названо model, потому что на class ругается инспектор*/
 		],
 		self::PROPERTY_BOOLEAN => [

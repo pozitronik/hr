@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var ActiveDataProvider $dataProvider
- * @var DynamicAttributesSearchCollection $searchCollection //условия поиска для отображения резуьтата у пользователя
+ * @var DynamicAttributesSearchCollection $searchCollection //условия поиска для отображения результата у пользователя
  */
 
 use app\helpers\IconsHelper;

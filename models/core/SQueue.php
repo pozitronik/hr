@@ -40,7 +40,7 @@ class SQueue extends Model {
 	}
 
 	/**
-	 * Очищает очерель сообщения для пользователя $user_id
+	 * Очищает очередь сообщения для пользователя $user_id
 	 * @param int $user_id
 	 */
 	public static function clear(int $user_id):void {

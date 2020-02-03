@@ -61,7 +61,7 @@ class ActiveRecordExtended extends ActiveRecordHistory {
 	}
 
 	/**
-	 * Удаляет набор моделей по наборк первичных ключей
+	 * Удаляет набор моделей по набору первичных ключей
 	 * @param array $primaryKeys
 	 * @throws Throwable
 	 * @throws StaleObjectException

@@ -84,7 +84,7 @@ class AjaxController extends BaseAjaxController {
 	 * Поиск пользователя в Select2
 	 *
 	 * @param string|null $term Строка поиска
-	 * @param int $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @param int $page Номер страницы (не поддерживается, задел на будущее)
 	 * @param int|null $group Группа ИСКЛЮЧАЕМАЯ из поиска
 	 * @return array
 	 */

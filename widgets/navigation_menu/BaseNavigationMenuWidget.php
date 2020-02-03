@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property ActiveRecord $model
  * @property int $mode
  *
- * Брать его текущую абсолютную позицию, менять position на fixed, возвращать позициюю
+ * Брать его текущую абсолютную позицию, менять position на fixed, возвращать позицию
  */
 class BaseNavigationMenuWidget extends CachedWidget {
 	public const MODE_MENU = 0;

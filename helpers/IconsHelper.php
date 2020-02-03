@@ -18,7 +18,7 @@ class IconsHelper {
 	 * @param int $radius -- радиус иконки
 	 * @param string $color -- цвет текста
 	 * @param string $background -- цвет фона
-	 * @param int $borderRadius -- толщина каёмкм
+	 * @param int $borderRadius -- толщина каёмки
 	 * @param string $borderColor -- цвет каёмки
 	 * @return string -- html-код иконки
 	 */

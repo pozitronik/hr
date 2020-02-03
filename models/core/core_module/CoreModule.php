@@ -94,7 +94,7 @@ class CoreModule extends BaseModule implements CoreModuleInterface {
 	}
 
 	/**
-	 * Функиция генерирует пункт меню навигации внутри модуля
+	 * Функция генерирует пункт меню навигации внутри модуля
 	 * @param string $label
 	 * @param string|array $url
 	 * @return array

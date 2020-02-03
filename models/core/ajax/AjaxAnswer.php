@@ -11,7 +11,7 @@ use yii\base\Model;
  * @package app\models\core\ajax
  *
  * @property int $resultCode Числовой код результата операции
- * @property null|int $count Количество возвращаемых реззультатов (если не установлено, то не используется)
+ * @property null|int $count Количество возвращаемых результатов (если не установлено, то не используется)
  * @property null|array $items Массив результатов (если не установлен, то не используется
  * @property null|string $content Возвращаемый результат рендеринга (если необходим)
  *

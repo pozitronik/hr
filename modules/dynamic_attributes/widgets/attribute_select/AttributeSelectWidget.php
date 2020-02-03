@@ -8,7 +8,7 @@ use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 
 /**
- * Виддет выбора атрибута (чего-либо, не обязательно пользователя - хотя на данный момент подразумевается, что атрибуты есть только у пользователей)
+ * Виджет выбора атрибута (чего-либо, не обязательно пользователя - хотя на данный момент подразумевается, что атрибуты есть только у пользователей)
  * Class AttributeSelectWidget
  * @package app\modules\dynamic_attributes\widgets\attribute_select
 

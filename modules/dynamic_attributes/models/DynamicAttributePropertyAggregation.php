@@ -11,7 +11,7 @@ use yii\base\Model;
  * Class DynamicAttributePropertyAggregation
  * Все агрегаторы по умолчанию работают на всём массиве данных. Отсеивание null-значений указываем дополнительным параметром.
  * @package app\modules\dynamic_attributes\models
- * @property string $type -- тип свойства, полученного в результате агрегации (может не совпадать с типами аггрегирующих свойств, навпример вернётся строка или процент или null)
+ * @property string $type -- тип свойства, полученного в результате агрегации (может не совпадать с типами агрегирующих свойств, например вернётся строка или процент или null)
  * @property mixed $value -- значение свойства, полученного в результате агрегации
  */
 class DynamicAttributePropertyAggregation extends Model {
