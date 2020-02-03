@@ -77,6 +77,5 @@ class ServiceController extends WigetableController {
 				return 'finished';
 			break;
 		}
-		return 'wtf';
 	}
 }
