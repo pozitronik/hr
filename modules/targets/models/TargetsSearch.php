@@ -112,7 +112,9 @@ class TargetsSearch extends Targets {
 		$this->load($params);
 
 		$dataProvider = new ActiveDataProvider([
-			'query' => Targets::find()->active()->where(['id' => ArrayHelper::getColumn($allUserMilestones, 'id')])
+			'query' => Targets::find()->active()
+				->where(['id' => ArrayHelper::getColumn($allUserMilestones, 'id')])
+				->andFilterWhere(['like', 'sys_targets.name', $this->name])
 		]);
 
 		if (!$this->validate()) return $dataProvider;
