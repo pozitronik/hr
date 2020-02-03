@@ -1,0 +1,6 @@
+.badge-target {
+	display: block !important;
+	width: 300px;
+	white-space: break-spaces !important;
+	margin:3px;
+}
