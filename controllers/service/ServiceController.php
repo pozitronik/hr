@@ -34,6 +34,16 @@ class ServiceController extends WigetableController {
 		]);
 
 	}
+	/**
+	 * @return string
+	 */
+	public function actionResetTargets():string {
+//		Yii::$app->user->logout();
+		return $this->render('reset', [
+			'result' => Service::ResetTargetsTables()
+		]);
+
+	}
 
 	/**
 	 * Необратимо маскирует

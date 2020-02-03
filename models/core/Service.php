@@ -5,7 +5,10 @@ namespace app\models\core;
 
 use Throwable;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\base\NotSupportedException;
+use yii\db\Exception;
 use yii\db\Transaction;
 
 /**
@@ -137,4 +140,47 @@ class Service extends Model {
 		return true;
 	}
 
+	/**
+	 * Очистка таблиц целеполаганий
+	 * @return bool
+	 * @throws InvalidConfigException
+	 * @throws NotSupportedException
+	 * @throws Exception
+	 */
+	public static function ResetTargetsTables():bool {
+		$connection = Yii::$app->db;
+		$transaction = new Transaction([
+			'db' => $connection
+		]);
+		$transaction->begin();
+		$tables = [
+			'import_targets',
+			'import_targets_clusters',
+			'import_targets_commands',
+			'import_targets_milestones',
+			'import_targets_subinitiatives',
+			'import_targets_targets',
+			'ref_targets_results',
+			'ref_targets_types',
+			'rel_targets_groups',
+			'rel_targets_targets',
+			'rel_targets_users',
+			'sys_targets',
+			'sys_targets_budgets',
+			'sys_targets_intervals',
+			'sys_targets_results',
+		];
+
+		try {
+			foreach ($tables as $table) {
+				$connection->createCommand("TRUNCATE TABLE $table")->execute();
+				$connection->createCommand("ALTER TABLE $table AUTO_INCREMENT = 0")->execute();
+			}
+		} /** @noinspection BadExceptionsProcessingInspection */ catch (Throwable $t) {
+			$transaction->rollBack();
+			return false;
+		}
+		$transaction->commit();
+		return true;
+	}
 }
