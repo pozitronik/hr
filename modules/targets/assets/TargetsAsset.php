@@ -15,9 +15,6 @@ class TargetsAsset extends AssetBundle {
 	public $css = [
 		'css/targets.css'
 	];
-	public $js = [
-	];
-
 	public $publishOptions = [
 		'forceCopy' => YII_ENV_DEV
 	];

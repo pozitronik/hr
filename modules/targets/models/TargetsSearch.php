@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
