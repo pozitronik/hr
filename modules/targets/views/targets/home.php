@@ -69,6 +69,12 @@ TargetsAsset::register($this);
 					'class' => DataColumn::class,
 					'attribute' => 'name',
 					'label' => 'Веха',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model,
@@ -88,6 +94,13 @@ TargetsAsset::register($this);
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'is_year',
+					'label' => 'Годовая цель',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model->getQuarterTargets()->all(),
@@ -106,6 +119,12 @@ TargetsAsset::register($this);
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'q1',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model->getQuarterTargets(1)->all(),
@@ -124,6 +143,12 @@ TargetsAsset::register($this);
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'q2',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model->getQuarterTargets(2)->all(),
@@ -142,6 +167,12 @@ TargetsAsset::register($this);
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'q3',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model->getQuarterTargets(3)->all(),
@@ -160,6 +191,12 @@ TargetsAsset::register($this);
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'q4',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
 							'models' => $model->getQuarterTargets(4)->all(),
