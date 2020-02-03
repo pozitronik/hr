@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
-use app\modules\targets\models\references\RefTargetsResults;
+use app\modules\targets\assets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsSearch;
@@ -27,6 +26,7 @@ use yii\web\View;
 $this->title = 'Мои цели';
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
+TargetsAsset::register($this);
 ?>
 
 <div class="panel">
@@ -67,15 +67,16 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				[
 					'class' => DataColumn::class,
-					'attribute' => 'parent_name',
+					'attribute' => 'name',
 					'label' => 'Веха',
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
-							'models' => $model->relParentTarget,
+							'models' => $model,
 							'attribute' => 'name',
 							"badgeOptions" => [
-								'class' => "badge badge-info"
+								'class' => "badge badge-target"
 							],
+							'itemsSeparator' => false,
 							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 							"optionsMapAttribute" => 'type',
 							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
@@ -87,22 +88,18 @@ $this->params['breadcrumbs'][] = $this->title;
 				[
 					'class' => DataColumn::class,
 					'attribute' => 'is_year',
-					'label' => 'Годовая цель',
 					'value' => static function(Targets $model) {
-						if ($model->relTargetsPeriods->is_year) {
-							return BadgeWidget::widget([
-								'models' => $model,
-								'attribute' => 'name',
-								"badgeOptions" => [
-									'class' => "badge badge-info"
-								],
-								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
-							]);
-						}
-						return null;
-
+						return BadgeWidget::widget([
+							'models' => $model->getQuarterTargets()->all(),
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-target"
+							],
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+						]);
 					},
 					'format' => 'raw'
 				],
@@ -110,20 +107,17 @@ $this->params['breadcrumbs'][] = $this->title;
 					'class' => DataColumn::class,
 					'attribute' => 'q1',
 					'value' => static function(Targets $model) {
-						if ($model->relTargetsPeriods->q1) {
-							return BadgeWidget::widget([
-								'models' => $model,
-								'attribute' => 'name',
-								"badgeOptions" => [
-									'class' => "badge badge-info"
-								],
-								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
-							]);
-						}
-						return null;
-
+						return BadgeWidget::widget([
+							'models' => $model->getQuarterTargets(1)->all(),
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-target"
+							],
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+						]);
 					},
 					'format' => 'raw'
 				],
@@ -131,20 +125,17 @@ $this->params['breadcrumbs'][] = $this->title;
 					'class' => DataColumn::class,
 					'attribute' => 'q2',
 					'value' => static function(Targets $model) {
-						if ($model->relTargetsPeriods->q2) {
-							return BadgeWidget::widget([
-								'models' => $model,
-								'attribute' => 'name',
-								"badgeOptions" => [
-									'class' => "badge badge-info"
-								],
-								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
-							]);
-						}
-						return null;
-
+						return BadgeWidget::widget([
+							'models' => $model->getQuarterTargets(2)->all(),
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-target"
+							],
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+						]);
 					},
 					'format' => 'raw'
 				],
@@ -152,20 +143,17 @@ $this->params['breadcrumbs'][] = $this->title;
 					'class' => DataColumn::class,
 					'attribute' => 'q3',
 					'value' => static function(Targets $model) {
-						if ($model->relTargetsPeriods->q3) {
-							return BadgeWidget::widget([
-								'models' => $model,
-								'attribute' => 'name',
-								"badgeOptions" => [
-									'class' => "badge badge-info"
-								],
-								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
-							]);
-						}
-						return null;
-
+						return BadgeWidget::widget([
+							'models' => $model->getQuarterTargets(3)->all(),
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-target"
+							],
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+						]);
 					},
 					'format' => 'raw'
 				],
@@ -173,44 +161,20 @@ $this->params['breadcrumbs'][] = $this->title;
 					'class' => DataColumn::class,
 					'attribute' => 'q4',
 					'value' => static function(Targets $model) {
-						if ($model->relTargetsPeriods->q4) {
-							return BadgeWidget::widget([
-								'models' => $model,
-								'attribute' => 'name',
-								"badgeOptions" => [
-									'class' => "badge badge-info"
-								],
-								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
-							]);
-						}
-						return null;
-
+						return BadgeWidget::widget([
+							'models' => $model->getQuarterTargets(4)->all(),
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-target"
+							],
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+						]);
 					},
 					'format' => 'raw'
 				],
-				[
-					'class' => DataColumn::class,
-					'attribute' => 'N/A',
-					'value' => static function(Targets $model) {
-						if ($model->relTargetsPeriods->notSet) {
-							return BadgeWidget::widget([
-								'models' => $model,
-								'attribute' => 'name',
-								"badgeOptions" => [
-									'class' => "badge badge-info"
-								],
-								"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
-							]);
-						}
-						return null;
-
-					},
-					'format' => 'raw'
-				]
 			],
 
 			'rowOptions' => static function($record) {
