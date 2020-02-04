@@ -29,6 +29,7 @@ use yii\helpers\Html;
  * @property array $badgeOptions
  * @property array $moreBadgeOptions
  * @property string|callable $prefix
+ * @property string|callable $badgePrefix
  * @property string|null|false $emptyResult
  * @property bool $iconify
  * @property null|string|callable $tooltip
@@ -52,7 +53,8 @@ class BadgeWidget extends CachedWidget {
 	public $optionsMapAttribute; //Имя аттрибута, используемого для подбора значения в $optionsMap, если null, то используется primaryKey (или id, если модель не имеет первичного ключа)
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
-	public $prefix = '';//строчка, добавляемая перед бейджами, может задаваться замыканием
+	public $prefix = '';//строчка, добавляемая перед всеми бейджами, может задаваться замыканием
+	public $badgePrefix = '';////строчка, добавляемая перед каждым бейджем, может задаваться замыканием, принимает параметром текущую модель
 	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
 	public $iconify = false;//Свернуть содержимое бейджа в иконку
 	public $tooltip;//если не null, то на бейдж навешивается тултип. Можно задавать замыканием user_func($model):string
@@ -136,9 +138,11 @@ class BadgeWidget extends CachedWidget {
 			}
 
 			if ($this->useBadges) {
-				$result[] = Html::tag("span", $badgeContent, array_merge(['class' => 'badge'], $badgeHtmlOptions));
+				$badgeContent = Html::tag("span", $badgeContent, array_merge(['class' => 'badge'], $badgeHtmlOptions));
+				$result[] = (ReflectionHelper::is_closure($this->badgePrefix))?call_user_func($this->badgePrefix, $model).$badgeContent:$badgeContent;
+
 			} else {
-				$result[] = $badgeContent;
+				$result[] = (ReflectionHelper::is_closure($this->badgePrefix))?call_user_func($this->badgePrefix, $model).$badgeContent:$badgeContent;
 			}
 
 		}
