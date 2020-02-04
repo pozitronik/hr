@@ -154,7 +154,19 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
+					'badgePrefix' => static function(Targets $model) {
+						return ($model->isMirrored)?BadgeWidget::widget([
+							'models' => (array)$model->relGroups,
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => ':',
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+							'prefix' => "Зеркалится: "
+						]):'';
+					}
 				]);
 			},
 			'format' => 'raw'
@@ -178,7 +190,19 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
+					'badgePrefix' => static function(Targets $model) {
+						return ($model->isMirrored)?BadgeWidget::widget([
+							'models' => (array)$model->relGroups,
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => ':',
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+							'prefix' => "Зеркалится: "
+						]):'';
+					}
 				]);
 			},
 			'format' => 'raw'
@@ -202,7 +226,19 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
+					'badgePrefix' => static function(Targets $model) {
+						return ($model->isMirrored)?BadgeWidget::widget([
+							'models' => (array)$model->relGroups,
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => ':',
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+							'prefix' => "Зеркалится: "
+						]):'';
+					}
 				]);
 			},
 			'format' => 'raw'
@@ -226,7 +262,19 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
+					'badgePrefix' => static function(Targets $model) {
+						return ($model->isMirrored)?BadgeWidget::widget([
+							'models' => (array)$model->relGroups,
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => ':',
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+							'prefix' => "Зеркалится: "
+						]):'';
+					}
 				]);
 			},
 			'format' => 'raw'
@@ -252,7 +300,19 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
+					'badgePrefix' => static function(Targets $model) {
+						return ($model->isMirrored)?BadgeWidget::widget([
+							'models' => (array)$model->relGroups,
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => ':',
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+							'prefix' => "Зеркалится: "
+						]):'';
+					}
 				]);
 			},
 			'format' => 'raw'
