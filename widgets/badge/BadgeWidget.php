@@ -137,12 +137,12 @@ class BadgeWidget extends CachedWidget {
 				$badgeContent = Html::a($badgeContent, $currentLinkScheme);
 			}
 
-			if ($this->useBadges) {
-				$badgeContent = Html::tag("span", $badgeContent, array_merge(['class' => 'badge'], $badgeHtmlOptions));
-				$result[] = (ReflectionHelper::is_closure($this->badgePrefix))?call_user_func($this->badgePrefix, $model).$badgeContent:$badgeContent;
+			$badgeContent = (ReflectionHelper::is_closure($this->badgePrefix))?call_user_func($this->badgePrefix, $model).$badgeContent:$badgeContent;
 
+			if ($this->useBadges) {
+				$result[] = Html::tag("span", $badgeContent, array_merge(['class' => 'badge'], $badgeHtmlOptions));
 			} else {
-				$result[] = (ReflectionHelper::is_closure($this->badgePrefix))?call_user_func($this->badgePrefix, $model).$badgeContent:$badgeContent;
+				$result[] = $badgeContent;
 			}
 
 		}
