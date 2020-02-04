@@ -5,6 +5,7 @@ namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
 use app\models\user\CurrentUser;
+use app\modules\groups\models\Groups;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
 use app\modules\targets\models\TargetsSearch;
@@ -108,19 +109,22 @@ class TargetsController extends WigetableController {
 		$id = $id??CurrentUser::Id();
 		$searchModel = new TargetsSearch();
 		$dataProvider = $searchModel->findUserTargets($id, Yii::$app->request->queryParams);
-		return $this->render('home', compact('searchModel', 'dataProvider'));
+		$title = null;
+		return $this->render('home', compact('searchModel', 'dataProvider', 'title'));
 	}
 
 	/**
 	 * Отображение целей группы
 	 * @param int $id
-	 * @return string
+	 * @return null|string
 	 * @throws Throwable
 	 */
-	public function actionGroup(int $id):string {
+	public function actionGroup(int $id):?string {
+		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		$searchModel = new TargetsSearch();
 		$dataProvider = $searchModel->findGroupTargets($id, Yii::$app->request->queryParams);
-		return $this->render('home', compact('searchModel', 'dataProvider'));
+		$title = "Цели группы {$group->name}";
+		return $this->render('home', compact('searchModel', 'dataProvider', 'title'));
 	}
 
 }

@@ -21,9 +21,10 @@ use yii\web\View;
  * @var View $this
  * @var ActiveDataProvider $dataProvider
  * @var TargetsSearch $searchModel
+ * @var string $title
  */
 
-$this->title = 'Мои цели';
+$this->title = $title??'Мои цели';
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 TargetsAsset::register($this);
