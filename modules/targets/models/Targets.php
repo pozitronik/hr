@@ -261,7 +261,7 @@ class Targets extends ActiveRecordExtended {
 	 * @return bool
 	 */
 	public function getIsMirrored():bool {
-		return 1 < $this->relGroups->count();
+		return 1 < count($this->relGroups);
 	}
 
 }
