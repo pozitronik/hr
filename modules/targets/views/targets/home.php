@@ -119,19 +119,16 @@ TargetsAsset::register($this);
 					"optionsMapAttribute" => 'type',
 					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
 					'badgePrefix' => static function(Targets $model) {
-						if ($model->isMirrored) {
-							return BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => true,
-								'itemsSeparator' => ':',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							]);
-						}
-						return '';
+						return ($model->isMirrored)?BadgeWidget::widget([
+							'models' => (array)$model->relGroups,
+							'attribute' => 'name',
+							'useBadges' => true,
+							'itemsSeparator' => ':',
+							"optionsMap" => RefGroupTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+							'prefix' => "Зеркалится: "
+						]):'';
 					}
 				]);
 
