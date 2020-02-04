@@ -35,7 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'panel' => [
-		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)")
+		'heading' => $this->title.(($dataProvider->totalCount > 0)?" (".Utils::pluralForm($dataProvider->totalCount, ['группа', 'группы', 'групп']).")":" (нет групп)"),
+		'before' => false,
 	],
 	'summary' => Html::a('Новая группа', GroupsModule::to(['groups/create']), ['class' => 'btn btn-success summary-content']),
 	'showOnEmpty' => true,
