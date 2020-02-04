@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
+use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\targets\assets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
@@ -116,8 +117,24 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
+					'badgePrefix' => static function(Targets $model) {
+						if ($model->isMirrored) {
+							return BadgeWidget::widget([
+								'models' => (array)$model->relGroups,
+								'attribute' => 'name',
+								'useBadges' => true,
+								'itemsSeparator' => ':',
+								"optionsMap" => RefGroupTypes::colorStyleOptions(),
+								"optionsMapAttribute" => 'type',
+								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+								'prefix' => "Зеркалится: "
+							]);
+						}
+						return '';
+					}
 				]);
+
 			},
 			'format' => 'raw'
 		],
