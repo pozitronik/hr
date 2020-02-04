@@ -148,7 +148,7 @@ class BadgeWidget extends CachedWidget {
 		}
 		if ([] === $result && false !== $this->emptyResult) $result = [$this->emptyResult];
 
-		if (ReflectionHelper::is_closure($this->prefix)) $this->prefix = call_user_func($this->prefix, $model);
+		if (ReflectionHelper::is_closure($this->prefix)) $this->prefix = call_user_func($this->prefix);
 
 		return $this->prefix.implode($this->itemsSeparator, $result).$moreBadge;
 
