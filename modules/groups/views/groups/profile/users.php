@@ -89,9 +89,7 @@ use yii\web\View;
 					'attribute' => 'name',
 					'unbadgedCount' => 3,
 					'itemsSeparator' => false,
-					"optionsMap" => static function() {
-						return RefUserPositionTypes::colorStyleOptions();
-					},
+					"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
 					'linkScheme' => [UsersModule::to(), 'UsersSearch[positionType]' => 'id', 'UsersSearch[groupId]' => ArrayHelper::getColumn($user->relGroups, 'id', [])]
 				]);
 			},
