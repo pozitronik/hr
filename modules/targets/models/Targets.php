@@ -46,6 +46,7 @@ use yii\db\ActiveQuery;
  *
  * @property ActiveQuery|TargetsPeriods $relTargetsPeriods
  *
+ * @property-read bool $isMirrored -- зеркальная ли цель
  */
 class Targets extends ActiveRecordExtended {
 	/**
@@ -254,6 +255,13 @@ class Targets extends ActiveRecordExtended {
 			break;
 		}
 		return $query;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getIsMirrored():bool {
+		return 1 < $this->relGroups->count();
 	}
 
 }
