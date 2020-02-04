@@ -105,16 +105,13 @@ class TargetsSearch extends Targets {
 		}
 
 		$allUserTargets = Targets::find()->active()->joinWith(['relGroups', 'relUsers'])->andFilterWhere(['sys_groups.id' => $userCommandsId])->orFilterWhere(['sys_users.id' => $userId])->all();
-		$allUserMilestones = [];
-		foreach ($allUserTargets as $userTarget) {
-			$allUserMilestones[] = $userTarget->relParentTarget;
-		}
 
+		$allUserMilestones = ArrayHelper::getColumn($allUserTargets, 'relParentTarget.id');
 		$this->load($params);
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => Targets::find()->active()
-				->where(['id' => ArrayHelper::getColumn($allUserMilestones, 'id')])
+				->where(['id' => $allUserMilestones])
 				->andFilterWhere(['like', 'sys_targets.name', $this->name])
 		]);
 
@@ -125,23 +122,25 @@ class TargetsSearch extends Targets {
 
 	/**
 	 * Все цели группы
-	 * @param int $groupId
+	 * @param null|int $groupId
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function findGroupTargets(int $groupId, array $params):ActiveDataProvider {
-		$allGroupTargets = Targets::find()->active()->joinWith(['relGroups'])->andFilterWhere(['sys_groups.id' => $groupId])->all();
-		$allGroupMilestones = [];
-		foreach ($allGroupTargets as $userTarget) {
-			$allGroupMilestones[] = $userTarget->relParentTarget;
-		}
+	public function findGroupTargets(?int $groupId, array $params):ActiveDataProvider {
+		$allGroupTargets = Targets::find()->active()->joinWith(['relGroups'])
+			->andFilterWhere(['sys_groups.id' => $groupId])
+			->andWhere(['sys_groups.type' => RefTargetsTypes::findId('Цель')])
+			->all();
+
+		$allGroupMilestones = array_unique(ArrayHelper::getColumn($allGroupTargets, 'relParentTarget.id'));
 
 		$this->load($params);
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => Targets::find()->active()
-				->where(['id' => ArrayHelper::getColumn($allGroupMilestones, 'id')])
+				->where(['id' => $allGroupMilestones])
 				->andFilterWhere(['like', 'sys_targets.name', $this->name])
+				->andFilterWhere(['like', 'sys_groups.name', $this->group_name])
 		]);
 
 		if (!$this->validate()) return $dataProvider;
