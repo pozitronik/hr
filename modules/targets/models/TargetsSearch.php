@@ -30,6 +30,7 @@ class TargetsSearch extends Targets {
 	}
 
 	/**
+	 * Все цели
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
@@ -114,6 +115,32 @@ class TargetsSearch extends Targets {
 		$dataProvider = new ActiveDataProvider([
 			'query' => Targets::find()->active()
 				->where(['id' => ArrayHelper::getColumn($allUserMilestones, 'id')])
+				->andFilterWhere(['like', 'sys_targets.name', $this->name])
+		]);
+
+		if (!$this->validate()) return $dataProvider;
+
+		return $dataProvider;
+	}
+
+	/**
+	 * Все цели группы
+	 * @param int $groupId
+	 * @param array $params
+	 * @return ActiveDataProvider
+	 */
+	public function findGroupTargets(int $groupId, array $params):ActiveDataProvider {
+		$allGroupTargets = Targets::find()->active()->joinWith(['relGroups'])->andFilterWhere(['sys_groups.id' => $groupId])->all();
+		$allGroupMilestones = [];
+		foreach ($allGroupTargets as $userTarget) {
+			$allGroupMilestones[] = $userTarget->relParentTarget;
+		}
+
+		$this->load($params);
+
+		$dataProvider = new ActiveDataProvider([
+			'query' => Targets::find()->active()
+				->where(['id' => ArrayHelper::getColumn($allGroupMilestones, 'id')])
 				->andFilterWhere(['like', 'sys_targets.name', $this->name])
 		]);
 
