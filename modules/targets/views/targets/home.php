@@ -14,7 +14,6 @@ use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html;
 use yii\i18n\Formatter;
 use yii\web\View;
 
@@ -116,7 +115,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
@@ -140,7 +139,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
@@ -164,7 +163,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
@@ -188,7 +187,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
@@ -212,7 +211,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
@@ -238,7 +237,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => false,
 					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 				]);
 			},
 			'format' => 'raw'
