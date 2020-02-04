@@ -111,4 +111,16 @@ class TargetsController extends WigetableController {
 		return $this->render('home', compact('searchModel', 'dataProvider'));
 	}
 
+	/**
+	 * Отображение целей группы
+	 * @param int $id
+	 * @return string
+	 * @throws Throwable
+	 */
+	public function actionGroup(int $id):string {
+		$searchModel = new TargetsSearch();
+		$dataProvider = $searchModel->findGroupTargets($id, Yii::$app->request->queryParams);
+		return $this->render('home', compact('searchModel', 'dataProvider'));
+	}
+
 }
