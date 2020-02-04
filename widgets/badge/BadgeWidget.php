@@ -30,6 +30,7 @@ use yii\helpers\Html;
  * @property array $moreBadgeOptions
  * @property string|callable $prefix
  * @property string|callable $badgePrefix
+ * @property string|callable $badgePostfix
  * @property string|null|false $emptyResult
  * @property bool $iconify
  * @property null|string|callable $tooltip
@@ -54,7 +55,8 @@ class BadgeWidget extends CachedWidget {
 	public $badgeOptions = ['class' => 'badge'];//дефолтная опция для бейджа
 	public $moreBadgeOptions = ['class' => 'badge pull-right'];//Массив HTML-опций для бейджа "ещё".
 	public $prefix = '';//строчка, добавляемая перед всеми бейджами, может задаваться замыканием
-	public $badgePrefix = '';////строчка, добавляемая перед каждым бейджем, может задаваться замыканием, принимает параметром текущую модель
+	public $badgePrefix = '';//строчка, добавляемая перед содержимым каждого, может задаваться замыканием, принимает параметром текущую модель
+	public $badgePostfix = '';//строчка, добавляемая после содержимого каждого бейджа, может задаваться замыканием, принимает параметром текущую модель
 	public $emptyResult = false;//значение, возвращаемое, если из обрабатываемых данных не удалось получить результат (обрабатываем пустые массивы, модель не содержит данных, etc)
 	public $iconify = false;//Свернуть содержимое бейджа в иконку
 	public $tooltip;//если не null, то на бейдж навешивается тултип. Можно задавать замыканием user_func($model):string
@@ -138,6 +140,7 @@ class BadgeWidget extends CachedWidget {
 			}
 
 			$badgeContent = (ReflectionHelper::is_closure($this->badgePrefix))?call_user_func($this->badgePrefix, $model).$badgeContent:$badgeContent;
+			$badgeContent = (ReflectionHelper::is_closure($this->badgePostfix))?$badgeContent.call_user_func($this->badgePostfix, $model):$badgeContent;
 
 			if ($this->useBadges) {
 				$result[] = Html::tag("span", $badgeContent, array_merge(['class' => 'badge'], $badgeHtmlOptions));
