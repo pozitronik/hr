@@ -235,7 +235,7 @@ class Targets extends ActiveRecordExtended {
 	 * @param int $quarter
 	 * @return LCQuery
 	 */
-	public function getQuarterTargets(?int $quarter = 0):LCQuery {
+	public function getQuarterTargets(int $quarter = TargetsPeriods::PERIOD_NOT_SET):LCQuery {
 		$query = self::find()->active()->joinWith(['relTargetsTargetsParent parent', 'relTargetsPeriods'])->where(['parent_id' => $this->id]);
 		switch ($quarter) {
 			default:
@@ -245,7 +245,7 @@ class Targets extends ActiveRecordExtended {
 			case 0:
 				$query->andWhere(["sys_targets_periods.is_year" => true]);
 			break;
-			case null:
+			case -1:
 				$query->andWhere(["sys_targets_periods.is_year" => false])
 					->andWhere(["sys_targets_periods.q1" => false])
 					->andWhere(["sys_targets_periods.q2" => false])

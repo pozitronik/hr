@@ -28,6 +28,9 @@ use yii\db\ActiveRecord;
 class TargetsPeriods extends ActiveRecord {
 	use ARExtended;
 
+	public const PERIOD_YEAR = 0;
+	public const PERIOD_NOT_SET = -1;
+
 	/**
 	 * {@inheritdoc}
 	 */

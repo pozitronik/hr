@@ -6,6 +6,7 @@ use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMe
 use app\modules\targets\assets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
+use app\modules\targets\models\TargetsPeriods;
 use app\modules\targets\models\TargetsSearch;
 use app\modules\targets\TargetsModule;
 use app\modules\targets\widgets\navigation_menu\TargetNavigationMenuWidget;
@@ -103,7 +104,7 @@ TargetsAsset::register($this);
 					],
 					'value' => static function(Targets $model) {
 						return BadgeWidget::widget([
-							'models' => $model->getQuarterTargets()->all(),
+							'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->all(),
 							'attribute' => 'name',
 							"badgeOptions" => [
 								'class' => "badge badge-target"
@@ -212,6 +213,30 @@ TargetsAsset::register($this);
 					},
 					'format' => 'raw'
 				],
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'not_set',
+					'headerOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'contentOptions' => [
+						'class' => 'kv-align-center kv-align-middle'
+					],
+					'value' => static function(Targets $model) {
+						return BadgeWidget::widget([
+							'models' => $model->getQuarterTargets()->all(),
+							'attribute' => 'name',
+							"badgeOptions" => [
+								'class' => "badge badge-target"
+							],
+							'itemsSeparator' => false,
+							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
+							"optionsMapAttribute" => 'type',
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
+						]);
+					},
+					'format' => 'raw'
+				]
 			],
 
 			'rowOptions' => static function($record) {
