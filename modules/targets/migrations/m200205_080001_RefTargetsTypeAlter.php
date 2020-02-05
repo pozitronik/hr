@@ -10,7 +10,7 @@ class m200205_080001_RefTargetsTypeAlter extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->addColumn('ref_targets_types', 'order', $this->integer()->notNull()->defaultValue(-1)->comment('Порядок включения целей, чем меньше - тем больше цель'));
+		$this->addColumn('ref_targets_types', 'order', $this->integer()->null()->comment('Порядок включения целей, чем меньше - тем больше цель'));
 		$this->createIndex('order', 'ref_targets_types', 'order');//Логично, что порядок уникален, но оставляем для удобства
 
 	}
