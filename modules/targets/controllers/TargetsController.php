@@ -44,7 +44,7 @@ class TargetsController extends WigetableController {
 		$newTarget = new Targets();
 
 		if ($newTarget->createModel(Yii::$app->request->post($newTarget->formName()))) {//todo: в таком режиме сохранение происходит потапно в разных транзакциях. Нужно предусмотреть механизм, в котором связанные объекты смогут сохраняться как единое целое. Возможно, это будет составная супермодель, не знаю.
-			if ($newTarget->relTargetsTypes->isFinal) {//если это финальный тип цели, создадим ему запись с интервалами
+			if ($newTarget->isFinal) {//если это финальный тип цели, создадим ему запись с интервалами
 				($newTargetInterval = new TargetsPeriods(['target_id' => $newTarget->id]))->createModel(Yii::$app->request->post($newTargetInterval->formName()));
 			}
 			if (Yii::$app->request->post('more', false)) return $this->redirect('create');//Создали и создаём ещё
