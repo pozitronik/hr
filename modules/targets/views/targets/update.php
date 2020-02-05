@@ -12,12 +12,12 @@ use app\modules\targets\TargetsModule;
 use yii\data\ArrayDataProvider;
 use yii\web\View;
 
-$this->title = "Изменить задание {$model->name}";
+$this->title = "Изменить задание целеполагания";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render($model->relTargetsTypes->isFinal?'final_form':'_form', [
+<?= $this->render($model->isFinal?'final_form':'_form', [
 	'model' => $model
 ])
 ?>
