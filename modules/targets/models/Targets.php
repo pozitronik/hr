@@ -33,8 +33,8 @@ use yii\db\ActiveQuery;
  * @property boolean $deleted Флаг удаления
  *
  * @property
- * @property ActiveQuery|Targets|null $relParentTarget -- вышестоящая задача целеполагания (если есть)
- * @property ActiveQuery|Targets[] $relChildTarget -- нижестоящие задачи целеполагания
+ * @property ActiveQuery|Targets $relParentTarget -- вышестоящая задача целеполагания (если есть)
+ * @property ActiveQuery|Targets[] $relChildTargets -- нижестоящие задачи целеполагания
  *
  * @property ActiveQuery|RefTargetsTypes $relTargetsTypes Тип задания через релейшен
  * @property ActiveQuery|RefTargetsResults $relTargetsResults Тип результата задания через релейшен
@@ -48,6 +48,8 @@ use yii\db\ActiveQuery;
  *
  * @property-read bool $isMirrored -- зеркальная ли цель
  * @property-read bool $isFinal -- финальная цель (нет нижестоящих уровней, но есть финальные атрибуты)
+ *
+ * @property-read string $logo -- фейковое свойство, нужно для отображения на графе
  */
 class Targets extends ActiveRecordExtended {
 	/**
@@ -137,11 +139,11 @@ class Targets extends ActiveRecordExtended {
 	}
 
 	/**
-	 * Вернёт нижестоящую задачу целеполагания, если есть
-	 * @return Targets|ActiveQuery|null
+	 * Вернёт нижестоящие задачу целеполагания, если есть
+	 * @return Targets[]|ActiveQuery
 	 */
-	public function getRelChildTarget() {
-		return $this->hasOne(self::class, ['id' => 'child_id'])->via('relTargetsTargetsChild');
+	public function getRelChildTargets() {
+		return $this->hasMany(self::class, ['id' => 'child_id'])->via('relTargetsTargetsChild');
 	}
 
 	/**
@@ -269,6 +271,13 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function getIsFinal():bool {
 		return $this->relTargetsTypes->isFinal;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLogo():string {
+		return "/img/targets/".mb_strtolower($this->relTargetsTypes->name).".png";
 	}
 
 }
