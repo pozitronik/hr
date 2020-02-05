@@ -15,6 +15,8 @@ use yii\db\ActiveQuery;
  * @property int|null $parent -- id родительского типа цели, null если высший
  *
  * @property RefTargetsTypes|ActiveQuery $relParent
+ * @property RefTargetsTypes|ActiveQuery $relChild
+ * @property-read bool $isFinal
  */
 class RefTargetsTypes extends CustomisableReference {
 	public $menuCaption = 'Типы целей';
@@ -51,7 +53,8 @@ class RefTargetsTypes extends CustomisableReference {
 			'usedCount' => 'Использований',
 			'color' => 'Цвет фона',
 			'textcolor' => 'Цвет текста',
-			'parent' => 'Вышестоящий тип'
+			'parent' => 'Вышестоящий тип',
+			'isFinal' => 'Финальный тип'
 		];
 	}
 
@@ -62,6 +65,13 @@ class RefTargetsTypes extends CustomisableReference {
 		return [
 			[
 				'attribute' => 'id',
+				'options' => [
+					'style' => 'width:36px;'
+				]
+			],
+			[
+				'attribute' => 'isFinal',
+				'format' => 'boolean',
 				'options' => [
 					'style' => 'width:36px;'
 				]
@@ -129,5 +139,21 @@ class RefTargetsTypes extends CustomisableReference {
 	 */
 	public function getRelParent() {
 		return $this->hasOne(static::class, ['id' => 'parent']);
+	}
+
+	/**
+	 * @return RefTargetsTypes|ActiveQuery
+	 */
+	public function getRelChild() {
+		return $this->hasOne(static::class, ['parent' => 'id']);
+	}
+
+	/**
+	 * Является ли тип цели финальным.
+	 * Финальный тип не может иметь нижестоящие цели, но имеет атрибуты сроков и может зеркалироваться (т.е. это "цель" в понятиях бизнеса)
+	 * @return bool
+	 */
+	public function getIsFinal():bool {
+		return (null !== $this->parent && null === $this->relChild);
 	}
 }
