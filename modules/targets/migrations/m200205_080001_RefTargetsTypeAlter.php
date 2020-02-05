@@ -10,8 +10,8 @@ class m200205_080001_RefTargetsTypeAlter extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeUp() {
-		$this->addColumn('ref_targets_types', 'order', $this->integer()->null()->comment('Порядок включения целей, чем меньше - тем больше цель'));
-		$this->createIndex('order', 'ref_targets_types', 'order');//Логично, что порядок уникален, но оставляем для удобства
+		$this->addColumn('ref_targets_types', 'parent', $this->integer()->null()->comment('id родительского типа цели, null если высший'));
+		$this->createIndex('parent', 'ref_targets_types', 'parent');//Логично, что порядок уникален, но оставляем для удобства
 
 	}
 
@@ -19,7 +19,7 @@ class m200205_080001_RefTargetsTypeAlter extends Migration {
 	 * {@inheritdoc}
 	 */
 	public function safeDown() {
-		$this->dropColumn('ref_targets_types', 'order');
+		$this->dropColumn('ref_targets_types', 'parent');
 	}
 
 	/*
