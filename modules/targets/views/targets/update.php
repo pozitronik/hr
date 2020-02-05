@@ -2,22 +2,22 @@
 declare(strict_types = 1);
 
 /**
- * @var ActiveRecord $model
+ * @var Targets $model
  * @var View $this
  * @var ArrayDataProvider $userRights
  */
 
+use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
 use yii\data\ArrayDataProvider;
-use yii\db\ActiveRecord;
 use yii\web\View;
 
-$this->title = 'Изменить задачу целеполагания';
+$this->title = "Изменить задание {$model->name}";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('_form', [
+<?= $this->render($model->relTargetsTypes->isFinal?'final_form':'_form', [
 	'model' => $model
 ])
 ?>

@@ -25,7 +25,7 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property int $type
- * @property int $result_type
+ * @property int|null $result_type
  * @property string $name
  * @property string $comment
  * @property string $create_date Дата регистрации
@@ -79,7 +79,7 @@ class Targets extends ActiveRecordExtended {
 	public function attributeLabels():array {
 		return [
 			'type' => 'Тип цели',
-			'result_type' => 'Тип результата цели',
+			'result_type' => 'Тип результата',
 			'name' => 'Название',
 			'comment' => 'Описание',
 			'create_date' => 'Дата создания',
@@ -227,9 +227,7 @@ class Targets extends ActiveRecordExtended {
 	 * @return TargetsPeriods|ActiveQuery
 	 */
 	public function getRelTargetsPeriods() {
-		/* todo: возможно, цели стоит вынести в отдельный класс - только у них есть периоды фактические, у остальных задач это будут виртуальные периоды, складывающиеся из периодов целей. */
-		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
-//		return (null === $periods->one())?new TargetsPeriods(['target_id' => $this->id]):$periods;
+		return ($this->relTargetsTypes->isFinal)?$this->hasOne(TargetsPeriods::class, ['target_id' => 'id']):null;
 	}
 
 	/**
