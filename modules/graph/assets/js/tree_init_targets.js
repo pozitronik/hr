@@ -10,7 +10,7 @@ const URL_LOAD_GRAPH = '/graph/targets/graph',//загрузка структу�
 	URL_LOAD_POSITIONS = '/graph/targets/load-positions',//загрузка позиций
 	URL_SAVE_POSITIONS = '/graph/targets/save-positions',//сохранение ----
 	URL_DELETE_POSITIONS = '/graph/targets/delete-positions',//удаление ----
-	URL_TARGETS_PROFILE = '/targets/targets/profile';//профиль цели
+	URL_TARGETS_PROFILE = '/targets/targets/update';//профиль цели
 
 class GraphControl {
 
@@ -47,7 +47,7 @@ class GraphControl {
 		this.network.on("doubleClick", function(params) {
 			if (0 === params.nodes.length) return;
 			let nodeId = params.nodes[0];
-			let id = nodeId.substring(6);
+			let id = nodeId.substring(7);
 			window.open(URL_TARGETS_PROFILE + '?id=' + id, '_blank');
 		});
 
