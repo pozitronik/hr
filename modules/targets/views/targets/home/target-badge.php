@@ -31,25 +31,28 @@ TargetsAsset::register($this);
 	'badgePostfix' => static function(Targets $model) {
 		$mirroredData = [];
 		if ($model->isMirrored) {
-
-			$mirroredData[] = BadgeWidget::widget([
-				'models' => (array)$model->relGroups,
-				'attribute' => 'name',
-				'useBadges' => false,
-				'itemsSeparator' => ', ',
-				"optionsMap" => RefGroupTypes::colorStyleOptions(),
-				"optionsMapAttribute" => 'type',
-				'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-			]);
-			$mirroredData[] = BadgeWidget::widget([
-				'models' => (array)$model->relUsers,
-				'attribute' => 'username',
-				'useBadges' => false,
-				'itemsSeparator' => ', ',
-				"optionsMap" => RefUserPositions::colorStyleOptions(),
-				"optionsMapAttribute" => 'type',
-				'linkScheme' => [TargetsModule::to('targets/users'), 'id' => 'id'],
-			]);
+			if ([] !== $model->relGroups) {
+				$mirroredData[] = BadgeWidget::widget([
+					'models' => (array)$model->relGroups,
+					'attribute' => 'name',
+					'useBadges' => false,
+					'itemsSeparator' => ', ',
+					"optionsMap" => RefGroupTypes::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+				]);
+			}
+			if ([] !== $model->relUsers) {
+				$mirroredData[] = BadgeWidget::widget([
+					'models' => (array)$model->relUsers,
+					'attribute' => 'username',
+					'useBadges' => false,
+					'itemsSeparator' => ', ',
+					"optionsMap" => RefUserPositions::colorStyleOptions(),
+					"optionsMapAttribute" => 'type',
+					'linkScheme' => [TargetsModule::to('targets/users'), 'id' => 'id'],
+				]);
+			}
 		}
 		return ([] !== $mirroredData)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
 				'models' => $mirroredData,
