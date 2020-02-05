@@ -84,8 +84,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				]);
 			},
 			'filter' => ArrayHelper::getValue($searchModel, 'positions'),
-			'filterType' => ReferenceSelectWidget::class,
 			'filterInputOptions' => ['placeholder' => 'Выберите должность'],
+			'filterType' => ReferenceSelectWidget::class,
 			'filterWidgetOptions' => [
 				'referenceClass' => RefUserPositions::class,
 				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
