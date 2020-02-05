@@ -119,7 +119,7 @@ class GraphControl {
 					enabled: true,
 					levelSeparation: 200,
 					nodeSpacing: 200,
-					treeSpacing: 200,
+					treeSpacing: 400,
 					blockShifting: true,
 					edgeMinimization: true,
 					parentCentralization: true,
