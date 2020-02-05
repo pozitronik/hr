@@ -107,15 +107,15 @@ class TargetsPeriods extends ActiveRecord {
 
 	/**
 	 * Строковое представление периодов цели
-	 * @return string
+	 * @return string[]
 	 */
-	public function toFilePeriod():string {
+	public function toFilePeriod():array {
 		$result = [];
 		foreach (['q1', 'q2', 'q3', 'q4', 'is_year'] as $value) {
 			if (true === (bool)$this->{$value}) {
 				$result[] = $this->attributeLabels()[$value];
 			}
 		}
-		return implode(', ', $result);
+		return $result;
 	}
 }

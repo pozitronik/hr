@@ -153,7 +153,11 @@ TargetsAsset::register($this);
 					'attribute' => 'quarter',
 					'label' => 'Период',
 					'value' => static function(Targets $target) {
-						return $target->relTargetsPeriods->toFilePeriod();
+						return BadgeWidget::widget([
+							'models' => $target->relTargetsPeriods->toFilePeriod(),
+							'useBadges' => true,
+							'itemsSeparator' => false
+						]);
 					},
 					'format' => 'raw'
 				],
