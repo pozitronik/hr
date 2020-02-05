@@ -53,4 +53,16 @@ class GraphController extends WigetableController {
 		]);
 	}
 
+	/**
+	 * @param int $id
+	 * @return string
+	 */
+	public function actionTarget(int $id):string {
+		return $this->render('target', [
+			'id' => $id,
+			'currentConfiguration' => 'default',
+			'positionConfigurations' => ['default' => 'default']
+		]);
+	}
+
 }
