@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
-use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\targets\assets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
@@ -28,7 +26,7 @@ use yii\web\View;
 $this->title = $title??'Мои цели';
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
-TargetsAsset::register($this);
+
 ?>
 
 
@@ -107,31 +105,10 @@ TargetsAsset::register($this);
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => static function(Targets $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->all(),
-					'attribute' => 'name',
-					"badgeOptions" => [
-						'class' => "badge badge-target"
-					],
-					'itemsSeparator' => false,
-					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
-					'badgePostfix' => static function(Targets $model) {
-						return ($model->isMirrored)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => false,
-								'itemsSeparator' => ', ',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							])."</span>":'';
-					}
+			'value' => function(Targets $model) {
+				return $this->render('home/target-badge', [
+					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->all()
 				]);
-
 			},
 			'format' => 'raw'
 		],
@@ -144,29 +121,9 @@ TargetsAsset::register($this);
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => static function(Targets $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getQuarterTargets(1)->all(),
-					'attribute' => 'name',
-					"badgeOptions" => [
-						'class' => "badge badge-target"
-					],
-					'itemsSeparator' => false,
-					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
-					'badgePostfix' => static function(Targets $model) {
-						return ($model->isMirrored)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => false,
-								'itemsSeparator' => ', ',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							])."</span>":'';
-					}
+			'value' => function(Targets $model) {
+				return $this->render('home/target-badge', [
+					'models' => $model->getQuarterTargets(1)->all()
 				]);
 			},
 			'format' => 'raw'
@@ -180,29 +137,9 @@ TargetsAsset::register($this);
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => static function(Targets $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getQuarterTargets(2)->all(),
-					'attribute' => 'name',
-					"badgeOptions" => [
-						'class' => "badge badge-target"
-					],
-					'itemsSeparator' => false,
-					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
-					'badgePostfix' => static function(Targets $model) {
-						return ($model->isMirrored)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => false,
-								'itemsSeparator' => ', ',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							])."</span>":'';
-					}
+			'value' => function(Targets $model) {
+				return $this->render('home/target-badge', [
+					'models' => $model->getQuarterTargets(2)->all()
 				]);
 			},
 			'format' => 'raw'
@@ -216,29 +153,9 @@ TargetsAsset::register($this);
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => static function(Targets $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getQuarterTargets(3)->all(),
-					'attribute' => 'name',
-					"badgeOptions" => [
-						'class' => "badge badge-target"
-					],
-					'itemsSeparator' => false,
-					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
-					'badgePostfix' => static function(Targets $model) {
-						return ($model->isMirrored)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => false,
-								'itemsSeparator' => ', ',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							])."</span>":'';
-					}
+			'value' => function(Targets $model) {
+				return $this->render('home/target-badge', [
+					'models' => $model->getQuarterTargets(3)->all()
 				]);
 			},
 			'format' => 'raw'
@@ -252,29 +169,9 @@ TargetsAsset::register($this);
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => static function(Targets $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getQuarterTargets(4)->all(),
-					'attribute' => 'name',
-					"badgeOptions" => [
-						'class' => "badge badge-target"
-					],
-					'itemsSeparator' => false,
-					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
-					'badgePostfix' => static function(Targets $model) {
-						return ($model->isMirrored)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => false,
-								'itemsSeparator' => ', ',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							])."</span>":'';
-					}
+			'value' => function(Targets $model) {
+				return $this->render('home/target-badge', [
+					'models' => $model->getQuarterTargets(4)->all()
 				]);
 			},
 			'format' => 'raw'
@@ -290,29 +187,9 @@ TargetsAsset::register($this);
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => static function(Targets $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getQuarterTargets()->all(),
-					'attribute' => 'name',
-					"badgeOptions" => [
-						'class' => "badge badge-target"
-					],
-					'itemsSeparator' => false,
-					"optionsMap" => RefTargetsTypes::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
-					'badgePostfix' => static function(Targets $model) {
-						return ($model->isMirrored)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-								'models' => (array)$model->relGroups,
-								'attribute' => 'name',
-								'useBadges' => false,
-								'itemsSeparator' => ', ',
-								"optionsMap" => RefGroupTypes::colorStyleOptions(),
-								"optionsMapAttribute" => 'type',
-								'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-								'prefix' => "Зеркалится: "
-							])."</span>":'';
-					}
+			'value' => function(Targets $model) {
+				return $this->render('home/target-badge', [
+					'models' => $model->getQuarterTargets()->all()
 				]);
 			},
 			'format' => 'raw'
