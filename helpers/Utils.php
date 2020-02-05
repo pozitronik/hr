@@ -332,4 +332,23 @@ class Utils {
 		}, $keywords, array_keys($keywords));
 		return implode(' ', $keywords);
 	}
+
+	/**
+	 * Разбивает строку, вставляя в месте разделения символ $splitter
+	 * @param string $input
+	 * @param int $minlength -- минимальная длина неразбиваемого участка
+	 * @param string $splitter -- символ подстановки
+	 * @param array $delimiters -- символы, по которым будет идти разделение (и только по ним)
+	 * @return string
+	 * todo
+	 */
+	public static function SplitString(string $input, int $minlength, string $splitter = "\n", array $delimiters = [' ']):string {
+
+		$result = [];
+		$partLength = ceil(mb_strlen($input) / $minlength);
+		for ($index = 0; $index < $partLength; $index++) {
+			$result[] = mb_substr($input, $index * $minlength, $minlength);
+		}
+		return implode($splitter, $result);
+	}
 }
