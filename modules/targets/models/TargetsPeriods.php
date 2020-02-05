@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models;
 
 use app\models\core\traits\ARExtended;
+use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -102,5 +103,19 @@ class TargetsPeriods extends ActiveRecord {
 	 */
 	public function getNotSet():bool {
 		return !($this->q1 || $this->q2 || $this->q3 || $this->q4 || $this->is_year);
+	}
+
+	/**
+	 * Строковое представление периодов цели
+	 * @return string
+	 */
+	public function toFilePeriod():string {
+		$result = [];
+		foreach (['q1', 'q2', 'q3', 'q4', 'is_year'] as $value) {
+			if (true === (bool)$this->{$value}) {
+				$result[] = $this->attributeLabels()[$value];
+			}
+		}
+		return implode(', ', $result);
 	}
 }
