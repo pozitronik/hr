@@ -13,6 +13,7 @@ use app\modules\groups\GroupsModule;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\targets\assets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
@@ -29,6 +30,8 @@ use yii\web\View;
 
 $this->title = 'Целеполагание';
 $this->params['breadcrumbs'][] = $this->title;
+
+TargetsAsset::register($this);
 ?>
 
 <div class="panel">
@@ -72,11 +75,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							'models' => $model->relParentTarget,
 							'attribute' => 'name',
 							"badgeOptions" => [
-								'class' => "badge badge-info"
+								'class' => "badge badge-target"
 							],
 							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 							"optionsMapAttribute" => 'type',
-							'linkScheme' => [TargetsModule::to('targets/profile'), 'id' => 'id']
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id']
 						]);
 					},
 					'format' => 'raw',
@@ -90,11 +93,11 @@ $this->params['breadcrumbs'][] = $this->title;
 							'models' => $model,
 							'attribute' => 'name',
 							"badgeOptions" => [
-								'class' => "badge badge-info"
+								'class' => "badge badge-target"
 							],
 							"optionsMap" => RefTargetsTypes::colorStyleOptions(),
 							"optionsMapAttribute" => 'type',
-							'linkScheme' => [TargetsModule::to('targets/profile'), 'id' => $model->id]
+							'linkScheme' => [TargetsModule::to('targets/update'), 'id' => $model->id]
 						]);
 					},
 					'format' => 'raw'
@@ -144,6 +147,15 @@ $this->params['breadcrumbs'][] = $this->title;
 						'referenceClass' => RefTargetsResults::class,
 						'pluginOptions' => ['allowClear' => true]
 					]
+				],
+				[
+					'class' => DataColumn::class,
+					'attribute' => 'quarter',
+					'label' => 'Период',
+					'value' => static function(Targets $target) {
+						return $target->relTargetsPeriods->toFilePeriod();
+					},
+					'format' => 'raw'
 				],
 				[
 					'class' => DataColumn::class,
