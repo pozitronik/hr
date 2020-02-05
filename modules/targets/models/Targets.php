@@ -47,6 +47,7 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|TargetsPeriods $relTargetsPeriods
  *
  * @property-read bool $isMirrored -- зеркальная ли цель
+ * @property-read bool $isFinal -- финальная цель (нет нижестоящих уровней, но есть финальные атрибуты)
  */
 class Targets extends ActiveRecordExtended {
 	/**
@@ -227,7 +228,8 @@ class Targets extends ActiveRecordExtended {
 	 * @return TargetsPeriods|ActiveQuery
 	 */
 	public function getRelTargetsPeriods() {
-		return ($this->relTargetsTypes->isFinal)?$this->hasOne(TargetsPeriods::class, ['target_id' => 'id']):null;
+		//Не включать условия в этот геттер, он есть и всё. Иначе будут падать релейшены
+		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
 	}
 
 	/**
@@ -259,7 +261,14 @@ class Targets extends ActiveRecordExtended {
 	 * @return bool
 	 */
 	public function getIsMirrored():bool {
-		return 1 < count($this->relGroups);
+		return 1 < (count($this->relGroups) + count($this->relUsers));
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getIsFinal():bool {
+		return $this->relTargetsTypes->isFinal;
 	}
 
 }
