@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\modules\targets\models;
 
 use app\models\core\traits\ARExtended;
-use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
