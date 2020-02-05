@@ -4,12 +4,9 @@ declare(strict_types = 1);
 namespace app\modules\graph\controllers;
 
 use app\models\prototypes\NodesPositionsConfig;
-use app\modules\graph\models\Graph;
 use app\modules\graph\models\GroupGraph;
 use app\modules\graph\models\TargetGraph;
-use app\modules\graph\models\UserGraph;
 use app\modules\targets\models\Targets;
-use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\ajax\BaseAjaxController;
 use app\models\user\CurrentUser;
