@@ -95,19 +95,21 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 			];
 
 		} else {
-			$selectionQuery = $this->loadedClass::find()->active();
-			if (is_array($this->exclude)) {
-				if ([] !== $this->exclude) {
-					if ($this->exclude[0] instanceof ActiveRecordExtended) {
-						$this->exclude = ArrayHelper::getColumn($this->exclude, $this->pkName);
+			if ([] === $this->data) {
+				$selectionQuery = $this->loadedClass::find()->active();
+				if (is_array($this->exclude)) {
+					if ([] !== $this->exclude) {
+						if ($this->exclude[0] instanceof ActiveRecordExtended) {
+							$this->exclude = ArrayHelper::getColumn($this->exclude, $this->pkName);
+						}
+						$selectionQuery->where(['not in', $this->pkName, $this->exclude]);
 					}
-					$selectionQuery->where(['not in', $this->pkName, $this->exclude]);
+				} elseif ($this->exclude instanceof LCQuery) {
+					$selectionQuery->{$this->exclude};
 				}
-			} elseif ($this->exclude instanceof LCQuery) {
-				$selectionQuery->{$this->exclude};
-			}
 
-			$this->data = ArrayHelper::map($selectionQuery->all(), $this->pkName, $this->mapAttribute);
+				$this->data = ArrayHelper::map($selectionQuery->all(), $this->pkName, $this->mapAttribute);
+			}
 		}
 
 		if (method_exists($this->loadedClass, 'dataOptions')) {//если у модели есть опции для выбиралки, присунем их к стандартным опциям
