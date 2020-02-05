@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\graph\models;
 
+use app\helpers\Utils;
 use app\modules\targets\models\Targets;
 use pozitronik\helpers\ArrayHelper;
 
@@ -16,7 +17,7 @@ class TargetNode extends GraphNode {
 	public function __construct(Targets $model, $config = []) {
 		parent::__construct($model, $config);
 		$this->id = $model->formName().$model->id;
-		$this->label = $model->name;
+		$this->label = Utils::SplitString($model->name, 15);
 		$this->color = ArrayHelper::getValue($model->relTargetsTypes, 'color', $this->getRandomRGB());
 		$this->shape = 'image';
 		$this->image = $model->logo;
