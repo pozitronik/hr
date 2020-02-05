@@ -153,11 +153,11 @@ TargetsAsset::register($this);
 					'attribute' => 'quarter',
 					'label' => 'Период',
 					'value' => static function(Targets $target) {
-						return BadgeWidget::widget([
+						return $target->isFinal?BadgeWidget::widget([
 							'models' => $target->relTargetsPeriods->toFilePeriod(),
 							'useBadges' => true,
 							'itemsSeparator' => false
-						]);
+						]):'Не применимо';
 					},
 					'format' => 'raw'
 				],
