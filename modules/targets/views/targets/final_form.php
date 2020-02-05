@@ -54,6 +54,13 @@ use yii\widgets\ActiveForm;
 			</div>
 			<div class="row">
 				<div class="col-md-12">
+					<?= $form->field($model, 'result_type')->widget(ReferenceSelectWidget::class, [
+						'referenceClass' => RefTargetsResults::class
+					]) ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
 					<?= $form->field($model, 'comment')->textarea() ?>
 				</div>
 			</div>
@@ -64,13 +71,7 @@ use yii\widgets\ActiveForm;
 					]) ?>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<?= $form->field($model, 'result_type')->widget(ReferenceSelectWidget::class, [
-						'referenceClass' => RefTargetsResults::class
-					]) ?>
-				</div>
-			</div>
+
 			<div class="row">
 				<div class="col-md-12">
 					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class, [
