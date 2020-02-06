@@ -13,6 +13,7 @@ use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use pozitronik\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\i18n\Formatter;
 use yii\web\View;
@@ -27,7 +28,8 @@ use yii\web\View;
 $this->title = "Цели пользователя {$user->username}";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
-/* todo: в таблице отображаются все цели через вехи. Нужен дополнительный режим, показывающий только те цели, которые напрямую привязаны к пользователю!*/
+
+$userTargetsId = ArrayHelper::getColumn(Targets::UserTargets($user), 'id');
 ?>
 
 
@@ -106,9 +108,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) {
+			'value' => function(Targets $model) use ($userTargetsId) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->all()
+					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->andFilterWhere(['sys_targets.id' => $userTargetsId])->all()
 				]);
 			},
 			'format' => 'raw'
@@ -122,9 +124,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) {
+			'value' => function(Targets $model) use ($userTargetsId) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(1)->all()
+					'models' => $model->getQuarterTargets(1)->andFilterWhere(['sys_targets.id' => $userTargetsId])->all()
 				]);
 			},
 			'format' => 'raw'
@@ -138,9 +140,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) {
+			'value' => function(Targets $model) use ($userTargetsId) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(2)->all()
+					'models' => $model->getQuarterTargets(2)->andFilterWhere(['sys_targets.id' => $userTargetsId])->all()
 				]);
 			},
 			'format' => 'raw'
@@ -154,9 +156,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) {
+			'value' => function(Targets $model) use ($userTargetsId) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(3)->all()
+					'models' => $model->getQuarterTargets(3)->andFilterWhere(['sys_targets.id' => $userTargetsId])->all()
 				]);
 			},
 			'format' => 'raw'
@@ -170,9 +172,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) {
+			'value' => function(Targets $model) use ($userTargetsId) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(4)->all()
+					'models' => $model->getQuarterTargets(4)->andFilterWhere(['sys_targets.id' => $userTargetsId])->all()
 				]);
 			},
 			'format' => 'raw'
@@ -188,9 +190,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) {
+			'value' => function(Targets $model) use ($userTargetsId) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets()->all()
+					'models' => $model->getQuarterTargets()->andFilterWhere(['sys_targets.id' => $userTargetsId])->all()
 				]);
 			},
 			'format' => 'raw'
