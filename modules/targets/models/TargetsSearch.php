@@ -154,4 +154,43 @@ class TargetsSearch extends Targets {
 		return $dataProvider;
 	}
 
+	/**
+	 * Возвращает цели, зеркальные для пользователя
+	 * @param int $userId
+	 * @param array $params
+	 * @return ActiveDataProvider
+	 * @throws Throwable
+	 */
+	public function findUserMirroredTargets(int $userId, array $params):ActiveDataProvider {
+		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
+		$userCommandsId = ArrayHelper::getColumn($user->getRelGroups()->all(), 'id');
+		if (null === $finalType = RefTargetsTypes::final()) {
+			throw new InvalidConfigException('Не могу найти финальный тип задачи в справочнике типов целей');
+		}
+		$targetTypeId = $finalType->id;
+
+		/** @var Targets[] $allUserTargets */
+		$allUserTargets = Targets::find()->active()
+			->joinWith(['relGroups', 'relUsers'])
+			->where(['sys_targets.type' => $targetTypeId])
+			->andFilterWhere(['sys_groups.id' => $userCommandsId])
+			->orFilterWhere(['sys_users.id' => $userId])
+			->all();
+		$allMirroredTargetsId = [];
+		foreach ($allUserTargets as $userTarget) {//довольно кривое временное решение
+			if ($userTarget->isMirrored) $allMirroredTargetsId[] = $userTarget->id;
+		}
+
+		$this->load($params);
+
+		$dataProvider = new ActiveDataProvider([
+			'query' => Targets::find()->active()
+				->where(['id' => $allMirroredTargetsId])
+				->andFilterWhere(['like', 'sys_targets.name', $this->name])
+		]);
+
+		if (!$this->validate()) return $dataProvider;
+
+		return $dataProvider;
+	}
 }
