@@ -338,17 +338,21 @@ class Utils {
 	 * @param string $input
 	 * @param int $minlength -- минимальная длина неразбиваемого участка
 	 * @param string $splitter -- символ подстановки
-	 * @param array $delimiters -- символы, по которым будет идти разделение (и только по ним)
+	 * @param string $delimiter -- символ, по которому будет идти разделение
 	 * @return string
-	 * todo
+	 * @throws Throwable
 	 */
-	public static function SplitString(string $input, int $minlength, string $splitter = "\n", array $delimiters = [' ']):string {
-
+	public static function SplitString(string $input, int $minlength, string $splitter = "\n", string $delimiter = ' '):string {
 		$result = [];
-		$partLength = ceil(mb_strlen($input) / $minlength);
-		for ($index = 0; $index < $partLength; $index++) {
-			$result[] = mb_substr($input, $index * $minlength, $minlength);
+		$parts = explode($delimiter, $input);
+		$index = 0;
+		foreach ($parts as $part) {
+			ArrayHelper::setValue($result, $index, ArrayHelper::getValue($result, $index, '').$part.$delimiter);
+			if (mb_strlen($result[$index]) >= $minlength) {
+				$result[$index] = trim($result[$index], $delimiter);
+				$index++;
+			}
 		}
-		return implode($splitter, $result);
+		return trim(implode($splitter, $result), $delimiter);
 	}
 }
