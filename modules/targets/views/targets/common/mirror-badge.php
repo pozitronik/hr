@@ -4,6 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Targets $model
+ * @var bool $spanned
  */
 
 use app\modules\groups\models\references\RefGroupTypes;
@@ -15,8 +16,8 @@ use app\widgets\badge\BadgeWidget;
 use yii\web\View;
 
 TargetsAsset::register($this);
-
 ?>
+<?php if (true === $spanned): ?><span class='badge-target-mirrors'><?php endif; ?>
 <?= BadgeWidget::widget([
 	'models' => (array)$model->relGroups,
 	'attribute' => 'name',
@@ -29,7 +30,6 @@ TargetsAsset::register($this);
 	"optionsMapAttribute" => 'type',
 	'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
 ]); ?>
-
 <?= BadgeWidget::widget([
 	'models' => (array)$model->relUsers,
 	'attribute' => 'username',
@@ -42,3 +42,4 @@ TargetsAsset::register($this);
 	"optionsMapAttribute" => 'position',
 	'linkScheme' => [TargetsModule::to('targets/user'), 'id' => 'id'],
 ]) ?>
+<?php if (true === $spanned): ?></span><?php endif; ?>

@@ -106,7 +106,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => function(Targets $model) {
 				if (!$model->relTargetsPeriods->is_year) return null;
 				return $this->render('common/mirror-badge', [
-					'model' => $model
+					'model' => $model,
+					'spanned' => false
 				]);
 			},
 			'format' => 'raw'
@@ -123,7 +124,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => function(Targets $model) {
 				if (!$model->relTargetsPeriods->q1) return null;
 				return $this->render('common/mirror-badge', [
-					'model' => $model
+					'model' => $model,
+					'spanned' => false
 				]);
 			},
 			'format' => 'raw'
@@ -140,7 +142,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => function(Targets $model) {
 				if (!$model->relTargetsPeriods->q2) return null;
 				return $this->render('common/mirror-badge', [
-					'model' => $model
+					'model' => $model,
+					'spanned' => false
 				]);
 			},
 			'format' => 'raw'
@@ -157,7 +160,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => function(Targets $model) {
 				if (!$model->relTargetsPeriods->q3) return null;
 				return $this->render('common/mirror-badge', [
-					'model' => $model
+					'model' => $model,
+					'spanned' => false
 				]);
 			},
 			'format' => 'raw'
@@ -174,7 +178,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => function(Targets $model) {
 				if (!$model->relTargetsPeriods->q4) return null;
 				return $this->render('common/mirror-badge', [
-					'model' => $model
+					'model' => $model,
+					'spanned' => false
 				]);
 			},
 			'format' => 'raw'
