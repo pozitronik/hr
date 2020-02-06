@@ -7,6 +7,7 @@ use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -98,15 +99,20 @@ class TargetsSearch extends Targets {
 	 */
 	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
-		$userCommandsId = [];
-		if (null !== $targetTypeId = RefTargetsTypes::findId('Цель')) {//todo: RefTargetsTypes::findTerminalRecordId($targetLevel);
-			$userCommands = $user->getRelGroups()->where(['sys_groups.type' => $targetTypeId])->all();
-			$userCommandsId = ArrayHelper::getColumn($userCommands, 'id');
+		$userCommandsId = ArrayHelper::getColumn($user->getRelGroups()->all(), 'id');
+		if (null === $finalType = RefTargetsTypes::final()) {
+			throw new InvalidConfigException('Не могу найти финальный тип задачи в справочнике типов целей');
 		}
+		$targetTypeId = $finalType->id;
 
-		$allUserTargets = Targets::find()->active()->joinWith(['relGroups', 'relUsers'])->andFilterWhere(['sys_groups.id' => $userCommandsId])->orFilterWhere(['sys_users.id' => $userId])->all();
+		$allUserTargets = Targets::find()->active()
+			->joinWith(['relGroups', 'relUsers'])
+			->where(['sys_targets.type' => $targetTypeId])
+			->andFilterWhere(['sys_groups.id' => $userCommandsId])
+			->orFilterWhere(['sys_users.id' => $userId])->all();
 
 		$allUserMilestones = ArrayHelper::getColumn($allUserTargets, 'relParentTarget.id');
+
 		$this->load($params);
 
 		$dataProvider = new ActiveDataProvider([
