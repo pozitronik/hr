@@ -29,7 +29,7 @@ TargetsAsset::register($this);
 	"optionsMap" => RefGroupTypes::colorStyleOptions(),
 	"optionsMapAttribute" => 'type',
 	'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-]); ?>
+]) ?>
 <?= BadgeWidget::widget([
 	'models' => (array)$model->relUsers,
 	'attribute' => 'username',

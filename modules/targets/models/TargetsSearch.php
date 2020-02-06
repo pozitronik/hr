@@ -7,6 +7,7 @@ use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -119,6 +120,8 @@ class TargetsSearch extends Targets {
 	 * @param int $groupId
 	 * @param array $params
 	 * @return ActiveDataProvider
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function findGroupTargets(int $groupId, array $params):ActiveDataProvider {
 		if (null === $group = Groups::findModel($groupId, new NotFoundHttpException())) return null;
