@@ -156,4 +156,12 @@ class RefTargetsTypes extends CustomisableReference {
 	public function getIsFinal():bool {
 		return (null !== $this->parent && null === $this->relChild);
 	}
+
+	/**
+	 * Вернёт id типа, вычисленного, как финальный
+	 * @return null|self
+	 */
+	public static function final():?self {
+		return static::find()->joinWith('relChild child')->where(['not', ['ref_targets_types.parent' => null]])->andWhere(['child.id' => null])->one();
+	}
 }
