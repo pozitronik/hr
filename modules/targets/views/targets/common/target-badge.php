@@ -27,9 +27,9 @@ TargetsAsset::register($this);
 	"optionsMapAttribute" => 'type',
 	'linkScheme' => [TargetsModule::to('targets/update'), 'id' => 'id'],
 	'badgePostfix' => function(Targets $model) {
-		return ($model->isMirrored)?$this->render('mirror-badge', [
+		return $this->render('mirror-badge', [
 			'model' => $model,
 			'spanned' => true
-		]):null;
+		]);
 	}
 ]) ?>
