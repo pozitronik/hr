@@ -9,6 +9,7 @@ use app\modules\groups\models\Groups;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
 use app\modules\targets\models\TargetsSearch;
+use app\modules\users\models\Users;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -102,15 +103,15 @@ class TargetsController extends WigetableController {
 	/**
 	 * Временно тут: экшен отображения персональных целей.
 	 * @param int|null $id -- id пользователя
-	 * @return string
+	 * @return string|null
 	 * @throws Throwable
 	 */
-	public function actionHome(?int $id = null):string {
+	public function actionUser(?int $id = null):?string {
 		$id = $id??CurrentUser::Id();
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
 		$searchModel = new TargetsSearch();
 		$dataProvider = $searchModel->findUserTargets($id, Yii::$app->request->queryParams);
-		$title = null;
-		return $this->render('home', compact('searchModel', 'dataProvider', 'title'));
+		return $this->render('user', compact('searchModel', 'dataProvider', 'user'));
 	}
 
 	/**
@@ -123,8 +124,7 @@ class TargetsController extends WigetableController {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		$searchModel = new TargetsSearch();
 		$dataProvider = $searchModel->findGroupTargets($id, Yii::$app->request->queryParams);
-		$title = "Цели группы {$group->name}";
-		return $this->render('home', compact('searchModel', 'dataProvider', 'title'));
+		return $this->render('group', compact('searchModel', 'dataProvider', 'group'));
 	}
 
 }

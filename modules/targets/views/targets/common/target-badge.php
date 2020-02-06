@@ -50,7 +50,7 @@ TargetsAsset::register($this);
 					'itemsSeparator' => ', ',
 					"optionsMap" => RefUserPositions::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
-					'linkScheme' => [TargetsModule::to('targets/home'), 'id' => 'id'],
+					'linkScheme' => [TargetsModule::to('targets/user'), 'id' => 'id'],
 				]);
 			}
 		}

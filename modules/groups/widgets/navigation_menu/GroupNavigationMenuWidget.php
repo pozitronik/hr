@@ -9,6 +9,7 @@ use app\modules\graph\GraphModule;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
+use app\modules\targets\TargetsModule;
 use app\modules\vacancy\VacancyModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
@@ -39,6 +40,10 @@ class GroupNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'label' => IconsHelper::users().'Пользователи',
 				'url' => GroupsModule::to(['groups/users', 'id' => $this->model->id])
+			],
+			[
+				'label' => IconsHelper::targets().'Цели',
+				'url' => TargetsModule::to(['targets/group', 'id' => $this->model->id])
 			],
 			[
 				'label' => IconsHelper::vacancy().'Вакансии',

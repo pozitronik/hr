@@ -9,6 +9,7 @@ use app\modules\targets\models\TargetsPeriods;
 use app\modules\targets\models\TargetsSearch;
 use app\modules\targets\TargetsModule;
 use app\modules\targets\widgets\navigation_menu\TargetNavigationMenuWidget;
+use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
@@ -20,10 +21,10 @@ use yii\web\View;
  * @var View $this
  * @var ActiveDataProvider $dataProvider
  * @var TargetsSearch $searchModel
- * @var string $title
+ * @var Users $user
  */
 
-$this->title = $title??'Мои цели';
+$this->title = "Цели пользователя {$user->username}";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -106,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'kv-align-center kv-align-middle'
 			],
 			'value' => function(Targets $model) {
-				return $this->render('home/target-badge', [
+				return $this->render('common/target-badge', [
 					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->all()
 				]);
 			},
@@ -122,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'kv-align-center kv-align-middle'
 			],
 			'value' => function(Targets $model) {
-				return $this->render('home/target-badge', [
+				return $this->render('common/target-badge', [
 					'models' => $model->getQuarterTargets(1)->all()
 				]);
 			},
@@ -138,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'kv-align-center kv-align-middle'
 			],
 			'value' => function(Targets $model) {
-				return $this->render('home/target-badge', [
+				return $this->render('common/target-badge', [
 					'models' => $model->getQuarterTargets(2)->all()
 				]);
 			},
@@ -154,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'kv-align-center kv-align-middle'
 			],
 			'value' => function(Targets $model) {
-				return $this->render('home/target-badge', [
+				return $this->render('common/target-badge', [
 					'models' => $model->getQuarterTargets(3)->all()
 				]);
 			},
@@ -170,7 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'kv-align-center kv-align-middle'
 			],
 			'value' => function(Targets $model) {
-				return $this->render('home/target-badge', [
+				return $this->render('common/target-badge', [
 					'models' => $model->getQuarterTargets(4)->all()
 				]);
 			},
@@ -188,7 +189,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'class' => 'kv-align-center kv-align-middle'
 			],
 			'value' => function(Targets $model) {
-				return $this->render('home/target-badge', [
+				return $this->render('common/target-badge', [
 					'models' => $model->getQuarterTargets()->all()
 				]);
 			},

@@ -9,6 +9,7 @@ use app\modules\export\ExportModule;
 use app\modules\graph\GraphModule;
 use app\modules\history\HistoryModule;
 use app\modules\home\HomeModule;
+use app\modules\targets\TargetsModule;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
@@ -39,6 +40,10 @@ class UserNavigationMenuWidget extends BaseNavigationMenuWidget {
 			[
 				'label' => IconsHelper::group().'Группы',
 				'url' => UsersModule::to(['users/groups', 'id' => $this->model->id])
+			],
+			[
+				'label' => IconsHelper::targets().'Цели',
+				'url' => TargetsModule::to(['targets/user', 'id' => $this->model->id])
 			],
 			[
 				'label' => IconsHelper::money().'Зарплатные данные',
