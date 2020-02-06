@@ -18,6 +18,7 @@ use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 
 /**
@@ -278,6 +279,23 @@ class Targets extends ActiveRecordExtended {
 	 */
 	public function getLogo():string {
 		return "/img/targets/".mb_strtolower($this->relTargetsTypes->name).".png";
+	}
+
+	/**
+	 * Все итоговые цели пользователя
+	 * @param Users $user
+	 * @return self[]
+	 * @throws InvalidConfigException
+	 */
+	public static function UserTargets(Users $user):array {
+		$userCommandsId = ArrayHelper::getColumn($user->relGroups, 'id');
+		$finalTypeId = RefTargetsTypes::final()->id;
+
+		return Targets::find()->active()
+			->joinWith(['relGroups', 'relUsers'])
+			->where(['sys_targets.type' => $finalTypeId])
+			->andFilterWhere(['sys_groups.id' => $userCommandsId])
+			->orFilterWhere(['sys_users.id' => $user->id])->all();
 	}
 
 }
