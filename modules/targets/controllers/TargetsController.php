@@ -10,6 +10,7 @@ use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
 use app\modules\targets\models\TargetsSearch;
 use app\modules\users\models\Users;
+use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -109,9 +110,15 @@ class TargetsController extends WigetableController {
 	public function actionUser(?int $id = null):?string {
 		$id = $id??CurrentUser::Id();
 		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		$params = Yii::$app->request->queryParams;
 		$searchModel = new TargetsSearch();
-		$dataProvider = $searchModel->findUserTargets($id, Yii::$app->request->queryParams);
-		return $this->render('user', compact('searchModel', 'dataProvider', 'user'));
+		$dataProvider = $searchModel->findUserTargets($id, $params);
+		return $this->render('user', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+			'user' => $user,
+			'onlyMirrored' => ArrayHelper::getValue($params, 'onlyMirrored', false)
+		]);
 	}
 
 	/**
@@ -123,8 +130,14 @@ class TargetsController extends WigetableController {
 	public function actionGroup(int $id):?string {
 		if (null === $group = Groups::findModel($id, new NotFoundHttpException())) return null;
 		$searchModel = new TargetsSearch();
-		$dataProvider = $searchModel->findGroupTargets($id, Yii::$app->request->queryParams);
-		return $this->render('group', compact('searchModel', 'dataProvider', 'group'));
+		$params = Yii::$app->request->queryParams;
+		$dataProvider = $searchModel->findGroupTargets($id, $params);
+		return $this->render('group', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+			'group' => $group,
+			'onlyMirrored' => ArrayHelper::getValue($params, 'onlyMirrored', false)
+		]);
 	}
 
 	/**

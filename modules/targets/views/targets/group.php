@@ -23,6 +23,7 @@ use yii\web\View;
  * @var ActiveDataProvider $dataProvider
  * @var TargetsSearch $searchModel
  * @var Groups $group
+ * @var bool $onlyMirrored -- показывать данные назначений только для зеркальных целей
  */
 
 $this->title = "Цели группы {$group->name}";
@@ -108,9 +109,10 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) use ($groupTargetsId) {
+			'value' => function(Targets $model) use ($groupTargetsId, $onlyMirrored) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all()
+					'models' => $model->getQuarterTargets(TargetsPeriods::PERIOD_YEAR)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all(),
+					'onlyMirrored' => $onlyMirrored
 				]);
 			},
 			'format' => 'raw'
@@ -124,9 +126,10 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) use ($groupTargetsId) {
+			'value' => function(Targets $model) use ($groupTargetsId, $onlyMirrored) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(1)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all()
+					'models' => $model->getQuarterTargets(1)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all(),
+					'onlyMirrored' => $onlyMirrored
 				]);
 			},
 			'format' => 'raw'
@@ -140,9 +143,10 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) use ($groupTargetsId) {
+			'value' => function(Targets $model) use ($groupTargetsId, $onlyMirrored) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(2)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all()
+					'models' => $model->getQuarterTargets(2)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all(),
+					'onlyMirrored' => $onlyMirrored
 				]);
 			},
 			'format' => 'raw'
@@ -156,9 +160,10 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) use ($groupTargetsId) {
+			'value' => function(Targets $model) use ($groupTargetsId, $onlyMirrored) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(3)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all()
+					'models' => $model->getQuarterTargets(3)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all(),
+					'onlyMirrored' => $onlyMirrored
 				]);
 			},
 			'format' => 'raw'
@@ -172,9 +177,10 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) use ($groupTargetsId) {
+			'value' => function(Targets $model) use ($groupTargetsId, $onlyMirrored) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets(4)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all()
+					'models' => $model->getQuarterTargets(4)->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all(),
+					'onlyMirrored' => $onlyMirrored
 				]);
 			},
 			'format' => 'raw'
@@ -190,9 +196,10 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
 			'contentOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],
-			'value' => function(Targets $model) use ($groupTargetsId) {
+			'value' => function(Targets $model) use ($groupTargetsId, $onlyMirrored) {
 				return $this->render('common/target-badge', [
-					'models' => $model->getQuarterTargets()->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all()
+					'models' => $model->getQuarterTargets()->andFilterWhere(['sys_targets.id' => $groupTargetsId])->all(),
+					'onlyMirrored' => $onlyMirrored
 				]);
 			},
 			'format' => 'raw'
