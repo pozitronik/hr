@@ -291,11 +291,26 @@ class Targets extends ActiveRecordExtended {
 		$userCommandsId = ArrayHelper::getColumn($user->relGroups, 'id');
 		$finalTypeId = RefTargetsTypes::final()->id;
 
-		return Targets::find()->active()
+		return static::find()->active()
 			->joinWith(['relGroups', 'relUsers'])
 			->where(['sys_targets.type' => $finalTypeId])
 			->andFilterWhere(['sys_groups.id' => $userCommandsId])
 			->orFilterWhere(['sys_users.id' => $user->id])->all();
+	}
+
+	/**
+	 * Все итоговые цели пользователя
+	 * @param Groups $group
+	 * @return self[]
+	 * @throws InvalidConfigException
+	 */
+	public static function GroupTargets(Groups $group):array {
+		$finalTypeId = RefTargetsTypes::final()->id;
+
+		return static::find()->active()
+			->joinWith(['relGroups', 'relUsers'])
+			->where(['sys_targets.type' => $finalTypeId])
+			->andWhere(['sys_groups.id' => $group->id])->all();
 	}
 
 }
