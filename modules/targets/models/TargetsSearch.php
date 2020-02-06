@@ -3,11 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-use app\modules\targets\models\references\RefTargetsTypes;
+use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
-use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -99,19 +98,8 @@ class TargetsSearch extends Targets {
 	 */
 	public function findUserTargets(int $userId, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
-		$userCommandsId = ArrayHelper::getColumn($user->getRelGroups()->all(), 'id');
-		if (null === $finalType = RefTargetsTypes::final()) {
-			throw new InvalidConfigException('Не могу найти финальный тип задачи в справочнике типов целей');
-		}
-		$targetTypeId = $finalType->id;
 
-		$allUserTargets = Targets::find()->active()
-			->joinWith(['relGroups', 'relUsers'])
-			->where(['sys_targets.type' => $targetTypeId])
-			->andFilterWhere(['sys_groups.id' => $userCommandsId])
-			->orFilterWhere(['sys_users.id' => $userId])->all();
-
-		$allUserMilestones = ArrayHelper::getColumn($allUserTargets, 'relParentTarget.id');
+		$allUserMilestones = array_unique(ArrayHelper::getColumn(self::UserTargets($user), 'relParentTarget.id'));
 
 		$this->load($params);
 
@@ -128,17 +116,14 @@ class TargetsSearch extends Targets {
 
 	/**
 	 * Все цели группы
-	 * @param null|int $groupId
+	 * @param int $groupId
 	 * @param array $params
 	 * @return ActiveDataProvider
 	 */
-	public function findGroupTargets(?int $groupId, array $params):ActiveDataProvider {
-		$allGroupTargets = Targets::find()->active()->joinWith(['relGroups'])
-			->andFilterWhere(['sys_groups.id' => $groupId])
-			->andWhere(['sys_groups.type' => RefTargetsTypes::findId('Цель')])
-			->all();
+	public function findGroupTargets(int $groupId, array $params):ActiveDataProvider {
+		if (null === $group = Groups::findModel($groupId, new NotFoundHttpException())) return null;
 
-		$allGroupMilestones = array_unique(ArrayHelper::getColumn($allGroupTargets, 'relParentTarget.id'));
+		$allGroupMilestones = array_unique(ArrayHelper::getColumn(self::GroupTargets($group), 'relParentTarget.id'));
 
 		$this->load($params);
 
@@ -163,19 +148,8 @@ class TargetsSearch extends Targets {
 	 */
 	public function findUserMirroredTargets(int $userId, array $params):ActiveDataProvider {
 		if (null === $user = Users::findModel($userId, new NotFoundHttpException())) return null;
-		$userCommandsId = ArrayHelper::getColumn($user->getRelGroups()->all(), 'id');
-		if (null === $finalType = RefTargetsTypes::final()) {
-			throw new InvalidConfigException('Не могу найти финальный тип задачи в справочнике типов целей');
-		}
-		$targetTypeId = $finalType->id;
 
-		/** @var Targets[] $allUserTargets */
-		$allUserTargets = Targets::find()->active()
-			->joinWith(['relGroups', 'relUsers'])
-			->where(['sys_targets.type' => $targetTypeId])
-			->andFilterWhere(['sys_groups.id' => $userCommandsId])
-			->orFilterWhere(['sys_users.id' => $userId])
-			->all();
+		$allUserTargets = self::UserTargets($user);
 		$allMirroredTargetsId = [];
 		foreach ($allUserTargets as $userTarget) {//довольно кривое временное решение
 			if ($userTarget->isMirrored) $allMirroredTargetsId[] = $userTarget->id;
