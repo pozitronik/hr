@@ -127,4 +127,18 @@ class TargetsController extends WigetableController {
 		return $this->render('group', compact('searchModel', 'dataProvider', 'group'));
 	}
 
+	/**
+	 * Отображение зеркальных целей
+	 * @param int|null $id
+	 * @return string|null
+	 * @throws Throwable
+	 */
+	public function actionMirror(?int $id = null):?string {
+		$id = $id??CurrentUser::Id();
+		if (null === $user = Users::findModel($id, new NotFoundHttpException())) return null;
+		$searchModel = new TargetsSearch();
+		$dataProvider = $searchModel->findUserMirroredTargets($id, Yii::$app->request->queryParams);
+		return $this->render('mirror', compact('searchModel', 'dataProvider', 'user'));
+	}
+
 }
