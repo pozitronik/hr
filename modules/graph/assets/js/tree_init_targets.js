@@ -10,7 +10,7 @@ const URL_LOAD_GRAPH = '/graph/targets/graph',//загрузка структу�
 	URL_LOAD_POSITIONS = '/graph/targets/load-positions',//загрузка позиций
 	URL_SAVE_POSITIONS = '/graph/targets/save-positions',//сохранение ----
 	URL_DELETE_POSITIONS = '/graph/targets/delete-positions',//удаление ----
-	URL_TARGETS_PROFILE = '/targets/targets/update';//профиль цели
+	URL_TARGETS_PROFILE = '/graph/graph/target';//профиль цели
 
 class GraphControl {
 
