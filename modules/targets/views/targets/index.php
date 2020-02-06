@@ -24,6 +24,7 @@ use app\modules\users\UsersModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use pozitronik\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
@@ -154,7 +155,7 @@ TargetsAsset::register($this);
 					'label' => 'Период',
 					'value' => static function(Targets $target) {
 						return $target->isFinal?BadgeWidget::widget([
-							'models' => $target->relTargetsPeriods->toFilePeriod(),
+							'models' => ArrayHelper::getValue($target, 'relTargetsPeriods.asFilePeriod'),//todo fixme: период у цели может не существовать, если цель преобразована из задания другого типа
 							'useBadges' => true,
 							'itemsSeparator' => false
 						]):'Не применимо';

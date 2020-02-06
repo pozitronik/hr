@@ -24,6 +24,7 @@ use yii\db\ActiveRecord;
  *
  * @property Targets $relTargets
  * @property-read bool $notSet
+ * @property-read string[] $asFilePeriod -- Строковое представление периодов цели, сделано геттером, @see modules/targets/views/targets/index.php:158
  */
 class TargetsPeriods extends ActiveRecord {
 	use ARExtended;
@@ -108,7 +109,7 @@ class TargetsPeriods extends ActiveRecord {
 	 * Строковое представление периодов цели
 	 * @return string[]
 	 */
-	public function toFilePeriod():array {
+	public function getAsFilePeriod():array {
 		$result = [];
 		foreach (['q1', 'q2', 'q3', 'q4', 'is_year'] as $value) {
 			if (true === (bool)$this->{$value}) {
@@ -117,4 +118,5 @@ class TargetsPeriods extends ActiveRecord {
 		}
 		return $result;
 	}
+
 }
