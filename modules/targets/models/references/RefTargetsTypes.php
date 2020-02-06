@@ -7,6 +7,7 @@ use app\modules\references\models\CustomisableReference;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\helpers\Html;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 
 /**
@@ -159,9 +160,15 @@ class RefTargetsTypes extends CustomisableReference {
 
 	/**
 	 * Вернёт id типа, вычисленного, как финальный
-	 * @return null|self
+	 * @param bool $throwOnNull
+	 * @return static|null
+	 * @throws InvalidConfigException
 	 */
-	public static function final():?self {
-		return static::find()->joinWith('relChild child')->where(['not', ['ref_targets_types.parent' => null]])->andWhere(['child.id' => null])->one();
+	public static function final(bool $throwOnNull = true):?self {
+		if ((null === $result =  static::find()->joinWith('relChild child')->where(['not', ['ref_targets_types.parent' => null]])->andWhere(['child.id' => null])->one()) && $throwOnNull) {
+			throw new InvalidConfigException('Не могу найти финальный тип задачи в справочнике типов целей');
+		}
+		return $result;
 	}
+
 }
