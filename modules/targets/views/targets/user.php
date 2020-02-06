@@ -27,7 +27,7 @@ use yii\web\View;
 $this->title = "Цели пользователя {$user->username}";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
-
+/* todo: в таблице отображаются все цели через вехи. Нужен дополнительный режим, показывающий только те цели, которые напрямую привязаны к пользователю!*/
 ?>
 
 
