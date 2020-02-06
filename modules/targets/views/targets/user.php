@@ -14,6 +14,7 @@ use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use pozitronik\helpers\ArrayHelper;
+use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\i18n\Formatter;
 use yii\web\View;
@@ -40,7 +41,7 @@ $userTargetsId = ArrayHelper::getColumn(Targets::UserTargets($user), 'id');
 		'heading' => $this->title,
 		'before' => false,
 	],
-	'summary' => false,
+	'summary' => Html::a('Зеркальные цели', TargetsModule::to(['targets/mirror', 'id' => $user->id]), ['class' => 'btn btn-success summary-content']),
 	'showOnEmpty' => true,
 	'emptyText' => 'Нет целей',
 	'toolbar' => false,

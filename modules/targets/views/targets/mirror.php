@@ -12,6 +12,7 @@ use app\modules\users\models\Users;
 use app\widgets\badge\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
+use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\i18n\Formatter;
 use yii\web\View;
@@ -36,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'heading' => $this->title,
 		'before' => false,
 	],
-	'summary' => false,
+	'summary' => Html::a('Все цели', TargetsModule::to(['targets/user', 'id' => $user->id]), ['class' => 'btn btn-success summary-content']),
 	'showOnEmpty' => true,
 	'emptyText' => 'Нет целей',
 	'toolbar' => false,
