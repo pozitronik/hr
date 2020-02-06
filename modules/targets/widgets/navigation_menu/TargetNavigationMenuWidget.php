@@ -8,7 +8,6 @@ use app\modules\graph\GraphModule;
 use app\modules\history\HistoryModule;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use app\modules\vacancy\VacancyModule;
 use app\widgets\navigation_menu\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -29,19 +28,11 @@ class TargetNavigationMenuWidget extends BaseNavigationMenuWidget {
 		$this->_navigationItems = [
 			[
 				'label' => IconsHelper::group().'Профиль',
-				'url' => TargetsModule::to(['targets/profile', 'id' => $this->model->id])
+				'url' => false//TargetsModule::to(['targets/profile', 'id' => $this->model->id])
 			],
 			[
-				'label' => IconsHelper::subgroups().'Иерархия',
-				'url' => TargetsModule::to(['targets/targets', 'id' => $this->model->id])
-			],
-			[
-				'label' => IconsHelper::users().'Пользователи',
-				'url' => TargetsModule::to(['targets/users', 'id' => $this->model->id])
-			],
-			[
-				'label' => IconsHelper::vacancy().'Бюджеты',
-				'url' => VacancyModule::to(['targets/budgets', 'id' => $this->model->id])
+				'label' => IconsHelper::money().'Бюджеты',
+				'url' => false
 			],
 			[
 				'label' => IconsHelper::network().'Граф',
