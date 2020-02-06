@@ -49,7 +49,7 @@ TargetsAsset::register($this);
 					'useBadges' => false,
 					'itemsSeparator' => ', ',
 					"optionsMap" => RefUserPositions::colorStyleOptions(),
-					"optionsMapAttribute" => 'type',
+					"optionsMapAttribute" => 'position',
 					'linkScheme' => [TargetsModule::to('targets/user'), 'id' => 'id'],
 				]);
 			}

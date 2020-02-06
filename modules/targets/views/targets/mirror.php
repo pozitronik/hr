@@ -96,6 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		[
 			'class' => DataColumn::class,
 			'attribute' => 'is_year',
+			'label' => 'Годовая',
 			'headerOptions' => [
 				'class' => 'kv-align-center kv-align-middle'
 			],

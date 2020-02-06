@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var Targets[] $models
+ * @var Targets $model
  */
 
 use app\modules\groups\models\references\RefGroupTypes;
@@ -16,35 +16,29 @@ use yii\web\View;
 
 TargetsAsset::register($this);
 
-$mirroredData = [];
-if ([] !== $model->relGroups) {
-	$mirroredData[] = BadgeWidget::widget([
-		'models' => (array)$model->relGroups,
-		'attribute' => 'name',
-		'useBadges' => true,
-		'itemsSeparator' => '<br/ >',
-		"optionsMap" => RefGroupTypes::colorStyleOptions(),
-		"optionsMapAttribute" => 'type',
-		'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
-	]);
-}
-if ([] !== $model->relUsers) {
-	$mirroredData[] = BadgeWidget::widget([
-		'models' => (array)$model->relUsers,
-		'attribute' => 'username',
-		'useBadges' => true,
-		'itemsSeparator' => '<br/ >',
-		"optionsMap" => RefUserPositions::colorStyleOptions(),
-		"optionsMapAttribute" => 'type',
-		'linkScheme' => [TargetsModule::to('targets/user'), 'id' => 'id'],
-	]);
-}
-
 ?>
-<?= ([] !== $mirroredData)?"<span class='badge-target-mirrors'>".BadgeWidget::widget([
-		'models' => $mirroredData,
-		'useBadges' => false,
-		'itemsSeparator' => false,
-	])."</span>":"";
+<?= BadgeWidget::widget([
+	'models' => (array)$model->relGroups,
+	'attribute' => 'name',
+	'useBadges' => true,
+	'itemsSeparator' => false,
+	"badgeOptions" => [
+		'class' => "badge badge-target"
+	],
+	"optionsMap" => RefGroupTypes::colorStyleOptions(),
+	"optionsMapAttribute" => 'type',
+	'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id'],
+]); ?>
 
-?>
+<?= BadgeWidget::widget([
+	'models' => (array)$model->relUsers,
+	'attribute' => 'username',
+	'useBadges' => true,
+	'itemsSeparator' => false,
+	"badgeOptions" => [
+		'class' => "badge badge-target"
+	],
+	"optionsMap" => RefUserPositions::colorStyleOptions(),
+	"optionsMapAttribute" => 'position',
+	'linkScheme' => [TargetsModule::to('targets/user'), 'id' => 'id'],
+]) ?>
