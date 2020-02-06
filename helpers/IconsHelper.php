@@ -298,5 +298,11 @@ class IconsHelper {
 	public static function statistic():string {
 		return "<i class='fa fa-abacus'></i>";
 	}
+	/**
+	 * @return string
+	 */
+	public static function targets():string {
+		return "<i class='fa fa-bullseye'></i>";
+	}
 
 }
