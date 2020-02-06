@@ -173,7 +173,7 @@ TargetsAsset::register($this);
 							'attribute' => 'name',
 							'itemsSeparator' => false,
 							"optionsMap" => RefGroupTypes::colorStyleOptions(),
-							'linkScheme' => [GroupsModule::to('groups/profile'), 'id' => 'id']
+							'linkScheme' => [TargetsModule::to('targets/group'), 'id' => 'id']
 						]);
 					},
 					'format' => 'raw'
