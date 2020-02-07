@@ -31,7 +31,7 @@ $this->title = "Цели пользователя {$user->username}";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 
-$userTargetsId = ArrayHelper::getColumn(Targets::UserTargets($user), 'id');
+$userTargetsId = ArrayHelper::getColumn(Targets::FindUserTargetsScope($user)->all(), 'id');
 ?>
 
 

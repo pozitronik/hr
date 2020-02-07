@@ -30,7 +30,7 @@ $this->title = "Цели группы {$group->name}";
 $this->params['breadcrumbs'][] = TargetsModule::breadcrumbItem('Целеполагание');
 $this->params['breadcrumbs'][] = $this->title;
 
-$groupTargetsId = ArrayHelper::getColumn(Targets::GroupTargets($group), 'id');
+$groupTargetsId = ArrayHelper::getColumn(Targets::FindGroupTargetsScope($group)->all(), 'id');
 ?>
 
 

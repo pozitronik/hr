@@ -121,6 +121,7 @@ class TargetsController extends WigetableController {
 		]);
 	}
 
+
 	/**
 	 * Отображение целей группы
 	 * @param int $id
