@@ -33,7 +33,6 @@ use yii\db\ActiveQuery;
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
  * @property boolean $deleted Флаг удаления
  *
- * @property
  * @property ActiveQuery|Targets $relParentTarget -- вышестоящая задача целеполагания (если есть)
  * @property ActiveQuery|Targets[] $relChildTargets -- нижестоящие задачи целеполагания
  *
@@ -284,10 +283,10 @@ class Targets extends ActiveRecordExtended {
 	/**
 	 * Все итоговые цели пользователя
 	 * @param Users $user
-	 * @return self[]
+	 * @return LCQuery
 	 * @throws InvalidConfigException
 	 */
-	public static function UserTargets(Users $user):array {
+	public static function FindUserTargetsScope(Users $user):LCQuery {
 		$userCommandsId = ArrayHelper::getColumn($user->relGroups, 'id');
 		$finalTypeId = RefTargetsTypes::final()->id;
 
@@ -295,22 +294,22 @@ class Targets extends ActiveRecordExtended {
 			->joinWith(['relGroups', 'relUsers'])
 			->where(['sys_targets.type' => $finalTypeId])
 			->andFilterWhere(['sys_groups.id' => $userCommandsId])
-			->orFilterWhere(['sys_users.id' => $user->id])->all();
+			->orFilterWhere(['sys_users.id' => $user->id]);
 	}
 
 	/**
 	 * Все итоговые цели пользователя
 	 * @param Groups $group
-	 * @return self[]
+	 * @return LCQuery
 	 * @throws InvalidConfigException
 	 */
-	public static function GroupTargets(Groups $group):array {
+	public static function FindGroupTargetsScope(Groups $group):LCQuery {
 		$finalTypeId = RefTargetsTypes::final()->id;
 
 		return static::find()->active()
 			->joinWith(['relGroups', 'relUsers'])
 			->where(['sys_targets.type' => $finalTypeId])
-			->andWhere(['sys_groups.id' => $group->id])->all();
+			->andWhere(['sys_groups.id' => $group->id]);
 	}
 
 }
