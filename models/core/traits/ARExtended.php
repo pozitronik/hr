@@ -12,7 +12,6 @@ use app\widgets\alert\AlertModel;
 use RuntimeException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Throwable;
 
@@ -22,14 +21,6 @@ use Throwable;
  *
  */
 trait ARExtended {
-
-	/**
-	 * @return ARExtended|ActiveQuery
-	 * Force caching for all models
-	 */
-//	public static function find() {
-//		return parent::find()->cache(0);
-//	}
 
 	/**
 	 * Обёртка для быстрого поиска моделей с опциональным выбросом логируемого исключения
