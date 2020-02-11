@@ -9,6 +9,8 @@ use yii\db\ActiveRecord;
 /**
  * Class ActiveRecordHistory
  * @package app\modules\history\models
+ * @todo: переписать на behaviors
+ * @deprecated
  */
 class ActiveRecordHistory extends ActiveRecord {
 	public $loggingEnabled = true;
