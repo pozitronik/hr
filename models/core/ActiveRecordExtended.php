@@ -10,11 +10,11 @@ use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
-use yii\db\StaleObjectException;
 
 /**
  * Class ActiveRecordExtended
  * @package app\models\core
+ * @deprecated -- в классе оставлены только методы, завязанные на проверку доступов и нотификации. Это нужно переделывать на на behaviors {todo}
  */
 class ActiveRecordExtended extends ActiveRecord {
 	use ARExtended;
