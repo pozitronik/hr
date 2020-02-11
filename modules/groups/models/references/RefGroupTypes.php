@@ -40,7 +40,7 @@ class RefGroupTypes extends CustomisableReference {
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		Groups::updateAll(['type' => $toId], ['type' => $fromId]);
-		self::deleteAllEx(['id' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
 	}
 

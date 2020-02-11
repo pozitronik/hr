@@ -123,7 +123,7 @@ class RefUserRoles extends CustomisableReference {
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		RelUsersGroupsRoles::updateAll(['role' => $toId], ['role' => $fromId]);
-		self::deleteAllEx(['id' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
 	}
 

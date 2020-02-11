@@ -263,7 +263,7 @@ class RefUserPositions extends CustomisableReference {
 	 */
 	public static function merge(int $fromId, int $toId):void {
 		Users::updateAll(['position' => $toId], ['position' => $fromId]);
-		self::deleteAllEx(['id' => $fromId]);
+		self::deleteAll(['id' => $fromId]);
 		self::flushCache();
 	}
 
@@ -302,7 +302,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @throws Throwable
 	 */
 	public function setBranch($branch):void {
-		RelRefUserPositionsBranches::deleteAllEx(['position_id' => $this->id]);
+		RelRefUserPositionsBranches::deleteAll(['position_id' => $this->id]);
 		RelRefUserPositionsBranches::linkModel($this->id, $branch);//проверки на пустоту делает метод
 	}
 
@@ -318,7 +318,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @throws Throwable
 	 */
 	public function setTypes($types):void {
-		RelRefUserPositionsTypes::deleteAllEx(['position_id' => $this->id]);
+		RelRefUserPositionsTypes::deleteAll(['position_id' => $this->id]);
 		RelRefUserPositionsTypes::linkModels($this->id, $types);//проверки на пустоту делает метод
 	}
 
@@ -355,7 +355,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @throws Throwable
 	 */
 	public function setRelRefGrades($relGrades):void {
-		RelGradesPositionsRules::deleteAllEx(['position_id' => $this->id]);
+		RelGradesPositionsRules::deleteAll(['position_id' => $this->id]);
 		RelGradesPositionsRules::linkModels($relGrades, $this->id);
 	}
 

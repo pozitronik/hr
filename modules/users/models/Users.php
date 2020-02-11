@@ -326,7 +326,7 @@ class Users extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public function setDropGroups($dropGroups):void {
-		RelUsersGroupsRoles::deleteAllEx(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
+		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
 
@@ -354,7 +354,7 @@ class Users extends ActiveRecord {
 	 */
 	public function setRolesInGroup(array $groupRoles):void {
 		foreach ($groupRoles as $group => $roles) {
-			RelUsersGroupsRoles::deleteAllEx(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $this->id])->select('id')]);
+			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $this->id])->select('id')]);
 			/** @var integer[] $roles */
 			foreach ($roles as $role) {
 				RelUsersGroupsRoles::setRoleInGroup($role, $group, $this->id);
