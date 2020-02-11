@@ -4,19 +4,19 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\models\core\traits\ARExtended;
-use app\modules\history\models\ActiveRecordHistory;
 use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
 use app\widgets\alert\AlertModel;
 use Throwable;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveRecord;
 use yii\db\StaleObjectException;
 
 /**
  * Class ActiveRecordExtended
  * @package app\models\core
  */
-class ActiveRecordExtended extends ActiveRecordHistory {
+class ActiveRecordExtended extends ActiveRecord {
 	use ARExtended;
 
 	/**
