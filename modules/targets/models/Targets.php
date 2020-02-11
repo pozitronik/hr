@@ -269,7 +269,7 @@ class Targets extends ActiveRecordExtended {
 	/**
 	 * @return bool
 	 */
-	public function getIsFinal():bool {
+	public function getIsFinal():bool {//плохое временное решение
 		return $this->relTargetsTypes->isFinal;
 	}
 
