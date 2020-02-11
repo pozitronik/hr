@@ -92,6 +92,7 @@ class ActiveRecordHistory extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public static function deleteAllEx($condition = null):?int {
+		/** @noinspection PhpDeprecationInspection */
 		$self_class_name = static::class;
 		/** @var static $self_class */
 		$self_class = new $self_class_name();
