@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models\relations;
 
-use app\models\core\ActiveRecordExtended;
 use app\models\relations\Relations;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
+use yii\db\ActiveRecord;
 
 /**
  * Модель связи вакансии с ролями. Предполагается, что вакансия принадлежит только одной группе (или вообще не принадлежит группе), но ролей у неё может быть любое количество
@@ -16,7 +16,7 @@ use app\modules\vacancy\models\Vacancy;
  * @property int $vacancy_id
  * @property int $role_id
  */
-class RelVacancyGroupRoles extends ActiveRecordExtended {
+class RelVacancyGroupRoles extends ActiveRecord {
 	use Relations;
 
 	/**
