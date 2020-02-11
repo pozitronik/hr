@@ -61,20 +61,6 @@ class ActiveRecordExtended extends ActiveRecord {
 	}
 
 	/**
-	 * Удаляет набор моделей по набору первичных ключей
-	 * @param array $primaryKeys
-	 * @throws Throwable
-	 * @throws StaleObjectException
-	 */
-	public static function deleteByKeys(array $primaryKeys):void {
-		foreach ($primaryKeys as $primaryKey) {
-			if (null !== $model = self::findModel($primaryKey)) {
-				$model->delete();
-			}
-		}
-	}
-
-	/**
 	 * Отличия от базового deleteAll(): проверка доступов и вызов родительского метода, всё.
 	 * @param null|mixed $condition
 	 * @return int|null

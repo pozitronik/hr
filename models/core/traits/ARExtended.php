@@ -220,6 +220,19 @@ trait ARExtended {
 	}
 
 	/**
+	 * Удаляет набор моделей по набору первичных ключей
+	 * @param array $primaryKeys
+	 * @throws Throwable
+	 */
+	public static function deleteByKeys(array $primaryKeys):void {
+		foreach ($primaryKeys as $primaryKey) {
+			if (null !== $model = self::findModel($primaryKey)) {
+				$model->delete();
+			}
+		}
+	}
+
+	/**
 	 * Метод создания модели, выполняющий дополнительную обработку:
 	 * 1) Обеспечивает последовательное создание модели и заполнение данных по связям (т.е. тех данных, которые не могут быть заполнены до фактического создания модели).
 	 *    Последовательность заключена в транзакцию - сбой на любом шаге ведёт к отмене всей операции.
