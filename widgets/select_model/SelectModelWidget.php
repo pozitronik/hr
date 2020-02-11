@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace app\widgets\select_model;
 
 use app\helpers\IconsHelper;
-use app\models\core\ActiveRecordExtended;
 use app\models\core\LCQuery;
 use app\models\core\SelectionWidgetInterface;
 use Exception;
@@ -14,6 +13,7 @@ use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveRecordInterface;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 
@@ -21,7 +21,7 @@ use yii\web\JsExpression;
  * Class SelectModelWidget
  * @package app\widgets\select_model
  *
- * @property ActiveRecordExtended $selectModel Класс модели, по которой будем выбирать данные
+ * @property ActiveRecordInterface $selectModel Класс модели, по которой будем выбирать данные
  * @property array $exclude Записи, исключаемые из выборки. Массив id, либо массив элементов, либо ActiveQuery-условие
  * @property string $mapAttribute Названия атрибута, который будет отображаться на выбиралку
  * @property string|null $pkName Имя ключевого атрибута модели, если не указано -- подберётся автоматически
@@ -66,7 +66,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 		}
 
 		$this->loadedClass = Yii::createObject($this->selectModel);
-		if (!($this->loadedClass instanceof ActiveRecordExtended)) {
+		if (!($this->loadedClass instanceof ActiveRecordInterface)) {
 			throw new InvalidConfigException("{$this->selectModel} must be a instance of ActiveRecordExtended");
 		}
 		$this->pkName = $this->pkName??$this->loadedClass::pkName();
@@ -98,7 +98,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 			$selectionQuery = $this->loadedClass::find()->active();
 			if (is_array($this->exclude)) {
 				if ([] !== $this->exclude) {
-					if ($this->exclude[0] instanceof ActiveRecordExtended) {
+					if ($this->exclude[0] instanceof ActiveRecordInterface) {
 						$this->exclude = ArrayHelper::getColumn($this->exclude, $this->pkName);
 					}
 					$selectionQuery->where(['not in', $this->pkName, $this->exclude]);
