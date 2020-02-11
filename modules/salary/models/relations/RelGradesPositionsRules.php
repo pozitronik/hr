@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\relations;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\relations\Relations;
 
 /**
@@ -13,7 +13,7 @@ use app\models\relations\Relations;
  * @property int $grade_id
  * @property int $position_id
  */
-class RelGradesPositionsRules extends ActiveRecordExtended {
+class RelGradesPositionsRules extends ActiveRecord {
 	use Relations;
 
 	/**

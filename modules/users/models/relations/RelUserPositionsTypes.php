@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\relations;
 
-use app\models\core\ActiveRecordExtended;
 use app\models\relations\Relations;
+use yii\db\ActiveRecord;
 
 /**
  * Class RelRefUserPositionsTypes
  * @package app\modules\references\models\relations
  */
-class RelUserPositionsTypes extends ActiveRecordExtended {
+class RelUserPositionsTypes extends ActiveRecord {
 	use Relations;
 
 	/**

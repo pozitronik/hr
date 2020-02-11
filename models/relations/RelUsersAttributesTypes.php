@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use Throwable;
 use yii\db\ActiveQuery;
@@ -18,7 +18,7 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|RelUsersAttributes[] $relUsersAttributes
  * @property ActiveQuery|RefAttributesTypes $refAttributesType Типы связей (справочник)
  */
-class RelUsersAttributesTypes extends ActiveRecordExtended {
+class RelUsersAttributesTypes extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */

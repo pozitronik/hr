@@ -10,7 +10,7 @@ namespace app\modules\dynamic_attributes\models;
 
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\SysExceptions;
 use app\models\relations\RelUsersAttributes;
@@ -44,7 +44,7 @@ use yii\db\ActiveQuery;
  * @property-read int $usersCount
  * @property-read int[] $possibleAggregations -- все доступные агрегаторы свойств атрибута
  */
-class DynamicAttributes extends ActiveRecordExtended {
+class DynamicAttributes extends ActiveRecord {
 	use PluginTrait;
 
 	public const CATEGORIES = [/*Ну хер знает*/

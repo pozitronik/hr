@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\CoreController;
 use ReflectionException;
@@ -27,7 +27,7 @@ use yii\web\Controller;
  * @property-read ArrayDataProvider $actionsAccessProvider Провайдер для отображения списка экшонов
  * @property-read string $module
  */
-class DynamicUserRights extends ActiveRecordExtended implements UserRightInterface {
+class DynamicUserRights extends ActiveRecord implements UserRightInterface {
 	protected $_module;//Регистрирующий модуль, заполняется при инициализации
 	protected $_actionsAccessMap = [];
 	private $_rules;//для обхода прямой модификации $rules

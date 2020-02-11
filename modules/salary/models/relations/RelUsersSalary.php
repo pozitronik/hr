@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\relations;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\relations\Relations;
 
 /**
@@ -16,7 +16,7 @@ use app\models\relations\Relations;
  * @property int $premium_group_id
  * @property int $location_id
  */
-class RelUsersSalary extends ActiveRecordExtended {
+class RelUsersSalary extends ActiveRecord {
 	use Relations;
 
 	/**

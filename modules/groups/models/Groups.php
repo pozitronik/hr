@@ -8,7 +8,7 @@ use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\LCQuery;
 use app\models\core\traits\Upload;
@@ -64,7 +64,7 @@ use yii\db\ActiveQuery;
  * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
-class Groups extends ActiveRecordExtended {
+class Groups extends ActiveRecord {
 	use Upload;
 	use PluginTrait;
 

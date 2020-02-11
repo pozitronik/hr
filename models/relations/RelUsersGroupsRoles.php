@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
@@ -17,7 +17,7 @@ use pozitronik\helpers\ArrayHelper;
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups
  * @property int $role Роль
  */
-class RelUsersGroupsRoles extends ActiveRecordExtended {
+class RelUsersGroupsRoles extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */

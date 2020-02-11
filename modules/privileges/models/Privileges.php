@@ -5,7 +5,7 @@ namespace app\modules\privileges\models;
 
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;
 use app\modules\privileges\models\relations\RelPrivilegesDynamicRights;
@@ -43,7 +43,7 @@ use yii\db\ActiveQuery;
  *
  *
  */
-class Privileges extends ActiveRecordExtended{
+class Privileges extends ActiveRecord {
 
 	/**
 	 * {@inheritdoc}

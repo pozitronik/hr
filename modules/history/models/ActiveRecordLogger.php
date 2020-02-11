@@ -5,7 +5,7 @@ namespace app\modules\history\models;
 
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
@@ -17,7 +17,6 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownClassException;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * Class ActiveRecordLogger

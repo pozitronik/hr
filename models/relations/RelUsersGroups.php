@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
@@ -21,7 +21,7 @@ use yii\db\ActiveQuery;
  * @property ActiveQuery|RefUserRoles[] $refUserRoles Роли пользователя в группе, полученные через релейшен
  *
  */
-class RelUsersGroups extends ActiveRecordExtended {
+class RelUsersGroups extends ActiveRecord {
 	use Relations;
 
 	/**

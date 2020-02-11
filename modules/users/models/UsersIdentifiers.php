@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\relations\Relations;
 
 /**
@@ -16,7 +16,7 @@ use app\models\relations\Relations;
  * @property int $user_id
  * @property string $tn -- табельник из ФОС
  */
-class UsersIdentifiers extends ActiveRecordExtended {
+class UsersIdentifiers extends ActiveRecord {
 	use Relations;
 
 	/**

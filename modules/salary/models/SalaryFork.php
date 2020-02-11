@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
@@ -29,7 +29,7 @@ use yii\db\ActiveQuery;
  * @property RefSalaryPremiumGroups|ActiveQuery|null $refPremiumGroup
  * @property RefLocations|ActiveQuery|null $refLocation
  */
-class SalaryFork extends ActiveRecordExtended {
+class SalaryFork extends ActiveRecord {
 
 	/**
 	 * {@inheritdoc}

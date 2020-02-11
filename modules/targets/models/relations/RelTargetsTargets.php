@@ -5,7 +5,7 @@ namespace app\modules\targets\models\relations;
 
 use app\models\relations\Relations;
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use Throwable;
 
 /**
@@ -16,7 +16,7 @@ use Throwable;
  * @property int $child_id Нижестоящая группа
  * @property int $relation Тип связи -- пока не используем
  */
-class RelTargetsTargets extends ActiveRecordExtended {
+class RelTargetsTargets extends ActiveRecord {
 	use Relations;
 
 	/**

@@ -8,7 +8,7 @@ use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
@@ -31,7 +31,6 @@ use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use Throwable;
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "sys_users".
@@ -101,7 +100,7 @@ use yii\db\ActiveRecord;
  * @property RefAttributesTypes[]|ActiveQuery $refAttributesTypes Типы атрибутов, присвоенных пользователю
  * *************************
  */
-class Users extends ActiveRecordExtended {
+class Users extends ActiveRecord {
 	use Upload;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.
 

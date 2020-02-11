@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
 use app\modules\references\ReferencesModule;
@@ -16,8 +16,6 @@ use yii\db\ActiveQuery;
 use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use RuntimeException;
-
-/** @noinspection UndetectableTableInspection */
 
 /**
  * Class Reference
@@ -40,7 +38,7 @@ use RuntimeException;
  *
  *
  */
-class Reference extends ActiveRecordExtended implements ReferenceInterface {
+class Reference extends ActiveRecord implements ReferenceInterface {
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
 	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions

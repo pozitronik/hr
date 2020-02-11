@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\relations;
 
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\relations\Relations;
 
 /**
  * Class RelRefUserPositionsBranches
  * @package app\modules\references\models\relations
  */
-class RelRefUserPositionsBranches extends ActiveRecordExtended {
+class RelRefUserPositionsBranches extends ActiveRecord {
 	use Relations;
 
 	/**

@@ -1,7 +1,7 @@
 <?php /** @noinspection UndetectableTableInspection */
 declare(strict_types = 1);
 
-namespace app\models\core;
+namespace app\models\core\deprecated;
 
 use app\models\core\traits\ARExtended;
 use app\modules\privileges\models\AccessMethods;

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models;
 
 use app\helpers\DateHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\models\core\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
@@ -51,7 +51,7 @@ use yii\db\ActiveQuery;
  *
  * @property-read string $logo -- фейковое свойство, нужно для отображения на графе
  */
-class Targets extends ActiveRecordExtended {
+class Targets extends ActiveRecord {
 	/**
 	 * {@inheritdoc}
 	 */

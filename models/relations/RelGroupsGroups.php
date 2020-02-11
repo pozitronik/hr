@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use Throwable;
 use yii\db\ActiveQuery;
@@ -18,7 +18,7 @@ use yii\db\ActiveQuery;
  * @property int $relation Тип связи
  * @property ActiveQuery|RefGroupRelationTypes refGroupsRelationTypes Типы связей (справочник)
  */
-class RelGroupsGroups extends ActiveRecordExtended {
+class RelGroupsGroups extends ActiveRecord {
 	use Relations;
 
 	/**

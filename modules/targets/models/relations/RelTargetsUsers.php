@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models\relations;
 
 use app\models\relations\Relations;
-use app\models\core\ActiveRecordExtended;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "rel_targets_users".
@@ -13,7 +13,7 @@ use app\models\core\ActiveRecordExtended;
  * @property int $target_id
  * @property int $user_id
  */
-class RelTargetsUsers extends ActiveRecordExtended {
+class RelTargetsUsers extends ActiveRecord {
 	use Relations;
 
 	/**

@@ -9,7 +9,6 @@ use app\models\relations\RelUsersGroupsRoles;
 use app\widgets\alert\AlertModel;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
-use app\models\core\ActiveRecordExtended;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
@@ -24,6 +23,7 @@ use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\relations\RelVacancyGroupRoles;
 use Throwable;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\db\Exception;
 
 /**
@@ -65,7 +65,7 @@ use yii\db\Exception;
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к справочнику ролей пользователей
  * @property bool $opened
  */
-class Vacancy extends ActiveRecordExtended {
+class Vacancy extends ActiveRecord {
 
 	/**
 	 * {@inheritdoc}
