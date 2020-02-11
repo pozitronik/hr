@@ -1,4 +1,5 @@
 <?php
+/** @noinspection UndetectableTableInspection */
 declare(strict_types = 1);
 
 namespace app\modules\references\models;
@@ -35,7 +36,6 @@ use RuntimeException;
  * @property int $usedCount Количество объектов, использующих это значение справочника
  * @property null|string $pluginId Плагин, подключающий расширение
  * @property null|CoreModule $plugin
- *
  *
  */
 class Reference extends ActiveRecord implements ReferenceInterface {

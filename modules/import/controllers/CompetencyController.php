@@ -5,7 +5,6 @@ namespace app\modules\import\controllers;
 
 use app\models\core\WigetableController;
 use app\modules\import\models\competency\ImportCompetency;
-use app\modules\import\models\ImportException;
 use Throwable;
 use Yii;
 use yii\web\Response;
@@ -50,7 +49,6 @@ class CompetencyController extends WigetableController {
 
 	/**
 	 * @return string|Response
-	 * @throws ImportException
 	 * @throws Throwable
 	 */
 	public function actionImport() {

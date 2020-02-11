@@ -6,7 +6,6 @@ namespace app\modules\salary\controllers;
 use app\models\core\WigetableController;
 use app\modules\salary\models\SalaryFork;
 use app\modules\salary\models\SalaryForkSearch;
-use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
@@ -67,8 +66,6 @@ class SalaryController extends WigetableController {
 	/**
 	 * @param int $id
 	 * @return null|string
-	 * @throws InvalidConfigException
-	 * @throws Throwable
 	 */
 	public function actionUpdate(int $id):?string {
 		if (null === $fork = SalaryFork::findModel($id, new NotFoundHttpException())) return null;

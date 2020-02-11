@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\competency;
 
+use Exception;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
 use app\helpers\Utils;
@@ -178,7 +179,6 @@ class ImportCompetency extends Model {
 	 * Проходим по декомпозированным таблицам и добавляем данные в боевую БД
 	 * @param array $result
 	 * @return bool true - шаг выполнен, false - нужно повторить запрос (шаг разбит на подшаги)
-	 * @throws ImportException
 	 * @throws Throwable
 	 */
 	public function Import(array &$result):bool {
@@ -211,8 +211,7 @@ class ImportCompetency extends Model {
 	 * Добавляет пользователя систему во временную группу
 	 * @param string $userName
 	 * @return Users
-	 * @throws ImportException
-	 * @throws Throwable
+	 * @throws Exception
 	 */
 	private function addUser(string $userName):Users {
 		$user = new Users();
