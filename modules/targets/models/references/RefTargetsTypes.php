@@ -5,6 +5,8 @@ namespace app\modules\targets\models\references;
 
 use app\modules\references\models\CustomisableReference;
 use app\modules\references\ReferencesModule;
+use app\modules\targets\models\Targets;
+use app\modules\targets\TargetsModule;
 use app\widgets\badge\BadgeWidget;
 use kartik\helpers\Html;
 use yii\base\InvalidConfigException;
@@ -123,7 +125,7 @@ class RefTargetsTypes extends CustomisableReference {
 					return BadgeWidget::widget([
 						'models' => $model,
 						'attribute' => 'usedCount',
-						'linkScheme' => false,//todo
+						'linkScheme' => [TargetsModule::to(['targets/index']), 'TargetsSearch[type]' => 'id'],
 						'itemsSeparator' => false,
 						"optionsMap" => static function() {
 							return self::colorStyleOptions();
@@ -169,6 +171,13 @@ class RefTargetsTypes extends CustomisableReference {
 			throw new InvalidConfigException('Не могу найти финальный тип задачи в справочнике типов целей');
 		}
 		return $result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getUsedCount():int {
+		return (int)Targets::find()->where(['type' => $this->id])->count();
 	}
 
 }
