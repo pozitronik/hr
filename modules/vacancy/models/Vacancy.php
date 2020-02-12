@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models;
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use app\models\relations\RelUsersGroupsRoles;
 use app\widgets\alert\AlertModel;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\DateHelper;
+use pozitronik\helpers\DateHelper;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;

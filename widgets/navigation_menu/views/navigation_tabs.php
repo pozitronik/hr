@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use yii\helpers\Html;
 use yii\web\View;
 

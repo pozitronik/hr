@@ -10,7 +10,7 @@ declare(strict_types = 1);
  * @var string $color
  */
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use yii\web\View;
 
 $fontColor = Utils::RGBColorContrast($color);

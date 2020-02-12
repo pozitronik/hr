@@ -1,7 +1,7 @@
 <?php
 
 use app\helpers\ArrayHelper;
-use app\helpers\DateHelper;
+use pozitronik\helpers\DateHelper;
 use yii\db\Migration;
 use yii\helpers\Console;
 

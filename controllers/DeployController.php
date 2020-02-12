@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use yii\web\Controller;
 
 /**

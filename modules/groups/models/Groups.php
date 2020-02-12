@@ -8,7 +8,7 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\DateHelper;
+use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\LCQuery;

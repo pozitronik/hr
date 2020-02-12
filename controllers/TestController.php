@@ -15,7 +15,7 @@ use app\modules\users\UsersModule;
 use app\widgets\admin_panel\AdminPanelWidget;
 use Yii;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\models\core\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;

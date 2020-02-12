@@ -5,8 +5,8 @@ namespace app\modules\import\models\competency;
 
 use Exception;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\DateHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\DateHelper;
+use pozitronik\helpers\Utils;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelUsersAttributes;

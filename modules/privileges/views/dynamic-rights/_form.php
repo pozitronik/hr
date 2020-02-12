@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var DynamicUserRights $model
  */
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\privileges\models\ActionAccess;
 use app\modules\privileges\models\DynamicUserRights;
 use kartik\grid\DataColumn;

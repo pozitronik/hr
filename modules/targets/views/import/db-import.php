@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $errors
  */
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\home\HomeModule;
 use app\modules\targets\models\import\ImportTargets;
 use yii\helpers\Html;

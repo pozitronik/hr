@@ -7,7 +7,7 @@ use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\UsersIdentifiers;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;

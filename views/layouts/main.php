@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\assets\AppAsset;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\widgets\alert\Alert;
 use yii\helpers\Html;
 use app\widgets\navbar\NavbarWidget;

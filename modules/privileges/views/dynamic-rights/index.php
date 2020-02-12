@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\IconsHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRightInterface;
 use app\modules\privileges\PrivilegesModule;

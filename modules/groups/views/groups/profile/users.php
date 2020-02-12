@@ -12,7 +12,7 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;

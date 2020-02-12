@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;

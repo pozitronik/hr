@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\badge;
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\ReflectionHelper;
 use pozitronik\widgets\CachedWidget;

@@ -9,7 +9,7 @@ declare(strict_types = 1);
  * @var array $messages
  */
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;

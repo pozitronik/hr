@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;
 use kartik\grid\GridView;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use yii\helpers\Html;
 
 

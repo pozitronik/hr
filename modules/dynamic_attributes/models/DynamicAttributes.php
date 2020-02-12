@@ -11,7 +11,7 @@ namespace app\modules\dynamic_attributes\models;
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\DateHelper;
+use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginTrait;
 use app\models\core\SysExceptions;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-use app\helpers\DateHelper;
+use pozitronik\helpers\DateHelper;
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\models\core\LCQuery;

@@ -5,7 +5,7 @@ namespace app\modules\privileges\models;
 
 use app\models\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\DateHelper;
+use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginsSupport;
 use app\models\core\LCQuery;

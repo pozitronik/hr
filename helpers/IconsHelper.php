@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\helpers;
 
 use app\modules\history\models\HistoryEventInterface;
+use pozitronik\helpers\Utils;
 
 /**
  * Class Icons

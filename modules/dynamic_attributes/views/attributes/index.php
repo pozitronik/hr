@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\IconsHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;

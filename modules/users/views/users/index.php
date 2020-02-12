@@ -16,7 +16,7 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\Privileges;

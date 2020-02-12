@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\graph\models;
 
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\targets\models\Targets;
 use pozitronik\helpers\ArrayHelper;
 

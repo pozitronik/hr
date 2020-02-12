@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace app\models\core\core_module;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\Utils;
 use app\modules\privileges\models\UserRightInterface;
 use pozitronik\helpers\ReflectionHelper;
+use pozitronik\helpers\Utils;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Throwable;

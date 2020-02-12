@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\helpers\IconsHelper;
-use app\helpers\Utils;
+use pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;

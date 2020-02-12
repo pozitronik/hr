@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
-use app\helpers\Utils;
 use app\models\core\traits\ARExtended;
+use pozitronik\helpers\Utils;
 use Yii;
 use Throwable;
 use yii\db\ActiveRecord;
