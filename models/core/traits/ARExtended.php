@@ -3,19 +3,19 @@ declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
+use pozitronik\core\models\sys_exceptions\SysExceptions;
 use pozitronik\core\models\user_right\AccessMethods;
 use pozitronik\core\models\user_right\UserAccessInterface;
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\SysExceptions;
-use app\modules\import\models\ImportException;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
+use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
-use yii\db\Exception;
 use yii\db\Transaction;
+use yii\helpers\VarDumper;
 
 /**
  * Trait ARExtended
@@ -104,7 +104,8 @@ trait ARExtended {
 	 * @param bool $ignoreEmptyCondition Игнорировать пустое поисковое значение
 	 * @param bool $forceUpdate Если запись по условию найдена, пытаться обновить её
 	 * @return ActiveRecord|self|null
-	 * @throws ImportException
+	 * @throws Exception
+	 * @throws InvalidConfigException
 	 */
 	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true, bool $forceUpdate = false):?self {
 		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
@@ -113,7 +114,7 @@ trait ARExtended {
 		if ($instance->isNewRecord || $forceUpdate) {
 			$instance->loadArray($fields??$searchCondition);
 			if (!$instance->save()) {
-				throw new ImportException($instance, $instance->errors);
+				throw new Exception("{$instance->formName()} errors: ".VarDumper::dumpAsString($instance->errors));
 			}
 		}
 		return $instance;
