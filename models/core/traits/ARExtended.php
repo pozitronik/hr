@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use pozitronik\core\models\user_right\AccessMethods;
+use pozitronik\core\models\user_right\UserAccessInterface;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
-use app\modules\privileges\models\UserAccess;
 use app\modules\import\models\ImportException;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
@@ -190,7 +190,7 @@ trait ARExtended {
 	 */
 	public function safeDelete():void {
 		/** @var Model $this */
-		if (!UserAccess::canAccess($this, AccessMethods::delete)) {
+		if (!UserAccessInterface::canAccess($this, AccessMethods::delete)) {
 			AlertModel::AccessNotify();
 			return;
 		}
