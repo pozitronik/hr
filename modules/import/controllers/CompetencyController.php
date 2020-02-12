@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\controllers;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\modules\import\models\competency\ImportCompetency;
 use Throwable;
 use Yii;

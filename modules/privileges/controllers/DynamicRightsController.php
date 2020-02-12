@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\controllers;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\modules\privileges\models\DynamicUserRights;
 use Throwable;
 use Yii;

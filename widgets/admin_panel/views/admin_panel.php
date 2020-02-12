@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var integer $mode
  */
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use yii\web\View;
 use app\widgets\controller\ControllerWidget;
 

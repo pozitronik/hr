@@ -9,7 +9,7 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
 use Throwable;
 use Yii;
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

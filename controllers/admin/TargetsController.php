@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 
 /**
  * Class WorkgroupsController

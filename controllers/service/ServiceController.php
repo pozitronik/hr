@@ -5,7 +5,7 @@ namespace app\controllers\service;
 
 use pozitronik\helpers\Utils;
 use app\models\core\Service;
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use Throwable;

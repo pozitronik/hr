@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\controllers;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\modules\salary\models\SalaryFork;
 use app\modules\salary\models\SalaryForkSearch;
 use Throwable;

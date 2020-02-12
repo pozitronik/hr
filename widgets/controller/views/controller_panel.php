@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var string $style
  */
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use yii\web\View;
 use yii\helpers\Url;
 

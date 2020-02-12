@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\controllers;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\modules\references\models\ReferenceLoader;
 use Yii;
 use yii\base\InvalidConfigException;

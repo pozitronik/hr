@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var WigetableController[] $controllers
  **/
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\widgets\controller\ControllerWidget;
 use yii\web\View;
 

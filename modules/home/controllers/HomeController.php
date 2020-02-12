@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\home\controllers;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;

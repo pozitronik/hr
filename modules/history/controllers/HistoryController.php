@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\controllers;
 
-use app\models\core\WigetableController;
+use pozitronik\core\models\core_controller\WigetableController;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
 use ReflectionException;
