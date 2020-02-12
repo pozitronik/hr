@@ -10,6 +10,7 @@ use yii\helpers\VarDumper;
 /**
  * Class ImportException
  * @package app\models\imports\fos
+ * @deprecated
  */
 class ImportException extends Exception {
 	private $modelName;
