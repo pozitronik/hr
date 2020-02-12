@@ -56,7 +56,8 @@
 		"kartik-v/yii2-widget-typeahead": "dev-master",
 		"desandro/masonry": "dev-master",
 		"metafizzy/isotope": "dev-master",
-		"pozitronik/yii2-cachedwidget": "*"
+		"pozitronik/yii2-cachedwidget": "*",
+		"pozitronik/yii2-core-tools": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -118,6 +119,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/pozitronik/yii2-cachedwidget"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-core-tools"
 		}
 	]
 }
