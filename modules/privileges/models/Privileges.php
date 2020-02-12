@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use app\models\core\traits\ARExtended;
-use pozitronik\core\models\user_right\UserRightInterface;
+use pozitronik\core\interfaces\access\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;

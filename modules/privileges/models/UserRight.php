@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\models\user_right\AccessMethods;
-use pozitronik\core\models\user_right\UserRightInterface;
+use pozitronik\core\interfaces\access\AccessMethods;
+use pozitronik\core\interfaces\access\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\InvalidConfigException;

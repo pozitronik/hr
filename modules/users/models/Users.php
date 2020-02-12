@@ -7,7 +7,7 @@ use app\models\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
-use pozitronik\core\models\user_right\UserRightInterface;
+use pozitronik\core\interfaces\access\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;

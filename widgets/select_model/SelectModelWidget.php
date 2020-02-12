@@ -5,11 +5,11 @@ namespace app\widgets\select_model;
 
 use app\helpers\IconsHelper;
 use app\models\core\LCQuery;
-use app\models\core\SelectionWidgetInterface;
 use app\models\core\traits\ARExtended;
 use Exception;
 use kartik\base\InputWidget;
 use kartik\select2\Select2;
+use pozitronik\core\interfaces\widgets\SelectionWidgetInterface;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;

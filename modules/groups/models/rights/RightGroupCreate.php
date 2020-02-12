@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\models\rights;
 
 use app\modules\privileges\models\UserRight;
-use pozitronik\core\models\user_right\AccessMethods;
+use pozitronik\core\interfaces\access\AccessMethods;
 use yii\base\Model;
 use yii\web\Controller;
 

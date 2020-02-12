@@ -5,7 +5,7 @@ namespace app\modules\users\models\rights;
 
 use app\modules\privileges\models\UserRight;
 use app\modules\users\models\Users;
-use pozitronik\core\models\user_right\AccessMethods;
+use pozitronik\core\interfaces\access\AccessMethods;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
