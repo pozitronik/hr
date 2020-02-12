@@ -312,4 +312,11 @@ class Targets extends ActiveRecordExtended {
 			->andWhere(['sys_groups.id' => $group->id]);
 	}
 
+	/**
+	 * todo
+	 */
+	public function dropCaches():void {
+
+	}
+
 }
