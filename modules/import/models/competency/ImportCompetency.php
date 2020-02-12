@@ -18,7 +18,6 @@ use app\modules\import\models\competency\activerecord\ICAttributes;
 use app\modules\import\models\competency\activerecord\ICFields;
 use app\modules\import\models\competency\activerecord\ICRelUsersFields;
 use app\modules\import\models\competency\activerecord\ICUsers;
-use app\modules\import\models\ImportException;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Model;
@@ -97,7 +96,6 @@ class ImportCompetency extends Model {
 	/**
 	 * @param string $name
 	 * @return int|null
-	 * @throws ImportException
 	 * @throws Throwable
 	 */
 	private function addICUser(string $name):?int {
@@ -135,7 +133,6 @@ class ImportCompetency extends Model {
 	 * @param string $competencyField
 	 * @return int|null
 	 * @throws Throwable
-	 * @throws ImportException
 	 */
 	private function addCompetencyField(string $competencyName, string $competencyField):?int {
 		$competencyId = ArrayHelper::getValue(ICAttributes::addInstance(['name' => $competencyName], [
@@ -156,7 +153,6 @@ class ImportCompetency extends Model {
 	 * @param int $fieldId
 	 * @param array $scoreValues
 	 * @return bool
-	 * @throws ImportException
 	 * @throws Throwable
 	 */
 	private function addScoreValues(int $userId, int $fieldId, array $scoreValues):bool {

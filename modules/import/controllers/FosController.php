@@ -8,9 +8,10 @@ use app\modules\import\models\fos\ImportFos;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use app\modules\import\models\fos\ImportFosDecomposedSearch;
 use app\modules\import\models\fos\ImportFosSearch;
-use app\modules\import\models\ImportException;
 use Throwable;
 use Yii;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\web\Response;
 
 /**
@@ -61,7 +62,8 @@ class FosController extends WigetableController {
 	 * @param int|null $domain
 	 * @param int $step
 	 * @return string|Response
-	 * @throws ImportException
+	 * @throws Exception
+	 * @throws InvalidConfigException
 	 */
 	public function actionDecompose(?int $domain = null, int $step = ImportFos::STEP_REFERENCES) {
 		if (null === $domain) return $this->redirect(['upload']);

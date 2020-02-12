@@ -4,11 +4,12 @@ declare(strict_types = 1);
 namespace app\modules\targets\controllers;
 
 use app\models\core\WigetableController;
-use app\modules\import\models\ImportException;
 use app\modules\targets\models\import\ImportTargets;
 use app\modules\targets\models\import\ImportTargetsSearch;
 use Throwable;
 use Yii;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -59,7 +60,8 @@ class ImportController extends WigetableController {
 	/**
 	 * @param int|null $domain
 	 * @return string|Response
-	 * @throws ImportException
+	 * @throws Exception
+	 * @throws InvalidConfigException
 	 */
 	public function actionDecompose(?int $domain = null) {
 		if (null === $domain) return $this->redirect(['upload']);

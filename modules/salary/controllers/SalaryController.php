@@ -8,8 +8,8 @@ use app\modules\salary\models\SalaryFork;
 use app\modules\salary\models\SalaryForkSearch;
 use Throwable;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidConfigException;
-use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 

@@ -13,8 +13,8 @@ use app\modules\users\models\Users;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidConfigException;
-use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 

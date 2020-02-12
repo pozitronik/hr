@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace app\modules\import\models\fos;
 
 use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
-use app\modules\import\models\ImportException;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\traits\Upload;
@@ -32,7 +31,8 @@ use app\modules\import\models\fos\activerecord\ImportFosTribeLeaderIt;
 use app\modules\import\models\fos\activerecord\ImportFosUsers;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
-use yii\base\Exception as BaseException;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
 /**
@@ -220,7 +220,6 @@ class ImportFos extends ActiveRecord {
 	 * @param string $filename
 	 * @param int|null $domain
 	 * @return bool
-	 * @throws BaseException
 	 * @throws Throwable
 	 */
 	public static function Import(string $filename, ?int $domain = null):bool {
@@ -231,7 +230,7 @@ class ImportFos extends ActiveRecord {
 			$spreadsheet->setActiveSheetIndex(0);
 			$dataArray = $spreadsheet->getActiveSheet()->toArray();
 		} catch (Throwable $t) {
-			throw new BaseException('Формат файла не поддерживается');
+			throw new Exception('Формат файла не поддерживается');
 		}
 		$domain = $domain??time();
 		$labels = (new self())->attributeLabels();
@@ -243,7 +242,7 @@ class ImportFos extends ActiveRecord {
 				$columnHeaderIndex = 0;
 				foreach ($labels as $key => $value) {
 					if ($value !== $headerValue = ArrayHelper::getValue($importRow, $columnHeaderIndex)) {
-						throw new BaseException("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
+						throw new Exception("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
 					}
 					$columnHeaderIndex++;
 				}
@@ -266,7 +265,8 @@ class ImportFos extends ActiveRecord {
 	 * @param int $step
 	 * @param array $messages Массив сообщений
 	 * @return int текущий исполненный шаг
-	 * @throws ImportException
+	 * @throws Exception
+	 * @throws InvalidConfigException
 	 */
 	public static function Decompose(int $domain, int $step = self::STEP_REFERENCES, array &$messages = []):int {
 		/** @var self[] $data */
@@ -322,8 +322,6 @@ class ImportFos extends ActiveRecord {
 							'domain' => $row->domain,
 							'position_type' => ArrayHelper::getValue($currentUserPositionType, 'id')
 						]);
-					} catch (ImportException $importException) {
-						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
@@ -423,9 +421,6 @@ class ImportFos extends ActiveRecord {
 							'user_id' => $chapter_couch_user_id,
 							'domain' => $row->domain
 						]);
-					} catch
-					(ImportException $importException) {
-						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
@@ -498,8 +493,6 @@ class ImportFos extends ActiveRecord {
 							'couch_id' => ImportFosUsers::findModelAttribute(['user_tn' => $row->chapter_couch_tn, 'domain' => $domain], 'id'),
 							'domain' => $row->domain
 						]);
-					} catch (ImportException $importException) {
-						$messages[] = ['row' => $row, 'error' => $importException->getName()];
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}

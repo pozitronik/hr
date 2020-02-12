@@ -10,11 +10,11 @@ namespace app\modules\dynamic_attributes\models;
 
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use pozitronik\core\models\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginTrait;
-use app\models\core\SysExceptions;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;

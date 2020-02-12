@@ -8,7 +8,6 @@ use app\models\core\traits\Upload;
 use app\models\relations\RelGroupsGroups;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\import\models\ImportException;
 use app\modules\targets\models\import\activerecord\ImportTargetsClusters;
 use app\modules\targets\models\import\activerecord\ImportTargetsCommands;
 use app\modules\targets\models\import\activerecord\ImportTargetsMilestones;
@@ -20,11 +19,11 @@ use app\modules\targets\models\relations\RelTargetsGroups;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
-use Exception;
+use yii\base\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
-use yii\base\Exception as BaseException;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 
@@ -120,7 +119,7 @@ class ImportTargets extends ActiveRecord {
 	 * @param string $filename
 	 * @param int|null $domain
 	 * @return bool
-	 * @throws BaseException
+	 * @throws Exception
 	 * @throws Throwable
 	 */
 	public static function Import(string $filename, ?int $domain = null):bool {
@@ -132,7 +131,7 @@ class ImportTargets extends ActiveRecord {
 			$spreadsheet->setActiveSheetIndex(0);
 			$dataArray = $spreadsheet->getActiveSheet()->toArray(null, false);
 		} catch (Throwable $t) {
-			throw new BaseException('Формат файла не поддерживается. Ошибка '.$t->getMessage());
+			throw new Exception('Формат файла не поддерживается. Ошибка '.$t->getMessage());
 		}
 		$domain = $domain??time();
 		$labels = (new self())->attributeLabels();
@@ -145,7 +144,7 @@ class ImportTargets extends ActiveRecord {
 				$columnHeaderIndex = 0;
 				foreach ($labels as $value) {
 					if ($value !== $headerValue = ArrayHelper::getValue($importRow, $columnHeaderIndex)) {
-						throw new BaseException("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
+						throw new Exception("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
 					}
 					$columnHeaderIndex++;
 				}
@@ -167,7 +166,8 @@ class ImportTargets extends ActiveRecord {
 	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
 	 * @param int $domain
 	 * @param array $messages Массив сообщений
-	 * @throws ImportException
+	 * @throws InvalidConfigException
+	 * @throws Exception
 	 */
 	public static function Decompose(int $domain, array &$messages = []):void {
 		/** @var self[] $data */
@@ -217,8 +217,6 @@ class ImportTargets extends ActiveRecord {
 					'command_id' => null === $command?null:ArrayHelper::getValue($command, 'id'),
 					'domain' => $row->domain
 				]);
-			} catch (ImportException $importException) {
-				$messages[] = ['row' => $row, 'error' => $importException->getName()];
 			} catch (Throwable $throwable) {
 				$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 			}
@@ -255,7 +253,7 @@ class ImportTargets extends ActiveRecord {
 	 * @param string $type
 	 * @param int|null $result_type_id
 	 * @return int
-	 * @throws \yii\db\Exception
+	 * @throws Exception
 	 */
 	public static function addTarget(string $name, string $type, ?int $result_type_id = null):int {
 		if (empty($name)) return -1;
@@ -331,7 +329,7 @@ class ImportTargets extends ActiveRecord {
 					try {
 						/** @var ImportTargetsTargets $target */
 						RelTargetsTargets::linkModels($target->relMilestones->hr_target_id, $target->hr_target_id);
-						RelTargetsGroups::linkModels($target->hr_target_id, ArrayHelper::getValue($target,'relCommands.hr_group_id'));//в файле может быть цель без команды
+						RelTargetsGroups::linkModels($target->hr_target_id, ArrayHelper::getValue($target, 'relCommands.hr_group_id'));//в файле может быть цель без команды
 					} catch (Throwable $t) {
 						echo $t->getMessage();
 					}
