@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models;
 
 use app\helpers\DateHelper;
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\models\core\LCQuery;
 use app\models\user\CurrentUser;
@@ -52,11 +53,20 @@ use yii\db\ActiveQuery;
  * @property-read string $logo -- фейковое свойство, нужно для отображения на графе
  */
 class Targets extends ActiveRecord {
+	use ARExtended;
+
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
 		return 'sys_targets';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**
@@ -278,6 +288,13 @@ class Targets extends ActiveRecord {
 	 */
 	public function getLogo():string {
 		return "/img/targets/".mb_strtolower($this->relTargetsTypes->name).".png";
+	}
+
+	/**
+	 * todo
+	 */
+	public function dropCaches():void {
+
 	}
 
 	/**

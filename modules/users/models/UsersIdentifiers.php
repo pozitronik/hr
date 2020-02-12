@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\models\relations\Relations;
 
@@ -18,6 +19,7 @@ use app\models\relations\Relations;
  */
 class UsersIdentifiers extends ActiveRecord {
 	use Relations;
+	use ARExtended;
 
 	/**
 	 * {@inheritdoc}

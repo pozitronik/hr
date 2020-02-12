@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use app\models\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
 use yii\db\ActiveRecord;
@@ -44,12 +45,19 @@ use yii\db\ActiveQuery;
  *
  */
 class Privileges extends ActiveRecord {
-
+	use ARExtended;
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
 		return 'sys_privileges';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

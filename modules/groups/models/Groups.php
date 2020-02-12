@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
+use app\models\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
@@ -67,6 +68,7 @@ use yii\db\ActiveQuery;
 class Groups extends ActiveRecord {
 	use Upload;
 	use PluginTrait;
+	use ARExtended;
 
 	public const LOGO_IMAGE_DIRECTORY = '@app/web/group_logotypes/';
 
@@ -97,6 +99,13 @@ class Groups extends ActiveRecord {
 	 */
 	public static function tableName():string {
 		return 'sys_groups';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

@@ -9,6 +9,7 @@ use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearc
 use Throwable;
 use Yii;
 use app\modules\users\models\Users;
+use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -40,6 +41,8 @@ class UserController extends WigetableController {
 	/**
 	 * @param int $user_id
 	 * @return Response
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function actionAddAttribute(int $user_id):Response {
 		if ((null !== $user = Users::findModel($user_id)) && null !== ($updateArray = Yii::$app->request->post($user->formName()))) $user->updateModel($updateArray);

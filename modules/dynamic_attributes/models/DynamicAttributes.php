@@ -8,6 +8,8 @@ namespace app\modules\dynamic_attributes\models;
  * Саму сущность потребуется утащить в компонент.
  */
 
+use app\models\core\LCQuery;
+use app\models\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\DateHelper;
 use yii\db\ActiveRecord;
@@ -46,6 +48,7 @@ use yii\db\ActiveQuery;
  */
 class DynamicAttributes extends ActiveRecord {
 	use PluginTrait;
+	use ARExtended;
 
 	public const CATEGORIES = [/*Ну хер знает*/
 		0 => 'Общая категория',
@@ -62,6 +65,13 @@ class DynamicAttributes extends ActiveRecord {
 	 */
 	public static function tableName():string {
 		return 'sys_attributes';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

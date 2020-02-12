@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
+use app\models\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
@@ -103,7 +104,7 @@ use Yii;
 class Users extends ActiveRecord {
 	use Upload;
 	use UsersSalaryTrait;//потом сделаем этот вызов опциональным в зависимости от подключения модуля. Или нет. Пока не заботимся.
-
+	use ARExtended;
 	use PluginTrait;
 
 	/*Переменная для инстанса заливки аватарок*/
@@ -148,6 +149,13 @@ class Users extends ActiveRecord {
 	 */
 	public static function tableName():string {
 		return 'sys_users';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

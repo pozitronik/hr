@@ -167,6 +167,7 @@ class ImportTargets extends ActiveRecord {
 	 * Анализирует проведённый импорт, декомпозируя данные по таблицам и генерируя сводную таблицу импорта
 	 * @param int $domain
 	 * @param array $messages Массив сообщений
+	 * @throws ImportException
 	 */
 	public static function Decompose(int $domain, array &$messages = []):void {
 		/** @var self[] $data */
@@ -254,6 +255,7 @@ class ImportTargets extends ActiveRecord {
 	 * @param string $type
 	 * @param int|null $result_type_id
 	 * @return int
+	 * @throws \yii\db\Exception
 	 */
 	public static function addTarget(string $name, string $type, ?int $result_type_id = null):int {
 		if (empty($name)) return -1;

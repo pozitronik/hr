@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
@@ -30,6 +31,7 @@ use yii\db\ActiveQuery;
  * @property RefLocations|ActiveQuery|null $refLocation
  */
 class SalaryFork extends ActiveRecord {
+	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
@@ -108,7 +110,6 @@ class SalaryFork extends ActiveRecord {
 	public function getRefLocation() {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id']);
 	}
-
 
 	/**
 	 * @return float

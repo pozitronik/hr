@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use app\models\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\references\RefGroupRelationTypes;
@@ -20,6 +21,7 @@ use yii\db\ActiveQuery;
  */
 class RelGroupsGroups extends ActiveRecord {
 	use Relations;
+	use ARExtended;
 
 	/**
 	 * {@inheritdoc}

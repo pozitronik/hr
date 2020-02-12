@@ -5,6 +5,7 @@ namespace app\modules\vacancy\models;
 
 use app\helpers\Utils;
 use app\models\core\LCQuery;
+use app\models\core\traits\ARExtended;
 use app\models\relations\RelUsersGroupsRoles;
 use app\widgets\alert\AlertModel;
 use pozitronik\helpers\ArrayHelper;
@@ -66,6 +67,7 @@ use yii\db\Exception;
  * @property bool $opened
  */
 class Vacancy extends ActiveRecord {
+	use ARExtended;
 
 	/**
 	 * {@inheritdoc}
@@ -88,6 +90,13 @@ class Vacancy extends ActiveRecord {
 			[['daddy'], 'default', 'value' => CurrentUser::Id()],//default-валидатор конфликтует с required, их нельзя указывать одновременно
 			[['create_date'], 'default', 'value' => DateHelper::lcDate()]
 		];
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

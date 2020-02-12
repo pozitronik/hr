@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use app\models\core\LCQuery;
+use app\models\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginsSupport;
@@ -28,6 +30,8 @@ use yii\web\Controller;
  * @property-read string $module
  */
 class DynamicUserRights extends ActiveRecord implements UserRightInterface {
+	use ARExtended;
+
 	protected $_module;//Регистрирующий модуль, заполняется при инициализации
 	protected $_actionsAccessMap = [];
 	private $_rules;//для обхода прямой модификации $rules
@@ -39,6 +43,13 @@ class DynamicUserRights extends ActiveRecord implements UserRightInterface {
 	 */
 	public static function tableName():string {
 		return 'sys_user_rights';
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

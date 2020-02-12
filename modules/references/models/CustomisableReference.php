@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\models\core\LCQuery;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use Throwable;
@@ -36,6 +37,13 @@ class CustomisableReference extends Reference {
 			[['deleted'], 'boolean'],
 			[['name', 'color', 'textcolor'], 'string', 'max' => 256]
 		];
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

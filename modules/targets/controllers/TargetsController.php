@@ -14,6 +14,7 @@ use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -41,6 +42,7 @@ class TargetsController extends WigetableController {
 	/**
 	 * @return string|Response
 	 * @throws InvalidConfigException
+	 * @throws Exception
 	 */
 	public function actionCreate() {
 		$newTarget = new Targets();

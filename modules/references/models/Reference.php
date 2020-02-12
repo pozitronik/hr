@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
+use app\models\core\LCQuery;
+use app\models\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;
@@ -39,6 +41,7 @@ use RuntimeException;
  *
  */
 class Reference extends ActiveRecord implements ReferenceInterface {
+	use ARExtended;
 	public $menuCaption = "Справочник";
 	public $menuIcon = "/img/admin/references.png";
 	/*	Массив, перечисляющий имена атрибутов, которые должны отдаваться в dataOptions
@@ -68,6 +71,13 @@ class Reference extends ActiveRecord implements ReferenceInterface {
 			[['name'], 'string', 'max' => 256],
 			[['value'], 'string', 'max' => 512]
 		];
+	}
+
+	/**
+	 * @return LCQuery
+	 */
+	public static function find():LCQuery {
+		return new LCQuery(static::class);
 	}
 
 	/**

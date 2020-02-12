@@ -7,6 +7,7 @@ use app\models\core\WigetableController;
 use app\modules\privileges\models\Privileges;
 use Throwable;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\web\NotFoundHttpException;
@@ -60,6 +61,8 @@ class PrivilegesController extends WigetableController {
 	/**
 	 * @param int $id
 	 * @return null|string
+	 * @throws Throwable
+	 * @throws InvalidConfigException
 	 */
 	public function actionUpdate(int $id):?string {
 		if (null === $privilege = Privileges::findModel($id, new NotFoundHttpException())) return null;

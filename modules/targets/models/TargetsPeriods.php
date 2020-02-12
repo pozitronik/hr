@@ -6,6 +6,7 @@ namespace app\modules\targets\models;
 use app\models\core\traits\ARExtended;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * Прототипирую период исполнения цели + связанные методы
@@ -79,6 +80,7 @@ class TargetsPeriods extends ActiveRecord {
 	 * @param string $period -- может быть в формате Q1 - Q4 или цифра года
 	 * @param int $target_id
 	 * @return static
+	 * @throws Exception
 	 */
 	public static function fromFilePeriod(string $period, int $target_id):self {
 		$result = new self();
