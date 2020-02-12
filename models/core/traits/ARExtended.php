@@ -5,7 +5,6 @@ namespace app\models\core\traits;
 
 use pozitronik\core\models\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;
-use app\widgets\alert\AlertModel;
 use RuntimeException;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
@@ -226,20 +225,18 @@ trait ARExtended {
 
 	/**
 	 * Метод создания модели, выполняющий дополнительную обработку:
-	 * 1) Обеспечивает последовательное создание модели и заполнение данных по связям (т.е. тех данных, которые не могут быть заполнены до фактического создания модели).
+	 *    Обеспечивает последовательное создание модели и заполнение данных по связям (т.е. тех данных, которые не могут быть заполнены до фактического создания модели).
 	 *    Последовательность заключена в транзакцию - сбой на любом шаге ведёт к отмене всей операции.
-	 * 2) Генерирует уведомление по результатам
 	 *
 	 * Значения по умолчанию больше не учитываются методом, предполагается, что они заданы в rules().
 	 * Если требуется выполнить какую-то логику в процессе создания - используем стандартные методы, вроде beforeValidate/beforeSave (по ситуации).
 	 *
 	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
-	 * @param bool $alerts -- false отключит создание алертов (полезно при импортах)
 	 * @return bool - результат операции
 	 * @throws Exception
 	 * @noinspection PhpUndefinedMethodInspection -- нужно из-за структуры кода, трейт не знает, что скрывается за static
 	 */
-	public function createModel(?array $paramsArray, bool $alerts = true):bool {
+	public function createModel(?array $paramsArray):bool {
 		$saved = false;
 		if ($this->loadArray($paramsArray)) {
 			/** @var Transaction $transaction */
@@ -251,11 +248,9 @@ trait ARExtended {
 				if (true === $saved = $this->save()) {
 					$transaction->commit();
 					$this->refresh();
-					if ($alerts) AlertModel::SuccessNotify();
 				}
 			}
 			if (!$saved) {
-				if ($alerts) AlertModel::ErrorsNotify($this->errors);
 				$transaction->rollBack();
 			}
 		}
@@ -263,20 +258,14 @@ trait ARExtended {
 	}
 
 	/**
-	 * Метод обновления модели, выполняющий дополнительную обработку: генерация уведомления по результатам
+	 * Метод обновления модели, выполняющий дополнительную обработку
 	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
-	 * @param bool $alerts -- false отключит создание алертов (полезно при импортах)
 	 * @return bool
+	 *
+	 * Раньше здесь была логика оповещений, после её удаления метод свёлся к текущему состоянию
+	 * @throws Exception
 	 */
-	public function updateModel(?array $paramsArray, bool $alerts = true):bool {
-		if ($this->loadArray($paramsArray)) {
-			if ($this->save()) {
-				if ($alerts) AlertModel::SuccessNotify();
-				$this->refresh();
-				return true;
-			}
-			if ($alerts) AlertModel::ErrorsNotify($this->errors);
-		}
-		return false;
+	public function updateModel(?array $paramsArray):bool {
+		return $this->createModel($paramsArray);
 	}
 }
