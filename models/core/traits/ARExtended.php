@@ -14,6 +14,7 @@ use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
+use yii\db\Exception;
 use yii\db\Transaction;
 
 /**
@@ -233,6 +234,7 @@ trait ARExtended {
 	 * @param bool $alerts -- false отключит создание алертов (полезно при импортах)
 	 * @return bool - результат операции
 	 * @noinspection PhpUndefinedMethodInspection
+	 * @throws Exception
 	 */
 	public function createModel(?array $paramsArray, bool $alerts = true):bool {
 		$saved = false;

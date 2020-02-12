@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\controllers;
 
-use app\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributesPropertyCollection;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;

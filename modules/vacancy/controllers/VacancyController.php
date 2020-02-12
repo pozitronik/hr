@@ -10,6 +10,7 @@ use app\modules\vacancy\models\VacancySearch;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -41,6 +42,7 @@ class VacancyController extends WigetableController {
 	 * @param int|null $group
 	 * @return string|Response
 	 * @throws InvalidConfigException
+	 * @throws Exception
 	 */
 	public function actionCreate(?int $group = null) {
 		$newVacancy = new Vacancy([
