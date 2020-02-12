@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\controllers\CoreController;
 use pozitronik\core\interfaces\access\AccessMethods;
 use pozitronik\core\interfaces\access\UserAccessInterface;
+use pozitronik\core\models\core_controller\CoreController;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;

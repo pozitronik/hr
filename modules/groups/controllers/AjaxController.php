@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\controllers;
 
 use app\models\relations\RelGroupsGroups;
-use pozitronik\core\controllers\BaseAjaxController;
+use pozitronik\core\models\core_controller\BaseAjaxController;
 use pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
