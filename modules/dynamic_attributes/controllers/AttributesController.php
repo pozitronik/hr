@@ -64,7 +64,7 @@ class AttributesController extends WigetableController {
 		if (null === $attribute = DynamicAttributes::findModel($id, new NotFoundHttpException())) return null;
 
 		if (null !== ($updateArray = Yii::$app->request->post($attribute->formName()))) {
-			$attribute->updateAttribute($updateArray);
+			$attribute->updateAttributes($updateArray);
 		}
 
 		return $this->render('update', [
