@@ -5,7 +5,6 @@ namespace app\modules\users;
 
 use pozitronik\core\models\core_module\CoreModule;
 
-
 /**
  * Class UsersModule
  * @package app\modules\users

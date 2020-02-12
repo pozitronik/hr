@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace app\modules\users\controllers;
 
-use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelUsersGroups;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Bookmarks;
 use app\modules\users\models\Users;
+use pozitronik\core\controllers\BaseAjaxController;
 use Throwable;
 use Yii;
 

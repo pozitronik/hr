@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\references\controllers;
 
-use app\models\core\ajax\BaseAjaxController;
 use app\models\relations\RelGroupsGroups;
 use app\modules\groups\models\Groups;
+use pozitronik\core\controllers\BaseAjaxController;
 use Throwable;
 use Yii;
 

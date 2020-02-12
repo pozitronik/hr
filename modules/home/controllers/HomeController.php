@@ -66,7 +66,6 @@ class HomeController extends WigetableController {
 		$allowedGroups = [];
 		//Проверяем доступы к списку юзеров
 
-		/** @noinspection RequireParameterInspection */
 		return $this->render('users-table', [
 			'dataProvider' => $searchModel->search($params, $allowedGroups),
 			'searchModel' => $searchModel,

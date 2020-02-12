@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use pozitronik\core\controllers\CoreController;
 use pozitronik\core\models\core_module\PluginsSupport;
-use app\models\core\CoreController;
 use app\models\core\traits\ModelExtended;
 use Throwable;
 use yii\base\InvalidConfigException;

@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\core;
 
+use pozitronik\core\controllers\CoreController;
+
 /**
  * Class WigetableController
  * Расширенный класс контроллера с дополнительными опциями встройки в меню и навигацию
