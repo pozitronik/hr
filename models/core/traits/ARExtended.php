@@ -4,14 +4,11 @@ declare(strict_types = 1);
 namespace app\models\core\traits;
 
 use pozitronik\core\models\sys_exceptions\SysExceptions;
-use pozitronik\core\models\user_right\AccessMethods;
-use pozitronik\core\models\user_right\UserAccessInterface;
 use pozitronik\helpers\ArrayHelper;
 use app\widgets\alert\AlertModel;
 use RuntimeException;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
-use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
 use yii\db\Transaction;
@@ -189,12 +186,6 @@ trait ARExtended {
 	 * Универсальная функция удаления любой модели
 	 */
 	public function safeDelete():void {
-		/** @var Model $this */
-		if (!UserAccessInterface::canAccess($this, AccessMethods::delete)) {
-			AlertModel::AccessNotify();
-			return;
-		}
-
 		if ($this->hasAttribute('deleted')) {
 			$this->setAndSaveAttribute('deleted', !$this->deleted);
 		} else {
