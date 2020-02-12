@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models;
 
 use pozitronik\helpers\DateHelper;
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\models\core\LCQuery;
 use app\models\user\CurrentUser;

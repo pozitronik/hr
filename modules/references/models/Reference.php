@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace app\modules\references\models;
 
 use app\models\core\LCQuery;
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use pozitronik\core\interfaces\reference\ReferenceInterface;
 use yii\db\ActiveRecord;
 use pozitronik\core\models\core_module\CoreModule;

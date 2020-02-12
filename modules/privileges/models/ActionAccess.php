@@ -5,7 +5,7 @@ namespace app\modules\privileges\models;
 
 use pozitronik\core\models\core_controller\CoreController;
 use pozitronik\core\models\core_module\PluginsSupport;
-use app\models\core\traits\ModelExtended;
+use pozitronik\core\traits\ModelExtended;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;

@@ -7,7 +7,7 @@ use Exception;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use pozitronik\helpers\Utils;
-use app\models\core\traits\Upload;
+use pozitronik\core\traits\Upload;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;

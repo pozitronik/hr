@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos\activerecord;
 
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;

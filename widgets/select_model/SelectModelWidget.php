@@ -5,7 +5,7 @@ namespace app\widgets\select_model;
 
 use app\helpers\IconsHelper;
 use app\models\core\LCQuery;
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use Exception;
 use kartik\base\InputWidget;
 use kartik\select2\Select2;

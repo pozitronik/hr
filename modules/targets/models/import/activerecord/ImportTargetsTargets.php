@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\import\activerecord;
 
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 

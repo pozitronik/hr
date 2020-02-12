@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\controller;
 
 use app\models\core\WigetableController;
+use pozitronik\core\traits\ModelExtended;
 use Throwable;
 use yii\base\Widget;
 
@@ -13,7 +14,7 @@ use yii\base\Widget;
  * @package app\components\controller
  *
  * @property integer $mode
- * @property WigetableController $model
+ * @property WigetableController|ModelExtended $model
  */
 class ControllerWidget extends Widget {
 	public $model;

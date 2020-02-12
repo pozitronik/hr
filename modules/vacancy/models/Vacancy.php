@@ -5,7 +5,7 @@ namespace app\modules\vacancy\models;
 
 use pozitronik\helpers\Utils;
 use app\models\core\LCQuery;
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use app\models\relations\RelUsersGroupsRoles;
 use app\widgets\alert\AlertModel;
 use pozitronik\helpers\ArrayHelper;

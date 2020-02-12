@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\references\RefGroupRelationTypes;

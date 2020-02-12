@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use app\models\core\LCQuery;
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use pozitronik\core\interfaces\access\AccessMethods;
 use pozitronik\core\interfaces\access\UserRightInterface;
 use pozitronik\core\models\core_controller\CoreController;

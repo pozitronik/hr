@@ -9,7 +9,7 @@ namespace app\modules\dynamic_attributes\models;
  */
 
 use app\models\core\LCQuery;
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use pozitronik\core\models\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;

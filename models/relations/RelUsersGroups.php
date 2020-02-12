@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;

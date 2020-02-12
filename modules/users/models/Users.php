@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
@@ -12,7 +12,7 @@ use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use pozitronik\core\models\core_module\PluginTrait;
-use app\models\core\traits\Upload;
+use pozitronik\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;

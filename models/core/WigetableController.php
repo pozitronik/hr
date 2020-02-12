@@ -16,6 +16,7 @@ use pozitronik\core\models\core_controller\CoreController;
  * @property-read string $defaultRoute
  */
 class WigetableController extends CoreController {
+
 	public $menuDisabled = false;//отключает пункт меню
 	public $orderWeight = 0;
 

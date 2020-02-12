@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
-use app\models\core\traits\ARExtended;
+use pozitronik\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
@@ -12,7 +12,7 @@ use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use pozitronik\core\models\core_module\PluginTrait;
 use app\models\core\LCQuery;
-use app\models\core\traits\Upload;
+use pozitronik\core\traits\Upload;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelGroupsGroups;

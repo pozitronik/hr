@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\import;
 
-use app\models\core\traits\Upload;
+use pozitronik\core\traits\Upload;
 use app\models\relations\RelGroupsGroups;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
