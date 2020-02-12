@@ -274,7 +274,7 @@ class ImportTargets extends ActiveRecord {
 			'result_type' => $result_type_id,
 			'comment' => $name,
 			'deleted' => false
-		], false);
+		]);
 		return $target->id;
 	}
 

@@ -89,13 +89,13 @@ class TargetsPeriods extends ActiveRecord {
 			$result->createModel([
 				'target_id' => $target_id,
 				"q{$qn}" => true
-			], false);
+			]);
 
 		} elseif (4 === mb_strlen($period)) {
 			$result->createModel([
 				'target_id' => $target_id,
 				'is_year' => true
-			], false);
+			]);
 		}
 		return $result;
 	}
