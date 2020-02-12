@@ -20,7 +20,6 @@ use yii\helpers\VarDumper;
 /**
  * Trait ARExtended
  * Расширения модели ActiveRecord
- *
  */
 trait ARExtended {
 
@@ -275,16 +274,17 @@ trait ARExtended {
 	/**
 	 * Метод обновления модели, выполняющий дополнительную обработку: генерация уведомления по результатам
 	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
+	 * @param bool $alerts -- false отключит создание алертов (полезно при импортах)
 	 * @return bool
 	 */
-	public function updateModel(?array $paramsArray):bool {
+	public function updateModel(?array $paramsArray, bool $alerts = true):bool {
 		if ($this->loadArray($paramsArray)) {
 			if ($this->save()) {
-				AlertModel::SuccessNotify();
+				if ($alerts) AlertModel::SuccessNotify();
 				$this->refresh();
 				return true;
 			}
-			AlertModel::ErrorsNotify($this->errors);
+			if ($alerts) AlertModel::ErrorsNotify($this->errors);
 		}
 		return false;
 	}
