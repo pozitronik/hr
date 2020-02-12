@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\models\core\core_module\PluginsSupport;
+use pozitronik\core\models\core_module\PluginsSupport;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\data\ArrayDataProvider;

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use app\models\core\core_module\PluginsSupport;
+use pozitronik\core\models\core_module\PluginsSupport;
 use app\modules\export\models\attributes\ExportAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\references\models\ReferenceLoader;
@@ -16,7 +16,7 @@ use app\widgets\admin_panel\AdminPanelWidget;
 use Yii;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\Utils;
-use app\models\core\core_module\CoreModule;
+use pozitronik\core\models\core_module\CoreModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;

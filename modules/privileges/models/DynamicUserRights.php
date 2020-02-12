@@ -9,7 +9,7 @@ use pozitronik\core\models\user_right\AccessMethods;
 use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
-use app\models\core\core_module\PluginsSupport;
+use pozitronik\core\models\core_module\PluginsSupport;
 use app\models\core\CoreController;
 use ReflectionException;
 use Throwable;

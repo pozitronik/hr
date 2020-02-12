@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users;
 
-use app\models\core\core_module\CoreModule;
+use pozitronik\core\models\core_module\CoreModule;
 
 
 /**

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\references\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\core_module\PluginsSupport;
+use pozitronik\core\models\core_module\PluginsSupport;
 use pozitronik\helpers\ReflectionHelper;
 use ReflectionException;
 use Throwable;

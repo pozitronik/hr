@@ -10,7 +10,7 @@ use app\modules\vacancy\models\Vacancy;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use app\models\core\core_module\PluginTrait;
+use pozitronik\core\models\core_module\PluginTrait;
 use app\models\core\LCQuery;
 use app\models\core\traits\Upload;
 use app\modules\groups\models\references\RefGroupTypes;

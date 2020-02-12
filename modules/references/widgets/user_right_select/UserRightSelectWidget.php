@@ -5,7 +5,7 @@ namespace app\modules\references\widgets\user_right_select;
 
 use pozitronik\widgets\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\core_module\PluginsSupport;
+use pozitronik\core\models\core_module\PluginsSupport;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
 use Throwable;

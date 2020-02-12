@@ -8,7 +8,7 @@ use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use app\models\core\core_module\PluginsSupport;
+use pozitronik\core\models\core_module\PluginsSupport;
 use app\models\core\LCQuery;
 use app\modules\privileges\models\relations\RelPrivilegesDynamicRights;
 use app\modules\privileges\models\relations\RelPrivilegesRights;

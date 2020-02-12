@@ -11,7 +11,7 @@ use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use app\models\core\core_module\PluginTrait;
+use pozitronik\core\models\core_module\PluginTrait;
 use app\models\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;

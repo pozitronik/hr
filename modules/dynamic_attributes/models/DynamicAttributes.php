@@ -14,7 +14,7 @@ use pozitronik\core\models\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use app\models\core\core_module\PluginTrait;
+use pozitronik\core\models\core_module\PluginTrait;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
