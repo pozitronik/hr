@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\core\traits;
 
+use pozitronik\core\models\user_right\AccessMethods;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\SysExceptions;
-use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserAccess;
 use app\modules\import\models\ImportException;
 use app\widgets\alert\AlertModel;

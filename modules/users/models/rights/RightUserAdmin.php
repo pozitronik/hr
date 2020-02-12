@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\rights;
 
-use app\modules\privileges\models\AccessMethods;
 use app\modules\privileges\models\UserRight;
 use app\modules\users\models\Users;
+use pozitronik\core\models\user_right\AccessMethods;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;

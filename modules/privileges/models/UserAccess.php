@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
+use pozitronik\core\models\user_right\AccessMethods;
+use pozitronik\core\models\user_right\UserAccessInterface;
 use pozitronik\helpers\ArrayHelper;
 use app\models\core\CoreController;
 use app\modules\groups\models\Groups;
@@ -18,7 +20,7 @@ use yii\web\Controller;
  * Class UserAccess
  * @package app\models\user_rights
  */
-class UserAccess extends Model {
+class UserAccess extends Model implements UserAccessInterface {
 
 	/**
 	 * Формирует массив правил доступа к контроллерам и экшенам (с учётом параметров), применимый в правилах AccessControl
