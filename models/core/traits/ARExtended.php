@@ -14,6 +14,7 @@ use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use Throwable;
+use yii\db\Transaction;
 
 /**
  * Trait ARExtended
@@ -231,10 +232,12 @@ trait ARExtended {
 	 * @param array|null $paramsArray - массив параметров БЕЗ учёта имени модели в форме (я забыл, почему сделал так, но, видимо, причина была)
 	 * @param bool $alerts -- false отключит создание алертов (полезно при импортах)
 	 * @return bool - результат операции
+	 * @noinspection PhpUndefinedMethodInspection
 	 */
 	public function createModel(?array $paramsArray, bool $alerts = true):bool {
 		$saved = false;
 		if ($this->loadArray($paramsArray)) {
+			/** @var Transaction $transaction */
 			$transaction = static::getDb()->beginTransaction();
 			if (true === $saved = $this->save()) {
 				$this->refresh();//переподгрузим атрибуты
