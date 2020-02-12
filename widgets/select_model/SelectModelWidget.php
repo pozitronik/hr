@@ -10,10 +10,12 @@ use app\models\core\SelectionWidgetInterface;
 use Exception;
 use kartik\base\InputWidget;
 use kartik\select2\Select2;
+use pozitronik\core\traits\ARExtended;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveRecordInterface;
 use yii\helpers\Html;
 use yii\web\JsExpression;
 
@@ -40,6 +42,7 @@ use yii\web\JsExpression;
 class SelectModelWidget extends InputWidget implements SelectionWidgetInterface {
 	//private $data = [];//calculated/evaluated/received data array
 	private $ajaxPluginOptions = [];//calculated select2 ajax parameters
+	/** @var ARExtended|ActiveRecordInterface $loadedClass */
 	protected $loadedClass;
 
 	public $pkName;//primary key name for selectModel
@@ -95,6 +98,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 			];
 
 		} elseif ([] === $this->data) {
+			/** @var LCQuery $selectionQuery */
 			$selectionQuery = $this->loadedClass::find()->active();
 			if (is_array($this->exclude)) {
 				if ([] !== $this->exclude) {
