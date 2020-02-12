@@ -6,6 +6,7 @@ namespace app\modules\references\models;
 
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use pozitronik\core\models\references\ReferenceInterface;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\CoreModule;
 use app\models\core\core_module\PluginsSupport;

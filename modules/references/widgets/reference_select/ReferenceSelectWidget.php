@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\references\widgets\reference_select;
 
+use pozitronik\core\models\references\ReferenceInterface;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
-use app\modules\references\models\ReferenceInterface;
 use app\modules\references\ReferencesModule;
 use kartik\select2\Select2;
 use pozitronik\helpers\ReflectionHelper;

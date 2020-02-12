@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\core\core_module;
 
+use pozitronik\core\models\references\ReferenceInterface;
 use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
-use app\modules\references\models\ReferenceInterface;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
