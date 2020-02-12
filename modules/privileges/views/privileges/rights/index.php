@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 
 use app\helpers\IconsHelper;
+use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\Utils;
 
 /**
@@ -13,7 +14,6 @@ use pozitronik\helpers\Utils;
 
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
-use app\modules\privileges\models\UserRightInterface;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
 use app\modules\references\widgets\user_right_select\UserRightSelectWidget;
 use kartik\grid\DataColumn;

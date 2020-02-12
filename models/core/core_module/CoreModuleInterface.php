@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\core_module;
 
-use app\modules\privileges\models\UserRightInterface;
+use pozitronik\core\models\user_right\UserRightInterface;
 
 /**
  * Интерфейс системного модуля приложения
@@ -29,6 +29,7 @@ interface CoreModuleInterface {
 	 * @return string
 	 */
 	public function getAlias():string;
+
 	/**
 	 * Возвращает массив прав, поддерживаемых модулем
 	 * @param UserRightInterface[] $excludedRights Массив моделей, исключаемых из списка

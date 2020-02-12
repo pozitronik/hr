@@ -5,6 +5,7 @@ namespace app\modules\privileges\models;
 
 use app\models\core\LCQuery;
 use app\models\core\traits\ARExtended;
+use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\models\core\core_module\PluginsSupport;

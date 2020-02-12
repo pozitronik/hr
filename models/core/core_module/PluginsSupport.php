@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\core\core_module;
 
+use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\ArrayHelper;
-use app\modules\privileges\models\UserRightInterface;
 use app\modules\references\models\Reference;
 use Throwable;
 use Yii;

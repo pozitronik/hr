@@ -8,9 +8,9 @@ declare(strict_types = 1);
  */
 
 use app\helpers\IconsHelper;
+use pozitronik\core\models\user_right\UserRightInterface;
 use pozitronik\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;
-use app\modules\privileges\models\UserRightInterface;
 use app\modules\privileges\PrivilegesModule;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
 use kartik\grid\DataColumn;
