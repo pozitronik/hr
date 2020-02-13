@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\models;
 
 use pozitronik\helpers\Utils;
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use pozitronik\core\traits\ARExtended;
 use app\models\relations\RelUsersGroupsRoles;
 use app\widgets\alert\AlertModel;

@@ -6,7 +6,7 @@ namespace app\modules\targets\models;
 use pozitronik\helpers\DateHelper;
 use pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsResults;

@@ -8,7 +8,7 @@ namespace app\modules\dynamic_attributes\models;
  * Саму сущность потребуется утащить в компонент.
  */
 
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use pozitronik\core\traits\ARExtended;
 use pozitronik\core\models\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;

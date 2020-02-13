@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\references\models;
 
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use app\modules\references\ReferencesModule;
 use app\widgets\badge\BadgeWidget;
 use Throwable;

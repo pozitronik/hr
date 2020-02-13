@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use pozitronik\core\traits\ARExtended;
 use pozitronik\core\interfaces\access\AccessMethods;
 use pozitronik\core\interfaces\access\UserRightInterface;

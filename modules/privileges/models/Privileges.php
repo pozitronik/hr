@@ -9,7 +9,7 @@ use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
 use pozitronik\core\models\core_module\PluginsSupport;
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use app\modules\privileges\models\relations\RelPrivilegesDynamicRights;
 use app\modules\privileges\models\relations\RelPrivilegesRights;
 use app\modules\privileges\models\relations\RelUsersPrivileges;

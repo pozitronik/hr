@@ -6,7 +6,7 @@ namespace app\modules\history\models;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
 use yii\db\ActiveRecord;
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
 use pozitronik\helpers\ReflectionHelper;

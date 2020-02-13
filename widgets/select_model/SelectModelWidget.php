@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\select_model;
 
 use app\helpers\IconsHelper;
-use app\models\core\LCQuery;
+use pozitronik\core\models\lcquery\LCQuery;
 use pozitronik\core\traits\ARExtended;
 use Exception;
 use kartik\base\InputWidget;
