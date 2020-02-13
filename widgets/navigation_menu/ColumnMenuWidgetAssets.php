@@ -11,11 +11,14 @@ use app\assets\AppAsset;
  * @package app\components\navigation_menu
  */
 class ColumnMenuWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/navigation_menu/assets';
-	public $js = [
-		'js/navigation_column_menu.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->js = ['js/navigation_column_menu.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

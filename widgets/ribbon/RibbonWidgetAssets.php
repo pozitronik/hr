@@ -11,18 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\ribbon
  */
 class RibbonWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/ribbon/assets';
-	public $css = [
-		'css/ribbon.css'
-	];
-	public $js = [
-		'js/ribbon.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/ribbon.css'];
+		$this->js = ['js/ribbon.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

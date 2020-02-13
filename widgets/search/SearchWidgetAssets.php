@@ -11,18 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\search
  */
 class SearchWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/search/assets';
-	public $css = [
-		'css/search.css'
-	];
-	public $js = [
-		'js/search.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/search.css'];
+		$this->js = ['js/search.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

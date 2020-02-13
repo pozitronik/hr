@@ -11,14 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\timeline
  */
 class TimelineEntryWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/history/widgets/timeline_entry/assets';
-	public $css = [
-		'css/timeline_entry.css'
-	];
-	public $js = [
-		'js/timeline_entry.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/timeline_entry.css'];
+		$this->js = ['js/timeline_entry.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

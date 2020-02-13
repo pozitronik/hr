@@ -11,16 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\navbar
  */
 class NavbarWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/navbar/assets';
-	public $css = [
-		'css/navbar.css'
-	];
-	public $js = [
-		'js/navbar.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/navbar.css'];
+		$this->js = ['js/navbar.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
 
 

@@ -11,18 +11,16 @@ use app\assets\AppAsset;
  * @package app\components\group_card
  */
 class GroupUsersWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/groups/widgets/group_users/assets';
-	public $css = [
-		'css/group_users.css'
-	];
-	public $js = [
-		'js/group_users.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
 
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/group_users.css'];
+		$this->js = ['js/group_users.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

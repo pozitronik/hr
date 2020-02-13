@@ -11,20 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\target_select
  */
 class TargetSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/targets/widgets/target_select/assets';
-	public $css = [
-		'css/target_select.css'
-	];
-	public $js = [
-		'js/target_select.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/target_select.css'];
+		$this->js = ['js/target_select.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
 
 

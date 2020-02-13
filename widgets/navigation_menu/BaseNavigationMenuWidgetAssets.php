@@ -11,14 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\navigation_menu
  */
 class BaseNavigationMenuWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/navigation_menu/assets';
-	public $css = [
-		'css/navigation_menu.css'
-	];
-	public $js = [
-		'js/navigation_menu.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/navigation_menu.css'];
+		$this->js = ['js/navigation_menu.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

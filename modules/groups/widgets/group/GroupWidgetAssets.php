@@ -11,16 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\group
  */
 class GroupWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/groups/widgets/group/assets';
-	public $css = [
-		'css/group.css'
-	];
-	public $js = [
-		'js/group.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/group.css'];
+		$this->js = ['js/group.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
 
 

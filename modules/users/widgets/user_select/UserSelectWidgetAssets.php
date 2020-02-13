@@ -11,20 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\user_select
  */
 class UserSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/users/widgets/user_select/assets';
-	public $css = [
-		'css/user_select.css'
-	];
-	public $js = [
-		'js/user_select.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/user_select.css'];
+		$this->js = ['js/user_select.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
 
 

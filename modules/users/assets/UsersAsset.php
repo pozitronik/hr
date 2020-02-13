@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\assets;
 
+use app\assets\AppAsset;
 use yii\web\AssetBundle;
 
 /**
@@ -10,13 +11,14 @@ use yii\web\AssetBundle;
  * @package app\modules\users\assets
  */
 class UsersAsset extends AssetBundle {
-	public $sourcePath = '@app/modules/users/assets';
-
-	public $js = [
-		'js/users.js'
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->js = ['js/users.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

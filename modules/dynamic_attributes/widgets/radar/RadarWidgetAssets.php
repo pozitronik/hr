@@ -11,14 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\radar
  */
 class RadarWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/dynamic_attributes/widgets/radar/assets';
-	public $css = [
-		'css/radar.css'
-	];
-	public $js = [
-		'js/radar.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/radar.css'];
+		$this->js = ['js/radar.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

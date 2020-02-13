@@ -11,19 +11,18 @@ use app\assets\AppAsset;
  * @package app\components\select_model
  */
 class SelectModelWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/select_model/assets';
-	public $css = [
-		'css/select_model.css'
-	];
-	public $js = [
-		'js/common.js',
-		'js/select_model.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/select_model.css'];
+		$this->js = [
+			'js/common.js',
+			'js/select_model.js'
+		];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

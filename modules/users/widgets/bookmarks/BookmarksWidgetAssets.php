@@ -11,14 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\bookmarks
  */
 class BookmarksWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/users/widgets/bookmarks/assets';
-	public $css = [
-		'css/bookmarks.css'
-	];
-	public $js = [
-		'js/bookmarks.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/bookmarks.css'];
+		$this->js = ['js/bookmarks.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

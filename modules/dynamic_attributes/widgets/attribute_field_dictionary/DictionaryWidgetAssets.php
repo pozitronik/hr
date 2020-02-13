@@ -11,18 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\dictionary
  */
 class DictionaryWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/dynamic_attributes/widgets/attribute_field_dictionary/assets';
-	public $css = [
-		'css/dictionary.css'
-	];
-	public $js = [
-		'js/dictionary.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/dictionary.css'];
+		$this->js = ['js/dictionary.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

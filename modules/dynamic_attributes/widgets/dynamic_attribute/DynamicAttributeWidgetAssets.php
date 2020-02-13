@@ -11,14 +11,15 @@ use app\assets\AppAsset;
  * @package app\modules\dynamic_attributes\widgets\dynamic_attribute
  */
 class DynamicAttributeWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/dynamic_attributes/widgets/dynamic_attribute/assets';
-	public $css = [
-		'css/dynamic_attribute.css'
-	];
-	public $js = [
-		'js/dynamic_attribute.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/dynamic_attribute.css'];
+		$this->js = ['js/dynamic_attribute.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

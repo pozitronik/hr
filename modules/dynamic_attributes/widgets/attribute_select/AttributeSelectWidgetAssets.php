@@ -11,14 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\attribute_select
  */
 class AttributeSelectWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/dynamic_attributes/widgets/attribute_select/assets';
-	public $css = [
-		'css/attribute_select.css'
-	];
-	public $js = [
-		'js/attribute_select.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/attribute_select.css'];
+		$this->js = ['js/attribute_select.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
+
 }

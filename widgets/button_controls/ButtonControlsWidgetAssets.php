@@ -11,18 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\button_controls
  */
 class ButtonControlsWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/button_controls/assets';
-	public $css = [
-		'css/button_controls.css'
-	];
-	public $js = [
-		'js/button_controls.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/button_controls.css'];
+		$this->js = ['js/button_controls.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }

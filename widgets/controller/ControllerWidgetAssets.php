@@ -11,16 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\controller
  */
 class ControllerWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/controller/assets';
-	public $css = [
-		'css/controller.css'
-	];
-	public $js = [
-		'js/controller.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/controller.css'];
+		$this->js = ['js/controller.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
 
 

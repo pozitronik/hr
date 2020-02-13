@@ -11,18 +11,15 @@ use app\assets\AppAsset;
  * @package app\components\interval
  */
 class IntervalWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/modules/targets/widgets/interval/assets';
-	public $css = [
-		'css/interval.css'
-	];
-	public $js = [
-		'js/interval.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
-
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/interval.css'];
+		$this->js = ['js/interval.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
