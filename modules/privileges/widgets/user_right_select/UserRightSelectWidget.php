@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\references\widgets\user_right_select;
+namespace app\modules\privileges\widgets\user_right_select;
 
 use pozitronik\widgets\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
