@@ -18,7 +18,7 @@ use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use pozitronik\widgets\BadgeWidget;

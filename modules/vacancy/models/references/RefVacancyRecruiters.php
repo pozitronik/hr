@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models\references;
 
-use app\modules\references\models\CustomisableReference;
+use pozitronik\references\models\CustomisableReference;
 
 /**
  * Class RefVacancyRecruiters

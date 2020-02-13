@@ -16,7 +16,7 @@ class TargetsAsset extends AssetBundle {
 	 */
 	public function init() {
 		$this->depends = [AppAsset::class];
-		$this->sourcePath = __DIR__.'/assets';
+		$this->sourcePath = __DIR__;
 		$this->css = ['css/targets.cs'];
 		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
 		parent::init();

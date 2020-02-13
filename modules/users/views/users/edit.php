@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var View $this
  */
 
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\privileges\models\Privileges;

@@ -9,7 +9,7 @@ declare(strict_types = 1);
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;

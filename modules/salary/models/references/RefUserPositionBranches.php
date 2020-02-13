@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use app\modules\references\models\Reference;
-use app\modules\references\ReferencesModule;
+use pozitronik\references\models\Reference;
+use pozitronik\references\ReferencesModule;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
 use pozitronik\widgets\BadgeWidget;
 use yii\helpers\Html;

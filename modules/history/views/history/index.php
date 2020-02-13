@@ -12,7 +12,7 @@ use pozitronik\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
 use app\modules\history\models\references\RefModels;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;

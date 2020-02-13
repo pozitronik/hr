@@ -11,7 +11,7 @@ declare(strict_types = 1);
 
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;

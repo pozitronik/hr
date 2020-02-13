@@ -8,9 +8,9 @@ declare(strict_types = 1);
  * @var RefUserPositions $searchModel
  */
 
-use app\modules\references\models\Reference;
-use app\modules\references\ReferencesModule;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\models\Reference;
+use pozitronik\references\ReferencesModule;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use pozitronik\widgets\BadgeWidget;

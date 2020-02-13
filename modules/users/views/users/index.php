@@ -20,7 +20,7 @@ use pozitronik\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\Privileges;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;

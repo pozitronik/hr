@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-
-use app\modules\references\models\Reference;
+use pozitronik\references\models\Reference;
 
 /**
  * @property int $id
@@ -13,7 +12,6 @@ use app\modules\references\models\Reference;
 class RefGrades extends Reference {
 	public $menuCaption = 'Грейды';
 	public $menuIcon = false;
-
 
 	/**
 	 * {@inheritdoc}

@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var Targets $model
  */
 
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\widgets\target_select\TargetSelectWidget;

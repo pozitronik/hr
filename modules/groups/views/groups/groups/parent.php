@@ -9,13 +9,13 @@ declare(strict_types = 1);
  */
 
 use app\helpers\IconsHelper;
+use app\modules\groups\widgets\group_type_select\GroupTypeSelectWidget;
+use app\modules\groups\widgets\relation_type_select\RelationTypeSelectWidget;
 use pozitronik\helpers\Utils;
 use app\modules\groups\assets\GroupsAsset;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
-use app\modules\references\widgets\group_type_select\GroupTypeSelectWidget;
-use app\modules\references\widgets\relation_type_select\RelationTypeSelectWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
 use yii\web\JsExpression;

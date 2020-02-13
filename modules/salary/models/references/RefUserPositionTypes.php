@@ -5,8 +5,8 @@ namespace app\modules\salary\models\references;
 
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
-use app\modules\references\models\CustomisableReference;
-use app\modules\references\ReferencesModule;
+use pozitronik\references\models\CustomisableReference;
+use pozitronik\references\ReferencesModule;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\Users;

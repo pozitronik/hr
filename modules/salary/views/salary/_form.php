@@ -7,8 +7,8 @@ declare(strict_types = 1);
  */
 
 use pozitronik\helpers\ArrayHelper;
-use app\modules\references\widgets\reference_dependent_dropdown\RefDepDrop;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_dependent_dropdown\RefDepDrop;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;

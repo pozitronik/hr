@@ -7,7 +7,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;

@@ -8,7 +8,7 @@ use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
-use app\modules\references\widgets\roles_select\RolesSelectWidget;
+use app\modules\users\widgets\roles_select\RolesSelectWidget;
 use app\widgets\select_model\SelectModelWidget;
 use kartik\form\ActiveForm;
 use yii\data\ActiveDataProvider;

@@ -3,15 +3,15 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use app\modules\references\models\CustomisableReference;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\UsersModule;
 use pozitronik\helpers\ArrayHelper;
-use app\modules\references\ReferencesModule;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
+use pozitronik\references\models\CustomisableReference;
+use pozitronik\references\ReferencesModule;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use pozitronik\widgets\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;

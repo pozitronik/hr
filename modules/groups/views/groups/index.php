@@ -17,7 +17,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use pozitronik\widgets\BadgeWidget;
 use kartik\grid\DataColumn;

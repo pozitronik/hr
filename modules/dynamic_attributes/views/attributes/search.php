@@ -11,7 +11,7 @@ declare(strict_types = 1);
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\depdrop\DepDrop;
 use yii\data\ActiveDataProvider;
 use yii\web\View;

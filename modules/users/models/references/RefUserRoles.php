@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\references;
 
-use app\modules\references\models\CustomisableReference;
-use app\modules\references\ReferencesModule;
+use pozitronik\references\models\CustomisableReference;
+use pozitronik\references\ReferencesModule;
 use app\modules\users\UsersModule;
 use pozitronik\widgets\BadgeWidget;
 use kartik\grid\GridView;

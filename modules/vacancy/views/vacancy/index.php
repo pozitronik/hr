@@ -13,7 +13,7 @@ use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
 use app\helpers\IconsHelper;
 use pozitronik\helpers\Utils;
-use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
+use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
