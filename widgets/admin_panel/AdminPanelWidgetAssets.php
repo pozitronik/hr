@@ -11,16 +11,17 @@ use app\assets\AppAsset;
  * @package app\components\admin_panel
  */
 class AdminPanelWidgetAssets extends AssetBundle {
-	public $sourcePath = '@app/widgets/admin_panel/assets';
-	public $css = [
-		'css/admin_panel.css'
-	];
-	public $js = [
-		'js/admin_panel.js'
-	];
-	public $depends = [
-		AppAsset::class
-	];
+	/**
+	 * @inheritdoc
+	 */
+	public function init() {
+		$this->depends = [AppAsset::class];
+		$this->sourcePath = __DIR__.'/assets';
+		$this->css = ['css/admin_panel.css'];
+		$this->js = ['js/admin_panel.js'];
+		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
+		parent::init();
+	}
 }
 
 
