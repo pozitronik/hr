@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\models\relations;
 
 use pozitronik\core\traits\ARExtended;
+use pozitronik\core\traits\Relations;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\references\RefGroupRelationTypes;

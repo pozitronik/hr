@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models\relations;
 
 use yii\db\ActiveRecord;
-use app\models\relations\Relations;
+use pozitronik\core\traits\Relations;
 
 /**
  * This is the model class for table "rel_privileges_rights".

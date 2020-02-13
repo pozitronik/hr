@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
+use pozitronik\core\traits\Relations;
 use yii\db\ActiveRecord;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;

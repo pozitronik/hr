@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace app\modules\users\models;
 
 use pozitronik\core\traits\ARExtended;
+use pozitronik\core\traits\Relations;
 use yii\db\ActiveRecord;
-use app\models\relations\Relations;
 
 /**
  * Class UsersIdentifiers
