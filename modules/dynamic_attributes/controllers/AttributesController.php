@@ -15,6 +15,7 @@ use Throwable;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use Yii;
+use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 

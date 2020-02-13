@@ -7,6 +7,7 @@ use pozitronik\core\traits\ARExtended;
 use yii\base\Exception;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * Прототипирую период исполнения цели + связанные методы
