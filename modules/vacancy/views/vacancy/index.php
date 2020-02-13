@@ -23,7 +23,7 @@ use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;

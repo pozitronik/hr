@@ -7,7 +7,7 @@ use app\modules\references\models\CustomisableReference;
 use app\modules\references\ReferencesModule;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use kartik\helpers\Html;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;

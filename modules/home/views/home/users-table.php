@@ -21,7 +21,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\modules\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;

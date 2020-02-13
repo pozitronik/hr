@@ -10,7 +10,7 @@ declare(strict_types = 1);
 use app\modules\groups\models\Groups;
 use app\modules\home\HomeModule;
 use app\modules\vacancy\VacancyModule;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 

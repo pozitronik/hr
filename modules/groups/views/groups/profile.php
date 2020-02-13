@@ -14,7 +14,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;

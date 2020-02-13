@@ -13,7 +13,7 @@ use app\modules\vacancy\models\references\RefVacancyRecruiters;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use kartik\detail\DetailView;
 use pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;

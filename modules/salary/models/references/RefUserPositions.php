@@ -12,7 +12,7 @@ use app\modules\salary\models\relations\RelGradesPositionsRules;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;

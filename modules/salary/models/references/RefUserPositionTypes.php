@@ -11,7 +11,7 @@ use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 

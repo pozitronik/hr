@@ -11,7 +11,7 @@ use app\modules\targets\assets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use yii\web\View;
 
 TargetsAsset::register($this);

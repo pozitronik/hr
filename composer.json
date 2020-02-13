@@ -57,7 +57,8 @@
 		"desandro/masonry": "dev-master",
 		"metafizzy/isotope": "dev-master",
 		"pozitronik/yii2-cachedwidget": "*",
-		"pozitronik/yii2-core-tools": "*"
+		"pozitronik/yii2-core-tools": "*",
+		"pozitronik/yii2-badgewidget": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -123,6 +124,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/pozitronik/yii2-core-tools"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-badgewidget"
 		}
 	]
 }

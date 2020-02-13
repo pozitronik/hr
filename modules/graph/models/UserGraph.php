@@ -6,7 +6,7 @@ namespace app\modules\graph\models;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use yii\base\InvalidConfigException;
 
 /**

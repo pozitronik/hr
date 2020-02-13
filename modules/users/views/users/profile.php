@@ -14,7 +14,7 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\web\View;

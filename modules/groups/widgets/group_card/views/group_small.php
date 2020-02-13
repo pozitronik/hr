@@ -12,7 +12,7 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
-use app\widgets\badge\BadgeWidget;
+use pozitronik\widgets\BadgeWidget;
 use pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 
