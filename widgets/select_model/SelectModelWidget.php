@@ -20,7 +20,6 @@ use yii\web\JsExpression;
 
 /**
  * Class SelectModelWidget
- * @package app\widgets\select_model
  *
  * @property ActiveRecordInterface $selectModel Класс модели, по которой будем выбирать данные
  * @property array $exclude Записи, исключаемые из выборки. Массив id, либо массив элементов, либо ActiveQuery-условие
