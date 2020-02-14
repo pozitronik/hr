@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\attribute_select;
 
-use app\widgets\select_model\SelectModelWidget;
+use pozitronik\widgets\SelectModelWidget;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 

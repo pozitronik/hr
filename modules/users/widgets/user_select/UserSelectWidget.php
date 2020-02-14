@@ -5,7 +5,7 @@ namespace app\modules\users\widgets\user_select;
 
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use app\widgets\select_model\SelectModelWidget;
+use pozitronik\widgets\SelectModelWidget;
 
 /**
  * Class UserSelectWidget
