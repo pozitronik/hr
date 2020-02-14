@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
 use app\modules\graph\GraphModule;
@@ -12,7 +12,7 @@ use app\modules\home\HomeModule;
 use app\modules\targets\TargetsModule;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

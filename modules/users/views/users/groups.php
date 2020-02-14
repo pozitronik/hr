@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\modules\users\UsersModule;

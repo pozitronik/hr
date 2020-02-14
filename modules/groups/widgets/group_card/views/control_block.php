@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var bool $expanded -- initial state
  **/
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use yii\bootstrap\Html;
 use yii\web\JsExpression;
 use yii\web\View;

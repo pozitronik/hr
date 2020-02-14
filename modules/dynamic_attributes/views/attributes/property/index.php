@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributePropertyNavigationMenuWidget;

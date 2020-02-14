@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use pozitronik\helpers\Utils;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\widgets\navigation_menu\PrivilegesNavigationMenuWidget;

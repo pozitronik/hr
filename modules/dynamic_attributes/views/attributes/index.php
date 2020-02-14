@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;

@@ -17,7 +17,7 @@ use yii\helpers\Html;
 use yii\web\View;
 use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\privileges\widgets\user_right_select\UserRightSelectWidget;
 use pozitronik\core\interfaces\access\UserRightInterface;
 use pozitronik\helpers\Utils;

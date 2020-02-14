@@ -10,7 +10,7 @@ declare(strict_types = 1);
  * @var bool $read_only
  */
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;

@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var DynamicAttributesSearchCollection $searchCollection //условия поиска для отображения результата у пользователя
  */
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;

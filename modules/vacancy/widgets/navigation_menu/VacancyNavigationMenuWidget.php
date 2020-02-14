@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\groups\GroupsModule;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

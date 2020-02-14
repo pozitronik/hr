@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRight;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 
 /**
  * Class UserRightNavigationMenuWidget

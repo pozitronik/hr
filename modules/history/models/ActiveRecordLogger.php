@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\history\models;
 
 use pozitronik\helpers\ArrayHelper;
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use yii\db\ActiveRecord;
 use pozitronik\core\models\lcquery\LCQuery;
 use app\models\user\CurrentUser;

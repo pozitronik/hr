@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var SalaryForkSearch $searchModel
  */
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;

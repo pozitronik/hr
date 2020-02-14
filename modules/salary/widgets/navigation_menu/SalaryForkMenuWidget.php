@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\history\HistoryModule;
 use app\modules\salary\models\SalaryFork;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

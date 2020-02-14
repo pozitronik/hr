@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\export\ExportModule;
 use app\modules\graph\GraphModule;
 use app\modules\groups\GroupsModule;
@@ -11,7 +11,7 @@ use app\modules\groups\models\Groups;
 use app\modules\history\HistoryModule;
 use app\modules\targets\TargetsModule;
 use app\modules\vacancy\VacancyModule;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

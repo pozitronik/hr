@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\privileges\models\Privileges;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 
 /**
  * Class ReferenceNavigationMenuWidget

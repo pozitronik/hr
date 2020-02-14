@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;

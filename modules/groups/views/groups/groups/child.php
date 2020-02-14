@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\groups\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\groups\widgets\relation_type_select\RelationTypeSelectWidget;
 use pozitronik\helpers\Utils;

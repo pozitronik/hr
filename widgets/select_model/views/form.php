@@ -15,7 +15,7 @@ declare(strict_types = 1);
  */
 
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use yii\db\ActiveRecord;

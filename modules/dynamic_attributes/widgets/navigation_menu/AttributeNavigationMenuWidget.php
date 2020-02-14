@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\navigation_menu;
 
-use app\helpers\IconsHelper;
+use pozitronik\helpers\IconsHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\widgets\navigation_menu\BaseNavigationMenuWidget;
+use pozitronik\widgets\BaseNavigationMenuWidget;
 
 /**
  * @property DynamicAttributes $model
