@@ -59,7 +59,8 @@
 		"pozitronik/yii2-cachedwidget": "*",
 		"pozitronik/yii2-core-tools": "*",
 		"pozitronik/yii2-badgewidget": "*",
-		"pozitronik/yii2-references": "*"
+		"pozitronik/yii2-references": "*",
+		"pozitronik/yii2-navigationwidget": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -129,6 +130,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/pozitronik/yii2-badgewidget"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-navigationwidget"
 		},
 		{
 			"type": "vcs",
