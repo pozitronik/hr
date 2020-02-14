@@ -9,7 +9,6 @@ use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\roles_select\RolesSelectWidget;
-use app\widgets\select_model\SelectModelWidget;
 use kartik\form\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -53,8 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
 								'attribute' => 'relGroups',
 								'exclude' => $model->relGroups,
 								'multiple' => true,
-								'renderingMode' => SelectModelWidget::MODE_FIELD,
-								'loadingMode' => SelectModelWidget::DATA_MODE_LOAD
+								'renderingMode' => GroupSelectWidget::MODE_FIELD,
+								'loadingMode' => GroupSelectWidget::DATA_MODE_LOAD
 								]),
 							'heading' => false,
 							'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
