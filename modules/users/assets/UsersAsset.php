@@ -16,7 +16,7 @@ class UsersAsset extends AssetBundle {
 	 */
 	public function init() {
 		$this->depends = [AppAsset::class];
-		$this->sourcePath = __DIR__.'/assets';
+		$this->sourcePath = __DIR__;
 		$this->js = ['js/users.js'];
 		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
 		parent::init();
