@@ -72,7 +72,7 @@ class TargetsController extends WigetableController {
 		if (null !== ($updateArray = Yii::$app->request->post($target->formName()))) $target->updateModel($updateArray);
 		$periodsClassName = (new TargetsPeriods())->formName();
 		if (null !== ($updateArray = Yii::$app->request->post($periodsClassName))) {
-			TargetsPeriods::addInstance(['target_id' => $target->id], array_merge(['target_id' => $target->id], $updateArray));
+			TargetsPeriods::addInstance(['target_id' => $target->id], array_merge(['target_id' => $target->id], $updateArray), true, true);
 		}
 
 		return $this->render('update', [
