@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\widgets\navigation_menu;
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\privileges\models\Privileges;
 use pozitronik\widgets\BaseNavigationMenuWidget;
 

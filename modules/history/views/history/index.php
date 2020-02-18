@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use pozitronik\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;

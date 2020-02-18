@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use pozitronik\core\interfaces\access\UserRightInterface;
 use pozitronik\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;

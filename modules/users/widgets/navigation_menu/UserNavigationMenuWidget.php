@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\navigation_menu;
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\export\ExportModule;
 use app\modules\graph\GraphModule;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\widgets\navigation_menu;
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\groups\GroupsModule;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\models\Vacancy;

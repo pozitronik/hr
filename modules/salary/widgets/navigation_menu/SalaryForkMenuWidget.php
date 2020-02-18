@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\widgets\navigation_menu;
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\history\HistoryModule;
 use app\modules\salary\models\SalaryFork;
 use pozitronik\widgets\BaseNavigationMenuWidget;

@@ -11,7 +11,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
 use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use pozitronik\helpers\Utils;
 use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;

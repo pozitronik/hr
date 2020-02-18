@@ -11,7 +11,7 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;

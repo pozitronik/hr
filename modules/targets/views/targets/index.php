@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var TargetsSearch $searchModel
  */
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\groups\models\references\RefGroupTypes;
 use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;

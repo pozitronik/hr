@@ -12,7 +12,7 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
-use pozitronik\helpers\IconsHelper;
+use app\models\core\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
