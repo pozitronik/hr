@@ -61,7 +61,8 @@
 		"pozitronik/yii2-badgewidget": "*",
 		"pozitronik/yii2-references": "*",
 		"pozitronik/yii2-navigationwidget": "*",
-		"pozitronik/yii2-selectmodelwidget": "*"
+		"pozitronik/yii2-selectmodelwidget": "*",
+		"pozitronik/yii2-exceptionslogger": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -143,6 +144,10 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/pozitronik/yii2-selectmodelwidget"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/pozitronik/yii2-exceptionslogger"
 		}
 	]
 }
