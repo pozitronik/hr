@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\controllers;
 
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use app\modules\groups\models\Groups;
 use app\modules\vacancy\models\Vacancy;
 use Throwable;

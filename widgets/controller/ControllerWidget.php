@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\controller;
 
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use pozitronik\core\traits\ModelExtended;
 use Throwable;
 use yii\base\Widget;

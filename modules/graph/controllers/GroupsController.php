@@ -8,7 +8,7 @@ use app\modules\graph\models\Graph;
 use app\modules\graph\models\GroupGraph;
 use app\modules\graph\models\UserGraph;
 use app\modules\users\models\Users;
-use pozitronik\core\models\core_controller\BaseAjaxController;
+use app\models\core\controller\BaseAjaxController;
 use pozitronik\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;

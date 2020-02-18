@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\controllers;
 
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use app\modules\targets\models\import\ImportTargets;
 use app\modules\targets\models\import\ImportTargetsSearch;
 use Throwable;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\controllers;
 
-use pozitronik\core\models\core_controller\BaseAjaxController;
+use app\models\core\controller\BaseAjaxController;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\references\RefUserPositions;
 use Throwable;

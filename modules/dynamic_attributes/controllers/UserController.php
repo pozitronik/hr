@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
 use Throwable;

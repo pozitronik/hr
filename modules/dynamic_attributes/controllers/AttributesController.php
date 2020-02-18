@@ -9,7 +9,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearch;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use Throwable;
 use yii\base\Exception;

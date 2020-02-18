@@ -5,7 +5,7 @@ namespace app\modules\users\controllers;
 
 use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\UsersMassUpdate;
 use Throwable;

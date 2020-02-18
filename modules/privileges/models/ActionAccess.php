@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\models\core_controller\CoreController;
+use app\models\core\controller\CoreController;
 use pozitronik\core\models\core_module\PluginsSupport;
 use pozitronik\core\traits\ModelExtended;
 use Throwable;

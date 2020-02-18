@@ -9,7 +9,7 @@ declare(strict_types = 1);
  * @var array $action
  */
 
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use yii\web\View;
 use yii\helpers\Url;
 

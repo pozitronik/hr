@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var false|string $caption
  */
 
-use pozitronik\core\models\core_controller\WigetableController;
+use app\models\core\controller\WigetableController;
 use yii\web\View;
 use yii\helpers\Html;
 
