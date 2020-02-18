@@ -5,7 +5,7 @@ namespace app\modules\dynamic_attributes\models;
 
 use app\modules\dynamic_attributes\models\types\AttributePropertyDictionary;
 use app\modules\dynamic_attributes\models\types\AttributePropertyUnknown;
-use pozitronik\core\models\sys_exceptions\SysExceptions;
+use pozitronik\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
 use app\modules\dynamic_attributes\models\types\AttributePropertyDate;

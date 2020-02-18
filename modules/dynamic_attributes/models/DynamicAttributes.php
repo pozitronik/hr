@@ -10,7 +10,7 @@ namespace app\modules\dynamic_attributes\models;
 
 use pozitronik\core\models\lcquery\LCQuery;
 use pozitronik\core\traits\ARExtended;
-use pozitronik\core\models\sys_exceptions\SysExceptions;
+use pozitronik\sys_exceptions\SysExceptions;
 use pozitronik\helpers\ArrayHelper;
 use pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
