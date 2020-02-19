@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var bool $onlyMirrored -- показывать данные назначений только для зеркальных целей
  */
 
-use app\modules\targets\assets\TargetsAsset;
+use app\modules\targets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;

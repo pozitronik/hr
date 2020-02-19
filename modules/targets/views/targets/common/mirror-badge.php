@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositions;
-use app\modules\targets\assets\TargetsAsset;
+use app\modules\targets\TargetsAsset;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
 use pozitronik\widgets\BadgeWidget;

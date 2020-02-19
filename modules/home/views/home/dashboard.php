@@ -14,7 +14,7 @@ use app\assets\MasonryAsset;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\GroupsSearch;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\users\assets\UsersAsset;
+use app\modules\users\UsersAsset;
 use app\widgets\button_controls\ButtonControlsWidget;
 use app\modules\groups\widgets\group_card\GroupCardWidget;
 use pozitronik\helpers\ArrayHelper;

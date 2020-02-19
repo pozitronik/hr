@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\users;
 
-use app\assets\AppAsset;
 use yii\web\AssetBundle;
 
 /**

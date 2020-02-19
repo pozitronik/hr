@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $positionConfigurations
  */
 
-use app\modules\graph\assets\VisjsAsset;
+use app\modules\graph\VisjsAsset;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
 use yii\web\View;

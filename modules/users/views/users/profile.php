@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
-use app\modules\graph\assets\VisjsAsset;
+use app\modules\graph\VisjsAsset;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\Users;

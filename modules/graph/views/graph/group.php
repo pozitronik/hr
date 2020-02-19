@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $positionConfigurations
  */
 
-use app\modules\graph\assets\VisjsAsset;
+use app\modules\graph\VisjsAsset;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use yii\web\View;

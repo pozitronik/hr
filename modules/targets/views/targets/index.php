@@ -12,7 +12,7 @@ use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMe
 use app\modules\groups\models\references\RefGroupTypes;
 use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositions;
-use app\modules\targets\assets\TargetsAsset;
+use app\modules\targets\TargetsAsset;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
