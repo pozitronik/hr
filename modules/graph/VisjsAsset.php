@@ -1,21 +1,19 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\graph\assets;
+namespace app\modules\graph;
 
-use app\assets\AppAsset;
 use yii\web\AssetBundle;
 
 /**
- * Class VisjsAssetTargets
+ * Class VisjsAsset
  * @package app\modules\graph\assets
  */
-class VisjsAssetTargets extends AssetBundle {
+class VisjsAsset extends AssetBundle {
 	/**
 	 * @inheritdoc
 	 */
 	public function init() {
-		$this->depends = [AppAsset::class];
 		$this->sourcePath = __DIR__.'/assets';
 		$this->css = [
 			'js/vis.js/vis.css',
@@ -24,7 +22,7 @@ class VisjsAssetTargets extends AssetBundle {
 		$this->js = [
 			'js/common.js',
 			'js/vis.js/vis.js',
-			'js/tree_init_targets.js'
+			'js/tree_init.js'
 		];
 		$this->publishOptions = ['forceCopy' => YII_ENV_DEV];
 		parent::init();
