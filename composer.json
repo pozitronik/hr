@@ -56,13 +56,7 @@
 		"kartik-v/yii2-widget-typeahead": "dev-master",
 		"desandro/masonry": "dev-master",
 		"metafizzy/isotope": "dev-master",
-		"pozitronik/yii2-cachedwidget": "*",
-		"pozitronik/yii2-core-tools": "*",
-		"pozitronik/yii2-badgewidget": "*",
-		"pozitronik/yii2-references": "*",
-		"pozitronik/yii2-navigationwidget": "*",
-		"pozitronik/yii2-selectmodelwidget": "*",
-		"pozitronik/yii2-exceptionslogger": "*"
+		"pozitronik/yii2-references": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -104,50 +98,6 @@
 		{
 			"type": "composer",
 			"url": "https://asset-packagist.org"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-arlogger"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-helpers"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/desandro/masonry"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/isotope"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-cachedwidget"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-core-tools"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-badgewidget"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-navigationwidget"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-references"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-selectmodelwidget"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/pozitronik/yii2-exceptionslogger"
 		}
 	]
 }
