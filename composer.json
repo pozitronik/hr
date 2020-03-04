@@ -56,7 +56,8 @@
 		"kartik-v/yii2-widget-typeahead": "dev-master",
 		"desandro/masonry": "dev-master",
 		"metafizzy/isotope": "dev-master",
-		"pozitronik/yii2-references": "*"
+		"pozitronik/yii2-references": "*",
+		"pozitronik/yii2-exceptionslogger": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
