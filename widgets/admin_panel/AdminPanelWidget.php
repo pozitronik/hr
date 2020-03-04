@@ -41,6 +41,9 @@ class AdminPanelWidget extends CachedWidget {
 	 * @return string
 	 * @throws Throwable
 	 * @throws InvalidConfigException
+	 *
+	 * todo: сюда будут попадать только WigetableControllers. Имеет смысл переделать фильтр так, чтобы включались контроллеры с нужным флагом, либо искуственно добавлялись нужные
+	 * "простые" контроллеры с пустыми/дефолтными параметрами
 	 */
 	public function run():string {
 		if (is_array($this->controllers_directory)) {
