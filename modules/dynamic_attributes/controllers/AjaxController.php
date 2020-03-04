@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\controllers;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
-use app\models\core\controller\BaseAjaxController;
+use app\models\core\controllers\BaseAjaxController;
 use pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\controllers;
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers\admin;
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 
 /**
  * Class WorkgroupsController

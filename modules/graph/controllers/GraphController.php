@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\graph\controllers;
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use app\models\user\CurrentUser;
 use pozitronik\helpers\ArrayHelper;
 use Throwable;

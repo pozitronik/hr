@@ -8,7 +8,7 @@ use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Bookmarks;
 use app\modules\users\models\Users;
-use app\models\core\controller\BaseAjaxController;
+use app\models\core\controllers\BaseAjaxController;
 use Throwable;
 use Yii;
 

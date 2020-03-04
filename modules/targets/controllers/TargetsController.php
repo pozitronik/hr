@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\controllers;
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\Targets;

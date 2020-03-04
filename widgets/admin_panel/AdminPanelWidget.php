@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\widgets\admin_panel;
 
-use app\models\core\controller\CoreController;
+use app\models\core\controllers\CoreController;
 use pozitronik\widgets\CachedWidget;
 use pozitronik\helpers\ArrayHelper;
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use Throwable;
 use yii\base\InvalidConfigException;
 

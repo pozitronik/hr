@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\controllers;
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use app\modules\privileges\models\Privileges;
 use Throwable;
 use Yii;

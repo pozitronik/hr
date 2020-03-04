@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var WigetableController[] $controllers
  **/
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use app\widgets\controller\ControllerWidget;
 use yii\web\View;
 

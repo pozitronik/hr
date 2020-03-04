@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var integer $mode
  */
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use yii\web\View;
 use app\widgets\controller\ControllerWidget;
 

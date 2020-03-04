@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\controllers;
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
 use ReflectionException;

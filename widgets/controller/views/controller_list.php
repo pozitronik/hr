@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var false|string $caption
  */
 
-use app\models\core\controller\WigetableController;
+use app\models\core\controllers\WigetableController;
 use yii\web\View;
 use yii\helpers\Html;
 

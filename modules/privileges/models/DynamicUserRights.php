@@ -7,7 +7,7 @@ use pozitronik\core\models\lcquery\LCQuery;
 use pozitronik\core\traits\ARExtended;
 use pozitronik\core\interfaces\access\AccessMethods;
 use pozitronik\core\interfaces\access\UserRightInterface;
-use app\models\core\controller\CoreController;
+use app\models\core\controllers\CoreController;
 use pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use pozitronik\core\models\core_module\PluginsSupport;

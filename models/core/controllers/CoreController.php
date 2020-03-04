@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\models\core\controller;
+namespace app\models\core\controllers;
 
 use pozitronik\core\models\core_controller\ControllerTrait;
 use pozitronik\core\traits\ModelExtended;

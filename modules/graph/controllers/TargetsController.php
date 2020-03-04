@@ -7,7 +7,7 @@ use app\models\prototypes\NodesPositionsConfig;
 use app\modules\graph\models\GroupGraph;
 use app\modules\graph\models\TargetGraph;
 use app\modules\targets\models\Targets;
-use app\models\core\controller\BaseAjaxController;
+use app\models\core\controllers\BaseAjaxController;
 use pozitronik\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;

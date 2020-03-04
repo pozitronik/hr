@@ -5,7 +5,7 @@ namespace app\modules\privileges\models;
 
 use pozitronik\core\interfaces\access\AccessMethods;
 use pozitronik\core\interfaces\access\UserAccessInterface;
-use app\models\core\controller\CoreController;
+use app\models\core\controllers\CoreController;
 use pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
