@@ -17,7 +17,7 @@
 		"irc": "irc://irc.freenode.net/yii",
 		"source": "https://github.com/yiisoft/yii2"
 	},
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"require": {
 		"php": ">=7.2.0",
 		"yiisoft/yii2": "*",
@@ -50,13 +50,13 @@
 		"kartik-v/yii2-number": "^1.0@dev",
 		"kartik-v/yii2-date-range": "^1.7@dev",
 		"kartik-v/yii2-widget-datetimepicker": "*",
-		"pozitronik/yii2-arlogger": "*",
+		"pozitronik/yii2-arlogger": "dev-master",
 		"pozitronik/yii2-helpers": "*",
 		"kartik-v/yii2-widget-touchspin": "dev-master",
 		"kartik-v/yii2-widget-typeahead": "dev-master",
 		"desandro/masonry": "dev-master",
 		"metafizzy/isotope": "dev-master",
-		"pozitronik/yii2-references": "*",
+		"pozitronik/yii2-references": "dev-master",
 		"pozitronik/yii2-exceptionslogger": "*"
 	},
 	"require-dev": {
