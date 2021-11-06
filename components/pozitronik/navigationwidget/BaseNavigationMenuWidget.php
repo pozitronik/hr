@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\cachedwidget;
+namespace app\components\pozitronik\navigationwidget;
 
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\components\pozitronik\helpers\ArrayHelper;
 use app\components\pozitronik\helpers\ReflectionHelper;
 use yii\db\ActiveRecord;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\cachedwidget;
+namespace app\components\pozitronik\selectmodelwidget;
 
 use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\components\pozitronik\core\traits\ARExtended;
@@ -135,7 +135,7 @@ class SelectModelWidget extends InputWidget implements SelectionWidgetInterface 
 				]);
 			break;
 			case self::MODE_FORM://fixme: не используем режим формы, он глючит. Пока такой фикс
-				return $this->render('@vendor/pozitronik/yii2-selectmodelwidget/src/views/form', [
+				return $this->render('@app/components/pozitronik/selectmodelwidget/views/form', [
 					'model' => $this->model,
 					'attribute' => $this->attribute,
 					'data' => $this->data,

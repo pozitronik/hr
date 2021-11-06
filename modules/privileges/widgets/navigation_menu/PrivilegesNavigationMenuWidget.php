@@ -5,7 +5,7 @@ namespace app\modules\privileges\widgets\navigation_menu;
 
 use app\models\core\IconsHelper;
 use app\modules\privileges\models\Privileges;
-use app\components\pozitronik\cachedwidget\BaseNavigationMenuWidget;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 
 /**
  * Class ReferenceNavigationMenuWidget

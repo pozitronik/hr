@@ -156,7 +156,7 @@ class BadgeWidget extends CachedWidget {
 
 		if (ReflectionHelper::is_closure($this->prefix)) $this->prefix = call_user_func($this->prefix);
 
-		return $this->prefix.implode($this->itemsSeparator, $result).$moreBadge;
+		return $this->prefix.implode((string)$this->itemsSeparator, $result).$moreBadge;
 
 	}
 }

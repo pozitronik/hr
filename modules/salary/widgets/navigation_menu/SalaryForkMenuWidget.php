@@ -6,7 +6,7 @@ namespace app\modules\salary\widgets\navigation_menu;
 use app\models\core\IconsHelper;
 use app\modules\history\HistoryModule;
 use app\modules\salary\models\SalaryFork;
-use app\components\pozitronik\cachedwidget\BaseNavigationMenuWidget;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

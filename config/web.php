@@ -25,6 +25,9 @@ use app\modules\privileges\PrivilegesModule;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositions;
+use app\modules\targets\models\references\RefTargetsResults;
+use app\modules\targets\models\references\RefTargetsTypes;
+use app\modules\targets\TargetsModule;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
@@ -159,16 +162,16 @@ $config = [
 				]
 			]
 		],
-//		'targets' => [
-//			'class' => TargetsModule::class,
-//			'params' => [
-//				'references' => [
-//					RefTargetsTypes::class,
-//					RefTargetsResults::class
-//				]
-//			]
-//
-//		],
+		'targets' => [
+			'class' => TargetsModule::class,
+			'params' => [
+				'references' => [
+					RefTargetsTypes::class,
+					RefTargetsResults::class
+				]
+			]
+
+		],
 		'graph' => [
 			'class' => GraphModule::class
 		]

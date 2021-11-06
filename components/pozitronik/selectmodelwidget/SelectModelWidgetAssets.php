@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\cachedwidget;
+namespace app\components\pozitronik\selectmodelwidget;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;
