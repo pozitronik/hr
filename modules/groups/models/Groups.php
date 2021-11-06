@@ -585,12 +585,12 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * Возвращает статистику по количеству юзеров в указанных группах (уники и суммари)
+	 * Возвращает статистику по количеству юзеров в указанных группах (уники и summary)
 	 * @param int[] $scope
 	 * @return int[]
 	 */
 	public static function getGroupScopeUsersCount(array $scope):array {
-		return Users::find()->leftJoin('rel_users_groups', 'rel_users_groups.user_id = sys_users.id')//поскольку нам нужно получать два разных аггрегатора и нельзя получать индекс, то мы не можем использовать joinWith (ORM будет требовать индекс).
+		return Users::find()->leftJoin('rel_users_groups', 'rel_users_groups.user_id = sys_users.id')//поскольку нам нужно получать два разных агрегатора и нельзя получать индекс, то мы не можем использовать joinWith (ORM будет требовать индекс).
 		->select(['COUNT(DISTINCT sys_users.id) AS dcount', 'COUNT(sys_users.id) as count'])
 			->where(['rel_users_groups.group_id' => $scope])
 			->asArray()

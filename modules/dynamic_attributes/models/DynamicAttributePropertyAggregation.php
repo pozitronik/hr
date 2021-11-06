@@ -89,7 +89,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	}
 
 	/**
-	 * @param int[] $values
+	 * @param array $values
 	 * @param bool $dropNullValues
 	 * @return float|null
 	 */

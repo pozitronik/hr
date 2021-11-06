@@ -24,8 +24,8 @@ class UsersMassUpdate extends Model {
 	private $usersId = [];
 	private $usersIdSelected = [];
 	private $virtualUser;
-	private $relGroups; //Поскольку модель пользователя сразу применяет переданные группы, то в вирутальную модель вводим переменную для хранения.
-	private $relDynamicAttributes; //Поскольку модель пользователя сразу применяет переданные атрибуты, то в вирутальную модель вводим переменную для хранения.
+	private $relGroups; //Поскольку модель пользователя сразу применяет переданные группы, то в виртуальную модель вводим переменную для хранения.
+	private $relDynamicAttributes; //Поскольку модель пользователя сразу применяет переданные атрибуты, то в виртуальную модель вводим переменную для хранения.
 	private $dropGroups;
 	private $dropUsersAttributes;
 

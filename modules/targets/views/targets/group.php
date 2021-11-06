@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
-use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;

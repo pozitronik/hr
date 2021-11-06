@@ -94,7 +94,7 @@ use yii\db\ActiveRecord;
  * @property string $chapter_couch_name Agile-коуч
  * @property string $email_sigma Адрес электронной почты (sigma)
  * @property string $email_alpha Адрес электронной почты (внутренний
- * @property int $domain Служеная метка очереди импорта
+ * @property int $domain Служебная метка очереди импорта
  */
 class ImportFos extends ActiveRecord {
 	use Upload;
@@ -170,7 +170,7 @@ class ImportFos extends ActiveRecord {
 			'tribe_id' => 'Трайб ID',
 			'tribe_code' => 'Код трайба',
 			'tribe_name' => 'Трайб',
-			'x3' => 'Тип верхнеуровнего объекта Sbergile',//10.09.2019 - новое, неиспользуемое поле
+			'x3' => 'Тип верхнеуровневого объекта Sbergile',//10.09.2019 - новое, неиспользуемое поле
 			'tribe_leader_tn' => 'Лидер трайба ТН',
 			'tribe_leader_name' => 'Лидер трайба',
 			'tribe_leader_it_tn' => 'IT-лидер трайба ТН',

@@ -107,7 +107,7 @@ class ImportCompetency extends Model {
 	}
 
 	/**
-	 * Добавляем оценки пользователю, при необходимости созздавая или модифицируя соответствующую компетенцию
+	 * Добавляем оценки пользователю, при необходимости создавая или модифицируя соответствующую компетенцию
 	 * @param int $userId
 	 * @param string $competencyName
 	 * @param string $competencyField

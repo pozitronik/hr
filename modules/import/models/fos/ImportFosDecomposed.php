@@ -157,7 +157,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Область экспертизы', "value" => $importFosUser->expert_area],
 					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Совмещаемая роль', "value" => $importFosUser->combined_role]
 				], $errors)
-			) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
+			) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибок)
 				$importFosUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный айдишник, чтобы на следующей итерации пропустился
 				continue; //пропустим засранца
 			}
