@@ -62,7 +62,7 @@ class AttributePropertyDictionary implements AttributePropertyInterface {
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		return false;
 	}
 
@@ -116,7 +116,7 @@ class AttributePropertyDictionary implements AttributePropertyInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return $value;
 	}
 }

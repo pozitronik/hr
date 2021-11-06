@@ -318,7 +318,7 @@ class Users extends ActiveRecord {
 	 * @param array $relUsersGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups($relUsersGroups):void {
+	public function setRelGroups(array $relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
@@ -333,7 +333,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropGroups
 	 * @throws Throwable
 	 */
-	public function setDropGroups($dropGroups):void {
+	public function setDropGroups(array $dropGroups):void {
 		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
@@ -414,10 +414,10 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param DynamicAttributes[]|ActiveQuery $relDynamicAttributes
+	 * @param ActiveQuery|DynamicAttributes[] $relDynamicAttributes
 	 * @throws Throwable
 	 */
-	public function setRelDynamicAttributes($relDynamicAttributes):void {
+	public function setRelDynamicAttributes(ActiveQuery|array $relDynamicAttributes):void {
 		RelUsersAttributes::linkModels($this, $relDynamicAttributes);
 	}
 
@@ -425,7 +425,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $dropUsersAttributes
 	 * @throws Throwable
 	 */
-	public function setDropUsersAttributes($dropUsersAttributes):void {
+	public function setDropUsersAttributes(array $dropUsersAttributes):void {
 		/*Сами значения атрибутов сохранятся в базе и должны будут восстановиться, если атрибут присвоить пользователю обратно*/
 		RelUsersAttributes::unlinkModels($this, $dropUsersAttributes);
 	}
@@ -481,10 +481,10 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Кривоватый метод работы с привлегиями; пока оставляю так, после рефакторинга админки привлегии будут редаткироваться или аяксом, или просто отдельно, соответственно будет юзаться удаление отдельным атрибутом
-	 * @param Privileges[]|ActiveQuery $relPrivileges
+	 * @param ActiveQuery|Privileges[] $relPrivileges
 	 * @throws Throwable
 	 */
-	public function setRelPrivileges($relPrivileges):void {
+	public function setRelPrivileges(ActiveQuery|array $relPrivileges):void {
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
 		$currentPrivilegesId = ArrayHelper::getColumn($this->relPrivileges, 'id');
 		$droppedPrivileges = array_diff($currentPrivilegesId, (array)$relPrivileges);
@@ -576,7 +576,7 @@ class Users extends ActiveRecord {
 	 * @param integer[] $relRefUserPositionTypes
 	 * @throws Throwable
 	 */
-	public function setRelRefUserPositionsTypesOwn($relRefUserPositionTypes):void {
+	public function setRelRefUserPositionsTypesOwn(array $relRefUserPositionTypes):void {
 //		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
 
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаляемые записи. */

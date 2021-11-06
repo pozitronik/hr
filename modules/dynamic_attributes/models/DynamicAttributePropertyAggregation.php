@@ -84,7 +84,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param mixed $value
 	 */
-	public function setValue($value):void {
+	public function setValue(mixed $value):void {
 		$this->_value = $value;
 	}
 
@@ -157,7 +157,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	 * @param int $truncPercent -- процент отбрасываемых минимальных и максимальных значений
 	 * @return float|null
 	 */
-	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, $truncPercent = 20):?float {
+	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, int $truncPercent = 20):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		sort($values, SORT_NUMERIC);
 		$truncCount = (int)((count($values) * $truncPercent) / 100);
@@ -166,7 +166,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	}
 
 	/**
-	 * @param int[] $values
+	 * @param array $values
 	 * @param bool $dropNullValues
 	 * @return int|null
 	 */

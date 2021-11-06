@@ -134,7 +134,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param mixed $value
 	 * @return boolean
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new static(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		} else {
@@ -149,10 +149,10 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 * @return mixed
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return $value;//не форматирует по умолчанию
 	}
 }

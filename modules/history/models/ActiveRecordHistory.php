@@ -87,11 +87,11 @@ class ActiveRecordHistory extends ActiveRecord {
 
 	/**
 	 * Отличия от базового deleteAll(): работаем в цикле для корректного логирования (через декомпозицию)
-	 * @param null|mixed $condition
+	 * @param mixed|null $condition
 	 * @return int|null
 	 * @throws Throwable
 	 */
-	public static function deleteAllEx($condition = null):?int {
+	public static function deleteAllEx(mixed $condition = null):?int {
 		/** @noinspection PhpDeprecationInspection */
 		$self_class_name = static::class;
 		/** @var static $self_class */

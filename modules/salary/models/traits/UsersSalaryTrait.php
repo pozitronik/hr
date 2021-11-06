@@ -48,7 +48,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @param mixed $relGrade
 	 */
-	public function setRelGrade($relGrade):void {
+	public function setRelGrade(mixed $relGrade):void {
 		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('grade_id', $relGrade);
 	}
@@ -64,7 +64,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @param mixed $relPremiumGroup
 	 */
-	public function setRelPremiumGroup($relPremiumGroup):void {
+	public function setRelPremiumGroup(mixed $relPremiumGroup):void {
 		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('premium_group_id', $relPremiumGroup);
 	}
@@ -80,7 +80,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @param mixed $relLocation
 	 */
-	public function setRelLocation($relLocation):void {
+	public function setRelLocation(mixed $relLocation):void {
 		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('location_id', $relLocation);
 	}

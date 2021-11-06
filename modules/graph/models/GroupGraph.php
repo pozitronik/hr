@@ -98,14 +98,14 @@ class GroupGraph extends Graph {
 	/**
 	 * @param mixed $upDepth
 	 */
-	public function setUpDepth($upDepth):void {
+	public function setUpDepth(mixed $upDepth):void {
 		$this->upDepth = $upDepth;
 	}
 
 	/**
 	 * @param mixed $downDepth
 	 */
-	public function setDownDepth($downDepth):void {
+	public function setDownDepth(mixed $downDepth):void {
 		$this->downDepth = $downDepth;
 	}
 

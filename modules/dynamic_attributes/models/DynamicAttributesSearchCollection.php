@@ -258,7 +258,7 @@ class DynamicAttributesSearchCollection extends Model {
 	/**
 	 * @param int[] $searchScope
 	 */
-	public function setSearchScope($searchScope):void {
+	public function setSearchScope(array $searchScope):void {
 		$this->searchScope = empty($searchScope)?[]:$searchScope;
 	}
 

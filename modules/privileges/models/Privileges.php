@@ -113,7 +113,7 @@ class Privileges extends ActiveRecord {
 	 * @param string[] $userRightsNames
 	 * @throws Throwable
 	 */
-	public function setUserRightsNames($userRightsNames):void {
+	public function setUserRightsNames(array $userRightsNames):void {
 		if ($this->isNewRecord || empty($userRightsNames)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
 		RelPrivilegesRights::linkModels($this, $userRightsNames);
 		$this->dropCaches();
@@ -130,7 +130,7 @@ class Privileges extends ActiveRecord {
 	 * @param int[] $userRightsIds
 	 * @throws Throwable
 	 */
-	public function setUserDynamicRightsIds($userRightsIds):void {
+	public function setUserDynamicRightsIds(array $userRightsIds):void {
 		if ($this->isNewRecord || empty($userRightsIds)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
 		RelPrivilegesDynamicRights::linkModels($this, $userRightsIds);
 		$this->dropCaches();

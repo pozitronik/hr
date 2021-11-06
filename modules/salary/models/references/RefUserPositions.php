@@ -301,7 +301,7 @@ class RefUserPositions extends CustomisableReference {
 	 * //не можем типизировать null, т.к. может быть передана строка, а делать преобразования бессмысленно
 	 * @throws Throwable
 	 */
-	public function setBranch($branch):void {
+	public function setBranch(mixed $branch):void {
 		RelRefUserPositionsBranches::deleteAll(['position_id' => $this->id]);
 		RelRefUserPositionsBranches::linkModel($this->id, $branch);//проверки на пустоту делает метод
 	}
@@ -317,7 +317,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @param mixed $types
 	 * @throws Throwable
 	 */
-	public function setTypes($types):void {
+	public function setTypes(mixed $types):void {
 		RelRefUserPositionsTypes::deleteAll(['position_id' => $this->id]);
 		RelRefUserPositionsTypes::linkModels($this->id, $types);//проверки на пустоту делает метод
 	}
@@ -354,7 +354,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @param mixed $relGrades
 	 * @throws Throwable
 	 */
-	public function setRelRefGrades($relGrades):void {
+	public function setRelRefGrades(mixed $relGrades):void {
 		RelGradesPositionsRules::deleteAll(['position_id' => $this->id]);
 		RelGradesPositionsRules::linkModels($relGrades, $this->id);
 	}

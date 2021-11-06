@@ -218,7 +218,7 @@ class AttributePropertyScore extends AttributeProperty {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}

@@ -159,7 +159,7 @@ class AlertModel extends Model {
 	 * @return string
 	 */
 	public function getIcon():string {
-		return $this->icon;
+		return (string)$this->icon;
 	}
 
 	/**

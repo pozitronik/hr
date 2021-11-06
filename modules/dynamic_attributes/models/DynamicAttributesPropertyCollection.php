@@ -148,7 +148,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param int|null $attributeId
 	 */
-	public function setAttributeId($attributeId):void {
+	public function setAttributeId(?int $attributeId):void {
 		$this->_attributeId = $attributeId;
 	}
 
@@ -162,7 +162,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param int|null $propertyId
 	 */
-	public function setPropertyId($propertyId):void {
+	public function setPropertyId(?int $propertyId):void {
 		$this->_propertyId = $propertyId;
 	}
 
@@ -192,7 +192,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param int $aggregation
 	 */
-	public function setAggregation($aggregation):void {
+	public function setAggregation(int $aggregation):void {
 		$this->_aggregation = $aggregation;
 	}
 

@@ -58,7 +58,7 @@ class ServiceController extends WigetableController {
 	 * @return Response|string
 	 * @throws Throwable
 	 */
-	public function actionMaskAndShit($step = 0) {
+	public function actionMaskAndShit(int $step = 0) {
 		switch ($step) {
 			default:
 			case 0:

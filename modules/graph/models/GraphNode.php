@@ -40,7 +40,7 @@ class GraphNode extends Model {
 	 * @param array $config
 	 * @throws InvalidConfigException
 	 */
-	public function __construct(Model $model, $config = []) {
+	public function __construct(Model $model, array $config = []) {
 		parent::__construct($config);
 		$this->id = $model->formName();
 	}

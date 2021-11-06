@@ -174,7 +174,7 @@ class AttributePropertyInteger extends AttributeProperty {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return Yii::$app->formatter->asInteger($value);
 	}
 }

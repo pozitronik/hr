@@ -377,7 +377,6 @@ class ImportFosDecomposed extends ActiveRecord {
 		}
 
 		if (null === $user->id) {
-			Yii::debug($user, 'debug');
 			$errors[] = [$name => $user->errors];
 			return null;
 		}

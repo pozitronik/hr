@@ -70,7 +70,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param int|null $attribute
 	 */
-	public function setAttribute($attribute):void {
+	public function setAttribute(?int $attribute):void {
 		$this->attribute = is_numeric($attribute)?(int)$attribute:null;
 	}
 
@@ -84,7 +84,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param int|null $property
 	 */
-	public function setProperty($property):void {
+	public function setProperty(?int $property):void {
 		$this->property = is_numeric($property)?(int)$property:null;
 	}
 
@@ -112,7 +112,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param mixed|null $value
 	 */
-	public function setValue($value):void {
+	public function setValue(mixed $value):void {
 		$this->value = $value;
 	}
 
@@ -126,7 +126,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param int[]|null $type
 	 */
-	public function setType($type):void {
+	public function setType(?array $type):void {
 		$this->type = $type;
 	}
 

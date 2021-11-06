@@ -21,7 +21,7 @@ class SQueue extends Model {
 	 * @param int $user_id
 	 * @param mixed $message
 	 */
-	public static function push(int $user_id, $message):void {
+	public static function push(int $user_id, mixed $message):void {
 		$current_messages = self::get($user_id);
 		$current_messages[] = $message;
 		Yii::$app->cache->set(self::$queue_identifier.$user_id, $current_messages);

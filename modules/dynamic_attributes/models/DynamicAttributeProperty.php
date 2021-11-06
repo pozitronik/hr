@@ -254,7 +254,7 @@ class DynamicAttributeProperty extends Model {
 	/**
 	 * @param mixed $value
 	 */
-	public function setValue($value):void {
+	public function setValue(mixed $value):void {
 		$this->_virtualValue = $value;
 	}
 

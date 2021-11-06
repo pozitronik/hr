@@ -99,7 +99,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	 * @param int $attributeId
 	 * @return bool
 	 */
-	public static function setAttributeTypeForUser($typeId, int $userId, int $attributeId):bool {
+	public static function setAttributeTypeForUser(array|int $typeId, int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
 		if ($rel) {
 			if (is_array($typeId)) {
@@ -124,7 +124,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function clearAttributeTypeForUser($typeId, int $userId, int $attributeId):bool {
+	public static function clearAttributeTypeForUser(array|int $typeId, int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
 		if ($rel) {
 			if (is_array($typeId)) {

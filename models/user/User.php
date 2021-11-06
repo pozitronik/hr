@@ -32,11 +32,11 @@ class User extends BaseObject implements IdentityInterface {
 	}
 
 	/**
-	 * @param Users|array $data
+	 * @param array|Users $data
 	 * Расширяет свойства Yii::$app->user->identity, абсолютно идентично Users::CurrentUser
 	 * используем вместо Users::CurrentUser, т.к. работает быстрее в счёт кеширования
 	 */
-	public static function fillUserData($data = []) {
+	public static function fillUserData(Users|array $data = []) {
 		self::$users = $data;
 		if (!empty($data)) {
 			self::$users = [
@@ -94,7 +94,7 @@ class User extends BaseObject implements IdentityInterface {
 	 * @param string $password password to validate
 	 * @return boolean if password provided is valid for current user
 	 */
-	public function validatePassword($password):bool {
+	public function validatePassword(string $password):bool {
 		return (null === $this->salt)?$this->password === $password:sha1($password.$this->salt) === $this->password;
 	}
 }

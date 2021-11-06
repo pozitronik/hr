@@ -76,7 +76,7 @@ class BaseAjaxController extends CoreController {
 	/**
 	 * @param AjaxAnswer $answer
 	 */
-	public function setAnswer($answer):void {
+	public function setAnswer(AjaxAnswer $answer):void {
 		$this->_answer = $answer;
 	}
 

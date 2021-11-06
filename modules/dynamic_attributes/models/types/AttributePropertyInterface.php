@@ -51,7 +51,7 @@ interface AttributePropertyInterface {
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool;
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool;
 
 	/**
 	 * Рендер поля просмотра значения свойства
@@ -81,5 +81,5 @@ interface AttributePropertyInterface {
 	 * @param mixed $value -- value to be formatted
 	 * @return mixed -- formatted output
 	 */
-	public static function format($value);
+	public static function format(mixed $value);
 }

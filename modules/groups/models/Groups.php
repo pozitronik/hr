@@ -172,7 +172,7 @@ class Groups extends ActiveRecord {
 	 * @param ActiveQuery|Users[] $relGroupsUsers
 	 * @throws Throwable
 	 */
-	public function setRelUsers($relGroupsUsers):void {
+	public function setRelUsers(ActiveQuery|array $relGroupsUsers):void {
 		RelUsersGroups::linkModels($relGroupsUsers, $this);
 	}
 
@@ -237,7 +237,7 @@ class Groups extends ActiveRecord {
 	 * @param ActiveQuery|Groups[] $childGroups
 	 * @throws Throwable
 	 */
-	public function setRelChildGroups($childGroups):void {
+	public function setRelChildGroups(ActiveQuery|array $childGroups):void {
 		RelGroupsGroups::linkModels($this, $childGroups);
 		$this->dropCaches();
 	}
@@ -272,7 +272,7 @@ class Groups extends ActiveRecord {
 	 * @param ActiveQuery|Groups[] $parentGroups
 	 * @throws Throwable
 	 */
-	public function setRelParentGroups($parentGroups):void {
+	public function setRelParentGroups(ActiveQuery|array $parentGroups):void {
 		RelGroupsGroups::linkModels($parentGroups, $this);
 		if (!empty($parentGroups)) {
 			foreach ((array)$parentGroups as $group) {
@@ -489,7 +489,7 @@ class Groups extends ActiveRecord {
 	 * @param array $stackedId Массив всех обойдённых групп (плоский)
 	 * @return array Массив всех обойдённых групп (иерархический)
 	 */
-	public function buildHierarchyTree(&$stackedId = []):array {
+	public function buildHierarchyTree(array &$stackedId = []):array {
 		if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
 		$hierarchyTree = [];
 		/** @var self[] $childGroups */
