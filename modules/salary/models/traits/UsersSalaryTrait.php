@@ -9,7 +9,6 @@ use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\relations\RelUsersSalary;
 use app\modules\salary\models\SalaryFork;
-use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
 /**
@@ -31,7 +30,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersSalary() {
+	public function getRelUsersSalary():ActiveQuery {
 		if (null === RelUsersSalary::find()->where(['user_id' => $this->id])->one()) (new RelUsersSalary(['user_id' => $this->id]))->save();
 		return $this->hasOne(RelUsersSalary::class, ['user_id' => 'id']);
 	}
@@ -39,7 +38,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGrade() {
+	public function getRelGrade():ActiveQuery {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade_id'])->via('relUsersSalary');
 	}
 
@@ -53,7 +52,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelPremiumGroup() {
+	public function getRelPremiumGroup():ActiveQuery {
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id'])->via('relUsersSalary');
 	}
 
@@ -67,7 +66,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelLocation() {
+	public function getRelLocation():ActiveQuery {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id'])->via('relUsersSalary');
 	}
 
@@ -91,7 +90,7 @@ trait UsersSalaryTrait {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositions() {
+	public function getRelRefUserPositions():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 

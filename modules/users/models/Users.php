@@ -271,14 +271,14 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroups() {
+	public function getRelUsersGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['user_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 	}
 
@@ -286,7 +286,7 @@ class Users extends ActiveRecord {
 	 * Релейшен к назначению ролей в этой группе
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
 	}
 
@@ -294,7 +294,7 @@ class Users extends ActiveRecord {
 	 * Все назначенные роли этого пользователя (используется изначально для определения руководителя)
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRoles() {
+	public function getRelRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
@@ -302,7 +302,7 @@ class Users extends ActiveRecord {
 	 * Все роли этого пользователя с флагом лидера
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesLeader() {
+	public function getRelRefUserRolesLeader():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
 	}
 
@@ -310,7 +310,7 @@ class Users extends ActiveRecord {
 	 * Все роли этого пользователя с флагом важной шишки
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesImportant() {
+	public function getRelRefUserRolesImportant():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
 	}
 
@@ -361,7 +361,7 @@ class Users extends ActiveRecord {
 	public function setRolesInGroup(array $groupRoles):void {
 		foreach ($groupRoles as $group => $roles) {
 			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $this->id])->select('id')]);
-			/** @var int $roles */
+			/** @var int[] $roles */
 			foreach ($roles as $role) {
 				RelUsersGroupsRoles::setRoleInGroup($role, $group, $this->id);
 			}
@@ -400,14 +400,14 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributes() {
+	public function getRelUsersAttributes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributes::class, ['user_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDynamicAttributes() {
+	public function getRelDynamicAttributes():ActiveQuery {
 		return $this->hasMany(DynamicAttributes::class, ['id' => 'attribute_id'])->via('relUsersAttributes');
 	}
 
@@ -450,7 +450,7 @@ class Users extends ActiveRecord {
 	 * Вернёт все группы, в которых пользователь имеет галочку босса
 	 * @return ActiveQuery
 	 */
-	public function getRelLeadingGroups() {
+	public function getRelLeadingGroups():ActiveQuery {
 		return $this->getRelGroups()->joinWith(['relRefUserRolesLeader']);
 	}
 
@@ -466,14 +466,14 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersPrivileges() {
+	public function getRelUsersPrivileges():ActiveQuery {
 		return $this->hasMany(RelUsersPrivileges::class, ['user_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelPrivileges() {
+	public function getRelPrivileges():ActiveQuery {
 		return $this->hasMany(Privileges::class, ['id' => 'privilege_id'])->via('relUsersPrivileges');
 	}
 
@@ -509,14 +509,14 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributesTypes() {
+	public function getRelUsersAttributesTypes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributesTypes::class, ['user_attribute_id' => 'id'])->via('relUsersAttributes');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRefAttributesTypes() {
+	public function getRefAttributesTypes():ActiveQuery {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
 
@@ -533,7 +533,7 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUserPosition() {
+	public function getRelUserPosition():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
@@ -541,7 +541,7 @@ class Users extends ActiveRecord {
 	 * ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypes() {
+	public function getRelRefUserPositionsTypes():ActiveQuery {
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'position']);
 	}
 
@@ -549,7 +549,7 @@ class Users extends ActiveRecord {
 	 * Типы должностей пользователя, полученные через привязку типов к занимаемой должности
 	 * @return ActiveQuery
 	 */
-	public function getRefUserPositionTypes() {
+	public function getRefUserPositionTypes():ActiveQuery {
 		return $this->hasOne(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
 	}
 
@@ -557,7 +557,7 @@ class Users extends ActiveRecord {
 	 * ID типов должностей, полученных через переопределения (не зависящие от привязок должности)
 	 * @return ActiveQuery
 	 */
-	public function getRelUserPositionsTypes() {
+	public function getRelUserPositionsTypes():ActiveQuery {
 		return $this->hasMany(RelUserPositionsTypes::class, ['user_id' => 'id']);
 	}
 
@@ -565,7 +565,7 @@ class Users extends ActiveRecord {
 	 * Типы должностей пользователя, полученные через переопределения (не зависящие от привязок должности)
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypesOwn() {
+	public function getRelRefUserPositionsTypesOwn():ActiveQuery {
 		return $this->hasMany(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
 	}
 
@@ -579,7 +579,7 @@ class Users extends ActiveRecord {
 
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаляемые записи. */
 		$currentUserPositionTypesId = ArrayHelper::getColumn($this->relUserPositionsTypes, 'position_type_id');
-		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, (array)$relRefUserPositionTypes);
+		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, $relRefUserPositionTypes);
 		RelUserPositionsTypes::unlinkModels($this, $droppedUserPositionTypes);
 		RelUserPositionsTypes::linkModels($this, $relRefUserPositionTypes);
 	}
@@ -622,7 +622,7 @@ class Users extends ActiveRecord {
 		$uniqueUsers = [];
 		array_walk($result, static function($value, &$key) use (&$uniqueKeys, &$uniqueUsers) {
 			/** @var Users $value */
-			if (!in_array($value->id, $uniqueKeys)) {
+			if (!in_array($value->id, $uniqueKeys, true)) {
 				$uniqueUsers[] = $value;
 				$uniqueKeys[] = $value->id;
 			}
@@ -635,7 +635,7 @@ class Users extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersIdentifiers() {
+	public function getRelUsersIdentifiers():ActiveQuery {
 		return $this->hasOne(UsersIdentifiers::class, ['user_id' => 'id']);
 	}
 

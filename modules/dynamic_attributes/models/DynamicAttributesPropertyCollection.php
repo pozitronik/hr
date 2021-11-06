@@ -103,7 +103,7 @@ class DynamicAttributesPropertyCollection extends Model {
 					$attributeModel->setVirtualProperty($propertyId, null, null);//skip property aggregation
 				} else {
 					$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
-					if (in_array($this->aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
+					if (in_array($this->aggregation, $propertyClass::aggregationConfig(), true) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
 						$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value, $aggregatedValue->type);
 					} else {
 						$attributeModel->setVirtualProperty($propertyId, 'Не поддерживается', DynamicAttributeProperty::PROPERTY_UNSUPPORTED);//fill by empty attribute

@@ -163,7 +163,7 @@ class UsersMassUpdate extends Model {
 	/**
 	 * @return Users
 	 */
-	public function getVirtualUser() {
+	public function getVirtualUser():Users {
 		return $this->virtualUser;
 	}
 

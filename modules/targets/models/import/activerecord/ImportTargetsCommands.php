@@ -56,14 +56,14 @@ class ImportTargetsCommands extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelCluster() {
+	public function getRelCluster():ActiveQuery {
 		return $this->hasOne(ImportTargetsClusters::class, ['id' => 'cluster_id'])->via('relTargets');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargets() {
+	public function getRelTargets():ActiveQuery {
 		return $this->hasMany(ImportTargetsTargets::class, ['command_id' => 'id']);
 	}
 }

@@ -56,14 +56,14 @@ class ICRelUsersFields extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelField() {
+	public function getRelField():ActiveQuery {
 		return $this->hasOne(ICFields::class, ['id' => 'field_id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelAttribute() {
+	public function getRelAttribute():ActiveQuery {
 		return $this->hasOne(ICAttributes::class, ['id' => 'attribute_id'])->via('relField');
 	}
 }

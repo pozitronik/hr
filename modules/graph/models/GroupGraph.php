@@ -58,7 +58,7 @@ class GroupGraph extends Graph {
 				}
 
 				$edge = new GroupEdge($group, $childGroup);
-				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"))) {
+				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"), true)) {
 					$this->edges[] = $edge;
 				}
 
@@ -87,7 +87,7 @@ class GroupGraph extends Graph {
 
 				}
 				$edge = new GroupEdge($parentGroup, $group);
-				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"))) {
+				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"), true)) {
 					$this->edges[] = $edge;
 				}
 			}
@@ -115,7 +115,7 @@ class GroupGraph extends Graph {
 	 */
 	public function applyNodesPositions(array $positions = []):void {
 		foreach ($positions as $nodeId => $position) {
-			if (false !== ($key = array_search($nodeId, array_column($this->nodes, 'id')))) {
+			if (false !== ($key = array_search($nodeId, array_column($this->nodes, 'id'), true))) {
 				/** @var int $key */
 				$this->nodes[$key]->x = $position['x'];
 				$this->nodes[$key]->y = $position['y'];

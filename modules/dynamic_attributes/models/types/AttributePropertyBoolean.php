@@ -133,7 +133,7 @@ class AttributePropertyBoolean extends AttributeProperty {
 		if ($dropNullValues) unset ($modaArray['']);
 
 		$maxValue = count($modaArray)?max($modaArray):null;
-		return (string)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
+		return (string)array_search($maxValue, $modaArray, true);//наиболее часто встречаемое значение
 	}
 
 	/**

@@ -83,14 +83,14 @@ class RelUsersGroups extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRefUserRoles() {
+	public function getRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 

@@ -169,7 +169,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			В остальных случаях делаем группы level3 && level4 (если есть данные), level4 входит в level3,
 			level5 игнорим
 			*/
-			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null])) {
+			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null], true)) {
 				if (null !== $id = ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'hr_group_id')) {
 					self::linkRole($id, $importFosUser->hr_user_id);
 				}
@@ -451,7 +451,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		/** @var null|Groups $group */
 		if (null === $group = Groups::findModel($groupId)) return;
 		$group = Groups::findModel($groupId);
-		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
+		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'), true)) {//Если пользователь не входит в группу, добавим его туда
 			$user->relGroups = $group;
 		}
 		if (!empty($roleName)) {

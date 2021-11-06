@@ -119,7 +119,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @return int[]|null
 	 */
-	public function getType() {
+	public function getType():?array {
 		return $this->type;
 	}
 

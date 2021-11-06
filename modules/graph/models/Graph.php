@@ -74,7 +74,7 @@ class Graph extends Model implements GraphInterface {
 		$nodeIds = [];
 		$edgeIds = [];
 		$this->nodes = array_filter($this->nodes, static function(GraphNode $node) use (&$nodeIds) {
-			if (in_array($node->id, $nodeIds)) {
+			if (in_array($node->id, $nodeIds, true)) {
 				return false;
 			}
 			$nodeIds[] = $node->id;
@@ -84,7 +84,7 @@ class Graph extends Model implements GraphInterface {
 		$this->nodes = array_values($this->nodes);//reindexing required, cause vis.js vil fail otherwise
 
 		$this->edges = array_filter($this->edges, static function(GraphEdge $edge) use (&$edgeIds) {
-			if (in_array($edge->id, $edgeIds)) {
+			if (in_array($edge->id, $edgeIds, true)) {
 				return false;
 			}
 			$edgeIds[] = $edge->id;

@@ -148,11 +148,11 @@ class DynamicAttributePropertyAggregation extends Model {
 		if ($dropNullValues) unset ($modaArray['']);
 
 		$maxValueCount = count($modaArray)?max($modaArray):null;
-		return (int)array_search($maxValueCount, $modaArray);//наиболее часто встречаемое значение
+		return (int)array_search($maxValueCount, $modaArray, true);//наиболее часто встречаемое значение
 	}
 
 	/**
-	 * @param int[] $values
+	 * @param array $values
 	 * @param bool $dropNullValues
 	 * @param int $truncPercent -- процент отбрасываемых минимальных и максимальных значений
 	 * @return float|null

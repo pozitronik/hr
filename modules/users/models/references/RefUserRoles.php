@@ -80,28 +80,28 @@ class RefUserRoles extends CustomisableReference {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['role' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroups() {
+	public function getRelUsersGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['id' => 'user_group_id'])->via('relUsersGroupsRoles');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getGroups() {
+	public function getGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getUsers() {
+	public function getUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 	}
 

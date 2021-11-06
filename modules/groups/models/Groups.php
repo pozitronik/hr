@@ -150,21 +150,21 @@ class Groups extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroups() {
+	public function getRelUsersGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['group_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelVacancy() {
+	public function getRelVacancy():ActiveQuery {
 		return $this->hasMany(Vacancy::class, ['group' => 'id']);
 	}
 
@@ -189,7 +189,7 @@ class Groups extends ActiveRecord {
 	 * Релейшен к назначению ролей в этой группе
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
 	}
 
@@ -197,7 +197,7 @@ class Groups extends ActiveRecord {
 	 * Все назначенные роли в этой группе
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRoles() {
+	public function getRelRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
@@ -205,7 +205,7 @@ class Groups extends ActiveRecord {
 	 * Все роли боссов в этой группе
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesLeader() {
+	public function getRelRefUserRolesLeader():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
 	}
 
@@ -213,14 +213,14 @@ class Groups extends ActiveRecord {
 	 * Все роли важных шишек в этой группе
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesImportant() {
+	public function getRelRefUserRolesImportant():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGroupsGroupsChild() {
+	public function getRelGroupsGroupsChild():ActiveQuery {
 		return $this->hasMany(RelGroupsGroups::class, ['parent_id' => 'id']);
 	}
 
@@ -228,7 +228,7 @@ class Groups extends ActiveRecord {
 	 * Вернет все группы, дочерние по отношению к текущей
 	 * @return ActiveQuery
 	 */
-	public function getRelChildGroups() {
+	public function getRelChildGroups():ActiveQuery {
 		return $this->hasMany(self::class, ['id' => 'child_id'])->via('relGroupsGroupsChild');
 	}
 
@@ -255,7 +255,7 @@ class Groups extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGroupsGroupsParent() {
+	public function getRelGroupsGroupsParent():ActiveQuery {
 		return $this->hasMany(RelGroupsGroups::class, ['child_id' => 'id']);
 	}
 
@@ -263,7 +263,7 @@ class Groups extends ActiveRecord {
 	 * Вернет все группы, дочерние по отношению к текущей
 	 * @return ActiveQuery
 	 */
-	public function getRelParentGroups() {
+	public function getRelParentGroups():ActiveQuery {
 		return $this->hasMany(self::class, ['id' => 'parent_id'])->via('relGroupsGroupsParent');
 	}
 
@@ -298,7 +298,7 @@ class Groups extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGroupTypes() {//todo: Большое количество повторных запросов, посмотреть
+	public function getRelGroupTypes():ActiveQuery {//todo: Большое количество повторных запросов, посмотреть
 		return $this->hasOne(RefGroupTypes::class, ['id' => 'type']);
 	}
 
@@ -490,14 +490,14 @@ class Groups extends ActiveRecord {
 	 * @return array Массив всех обойдённых групп (иерархический)
 	 */
 	public function buildHierarchyTree(array &$stackedId = []):array {
-		if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
+		if (!in_array($this->id, $stackedId, true)) $stackedId[] = $this->id;
 		$hierarchyTree = [];
 		/** @var self[] $childGroups */
 		$childGroups = Yii::$app->cache->getOrSet(static::class."getRelChildGroups{$this->id}", function() {
 			return $this->getRelChildGroups()->orderBy('name')->active()->all();
 		});
 		foreach ($childGroups as $childGroup) {
-			if (in_array($childGroup->id, $stackedId)) {
+			if (in_array($childGroup->id, $stackedId, true)) {
 				$hierarchyTree[$this->id][$childGroup->id] = $childGroup->id;
 			} else {
 				$stackedId[] = $childGroup->id;

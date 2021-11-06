@@ -87,77 +87,77 @@ class ImportFosUsers extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDecomposed() {
+	public function getRelDecomposed():ActiveQuery {
 		return $this->hasOne(ImportFosDecomposed::class, ['user_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelPosition() {
+	public function getRelPosition():ActiveQuery {
 		return $this->hasOne(ImportFosPositions::class, ['id' => 'position_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTown() {
+	public function getRelTown():ActiveQuery {
 		return $this->hasOne(ImportFosTown::class, ['id' => 'town_id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDivisionLevel1() {
+	public function getRelDivisionLevel1():ActiveQuery {
 		return $this->hasOne(ImportFosDivisionLevel1::class, ['id' => 'division_level_1_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDivisionLevel2() {
+	public function getRelDivisionLevel2():ActiveQuery {
 		return $this->hasOne(ImportFosDivisionLevel2::class, ['id' => 'division_level_2_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDivisionLevel3() {
+	public function getRelDivisionLevel3():ActiveQuery {
 		return $this->hasOne(ImportFosDivisionLevel3::class, ['id' => 'division_level_3_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDivisionLevel4() {
+	public function getRelDivisionLevel4():ActiveQuery {
 		return $this->hasOne(ImportFosDivisionLevel4::class, ['id' => 'division_level_4_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDivisionLevel5() {
+	public function getRelDivisionLevel5():ActiveQuery {
 		return $this->hasOne(ImportFosDivisionLevel5::class, ['id' => 'division_level_5_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelCommand() {
+	public function getRelCommand():ActiveQuery {
 		return $this->hasOne(ImportFosCommand::class, ['id' => 'command_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelFunctionalBlock() {
+	public function getRelFunctionalBlock():ActiveQuery {
 		return $this->hasOne(ImportFosFunctionalBlock::class, ['id' => 'functional_block_id'])->via('relDecomposed');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelChapter() {
+	public function getRelChapter():ActiveQuery {
 		return $this->hasOne(ImportFosChapter::class, ['id' => 'chapter_id'])->via('relDecomposed');
 	}
 

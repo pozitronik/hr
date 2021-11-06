@@ -71,7 +71,7 @@ class TargetsPeriods extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargets() {
+	public function getRelTargets():ActiveQuery {
 		return $this->hasOne(Targets::class, ['id' => 'target_id']);
 	}
 

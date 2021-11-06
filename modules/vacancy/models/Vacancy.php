@@ -164,70 +164,70 @@ class Vacancy extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasOne(Groups::class, ['id' => 'group']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPosition() {
+	public function getRelRefUserPosition():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefLocation() {
+	public function getRelRefLocation():ActiveQuery {
 		return $this->hasOne(RefLocations::class, ['id' => 'location']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefVacancyStatus() {
+	public function getRelRefVacancyStatus():ActiveQuery {
 		return $this->hasOne(RefVacancyStatuses::class, ['id' => 'status']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefVacancyRecruiter() {
+	public function getRelRefVacancyRecruiter():ActiveQuery {
 		return $this->hasOne(RefVacancyRecruiters::class, ['id' => 'recruiter']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefSalaryPremiumGroup() {
+	public function getRelRefSalaryPremiumGroup():ActiveQuery {
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefGrade() {
+	public function getRelRefGrade():ActiveQuery {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelEmployer() {
+	public function getRelEmployer():ActiveQuery {
 		return $this->hasOne(Users::class, ['id' => 'employer']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTeamlead() {
+	public function getRelTeamlead():ActiveQuery {
 		return $this->hasOne(Users::class, ['id' => 'teamlead']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelVacancyGroupRoles() {
+	public function getRelVacancyGroupRoles():ActiveQuery {
 		return $this->hasMany(RelVacancyGroupRoles::class, ['vacancy_id' => 'id']);
 	}
 
@@ -244,7 +244,7 @@ class Vacancy extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRoles() {
+	public function getRelRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role_id'])->via('relVacancyGroupRoles');
 	}
 

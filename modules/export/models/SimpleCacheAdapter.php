@@ -12,6 +12,7 @@ use Yii;
 use yii\base\Component;
 use Psr\SimpleCache\CacheInterface;
 use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\caching\Cache;
 use yii\di\Instance;
 
@@ -28,7 +29,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	private $cache;
 
 	/**
-	 * @throws \yii\base\InvalidConfigException
+	 * @throws InvalidConfigException
 	 */
 	public function init() {
 		parent::init();

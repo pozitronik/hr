@@ -255,7 +255,7 @@ class DynamicAttributes extends ActiveRecord {
 		$virtualProperties = [];
 		foreach ($this->properties as $property) {
 			$virtualProperty = $this->getVirtualProperty($property->id);
-			if (null !== $virtualProperty->type) {//собираем только установленные свойства. Сделано для возможности просмотра статистики не по всему атрибуту, а только по одному свойству
+			if (null !== $virtualProperty?->type) {//собираем только установленные свойства. Сделано для возможности просмотра статистики не по всему атрибуту, а только по одному свойству
 				$virtualProperties[] = $virtualProperty;
 			}
 		}
@@ -267,7 +267,7 @@ class DynamicAttributes extends ActiveRecord {
 	 * @return DynamicAttributeProperty|null -- значение запрошенного виртуального свойства
 	 * @throws Throwable
 	 */
-	public function getVirtualProperty(int $property_id) {
+	public function getVirtualProperty(int $property_id):?DynamicAttributeProperty {
 		if (null === $property = $this->getPropertyById($property_id)) throw new RuntimeException("Property id {$property_id} not exist in {$this->name}");
 		$property->value = ArrayHelper::getValue($this->_virtualPropertyValues, $property_id);
 		$property->type = ArrayHelper::getValue($this->_virtualPropertyTypes, $property_id);
@@ -277,7 +277,7 @@ class DynamicAttributes extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributes() {
+	public function getRelUsersAttributes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributes::class, ['attribute_id' => 'id']);
 	}
 
@@ -320,7 +320,7 @@ class DynamicAttributes extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersAttributes');
 	}
 

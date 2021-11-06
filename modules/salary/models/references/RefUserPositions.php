@@ -276,14 +276,14 @@ class RefUserPositions extends CustomisableReference {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsBranches() {
+	public function getRelRefUserPositionsBranches():ActiveQuery {
 		return $this->hasOne(RelRefUserPositionsBranches::class, ['position_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionBranch() {
+	public function getRelRefUserPositionBranch():ActiveQuery {
 		return $this->hasOne(RefUserPositionBranches::class, ['id' => 'position_branch_id'])->via('relRefUserPositionsBranches');
 	}
 
@@ -324,28 +324,28 @@ class RefUserPositions extends CustomisableReference {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypes() {
+	public function getRelRefUserPositionsTypes():ActiveQuery {
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionTypes() {
+	public function getRelRefUserPositionTypes():ActiveQuery {
 		return $this->hasMany(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelRefGrades() {
+	public function getRelRefGrades():ActiveQuery {
 		return $this->hasMany(RefGrades::class, ['id' => 'grade_id'])->via('relGradesPositionsRules');
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGradesPositionsRules() {
+	public function getRelGradesPositionsRules():ActiveQuery {
 		return $this->hasMany(RelGradesPositionsRules::class, ['position_id' => 'id']);
 	}
 

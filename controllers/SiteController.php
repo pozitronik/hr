@@ -53,7 +53,7 @@ class SiteController extends Controller {
 	/**
 	 * @return Response
 	 */
-	public function actionIndex() {
+	public function actionIndex():Response {
 		return CurrentUser::isGuest()?$this->redirect(['site/login']):CurrentUser::goHome();
 	}
 

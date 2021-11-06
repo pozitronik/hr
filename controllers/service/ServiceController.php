@@ -23,7 +23,7 @@ class ServiceController extends WigetableController {
 	/**
 	 * @return string
 	 */
-	public function actionIndex() {
+	public function actionIndex():string {
 		return $this->render('index');
 	}
 

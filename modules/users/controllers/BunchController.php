@@ -12,7 +12,6 @@ use Throwable;
 use Yii;
 use app\modules\users\models\Users;
 use yii\data\ArrayDataProvider;
-use yii\web\Response;
 
 /**
  * Class BunchController
@@ -32,7 +31,7 @@ class BunchController extends WigetableController {
 	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionIndex(int $group_id = null, bool $hierarchy = false) {
+	public function actionIndex(int $group_id = null, bool $hierarchy = false):string {
 		$massUpdate = new UsersMassUpdate();
 		$massUpdate->usersId = ArrayHelper::getColumn(Users::find()->active()->all(), 'id');
 		if ($massUpdate->load(Yii::$app->request->post())) {

@@ -51,7 +51,7 @@ class ImportFosChapterLeader extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasOne(ImportFosUsers::class, ['id' => 'user_id']);
 	}
 }

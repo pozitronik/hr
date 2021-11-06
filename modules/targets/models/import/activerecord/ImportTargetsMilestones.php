@@ -55,7 +55,7 @@ class ImportTargetsMilestones extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelSubInitiatives() {
+	public function getRelSubInitiatives():ActiveQuery {
 		return $this->hasOne(ImportTargetsSubinitiatives::class, ['id' => 'initiative_id']);
 	}
 }

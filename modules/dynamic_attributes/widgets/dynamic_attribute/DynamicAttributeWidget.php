@@ -56,7 +56,7 @@ class DynamicAttributeWidget extends CachedWidget {
 
 		if (null !== $this->property_id) {
 			$propertiesCollection = array_filter($propertiesCollection, function(DynamicAttributeProperty $property) {
-				return in_array($property->id, $this->property_id);
+				return in_array($property->id, $this->property_id, true);
 			});
 		}
 

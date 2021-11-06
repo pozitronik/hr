@@ -68,14 +68,14 @@ class RelUsersAttributes extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributesTypes() {
+	public function getRelUsersAttributesTypes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributesTypes::class, ['user_attribute_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRefAttributesTypes() {
+	public function getRefAttributesTypes():ActiveQuery {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
 
@@ -99,7 +99,7 @@ class RelUsersAttributes extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelDynamicAttribute() {
+	public function getRelDynamicAttribute():ActiveQuery {
 		return $this->hasOne(DynamicAttributes::class, ['id' => 'attribute_id']);
 	}
 }

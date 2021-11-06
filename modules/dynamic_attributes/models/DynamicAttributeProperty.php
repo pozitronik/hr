@@ -10,7 +10,6 @@ use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
 use app\modules\dynamic_attributes\models\types\AttributePropertyDate;
 use app\modules\dynamic_attributes\models\types\AttributePropertyInteger;
-use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use app\modules\dynamic_attributes\models\types\AttributePropertyPercent;
 use app\modules\dynamic_attributes\models\types\AttributePropertyScore;
 use app\modules\dynamic_attributes\models\types\AttributePropertyString;

@@ -109,14 +109,14 @@ class Targets extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsTargetsChild() {
+	public function getRelTargetsTargetsChild():ActiveQuery {
 		return $this->hasMany(RelTargetsTargets::class, ['parent_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsTargetsParent() {
+	public function getRelTargetsTargetsParent():ActiveQuery {
 		return $this->hasOne(RelTargetsTargets::class, ['child_id' => 'id']);
 	}
 
@@ -159,28 +159,28 @@ class Targets extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsTypes() {
+	public function getRelTargetsTypes():ActiveQuery {
 		return $this->hasOne(RefTargetsTypes::class, ['id' => 'type']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsResults() {
+	public function getRelTargetsResults():ActiveQuery {
 		return $this->hasOne(RefTargetsResults::class, ['id' => 'result_type']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsGroups() {
+	public function getRelTargetsGroups():ActiveQuery {
 		return $this->hasMany(RelTargetsGroups::class, ['target_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relTargetsGroups');
 	}
 
@@ -195,14 +195,14 @@ class Targets extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsUsers() {
+	public function getRelTargetsUsers():ActiveQuery {
 		return $this->hasMany(RelTargetsUsers::class, ['target_id' => 'id']);
 	}
 
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relTargetsUsers');
 	}
 
@@ -239,7 +239,7 @@ class Targets extends ActiveRecord {
 	/**
 	 * @return ActiveQuery
 	 */
-	public function getRelTargetsPeriods() {
+	public function getRelTargetsPeriods():ActiveQuery {
 		//Не включать условия в этот геттер, он есть и всё. Иначе будут падать релейшены
 		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
 	}

@@ -46,7 +46,7 @@ foreach (RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider
 		'value' => $key,
 		'options' => [
 				'data-filter' => $value['id'],
-				'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false
+				'checked' => in_array($value['id'], $userDashboardFilter, true)?'checked':false
 			] + ArrayHelper::getValue($styleOptions, $value['id'], [])
 	];
 }

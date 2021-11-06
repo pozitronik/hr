@@ -213,7 +213,7 @@ class DynamicAttributesSearchCollection extends Model {
 		foreach ($this->searchItems as $searchItem) {
 			if (null === $model = DynamicAttributes::findModel($searchItem->attribute)) continue;
 			$aliasName = "attributes{$searchItem->attribute}";
-			if (!in_array($aliasName, $usedAliases)) {
+			if (!in_array($aliasName, $usedAliases, true)) {
 				$query->leftJoin("rel_users_attributes $aliasName", "$aliasName.user_id = sys_users.id");
 				$usedAliases[] = $aliasName;
 			}
@@ -223,7 +223,7 @@ class DynamicAttributesSearchCollection extends Model {
 					/** @noinspection BadExceptionsProcessingInspection */
 					try {
 						$typeAlias = $aliasName.$type.$searchItem->property;
-						if (!in_array($typeAlias, $usedAliases)) {
+						if (!in_array($typeAlias, $usedAliases, true)) {
 							$typeTableName = $className::tableName();
 
 							$query->leftJoin("$typeTableName $typeAlias", "$typeAlias.user_id = sys_users.id AND $typeAlias.property_id = {$searchItem->property} AND $typeAlias.attribute_id = $aliasName.attribute_id");

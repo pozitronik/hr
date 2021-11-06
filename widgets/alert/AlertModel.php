@@ -231,7 +231,7 @@ class AlertModel extends Model {
 	/**
 	 * @return bool|false
 	 */
-	public function getDelay() {
+	public function getDelay():bool {
 		return $this->delay;
 	}
 
