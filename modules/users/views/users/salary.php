@@ -7,13 +7,13 @@ declare(strict_types = 1);
  */
 
 use app\modules\salary\models\references\RefUserPositionTypes;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\references\widgets\reference_dependent_dropdown\RefDepDrop;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\references\widgets\reference_dependent_dropdown\RefDepDrop;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\SalaryModule;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;

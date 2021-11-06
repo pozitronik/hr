@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\references;
 
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use kartik\helpers\Html;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;

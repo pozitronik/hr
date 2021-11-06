@@ -5,13 +5,13 @@ namespace app\modules\salary\models\references;
 
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 

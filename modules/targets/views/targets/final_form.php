@@ -7,14 +7,14 @@ declare(strict_types = 1);
  */
 
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\targets\models\references\RefTargetsResults;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\widgets\interval\IntervalWidget;
 use app\modules\targets\widgets\target_select\TargetSelectWidget;
 use app\modules\users\widgets\user_select\UserSelectWidget;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;

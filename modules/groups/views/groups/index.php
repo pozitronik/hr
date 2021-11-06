@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
@@ -17,9 +17,9 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;

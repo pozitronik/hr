@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\base\Model;
 
 /**

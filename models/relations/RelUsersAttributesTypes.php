@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use Throwable;

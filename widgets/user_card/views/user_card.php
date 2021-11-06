@@ -13,7 +13,7 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use yii\web\View;
 
 $badgeData = [];

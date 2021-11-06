@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;

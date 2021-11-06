@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use pozitronik\sys_exceptions\SysExceptions;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\sys_exceptions\SysExceptions;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;

@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\graph\models;
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\targets\models\Targets;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 
 /**
  * Реализация нод для цели

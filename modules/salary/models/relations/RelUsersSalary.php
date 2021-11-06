@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\relations;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\Relations;
 
 /**
  * This is the model class for table "rel_users_salary".

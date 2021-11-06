@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models\references;
 
-use pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\models\CustomisableReference;
 use app\models\relations\RelGroupsGroups;
 use Throwable;
 

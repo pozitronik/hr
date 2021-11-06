@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\widgets\dynamic_attribute;
 
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
-use pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\widgets\CachedWidget;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use Throwable;
 use yii\base\InvalidConfigException;

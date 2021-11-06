@@ -11,7 +11,7 @@ declare(strict_types = 1);
 use app\models\core\IconsHelper;
 use app\modules\groups\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\groups\widgets\relation_type_select\RelationTypeSelectWidget;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\groups\assets\GroupsAsset;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;

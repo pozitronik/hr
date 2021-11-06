@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use pozitronik\references\models\Reference;
-use pozitronik\references\ReferencesModule;
+use app\components\pozitronik\references\models\Reference;
+use app\components\pozitronik\references\ReferencesModule;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use yii\helpers\Html;
 
 /**

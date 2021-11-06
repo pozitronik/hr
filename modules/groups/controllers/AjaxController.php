@@ -5,7 +5,7 @@ namespace app\modules\groups\controllers;
 
 use app\models\relations\RelGroupsGroups;
 use app\models\core\controllers\BaseAjaxController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;

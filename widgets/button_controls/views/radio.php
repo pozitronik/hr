@@ -10,7 +10,7 @@ declare(strict_types = 1);
  * @var bool $inheritStyle
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\web\View;
 

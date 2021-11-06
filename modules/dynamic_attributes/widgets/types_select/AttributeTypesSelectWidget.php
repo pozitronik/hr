@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\widgets\types_select;
 
-use pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\widgets\CachedWidget;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 

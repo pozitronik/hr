@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Exception;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use Throwable;
 use Yii;
 use yii\db\Expression;

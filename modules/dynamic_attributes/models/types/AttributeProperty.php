@@ -7,7 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use Exception;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;

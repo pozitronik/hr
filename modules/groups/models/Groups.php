@@ -3,16 +3,16 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginTrait;
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\core\models\core_module\PluginTrait;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\Upload;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelGroupsGroups;

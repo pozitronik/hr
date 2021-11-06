@@ -6,10 +6,10 @@ declare(strict_types = 1);
  * @var Vacancy $model
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
-use pozitronik\references\widgets\reference_dependent_dropdown\RefDepDrop;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_dependent_dropdown\RefDepDrop;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;

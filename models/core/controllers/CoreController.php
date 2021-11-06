@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\core\controllers;
 
-use pozitronik\core\models\core_controller\ControllerTrait;
-use pozitronik\core\traits\ModelExtended;
+use app\components\pozitronik\core\models\core_controller\ControllerTrait;
+use app\components\pozitronik\core\traits\ModelExtended;
 use app\modules\privileges\models\UserAccess;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;

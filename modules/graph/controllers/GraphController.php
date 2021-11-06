@@ -5,7 +5,7 @@ namespace app\modules\graph\controllers;
 
 use app\models\core\controllers\WigetableController;
 use app\models\user\CurrentUser;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 
 /**

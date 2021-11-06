@@ -8,8 +8,8 @@ declare(strict_types = 1);
  */
 
 use app\models\core\IconsHelper;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\PrivilegesModule;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;

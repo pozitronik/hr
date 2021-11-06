@@ -9,7 +9,7 @@ declare(strict_types = 1);
  */
 
 use app\models\core\IconsHelper;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;

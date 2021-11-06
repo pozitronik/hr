@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\traits\ARExtended;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginsSupport;
-use pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\models\core_module\PluginsSupport;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\modules\privileges\models\relations\RelPrivilegesDynamicRights;
 use app\modules\privileges\models\relations\RelPrivilegesRights;
 use app\modules\privileges\models\relations\RelUsersPrivileges;

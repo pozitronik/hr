@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\models\CustomisableReference;
 
 /**
  * Справочник премиальных групп. Премиальная группа применяется, как модификатор при указании зарплатной вилки

@@ -8,11 +8,11 @@ declare(strict_types = 1);
  */
 
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\history\models\ActiveRecordLogger;
 use app\modules\history\models\ActiveRecordLoggerSearch;
 use app\modules\history\models\references\RefModels;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;

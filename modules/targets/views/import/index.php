@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var int $domain
  */
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 use yii\web\View;

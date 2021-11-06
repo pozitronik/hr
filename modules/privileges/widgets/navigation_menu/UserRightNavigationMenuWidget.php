@@ -6,7 +6,7 @@ namespace app\modules\privileges\widgets\navigation_menu;
 use app\models\core\IconsHelper;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\UserRight;
-use pozitronik\widgets\BaseNavigationMenuWidget;
+use app\components\pozitronik\widgets\BaseNavigationMenuWidget;
 
 /**
  * Class UserRightNavigationMenuWidget

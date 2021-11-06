@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use pozitronik\core\traits\ARExtended;
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\Relations;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;

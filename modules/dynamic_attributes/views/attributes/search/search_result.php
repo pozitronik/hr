@@ -8,16 +8,16 @@ declare(strict_types = 1);
  */
 
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\web\View; ?>

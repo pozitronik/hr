@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\interfaces\access\AccessMethods;
-use pozitronik\core\interfaces\access\UserAccessInterface;
+use app\components\pozitronik\core\interfaces\access\AccessMethods;
+use app\components\pozitronik\core\interfaces\access\UserAccessInterface;
 use app\models\core\controllers\CoreController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use ReflectionException;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos\activerecord;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 
 /**

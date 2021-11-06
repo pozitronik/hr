@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy;
 
-use pozitronik\core\models\core_module\CoreModule;
+use app\components\pozitronik\core\models\core_module\CoreModule;
 
 /**
  * Class VacancyModule

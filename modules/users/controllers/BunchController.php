@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\controllers;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\controllers\WigetableController;
 use app\modules\groups\models\Groups;

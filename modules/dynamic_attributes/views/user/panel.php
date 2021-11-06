@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var Users $user
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\users\models\Users;

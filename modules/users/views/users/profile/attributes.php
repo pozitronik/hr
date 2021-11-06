@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $provider
  */
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\models\relations\RelUsersAttributes;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;

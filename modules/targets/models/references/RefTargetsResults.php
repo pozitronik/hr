@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\targets\models\references;
 
 
-use pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\models\CustomisableReference;
 use app\modules\targets\models\Targets;
 
 /**

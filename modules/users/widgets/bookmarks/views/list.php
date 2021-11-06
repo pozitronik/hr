@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var Bookmarks $model
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\users\models\Bookmarks;
 use yii\web\View;
 use yii\helpers\Html;

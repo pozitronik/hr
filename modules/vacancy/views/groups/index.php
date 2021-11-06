@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $provider
  */
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;

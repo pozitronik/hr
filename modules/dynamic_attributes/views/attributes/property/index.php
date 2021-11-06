@@ -10,7 +10,7 @@ use yii\data\BaseDataProvider;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\helpers\Html;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 
 /**
  * @var View $this

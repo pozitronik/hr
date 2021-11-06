@@ -3,17 +3,17 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginTrait;
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\core\models\core_module\PluginTrait;
+use app\components\pozitronik\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;

@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\import\models\competency;
 
 use Exception;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
-use pozitronik\helpers\Utils;
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
+use app\components\pozitronik\helpers\Utils;
+use app\components\pozitronik\core\traits\Upload;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;

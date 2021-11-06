@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var Users $user
  */
 
-use pozitronik\core\models\core_module\PluginsSupport;
+use app\components\pozitronik\core\models\core_module\PluginsSupport;
 use app\modules\home\HomeModule;
 use yii\base\View;
 use yii\helpers\Html;

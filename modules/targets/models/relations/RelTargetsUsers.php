@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\relations;
 
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\Relations;
 use yii\db\ActiveRecord;
 
 /**

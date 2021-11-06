@@ -5,7 +5,7 @@ namespace app\modules\dynamic_attributes\controllers;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\models\core\controllers\BaseAjaxController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;

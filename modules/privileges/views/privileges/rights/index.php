@@ -19,8 +19,8 @@ use kartik\grid\GridView;
 use kartik\grid\CheckboxColumn;
 use app\models\core\IconsHelper;
 use app\modules\privileges\widgets\user_right_select\UserRightSelectWidget;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\Utils;
 
 ?>
 <?=

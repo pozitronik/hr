@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\controllers;
 
-use pozitronik\core\models\ajax_answer\AjaxAnswer;
+use app\components\pozitronik\core\models\ajax_answer\AjaxAnswer;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;

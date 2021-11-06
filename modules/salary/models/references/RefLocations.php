@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models\references;
 
-use pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\models\CustomisableReference;
 
 /**
  * Справочник расположений. Расположение применяется, как модификатор при задании зарплатной вилки.

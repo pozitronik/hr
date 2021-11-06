@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models;
 
 use app\modules\users\models\Users;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Exception;
 use yii\base\Model;

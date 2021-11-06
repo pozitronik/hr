@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\widgets\user_right_select;
 
-use pozitronik\widgets\CachedWidget;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\core\models\core_module\PluginsSupport;
+use app\components\pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\core\models\core_module\PluginsSupport;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
 use Throwable;

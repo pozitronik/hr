@@ -8,13 +8,13 @@ namespace app\modules\dynamic_attributes\models;
  * Саму сущность потребуется утащить в компонент.
  */
 
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\ARExtended;
-use pozitronik\sys_exceptions\SysExceptions;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\sys_exceptions\SysExceptions;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginTrait;
+use app\components\pozitronik\core\models\core_module\PluginTrait;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;

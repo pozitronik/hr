@@ -8,7 +8,7 @@ declare(strict_types = 1);
  */
 
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\widgets\navigation_menu\PrivilegesNavigationMenuWidget;
 use kartik\grid\DataColumn;

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\db\Expression;
 

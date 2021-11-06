@@ -11,7 +11,7 @@ use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefUserPositionBranches;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use kartik\color\ColorInput;
 use yii\web\View;
 use yii\helpers\Html;

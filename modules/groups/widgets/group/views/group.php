@@ -7,13 +7,13 @@ declare(strict_types = 1);
  * @var Users[] $users
  */
 
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\widgets\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
 use app\modules\users\widgets\user\UserWidget;

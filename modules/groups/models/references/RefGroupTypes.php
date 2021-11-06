@@ -5,9 +5,9 @@ namespace app\modules\groups\models\references;
 
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
+use app\components\pozitronik\widgets\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;

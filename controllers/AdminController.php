@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\models\core\controllers\WigetableController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\base\InlineAction;
 use yii\base\Response;
 use yii\web\Controller;

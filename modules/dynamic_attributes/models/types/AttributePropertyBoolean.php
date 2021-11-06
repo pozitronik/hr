@@ -7,7 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use Exception;
 use kartik\switchinput\SwitchInput;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Yii;
 use yii\db\Expression;
 use yii\widgets\ActiveField;

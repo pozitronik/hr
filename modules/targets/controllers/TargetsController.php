@@ -10,7 +10,7 @@ use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
 use app\modules\targets\models\TargetsSearch;
 use app\modules\users\models\Users;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\Exception;

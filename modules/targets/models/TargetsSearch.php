@@ -6,7 +6,7 @@ namespace app\modules\targets\models;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\users\models\Users;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
