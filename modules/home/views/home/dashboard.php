@@ -36,21 +36,21 @@ $this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card'/*,
 $this->registerJs("Controls.refresh()", View::POS_END);
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
-$userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
+$userGroupTypes = [];
 $userDashboardFilter = CurrentUser::User()->options->get('dashboardFilter');
 $styleOptions = RefGroupTypes::colorStyleOptions();
 
-array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardFilter, $styleOptions) {
-	$key = "filter-type{$value['id']}";
-	$value = [
+foreach (RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type')) as $key => $value) {
+	$userGroupTypes["filter-type{$value['id']}"] = [
 		'label' => $value['name'],
 		'value' => $key,
 		'options' => [
 				'data-filter' => $value['id'],
 				'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false
-			] + ArrayHelper::getValue($styleOptions, $value['id'])
+			] + ArrayHelper::getValue($styleOptions, $value['id'], [])
 	];
-});
+}
+
 ?>
 
 <div class="panel">
