@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use pozitronik\core\traits\ARExtended;
-use pozitronik\core\traits\Relations;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\Relations;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use Throwable;
@@ -55,9 +55,9 @@ class RelGroupsGroups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RefGroupRelationTypes
+	 * @return ActiveQuery
 	 */
-	public function getRefGroupsRelationTypes() {
+	public function getRefGroupsRelationTypes():ActiveQuery {
 		return $this->hasOne(RefGroupRelationTypes::class, ['id' => 'relation']);
 	}
 

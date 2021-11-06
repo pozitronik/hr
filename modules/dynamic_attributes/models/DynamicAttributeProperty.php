@@ -5,12 +5,11 @@ namespace app\modules\dynamic_attributes\models;
 
 use app\modules\dynamic_attributes\models\types\AttributePropertyDictionary;
 use app\modules\dynamic_attributes\models\types\AttributePropertyUnknown;
-use pozitronik\sys_exceptions\SysExceptions;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\sys_exceptions\SysExceptions;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\types\AttributePropertyBoolean;
 use app\modules\dynamic_attributes\models\types\AttributePropertyDate;
 use app\modules\dynamic_attributes\models\types\AttributePropertyInteger;
-use app\modules\dynamic_attributes\models\types\AttributePropertyInterface;
 use app\modules\dynamic_attributes\models\types\AttributePropertyPercent;
 use app\modules\dynamic_attributes\models\types\AttributePropertyScore;
 use app\modules\dynamic_attributes\models\types\AttributePropertyString;
@@ -29,15 +28,15 @@ use yii\widgets\ActiveForm;
  * Описание структуры свойства атрибута
  * @package app\models\attributes
  *
- * @property integer $attributeId
- * @property integer $id
+ * @property int $attributeId
+ * @property int $id
  * @property string $name
  * @property string|null $type -- null as unsupported
- * @property boolean $required
+ * @property bool $required
  *
- * @property integer $userId;
+ * @property int $userId;
  *
- * @property boolean $isNewRecord
+ * @property bool $isNewRecord
  * @property DynamicAttributes $dynamicAttribute
  * @property mixed $value -- атрибут для обращения к виртуальному (не хранящемуся в БД) значению
  * @property-read string $categoryName
@@ -108,7 +107,7 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * @param null|string $type
-	 * @return AttributePropertyInterface|string
+	 * @return string
 	 * @throws Throwable
 	 */
 	public static function getTypeClass(?string $type):string {
@@ -184,7 +183,7 @@ class DynamicAttributeProperty extends Model {
 	}
 
 	/**
-	 * @param string $type
+	 * @param string|null $type
 	 */
 	public function setType(?string $type):void {
 		$this->type = $type;
@@ -212,7 +211,7 @@ class DynamicAttributeProperty extends Model {
 	}
 
 	/**
-	 * @return integer
+	 * @return int
 	 */
 	public function getId():int {
 		return $this->id;
@@ -254,7 +253,7 @@ class DynamicAttributeProperty extends Model {
 	/**
 	 * @param mixed $value
 	 */
-	public function setValue($value):void {
+	public function setValue(mixed $value):void {
 		$this->_virtualValue = $value;
 	}
 

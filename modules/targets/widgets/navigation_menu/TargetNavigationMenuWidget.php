@@ -8,7 +8,7 @@ use app\modules\graph\GraphModule;
 use app\modules\history\HistoryModule;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use pozitronik\widgets\BaseNavigationMenuWidget;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

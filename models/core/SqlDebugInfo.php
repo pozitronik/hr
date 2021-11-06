@@ -27,7 +27,7 @@ class SqlDebugInfo extends Model {
 	/**
 	 * extract debug information from sql if exists
 	 * @param string $sql
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getFromSql(string $sql):bool {
 		$this->userid = null;

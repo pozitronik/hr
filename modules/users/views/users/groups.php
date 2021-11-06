@@ -1,6 +1,8 @@
 <?php
 declare(strict_types = 1);
 
+use app\components\pozitronik\core\interfaces\widgets\SelectionWidgetInterface;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
@@ -52,8 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
 								'attribute' => 'relGroups',
 								'exclude' => $model->relGroups,
 								'multiple' => true,
-								'renderingMode' => GroupSelectWidget::MODE_FIELD,
-								'loadingMode' => GroupSelectWidget::DATA_MODE_LOAD
+								'renderingMode' => SelectionWidgetInterface::MODE_FIELD,
+								'loadingMode' => SelectionWidgetInterface::DATA_MODE_LOAD
 								]),
 							'heading' => false,
 							'footer' => $provider->totalCount > $provider->pagination->pageSize?null:false
@@ -77,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								'value' => static function(Groups $model) {
 									return GroupNavigationMenuWidget::widget([
 										'model' => $model,
-										'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+										'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 									]);
 								},
 								'format' => 'raw'

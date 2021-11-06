@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos\activerecord;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -62,23 +62,23 @@ class ImportFosTribe extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportFosDecomposed[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelDecomposed() {
+	public function getRelDecomposed():ActiveQuery {
 		return $this->hasMany(ImportFosDecomposed::class, ['tribe_id' => 'id']);
 	}
 
 	/**
-	 * @return ImportFosClusterProduct[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelCluster() {
+	public function getRelCluster():ActiveQuery {
 		return $this->hasMany(ImportFosClusterProduct::class, ['id' => 'cluster_product_id'])->via('relDecomposed');
 	}
 
 	/**
-	 * @return ImportFosChapter[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelChapter() {
+	public function getRelChapter():ActiveQuery {
 		return $this->hasMany(ImportFosChapter::class, ['id' => 'chapter_id'])->via('relDecomposed');
 	}
 }

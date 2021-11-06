@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\controllers;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\models\core\controllers\WigetableController;
 use app\modules\groups\models\Groups;
@@ -12,7 +12,6 @@ use Throwable;
 use Yii;
 use app\modules\users\models\Users;
 use yii\data\ArrayDataProvider;
-use yii\web\Response;
 
 /**
  * Class BunchController
@@ -29,10 +28,10 @@ class BunchController extends WigetableController {
 	 * В post['selection'] приходят айдишники выбранных юзеров
 	 * @param int|null $group_id - если указано, то выбираются пользователи этой группы
 	 * @param bool $hierarchy вместе с group_id прогружает иерархично всех пользователей вниз
-	 * @return string|Response
+	 * @return string
 	 * @throws Throwable
 	 */
-	public function actionIndex(int $group_id = null, bool $hierarchy = false) {
+	public function actionIndex(int $group_id = null, bool $hierarchy = false):string {
 		$massUpdate = new UsersMassUpdate();
 		$massUpdate->usersId = ArrayHelper::getColumn(Users::find()->active()->all(), 'id');
 		if ($massUpdate->load(Yii::$app->request->post())) {

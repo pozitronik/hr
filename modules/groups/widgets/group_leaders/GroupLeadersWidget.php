@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\groups\widgets\group_leaders;
 
 use app\modules\groups\models\Groups;
-use pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use Throwable;
 
 /**

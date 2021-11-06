@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\widgets\relation_type_select;
 
-use pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\modules\groups\models\references\RefGroupRelationTypes;
 use app\models\relations\RelGroupsGroups;
 use Throwable;

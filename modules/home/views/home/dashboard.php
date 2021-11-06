@@ -17,7 +17,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\UsersAsset;
 use app\widgets\button_controls\ButtonControlsWidget;
 use app\modules\groups\widgets\group_card\GroupCardWidget;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -36,21 +36,21 @@ $this->registerJs("var Controls = new DashboardControl('.grid', '.panel-card'/*,
 $this->registerJs("Controls.refresh()", View::POS_END);
 /*Временный код: генерируем список типов групп у пользюка в скопе*/
 
-$userGroupTypes = RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type'));
+$userGroupTypes = [];
 $userDashboardFilter = CurrentUser::User()->options->get('dashboardFilter');
 $styleOptions = RefGroupTypes::colorStyleOptions();
 
-array_walk($userGroupTypes, static function(&$value, &$key) use ($userDashboardFilter, $styleOptions) {
-	$key = "filter-type{$value['id']}";
-	$value = [
+foreach (RefGroupTypes::getGroupsTypesScope(ArrayHelper::getColumn($dataProvider->models, 'type')) as $key => $value) {
+	$userGroupTypes["filter-type{$value['id']}"] = [
 		'label' => $value['name'],
 		'value' => $key,
 		'options' => [
 				'data-filter' => $value['id'],
-				'checked' => in_array($value['id'], $userDashboardFilter)?'checked':false
-			] + ArrayHelper::getValue($styleOptions, $value['id'])
+				'checked' => in_array($value['id'], $userDashboardFilter, true)?'checked':false
+			] + ArrayHelper::getValue($styleOptions, $value['id'], [])
 	];
-});
+}
+
 ?>
 
 <div class="panel">

@@ -4,15 +4,15 @@ declare(strict_types = 1);
 namespace app\modules\salary\models\references;
 
 use app\modules\users\UsersModule;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\relations\RelGradesPositionsRules;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\Users;
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
@@ -209,7 +209,6 @@ class RefUserPositions extends CustomisableReference {
 	 * {@inheritDoc}
 	 */
 	public function search(array $params):ActiveQuery {
-		/** @var ActiveQuery $query */
 		$query = self::find();
 		$this->load($params);
 		$query->joinWith(['relRefUserPositionBranch', 'relRefUserPositionsBranches', 'relRefUserPositionTypes', 'relRefUserPositionsTypes', 'relRefGrades']);
@@ -275,16 +274,16 @@ class RefUserPositions extends CustomisableReference {
 	}
 
 	/**
-	 * @return RelRefUserPositionsBranches|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsBranches() {
+	public function getRelRefUserPositionsBranches():ActiveQuery {
 		return $this->hasOne(RelRefUserPositionsBranches::class, ['position_id' => 'id']);
 	}
 
 	/**
-	 * @return RefUserPositionBranches|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionBranch() {
+	public function getRelRefUserPositionBranch():ActiveQuery {
 		return $this->hasOne(RefUserPositionBranches::class, ['id' => 'position_branch_id'])->via('relRefUserPositionsBranches');
 	}
 
@@ -301,7 +300,7 @@ class RefUserPositions extends CustomisableReference {
 	 * //не можем типизировать null, т.к. может быть передана строка, а делать преобразования бессмысленно
 	 * @throws Throwable
 	 */
-	public function setBranch($branch):void {
+	public function setBranch(mixed $branch):void {
 		RelRefUserPositionsBranches::deleteAll(['position_id' => $this->id]);
 		RelRefUserPositionsBranches::linkModel($this->id, $branch);//проверки на пустоту делает метод
 	}
@@ -317,36 +316,36 @@ class RefUserPositions extends CustomisableReference {
 	 * @param mixed $types
 	 * @throws Throwable
 	 */
-	public function setTypes($types):void {
+	public function setTypes(mixed $types):void {
 		RelRefUserPositionsTypes::deleteAll(['position_id' => $this->id]);
 		RelRefUserPositionsTypes::linkModels($this->id, $types);//проверки на пустоту делает метод
 	}
 
 	/**
-	 * @return RelRefUserPositionsTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypes() {
+	public function getRelRefUserPositionsTypes():ActiveQuery {
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'id']);
 	}
 
 	/**
-	 * @return RefUserPositionTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionTypes() {
+	public function getRelRefUserPositionTypes():ActiveQuery {
 		return $this->hasMany(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
 	}
 
 	/**
-	 * @return RefGrades[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefGrades() {
+	public function getRelRefGrades():ActiveQuery {
 		return $this->hasMany(RefGrades::class, ['id' => 'grade_id'])->via('relGradesPositionsRules');
 	}
 
 	/**
-	 * @return RelGradesPositionsRules[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGradesPositionsRules() {
+	public function getRelGradesPositionsRules():ActiveQuery {
 		return $this->hasMany(RelGradesPositionsRules::class, ['position_id' => 'id']);
 	}
 
@@ -354,7 +353,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @param mixed $relGrades
 	 * @throws Throwable
 	 */
-	public function setRelRefGrades($relGrades):void {
+	public function setRelRefGrades(mixed $relGrades):void {
 		RelGradesPositionsRules::deleteAll(['position_id' => $this->id]);
 		RelGradesPositionsRules::linkModels($relGrades, $this->id);
 	}

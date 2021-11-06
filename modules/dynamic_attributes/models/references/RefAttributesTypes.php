@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models\references;
 
-use pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\models\CustomisableReference;
 use app\models\relations\RelUsersAttributesTypes;
 
 /**
@@ -13,7 +13,7 @@ use app\models\relations\RelUsersAttributesTypes;
  * @property string $name
  * @property string $color
  * @property int $deleted
- * @property-read integer $usedCount Количество объектов, использующих это значение справочника
+ * @property-read int $usedCount Количество объектов, использующих это значение справочника
  */
 class RefAttributesTypes extends CustomisableReference {
 	public $menuCaption = 'Типы отношений атрибутов';

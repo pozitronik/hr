@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\users\models\Users;
 use Exception;
-use pozitronik\helpers\ReflectionHelper;
+use app\components\pozitronik\helpers\ReflectionHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;

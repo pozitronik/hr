@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers;
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use yii\web\Controller;
 
 /**
@@ -40,6 +40,9 @@ class DeployController extends Controller {
 		echo $output."\n";
 	}
 
+	/**
+	 *
+	 */
 	public function actionFlush():void {
 		$this->layout = false;
 		$output = [];

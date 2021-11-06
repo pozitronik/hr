@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 /* @var View $this
  * @var Users $model
- * @var boolean $boss
+ * @var bool $boss
  */
 
 use app\models\user\CurrentUser;

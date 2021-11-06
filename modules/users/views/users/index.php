@@ -10,21 +10,22 @@ declare(strict_types = 1);
  * @deprecated
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\privileges\models\Privileges;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -77,7 +78,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'value' => static function(Users $model) {
 				return UserNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

@@ -8,13 +8,14 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\DynamicAttributesModule;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\users\models\UsersSearch;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\bootstrap\ButtonGroup;
 use yii\data\ActiveDataProvider;
@@ -61,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(DynamicAttributes $model) {
 				return AttributeNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => AttributeNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

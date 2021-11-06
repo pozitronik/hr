@@ -125,7 +125,7 @@ class AttributePropertyPercent extends AttributeProperty {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
@@ -134,7 +134,7 @@ class AttributePropertyPercent extends AttributeProperty {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return Yii::$app->formatter->asPercent($value);
 	}
 }

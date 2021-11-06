@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\base\Exception;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -69,9 +69,9 @@ class TargetsPeriods extends ActiveRecord {
 	}
 
 	/**
-	 * @return Targets|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTargets() {
+	public function getRelTargets():ActiveQuery {
 		return $this->hasOne(Targets::class, ['id' => 'target_id']);
 	}
 

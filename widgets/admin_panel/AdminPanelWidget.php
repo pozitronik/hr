@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace app\widgets\admin_panel;
 
 use app\models\core\controllers\CoreController;
-use pozitronik\widgets\CachedWidget;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\cachedwidget\CachedWidget;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\core\controllers\WigetableController;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -15,7 +15,7 @@ use yii\base\InvalidConfigException;
  * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *AdminPanel* на нужное нам имя, и работаем
  * @package app\components\admin_panel
  *
- * @property integer $mode
+ * @property int $mode
  * @property string[]|string $controllers_directory
  */
 class AdminPanelWidget extends CachedWidget {

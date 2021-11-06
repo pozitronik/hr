@@ -6,8 +6,8 @@ namespace app\modules\import\models\fos;
 use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\UsersIdentifiers;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
@@ -157,7 +157,7 @@ class ImportFosDecomposed extends ActiveRecord {
 					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Область экспертизы', "value" => $importFosUser->expert_area],
 					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Совмещаемая роль', "value" => $importFosUser->combined_role]
 				], $errors)
-			) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибков)
+			) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибок)
 				$importFosUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный айдишник, чтобы на следующей итерации пропустился
 				continue; //пропустим засранца
 			}
@@ -169,7 +169,7 @@ class ImportFosDecomposed extends ActiveRecord {
 			В остальных случаях делаем группы level3 && level4 (если есть данные), level4 входит в level3,
 			level5 игнорим
 			*/
-			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null])) {
+			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null], true)) {
 				if (null !== $id = ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'hr_group_id')) {
 					self::linkRole($id, $importFosUser->hr_user_id);
 				}
@@ -183,7 +183,6 @@ class ImportFosDecomposed extends ActiveRecord {
 			}
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
-			/** @var ImportFosCommand $command */
 			if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
 				self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->id, $command->id), 'name'));
 			}
@@ -302,16 +301,12 @@ class ImportFosDecomposed extends ActiveRecord {
 		switch ($step) {
 			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
 				return self::DoStepGroups();
-			break;
 			case self::STEP_USERS:
 				return self::DoStepUsers($errors);
-			break;
 			case self::STEP_LINKING_USERS:
 				return self::DoStepLinkingUsers();
-			break;
 			case self::STEP_LINKING_GROUPS:
 				return self::DoStepLinkingGroups();
-			break;
 		}
 		throw new NotFoundHttpException('Step not found');
 
@@ -377,7 +372,6 @@ class ImportFosDecomposed extends ActiveRecord {
 		}
 
 		if (null === $user->id) {
-			Yii::debug($user, 'debug');
 			$errors[] = [$name => $user->errors];
 			return null;
 		}
@@ -457,7 +451,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		/** @var null|Groups $group */
 		if (null === $group = Groups::findModel($groupId)) return;
 		$group = Groups::findModel($groupId);
-		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'))) {//Если пользователь не входит в группу, добавим его туда
+		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'), true)) {//Если пользователь не входит в группу, добавим его туда
 			$user->relGroups = $group;
 		}
 		if (!empty($roleName)) {

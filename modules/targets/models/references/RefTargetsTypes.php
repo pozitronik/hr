@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\references;
 
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\helpers\Html;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
@@ -138,16 +138,16 @@ class RefTargetsTypes extends CustomisableReference {
 	}
 
 	/**
-	 * @return RefTargetsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelParent() {
+	public function getRelParent():ActiveQuery {
 		return $this->hasOne(static::class, ['id' => 'parent']);
 	}
 
 	/**
-	 * @return RefTargetsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelChild() {
+	public function getRelChild():ActiveQuery {
 		return $this->hasOne(static::class, ['parent' => 'id']);
 	}
 

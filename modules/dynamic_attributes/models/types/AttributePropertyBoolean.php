@@ -7,7 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use Exception;
 use kartik\switchinput\SwitchInput;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Yii;
 use yii\db\Expression;
 use yii\widgets\ActiveField;
@@ -92,7 +92,7 @@ class AttributePropertyBoolean extends AttributeProperty {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		switch ($aggregation) {
@@ -101,7 +101,6 @@ class AttributePropertyBoolean extends AttributeProperty {
 					'type' => DynamicAttributeProperty::PROPERTY_BOOLEAN,
 					'value' => self::getModaValue(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY:
 				$values = DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), false);
 				foreach ($values as $key => &$value) {
@@ -111,13 +110,11 @@ class AttributePropertyBoolean extends AttributeProperty {
 					'type' => DynamicAttributeProperty::PROPERTY_DICTIONARY,
 					'value' => $values
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
 					'value' => DynamicAttributePropertyAggregation::AggregateIntCount($models, $dropNullValues)
 				]);
-			break;
 			default:
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}
@@ -136,13 +133,13 @@ class AttributePropertyBoolean extends AttributeProperty {
 		if ($dropNullValues) unset ($modaArray['']);
 
 		$maxValue = count($modaArray)?max($modaArray):null;
-		return (string)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
+		return (string)array_search($maxValue, $modaArray, true);//наиболее часто встречаемое значение
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return Yii::$app->formatter->asBoolean($value);
 	}
 }

@@ -41,7 +41,7 @@ class ActiveRecordHistory extends ActiveRecord {
 	 *     ],
 	 *     'relations' => [//Конфигурация подключения и отображения связанных моделей. Модели, указанные в конфигурации, будут отданы в историю запрашиваемого объекта, при условии обнаружения их в логе по указанным правилам
 	 *        RelUsersGroups::class => ['id' => 'user_id'],//КлассМодели => [входящий ключ => исходящий ключ]. Включает историю КлассаМодели, у которой значение входящего ключа совпадает с со значением исходящего ключа (аналогично hasOne)
-	 *        RelUsersGroupsRoles::class => function(ActiveQuery $condition, ActiveRecord $model):ActiveQuery {},//КлассМодели => Замыкание, в которое первым параметром передаётся текущий запрос в таблицу лога, вторым - инициализированный класс модели. Замыкание может произвольно модицифировать запрос и вернуть его для дальнейшего поиска
+	 *        RelUsersGroupsRoles::class => function(ActiveQuery $condition, ActiveRecord $model):ActiveQuery {},//КлассМодели => Замыкание, в которое первым параметром передаётся текущий запрос в таблицу лога, вторым - инициализированный класс модели. Замыкание может произвольно модифицировать запрос и вернуть его для дальнейшего поиска
 	 *     ],
 	 *     'events' => [//Конфигурация переопределения типов событий, основанная на отслеживании изменений атрибутов (если не определено, тип события будет определён по изменению атрибутов)
 	 *        HistoryEventInterface::EVENT_DELETED => [//Тип определяемого события
@@ -87,18 +87,16 @@ class ActiveRecordHistory extends ActiveRecord {
 
 	/**
 	 * Отличия от базового deleteAll(): работаем в цикле для корректного логирования (через декомпозицию)
-	 * @param null|mixed $condition
+	 * @param mixed|null $condition
 	 * @return int|null
 	 * @throws Throwable
 	 */
-	public static function deleteAllEx($condition = null):?int {
+	public static function deleteAllEx(mixed $condition = null):?int {
 		/** @noinspection PhpDeprecationInspection */
 		$self_class_name = static::class;
-		/** @var static $self_class */
 		$self_class = new $self_class_name();
 		$deletedModels = $self_class::findAll($condition);
 		$dc = 0;
-		/** @var static[] $deletedModels */
 		foreach ($deletedModels as $deletedModel) {
 			$dc += (int)$deletedModel->delete();
 		}

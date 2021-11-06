@@ -10,7 +10,7 @@ use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\TargetsModule;
 use app\modules\targets\models\Targets;
 use app\modules\targets\widgets\navigation_menu\TargetNavigationMenuWidget;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
 

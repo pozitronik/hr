@@ -5,13 +5,13 @@ namespace app\modules\salary\models\references;
 
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 
@@ -41,37 +41,37 @@ class RefUserPositionTypes extends CustomisableReference {
 	}
 
 	/**
-	 * @return RelRefUserPositionsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUSerPositionsTypes() {
+	public function getRelRefUSerPositionsTypes():ActiveQuery {
 		return $this->hasOne(RelRefUserPositionsTypes::class, ['position_type_id' => 'id']);
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositions() {
+	public function getRelRefUserPositions():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position_id'])->via('relRefUSerPositionsTypes');
 	}
 
 	/**
-	 * @return Users[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['position' => 'id'])->via('relRefUserPositions');
 	}
 
 	/**
-	 * @return RelUsersGroups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUserGroups() {
+	public function getRelUserGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['user_id' => 'id'])->via('relUsers');
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUserGroups');
 	}
 

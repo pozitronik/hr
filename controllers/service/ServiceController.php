@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\controllers\service;
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\models\core\Service;
 use app\models\core\controllers\WigetableController;
 use app\modules\groups\models\Groups;
@@ -21,9 +21,9 @@ use yii\db\Exception;
 class ServiceController extends WigetableController {
 
 	/**
-	 * @return string|Response
+	 * @return string
 	 */
-	public function actionIndex() {
+	public function actionIndex():string {
 		return $this->render('index');
 	}
 
@@ -58,7 +58,7 @@ class ServiceController extends WigetableController {
 	 * @return Response|string
 	 * @throws Throwable
 	 */
-	public function actionMaskAndShit($step = 0) {
+	public function actionMaskAndShit(int $step = 0) {
 		switch ($step) {
 			default:
 			case 0:
@@ -69,7 +69,6 @@ class ServiceController extends WigetableController {
 					$user->save();
 				}
 				return $this->redirect(['/service/service/mask-and-shit', 'step' => $step + 1]);
-			break;
 			case 1:
 				$users = Users::find()->all();
 				foreach ($users as $user) {
@@ -84,7 +83,6 @@ class ServiceController extends WigetableController {
 					}
 				}
 				return $this->redirect(['/service/service/mask-and-shit', 'step' => $step + 1]);
-			break;
 			case 2:
 				$groups = Groups::find()->all();
 				foreach ($groups as $group) {
@@ -92,7 +90,6 @@ class ServiceController extends WigetableController {
 					$group->save();
 				}
 				return 'finished';
-			break;
 		}
 	}
 }

@@ -7,9 +7,10 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\PrivilegesModule;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
@@ -55,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(UserRightInterface $model) {
 				return UserRightNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => UserRightNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

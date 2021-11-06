@@ -3,17 +3,17 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\salary\models\relations\RelRefUserPositionsTypes;
 use app\modules\users\models\relations\RelUserPositionsTypes;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginTrait;
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\core\models\core_module\PluginTrait;
+use app\components\pozitronik\core\traits\Upload;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
@@ -46,7 +46,7 @@ use Yii;
  * @property string $create_date Дата регистрации
  * @property string $profile_image Название файла фотографии профиля
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
- * @property boolean $deleted Флаг удаления
+ * @property bool $deleted Флаг удаления
  * @property-write string $update_password Свойство только для обновления пароля
  *
  * @property int|null $position Должность/позиция
@@ -66,14 +66,14 @@ use Yii;
  * @property ActiveQuery|RefUserPositions $relUserPosition Релейшен к должностям пользователей (у пользователя может быть только одна должность)
  * @property-read ActiveQuery|RelRefUserPositionsTypes[] $relRefUserPositionsTypes ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
  * @property-read ActiveQuery|RefUserPositionTypes[] $refUserPositionTypes Типы должностей пользователя, полученные через привязку типов к занимаемой должности. НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ КАК ГЕТТЕР, вызывать только функцию
- * @property ActiveQuery|RefUserPositionTypes[]|integer[] $relRefUserPositionsTypesOwn Типы должностей пользователя, полученные через прямые определения (не зависящие от привязок должности)
+ * @property ActiveQuery|RefUserPositionTypes[]|int $relRefUserPositionsTypesOwn Типы должностей пользователя, полученные через прямые определения (не зависящие от привязок должности)
  * @property-read RefUserPositionTypes[] $relRefUserPositionsTypesAny Типы должностей пользователя, полученные напрямую, или (в случае отсутствия прямых указаний) через должности (использовать при расчётах и выводе)
  * @property-read ActiveQuery|RelUserPositionsTypes[] $relUserPositionsTypes Релейшен к таблице связей пользователя с типами должностей (для прямого определения)
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles Релейшен к ролям пользователей в группах
- * @property integer[] $dropGroups
+ * @property int $dropGroups
  *
  * ***************************
  * Опции
@@ -85,12 +85,12 @@ use Yii;
  * Права в системе
  * @property RelUsersPrivileges[]|ActiveQuery $relUsersPrivileges Релейшен к таблице связей с привилегиями
  * @property Privileges[]|ActiveQuery $relPrivileges Релейшен к привилегиям
- * @property integer[] $dropUsersPrivileges Атрибут для удаления привилегий
+ * @property int $dropUsersPrivileges Атрибут для удаления привилегий
  * @property-read UserRightInterface[] $rights Массив прав пользователя в системе, вычисляется из суммы привилегий
  * **************************
  * Атрибуты
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
- * @property integer[] $dropUsersAttributes
+ * @property int $dropUsersAttributes
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader Релейшен к ролям пользователей с флагом босса
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesImportant Релейшен к ролям пользователей с флагом важной шишки
@@ -114,7 +114,7 @@ class Users extends ActiveRecord {
 	public const PROFILE_IMAGE_DIRECTORY = '@app/web/profile_photos/';
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -269,48 +269,48 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelUsersGroups[]
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroups() {
+	public function getRelUsersGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 	}
 
 	/**
 	 * Релейшен к назначению ролей в этой группе
-	 * @return ActiveQuery|RelUsersGroupsRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
 	}
 
 	/**
 	 * Все назначенные роли этого пользователя (используется изначально для определения руководителя)
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRoles() {
+	public function getRelRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
 	/**
 	 * Все роли этого пользователя с флагом лидера
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesLeader() {
+	public function getRelRefUserRolesLeader():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
 	}
 
 	/**
 	 * Все роли этого пользователя с флагом важной шишки
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesImportant() {
+	public function getRelRefUserRolesImportant():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
 	}
 
@@ -318,22 +318,22 @@ class Users extends ActiveRecord {
 	 * @param array $relUsersGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups($relUsersGroups):void {
+	public function setRelGroups(array $relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
 	/**
-	 * @return integer[]
+	 * @return array
 	 */
 	public function getDropGroups():array {
 		return [];
 	}
 
 	/**
-	 * @param integer[] $dropGroups
+	 * @param array $dropGroups
 	 * @throws Throwable
 	 */
-	public function setDropGroups($dropGroups):void {
+	public function setDropGroups(array $dropGroups):void {
 		RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $dropGroups, 'user_id' => $this->id])->select('id')]);
 		RelUsersGroups::unlinkModels($this, $dropGroups);
 	}
@@ -348,22 +348,20 @@ class Users extends ActiveRecord {
 		switch ($access) {
 			case 'sysadmin':
 				return 1 === CurrentUser::Id();
-			break;
 			default:
 				return null !== $access;
-			break;
 		}
 	}
 
 	/**
 	 * Добавляет массив ролей пользователя к группе
-	 * @param array<integer, array<integer>> $groupRoles
+	 * @param array<int, array<int>> $groupRoles
 	 * @throws Throwable
 	 */
 	public function setRolesInGroup(array $groupRoles):void {
 		foreach ($groupRoles as $group => $roles) {
 			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $this->id])->select('id')]);
-			/** @var integer[] $roles */
+			/** @var int[] $roles */
 			foreach ($roles as $role) {
 				RelUsersGroupsRoles::setRoleInGroup($role, $group, $this->id);
 			}
@@ -400,38 +398,38 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributes() {
+	public function getRelUsersAttributes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributes::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return DynamicAttributes[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelDynamicAttributes() {
+	public function getRelDynamicAttributes():ActiveQuery {
 		return $this->hasMany(DynamicAttributes::class, ['id' => 'attribute_id'])->via('relUsersAttributes');
 	}
 
 	/**
-	 * @param DynamicAttributes[]|ActiveQuery $relDynamicAttributes
+	 * @param ActiveQuery|DynamicAttributes[] $relDynamicAttributes
 	 * @throws Throwable
 	 */
-	public function setRelDynamicAttributes($relDynamicAttributes):void {
+	public function setRelDynamicAttributes(ActiveQuery|array $relDynamicAttributes):void {
 		RelUsersAttributes::linkModels($this, $relDynamicAttributes);
 	}
 
 	/**
-	 * @param integer[] $dropUsersAttributes
+	 * @param array $dropUsersAttributes
 	 * @throws Throwable
 	 */
-	public function setDropUsersAttributes($dropUsersAttributes):void {
+	public function setDropUsersAttributes(array $dropUsersAttributes):void {
 		/*Сами значения атрибутов сохранятся в базе и должны будут восстановиться, если атрибут присвоить пользователю обратно*/
 		RelUsersAttributes::unlinkModels($this, $dropUsersAttributes);
 	}
 
 	/**
-	 * @return integer[]
+	 * @return array
 	 */
 	public function getDropUsersAttributes():array {
 		return [];
@@ -450,9 +448,9 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Вернёт все группы, в которых пользователь имеет галочку босса
-	 * @return LCQuery|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelLeadingGroups() {
+	public function getRelLeadingGroups():ActiveQuery {
 		return $this->getRelGroups()->joinWith(['relRefUserRolesLeader']);
 	}
 
@@ -466,25 +464,25 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersPrivileges[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersPrivileges() {
+	public function getRelUsersPrivileges():ActiveQuery {
 		return $this->hasMany(RelUsersPrivileges::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return Privileges[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelPrivileges() {
+	public function getRelPrivileges():ActiveQuery {
 		return $this->hasMany(Privileges::class, ['id' => 'privilege_id'])->via('relUsersPrivileges');
 	}
 
 	/**
 	 * Кривоватый метод работы с привлегиями; пока оставляю так, после рефакторинга админки привлегии будут редаткироваться или аяксом, или просто отдельно, соответственно будет юзаться удаление отдельным атрибутом
-	 * @param Privileges[]|ActiveQuery $relPrivileges
+	 * @param ActiveQuery|Privileges[] $relPrivileges
 	 * @throws Throwable
 	 */
-	public function setRelPrivileges($relPrivileges):void {
+	public function setRelPrivileges(ActiveQuery|array $relPrivileges):void {
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
 		$currentPrivilegesId = ArrayHelper::getColumn($this->relPrivileges, 'id');
 		$droppedPrivileges = array_diff($currentPrivilegesId, (array)$relPrivileges);
@@ -502,23 +500,23 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return integer[]
+	 * @return array
 	 */
 	public function getDropUsersPrivileges():array {
 		return [];
 	}
 
 	/**
-	 * @return RelUsersAttributesTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributesTypes() {
+	public function getRelUsersAttributesTypes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributesTypes::class, ['user_attribute_id' => 'id'])->via('relUsersAttributes');
 	}
 
 	/**
-	 * @return RefAttributesTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRefAttributesTypes() {
+	public function getRefAttributesTypes():ActiveQuery {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
 
@@ -533,55 +531,55 @@ class Users extends ActiveRecord {
 	 */
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUserPosition() {
+	public function getRelUserPosition():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
 	/**
 	 * ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
-	 * @return RelRefUserPositionsTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypes() {
+	public function getRelRefUserPositionsTypes():ActiveQuery {
 		return $this->hasMany(RelRefUserPositionsTypes::class, ['position_id' => 'position']);
 	}
 
 	/**
 	 * Типы должностей пользователя, полученные через привязку типов к занимаемой должности
-	 * @return ActiveQuery|RefUserPositionTypes
+	 * @return ActiveQuery
 	 */
-	public function getRefUserPositionTypes() {
+	public function getRefUserPositionTypes():ActiveQuery {
 		return $this->hasOne(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relRefUserPositionsTypes');
 	}
 
 	/**
 	 * ID типов должностей, полученных через переопределения (не зависящие от привязок должности)
-	 * @return RelUserPositionsTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUserPositionsTypes() {
+	public function getRelUserPositionsTypes():ActiveQuery {
 		return $this->hasMany(RelUserPositionsTypes::class, ['user_id' => 'id']);
 	}
 
 	/**
 	 * Типы должностей пользователя, полученные через переопределения (не зависящие от привязок должности)
-	 * @return ActiveQuery|RefUserPositionTypes[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositionsTypesOwn() {
+	public function getRelRefUserPositionsTypesOwn():ActiveQuery {
 		return $this->hasMany(RefUserPositionTypes::class, ['id' => 'position_type_id'])->via('relUserPositionsTypes');
 	}
 
 	/**
 	 * Сюда прилетают изменения типа должности из профиля пользователя. Мы не меняем тип должности у самой должности, внося измненения в таблицу переопределний для этого конкретного юзернейма
-	 * @param integer[] $relRefUserPositionTypes
+	 * @param array $relRefUserPositionTypes
 	 * @throws Throwable
 	 */
-	public function setRelRefUserPositionsTypesOwn($relRefUserPositionTypes):void {
+	public function setRelRefUserPositionsTypesOwn(array $relRefUserPositionTypes):void {
 //		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
 
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаляемые записи. */
 		$currentUserPositionTypesId = ArrayHelper::getColumn($this->relUserPositionsTypes, 'position_type_id');
-		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, (array)$relRefUserPositionTypes);
+		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, $relRefUserPositionTypes);
 		RelUserPositionsTypes::unlinkModels($this, $droppedUserPositionTypes);
 		RelUserPositionsTypes::linkModels($this, $relRefUserPositionTypes);
 	}
@@ -622,9 +620,9 @@ class Users extends ActiveRecord {
 		$result = array_merge(...$result);
 		$uniqueKeys = [];
 		$uniqueUsers = [];
-		array_walk($result, static function(&$value, &$key) use (&$uniqueKeys, &$uniqueUsers) {
+		array_walk($result, static function($value, &$key) use (&$uniqueKeys, &$uniqueUsers) {
 			/** @var Users $value */
-			if (!in_array($value->id, $uniqueKeys)) {
+			if (!in_array($value->id, $uniqueKeys, true)) {
 				$uniqueUsers[] = $value;
 				$uniqueKeys[] = $value->id;
 			}
@@ -635,9 +633,9 @@ class Users extends ActiveRecord {
 	/********************************************************/
 
 	/**
-	 * @return UsersIdentifiers|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersIdentifiers() {
+	public function getRelUsersIdentifiers():ActiveQuery {
 		return $this->hasOne(UsersIdentifiers::class, ['user_id' => 'id']);
 	}
 

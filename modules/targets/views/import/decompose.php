@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var array $messages
  */
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use yii\helpers\Html;
 use yii\web\View;
 

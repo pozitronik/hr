@@ -3,7 +3,8 @@ declare(strict_types = 1);
 
 namespace app\widgets\button_controls;
 
-use pozitronik\widgets\CachedWidget;
+
+use app\components\pozitronik\cachedwidget\CachedWidget;
 
 /**
  * Class ButtonControlsWidget

@@ -30,7 +30,7 @@ class ActiveRecordLoggerSearch extends ActiveRecordLogger {
 	 * @return ActiveDataProvider
 	 * @throws Throwable
 	 */
-	public function search(array $params, $pagination = true):ActiveDataProvider {
+	public function search(array $params, bool $pagination = true):ActiveDataProvider {
 		$query = ActiveRecordLogger::find();
 
 		$dataProvider = new ActiveDataProvider([

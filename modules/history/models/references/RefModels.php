@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models\references;
 
-use pozitronik\core\interfaces\reference\ReferenceInterface;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\core\interfaces\reference\ReferenceInterface;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\history\models\ActiveRecordLogger;
 use yii\base\Model;
 use yii\db\ActiveQuery;
@@ -28,7 +28,7 @@ class RefModels extends Model implements ReferenceInterface {
 
 	/**
 	 * Справочникам всегда нужно возвращать массив значений для выбиралок, вот эта функция у них универсальная
-	 * @param boolean $sort Сортировка выдачи
+	 * @param bool $sort Сортировка выдачи
 	 * @return array
 	 */
 	public static function mapData(bool $sort = false):array {
@@ -58,7 +58,7 @@ class RefModels extends Model implements ReferenceInterface {
 
 	/**
 	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
-	 * @return string|false
+	 * @return string
 	 */
 	public function getForm():string {
 		return '';

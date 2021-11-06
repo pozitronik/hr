@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\history\models;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\core\IconsHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
-use pozitronik\helpers\ReflectionHelper;
+use app\components\pozitronik\helpers\ReflectionHelper;
 use ReflectionClass;
 use ReflectionException;
 use Throwable;

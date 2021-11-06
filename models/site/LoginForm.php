@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\site;
 
 use app\models\user\User;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use Yii;
 use yii\base\Model;
 
@@ -91,7 +91,7 @@ class LoginForm extends Model {
 
 	/**
 	 * Logs in a user using the provided username and password.
-	 * @return boolean whether the user is logged in successfully
+	 * @return bool whether the user is logged in successfully
 	 */
 	public function doLogin():bool {
 		return ($this->validate() && Yii::$app->user->login($this->getUser(), $this->rememberMe?DateHelper::SECONDS_IN_MONTH:0));

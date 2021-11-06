@@ -8,7 +8,7 @@ declare(strict_types = 1);
  * @var array $errors
  */
 
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\home\HomeModule;
 use app\modules\import\models\fos\ImportFosDecomposed;
 use yii\helpers\Html;

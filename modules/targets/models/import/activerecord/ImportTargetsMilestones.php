@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\import\activerecord;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -53,9 +53,9 @@ class ImportTargetsMilestones extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportTargetsSubinitiatives|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelSubInitiatives() {
+	public function getRelSubInitiatives():ActiveQuery {
 		return $this->hasOne(ImportTargetsSubinitiatives::class, ['id' => 'initiative_id']);
 	}
 }

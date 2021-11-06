@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\widgets\attribute_field_score\ScoreWidget;
 use Exception;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use Throwable;
 use Yii;
 use yii\db\Expression;
@@ -171,7 +171,8 @@ class AttributePropertyScore extends AttributeProperty {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @param $value
+	 * @throws Throwable
 	 */
 	public function setValue($value):void {
 		$this->self_score_value = ArrayHelper::getValue($value, 'selfScoreValue');
@@ -183,7 +184,7 @@ class AttributePropertyScore extends AttributeProperty {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @return ScoreProperty
 	 */
 	public function getValue():ScoreProperty {
 		return new ScoreProperty([
@@ -218,7 +219,7 @@ class AttributePropertyScore extends AttributeProperty {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new self(compact('attribute_id', 'user_id', 'property_id'));
 		}
@@ -453,7 +454,7 @@ class AttributePropertyScore extends AttributeProperty {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 * @throws Throwable
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
@@ -463,55 +464,46 @@ class AttributePropertyScore extends AttributeProperty {
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getAverageValue($models, $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_AVG_TRUNC:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getAverageTruncValue($models, $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_HARMONIC:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getHarmonicValue($models)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_MODA:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getModaValue($models, $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getCountValue($models)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_MIN:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getMinValue($models, $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_MAX:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getMaxValue($models, $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_SUM:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getSumValue($models)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_MEDIAN:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_SCORE,
 					'value' => self::getMedianValue($models)
 				]);
-			break;
 			default:
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}

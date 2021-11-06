@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\controllers;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearch;
@@ -109,7 +109,7 @@ class AttributesController extends WigetableController {
 			]);
 		}
 
-		$property = $attribute->getPropertyById((int)$property_id, new NotFoundHttpException());
+		$property = $attribute->getPropertyById($property_id, new NotFoundHttpException());
 		return $this->render('property/update', [
 			'attribute' => $attribute,
 			'model' => $property
@@ -120,7 +120,7 @@ class AttributesController extends WigetableController {
 	 * Удаляет свойство из атрибута
 	 * Заполненные данные по аттрибуту не удаляются.
 	 * @param int $attribute_id
-	 * @param int $property_id
+	 * @param int|null $property_id
 	 * @throws Throwable
 	 */
 	public function actionPropertyDelete(int $attribute_id, int $property_id = null):void {

@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var ActiveRecord $model
  * @var string $attribute,
  * @var array $data
- * @var boolean $multiple
+ * @var bool $multiple
  * @var array $options
  */
 

@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models\rights;
 
-use pozitronik\core\interfaces\access\AccessMethods;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\core\interfaces\access\AccessMethods;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use app\modules\privileges\models\UserRight;
 use Throwable;

@@ -6,7 +6,7 @@ namespace app\modules\dynamic_attributes\models;
 use yii\base\Model;
 
 /**
- * @property boolean $union Режим объединения поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
+ * @property bool $union Режим объединения поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
  * @property int[]|null $type Массив типов отношений атрибута (id)
  * @property int|null $attribute Искомый атрибут (id)
  * @property int|null $property Свойство атрибута (id)
@@ -70,7 +70,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param int|null $attribute
 	 */
-	public function setAttribute($attribute):void {
+	public function setAttribute(?int $attribute):void {
 		$this->attribute = is_numeric($attribute)?(int)$attribute:null;
 	}
 
@@ -84,7 +84,7 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param int|null $property
 	 */
-	public function setProperty($property):void {
+	public function setProperty(?int $property):void {
 		$this->property = is_numeric($property)?(int)$property:null;
 	}
 
@@ -112,21 +112,21 @@ class DynamicAttributesSearchItem extends Model {
 	/**
 	 * @param mixed|null $value
 	 */
-	public function setValue($value):void {
+	public function setValue(mixed $value):void {
 		$this->value = $value;
 	}
 
 	/**
-	 * @return int[]|mixed|null
+	 * @return int[]|null
 	 */
-	public function getType() {
+	public function getType():?array {
 		return $this->type;
 	}
 
 	/**
 	 * @param int[]|null $type
 	 */
-	public function setType($type):void {
+	public function setType(?array $type):void {
 		$this->type = $type;
 	}
 

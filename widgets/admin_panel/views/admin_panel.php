@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var WigetableController[] $controllers
- * @var integer $mode
+ * @var int $mode
  */
 
 use app\models\core\controllers\WigetableController;

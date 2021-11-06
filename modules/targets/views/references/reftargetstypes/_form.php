@@ -7,7 +7,7 @@ declare(strict_types = 1);
  * @var ActiveForm $form
  */
 
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\targets\models\references\RefTargetsTypes;
 use kartik\color\ColorInput;
 use yii\web\View;

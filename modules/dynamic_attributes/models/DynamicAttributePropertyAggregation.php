@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Model;
 
@@ -84,12 +84,12 @@ class DynamicAttributePropertyAggregation extends Model {
 	/**
 	 * @param mixed $value
 	 */
-	public function setValue($value):void {
+	public function setValue(mixed $value):void {
 		$this->_value = $value;
 	}
 
 	/**
-	 * @param int[] $values
+	 * @param array $values
 	 * @param bool $dropNullValues
 	 * @return float|null
 	 */
@@ -148,16 +148,16 @@ class DynamicAttributePropertyAggregation extends Model {
 		if ($dropNullValues) unset ($modaArray['']);
 
 		$maxValueCount = count($modaArray)?max($modaArray):null;
-		return (int)array_search($maxValueCount, $modaArray);//наиболее часто встречаемое значение
+		return (int)array_search($maxValueCount, $modaArray, true);//наиболее часто встречаемое значение
 	}
 
 	/**
-	 * @param int[] $values
+	 * @param array $values
 	 * @param bool $dropNullValues
 	 * @param int $truncPercent -- процент отбрасываемых минимальных и максимальных значений
 	 * @return float|null
 	 */
-	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, $truncPercent = 20):?float {
+	public static function AggregateIntAvgTrunc(array $values, bool $dropNullValues = false, int $truncPercent = 20):?float {
 		$values = $dropNullValues?ArrayHelper::filterValues($values):$values;
 		sort($values, SORT_NUMERIC);
 		$truncCount = (int)((count($values) * $truncPercent) / 100);
@@ -166,7 +166,7 @@ class DynamicAttributePropertyAggregation extends Model {
 	}
 
 	/**
-	 * @param int[] $values
+	 * @param array $values
 	 * @param bool $dropNullValues
 	 * @return int|null
 	 */

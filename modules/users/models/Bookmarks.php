@@ -11,8 +11,8 @@ use yii\base\Model;
  * @package app\models\users
  * @property string $route
  * @property string $name
- * @property integer $type
- * @property integer $order
+ * @property int $type
+ * @property int $order
  *
  * @property-read string $typeSpan
  */

@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var DynamicAttributeProperty $model
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\web\View;
 use yii\helpers\Html;

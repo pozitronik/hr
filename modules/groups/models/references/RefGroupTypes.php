@@ -5,9 +5,9 @@ namespace app\modules\groups\models\references;
 
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
-use pozitronik\references\models\CustomisableReference;
-use pozitronik\references\ReferencesModule;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\ReferencesModule;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
@@ -18,7 +18,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property string $name Название
  * @property int $deleted
- * @property-read integer $usedCount Количество объектов, использующих это значение справочника
+ * @property-read int $usedCount Количество объектов, использующих это значение справочника
  * @property Groups $relGroups
  */
 class RefGroupTypes extends CustomisableReference {
@@ -52,7 +52,7 @@ class RefGroupTypes extends CustomisableReference {
 	}
 
 	/**
-	 * Возващает массив всех типов групп в скоупе пользователя в формате
+	 * Возвращает массив всех типов групп в скоупе пользователя в формате
 	 * [
 	 *    'id' => 'typeName'
 	 * ]
@@ -64,9 +64,9 @@ class RefGroupTypes extends CustomisableReference {
 	}
 
 	/**
-	 * @return Groups|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['type' => 'id']);
 	}
 

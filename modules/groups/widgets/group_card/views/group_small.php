@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var Groups $group
- * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы; 'col-md' -- значение для модификатора колонк
+ * @var array $options -- 'showChildGroups':bool -- показывать дочерние группы; 'col-md' -- значение для модификатора колонок
  */
 
 use app\modules\groups\GroupsModule;
@@ -12,8 +12,8 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\groups\widgets\group_users\GroupUsersWidget;
-use pozitronik\widgets\BadgeWidget;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\badgewidget\BadgeWidget;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\web\View;
 
 //$this->registerJs("var MsnrySmall = new Masonry('.panel-card-small',{columnWidth: '.grid-sizer-small', itemSelector: '.panel-card-small', percentPosition: true, fitWidth: true}); ", View::POS_END);

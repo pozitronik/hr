@@ -20,7 +20,7 @@ use yii\base\Model;
  * @property string $color
  * @property string $shape
  * @property string $image
- * @property boolean $widthConstraint
+ * @property bool $widthConstraint
  */
 class GraphNode extends Model {
 	use ArrayableTrait;
@@ -40,7 +40,7 @@ class GraphNode extends Model {
 	 * @param array $config
 	 * @throws InvalidConfigException
 	 */
-	public function __construct(Model $model, $config = []) {
+	public function __construct(Model $model, array $config = []) {
 		parent::__construct($config);
 		$this->id = $model->formName();
 	}

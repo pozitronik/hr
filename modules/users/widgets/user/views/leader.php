@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /* @var View $this
  * @var Users $model
  * @var Groups $group
- * @var boolean $boss
+ * @var bool $boss
  * @var array|callable $options
  */
 
@@ -13,7 +13,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
 

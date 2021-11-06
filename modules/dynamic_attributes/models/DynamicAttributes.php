@@ -8,13 +8,13 @@ namespace app\modules\dynamic_attributes\models;
  * Саму сущность потребуется утащить в компонент.
  */
 
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\ARExtended;
-use pozitronik\sys_exceptions\SysExceptions;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\sys_exceptions\SysExceptions;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginTrait;
+use app\components\pozitronik\core\models\core_module\PluginTrait;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
@@ -33,7 +33,7 @@ use yii\db\ActiveQuery;
  * @property int $daddy Создатель
  * @property string $create_date Дата создания
  * @property array $structure Структура свойств
- * @property integer $access
+ * @property int $access
  * @property int $deleted Флаг удаления
  *
  * @property-read DynamicAttributeProperty[] $properties
@@ -255,7 +255,7 @@ class DynamicAttributes extends ActiveRecord {
 		$virtualProperties = [];
 		foreach ($this->properties as $property) {
 			$virtualProperty = $this->getVirtualProperty($property->id);
-			if (null !== $virtualProperty->type) {//собираем только установленные свойства. Сделано для возможности просмотра статистики не по всему атрибуту, а только по одному свойству
+			if (null !== $virtualProperty?->type) {//собираем только установленные свойства. Сделано для возможности просмотра статистики не по всему атрибуту, а только по одному свойству
 				$virtualProperties[] = $virtualProperty;
 			}
 		}
@@ -264,10 +264,10 @@ class DynamicAttributes extends ActiveRecord {
 
 	/**
 	 * @param int $property_id
-	 * @return mixed -- значение запрошенного виртуального свойства
+	 * @return DynamicAttributeProperty|null -- значение запрошенного виртуального свойства
 	 * @throws Throwable
 	 */
-	public function getVirtualProperty(int $property_id) {
+	public function getVirtualProperty(int $property_id):?DynamicAttributeProperty {
 		if (null === $property = $this->getPropertyById($property_id)) throw new RuntimeException("Property id {$property_id} not exist in {$this->name}");
 		$property->value = ArrayHelper::getValue($this->_virtualPropertyValues, $property_id);
 		$property->type = ArrayHelper::getValue($this->_virtualPropertyTypes, $property_id);
@@ -275,9 +275,9 @@ class DynamicAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributes() {
+	public function getRelUsersAttributes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributes::class, ['attribute_id' => 'id']);
 	}
 
@@ -318,9 +318,9 @@ class DynamicAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return Users|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersAttributes');
 	}
 

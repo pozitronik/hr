@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
-use pozitronik\helpers\DateHelper;
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\targets\models\references\RefTargetsResults;
@@ -15,7 +15,7 @@ use app\modules\targets\models\relations\RelTargetsGroups;
 use app\modules\targets\models\relations\RelTargetsTargets;
 use app\modules\targets\models\relations\RelTargetsUsers;
 use app\modules\users\models\Users;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -32,7 +32,7 @@ use yii\db\ActiveQuery;
  * @property string $comment
  * @property string $create_date Дата регистрации
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
- * @property boolean $deleted Флаг удаления
+ * @property bool $deleted Флаг удаления
  *
  * @property ActiveQuery|Targets $relParentTarget -- вышестоящая задача целеполагания (если есть)
  * @property ActiveQuery|Targets[] $relChildTargets -- нижестоящие задачи целеполагания
@@ -107,16 +107,16 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelTargetsTargets[]
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsTargetsChild() {
+	public function getRelTargetsTargetsChild():ActiveQuery {
 		return $this->hasMany(RelTargetsTargets::class, ['parent_id' => 'id']);
 	}
 
 	/**
-	 * @return ActiveQuery|RelTargetsTargets|null
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsTargetsParent() {
+	public function getRelTargetsTargetsParent():ActiveQuery {
 		return $this->hasOne(RelTargetsTargets::class, ['child_id' => 'id']);
 	}
 
@@ -130,10 +130,10 @@ class Targets extends ActiveRecord {
 
 	/**
 	 * Установка родительской задачи
-	 * @param Targets|ActiveQuery|null|string $parentTarget
+	 * @param string|ActiveQuery|Targets|null $parentTarget
 	 * @throws Throwable
 	 */
-	public function setRelParentTarget($parentTarget):void {
+	public function setRelParentTarget(ActiveQuery|string|Targets|null $parentTarget):void {
 		RelTargetsTargets::linkModels($parentTarget, $this);
 		if (!empty($parentTarget) && null === $model = self::findModel($parentTarget)) $model->dropCaches();
 	}
@@ -157,60 +157,60 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefTargetsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsTypes() {
+	public function getRelTargetsTypes():ActiveQuery {
 		return $this->hasOne(RefTargetsTypes::class, ['id' => 'type']);
 	}
 
 	/**
-	 * @return RefTargetsResults|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsResults() {
+	public function getRelTargetsResults():ActiveQuery {
 		return $this->hasOne(RefTargetsResults::class, ['id' => 'result_type']);
 	}
 
 	/**
-	 * @return RelTargetsGroups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsGroups() {
+	public function getRelTargetsGroups():ActiveQuery {
 		return $this->hasMany(RelTargetsGroups::class, ['target_id' => 'id']);
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relTargetsGroups');
 	}
 
 	/**
-	 * @param Groups[]|ActiveQuery $relTargetsGroups
+	 * @param ActiveQuery|Groups[] $relTargetsGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups($relTargetsGroups):void {
+	public function setRelGroups(ActiveQuery|array $relTargetsGroups):void {
 		RelTargetsGroups::linkModels($this, $relTargetsGroups);
 	}
 
 	/**
-	 * @return RelTargetsUsers[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsUsers() {
+	public function getRelTargetsUsers():ActiveQuery {
 		return $this->hasMany(RelTargetsUsers::class, ['target_id' => 'id']);
 	}
 
 	/**
-	 * @return Users[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relTargetsUsers');
 	}
 
 	/**
-	 * @param Users[]|ActiveQuery $relTargetsUsers
+	 * @param ActiveQuery|Users[] $relTargetsUsers
 	 * @throws Throwable
 	 */
-	public function setRelUsers($relTargetsUsers):void {
+	public function setRelUsers(ActiveQuery|array $relTargetsUsers):void {
 		RelTargetsUsers::linkModels($this, $relTargetsUsers);
 	}
 
@@ -237,9 +237,9 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return TargetsPeriods|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTargetsPeriods() {
+	public function getRelTargetsPeriods():ActiveQuery {
 		//Не включать условия в этот геттер, он есть и всё. Иначе будут падать релейшены
 		return $this->hasOne(TargetsPeriods::class, ['target_id' => 'id']);
 	}

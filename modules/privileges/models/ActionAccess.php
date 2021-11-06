@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models;
 
 use app\models\core\controllers\CoreController;
-use pozitronik\core\models\core_module\PluginsSupport;
-use pozitronik\core\traits\ModelExtended;
+use app\components\pozitronik\core\models\core_module\PluginsSupport;
+use app\components\pozitronik\core\traits\ModelExtended;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\base\Model;

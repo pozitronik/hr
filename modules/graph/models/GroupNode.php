@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\graph\models;
 
 use app\modules\groups\models\Groups;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 
 /**
  * Реализация нод для групп

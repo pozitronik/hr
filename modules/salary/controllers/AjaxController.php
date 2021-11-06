@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\salary\controllers;
 
 use app\models\core\controllers\BaseAjaxController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\salary\models\references\RefUserPositions;
 use Throwable;
 use Yii;

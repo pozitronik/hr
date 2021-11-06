@@ -11,6 +11,7 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefLocations;
@@ -19,7 +20,7 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -60,7 +61,7 @@ use yii\web\View;
 			'value' => static function(Vacancy $model) {
 				return VacancyNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => VacancyNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

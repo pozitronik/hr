@@ -9,7 +9,6 @@ use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\relations\RelUsersSalary;
 use app\modules\salary\models\SalaryFork;
-use app\modules\users\models\Users;
 use yii\db\ActiveQuery;
 
 /**
@@ -29,59 +28,52 @@ use yii\db\ActiveQuery;
 trait UsersSalaryTrait {
 
 	/**
-	 * @return RelUsersSalary|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersSalary() {
-		/** @var Users $this */
+	public function getRelUsersSalary():ActiveQuery {
 		if (null === RelUsersSalary::find()->where(['user_id' => $this->id])->one()) (new RelUsersSalary(['user_id' => $this->id]))->save();
 		return $this->hasOne(RelUsersSalary::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return RefGrades|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGrade() {
-		/** @var Users $this */
+	public function getRelGrade():ActiveQuery {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade_id'])->via('relUsersSalary');
 	}
 
 	/**
 	 * @param mixed $relGrade
 	 */
-	public function setRelGrade($relGrade):void {
-		/** @var Users $this */
+	public function setRelGrade(mixed $relGrade):void {
 		$this->relUsersSalary->setAndSaveAttribute('grade_id', $relGrade);
 	}
 
 	/**
-	 * @return RefSalaryPremiumGroups|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
-	public function getRelPremiumGroup() {
-		/** @var Users $this */
+	public function getRelPremiumGroup():ActiveQuery {
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id'])->via('relUsersSalary');
 	}
 
 	/**
 	 * @param mixed $relPremiumGroup
 	 */
-	public function setRelPremiumGroup($relPremiumGroup):void {
-		/** @var Users $this */
+	public function setRelPremiumGroup(mixed $relPremiumGroup):void {
 		$this->relUsersSalary->setAndSaveAttribute('premium_group_id', $relPremiumGroup);
 	}
 
 	/**
-	 * @return RefLocations|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
-	public function getRelLocation() {
-		/** @var Users $this */
+	public function getRelLocation():ActiveQuery {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id'])->via('relUsersSalary');
 	}
 
 	/**
 	 * @param mixed $relLocation
 	 */
-	public function setRelLocation($relLocation):void {
-		/** @var Users $this */
+	public function setRelLocation(mixed $relLocation):void {
 		$this->relUsersSalary->setAndSaveAttribute('location_id', $relLocation);
 	}
 
@@ -96,9 +88,9 @@ trait UsersSalaryTrait {
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPositions() {
+	public function getRelRefUserPositions():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 

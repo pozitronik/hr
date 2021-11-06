@@ -8,10 +8,12 @@ declare(strict_types = 1);
  * @var string $heading Заголовок панели (например, для отображения пути иерархии)
  */
 
+use app\components\pozitronik\core\interfaces\widgets\SelectionWidgetInterface;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\groups\widgets\group_type_select\GroupTypeSelectWidget;
 use app\modules\groups\widgets\relation_type_select\RelationTypeSelectWidget;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\groups\assets\GroupsAsset;
 use app\modules\groups\models\Groups;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
@@ -39,7 +41,7 @@ GroupsAsset::register($this);
 			'attribute' => 'relParentGroups',
 			'exclude'  =>  $model->isNewRecord?[]:array_merge($model->relParentGroups, [$model]),
 			'multiple' => true,
-			'renderingMode' => GroupSelectWidget::MODE_FORM
+			'renderingMode' => SelectionWidgetInterface::MODE_FORM
 		])
 	],
 	'toolbar' => false,
@@ -65,7 +67,7 @@ GroupsAsset::register($this);
 			'value' => static function(Groups $model) {
 				return GroupNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace app\modules\import\models\competency;
 
 use Exception;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
-use pozitronik\helpers\Utils;
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
+use app\components\pozitronik\helpers\Utils;
+use app\components\pozitronik\core\traits\Upload;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelUsersAttributes;
 use app\models\user\CurrentUser;
@@ -58,7 +58,6 @@ class ImportCompetency extends Model {
 		$currentCompetencyName = '';
 		//	$userScoreCellsIndexes = [];
 
-		/** @var array $dataArray */
 		foreach ($dataArray as $rowIndex => $importRow) {
 			if (0 === $rowIndex) {//Строченька с именами
 				/** @var array $importRow */
@@ -85,7 +84,7 @@ class ImportCompetency extends Model {
 				}
 				foreach ($userIdIndexes as $usersCount => $usersCountValue) {
 					$userScoreSliceBlock = array_slice($importRow, 2 + ($usersCount * 6), 6);//вырезаем кусок оценок
-					$this->addScores($userIdIndexes[$usersCount], $currentCompetencyName, $currentCompetencyFieldName, $userScoreSliceBlock);
+					$this->addScores($usersCountValue, $currentCompetencyName, $currentCompetencyFieldName, $userScoreSliceBlock);
 				}
 
 			}
@@ -107,7 +106,7 @@ class ImportCompetency extends Model {
 	}
 
 	/**
-	 * Добавляем оценки пользователю, при необходимости созздавая или модифицируя соответствующую компетенцию
+	 * Добавляем оценки пользователю, при необходимости создавая или модифицируя соответствующую компетенцию
 	 * @param int $userId
 	 * @param string $competencyName
 	 * @param string $competencyField

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\import\activerecord;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -76,16 +76,16 @@ class ImportTargetsTargets extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportTargetsCommands|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelCommands() {
+	public function getRelCommands():ActiveQuery {
 		return $this->hasOne(ImportTargetsCommands::class, ['id' => 'command_id']);
 	}
 
 	/**
-	 * @return ImportTargetsMilestones|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelMilestones() {
+	public function getRelMilestones():ActiveQuery {
 		return $this->hasOne(ImportTargetsMilestones::class, ['id' => 'milestone_id']);
 	}
 }

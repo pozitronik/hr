@@ -9,9 +9,10 @@ declare(strict_types = 1);
  * @var string|array $updateAttributeAction
  */
 
+use app\components\pozitronik\core\interfaces\widgets\SelectionWidgetInterface;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use app\modules\dynamic_attributes\models\user_attributes\RelUserAttributesSearch;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\dynamic_attributes\widgets\attribute_select\AttributeSelectWidget;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
@@ -21,6 +22,7 @@ use kartik\grid\DataColumn;
 use kartik\select2\Select2;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\grid\GridView as GridViewAlias;
 use yii\helpers\Html;
 use yii\web\View;
 use kartik\grid\GridView;
@@ -63,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							'before' => AttributeSelectWidget::widget([
 								'model' => $user,
 								'attribute' => 'relDynamicAttributes',
-								'renderingMode' => AttributeSelectWidget::MODE_FORM,
-								'loadingMode' => AttributeSelectWidget::DATA_MODE_AJAX,
+								'renderingMode' => SelectionWidgetInterface::MODE_FORM,
+								'loadingMode' => SelectionWidgetInterface::DATA_MODE_AJAX,
 								'multiple' => true,
 								'postUrl' => $updateAttributeAction
 							]),
@@ -75,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'export' => false,
 						'resizableColumns' => false,
 						'responsive' => true,
-						'filterPosition' => GridView::FILTER_POS_BODY,
+						'filterPosition' => GridViewAlias::FILTER_POS_BODY,
 						'columns' => [
 							[
 								'class' => DataColumn::class,

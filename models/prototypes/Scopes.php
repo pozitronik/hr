@@ -11,6 +11,9 @@ use yii\base\Model;
  */
 class Scopes extends Model {
 
+	/**
+	 *
+	 */
 	public function DefineScope():void {
 
 	}

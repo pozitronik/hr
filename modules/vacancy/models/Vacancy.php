@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\vacancy\models;
 
-use pozitronik\helpers\Utils;
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\helpers\Utils;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\ARExtended;
 use app\models\relations\RelUsersGroupsRoles;
 use app\widgets\alert\AlertModel;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
@@ -131,7 +131,7 @@ class Vacancy extends ActiveRecord {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -162,72 +162,72 @@ class Vacancy extends ActiveRecord {
 	}
 
 	/**
-	 * @return Groups|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasOne(Groups::class, ['id' => 'group']);
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserPosition() {
+	public function getRelRefUserPosition():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);
 	}
 
 	/**
-	 * @return RefLocations|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefLocation() {
+	public function getRelRefLocation():ActiveQuery {
 		return $this->hasOne(RefLocations::class, ['id' => 'location']);
 	}
 
 	/**
-	 * @return RefVacancyStatuses|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefVacancyStatus() {
+	public function getRelRefVacancyStatus():ActiveQuery {
 		return $this->hasOne(RefVacancyStatuses::class, ['id' => 'status']);
 	}
 
 	/**
-	 * @return RefVacancyRecruiters|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefVacancyRecruiter() {
+	public function getRelRefVacancyRecruiter():ActiveQuery {
 		return $this->hasOne(RefVacancyRecruiters::class, ['id' => 'recruiter']);
 	}
 
 	/**
-	 * @return RefSalaryPremiumGroups|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefSalaryPremiumGroup() {
+	public function getRelRefSalaryPremiumGroup():ActiveQuery {
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group']);
 	}
 
 	/**
-	 * @return RefGrades|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefGrade() {
+	public function getRelRefGrade():ActiveQuery {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade']);
 	}
 
 	/**
-	 * @return Users|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelEmployer() {
+	public function getRelEmployer():ActiveQuery {
 		return $this->hasOne(Users::class, ['id' => 'employer']);
 	}
 
 	/**
-	 * @return Users|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelTeamlead() {
+	public function getRelTeamlead():ActiveQuery {
 		return $this->hasOne(Users::class, ['id' => 'teamlead']);
 	}
 
 	/**
-	 * @return RelVacancyGroupRoles[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelVacancyGroupRoles() {
+	public function getRelVacancyGroupRoles():ActiveQuery {
 		return $this->hasMany(RelVacancyGroupRoles::class, ['vacancy_id' => 'id']);
 	}
 
@@ -235,16 +235,16 @@ class Vacancy extends ActiveRecord {
 	 * @param int[] $roles
 	 * @throws Throwable
 	 */
-	public function setRelRefUserRoles($roles):void {
-		$droppedRoles = array_diff(ArrayHelper::getColumn($this->relVacancyGroupRoles, 'role_id'), (array)$roles);
+	public function setRelRefUserRoles(array $roles):void {
+		$droppedRoles = array_diff(ArrayHelper::getColumn($this->relVacancyGroupRoles, 'role_id'), $roles);
 		RelVacancyGroupRoles::unlinkModels($this, $droppedRoles);
 		RelVacancyGroupRoles::linkModels($this, $roles);
 	}
 
 	/**
-	 * @return RefUserRoles[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRoles() {
+	public function getRelRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role_id'])->via('relVacancyGroupRoles');
 	}
 

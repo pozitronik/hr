@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\history\widgets\timeline_entry;
 
-use pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\modules\history\models\TimelineEntry;
 
 /**

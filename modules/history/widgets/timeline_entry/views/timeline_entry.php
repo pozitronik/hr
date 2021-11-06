@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var TimelineEntry $entry
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\history\models\TimelineEntry;
 use app\modules\users\models\Users;
 use yii\web\View;

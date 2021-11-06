@@ -8,7 +8,7 @@ use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
 use app\modules\users\models\references\RefUserRoles;
 use yii\db\ActiveQuery;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "rel_users_groups_roles".
@@ -26,7 +26,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -131,7 +131,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelUsersGroups[]
+	 * @return ActiveQuery
 	 */
 	public
 	function getRelUsersGroups():ActiveQuery {

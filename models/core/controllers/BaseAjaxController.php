@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\core\controllers;
 
-use pozitronik\core\models\ajax_answer\AjaxAnswer;
+use app\components\pozitronik\core\models\ajax_answer\AjaxAnswer;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\ContentNegotiator;
@@ -19,6 +19,9 @@ use yii\web\Response;
 class BaseAjaxController extends CoreController {
 	private $_answer;
 
+	/**
+	 *
+	 */
 	public function init():void {
 		parent::init();
 		$this->enableCsrfValidation = false;
@@ -76,7 +79,7 @@ class BaseAjaxController extends CoreController {
 	/**
 	 * @param AjaxAnswer $answer
 	 */
-	public function setAnswer($answer):void {
+	public function setAnswer(AjaxAnswer $answer):void {
 		$this->_answer = $answer;
 	}
 

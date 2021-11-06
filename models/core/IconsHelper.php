@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\models\core;
 
 use app\modules\history\models\HistoryEventInterface;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 
 /**
  * Class Icons
@@ -36,16 +36,12 @@ class IconsHelper {
 		switch ($eventType) {
 			case HistoryEventInterface::EVENT_CREATED:
 				return "<i class='fa fa-2x fa-plus-circle' style='color: #51a351;' title='Создание'></i>";
-			break;
 			case HistoryEventInterface::EVENT_CHANGED:
 				return "<i class='fa fa-2x fa-exchange-alt' title='Изменение'></i>";
-			break;
 			case HistoryEventInterface::EVENT_DELETED:
 				return "<i class='fa fa-2x fa-minus-circle' style='color: Tomato;' title='Удаление'></i>";
-			break;
 			default:
 				return "<i class='fa fa-2x fa-question-circle' title='Неизвестный тип события'></i>";
-			break;
 		}
 	}
 

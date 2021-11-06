@@ -62,7 +62,7 @@ class AttributePropertyDictionary implements AttributePropertyInterface {
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		return false;
 	}
 
@@ -107,7 +107,7 @@ class AttributePropertyDictionary implements AttributePropertyInterface {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		return null;
@@ -116,7 +116,7 @@ class AttributePropertyDictionary implements AttributePropertyInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return $value;
 	}
 }

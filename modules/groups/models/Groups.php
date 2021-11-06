@@ -3,16 +3,16 @@ declare(strict_types = 1);
 
 namespace app\modules\groups\models;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginTrait;
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\core\models\core_module\PluginTrait;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\Upload;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelGroupsGroups;
@@ -30,9 +30,9 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property string $name Название
- * @property integer $type Тип группы
+ * @property int $type Тип группы
  * @property string $comment Описание
- * @property integer|null $daddy Пользователь, создавший группу
+ * @property int|null $daddy Пользователь, создавший группу
  * @property string $logotype Название файла-логотипа
  * @property ActiveQuery|Users[] $relUsers Пользователи в группе
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Связь с релейшеном пользователей
@@ -55,14 +55,14 @@ use yii\db\ActiveQuery;
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property array $rolesInGroup
  * @property array $dropUsers
- * @property boolean $deleted
+ * @property bool $deleted
  * @property LCQuery $relUsersHierarchy Пользователи во всех группах вниз по иерархии
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
- * @property-read integer $usersCount Количество пользователей в группе
- * @property-read integer $vacancyCount Количество вакансий в группе
+ * @property-read int $usersCount Количество пользователей в группе
+ * @property-read int $vacancyCount Количество вакансий в группе
  *
- * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
+ * @property-read int $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
 class Groups extends ActiveRecord {
@@ -148,23 +148,23 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelUsersGroups[]
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroups() {
+	public function getRelUsersGroups():ActiveQuery {
 		return $this->hasMany(RelUsersGroups::class, ['group_id' => 'id']);
 	}
 
 	/**
-	 * @return ActiveQuery|Users[]|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 	}
 
 	/**
-	 * @return ActiveQuery|Vacancy[]|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelVacancy() {
+	public function getRelVacancy():ActiveQuery {
 		return $this->hasMany(Vacancy::class, ['group' => 'id']);
 	}
 
@@ -172,7 +172,7 @@ class Groups extends ActiveRecord {
 	 * @param ActiveQuery|Users[] $relGroupsUsers
 	 * @throws Throwable
 	 */
-	public function setRelUsers($relGroupsUsers):void {
+	public function setRelUsers(ActiveQuery|array $relGroupsUsers):void {
 		RelUsersGroups::linkModels($relGroupsUsers, $this);
 	}
 
@@ -187,48 +187,48 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Релейшен к назначению ролей в этой группе
-	 * @return ActiveQuery|RelUsersGroupsRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
 	}
 
 	/**
 	 * Все назначенные роли в этой группе
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRoles() {
+	public function getRelRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 
 	/**
 	 * Все роли боссов в этой группе
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesLeader() {
+	public function getRelRefUserRolesLeader():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
 	}
 
 	/**
 	 * Все роли важных шишек в этой группе
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
-	public function getRelRefUserRolesImportant() {
+	public function getRelRefUserRolesImportant():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
 	}
 
 	/**
-	 * @return ActiveQuery|RelGroupsGroups[]
+	 * @return ActiveQuery
 	 */
-	public function getRelGroupsGroupsChild() {
+	public function getRelGroupsGroupsChild():ActiveQuery {
 		return $this->hasMany(RelGroupsGroups::class, ['parent_id' => 'id']);
 	}
 
 	/**
 	 * Вернет все группы, дочерние по отношению к текущей
-	 * @return Groups[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelChildGroups() {
+	public function getRelChildGroups():ActiveQuery {
 		return $this->hasMany(self::class, ['id' => 'child_id'])->via('relGroupsGroupsChild');
 	}
 
@@ -237,7 +237,7 @@ class Groups extends ActiveRecord {
 	 * @param ActiveQuery|Groups[] $childGroups
 	 * @throws Throwable
 	 */
-	public function setRelChildGroups($childGroups):void {
+	public function setRelChildGroups(ActiveQuery|array $childGroups):void {
 		RelGroupsGroups::linkModels($this, $childGroups);
 		$this->dropCaches();
 	}
@@ -253,17 +253,17 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelGroupsGroups[]
+	 * @return ActiveQuery
 	 */
-	public function getRelGroupsGroupsParent() {
+	public function getRelGroupsGroupsParent():ActiveQuery {
 		return $this->hasMany(RelGroupsGroups::class, ['child_id' => 'id']);
 	}
 
 	/**
 	 * Вернет все группы, дочерние по отношению к текущей
-	 * @return Groups[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelParentGroups() {
+	public function getRelParentGroups():ActiveQuery {
 		return $this->hasMany(self::class, ['id' => 'parent_id'])->via('relGroupsGroupsParent');
 	}
 
@@ -272,7 +272,7 @@ class Groups extends ActiveRecord {
 	 * @param ActiveQuery|Groups[] $parentGroups
 	 * @throws Throwable
 	 */
-	public function setRelParentGroups($parentGroups):void {
+	public function setRelParentGroups(ActiveQuery|array $parentGroups):void {
 		RelGroupsGroups::linkModels($parentGroups, $this);
 		if (!empty($parentGroups)) {
 			foreach ((array)$parentGroups as $group) {
@@ -296,9 +296,9 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefGroupTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroupTypes() {//todo: Большое количество повторных запросов, посмотреть
+	public function getRelGroupTypes():ActiveQuery {//todo: Большое количество повторных запросов, посмотреть
 		return $this->hasOne(RefGroupTypes::class, ['id' => 'type']);
 	}
 
@@ -340,7 +340,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Добавляет массив ролей пользователя к группе
-	 * @param array<integer, array<integer>> $userRoles
+	 * @param array<int, array<int>> $userRoles
 	 * @throws Throwable
 	 */
 	public function setRolesInGroup(array $userRoles):void {
@@ -489,15 +489,15 @@ class Groups extends ActiveRecord {
 	 * @param array $stackedId Массив всех обойдённых групп (плоский)
 	 * @return array Массив всех обойдённых групп (иерархический)
 	 */
-	public function buildHierarchyTree(&$stackedId = []):array {
-		if (!in_array($this->id, $stackedId)) $stackedId[] = $this->id;
+	public function buildHierarchyTree(array &$stackedId = []):array {
+		if (!in_array($this->id, $stackedId, true)) $stackedId[] = $this->id;
 		$hierarchyTree = [];
 		/** @var self[] $childGroups */
 		$childGroups = Yii::$app->cache->getOrSet(static::class."getRelChildGroups{$this->id}", function() {
 			return $this->getRelChildGroups()->orderBy('name')->active()->all();
 		});
 		foreach ($childGroups as $childGroup) {
-			if (in_array($childGroup->id, $stackedId)) {
+			if (in_array($childGroup->id, $stackedId, true)) {
 				$hierarchyTree[$this->id][$childGroup->id] = $childGroup->id;
 			} else {
 				$stackedId[] = $childGroup->id;
@@ -547,7 +547,7 @@ class Groups extends ActiveRecord {
 				}
 			}
 			/** @var RefUserPositionTypes[] $allPositionTypes */
-			foreach ($allPositionTypes as &$positionType) {
+			foreach ($allPositionTypes as $positionType) {
 				$positionType->count = ArrayHelper::getValue($countersArray, $positionType->id, 0);
 			}
 
@@ -576,7 +576,7 @@ class Groups extends ActiveRecord {
 				$vacancyStatusesCount[ArrayHelper::getValue($value, 'id')] = ArrayHelper::getValue($value, 'count');
 			}
 
-			foreach ($allVacancyStatuses as &$vacancyStatus) {
+			foreach ($allVacancyStatuses as $vacancyStatus) {
 				$vacancyStatus->count = ArrayHelper::getValue($vacancyStatusesCount, $vacancyStatus->id, 0);
 			}
 
@@ -585,12 +585,12 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * Возвращает статистику по количеству юзеров в указанных группах (уники и суммари)
+	 * Возвращает статистику по количеству юзеров в указанных группах (уники и summary)
 	 * @param int[] $scope
 	 * @return int[]
 	 */
 	public static function getGroupScopeUsersCount(array $scope):array {
-		return Users::find()->leftJoin('rel_users_groups', 'rel_users_groups.user_id = sys_users.id')//поскольку нам нужно получать два разных аггрегатора и нельзя получать индекс, то мы не можем использовать joinWith (ORM будет требовать индекс).
+		return Users::find()->leftJoin('rel_users_groups', 'rel_users_groups.user_id = sys_users.id')//поскольку нам нужно получать два разных агрегатора и нельзя получать индекс, то мы не можем использовать joinWith (ORM будет требовать индекс).
 		->select(['COUNT(DISTINCT sys_users.id) AS dcount', 'COUNT(sys_users.id) as count'])
 			->where(['rel_users_groups.group_id' => $scope])
 			->asArray()

@@ -7,8 +7,9 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
+use app\components\pozitronik\helpers\Utils;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\widgets\navigation_menu\PrivilegesNavigationMenuWidget;
 use kartik\grid\DataColumn;
@@ -51,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Privileges $model) {
 				return PrivilegesNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => PrivilegesNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

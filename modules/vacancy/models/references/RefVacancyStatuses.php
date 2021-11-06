@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\vacancy\models\references;
 
 use app\modules\groups\models\Groups;
-use pozitronik\references\models\CustomisableReference;
+use app\components\pozitronik\references\models\CustomisableReference;
 use app\modules\vacancy\models\Vacancy;
 use yii\db\ActiveQuery;
 
@@ -28,16 +28,16 @@ class RefVacancyStatuses extends CustomisableReference {
 		return 'ref_vacancy_statuses';
 	}
 	/**
-	 * @return Vacancy[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelVacancy() {
+	public function getRelVacancy():ActiveQuery {
 		return $this->hasMany(Vacancy::class, ['status' => 'id']);
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelGroups() {
+	public function getRelGroups():ActiveQuery {
 		return $this->hasMany(Groups::class, ['id' => 'group'])->via('relVacancy');
 	}
 }

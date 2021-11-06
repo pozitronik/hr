@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\dynamic_attributes\models;
 
-use pozitronik\sys_exceptions\SysExceptions;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\sys_exceptions\SysExceptions;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
@@ -47,6 +47,9 @@ class DynamicAttributesSearchCollection extends Model {
 		];
 	}
 
+	/**
+	 *
+	 */
 	public function init():void {
 		parent::init();
 		if ([] === $this->searchItems) $this->searchItems[] = new DynamicAttributesSearchItem();//По умолчанию одно условие
@@ -90,7 +93,7 @@ class DynamicAttributesSearchCollection extends Model {
 
 	/**
 	 * Для предвыбранного атрибута нужно отдать его поля
-	 * @param null|integer $index
+	 * @param null|int $index
 	 * @return array
 	 * @throws Throwable
 	 */
@@ -103,8 +106,8 @@ class DynamicAttributesSearchCollection extends Model {
 
 	/**
 	 * Для предвыбранного свойства нужно отдать его условия
-	 * @param null|integer $attributeIndex
-	 * @param null|integer $propertyIndex
+	 * @param null|int $attributeIndex
+	 * @param null|int $propertyIndex
 	 * @return array
 	 * @throws Throwable
 	 */
@@ -119,7 +122,7 @@ class DynamicAttributesSearchCollection extends Model {
 	/**
 	 * Для задания data-type-атрибутов у выбиралки типов при поиске придумано вот такое решение
 	 * @see https://github.com/kartik-v/yii2-widgets/issues/247
-	 * @param null|integer $index
+	 * @param null|int $index
 	 * @return array
 	 * @throws Throwable
 	 */
@@ -158,7 +161,6 @@ class DynamicAttributesSearchCollection extends Model {
 			switch ($groupId) {
 				case self::SCOPE_ALL_GROUPS://все группы - это все группы
 					return $query;
-				break;
 				default:
 					$groups[] = Groups::findModels($this->searchScope);
 				break;
@@ -211,7 +213,7 @@ class DynamicAttributesSearchCollection extends Model {
 		foreach ($this->searchItems as $searchItem) {
 			if (null === $model = DynamicAttributes::findModel($searchItem->attribute)) continue;
 			$aliasName = "attributes{$searchItem->attribute}";
-			if (!in_array($aliasName, $usedAliases)) {
+			if (!in_array($aliasName, $usedAliases, true)) {
 				$query->leftJoin("rel_users_attributes $aliasName", "$aliasName.user_id = sys_users.id");
 				$usedAliases[] = $aliasName;
 			}
@@ -221,7 +223,7 @@ class DynamicAttributesSearchCollection extends Model {
 					/** @noinspection BadExceptionsProcessingInspection */
 					try {
 						$typeAlias = $aliasName.$type.$searchItem->property;
-						if (!in_array($typeAlias, $usedAliases)) {
+						if (!in_array($typeAlias, $usedAliases, true)) {
 							$typeTableName = $className::tableName();
 
 							$query->leftJoin("$typeTableName $typeAlias", "$typeAlias.user_id = sys_users.id AND $typeAlias.property_id = {$searchItem->property} AND $typeAlias.attribute_id = $aliasName.attribute_id");
@@ -258,7 +260,7 @@ class DynamicAttributesSearchCollection extends Model {
 	/**
 	 * @param int[] $searchScope
 	 */
-	public function setSearchScope($searchScope):void {
+	public function setSearchScope(array $searchScope):void {
 		$this->searchScope = empty($searchScope)?[]:$searchScope;
 	}
 

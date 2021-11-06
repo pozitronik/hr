@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\interfaces\access\AccessMethods;
-use pozitronik\core\interfaces\access\UserAccessInterface;
+use app\components\pozitronik\core\interfaces\access\AccessMethods;
+use app\components\pozitronik\core\interfaces\access\UserAccessInterface;
 use app\models\core\controllers\CoreController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\models\user\CurrentUser;
 use ReflectionException;
@@ -35,8 +35,8 @@ class UserAccess extends Model implements UserAccessInterface {
 		if (null === $user = CurrentUser::User()) return [];
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
-		$defaultAllow = ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
-		if ($user->is('sysadmin')) $defaultAllow = true;
+		$allow = ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
+		if ($user->is('sysadmin')) $allow = true;
 
 		$actions = CoreController::GetControllerActions($controller);
 
@@ -53,13 +53,13 @@ class UserAccess extends Model implements UserAccessInterface {
 					'roles' => ['@']
 				];
 				$ruleDefined = true;
-				break 1;
+				break;
 
 			}
 			if (!$ruleDefined) {//Ни одно право не определило правило доступа
 				$rules[] = [
 					'actions' => [$action],
-					'allow' => $defaultAllow,
+					'allow' => $allow,
 					'roles' => ['@']
 				];
 			}
@@ -68,7 +68,7 @@ class UserAccess extends Model implements UserAccessInterface {
 	}
 
 	/**
-	 * Вычисляет, имется ли у текущего пользователя доступ к выполнению метода у модели
+	 * Вычисляет, имеЕтся ли у текущего пользователя доступ к выполнению метода у модели
 	 * @param Model $model
 	 * @param null|int $method
 	 * @param array|null $actionParameters

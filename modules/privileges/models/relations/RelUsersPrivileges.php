@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\privileges\models\relations;
 
 use yii\db\ActiveRecord;
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\Relations;
 use app\modules\privileges\models\Privileges;
 use app\modules\users\models\Users;
 
@@ -19,7 +19,7 @@ class RelUsersPrivileges extends ActiveRecord {
 	use Relations;
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [

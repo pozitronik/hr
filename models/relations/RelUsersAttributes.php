@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\Relations;
 use yii\db\ActiveRecord;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
@@ -25,7 +25,7 @@ class RelUsersAttributes extends ActiveRecord {
 	use Relations;
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -66,16 +66,16 @@ class RelUsersAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributesTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributesTypes() {
+	public function getRelUsersAttributesTypes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributesTypes::class, ['user_attribute_id' => 'id']);
 	}
 
 	/**
-	 * @return RefAttributesTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRefAttributesTypes() {
+	public function getRefAttributesTypes():ActiveQuery {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
 	}
 
@@ -97,9 +97,9 @@ class RelUsersAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return DynamicAttributes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelDynamicAttribute() {
+	public function getRelDynamicAttribute():ActiveQuery {
 		return $this->hasOne(DynamicAttributes::class, ['id' => 'attribute_id']);
 	}
 }

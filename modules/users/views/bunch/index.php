@@ -16,7 +16,7 @@ use app\modules\users\models\Users;
 use app\modules\users\models\UsersMassUpdate;
 use app\modules\users\UsersModule;
 use kartik\select2\Select2;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\web\View;

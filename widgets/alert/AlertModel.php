@@ -16,9 +16,9 @@ use yii\base\Model;
  * @property string|null $title
  * @property string|null $linkUrl
  * @property string $linkTarget
- * @property boolean $showSeparator
+ * @property bool $showSeparator
  * @property int $delay
- * @property boolean $useAnimation
+ * @property bool $useAnimation
  * @property array $pluginOptions
  */
 class AlertModel extends Model {
@@ -120,6 +120,9 @@ class AlertModel extends Model {
 		]);
 	}
 
+	/**
+	 *
+	 */
 	public static function AccessNotify():void {
 		self::Notify([
 			'type' => Growl::TYPE_WARNING,
@@ -159,7 +162,7 @@ class AlertModel extends Model {
 	 * @return string
 	 */
 	public function getIcon():string {
-		return $this->icon;
+		return (string)$this->icon;
 	}
 
 	/**
@@ -226,9 +229,9 @@ class AlertModel extends Model {
 	}
 
 	/**
-	 * @return int|false
+	 * @return bool|false
 	 */
-	public function getDelay() {
+	public function getDelay():bool {
 		return $this->delay;
 	}
 

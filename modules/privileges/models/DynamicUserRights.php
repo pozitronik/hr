@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\models\lcquery\LCQuery;
-use pozitronik\core\traits\ARExtended;
-use pozitronik\core\interfaces\access\AccessMethods;
-use pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\interfaces\access\AccessMethods;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
 use app\models\core\controllers\CoreController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginsSupport;
+use app\components\pozitronik\core\models\core_module\PluginsSupport;
 use ReflectionException;
 use Throwable;
 use yii\base\InvalidConfigException;
@@ -119,7 +119,10 @@ class DynamicUserRights extends ActiveRecord implements UserRightInterface {
 		return parent::beforeValidate();
 	}
 
-	private function prepareAccessMap() {
+	/**
+	 *
+	 */
+	private function prepareAccessMap():void {
 		$this->_rules[$this->ruleActionsIndexName] = [];
 		foreach ($this->actionsAccessMap as $item) {
 			if (null !== $item->state) {

@@ -9,7 +9,7 @@ use app\modules\graph\models\GroupGraph;
 use app\modules\graph\models\UserGraph;
 use app\modules\users\models\Users;
 use app\models\core\controllers\BaseAjaxController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\user\CurrentUser;
 use app\modules\groups\models\Groups;
 use Throwable;

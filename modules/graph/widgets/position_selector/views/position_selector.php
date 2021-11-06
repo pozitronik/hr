@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /**
  * @var View $this
  * @var array $positionConfigurations -- array of configs for current user/group
- * @var integer $currentConfiguration -- current config
+ * @var int $currentConfiguration -- current config
  */
 
 use yii\web\View;

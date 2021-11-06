@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use pozitronik\core\traits\ARExtended;
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\Relations;
 use yii\db\ActiveRecord;
 use app\modules\groups\models\Groups;
 use app\modules\history\models\HistoryEventInterface;
@@ -28,7 +28,7 @@ class RelUsersGroups extends ActiveRecord {
 	use ARExtended;
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -81,16 +81,16 @@ class RelUsersGroups extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersGroupsRoles[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersGroupsRoles() {
+	public function getRelUsersGroupsRoles():ActiveQuery {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id']);
 	}
 
 	/**
-	 * @return RefUserRoles[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRefUserRoles() {
+	public function getRefUserRoles():ActiveQuery {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
 	}
 

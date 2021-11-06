@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\models\relations;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\modules\dynamic_attributes\models\references\RefAttributesTypes;
 use Throwable;
@@ -48,9 +48,9 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersAttributes() {
+	public function getRelUsersAttributes():ActiveQuery {
 		return $this->hasMany(RelUsersAttributes::class, ['id' => 'user_attribute_id']);
 	}
 
@@ -86,9 +86,9 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefAttributesTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRefAttributesType() {
+	public function getRefAttributesType():ActiveQuery {
 		return $this->hasOne(RefAttributesTypes::class, ['id' => 'type']);
 	}
 
@@ -99,7 +99,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	 * @param int $attributeId
 	 * @return bool
 	 */
-	public static function setAttributeTypeForUser($typeId, int $userId, int $attributeId):bool {
+	public static function setAttributeTypeForUser(array|int $typeId, int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
 		if ($rel) {
 			if (is_array($typeId)) {
@@ -124,7 +124,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public static function clearAttributeTypeForUser($typeId, int $userId, int $attributeId):bool {
+	public static function clearAttributeTypeForUser(array|int $typeId, int $userId, int $attributeId):bool {
 		$rel = RelUsersAttributes::find()->where(['user_id' => $userId, 'attribute_id' => $attributeId])->one();
 		if ($rel) {
 			if (is_array($typeId)) {

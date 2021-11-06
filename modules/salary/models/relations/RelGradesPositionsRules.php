@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\salary\models\relations;
 
 use yii\db\ActiveRecord;
-use pozitronik\core\traits\Relations;
+use app\components\pozitronik\core\traits\Relations;
 
 /**
  * Модель правил соответствия должностей и грейдов. Т.е. должности может быть присвоен грейд из тех, что есть в этой таблице.

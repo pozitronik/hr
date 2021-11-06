@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\models\Groups;
 use app\widgets\alert\AlertModel;
 use Throwable;
@@ -24,8 +24,8 @@ class UsersMassUpdate extends Model {
 	private $usersId = [];
 	private $usersIdSelected = [];
 	private $virtualUser;
-	private $relGroups; //Поскольку модель пользователя сразу применяет переданные группы, то в вирутальную модель вводим переменную для хранения.
-	private $relDynamicAttributes; //Поскольку модель пользователя сразу применяет переданные атрибуты, то в вирутальную модель вводим переменную для хранения.
+	private $relGroups; //Поскольку модель пользователя сразу применяет переданные группы, то в виртуальную модель вводим переменную для хранения.
+	private $relDynamicAttributes; //Поскольку модель пользователя сразу применяет переданные атрибуты, то в виртуальную модель вводим переменную для хранения.
 	private $dropGroups;
 	private $dropUsersAttributes;
 
@@ -161,9 +161,9 @@ class UsersMassUpdate extends Model {
 	}
 
 	/**
-	 * @return mixed
+	 * @return Users
 	 */
-	public function getVirtualUser() {
+	public function getVirtualUser():Users {
 		return $this->virtualUser;
 	}
 
@@ -191,7 +191,7 @@ class UsersMassUpdate extends Model {
 	}
 
 	/**
-	 * @return bool|int[]
+	 * @return array
 	 */
 	public function getUsersIdSelected():array {
 		return $this->usersIdSelected;

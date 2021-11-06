@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\salary\models;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
 use app\modules\salary\models\references\RefGrades;
 use app\modules\salary\models\references\RefLocations;
@@ -84,30 +84,30 @@ class SalaryFork extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRefUserPosition() {
+	public function getRefUserPosition():ActiveQuery {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position_id']);
 	}
 
 	/**
-	 * @return RefGrades|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRefGrade() {
+	public function getRefGrade():ActiveQuery {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade_id']);
 	}
 
 	/**
-	 * @return RefSalaryPremiumGroups|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
-	public function getRefPremiumGroup() {
+	public function getRefPremiumGroup():ActiveQuery {
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id']);
 	}
 
 	/**
-	 * @return RefLocations|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
-	public function getRefLocation() {
+	public function getRefLocation():ActiveQuery {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id']);
 	}
 

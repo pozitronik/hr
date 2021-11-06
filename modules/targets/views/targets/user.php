@@ -1,8 +1,8 @@
 <?php
 declare(strict_types = 1);
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
-use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\targets\models\references\RefTargetsTypes;
 use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
@@ -10,10 +10,10 @@ use app\modules\targets\models\TargetsSearch;
 use app\modules\targets\TargetsModule;
 use app\modules\targets\widgets\navigation_menu\TargetNavigationMenuWidget;
 use app\modules\users\models\Users;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\i18n\Formatter;
@@ -69,7 +69,7 @@ $userTargetsId = ArrayHelper::getColumn(Targets::FindUserTargetsScope($user)->al
 			'value' => static function(Targets $model) {
 				return TargetNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => AttributeNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

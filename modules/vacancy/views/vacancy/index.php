@@ -7,13 +7,14 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\core\IconsHelper;
-use pozitronik\helpers\Utils;
-use pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
+use app\components\pozitronik\helpers\Utils;
+use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefLocations;
 use app\modules\salary\models\references\RefSalaryPremiumGroups;
 use app\modules\salary\models\references\RefUserPositions;
@@ -23,7 +24,7 @@ use app\modules\vacancy\models\references\RefVacancyStatuses;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\models\VacancySearch;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
-use pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -68,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Vacancy $model) {
 				return VacancyNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => VacancyNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

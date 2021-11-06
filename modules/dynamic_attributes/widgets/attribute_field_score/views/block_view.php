@@ -9,8 +9,9 @@ declare(strict_types = 1);
  * @var string $attribute
  */
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use kartik\base\BootstrapInterface;
 use kartik\rating\StarRating;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -19,7 +20,7 @@ use yii\web\View;
 
 <div class="panel panel-score">
 	<div class="panel-heading">
-		<div class="panel-title"><?= null === $model->$attribute?null:$model->$attribute->getAttributeLabel($scoreAttributeName) ?></div>
+		<div class="panel-title"><?= $model->$attribute?->getAttributeLabel($scoreAttributeName) ?></div>
 	</div>
 
 	<div class="panel-body">
@@ -29,7 +30,7 @@ use yii\web\View;
 					'name' => "DynamicAttributeProperty[$model->id][$scoreAttributeName]",
 					'value' => $value = ArrayHelper::getValue($model->$attribute, $scoreAttributeName),
 					'pluginOptions' => [
-						'size' => (INF === $value)?StarRating::SIZE_TINY:StarRating::SIZE_SMALL,
+						'size' => (INF === $value)?BootstrapInterface::SIZE_TINY:BootstrapInterface::SIZE_SMALL,
 						'displayOnly' => true,
 						'stars' => 5,
 						'step' => 0.1,

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\models;
 
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\base\Model;
 
 /**
@@ -12,7 +12,7 @@ use yii\base\Model;
  * prototype
  * @package app\models\users
  *
- * @property integer $userId
+ * @property int $userId
  * @property array $nodePositionsConfig
  * @property Bookmarks[] $bookmarks
  *

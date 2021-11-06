@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace app\modules\privileges\models;
 
-use pozitronik\core\traits\ARExtended;
-use pozitronik\core\interfaces\access\UserRightInterface;
-use pozitronik\helpers\ArrayHelper;
-use pozitronik\helpers\DateHelper;
+use app\components\pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\interfaces\access\UserRightInterface;
+use app\components\pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\DateHelper;
 use yii\db\ActiveRecord;
-use pozitronik\core\models\core_module\PluginsSupport;
-use pozitronik\core\models\lcquery\LCQuery;
+use app\components\pozitronik\core\models\core_module\PluginsSupport;
+use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\modules\privileges\models\relations\RelPrivilegesDynamicRights;
 use app\modules\privileges\models\relations\RelPrivilegesRights;
 use app\modules\privileges\models\relations\RelUsersPrivileges;
@@ -96,9 +96,9 @@ class Privileges extends ActiveRecord {
 
 	/**
 	 * Связь с именами классов
-	 * @return ActiveQuery|LCQuery|RelPrivilegesRights[]
+	 * @return ActiveQuery
 	 */
-	public function getRelPrivilegesRights() {
+	public function getRelPrivilegesRights():ActiveQuery {
 		return $this->hasMany(RelPrivilegesRights::class, ['privilege' => 'id']);
 	}
 
@@ -113,7 +113,7 @@ class Privileges extends ActiveRecord {
 	 * @param string[] $userRightsNames
 	 * @throws Throwable
 	 */
-	public function setUserRightsNames($userRightsNames):void {
+	public function setUserRightsNames(array $userRightsNames):void {
 		if ($this->isNewRecord || empty($userRightsNames)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
 		RelPrivilegesRights::linkModels($this, $userRightsNames);
 		$this->dropCaches();
@@ -130,7 +130,7 @@ class Privileges extends ActiveRecord {
 	 * @param int[] $userRightsIds
 	 * @throws Throwable
 	 */
-	public function setUserDynamicRightsIds($userRightsIds):void {
+	public function setUserDynamicRightsIds(array $userRightsIds):void {
 		if ($this->isNewRecord || empty($userRightsIds)) return;//Обработчик сохранения перевызовет метод после сохранения основной модели
 		RelPrivilegesDynamicRights::linkModels($this, $userRightsIds);
 		$this->dropCaches();
@@ -201,16 +201,16 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersPrivileges[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsersPrivileges() {
+	public function getRelUsersPrivileges():ActiveQuery {
 		return $this->hasMany(RelUsersPrivileges::class, ['privilege_id' => 'id']);
 	}
 
 	/**
-	 * @return Users|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersPrivileges');
 	}
 
@@ -230,9 +230,9 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
-	 * @return LCQuery|RelPrivilegesDynamicRights[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelPrivilegesDynamicRights() {
+	public function getRelPrivilegesDynamicRights():ActiveQuery {
 		return $this->hasMany(RelPrivilegesDynamicRights::class, ['privilege' => 'id']);
 	}
 

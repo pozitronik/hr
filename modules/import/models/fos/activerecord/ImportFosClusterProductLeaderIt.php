@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos\activerecord;
 
-use pozitronik\core\traits\ARExtended;
+use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -49,9 +49,9 @@ class ImportFosClusterProductLeaderIt extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportFosUsers|ActiveQuery
+	 * @return ActiveQuery
 	 */
-	public function getRelUsers() {
+	public function getRelUsers():ActiveQuery {
 		return $this->hasOne(ImportFosUsers::class, ['id' => 'user_id']);
 	}
 }

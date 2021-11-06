@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\controller;
 
 use app\models\core\controllers\WigetableController;
-use pozitronik\core\traits\ModelExtended;
+use app\components\pozitronik\core\traits\ModelExtended;
 use Throwable;
 use yii\base\Widget;
 
@@ -13,7 +13,7 @@ use yii\base\Widget;
  * Отображение WigetableController в виде виджетов/меню
  * @package app\components\controller
  *
- * @property integer $mode
+ * @property int $mode
  * @property WigetableController|ModelExtended $model
  */
 class ControllerWidget extends Widget {
@@ -48,15 +48,12 @@ class ControllerWidget extends Widget {
 					'action' => $action,
 					'caption' => $caption
 				]);
-			break;
 			case self::MODE_MENU:
 				//not implemented yet
 				return 'mode not implemented yet';
-			break;
 			default:
 			case self::MODE_LIST:
 				return $this->render('controller_list', compact('action', 'caption'));
-			break;
 		}
 
 	}

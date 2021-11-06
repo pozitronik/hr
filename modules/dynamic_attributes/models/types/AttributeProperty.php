@@ -7,7 +7,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\modules\dynamic_attributes\widgets\attribute_field\AttributeFieldWidget;
 use Exception;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -89,7 +89,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		if (DynamicAttributePropertyAggregation::AGGREGATION_COUNT === $aggregation) {
@@ -106,7 +106,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @return self|ActiveRecord|null
+	 * @return AttributeProperty|null
 	 */
 	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();
@@ -132,9 +132,9 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param int $property_id
 	 * @param int $user_id
 	 * @param mixed $value
-	 * @return boolean
+	 * @return bool
 	 */
-	public static function saveValue(int $attribute_id, int $property_id, int $user_id, $value):bool {
+	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {
 			$record = new static(compact('attribute_id', 'user_id', 'property_id', 'value'));
 		} else {
@@ -149,10 +149,10 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	}
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 * @return mixed
 	 */
-	public static function format($value) {
+	public static function format(mixed $value) {
 		return $value;//не форматирует по умолчанию
 	}
 }

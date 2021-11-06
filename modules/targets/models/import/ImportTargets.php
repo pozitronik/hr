@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models\import;
 
-use pozitronik\core\traits\Upload;
+use app\components\pozitronik\core\traits\Upload;
 use app\models\relations\RelGroupsGroups;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -21,7 +21,7 @@ use app\modules\targets\models\Targets;
 use app\modules\targets\models\TargetsPeriods;
 use yii\base\Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
@@ -339,7 +339,6 @@ class ImportTargets extends ActiveRecord {
 			break;
 			default:
 				throw new NotFoundHttpException('Step not found');
-			break;
 		}
 		return true;
 

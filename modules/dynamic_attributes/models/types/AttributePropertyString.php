@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models\types;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use yii\db\Expression;
 
@@ -84,7 +84,7 @@ class AttributePropertyString extends AttributeProperty {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		switch ($aggregation) {
@@ -93,19 +93,16 @@ class AttributePropertyString extends AttributeProperty {
 					'type' => DynamicAttributeProperty::PROPERTY_STRING,
 					'value' => self::getModaValue(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_DICTIONARY,
 					'value' => DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
 					'value' => DynamicAttributePropertyAggregation::AggregateIntCount($models, $dropNullValues)
 				]);
-			break;
 			default:
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}
@@ -124,7 +121,7 @@ class AttributePropertyString extends AttributeProperty {
 		if ($dropNullValues) unset ($modaArray['']);
 
 		$maxValue = count($modaArray)?max($modaArray):null;
-		return (string)array_search($maxValue, $modaArray);//наиболее часто встречаемое значение
+		return (string)array_search($maxValue, $modaArray, true);//наиболее часто встречаемое значение
 	}
 
 }

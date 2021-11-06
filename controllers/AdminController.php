@@ -4,9 +4,8 @@ declare(strict_types = 1);
 namespace app\controllers;
 
 use app\models\core\controllers\WigetableController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use yii\base\InlineAction;
-use yii\base\Response;
 use yii\web\Controller;
 
 /**
@@ -19,9 +18,9 @@ class AdminController extends Controller {
 	private $controllers;
 
 	/**
-	 * @return string|Response
+	 * @return string
 	 */
-	public function actionIndex() {
+	public function actionIndex():string {
 		return $this->render('index', [
 			'controllers' => $this->controllers
 		]);
@@ -39,7 +38,7 @@ class AdminController extends Controller {
 	 * @inheritdoc
 	 */
 	public function createAction($id) {
-		if ((null === $action = parent::createAction($id)) && in_array("admin/$id", ArrayHelper::getColumn($this->controllers, 'id'))) {
+		if ((null === $action = parent::createAction($id)) && in_array("admin/$id", ArrayHelper::getColumn($this->controllers, 'id'), true)) {
 			$this->redirect(["admin/$id/index"]);
 			return new InlineAction($id, $this, 'actionIndex');//Можно вернуть пофиг что, но что-то корректное
 		}

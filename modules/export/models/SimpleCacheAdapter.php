@@ -6,11 +6,13 @@ namespace app\modules\export\models;
 use DateInterval;
 use DateTime;
 use Exception;
+use Psr\SimpleCache\InvalidArgumentException as CacheInvalidArgumentException;
 use Traversable;
 use Yii;
 use yii\base\Component;
 use Psr\SimpleCache\CacheInterface;
 use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\caching\Cache;
 use yii\di\Instance;
 
@@ -26,6 +28,9 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	 */
 	private $cache;
 
+	/**
+	 * @throws InvalidConfigException
+	 */
 	public function init() {
 		parent::init();
 
@@ -77,7 +82,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	public function delete($key):bool {
 		$this->assertValidKey($key);
 
-		return $this->has($key)?$this->cache->delete($key):true;
+		return !$this->has($key) || $this->cache->delete($key);
 	}
 
 	/**
@@ -128,11 +133,12 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	/**
 	 * @param iterable $keys
 	 * @return bool
+	 * @throws CacheInvalidArgumentException
 	 */
 	public function deleteMultiple($keys):bool {
 		if ($keys instanceof Traversable) {
 			$keys = iterator_to_array($keys, false);
-		} else if (!is_array($keys)) {
+		} elseif (!is_array($keys)) {
 			throw new InvalidArgumentException('Invalid keys: '.var_export($keys, true).'. Keys should be an array or Traversable of strings.');
 		}
 
@@ -155,7 +161,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	/**
 	 * @param $key
 	 */
-	private function assertValidKey($key) {
+	private function assertValidKey($key):void {
 		if (!is_string($key)) {
 			throw new InvalidArgumentException('Invalid key: '.var_export($key, true).'. Key should be a string.');
 		}
@@ -177,7 +183,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	/**
 	 * @param $ttl
 	 */
-	private function assertValidTtl($ttl) {
+	private function assertValidTtl($ttl):void {
 		if (null !== $ttl && !is_int($ttl) && !$ttl instanceof DateInterval) {
 			$error = 'Invalid time: '.serialize($ttl).'. Must be integer or instance of DateInterval.';
 			throw new InvalidArgumentException($error);

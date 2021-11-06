@@ -8,7 +8,7 @@ use app\modules\groups\GroupsModule;
 use app\modules\history\HistoryModule;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\VacancyModule;
-use pozitronik\widgets\BaseNavigationMenuWidget;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 

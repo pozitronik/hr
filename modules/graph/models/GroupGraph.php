@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\graph\models;
 
 use app\modules\groups\models\Groups;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 
 /**
@@ -58,7 +58,7 @@ class GroupGraph extends Graph {
 				}
 
 				$edge = new GroupEdge($group, $childGroup);
-				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"))) {
+				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"), true)) {
 					$this->edges[] = $edge;
 				}
 
@@ -87,7 +87,7 @@ class GroupGraph extends Graph {
 
 				}
 				$edge = new GroupEdge($parentGroup, $group);
-				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"))) {
+				if (!in_array($edge->id, ArrayHelper::getColumn($this->edges, "id"), true)) {
 					$this->edges[] = $edge;
 				}
 			}
@@ -98,14 +98,14 @@ class GroupGraph extends Graph {
 	/**
 	 * @param mixed $upDepth
 	 */
-	public function setUpDepth($upDepth):void {
+	public function setUpDepth(mixed $upDepth):void {
 		$this->upDepth = $upDepth;
 	}
 
 	/**
 	 * @param mixed $downDepth
 	 */
-	public function setDownDepth($downDepth):void {
+	public function setDownDepth(mixed $downDepth):void {
 		$this->downDepth = $downDepth;
 	}
 
@@ -115,8 +115,8 @@ class GroupGraph extends Graph {
 	 */
 	public function applyNodesPositions(array $positions = []):void {
 		foreach ($positions as $nodeId => $position) {
-			if (false !== ($key = array_search($nodeId, array_column($this->nodes, 'id')))) {
-				/** @var integer $key */
+			if (false !== ($key = array_search($nodeId, array_column($this->nodes, 'id'), true))) {
+				/** @var int $key */
 				$this->nodes[$key]->x = $position['x'];
 				$this->nodes[$key]->y = $position['y'];
 			}

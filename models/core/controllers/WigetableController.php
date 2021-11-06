@@ -10,8 +10,8 @@ namespace app\models\core\controllers;
  *
  * @property-read false|string $menuIcon
  * @property-read false|string $menuCaption
- * @property-read boolean $menuDisabled
- * @property-read integer $orderWeight
+ * @property-read bool $menuDisabled
+ * @property-read int $orderWeight
  * @property-read string $defaultRoute
  */
 class WigetableController extends CoreController {
@@ -21,17 +21,17 @@ class WigetableController extends CoreController {
 
 	/**
 	 * Возвращает путь к иконке контроллера
-	 * @return false|string
+	 * @return false
 	 */
-	public function getMenuIcon() {
+	public function getMenuIcon():bool {
 		return false;
 	}
 
 	/**
 	 * Возвращает строковое название пункта меню контроллера
-	 * @return false|string
+	 * @return false
 	 */
-	public function getMenuCaption() {
+	public function getMenuCaption():bool {
 		return false;
 	}
 

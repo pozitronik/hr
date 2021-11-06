@@ -11,7 +11,7 @@ use yii\base\Model;
  * @package app\models\prototypes
  *
  * @property string $name
- * @property integer $groupId
+ * @property int $groupId
  * @property array $nodes
  */
 class NodesPositionsConfig extends Model {

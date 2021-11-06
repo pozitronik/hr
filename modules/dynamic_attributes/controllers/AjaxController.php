@@ -5,7 +5,7 @@ namespace app\modules\dynamic_attributes\controllers;
 
 use app\modules\dynamic_attributes\models\DynamicAttributePropertyAggregation;
 use app\models\core\controllers\BaseAjaxController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersAttributesTypes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -122,7 +122,7 @@ class AjaxController extends BaseAjaxController {
 	 * Поиск пользователя в Select2
 	 *
 	 * @param string|null $term Строка поиска
-	 * @param int $page Номер страницы (не поддерживается, задел на будущее)
+	 * @param int|null $page Номер страницы (не поддерживается, задел на будущее)
 	 * @param int|null $user Пользователь, атрибуты которого ИСКЛЮЧАЮТСЯ из поиска
 	 * @return array
 	 */

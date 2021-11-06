@@ -10,7 +10,7 @@ use app\modules\groups\models\GroupsSearch;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
 use app\modules\users\UsersModule;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use Yii;
 use yii\base\Response;

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\dynamic_attributes\models;
 
 use app\modules\users\models\Users;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Exception;
 use yii\base\Model;
@@ -58,12 +58,16 @@ class DynamicAttributesPropertyCollection extends Model {
 
 	/**
 	 * @param Users[] $userScope
+	 * @throws Throwable
 	 */
 	public function setUserScope(array $userScope):void {
 		$this->_userScope = $userScope;
 		$this->fillScope();
 	}
 
+	/**
+	 * @throws Throwable
+	 */
 	private function fillScope():void {
 		foreach ($this->_userScope as $user) {
 			$userAttributes = $user->relDynamicAttributes;
@@ -99,7 +103,7 @@ class DynamicAttributesPropertyCollection extends Model {
 					$attributeModel->setVirtualProperty($propertyId, null, null);//skip property aggregation
 				} else {
 					$propertyClass = DynamicAttributeProperty::getTypeClass(ArrayHelper::getValue($userAttributePropertyArray, "type"));
-					if (in_array($this->aggregation, $propertyClass::aggregationConfig()) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
+					if (in_array($this->aggregation, $propertyClass::aggregationConfig(), true) && DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED !== $aggregatedValue = $propertyClass::applyAggregation(ArrayHelper::getValue($userAttributePropertyArray, 'values', []), $this->aggregation, $this->dropNullValues)) {
 						$attributeModel->setVirtualProperty($propertyId, $aggregatedValue->value, $aggregatedValue->type);
 					} else {
 						$attributeModel->setVirtualProperty($propertyId, 'Не поддерживается', DynamicAttributeProperty::PROPERTY_UNSUPPORTED);//fill by empty attribute
@@ -148,7 +152,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param int|null $attributeId
 	 */
-	public function setAttributeId($attributeId):void {
+	public function setAttributeId(?int $attributeId):void {
 		$this->_attributeId = $attributeId;
 	}
 
@@ -162,7 +166,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param int|null $propertyId
 	 */
-	public function setPropertyId($propertyId):void {
+	public function setPropertyId(?int $propertyId):void {
 		$this->_propertyId = $propertyId;
 	}
 
@@ -183,7 +187,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	}
 
 	/**
-	 * @return int
+	 * @return int|null
 	 */
 	public function getAggregation():?int {
 		return empty($this->_aggregation)?null:(int)$this->_aggregation;
@@ -192,7 +196,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	/**
 	 * @param int $aggregation
 	 */
-	public function setAggregation($aggregation):void {
+	public function setAggregation(int $aggregation):void {
 		$this->_aggregation = $aggregation;
 	}
 
@@ -212,7 +216,7 @@ class DynamicAttributesPropertyCollection extends Model {
 
 	/**
 	 * Для предвыбранного атрибута нужно отдать его поля
-	 * @param null|integer $index
+	 * @param null|int $index
 	 * @return array
 	 * @throws Throwable
 	 *

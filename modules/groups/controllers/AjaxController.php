@@ -5,7 +5,7 @@ namespace app\modules\groups\controllers;
 
 use app\models\relations\RelGroupsGroups;
 use app\models\core\controllers\BaseAjaxController;
-use pozitronik\helpers\ArrayHelper;
+use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\relations\RelUsersGroups;
 use app\modules\groups\models\Groups;
 use app\modules\users\models\Users;
@@ -62,7 +62,7 @@ class AjaxController extends BaseAjaxController {
 	 * Поиск группы в Select2
 	 *
 	 * @param string|null $term Строка поиска
-	 * @param int $page Номер страницы (не поддерживается, задел на быдущее)
+	 * @param int|null $page Номер страницы (не поддерживается, задел на быдущее)
 	 * @param int|null $user Пользователь ИСКЛЮЧАЕМЫЙ из поиска
 	 * @return array
 	 * @throws Throwable

@@ -12,7 +12,7 @@ use app\modules\home\HomeModule;
 use app\modules\targets\TargetsModule;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use pozitronik\widgets\BaseNavigationMenuWidget;
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use Throwable;
 use yii\base\InvalidConfigException;
 
