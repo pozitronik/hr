@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\groups\models\Groups;
@@ -68,7 +69,7 @@ $groupTargetsId = ArrayHelper::getColumn(Targets::FindGroupTargetsScope($group)-
 			'value' => static function(Targets $model) {
 				return TargetNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => AttributeNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

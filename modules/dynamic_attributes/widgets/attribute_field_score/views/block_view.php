@@ -11,6 +11,7 @@ declare(strict_types = 1);
 
 use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
+use kartik\base\BootstrapInterface;
 use kartik\rating\StarRating;
 use yii\web\JsExpression;
 use yii\web\View;
@@ -29,7 +30,7 @@ use yii\web\View;
 					'name' => "DynamicAttributeProperty[$model->id][$scoreAttributeName]",
 					'value' => $value = ArrayHelper::getValue($model->$attribute, $scoreAttributeName),
 					'pluginOptions' => [
-						'size' => (INF === $value)?StarRating::SIZE_TINY:StarRating::SIZE_SMALL,
+						'size' => (INF === $value)?BootstrapInterface::SIZE_TINY:BootstrapInterface::SIZE_SMALL,
 						'displayOnly' => true,
 						'stars' => 5,
 						'step' => 0.1,

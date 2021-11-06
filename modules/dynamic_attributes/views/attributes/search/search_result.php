@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var DynamicAttributesSearchCollection $searchCollection //условия поиска для отображения результата у пользователя
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\components\pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributesSearchCollection;
@@ -49,7 +50,7 @@ use yii\web\View; ?>
 			'value' => static function(Users $model) {
 				return UserNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

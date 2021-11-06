@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\components\pozitronik\helpers\Utils;
 use app\modules\groups\GroupsModule;
@@ -61,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Groups $model) {
 				return GroupNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => GroupNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

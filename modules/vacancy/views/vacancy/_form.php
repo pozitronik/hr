@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Vacancy $model
  */
 
+use app\components\pozitronik\core\interfaces\widgets\SelectionWidgetInterface;
 use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\components\pozitronik\references\widgets\reference_dependent_dropdown\RefDepDrop;
@@ -92,8 +93,8 @@ use yii\widgets\ActiveForm;
 					<div class="col-md-3">
 						<?= $form->field($model, 'employer')->widget(UserSelectWidget::class, [
 							'multiple' => false,
-							'renderingMode' => GroupSelectWidget::MODE_FIELD,
-							'loadingMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+							'renderingMode' => SelectionWidgetInterface::MODE_FIELD,
+							'loadingMode' => $model->isNewRecord?SelectionWidgetInterface::DATA_MODE_AJAX:SelectionWidgetInterface::DATA_MODE_LOAD
 						]) ?>
 					</div>
 
@@ -101,14 +102,14 @@ use yii\widgets\ActiveForm;
 						<?php if (null === $model->group): ?>
 							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 								'multiple' => false,
-								'renderingMode' => GroupSelectWidget::MODE_FIELD,
-								'loadingMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+								'renderingMode' => SelectionWidgetInterface::MODE_FIELD,
+								'loadingMode' => $model->isNewRecord?SelectionWidgetInterface::DATA_MODE_AJAX:SelectionWidgetInterface::DATA_MODE_LOAD
 							])->label('Группа (подразделение)') ?>
 						<?php else: ?>
 							<?= $form->field($model, 'group')->widget(GroupSelectWidget::class, [
 								'multiple' => false,
-								'renderingMode' => GroupSelectWidget::MODE_FIELD,
-								'loadingMode' => GroupSelectWidget::DATA_MODE_LOAD
+								'renderingMode' => SelectionWidgetInterface::MODE_FIELD,
+								'loadingMode' => SelectionWidgetInterface::DATA_MODE_LOAD
 							])->label('Группа (подразделение)') ?>
 						<?php endif; ?>
 					</div>
@@ -126,8 +127,8 @@ use yii\widgets\ActiveForm;
 					<div class="col-md-3">
 						<?= $form->field($model, 'teamlead')->widget(UserSelectWidget::class, [
 							'multiple' => false,
-							'renderingMode' => GroupSelectWidget::MODE_FIELD,
-							'loadingMode' => $model->isNewRecord?GroupSelectWidget::DATA_MODE_AJAX:GroupSelectWidget::DATA_MODE_LOAD
+							'renderingMode' => SelectionWidgetInterface::MODE_FIELD,
+							'loadingMode' => $model->isNewRecord?SelectionWidgetInterface::DATA_MODE_AJAX:SelectionWidgetInterface::DATA_MODE_LOAD
 						]) ?>
 					</div>
 				</div>

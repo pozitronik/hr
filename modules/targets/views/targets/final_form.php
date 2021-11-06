@@ -6,6 +6,7 @@ declare(strict_types = 1);
  * @var Targets $model
  */
 
+use app\components\pozitronik\core\interfaces\widgets\SelectionWidgetInterface;
 use app\modules\groups\widgets\group_select\GroupSelectWidget;
 use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\targets\models\references\RefTargetsResults;
@@ -41,7 +42,7 @@ use yii\widgets\ActiveForm;
 				</div>
 				<div class="col-md-4">
 					<?= $form->field($model, 'relParentTarget')->widget(TargetSelectWidget::class, [
-						'loadingMode' => TargetSelectWidget::DATA_MODE_LOAD,
+						'loadingMode' => SelectionWidgetInterface::DATA_MODE_LOAD,
 						'data' => ArrayHelper::map(Targets::find()->where(['type' => $model->relTargetsTypes->parent])->all(), 'id', 'name')
 					]) ?>
 				</div>
@@ -67,7 +68,7 @@ use yii\widgets\ActiveForm;
 			<div class="row">
 				<div class="col-md-12">
 					<?= $form->field($model, 'relGroups')->widget(GroupSelectWidget::class, [
-						'loadingMode' => GroupSelectWidget::DATA_MODE_LOAD
+						'loadingMode' => SelectionWidgetInterface::DATA_MODE_LOAD
 					]) ?>
 				</div>
 			</div>
@@ -75,7 +76,7 @@ use yii\widgets\ActiveForm;
 			<div class="row">
 				<div class="col-md-12">
 					<?= $form->field($model, 'relUsers')->widget(UserSelectWidget::class, [
-						'loadingMode' => UserSelectWidget::DATA_MODE_LOAD
+						'loadingMode' => SelectionWidgetInterface::DATA_MODE_LOAD
 					]) ?>
 				</div>
 			</div>

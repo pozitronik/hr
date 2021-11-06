@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var TargetsSearch $searchModel
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\dynamic_attributes\widgets\navigation_menu\AttributeNavigationMenuWidget;
 use app\modules\groups\models\references\RefGroupTypes;
@@ -61,7 +62,7 @@ TargetsAsset::register($this);
 					'value' => static function(Targets $model) {
 						return TargetNavigationMenuWidget::widget([
 							'model' => $model,
-							'mode' => AttributeNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+							'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 						]);
 					},
 					'format' => 'raw'

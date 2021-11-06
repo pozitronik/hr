@@ -77,7 +77,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	public function delete($key):bool {
 		$this->assertValidKey($key);
 
-		return $this->has($key)?$this->cache->delete($key):true;
+		return !$this->has($key) || $this->cache->delete($key);
 	}
 
 	/**

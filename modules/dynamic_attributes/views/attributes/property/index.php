@@ -1,6 +1,7 @@
 <?php
 declare(strict_types = 1);
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
@@ -52,7 +53,7 @@ use app\components\pozitronik\helpers\ArrayHelper;
 				return AttributePropertyNavigationMenuWidget::widget([
 					'model' => $model,
 					'attribute' => $attribute,
-					'mode' => AttributePropertyNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

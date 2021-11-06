@@ -53,7 +53,7 @@ class UserAccess extends Model implements UserAccessInterface {
 					'roles' => ['@']
 				];
 				$ruleDefined = true;
-				break 1;
+				break;
 
 			}
 			if (!$ruleDefined) {//Ни одно право не определило правило доступа

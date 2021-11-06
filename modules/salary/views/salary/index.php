@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var SalaryForkSearch $searchModel
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefGrades;
@@ -57,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(SalaryFork $model) {
 				return SalaryForkMenuWidget::widget([
 					'model' => $model,
-					'mode' => SalaryForkMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

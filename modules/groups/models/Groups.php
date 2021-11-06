@@ -547,7 +547,7 @@ class Groups extends ActiveRecord {
 				}
 			}
 			/** @var RefUserPositionTypes[] $allPositionTypes */
-			foreach ($allPositionTypes as &$positionType) {
+			foreach ($allPositionTypes as $positionType) {
 				$positionType->count = ArrayHelper::getValue($countersArray, $positionType->id, 0);
 			}
 

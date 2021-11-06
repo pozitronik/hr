@@ -11,6 +11,7 @@ declare(strict_types = 1);
  * @var bool|string $heading
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\models\core\IconsHelper;
 use app\modules\groups\models\Groups;
 use app\modules\salary\models\references\RefLocations;
@@ -60,7 +61,7 @@ use yii\web\View;
 			'value' => static function(Vacancy $model) {
 				return VacancyNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => VacancyNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

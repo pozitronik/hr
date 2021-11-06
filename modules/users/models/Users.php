@@ -622,7 +622,7 @@ class Users extends ActiveRecord {
 		$result = array_merge(...$result);
 		$uniqueKeys = [];
 		$uniqueUsers = [];
-		array_walk($result, static function(&$value, &$key) use (&$uniqueKeys, &$uniqueUsers) {
+		array_walk($result, static function($value, &$key) use (&$uniqueKeys, &$uniqueUsers) {
 			/** @var Users $value */
 			if (!in_array($value->id, $uniqueKeys)) {
 				$uniqueUsers[] = $value;

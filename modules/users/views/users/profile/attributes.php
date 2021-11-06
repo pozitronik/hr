@@ -15,6 +15,7 @@ use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWid
 use app\modules\users\models\Users;
 use kartik\grid\DataColumn;
 use yii\data\ActiveDataProvider;
+use yii\grid\GridView as GridViewAlias;
 use yii\web\View;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
@@ -40,7 +41,7 @@ use yii\bootstrap\Html;
 	'export' => false,
 	'resizableColumns' => false,
 	'responsive' => true,
-	'filterPosition' => GridView::FILTER_POS_BODY,
+	'filterPosition' => GridViewAlias::FILTER_POS_BODY,
 	'columns' => [
 		[
 			'class' => DataColumn::class,

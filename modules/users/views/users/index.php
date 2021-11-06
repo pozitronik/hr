@@ -10,6 +10,7 @@ declare(strict_types = 1);
  * @deprecated
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositionTypes;
@@ -77,7 +78,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'value' => static function(Users $model) {
 				return UserNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => UserNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

@@ -8,6 +8,7 @@ declare(strict_types = 1);
  * @var Privileges $model
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\modules\privileges\models\DynamicUserRights;
 use app\modules\privileges\models\Privileges;
 use app\modules\privileges\widgets\navigation_menu\UserRightNavigationMenuWidget;
@@ -70,7 +71,7 @@ GridView::widget([
 			'value' => static function(UserRightInterface $model) {
 				return UserRightNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => UserRightNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

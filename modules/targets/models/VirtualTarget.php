@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace app\modules\targets\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * Class VirtualTarget
  * @package app\modules\targets\models

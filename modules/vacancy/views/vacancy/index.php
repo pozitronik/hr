@@ -7,6 +7,7 @@ declare(strict_types = 1);
  * @var ActiveDataProvider $dataProvider
  */
 
+use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\users\UsersModule;
 use app\modules\vacancy\VacancyModule;
@@ -68,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'value' => static function(Vacancy $model) {
 				return VacancyNavigationMenuWidget::widget([
 					'model' => $model,
-					'mode' => VacancyNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
+					'mode' => BaseNavigationMenuWidget::MODE_ACTION_COLUMN_MENU
 				]);
 			},
 			'format' => 'raw'

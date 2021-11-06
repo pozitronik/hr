@@ -35,6 +35,7 @@ class ExportAttributes extends Model {
 	 * @return array<int, int> - итоговое смещение в таблице по колонке и строке
 	 * @throws SpreadsheetException
 	 * @throws Throwable
+	 * @noinspection PhpSameParameterValueInspection
 	 */
 	private static function GetUserAttributes(Worksheet $worksheet, Users $user, array $relAttributes, int $colOffset = 0, int $rowOffset = 0, bool $formatting = true):array {
 		$AttributeNameStyleArray = [

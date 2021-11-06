@@ -85,7 +85,7 @@ class ImportCompetency extends Model {
 				}
 				foreach ($userIdIndexes as $usersCount => $usersCountValue) {
 					$userScoreSliceBlock = array_slice($importRow, 2 + ($usersCount * 6), 6);//вырезаем кусок оценок
-					$this->addScores($userIdIndexes[$usersCount], $currentCompetencyName, $currentCompetencyFieldName, $userScoreSliceBlock);
+					$this->addScores($usersCountValue, $currentCompetencyName, $currentCompetencyFieldName, $userScoreSliceBlock);
 				}
 
 			}
