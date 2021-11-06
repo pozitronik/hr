@@ -107,7 +107,7 @@ class AttributePropertyInteger extends AttributeProperty {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 * @throws Throwable
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {

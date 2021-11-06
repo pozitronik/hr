@@ -94,11 +94,9 @@ class ActiveRecordHistory extends ActiveRecord {
 	public static function deleteAllEx(mixed $condition = null):?int {
 		/** @noinspection PhpDeprecationInspection */
 		$self_class_name = static::class;
-		/** @var static $self_class */
 		$self_class = new $self_class_name();
 		$deletedModels = $self_class::findAll($condition);
 		$dc = 0;
-		/** @var static[] $deletedModels */
 		foreach ($deletedModels as $deletedModel) {
 			$dc += (int)$deletedModel->delete();
 		}

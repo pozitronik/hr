@@ -29,7 +29,7 @@ class BunchController extends WigetableController {
 	 * В post['selection'] приходят айдишники выбранных юзеров
 	 * @param int|null $group_id - если указано, то выбираются пользователи этой группы
 	 * @param bool $hierarchy вместе с group_id прогружает иерархично всех пользователей вниз
-	 * @return string|Response
+	 * @return string
 	 * @throws Throwable
 	 */
 	public function actionIndex(int $group_id = null, bool $hierarchy = false) {

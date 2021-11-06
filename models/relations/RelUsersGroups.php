@@ -28,7 +28,7 @@ class RelUsersGroups extends ActiveRecord {
 	use ARExtended;
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -81,14 +81,14 @@ class RelUsersGroups extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersGroupsRoles[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersGroupsRoles() {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id']);
 	}
 
 	/**
-	 * @return RefUserRoles[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRefUserRoles() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');

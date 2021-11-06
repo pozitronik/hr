@@ -64,7 +64,7 @@ class RefGroupTypes extends CustomisableReference {
 	}
 
 	/**
-	 * @return Groups|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['type' => 'id']);

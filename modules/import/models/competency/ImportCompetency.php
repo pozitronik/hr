@@ -58,7 +58,6 @@ class ImportCompetency extends Model {
 		$currentCompetencyName = '';
 		//	$userScoreCellsIndexes = [];
 
-		/** @var array $dataArray */
 		foreach ($dataArray as $rowIndex => $importRow) {
 			if (0 === $rowIndex) {//Строченька с именами
 				/** @var array $importRow */

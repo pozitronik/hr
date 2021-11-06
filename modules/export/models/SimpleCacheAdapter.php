@@ -6,6 +6,7 @@ namespace app\modules\export\models;
 use DateInterval;
 use DateTime;
 use Exception;
+use Psr\SimpleCache\InvalidArgumentException as CacheInvalidArgumentException;
 use Traversable;
 use Yii;
 use yii\base\Component;
@@ -26,6 +27,9 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	 */
 	private $cache;
 
+	/**
+	 * @throws \yii\base\InvalidConfigException
+	 */
 	public function init() {
 		parent::init();
 
@@ -128,6 +132,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	/**
 	 * @param iterable $keys
 	 * @return bool
+	 * @throws CacheInvalidArgumentException
 	 */
 	public function deleteMultiple($keys):bool {
 		if ($keys instanceof Traversable) {

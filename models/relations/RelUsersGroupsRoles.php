@@ -26,7 +26,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -131,7 +131,7 @@ class RelUsersGroupsRoles extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelUsersGroups[]
+	 * @return ActiveQuery
 	 */
 	public
 	function getRelUsersGroups():ActiveQuery {

@@ -55,7 +55,7 @@ class RelGroupsGroups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RefGroupRelationTypes
+	 * @return ActiveQuery
 	 */
 	public function getRefGroupsRelationTypes() {
 		return $this->hasOne(RefGroupRelationTypes::class, ['id' => 'relation']);

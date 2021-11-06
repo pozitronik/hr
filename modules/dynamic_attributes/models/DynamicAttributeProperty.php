@@ -108,7 +108,7 @@ class DynamicAttributeProperty extends Model {
 
 	/**
 	 * @param null|string $type
-	 * @return AttributePropertyInterface|string
+	 * @return string
 	 * @throws Throwable
 	 */
 	public static function getTypeClass(?string $type):string {
@@ -184,7 +184,7 @@ class DynamicAttributeProperty extends Model {
 	}
 
 	/**
-	 * @param string $type
+	 * @param string|null $type
 	 */
 	public function setType(?string $type):void {
 		$this->type = $type;

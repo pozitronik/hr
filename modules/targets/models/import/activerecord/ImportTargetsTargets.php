@@ -76,14 +76,14 @@ class ImportTargetsTargets extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportTargetsCommands|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelCommands() {
 		return $this->hasOne(ImportTargetsCommands::class, ['id' => 'command_id']);
 	}
 
 	/**
-	 * @return ImportTargetsMilestones|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelMilestones() {
 		return $this->hasOne(ImportTargetsMilestones::class, ['id' => 'milestone_id']);

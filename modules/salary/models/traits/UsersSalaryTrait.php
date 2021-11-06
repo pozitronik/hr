@@ -29,19 +29,17 @@ use yii\db\ActiveQuery;
 trait UsersSalaryTrait {
 
 	/**
-	 * @return RelUsersSalary|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersSalary() {
-		/** @var Users $this */
 		if (null === RelUsersSalary::find()->where(['user_id' => $this->id])->one()) (new RelUsersSalary(['user_id' => $this->id]))->save();
 		return $this->hasOne(RelUsersSalary::class, ['user_id' => 'id']);
 	}
 
 	/**
-	 * @return RefGrades|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelGrade() {
-		/** @var Users $this */
 		return $this->hasOne(RefGrades::class, ['id' => 'grade_id'])->via('relUsersSalary');
 	}
 
@@ -49,15 +47,13 @@ trait UsersSalaryTrait {
 	 * @param mixed $relGrade
 	 */
 	public function setRelGrade(mixed $relGrade):void {
-		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('grade_id', $relGrade);
 	}
 
 	/**
-	 * @return RefSalaryPremiumGroups|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
 	public function getRelPremiumGroup() {
-		/** @var Users $this */
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id'])->via('relUsersSalary');
 	}
 
@@ -65,15 +61,13 @@ trait UsersSalaryTrait {
 	 * @param mixed $relPremiumGroup
 	 */
 	public function setRelPremiumGroup(mixed $relPremiumGroup):void {
-		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('premium_group_id', $relPremiumGroup);
 	}
 
 	/**
-	 * @return RefLocations|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
 	public function getRelLocation() {
-		/** @var Users $this */
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id'])->via('relUsersSalary');
 	}
 
@@ -81,7 +75,6 @@ trait UsersSalaryTrait {
 	 * @param mixed $relLocation
 	 */
 	public function setRelLocation(mixed $relLocation):void {
-		/** @var Users $this */
 		$this->relUsersSalary->setAndSaveAttribute('location_id', $relLocation);
 	}
 
@@ -96,7 +89,7 @@ trait UsersSalaryTrait {
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelRefUserPositions() {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position']);

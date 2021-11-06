@@ -13,6 +13,9 @@ class AgreementsController extends WigetableController {
 	public $menuIcon = "/img/admin/agreements.png";
 	public $menuDisabled = true;
 
+	/**
+	 *
+	 */
 	public function actionIndex():void {
 		echo $this->id;
 		echo "this is index";

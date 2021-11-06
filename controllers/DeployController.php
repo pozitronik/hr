@@ -40,6 +40,9 @@ class DeployController extends Controller {
 		echo $output."\n";
 	}
 
+	/**
+	 *
+	 */
 	public function actionFlush():void {
 		$this->layout = false;
 		$output = [];

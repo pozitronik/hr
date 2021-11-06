@@ -58,12 +58,16 @@ class DynamicAttributesPropertyCollection extends Model {
 
 	/**
 	 * @param Users[] $userScope
+	 * @throws Throwable
 	 */
 	public function setUserScope(array $userScope):void {
 		$this->_userScope = $userScope;
 		$this->fillScope();
 	}
 
+	/**
+	 * @throws Throwable
+	 */
 	private function fillScope():void {
 		foreach ($this->_userScope as $user) {
 			$userAttributes = $user->relDynamicAttributes;
@@ -183,7 +187,7 @@ class DynamicAttributesPropertyCollection extends Model {
 	}
 
 	/**
-	 * @return int
+	 * @return int|null
 	 */
 	public function getAggregation():?int {
 		return empty($this->_aggregation)?null:(int)$this->_aggregation;

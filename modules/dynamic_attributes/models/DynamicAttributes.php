@@ -264,7 +264,7 @@ class DynamicAttributes extends ActiveRecord {
 
 	/**
 	 * @param int $property_id
-	 * @return mixed -- значение запрошенного виртуального свойства
+	 * @return DynamicAttributeProperty|null -- значение запрошенного виртуального свойства
 	 * @throws Throwable
 	 */
 	public function getVirtualProperty(int $property_id) {
@@ -275,7 +275,7 @@ class DynamicAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersAttributes() {
 		return $this->hasMany(RelUsersAttributes::class, ['attribute_id' => 'id']);
@@ -318,7 +318,7 @@ class DynamicAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return Users|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersAttributes');

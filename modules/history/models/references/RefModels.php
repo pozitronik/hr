@@ -58,7 +58,7 @@ class RefModels extends Model implements ReferenceInterface {
 
 	/**
 	 * Если в справочнике требуется редактировать поля, кроме обязательных, то функция возвращает путь к встраиваемой вьюхе, иначе к дефолтной
-	 * @return string|false
+	 * @return string
 	 */
 	public function getForm():string {
 		return '';

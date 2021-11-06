@@ -84,28 +84,28 @@ class SalaryFork extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRefUserPosition() {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position_id']);
 	}
 
 	/**
-	 * @return RefGrades|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRefGrade() {
 		return $this->hasOne(RefGrades::class, ['id' => 'grade_id']);
 	}
 
 	/**
-	 * @return RefSalaryPremiumGroups|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
 	public function getRefPremiumGroup() {
 		return $this->hasOne(RefSalaryPremiumGroups::class, ['id' => 'premium_group_id']);
 	}
 
 	/**
-	 * @return RefLocations|ActiveQuery|null
+	 * @return ActiveQuery
 	 */
 	public function getRefLocation() {
 		return $this->hasOne(RefLocations::class, ['id' => 'location_id']);

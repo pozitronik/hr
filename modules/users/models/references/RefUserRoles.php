@@ -78,28 +78,28 @@ class RefUserRoles extends CustomisableReference {
 	}
 
 	/**
-	 * @return RelUsersGroupsRoles[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersGroupsRoles() {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['role' => 'id']);
 	}
 
 	/**
-	 * @return RelUsersGroups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersGroups() {
 		return $this->hasMany(RelUsersGroups::class, ['id' => 'user_group_id'])->via('relUsersGroupsRoles');
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUsersGroups');
 	}
 
 	/**
-	 * @return Users[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
@@ -214,7 +214,6 @@ class RefUserRoles extends CustomisableReference {
 	 * @return ActiveQuery
 	 */
 	public function search(array $params):ActiveQuery {
-		/** @var ActiveQuery $query */
 		$query = self::find();
 		$this->load($params);
 		$query->andFilterWhere(['LIKE', 'name', $this->name]);

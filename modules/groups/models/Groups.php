@@ -148,21 +148,21 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelUsersGroups[]
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersGroups() {
 		return $this->hasMany(RelUsersGroups::class, ['group_id' => 'id']);
 	}
 
 	/**
-	 * @return ActiveQuery|Users[]|LCQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersGroups');
 	}
 
 	/**
-	 * @return ActiveQuery|Vacancy[]|LCQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelVacancy() {
 		return $this->hasMany(Vacancy::class, ['group' => 'id']);
@@ -187,7 +187,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Релейшен к назначению ролей в этой группе
-	 * @return ActiveQuery|RelUsersGroupsRoles[]
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersGroupsRoles() {
 		return $this->hasMany(RelUsersGroupsRoles::class, ['user_group_id' => 'id'])->via('relUsersGroups');
@@ -195,7 +195,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Все назначенные роли в этой группе
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
 	public function getRelRefUserRoles() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles');
@@ -203,7 +203,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Все роли боссов в этой группе
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
 	public function getRelRefUserRolesLeader() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.boss_flag' => true]);
@@ -211,14 +211,14 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Все роли важных шишек в этой группе
-	 * @return ActiveQuery|RefUserRoles[]
+	 * @return ActiveQuery
 	 */
 	public function getRelRefUserRolesImportant() {
 		return $this->hasMany(RefUserRoles::class, ['id' => 'role'])->via('relUsersGroupsRoles')->where(['ref_user_roles.importance_flag' => true]);
 	}
 
 	/**
-	 * @return ActiveQuery|RelGroupsGroups[]
+	 * @return ActiveQuery
 	 */
 	public function getRelGroupsGroupsChild() {
 		return $this->hasMany(RelGroupsGroups::class, ['parent_id' => 'id']);
@@ -226,7 +226,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Вернет все группы, дочерние по отношению к текущей
-	 * @return Groups[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelChildGroups() {
 		return $this->hasMany(self::class, ['id' => 'child_id'])->via('relGroupsGroupsChild');
@@ -253,7 +253,7 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelGroupsGroups[]
+	 * @return ActiveQuery
 	 */
 	public function getRelGroupsGroupsParent() {
 		return $this->hasMany(RelGroupsGroups::class, ['child_id' => 'id']);
@@ -261,7 +261,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Вернет все группы, дочерние по отношению к текущей
-	 * @return Groups[]|ActiveQuery|LCQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelParentGroups() {
 		return $this->hasMany(self::class, ['id' => 'parent_id'])->via('relGroupsGroupsParent');
@@ -296,7 +296,7 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefGroupTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelGroupTypes() {//todo: Большое количество повторных запросов, посмотреть
 		return $this->hasOne(RefGroupTypes::class, ['id' => 'type']);

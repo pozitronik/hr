@@ -96,7 +96,7 @@ class Privileges extends ActiveRecord {
 
 	/**
 	 * Связь с именами классов
-	 * @return ActiveQuery|LCQuery|RelPrivilegesRights[]
+	 * @return ActiveQuery
 	 */
 	public function getRelPrivilegesRights() {
 		return $this->hasMany(RelPrivilegesRights::class, ['privilege' => 'id']);
@@ -201,14 +201,14 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersPrivileges[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersPrivileges() {
 		return $this->hasMany(RelUsersPrivileges::class, ['privilege_id' => 'id']);
 	}
 
 	/**
-	 * @return Users|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relUsersPrivileges');
@@ -230,7 +230,7 @@ class Privileges extends ActiveRecord {
 	}
 
 	/**
-	 * @return LCQuery|RelPrivilegesDynamicRights[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelPrivilegesDynamicRights() {
 		return $this->hasMany(RelPrivilegesDynamicRights::class, ['privilege' => 'id']);

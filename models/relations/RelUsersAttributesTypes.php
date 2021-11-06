@@ -48,7 +48,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersAttributes() {
 		return $this->hasMany(RelUsersAttributes::class, ['id' => 'user_attribute_id']);
@@ -86,7 +86,7 @@ class RelUsersAttributesTypes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefAttributesTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRefAttributesType() {
 		return $this->hasOne(RefAttributesTypes::class, ['id' => 'type']);

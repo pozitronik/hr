@@ -47,6 +47,9 @@ class DynamicAttributesSearchCollection extends Model {
 		];
 	}
 
+	/**
+	 *
+	 */
 	public function init():void {
 		parent::init();
 		if ([] === $this->searchItems) $this->searchItems[] = new DynamicAttributesSearchItem();//По умолчанию одно условие

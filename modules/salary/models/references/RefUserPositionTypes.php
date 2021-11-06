@@ -41,35 +41,35 @@ class RefUserPositionTypes extends CustomisableReference {
 	}
 
 	/**
-	 * @return RelRefUserPositionsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelRefUSerPositionsTypes() {
 		return $this->hasOne(RelRefUserPositionsTypes::class, ['position_type_id' => 'id']);
 	}
 
 	/**
-	 * @return RefUserPositions|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelRefUserPositions() {
 		return $this->hasOne(RefUserPositions::class, ['id' => 'position_id'])->via('relRefUSerPositionsTypes');
 	}
 
 	/**
-	 * @return Users[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['position' => 'id'])->via('relRefUserPositions');
 	}
 
 	/**
-	 * @return RelUsersGroups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUserGroups() {
 		return $this->hasMany(RelUsersGroups::class, ['user_id' => 'id'])->via('relUsers');
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relUserGroups');

@@ -50,7 +50,7 @@ class ImportFosProductOwner extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportFosUsers|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasOne(ImportFosUsers::class, ['id' => 'user_id']);

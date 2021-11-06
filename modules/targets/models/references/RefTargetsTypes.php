@@ -138,14 +138,14 @@ class RefTargetsTypes extends CustomisableReference {
 	}
 
 	/**
-	 * @return RefTargetsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelParent() {
 		return $this->hasOne(static::class, ['id' => 'parent']);
 	}
 
 	/**
-	 * @return RefTargetsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelChild() {
 		return $this->hasOne(static::class, ['parent' => 'id']);

@@ -89,7 +89,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {
 		if (DynamicAttributePropertyAggregation::AGGREGATION_COUNT === $aggregation) {
@@ -106,7 +106,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param int $attribute_id
 	 * @param int $property_id
 	 * @param int $user_id
-	 * @return self|ActiveRecord|null
+	 * @return AttributeProperty|null
 	 */
 	public static function getRecord(int $attribute_id, int $property_id, int $user_id):?self {
 		return self::find()->where(compact('attribute_id', 'property_id', 'user_id'))->one();

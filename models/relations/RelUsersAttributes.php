@@ -25,7 +25,7 @@ class RelUsersAttributes extends ActiveRecord {
 	use Relations;
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [
@@ -66,14 +66,14 @@ class RelUsersAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelUsersAttributesTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsersAttributesTypes() {
 		return $this->hasMany(RelUsersAttributesTypes::class, ['user_attribute_id' => 'id']);
 	}
 
 	/**
-	 * @return RefAttributesTypes[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRefAttributesTypes() {
 		return $this->hasMany(RefAttributesTypes::class, ['id' => 'type'])->via('relUsersAttributesTypes');
@@ -97,7 +97,7 @@ class RelUsersAttributes extends ActiveRecord {
 	}
 
 	/**
-	 * @return DynamicAttributes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelDynamicAttribute() {
 		return $this->hasOne(DynamicAttributes::class, ['id' => 'attribute_id']);

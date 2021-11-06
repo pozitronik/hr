@@ -19,7 +19,7 @@ class RelUsersPrivileges extends ActiveRecord {
 	use Relations;
 
 	/**
-	 * {@inheritDoc}
+	 * {}
 	 */
 	public function historyRules():array {
 		return [

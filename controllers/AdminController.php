@@ -19,7 +19,7 @@ class AdminController extends Controller {
 	private $controllers;
 
 	/**
-	 * @return string|Response
+	 * @return string
 	 */
 	public function actionIndex() {
 		return $this->render('index', [

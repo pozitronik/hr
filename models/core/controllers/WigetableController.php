@@ -21,7 +21,7 @@ class WigetableController extends CoreController {
 
 	/**
 	 * Возвращает путь к иконке контроллера
-	 * @return false|string
+	 * @return false
 	 */
 	public function getMenuIcon() {
 		return false;
@@ -29,7 +29,7 @@ class WigetableController extends CoreController {
 
 	/**
 	 * Возвращает строковое название пункта меню контроллера
-	 * @return false|string
+	 * @return false
 	 */
 	public function getMenuCaption() {
 		return false;

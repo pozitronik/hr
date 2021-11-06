@@ -107,14 +107,14 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return ActiveQuery|RelTargetsTargets[]
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsTargetsChild() {
 		return $this->hasMany(RelTargetsTargets::class, ['parent_id' => 'id']);
 	}
 
 	/**
-	 * @return ActiveQuery|RelTargetsTargets|null
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsTargetsParent() {
 		return $this->hasOne(RelTargetsTargets::class, ['child_id' => 'id']);
@@ -157,28 +157,28 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return RefTargetsTypes|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsTypes() {
 		return $this->hasOne(RefTargetsTypes::class, ['id' => 'type']);
 	}
 
 	/**
-	 * @return RefTargetsResults|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsResults() {
 		return $this->hasOne(RefTargetsResults::class, ['id' => 'result_type']);
 	}
 
 	/**
-	 * @return RelTargetsGroups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsGroups() {
 		return $this->hasMany(RelTargetsGroups::class, ['target_id' => 'id']);
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group_id'])->via('relTargetsGroups');
@@ -193,14 +193,14 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return RelTargetsUsers[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsUsers() {
 		return $this->hasMany(RelTargetsUsers::class, ['target_id' => 'id']);
 	}
 
 	/**
-	 * @return Users[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelUsers() {
 		return $this->hasMany(Users::class, ['id' => 'user_id'])->via('relTargetsUsers');
@@ -237,7 +237,7 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @return TargetsPeriods|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelTargetsPeriods() {
 		//Не включать условия в этот геттер, он есть и всё. Иначе будут падать релейшены

@@ -24,6 +24,9 @@ class Graph extends Model implements GraphInterface {
 	public $nodes = [];
 	public $edges = [];
 
+	/**
+	 *
+	 */
 	public function roundNodes():void {
 		$levelMap = [];
 		foreach ($this->nodes as $node) {//распределение нод по уровням круга.
@@ -37,7 +40,6 @@ class Graph extends Model implements GraphInterface {
 			$radius = (0 === $level)?$level:($level + 1);
 			$radius *= 360;
 			$angle = 0;//Стартовый угол, 0 - 360
-			/** @var GraphNode[] $items */
 			foreach ($items as $item) {//Почему-то координаты применяются к текущим нодам, хотя работаем мы с копией, а не ссылкой. Нам это ок, но как-то странно
 				$item->x = ($radius * cos($angle * M_PI / 360));
 				$item->y = ($radius * sin($angle * M_PI / 360));
@@ -65,6 +67,9 @@ class Graph extends Model implements GraphInterface {
 		return $result;
 	}
 
+	/**
+	 *
+	 */
 	private function setUnique():void {
 		$nodeIds = [];
 		$edgeIds = [];

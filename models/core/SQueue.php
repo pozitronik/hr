@@ -29,7 +29,7 @@ class SQueue extends Model {
 
 	/**
 	 * Возвращает очередь сообщений для пользователя $user_id
-	 * @param int $user_id
+	 * @param int|null $user_id
 	 * @return array
 	 */
 	public static function get(?int $user_id):array {

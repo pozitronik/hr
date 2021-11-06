@@ -171,7 +171,8 @@ class AttributePropertyScore extends AttributeProperty {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @param $value
+	 * @throws Throwable
 	 */
 	public function setValue($value):void {
 		$this->self_score_value = ArrayHelper::getValue($value, 'selfScoreValue');
@@ -183,7 +184,7 @@ class AttributePropertyScore extends AttributeProperty {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @return ScoreProperty
 	 */
 	public function getValue():ScoreProperty {
 		return new ScoreProperty([
@@ -453,7 +454,7 @@ class AttributePropertyScore extends AttributeProperty {
 	 * @param self[] $models -- набор значений атрибутов
 	 * @param int $aggregation -- выбранный агрегатор
 	 * @param bool $dropNullValues -- true -- отфильтровать пустые значения из набора
-	 * @return DynamicAttributePropertyAggregation -- результат агрегации в модели
+	 * @return DynamicAttributePropertyAggregation|null -- результат агрегации в модели
 	 * @throws Throwable
 	 */
 	public static function applyAggregation(array $models, int $aggregation, bool $dropNullValues = false):?DynamicAttributePropertyAggregation {

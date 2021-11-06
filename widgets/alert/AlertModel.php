@@ -120,6 +120,9 @@ class AlertModel extends Model {
 		]);
 	}
 
+	/**
+	 *
+	 */
 	public static function AccessNotify():void {
 		self::Notify([
 			'type' => Growl::TYPE_WARNING,
@@ -226,7 +229,7 @@ class AlertModel extends Model {
 	}
 
 	/**
-	 * @return int|false
+	 * @return bool|false
 	 */
 	public function getDelay() {
 		return $this->delay;

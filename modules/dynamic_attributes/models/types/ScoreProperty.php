@@ -80,14 +80,14 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	public function getSelfScoreComment():?string {
 		return $this->_self_score_comment;
 	}
 
 	/**
-	 * @param string $self_score_comment
+	 * @param string|null $self_score_comment
 	 */
 	public function setSelfScoreComment(?string $self_score_comment):void {
 		$this->_self_score_comment = $self_score_comment;
@@ -108,14 +108,14 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	public function getTlScoreComment():?string {
 		return $this->_tl_score_comment;
 	}
 
 	/**
-	 * @param string $tl_score_comment
+	 * @param string|null $tl_score_comment
 	 */
 	public function setTlScoreComment(?string $tl_score_comment):void {
 		$this->_tl_score_comment = $tl_score_comment;
@@ -136,14 +136,14 @@ class ScoreProperty extends Model {
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	public function getAlScoreComment():?string {
 		return $this->_al_score_comment;
 	}
 
 	/**
-	 * @param string $al_score_comment
+	 * @param string|null $al_score_comment
 	 */
 	public function setAlScoreComment(?string $al_score_comment):void {
 		$this->_al_score_comment = $al_score_comment;

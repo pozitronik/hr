@@ -28,14 +28,14 @@ class RefVacancyStatuses extends CustomisableReference {
 		return 'ref_vacancy_statuses';
 	}
 	/**
-	 * @return Vacancy[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelVacancy() {
 		return $this->hasMany(Vacancy::class, ['status' => 'id']);
 	}
 
 	/**
-	 * @return Groups[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelGroups() {
 		return $this->hasMany(Groups::class, ['id' => 'group'])->via('relVacancy');

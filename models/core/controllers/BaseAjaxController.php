@@ -19,6 +19,9 @@ use yii\web\Response;
 class BaseAjaxController extends CoreController {
 	private $_answer;
 
+	/**
+	 *
+	 */
 	public function init():void {
 		parent::init();
 		$this->enableCsrfValidation = false;

@@ -21,7 +21,7 @@ use yii\db\Exception;
 class ServiceController extends WigetableController {
 
 	/**
-	 * @return string|Response
+	 * @return string
 	 */
 	public function actionIndex() {
 		return $this->render('index');

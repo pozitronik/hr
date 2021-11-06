@@ -161,7 +161,7 @@ class UsersMassUpdate extends Model {
 	}
 
 	/**
-	 * @return mixed
+	 * @return Users
 	 */
 	public function getVirtualUser() {
 		return $this->virtualUser;
@@ -191,7 +191,7 @@ class UsersMassUpdate extends Model {
 	}
 
 	/**
-	 * @return bool|int[]
+	 * @return array
 	 */
 	public function getUsersIdSelected():array {
 		return $this->usersIdSelected;

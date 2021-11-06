@@ -120,7 +120,7 @@ class AttributesController extends WigetableController {
 	 * Удаляет свойство из атрибута
 	 * Заполненные данные по аттрибуту не удаляются.
 	 * @param int $attribute_id
-	 * @param int $property_id
+	 * @param int|null $property_id
 	 * @throws Throwable
 	 */
 	public function actionPropertyDelete(int $attribute_id, int $property_id = null):void {

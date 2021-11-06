@@ -53,14 +53,14 @@ class ImportFosFunctionalBlock extends ActiveRecord {
 	}
 
 	/**
-	 * @return ImportFosDecomposed[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelDecomposed() {
 		return $this->hasMany(ImportFosDecomposed::class, ['functional_block_id' => 'id']);
 	}
 
 	/**
-	 * @return ImportFosTribe[]|ActiveQuery
+	 * @return ActiveQuery
 	 */
 	public function getRelTribe() {
 		return $this->hasMany(ImportFosTribe::class, ['id' => 'tribe_id'])->via('relDecomposed');
