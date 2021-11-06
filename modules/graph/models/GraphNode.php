@@ -20,7 +20,7 @@ use yii\base\Model;
  * @property string $color
  * @property string $shape
  * @property string $image
- * @property boolean $widthConstraint
+ * @property bool $widthConstraint
  */
 class GraphNode extends Model {
 	use ArrayableTrait;

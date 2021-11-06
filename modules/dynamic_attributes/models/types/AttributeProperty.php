@@ -132,7 +132,7 @@ class AttributeProperty extends ActiveRecord implements AttributePropertyInterfa
 	 * @param int $property_id
 	 * @param int $user_id
 	 * @param mixed $value
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function saveValue(int $attribute_id, int $property_id, int $user_id, mixed $value):bool {
 		if (null === $record = self::getRecord($attribute_id, $property_id, $user_id)) {

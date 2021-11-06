@@ -14,7 +14,7 @@ use Throwable;
  * @property string $name Название
  * @property int $deleted
  * @property string $color
- * @property-read integer $usedCount Количество объектов, использующих это значение справочника
+ * @property-read int $usedCount Количество объектов, использующих это значение справочника
  */
 class RefGroupRelationTypes extends CustomisableReference {
 	public $menuCaption = 'Типы соединений групп';

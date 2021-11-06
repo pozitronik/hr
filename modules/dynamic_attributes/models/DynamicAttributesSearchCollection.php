@@ -90,7 +90,7 @@ class DynamicAttributesSearchCollection extends Model {
 
 	/**
 	 * Для предвыбранного атрибута нужно отдать его поля
-	 * @param null|integer $index
+	 * @param null|int $index
 	 * @return array
 	 * @throws Throwable
 	 */
@@ -103,8 +103,8 @@ class DynamicAttributesSearchCollection extends Model {
 
 	/**
 	 * Для предвыбранного свойства нужно отдать его условия
-	 * @param null|integer $attributeIndex
-	 * @param null|integer $propertyIndex
+	 * @param null|int $attributeIndex
+	 * @param null|int $propertyIndex
 	 * @return array
 	 * @throws Throwable
 	 */
@@ -119,7 +119,7 @@ class DynamicAttributesSearchCollection extends Model {
 	/**
 	 * Для задания data-type-атрибутов у выбиралки типов при поиске придумано вот такое решение
 	 * @see https://github.com/kartik-v/yii2-widgets/issues/247
-	 * @param null|integer $index
+	 * @param null|int $index
 	 * @return array
 	 * @throws Throwable
 	 */

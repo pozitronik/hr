@@ -30,9 +30,9 @@ use yii\db\ActiveQuery;
  *
  * @property int $id
  * @property string $name Название
- * @property integer $type Тип группы
+ * @property int $type Тип группы
  * @property string $comment Описание
- * @property integer|null $daddy Пользователь, создавший группу
+ * @property int|null $daddy Пользователь, создавший группу
  * @property string $logotype Название файла-логотипа
  * @property ActiveQuery|Users[] $relUsers Пользователи в группе
  * @property ActiveQuery|RelUsersGroups[] $relUsersGroups Связь с релейшеном пользователей
@@ -55,14 +55,14 @@ use yii\db\ActiveQuery;
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles
  * @property array $rolesInGroup
  * @property array $dropUsers
- * @property boolean $deleted
+ * @property bool $deleted
  * @property LCQuery $relUsersHierarchy Пользователи во всех группах вниз по иерархии
  * @property-read string $logo Полный путь к логотипу/дефолтной картинке
  *
- * @property-read integer $usersCount Количество пользователей в группе
- * @property-read integer $vacancyCount Количество вакансий в группе
+ * @property-read int $usersCount Количество пользователей в группе
+ * @property-read int $vacancyCount Количество вакансий в группе
  *
- * @property-read integer $childGroupsCount Количество подгрупп (следующего уровня)
+ * @property-read int $childGroupsCount Количество подгрупп (следующего уровня)
  *
  */
 class Groups extends ActiveRecord {
@@ -340,7 +340,7 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Добавляет массив ролей пользователя к группе
-	 * @param array<integer, array<integer>> $userRoles
+	 * @param array<int, array<int>> $userRoles
 	 * @throws Throwable
 	 */
 	public function setRolesInGroup(array $userRoles):void {
@@ -576,7 +576,7 @@ class Groups extends ActiveRecord {
 				$vacancyStatusesCount[ArrayHelper::getValue($value, 'id')] = ArrayHelper::getValue($value, 'count');
 			}
 
-			foreach ($allVacancyStatuses as &$vacancyStatus) {
+			foreach ($allVacancyStatuses as $vacancyStatus) {
 				$vacancyStatus->count = ArrayHelper::getValue($vacancyStatusesCount, $vacancyStatus->id, 0);
 			}
 

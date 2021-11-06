@@ -132,7 +132,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	public function deleteMultiple($keys):bool {
 		if ($keys instanceof Traversable) {
 			$keys = iterator_to_array($keys, false);
-		} else if (!is_array($keys)) {
+		} elseif (!is_array($keys)) {
 			throw new InvalidArgumentException('Invalid keys: '.var_export($keys, true).'. Keys should be an array or Traversable of strings.');
 		}
 

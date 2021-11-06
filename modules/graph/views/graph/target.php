@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 /**
  * @var View $this
- * @var integer|null $id
+ * @var int|null $id
  * @var string $currentConfiguration
  * @var array $positionConfigurations
  */

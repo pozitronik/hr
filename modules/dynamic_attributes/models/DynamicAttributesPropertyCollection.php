@@ -212,7 +212,7 @@ class DynamicAttributesPropertyCollection extends Model {
 
 	/**
 	 * Для предвыбранного атрибута нужно отдать его поля
-	 * @param null|integer $index
+	 * @param null|int $index
 	 * @return array
 	 * @throws Throwable
 	 *

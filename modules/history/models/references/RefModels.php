@@ -28,7 +28,7 @@ class RefModels extends Model implements ReferenceInterface {
 
 	/**
 	 * Справочникам всегда нужно возвращать массив значений для выбиралок, вот эта функция у них универсальная
-	 * @param boolean $sort Сортировка выдачи
+	 * @param bool $sort Сортировка выдачи
 	 * @return array
 	 */
 	public static function mapData(bool $sort = false):array {

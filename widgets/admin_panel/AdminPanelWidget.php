@@ -15,7 +15,7 @@ use yii\base\InvalidConfigException;
  * Пустой шаблон виджета. Для быстрого использования копипастим под нужным именем, заменяем все *AdminPanel* на нужное нам имя, и работаем
  * @package app\components\admin_panel
  *
- * @property integer $mode
+ * @property int $mode
  * @property string[]|string $controllers_directory
  */
 class AdminPanelWidget extends CachedWidget {

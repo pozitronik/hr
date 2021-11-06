@@ -10,8 +10,8 @@ namespace app\models\core\controllers;
  *
  * @property-read false|string $menuIcon
  * @property-read false|string $menuCaption
- * @property-read boolean $menuDisabled
- * @property-read integer $orderWeight
+ * @property-read bool $menuDisabled
+ * @property-read int $orderWeight
  * @property-read string $defaultRoute
  */
 class WigetableController extends CoreController {

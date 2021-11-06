@@ -32,7 +32,7 @@ use yii\db\ActiveQuery;
  * @property string $comment
  * @property string $create_date Дата регистрации
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
- * @property boolean $deleted Флаг удаления
+ * @property bool $deleted Флаг удаления
  *
  * @property ActiveQuery|Targets $relParentTarget -- вышестоящая задача целеполагания (если есть)
  * @property ActiveQuery|Targets[] $relChildTargets -- нижестоящие задачи целеполагания

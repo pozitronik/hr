@@ -115,7 +115,7 @@ class TargetGraph extends Graph {
 	public function applyNodesPositions(array $positions = []):void {
 		foreach ($positions as $nodeId => $position) {
 			if (false !== ($key = array_search($nodeId, array_column($this->nodes, 'id')))) {
-				/** @var integer $key */
+				/** @var int $key */
 				$this->nodes[$key]->x = $position['x'];
 				$this->nodes[$key]->y = $position['y'];
 			}

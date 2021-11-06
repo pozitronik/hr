@@ -12,7 +12,7 @@ use yii\base\Model;
  * prototype
  * @package app\models\users
  *
- * @property integer $userId
+ * @property int $userId
  * @property array $nodePositionsConfig
  * @property Bookmarks[] $bookmarks
  *

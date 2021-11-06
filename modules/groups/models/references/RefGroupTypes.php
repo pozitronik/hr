@@ -18,7 +18,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property string $name Название
  * @property int $deleted
- * @property-read integer $usedCount Количество объектов, использующих это значение справочника
+ * @property-read int $usedCount Количество объектов, использующих это значение справочника
  * @property Groups $relGroups
  */
 class RefGroupTypes extends CustomisableReference {

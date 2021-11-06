@@ -6,7 +6,7 @@ namespace app\modules\dynamic_attributes\models;
 use yii\base\Model;
 
 /**
- * @property boolean $union Режим объединения поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
+ * @property bool $union Режим объединения поиска: true - И (все правила), false - ИЛИ (хотя бы одно правило)
  * @property int[]|null $type Массив типов отношений атрибута (id)
  * @property int|null $attribute Искомый атрибут (id)
  * @property int|null $property Свойство атрибута (id)

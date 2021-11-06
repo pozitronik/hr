@@ -16,9 +16,9 @@ use yii\base\Model;
  * @property string|null $title
  * @property string|null $linkUrl
  * @property string $linkTarget
- * @property boolean $showSeparator
+ * @property bool $showSeparator
  * @property int $delay
- * @property boolean $useAnimation
+ * @property bool $useAnimation
  * @property array $pluginOptions
  */
 class AlertModel extends Model {

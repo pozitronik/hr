@@ -4,7 +4,7 @@ declare(strict_types = 1);
 /* @var View $this
  * @var Users $model
  * @var Groups $group
- * @var boolean $boss
+ * @var bool $boss
  * @var array|callable $options
  */
 

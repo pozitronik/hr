@@ -5,7 +5,7 @@ declare(strict_types = 1);
  * @var View $this
  * @var array $data
  * @var array $value
- * @var integer $groupId
+ * @var int $groupId
  * @var array $options
  * @var bool $showStatus
  */

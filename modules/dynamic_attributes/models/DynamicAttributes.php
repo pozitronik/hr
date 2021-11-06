@@ -33,7 +33,7 @@ use yii\db\ActiveQuery;
  * @property int $daddy Создатель
  * @property string $create_date Дата создания
  * @property array $structure Структура свойств
- * @property integer $access
+ * @property int $access
  * @property int $deleted Флаг удаления
  *
  * @property-read DynamicAttributeProperty[] $properties

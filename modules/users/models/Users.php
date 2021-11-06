@@ -46,7 +46,7 @@ use Yii;
  * @property string $create_date Дата регистрации
  * @property string $profile_image Название файла фотографии профиля
  * @property int $daddy ID зарегистрировавшего/проверившего пользователя
- * @property boolean $deleted Флаг удаления
+ * @property bool $deleted Флаг удаления
  * @property-write string $update_password Свойство только для обновления пароля
  *
  * @property int|null $position Должность/позиция
@@ -66,14 +66,14 @@ use Yii;
  * @property ActiveQuery|RefUserPositions $relUserPosition Релейшен к должностям пользователей (у пользователя может быть только одна должность)
  * @property-read ActiveQuery|RelRefUserPositionsTypes[] $relRefUserPositionsTypes ID типов должностей пользователя, полученные через привязку типов к занимаемой должности
  * @property-read ActiveQuery|RefUserPositionTypes[] $refUserPositionTypes Типы должностей пользователя, полученные через привязку типов к занимаемой должности. НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ КАК ГЕТТЕР, вызывать только функцию
- * @property ActiveQuery|RefUserPositionTypes[]|integer[] $relRefUserPositionsTypesOwn Типы должностей пользователя, полученные через прямые определения (не зависящие от привязок должности)
+ * @property ActiveQuery|RefUserPositionTypes[]|int $relRefUserPositionsTypesOwn Типы должностей пользователя, полученные через прямые определения (не зависящие от привязок должности)
  * @property-read RefUserPositionTypes[] $relRefUserPositionsTypesAny Типы должностей пользователя, полученные напрямую, или (в случае отсутствия прямых указаний) через должности (использовать при расчётах и выводе)
  * @property-read ActiveQuery|RelUserPositionsTypes[] $relUserPositionsTypes Релейшен к таблице связей пользователя с типами должностей (для прямого определения)
  *
  * @property ActiveQuery|Groups[] $relGroups
  * @property-write array $rolesInGroup
  * @property RelUsersGroupsRoles[]|ActiveQuery $relUsersGroupsRoles Релейшен к ролям пользователей в группах
- * @property integer[] $dropGroups
+ * @property int $dropGroups
  *
  * ***************************
  * Опции
@@ -85,12 +85,12 @@ use Yii;
  * Права в системе
  * @property RelUsersPrivileges[]|ActiveQuery $relUsersPrivileges Релейшен к таблице связей с привилегиями
  * @property Privileges[]|ActiveQuery $relPrivileges Релейшен к привилегиям
- * @property integer[] $dropUsersPrivileges Атрибут для удаления привилегий
+ * @property int $dropUsersPrivileges Атрибут для удаления привилегий
  * @property-read UserRightInterface[] $rights Массив прав пользователя в системе, вычисляется из суммы привилегий
  * **************************
  * Атрибуты
  * @property RelUsersAttributes[]|ActiveQuery $relUsersAttributes Релейшен к таблице связей с атрибутами
- * @property integer[] $dropUsersAttributes
+ * @property int $dropUsersAttributes
  * @property ActiveQuery|RefUserRoles[] $relRefUserRoles Релейшен к ролям пользователей
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesLeader Релейшен к ролям пользователей с флагом босса
  * @property ActiveQuery|RefUserRoles[] $relRefUserRolesImportant Релейшен к ролям пользователей с флагом важной шишки
@@ -323,14 +323,14 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return integer[]
+	 * @return int
 	 */
 	public function getDropGroups():array {
 		return [];
 	}
 
 	/**
-	 * @param integer[] $dropGroups
+	 * @param int $dropGroups
 	 * @throws Throwable
 	 */
 	public function setDropGroups(array $dropGroups):void {
@@ -357,13 +357,13 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Добавляет массив ролей пользователя к группе
-	 * @param array<integer, array<integer>> $groupRoles
+	 * @param array<int, array<int>> $groupRoles
 	 * @throws Throwable
 	 */
 	public function setRolesInGroup(array $groupRoles):void {
 		foreach ($groupRoles as $group => $roles) {
 			RelUsersGroupsRoles::deleteAll(['user_group_id' => RelUsersGroups::find()->where(['group_id' => $group, 'user_id' => $this->id])->select('id')]);
-			/** @var integer[] $roles */
+			/** @var int $roles */
 			foreach ($roles as $role) {
 				RelUsersGroupsRoles::setRoleInGroup($role, $group, $this->id);
 			}
@@ -422,7 +422,7 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param integer[] $dropUsersAttributes
+	 * @param int $dropUsersAttributes
 	 * @throws Throwable
 	 */
 	public function setDropUsersAttributes(array $dropUsersAttributes):void {
@@ -431,7 +431,7 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return integer[]
+	 * @return int
 	 */
 	public function getDropUsersAttributes():array {
 		return [];
@@ -502,7 +502,7 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @return integer[]
+	 * @return int
 	 */
 	public function getDropUsersPrivileges():array {
 		return [];
@@ -573,7 +573,7 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Сюда прилетают изменения типа должности из профиля пользователя. Мы не меняем тип должности у самой должности, внося измненения в таблицу переопределний для этого конкретного юзернейма
-	 * @param integer[] $relRefUserPositionTypes
+	 * @param int $relRefUserPositionTypes
 	 * @throws Throwable
 	 */
 	public function setRelRefUserPositionsTypesOwn(array $relRefUserPositionTypes):void {

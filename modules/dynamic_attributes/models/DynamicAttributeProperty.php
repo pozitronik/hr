@@ -29,15 +29,15 @@ use yii\widgets\ActiveForm;
  * Описание структуры свойства атрибута
  * @package app\models\attributes
  *
- * @property integer $attributeId
- * @property integer $id
+ * @property int $attributeId
+ * @property int $id
  * @property string $name
  * @property string|null $type -- null as unsupported
- * @property boolean $required
+ * @property bool $required
  *
- * @property integer $userId;
+ * @property int $userId;
  *
- * @property boolean $isNewRecord
+ * @property bool $isNewRecord
  * @property DynamicAttributes $dynamicAttribute
  * @property mixed $value -- атрибут для обращения к виртуальному (не хранящемуся в БД) значению
  * @property-read string $categoryName
@@ -212,7 +212,7 @@ class DynamicAttributeProperty extends Model {
 	}
 
 	/**
-	 * @return integer
+	 * @return int
 	 */
 	public function getId():int {
 		return $this->id;

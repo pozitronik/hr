@@ -38,7 +38,7 @@ class GroupsController extends WigetableController {
 
 	/**
 	 * Изменение группы
-	 * @param integer $id
+	 * @param int $id
 	 * @return null|string
 	 * @throws Throwable
 	 */

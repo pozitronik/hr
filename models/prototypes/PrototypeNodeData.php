@@ -8,9 +8,9 @@ use yii\base\Model;
 /**
  * Class PrototypeNodeData
  *
- * @property integer $nodeId
- * @property integer $x
- * @property integer $y
+ * @property int $nodeId
+ * @property int $x
+ * @property int $y
  */
 class PrototypeNodeData extends Model {
 	public $nodeId;

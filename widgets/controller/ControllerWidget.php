@@ -13,7 +13,7 @@ use yii\base\Widget;
  * Отображение WigetableController в виде виджетов/меню
  * @package app\components\controller
  *
- * @property integer $mode
+ * @property int $mode
  * @property WigetableController|ModelExtended $model
  */
 class ControllerWidget extends Widget {
