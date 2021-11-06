@@ -19,7 +19,7 @@ use app\modules\groups\widgets\group_users\GroupUsersWidget;
 use app\modules\groups\widgets\navigation_menu\GroupNavigationMenuWidget;
 use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;

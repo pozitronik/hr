@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\ribbon;
 
-use app\components\pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\components\pozitronik\helpers\ArrayHelper;
 use Throwable;
 use yii\base\Model;

@@ -5,7 +5,7 @@ namespace app\components\pozitronik\references\models;
 
 use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\components\pozitronik\references\ReferencesModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use Throwable;
 use Yii;
 use yii\base\InvalidConfigException;

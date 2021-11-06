@@ -16,6 +16,6 @@ class ReferencesModule extends CoreModule {
 	 * {@inheritDoc}
 	 */
 	public function getControllerPath() {
-		return Yii::getAlias('@vendor/pozitronik/yii2-references/src/controllers');
+		return Yii::getAlias('@app/components/pozitronik/references/controllers');
 	}
 }

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\widgets\user_card;
 
-use app\components\pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\modules\users\models\Users;
 use Throwable;
 

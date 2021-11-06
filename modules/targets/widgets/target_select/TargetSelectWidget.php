@@ -5,7 +5,7 @@ namespace app\modules\targets\widgets\target_select;
 
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use app\components\pozitronik\widgets\SelectModelWidget;
+use app\components\pozitronik\cachedwidget\SelectModelWidget;
 
 /**
  * Виджет выбора задачи целеполагания (общий, для тех моделей, которые имеют нужные атрибуты).

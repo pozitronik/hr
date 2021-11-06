@@ -19,7 +19,7 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\vacancy\models\Vacancy;
 use app\modules\vacancy\widgets\navigation_menu\VacancyNavigationMenuWidget;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;

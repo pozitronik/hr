@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\widgets;
+namespace app\components\pozitronik\cachedwidget;
 
 use app\components\pozitronik\helpers\ArrayHelper;
 use app\components\pozitronik\helpers\ReflectionHelper;

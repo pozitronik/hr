@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace app\modules\users\widgets\bookmarks;
 
-use app\components\pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Bookmarks;
 use Throwable;

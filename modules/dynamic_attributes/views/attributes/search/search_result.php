@@ -14,7 +14,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributesSearchItem;
 use app\modules\dynamic_attributes\widgets\dynamic_attribute\DynamicAttributeWidget;
 use app\modules\users\models\Users;
 use app\modules\users\widgets\navigation_menu\UserNavigationMenuWidget;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use app\components\pozitronik\helpers\ArrayHelper;

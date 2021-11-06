@@ -5,7 +5,7 @@ namespace app\modules\dynamic_attributes\widgets\navigation_menu;
 
 use app\models\core\IconsHelper;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
-use app\components\pozitronik\widgets\BaseNavigationMenuWidget;
+use app\components\pozitronik\cachedwidget\BaseNavigationMenuWidget;
 
 /**
  * @property DynamicAttributes $model

@@ -12,7 +12,7 @@ use app\modules\users\models\Users;
 use app\components\pozitronik\references\models\CustomisableReference;
 use app\components\pozitronik\references\ReferencesModule;
 use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;

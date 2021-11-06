@@ -7,7 +7,7 @@ use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\components\pozitronik\references\models\CustomisableReference;
 use app\components\pozitronik\references\ReferencesModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use Throwable;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;

@@ -13,7 +13,7 @@ use app\modules\users\models\references\RefUserRoles;
 use app\models\relations\RelUsersGroupsRoles;
 use app\models\user\CurrentUser;
 use app\modules\users\models\Users;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use yii\helpers\Html;
 use yii\web\View;
 

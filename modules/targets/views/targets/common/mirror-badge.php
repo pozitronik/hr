@@ -12,7 +12,7 @@ use app\modules\salary\models\references\RefUserPositions;
 use app\modules\targets\TargetsAsset;
 use app\modules\targets\models\Targets;
 use app\modules\targets\TargetsModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use yii\web\View;
 
 TargetsAsset::register($this);

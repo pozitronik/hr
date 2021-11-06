@@ -14,7 +14,7 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\groups\widgets\group_leaders\GroupLeadersWidget;
 use app\modules\home\HomeModule;
 use app\modules\vacancy\VacancyModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use app\components\pozitronik\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;

@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * @var array $items
  */
 
-use app\components\pozitronik\widgets\ColumnMenuWidgetAssets;
+use app\components\pozitronik\cachedwidget\ColumnMenuWidgetAssets;
 use yii\bootstrap\ButtonDropdown;
 use yii\web\View;
 

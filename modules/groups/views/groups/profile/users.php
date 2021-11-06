@@ -21,7 +21,7 @@ use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use app\components\pozitronik\helpers\ArrayHelper;

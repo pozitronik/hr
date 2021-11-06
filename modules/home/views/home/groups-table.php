@@ -9,6 +9,7 @@ declare(strict_types = 1);
  * @var string|null $userLink
  */
 
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\GroupsSearch;
@@ -18,7 +19,6 @@ use app\components\pozitronik\references\widgets\reference_select\ReferenceSelec
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use app\components\pozitronik\widgets\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use app\components\pozitronik\helpers\ArrayHelper;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\widgets;
+namespace app\components\pozitronik\cachedwidget;
 
 use app\components\pozitronik\core\models\lcquery\LCQuery;
 use app\components\pozitronik\core\traits\ARExtended;

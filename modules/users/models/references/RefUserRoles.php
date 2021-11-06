@@ -6,7 +6,7 @@ namespace app\modules\users\models\references;
 use app\components\pozitronik\references\models\CustomisableReference;
 use app\components\pozitronik\references\ReferencesModule;
 use app\modules\users\UsersModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\GridView;
 use app\modules\groups\models\Groups;
 use app\models\relations\RelUsersGroups;

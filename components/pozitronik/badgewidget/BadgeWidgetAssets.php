@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\widgets;
+namespace app\components\pozitronik\badgewidget;
 
 use yii\web\AssetBundle;
 use app\assets\AppAsset;

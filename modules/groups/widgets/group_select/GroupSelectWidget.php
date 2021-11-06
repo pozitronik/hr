@@ -5,7 +5,7 @@ namespace app\modules\groups\widgets\group_select;
 
 use app\modules\groups\GroupsModule;
 use app\modules\groups\models\Groups;
-use app\components\pozitronik\widgets\SelectModelWidget;
+use app\components\pozitronik\cachedwidget\SelectModelWidget;
 
 /**
  * Class GroupSelectWidget

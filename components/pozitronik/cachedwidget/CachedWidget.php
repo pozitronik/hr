@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\components\pozitronik\widgets;
+namespace app\components\pozitronik\cachedwidget;
 
 use Yii;
 use yii\base\Widget;

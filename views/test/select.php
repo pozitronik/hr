@@ -13,7 +13,7 @@ use app\components\pozitronik\references\ReferencesModule;
 use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\salary\models\references\RefUserPositionTypes;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use yii\data\ActiveDataProvider;

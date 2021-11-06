@@ -58,6 +58,7 @@ class PluginsSupport {
 				}
 			}
 		}
+
 		return $plugins;
 	}
 

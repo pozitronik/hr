@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace app\widgets\admin_panel;
 
 use app\models\core\controllers\CoreController;
-use app\components\pozitronik\widgets\CachedWidget;
+use app\components\pozitronik\cachedwidget\CachedWidget;
 use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\core\controllers\WigetableController;
 use Throwable;

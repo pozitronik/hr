@@ -20,7 +20,7 @@ use app\modules\targets\models\TargetsSearch;
 use app\modules\targets\TargetsModule;
 use app\modules\targets\widgets\navigation_menu\TargetNavigationMenuWidget;
 use app\modules\users\UsersModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use kartik\grid\GridView;
 use app\components\pozitronik\helpers\ArrayHelper;

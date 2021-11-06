@@ -16,7 +16,7 @@ use app\components\pozitronik\references\widgets\reference_select\ReferenceSelec
 use app\modules\users\models\references\RefUserRoles;
 use app\modules\users\models\Users;
 use app\modules\users\UsersModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use kartik\grid\DataColumn;
 use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\Html;

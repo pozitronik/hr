@@ -6,7 +6,7 @@ namespace app\modules\salary\models\references;
 use app\components\pozitronik\references\models\Reference;
 use app\components\pozitronik\references\ReferencesModule;
 use app\modules\salary\models\relations\RelRefUserPositionsBranches;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use yii\helpers\Html;
 
 /**

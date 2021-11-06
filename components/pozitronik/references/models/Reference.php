@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
 use app\components\pozitronik\core\models\core_module\CoreModule;
 use app\components\pozitronik\core\models\core_module\PluginsSupport;
 use app\components\pozitronik\references\ReferencesModule;
-use app\components\pozitronik\widgets\BadgeWidget;
+use app\components\pozitronik\badgewidget\BadgeWidget;
 use Throwable;
 use Yii;
 use yii\base\ErrorException;
