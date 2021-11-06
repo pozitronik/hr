@@ -20,7 +20,7 @@ use yii\web\View;
 
 <div class="panel panel-score">
 	<div class="panel-heading">
-		<div class="panel-title"><?= null === $model->$attribute?null:$model->$attribute->getAttributeLabel($scoreAttributeName) ?></div>
+		<div class="panel-title"><?= $model->$attribute?->getAttributeLabel($scoreAttributeName) ?></div>
 	</div>
 
 	<div class="panel-body">

@@ -69,7 +69,6 @@ class ServiceController extends WigetableController {
 					$user->save();
 				}
 				return $this->redirect(['/service/service/mask-and-shit', 'step' => $step + 1]);
-			break;
 			case 1:
 				$users = Users::find()->all();
 				foreach ($users as $user) {
@@ -84,7 +83,6 @@ class ServiceController extends WigetableController {
 					}
 				}
 				return $this->redirect(['/service/service/mask-and-shit', 'step' => $step + 1]);
-			break;
 			case 2:
 				$groups = Groups::find()->all();
 				foreach ($groups as $group) {
@@ -92,7 +90,6 @@ class ServiceController extends WigetableController {
 					$group->save();
 				}
 				return 'finished';
-			break;
 		}
 	}
 }

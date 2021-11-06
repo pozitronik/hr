@@ -339,7 +339,6 @@ class ImportTargets extends ActiveRecord {
 			break;
 			default:
 				throw new NotFoundHttpException('Step not found');
-			break;
 		}
 		return true;
 

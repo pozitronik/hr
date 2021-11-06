@@ -158,7 +158,6 @@ class DynamicAttributesSearchCollection extends Model {
 			switch ($groupId) {
 				case self::SCOPE_ALL_GROUPS://все группы - это все группы
 					return $query;
-				break;
 				default:
 					$groups[] = Groups::findModels($this->searchScope);
 				break;

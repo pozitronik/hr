@@ -93,19 +93,16 @@ class AttributePropertyString extends AttributeProperty {
 					'type' => DynamicAttributeProperty::PROPERTY_STRING,
 					'value' => self::getModaValue(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_FREQUENCY:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_DICTIONARY,
 					'value' => DynamicAttributePropertyAggregation::FrequencyDistribution(ArrayHelper::getColumn($models, 'value'), $dropNullValues)
 				]);
-			break;
 			case DynamicAttributePropertyAggregation::AGGREGATION_COUNT:
 				return new DynamicAttributePropertyAggregation([
 					'type' => DynamicAttributeProperty::PROPERTY_INTEGER,
 					'value' => DynamicAttributePropertyAggregation::AggregateIntCount($models, $dropNullValues)
 				]);
-			break;
 			default:
 				return DynamicAttributePropertyAggregation::AGGREGATION_UNSUPPORTED;
 		}

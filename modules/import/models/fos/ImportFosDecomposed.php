@@ -302,16 +302,12 @@ class ImportFosDecomposed extends ActiveRecord {
 		switch ($step) {
 			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
 				return self::DoStepGroups();
-			break;
 			case self::STEP_USERS:
 				return self::DoStepUsers($errors);
-			break;
 			case self::STEP_LINKING_USERS:
 				return self::DoStepLinkingUsers();
-			break;
 			case self::STEP_LINKING_GROUPS:
 				return self::DoStepLinkingGroups();
-			break;
 		}
 		throw new NotFoundHttpException('Step not found');
 

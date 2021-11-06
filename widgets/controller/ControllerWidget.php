@@ -48,15 +48,12 @@ class ControllerWidget extends Widget {
 					'action' => $action,
 					'caption' => $caption
 				]);
-			break;
 			case self::MODE_MENU:
 				//not implemented yet
 				return 'mode not implemented yet';
-			break;
 			default:
 			case self::MODE_LIST:
 				return $this->render('controller_list', compact('action', 'caption'));
-			break;
 		}
 
 	}

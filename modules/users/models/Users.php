@@ -348,10 +348,8 @@ class Users extends ActiveRecord {
 		switch ($access) {
 			case 'sysadmin':
 				return 1 === CurrentUser::Id();
-			break;
 			default:
 				return null !== $access;
-			break;
 		}
 	}
 
