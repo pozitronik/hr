@@ -119,7 +119,7 @@ class DynamicUserRights extends ActiveRecord implements UserRightInterface {
 		return parent::beforeValidate();
 	}
 
-	private function prepareAccessMap() {
+	private function prepareAccessMap():void {
 		$this->_rules[$this->ruleActionsIndexName] = [];
 		foreach ($this->actionsAccessMap as $item) {
 			if (null !== $item->state) {

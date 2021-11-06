@@ -109,7 +109,7 @@ class AttributesController extends WigetableController {
 			]);
 		}
 
-		$property = $attribute->getPropertyById((int)$property_id, new NotFoundHttpException());
+		$property = $attribute->getPropertyById($property_id, new NotFoundHttpException());
 		return $this->render('property/update', [
 			'attribute' => $attribute,
 			'model' => $property

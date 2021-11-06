@@ -236,7 +236,7 @@ class Vacancy extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	public function setRelRefUserRoles(array $roles):void {
-		$droppedRoles = array_diff(ArrayHelper::getColumn($this->relVacancyGroupRoles, 'role_id'), (array)$roles);
+		$droppedRoles = array_diff(ArrayHelper::getColumn($this->relVacancyGroupRoles, 'role_id'), $roles);
 		RelVacancyGroupRoles::unlinkModels($this, $droppedRoles);
 		RelVacancyGroupRoles::linkModels($this, $roles);
 	}

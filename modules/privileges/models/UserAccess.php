@@ -35,8 +35,8 @@ class UserAccess extends Model implements UserAccessInterface {
 		if (null === $user = CurrentUser::User()) return [];
 		$rights = $user->rights;//Все права, присвоенные пользователю
 		$rules = [];
-		$defaultAllow = ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
-		if ($user->is('sysadmin')) $defaultAllow = true;
+		$allow = ArrayHelper::getValue(Yii::$app->params, 'accessDefaultMode', $defaultAllow);
+		if ($user->is('sysadmin')) $allow = true;
 
 		$actions = CoreController::GetControllerActions($controller);
 
@@ -59,7 +59,7 @@ class UserAccess extends Model implements UserAccessInterface {
 			if (!$ruleDefined) {//Ни одно право не определило правило доступа
 				$rules[] = [
 					'actions' => [$action],
-					'allow' => $defaultAllow,
+					'allow' => $allow,
 					'roles' => ['@']
 				];
 			}
@@ -68,7 +68,7 @@ class UserAccess extends Model implements UserAccessInterface {
 	}
 
 	/**
-	 * Вычисляет, имется ли у текущего пользователя доступ к выполнению метода у модели
+	 * Вычисляет, имеЕтся ли у текущего пользователя доступ к выполнению метода у модели
 	 * @param Model $model
 	 * @param null|int $method
 	 * @param array|null $actionParameters

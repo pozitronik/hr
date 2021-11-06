@@ -155,7 +155,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	/**
 	 * @param $key
 	 */
-	private function assertValidKey($key) {
+	private function assertValidKey($key):void {
 		if (!is_string($key)) {
 			throw new InvalidArgumentException('Invalid key: '.var_export($key, true).'. Key should be a string.');
 		}
@@ -177,7 +177,7 @@ class SimpleCacheAdapter extends Component implements CacheInterface {
 	/**
 	 * @param $ttl
 	 */
-	private function assertValidTtl($ttl) {
+	private function assertValidTtl($ttl):void {
 		if (null !== $ttl && !is_int($ttl) && !$ttl instanceof DateInterval) {
 			$error = 'Invalid time: '.serialize($ttl).'. Must be integer or instance of DateInterval.';
 			throw new InvalidArgumentException($error);

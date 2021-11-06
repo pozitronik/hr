@@ -36,7 +36,7 @@ class User extends BaseObject implements IdentityInterface {
 	 * Расширяет свойства Yii::$app->user->identity, абсолютно идентично Users::CurrentUser
 	 * используем вместо Users::CurrentUser, т.к. работает быстрее в счёт кеширования
 	 */
-	public static function fillUserData(Users|array $data = []) {
+	public static function fillUserData(Users|array $data = []):void {
 		self::$users = $data;
 		if (!empty($data)) {
 			self::$users = [
