@@ -236,9 +236,9 @@ class AlertModel extends Model {
 	}
 
 	/**
-	 * @param int $delay
+	 * @param null|int $delay
 	 */
-	public function setDelay(int $delay):void {
+	public function setDelay(?int $delay):void {
 		$this->delay = $delay;
 	}
 
