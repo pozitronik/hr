@@ -35,7 +35,7 @@ class Alert extends Widget {
 					'icon' => $alert->icon,//'glyphicon glyphicon-ok-sign',
 					'body' => $alert->body,
 					'showSeparator' => $alert->showSeparator,
-					'delay' => $alert->delay,
+					'delay' => $alert->delay??false,
 					'pluginOptions' => $alert->pluginOptions
 				]);
 				SQueue::clear(CurrentUser::Id());

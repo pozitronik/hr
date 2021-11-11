@@ -17,7 +17,7 @@ use yii\base\Model;
  * @property string|null $linkUrl
  * @property string $linkTarget
  * @property bool $showSeparator
- * @property int $delay
+ * @property null|int $delay
  * @property bool $useAnimation
  * @property array $pluginOptions
  */
@@ -32,7 +32,7 @@ class AlertModel extends Model {
 	private $linkUrl;
 	private $linkTarget = '_blank';
 	private $showSeparator = false;
-	private $delay = false;//unlimited delay by default
+	private $delay;//unlimited delay by default
 	private $closeButton = [];
 	private $useAnimation = true;
 	private $iconOptions = [];
@@ -229,9 +229,9 @@ class AlertModel extends Model {
 	}
 
 	/**
-	 * @return bool|false
+	 * @return null|int
 	 */
-	public function getDelay():bool {
+	public function getDelay():?int {
 		return $this->delay;
 	}
 

@@ -169,10 +169,10 @@ class Groups extends ActiveRecord {
 	}
 
 	/**
-	 * @param ActiveQuery|Users[] $relGroupsUsers
+	 * @param mixed $relGroupsUsers
 	 * @throws Throwable
 	 */
-	public function setRelUsers(ActiveQuery|array $relGroupsUsers):void {
+	public function setRelUsers($relGroupsUsers):void {
 		RelUsersGroups::linkModels($relGroupsUsers, $this);
 	}
 
@@ -234,10 +234,10 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Внесёт группу в релейшен дочерних к текущей
-	 * @param ActiveQuery|Groups[] $childGroups
+	 * @param mixed $childGroups
 	 * @throws Throwable
 	 */
-	public function setRelChildGroups(ActiveQuery|array $childGroups):void {
+	public function setRelChildGroups($childGroups):void {
 		RelGroupsGroups::linkModels($this, $childGroups);
 		$this->dropCaches();
 	}
@@ -269,10 +269,10 @@ class Groups extends ActiveRecord {
 
 	/**
 	 * Внесёт группу в релейшен дочерних к текущей
-	 * @param ActiveQuery|Groups[] $parentGroups
+	 * @param mixed $parentGroups
 	 * @throws Throwable
 	 */
-	public function setRelParentGroups(ActiveQuery|array $parentGroups):void {
+	public function setRelParentGroups($parentGroups):void {
 		RelGroupsGroups::linkModels($parentGroups, $this);
 		if (!empty($parentGroups)) {
 			foreach ((array)$parentGroups as $group) {

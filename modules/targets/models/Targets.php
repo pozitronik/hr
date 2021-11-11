@@ -130,10 +130,10 @@ class Targets extends ActiveRecord {
 
 	/**
 	 * Установка родительской задачи
-	 * @param string|ActiveQuery|Targets|null $parentTarget
+	 * @param mixed $parentTarget
 	 * @throws Throwable
 	 */
-	public function setRelParentTarget(ActiveQuery|string|Targets|null $parentTarget):void {
+	public function setRelParentTarget($parentTarget):void {
 		RelTargetsTargets::linkModels($parentTarget, $this);
 		if (!empty($parentTarget) && null === $model = self::findModel($parentTarget)) $model->dropCaches();
 	}
@@ -185,10 +185,10 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @param ActiveQuery|Groups[] $relTargetsGroups
+	 * @param mixed $relTargetsGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups(ActiveQuery|array $relTargetsGroups):void {
+	public function setRelGroups(mixed $relTargetsGroups):void {
 		RelTargetsGroups::linkModels($this, $relTargetsGroups);
 	}
 
@@ -207,10 +207,10 @@ class Targets extends ActiveRecord {
 	}
 
 	/**
-	 * @param ActiveQuery|Users[] $relTargetsUsers
+	 * @param mixed $relTargetsUsers
 	 * @throws Throwable
 	 */
-	public function setRelUsers(ActiveQuery|array $relTargetsUsers):void {
+	public function setRelUsers($relTargetsUsers):void {
 		RelTargetsUsers::linkModels($this, $relTargetsUsers);
 	}
 

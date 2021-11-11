@@ -315,10 +315,10 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param array $relUsersGroups
+	 * @param mixed $relUsersGroups
 	 * @throws Throwable
 	 */
-	public function setRelGroups(array $relUsersGroups):void {
+	public function setRelGroups($relUsersGroups):void {
 		RelUsersGroups::linkModels($this, $relUsersGroups);
 	}
 
@@ -412,10 +412,10 @@ class Users extends ActiveRecord {
 	}
 
 	/**
-	 * @param ActiveQuery|DynamicAttributes[] $relDynamicAttributes
+	 * @param mixed $relDynamicAttributes
 	 * @throws Throwable
 	 */
-	public function setRelDynamicAttributes(ActiveQuery|array $relDynamicAttributes):void {
+	public function setRelDynamicAttributes($relDynamicAttributes):void {
 		RelUsersAttributes::linkModels($this, $relDynamicAttributes);
 	}
 
@@ -479,10 +479,10 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Кривоватый метод работы с привлегиями; пока оставляю так, после рефакторинга админки привлегии будут редаткироваться или аяксом, или просто отдельно, соответственно будет юзаться удаление отдельным атрибутом
-	 * @param ActiveQuery|Privileges[] $relPrivileges
+	 * @param mixed $relPrivileges
 	 * @throws Throwable
 	 */
-	public function setRelPrivileges(ActiveQuery|array $relPrivileges):void {
+	public function setRelPrivileges($relPrivileges):void {
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаялемые записи. */
 		$currentPrivilegesId = ArrayHelper::getColumn($this->relPrivileges, 'id');
 		$droppedPrivileges = array_diff($currentPrivilegesId, (array)$relPrivileges);
@@ -571,10 +571,10 @@ class Users extends ActiveRecord {
 
 	/**
 	 * Сюда прилетают изменения типа должности из профиля пользователя. Мы не меняем тип должности у самой должности, внося измненения в таблицу переопределний для этого конкретного юзернейма
-	 * @param array $relRefUserPositionTypes
+	 * @param mixed $relRefUserPositionTypes
 	 * @throws Throwable
 	 */
-	public function setRelRefUserPositionsTypesOwn(array $relRefUserPositionTypes):void {
+	public function setRelRefUserPositionsTypesOwn($relRefUserPositionTypes):void {
 //		if ([] === array_diff($this->relUserPosition->types, $relRefUserPositionTypes) && empty($this->relUserPositionsTypes)) return;//это не изменение, пришли типы, определённые должностью
 
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаляемые записи. */

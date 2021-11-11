@@ -25,9 +25,9 @@ class VirtualTarget extends Targets {
 	}
 
 	/**
-	 * @param Targets[] $relChildTargets
+	 * @param mixed $relChildTargets
 	 */
-	public function setRelChildTargets(array $relChildTargets):void {
+	public function setRelChildTargets($relChildTargets):void {
 		$this->relChildTargets = $relChildTargets;
 	}
 
@@ -39,9 +39,9 @@ class VirtualTarget extends Targets {
 	}
 
 	/**
-	 * @param string|ActiveQuery|Targets|null $parentTarget
+	 * @param mixed $parentTarget
 	 */
-	public function setRelParentTarget(ActiveQuery|string|Targets|null $parentTarget):void {
+	public function setRelParentTarget($parentTarget):void {
 		$this->relParentTarget = $parentTarget;
 	}
 }

@@ -353,7 +353,7 @@ class RefUserPositions extends CustomisableReference {
 	 * @param mixed $relGrades
 	 * @throws Throwable
 	 */
-	public function setRelRefGrades(mixed $relGrades):void {
+	public function setRelRefGrades($relGrades):void {
 		RelGradesPositionsRules::deleteAll(['position_id' => $this->id]);
 		RelGradesPositionsRules::linkModels($relGrades, $this->id);
 	}
