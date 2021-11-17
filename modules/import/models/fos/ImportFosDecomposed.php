@@ -223,7 +223,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		}
 		foreach (ImportFosClusterProductLeaderIt::find()->all() as $clusterLeaderIt) {
 			/** @var ImportFosClusterProductLeaderIt $clusterLeaderIt */
-			foreach (ImportFosClusterProductLeader::findAll(['leader_it_id' => $clusterLeaderIt->user_id]) as $cluster) {
+			foreach (ImportFosClusterProduct::findAll(['leader_it_id' => $clusterLeaderIt->user_id]) as $cluster) {
 				self::linkRole($cluster->hr_group_id, $clusterLeaderIt->relUsers->hr_user_id, 'IT-Лидер кластера');
 			}
 		}
