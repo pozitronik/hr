@@ -167,7 +167,7 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 					"optionsMap" => RefGroupTypes::colorStyleOptions(),
 					"optionsMapAttribute" => 'type',
 					'unbadgedCount' => false,
-					'linkScheme' => ['/home/users', 'UsersSearch[groupId]' => 'id']
+					'linkScheme' => ['/users', 'UsersSearch[groupId]' => 'id']
 				]);
 			},
 			'format' => 'raw'

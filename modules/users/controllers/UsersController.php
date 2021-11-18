@@ -51,7 +51,7 @@ class UsersController extends WigetableController {
 		//Проверяем доступы к списку юзеров
 
 		$dataProvider = $searchModel->search($params, $allowedGroups);
-		$groupsScope = Groups::findModels($searchModel->groupId);
+		$groupsScope = Groups::findModels([$searchModel->groupId]);
 
 		return $this->render('index', compact('searchModel', 'dataProvider', 'groupsScope'));
 	}
