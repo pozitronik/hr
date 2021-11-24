@@ -101,40 +101,41 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @throws Exception
 	 */
 	private static function DoStepGroups():bool {
-		foreach (ImportFosChapter::findAll(['hr_group_id' => null]) as $chapter) {
-			$chapter->setAndSaveAttribute('hr_group_id', self::addGroup($chapter->name, 'Чаптер'));
-		}
-		foreach (ImportFosClusterProduct::findAll(['hr_group_id' => null]) as $cluster) {
-			$cluster->setAndSaveAttribute('hr_group_id', self::addGroup($cluster->name, 'Кластер'));
-		}
+//		foreach (ImportFosChapter::findAll(['hr_group_id' => null]) as $chapter) {
+//			$chapter->setAndSaveAttribute('hr_group_id', self::addGroup($chapter->name, 'Чаптер'));
+//		}
+//		foreach (ImportFosClusterProduct::findAll(['hr_group_id' => null]) as $cluster) {
+//			$cluster->setAndSaveAttribute('hr_group_id', self::addGroup($cluster->name, 'Кластер'));
+//		}
 		foreach (ImportFosCommand::findAll(['hr_group_id' => null]) as $command) {
 			$command->setAndSaveAttribute('hr_group_id', self::addGroup($command->name, 'Команда'));
 		}
 
+		foreach (ImportFosFunctionalBlock::findAll(['hr_group_id' => null]) as $functionalBlock) {
+			$functionalBlock->setAndSaveAttribute('hr_group_id', self::addGroup($functionalBlock->name, 'Блок 1'));
+		}
 		foreach (ImportFosDivisionLevel1::findAll(['hr_group_id' => null]) as $division) {
-			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение первого уровня'));
+			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Блок 2'));
 		}
 		foreach (ImportFosDivisionLevel2::findAll(['hr_group_id' => null]) as $division) {
-			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение второго уровня'));
+			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Дирекция'));
 		}
 		foreach (ImportFosDivisionLevel3::findAll(['hr_group_id' => null]) as $division) {
-			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение третьего уровня'));
+			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Департамент'));
 		}
 		foreach (ImportFosDivisionLevel4::findAll(['hr_group_id' => null]) as $division) {
-			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение четвёртого уровня'));
+			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Служба'));
 		}
 		foreach (ImportFosDivisionLevel5::findAll(['hr_group_id' => null]) as $division) {
-			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Подразделение пятого уровня'));
+			$division->setAndSaveAttribute('hr_group_id', self::addGroup($division->name, 'Отдел'));
 		}
-		foreach (ImportFosFunctionalBlock::findAll(['hr_group_id' => null]) as $functionalBlock) {
-			$functionalBlock->setAndSaveAttribute('hr_group_id', self::addGroup($functionalBlock->name, 'Функциональный блок'));
-		}
-		foreach (ImportFosFunctionalBlockTribe::findAll(['hr_group_id' => null]) as $functionalBlockTribe) {
-			$functionalBlockTribe->setAndSaveAttribute('hr_group_id', self::addGroup($functionalBlockTribe->name, 'Функциональный блок трайба'));
-		}
-		foreach (ImportFosTribe::findAll(['hr_group_id' => null]) as $tribe) {
-			$tribe->setAndSaveAttribute('hr_group_id', self::addGroup($tribe->name, 'Трайб'));
-		}
+
+//		foreach (ImportFosFunctionalBlockTribe::findAll(['hr_group_id' => null]) as $functionalBlockTribe) {
+//			$functionalBlockTribe->setAndSaveAttribute('hr_group_id', self::addGroup($functionalBlockTribe->name, 'Функциональный блок трайба'));
+//		}
+//		foreach (ImportFosTribe::findAll(['hr_group_id' => null]) as $tribe) {
+//			$tribe->setAndSaveAttribute('hr_group_id', self::addGroup($tribe->name, 'Трайб'));
+//		}
 		return true;//Поскольку тут объём работы довольно мал, считаем, что он всегда успевает выполниться
 	}
 
@@ -163,34 +164,19 @@ class ImportFosDecomposed extends ActiveRecord {
 			}
 
 			$importFosUser->setAndSaveAttribute('hr_user_id', $userId);
-			/*Логика декомпозиции подразделений:
-			Если функциональный блок = Розничный бизнес, то делаем группу из level2
-			Если функциональный блок = Пуст, то делаем группу из level2
-			В остальных случаях делаем группы level3 && level4 (если есть данные), level4 входит в level3,
-			level5 игнорим
-			*/
-			if (in_array(ArrayHelper::getValue($importFosUser->relFunctionalBlock, 'name'), ['Розничный бизнес', null], true)) {
-				if (null !== $id = ArrayHelper::getValue($importFosUser->relDivisionLevel2, 'hr_group_id')) {
-					self::linkRole($id, $importFosUser->hr_user_id);
-				}
-			} else {
-				$id3 = ArrayHelper::getValue($importFosUser->relDivisionLevel3, 'hr_group_id');
-				$id4 = ArrayHelper::getValue($importFosUser->relDivisionLevel4, 'hr_group_id');
 
-				self::linkRole($id4, $importFosUser->hr_user_id);
-				self::linkRole($id3, $importFosUser->hr_user_id);
-				RelGroupsGroups::linkModels($id3, $id4);
-			}
+			self::linkRole($importFosUser->relFunctionalBlock?->hr_group_id, $importFosUser->hr_user_id);//Блок 1
+			self::linkRole($importFosUser->relDivisionLevel1?->hr_group_id, $importFosUser->hr_user_id);//Блок 2
+			self::linkRole($importFosUser->relDivisionLevel2?->hr_group_id, $importFosUser->hr_user_id);//Дирекция
+			self::linkRole($importFosUser->relDivisionLevel3?->hr_group_id, $importFosUser->hr_user_id);//Департамент
+			self::linkRole($importFosUser->relDivisionLevel4?->hr_group_id, $importFosUser->hr_user_id);//Служба
+			self::linkRole($importFosUser->relDivisionLevel5?->hr_group_id, $importFosUser->hr_user_id);//Отдел
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
 			if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
 				self::linkRole($command->hr_group_id, $importFosUser->hr_user_id, ArrayHelper::getValue(self::findUserCommandPosition($importFosUser->id, $command->id), 'name'));
 			}
 
-			/*Добавление пользователей в чаптер */
-			if (null !== $chapter = $importFosUser->relChapter) {//Пользователь может быть вне чаптера
-				self::linkRole($chapter->hr_group_id, $importFosUser->hr_user_id);
-			}
 		}
 		return false;
 	}
@@ -201,48 +187,51 @@ class ImportFosDecomposed extends ActiveRecord {
 	 */
 	private static function DoStepLinkingUsers():bool {
 
-		foreach (ImportFosChapterCouch::find()->all() as $couch) {//coach, хуйло неграмотное
-			/** @var ImportFosChapterCouch $couch */
-			$found = ImportFosChapter::findAll(['couch_id' => $couch->user_id]);
-			foreach ($found as $chapter) {
-				self::linkRole($chapter->hr_group_id, $couch->relUsers->hr_user_id, 'Agile-коуч');
-			}
-		}
-		foreach (ImportFosChapterLeader::find()->all() as $chapterLeader) {
-			/** @var ImportFosChapterLeader $chapterLeader */
-			$found = ImportFosChapter::findAll(['leader_id' => $chapterLeader->user_id]);
-			foreach ($found as $chapter) {
-				self::linkRole($chapter->hr_group_id, $chapterLeader->relUsers->hr_user_id, 'Лидер чаптера');
-			}
-		}
-		foreach (ImportFosClusterProductLeader::find()->all() as $clusterLeader) {
-			/** @var ImportFosClusterProductLeader $clusterLeader */
-			foreach (ImportFosClusterProduct::findAll(['leader_id' => $clusterLeader->user_id]) as $cluster) {
-				self::linkRole($cluster->hr_group_id, $clusterLeader->relUsers->hr_user_id, 'Лидер кластера');
-			}
-		}
-		foreach (ImportFosClusterProductLeaderIt::find()->all() as $clusterLeaderIt) {
-			/** @var ImportFosClusterProductLeaderIt $clusterLeaderIt */
-			foreach (ImportFosClusterProduct::findAll(['leader_it_id' => $clusterLeaderIt->user_id]) as $cluster) {
-				self::linkRole($cluster->hr_group_id, $clusterLeaderIt->relUsers->hr_user_id, 'IT-Лидер кластера');
-			}
-		}
+//		foreach (ImportFosChapterCouch::find()->all() as $couch) {//coach, хуйло неграмотное
+//			/** @var ImportFosChapterCouch $couch */
+//			$found = ImportFosChapter::findAll(['couch_id' => $couch->user_id]);
+//			foreach ($found as $chapter) {
+//				self::linkRole($chapter->hr_group_id, $couch->relUsers->hr_user_id, 'Agile-коуч');
+//			}
+//		}
+//		foreach (ImportFosChapterLeader::find()->all() as $chapterLeader) {
+//			/** @var ImportFosChapterLeader $chapterLeader */
+//			$found = ImportFosChapter::findAll(['leader_id' => $chapterLeader->user_id]);
+//			foreach ($found as $chapter) {
+//				self::linkRole($chapter->hr_group_id, $chapterLeader->relUsers->hr_user_id, 'Лидер чаптера');
+//			}
+//		}
+//		foreach (ImportFosClusterProductLeader::find()->all() as $clusterLeader) {
+//			/** @var ImportFosClusterProductLeader $clusterLeader */
+//			foreach (ImportFosClusterProduct::findAll(['leader_id' => $clusterLeader->user_id]) as $cluster) {
+//				self::linkRole($cluster->hr_group_id, $clusterLeader->relUsers->hr_user_id, 'Лидер кластера');
+//			}
+//		}
+//		foreach (ImportFosClusterProductLeaderIt::find()->all() as $clusterLeaderIt) {
+//			/** @var ImportFosClusterProductLeaderIt $clusterLeaderIt */
+//			foreach (ImportFosClusterProduct::findAll(['leader_it_id' => $clusterLeaderIt->user_id]) as $cluster) {
+//				self::linkRole($cluster->hr_group_id, $clusterLeaderIt->relUsers->hr_user_id, 'IT-Лидер кластера');
+//			}
+//		}
+
 		foreach (ImportFosProductOwner::find()->all() as $productOwner) {
 			/** @var ImportFosProductOwner $productOwner */
 			foreach (ImportFosCommand::findAll(['owner_id' => $productOwner->user_id]) as $command) {
 				self::linkRole($command->hr_group_id, $productOwner->relUsers->hr_user_id, 'Владелец продукта');
 			}
 		}
+		/*Лидер Блока 2*/
 		foreach (ImportFosTribeLeader::find()->all() as $tribeLeader) {
 			/** @var ImportFosTribeLeader $tribeLeader */
-			foreach (ImportFosTribe::findAll(['leader_id' => $tribeLeader->user_id]) as $tribe) {
-				self::linkRole($tribe->hr_group_id, $tribeLeader->relUsers->hr_user_id, 'Лидер трайба');
+			foreach (ImportFosDivisionLevel1::find()->all() as $tribe) {
+				self::linkRole($tribe->hr_group_id, $tribeLeader->relUsers->hr_user_id, 'Лидер Блока 2');
 			}
 		}
+		/*Лидер Блока 1*/
 		foreach (ImportFosTribeLeaderIt::find()->all() as $tribeLeaderIt) {
 			/** @var ImportFosTribeLeaderIt $tribeLeaderIt */
-			foreach (ImportFosTribe::findAll(['leader_it_id' => $tribeLeaderIt->user_id]) as $tribe) {
-				self::linkRole($tribe->hr_group_id, $tribeLeaderIt->relUsers->hr_user_id, 'IT-Лидер трайба');
+			foreach (ImportFosFunctionalBlock::find()->all() as $tribe) {
+				self::linkRole($tribe->hr_group_id, $tribeLeaderIt->relUsers->hr_user_id, 'Лидер Блока 1');
 			}
 		}
 
@@ -257,34 +246,39 @@ class ImportFosDecomposed extends ActiveRecord {
 	 * @throws Throwable
 	 */
 	private static function DoStepLinkingGroups():bool {
-		/** @var ImportFosFunctionalBlock $fBlock */
-		foreach (ImportFosFunctionalBlock::find()->all() as $fBlock) {
-			foreach ($fBlock->relTribe as $tribe) {
-				/** @var ImportFosFunctionalBlock $fBlock */
-				RelGroupsGroups::linkModels($fBlock->hr_group_id, $tribe->hr_group_id);
-			}
-
-		}
-
-		/** @var ImportFosTribe $tribe */
-		foreach (ImportFosTribe::find()->all() as $tribe) {
-			foreach ($tribe->relCluster as $cluster) {
-				/** @var ImportFosTribe $tribe */
-				RelGroupsGroups::linkModels($tribe->hr_group_id, $cluster->hr_group_id);
-			}
-			foreach ($tribe->relChapter as $chapter) {
-				/** @var ImportFosChapter $tribe */
-				RelGroupsGroups::linkModels($tribe->hr_group_id, $chapter->hr_group_id);//it-relation
-			}
-		}
-		/** @var ImportFosClusterProduct $cluster */
-		foreach (ImportFosClusterProduct::find()->all() as $cluster) {
-			/** @var ImportFosClusterProduct $cluster */
-			foreach ($cluster->relCommand as $command) {
-				/** @var ImportFosClusterProduct $cluster */
-				RelGroupsGroups::linkModels($cluster->hr_group_id, $command->hr_group_id);
-			}
-		}
+//		foreach (ImportFosDivisionLevel1::find()->all() as $level1) {
+//			/** @var ImportFosDivisionLevel1 $level1 */
+//		}
+//
+//
+//		/** @var ImportFosFunctionalBlock $fBlock */
+//		foreach (ImportFosFunctionalBlock::find()->all() as $fBlock) {
+//			foreach ($fBlock->relTribe as $tribe) {
+//				/** @var ImportFosFunctionalBlock $fBlock */
+//				RelGroupsGroups::linkModels($fBlock->hr_group_id, $tribe->hr_group_id);
+//			}
+//
+//		}
+//
+//		/** @var ImportFosTribe $tribe */
+//		foreach (ImportFosTribe::find()->all() as $tribe) {
+//			foreach ($tribe->relCluster as $cluster) {
+//				/** @var ImportFosTribe $tribe */
+//				RelGroupsGroups::linkModels($tribe->hr_group_id, $cluster->hr_group_id);
+//			}
+//			foreach ($tribe->relChapter as $chapter) {
+//				/** @var ImportFosChapter $tribe */
+//				RelGroupsGroups::linkModels($tribe->hr_group_id, $chapter->hr_group_id);//it-relation
+//			}
+//		}
+//		/** @var ImportFosClusterProduct $cluster */
+//		foreach (ImportFosClusterProduct::find()->all() as $cluster) {
+//			/** @var ImportFosClusterProduct $cluster */
+//			foreach ($cluster->relCommand as $command) {
+//				/** @var ImportFosClusterProduct $cluster */
+//				RelGroupsGroups::linkModels($cluster->hr_group_id, $command->hr_group_id);
+//			}
+//		}
 		return true;
 	}
 
