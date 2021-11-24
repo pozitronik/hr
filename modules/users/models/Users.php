@@ -579,7 +579,7 @@ class Users extends ActiveRecord {
 
 		/*Чтобы не захламлять лог пересозданием, находим только реально удаляемые записи. */
 		$currentUserPositionTypesId = ArrayHelper::getColumn($this->relUserPositionsTypes, 'position_type_id');
-		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, $relRefUserPositionTypes);
+		$droppedUserPositionTypes = array_diff($currentUserPositionTypesId, (array)$relRefUserPositionTypes);
 		RelUserPositionsTypes::unlinkModels($this, $droppedUserPositionTypes);
 		RelUserPositionsTypes::linkModels($this, $relRefUserPositionTypes);
 	}
