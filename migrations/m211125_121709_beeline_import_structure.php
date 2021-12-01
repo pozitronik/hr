@@ -41,6 +41,8 @@ class m211125_121709_beeline_import_structure extends Migration {
 
 		$this->createTable('import_beeline', [
 			'id' => $this->primaryKey(),
+			'user_tn' => $this->string(255),
+			'user_name' => $this->string(255),
 			'business_block' => $this->string(255),
 			'functional_block' => $this->string(255),
 			'direction' => $this->string(255),
@@ -51,8 +53,6 @@ class m211125_121709_beeline_import_structure extends Migration {
 			'ceo_level' => $this->string(255),
 			'user_type' => $this->string(255),
 			'position_name' => $this->string(255),
-			'user_tn' => $this->string(255),
-			'user_name' => $this->string(255),
 			'administrative_boss_name' => $this->string(255),
 			'administrative_boss_position_name' => $this->string(255),
 			'functional_boss_name' => $this->string(255),
