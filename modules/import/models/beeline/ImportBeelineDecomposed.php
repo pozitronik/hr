@@ -14,6 +14,7 @@ use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\import\models\beeline\active_record\ImportBeelineBranch;
 use app\modules\import\models\beeline\active_record\ImportBeelineBusinessBlock;
+use app\modules\import\models\beeline\active_record\ImportBeelineDecomposed as ImportBeelineDecomposedAliasAR;
 use app\modules\import\models\beeline\active_record\ImportBeelineDepartment;
 use app\modules\import\models\beeline\active_record\ImportBeelineDirection;
 use app\modules\import\models\beeline\active_record\ImportBeelineFunctionalBlock;
@@ -33,7 +34,7 @@ use yii\web\NotFoundHttpException;
 /**
  * Class ImportBeelineDecomposed
  */
-class ImportBeelineDecomposed extends active_record\ImportBeelineDecomposed {
+class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 
 	private const STEP_USERS_CHUNK_SIZE = 200;//Объём лимита выборки на шаге импорта пользователей
 
@@ -277,7 +278,7 @@ class ImportBeelineDecomposed extends active_record\ImportBeelineDecomposed {
 
 		foreach ($importUsers as $importUser) {
 			/** @var ImportBeelineUsers $importUser */
-			if (null === $userId = self::addUser($importUser->user_tn, $importUser->name, null, null, null, [
+			if (null === $userId = self::addUser((int)$importUser->user_tn, $importUser->name, $importUser->position, null, null, [
 //					['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importUser->remote],
 //					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importUser->relTown, 'name')],
 //					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importUser->email_sigma],
@@ -292,7 +293,7 @@ class ImportBeelineDecomposed extends active_record\ImportBeelineDecomposed {
 
 			$importUser->setAndSaveAttribute('hr_user_id', $userId);
 
-			self::linkRole($importUser->relBeelineBusinessBlock->hr_group_id, $importUser->hr_user_id);//Бизнес-блок
+			self::linkRole($importUser->relBeelineBusinessBlock?->hr_group_id, $importUser->hr_user_id);//Бизнес-блок
 			self::linkRole($importUser->relBeelineFunctionalBlock?->hr_group_id, $importUser->hr_user_id);//Функциональный блок
 			self::linkRole($importUser->relBeelineDirection?->hr_group_id, $importUser->hr_user_id);//Дирекция
 			self::linkRole($importUser->relBeelineDepartment?->hr_group_id, $importUser->hr_user_id);//Департамент

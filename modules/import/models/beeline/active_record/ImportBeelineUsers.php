@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int|null $user_tn
  * @property string $name
- * @property int $position_id key to position id
+ * @property string $position Название должности
  * @property int $level ceo level
  * @property int $domain
  * @property null|int $hr_user_id
@@ -45,8 +45,8 @@ class ImportBeelineUsers extends ActiveRecord {
 	public function rules():array {
 		return [
 			['user_tn', 'integer'],//kinda
-			[['position_id', 'level'], 'integer'],
-			[['name'], 'string', 'max' => 255],
+			[['level'], 'integer'],
+			[['name', 'position'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
 			['hr_user_id', 'integer']
 		];

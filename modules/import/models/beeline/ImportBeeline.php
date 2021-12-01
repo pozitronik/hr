@@ -193,14 +193,13 @@ class ImportBeeline extends ActiveRecord {
 		switch ($step) {
 			case self::STEP_REFERENCES:
 				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность и всё. Таблицы декомпозиции не учитывают домен, наполняясь по мере новых импортов*/
-					$position = RefUserPositions::addInstance(['name' => $row->position_name]);
 
 					try {
 						/*Сразу же декомпозируем сущность сотрудника*/
 						ImportBeelineUsers::addInstance(['user_tn' => $row->user_tn, 'domain' => $row->domain], [
 							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
-							'position_id' => ArrayHelper::getValue($position, 'id'),
+							'position' => $row->position_name,
 							'level' => (int)$row->ceo_level,
 							'domain' => $row->domain
 						]);

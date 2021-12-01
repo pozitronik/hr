@@ -13,9 +13,9 @@ class m211201_092654_beeline_import_users extends Migration {
 	public function safeUp() {
 		$this->createTable('import_beeline_users', [
 			'id' => $this->primaryKey(),
-			'user_tn' => $this->string(255)->null(),
+			'user_tn' => $this->integer()->null(),
 			'name' => $this->string(255),
-			'position_id' => $this->integer(),
+			'position' => $this->string(255),
 			'level' => $this->integer(),
 			'domain' => $this->integer(),
 			'hr_user_id' => $this->integer()->null()
