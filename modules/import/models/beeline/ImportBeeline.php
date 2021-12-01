@@ -202,6 +202,7 @@ class ImportBeeline extends ActiveRecord {
 							'name' => $row->user_name,
 							'position_id' => ArrayHelper::getValue($position, 'id'),
 							'level' => $row->ceo_level,
+							'domain' => $row->domain
 						]);
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
@@ -275,7 +276,7 @@ class ImportBeeline extends ActiveRecord {
 							'user_id' => ImportBeelineUsers::findModelAttribute(['user_tn' => $row->user_tn, 'domain' => $domain], 'id'),
 							'business_block_id' => ImportBeelineBusinessBlock::findModelAttribute(['name' => $row->business_block], 'id'),
 							'functional_block_id' => ImportBeelineFunctionalBlock::findModelAttribute(['name' => $row->functional_block], 'id'),
-							'direction_block_id' => ImportBeelineDirection::findModelAttribute(['name' => $row->direction], 'id'),
+							'direction_id' => ImportBeelineDirection::findModelAttribute(['name' => $row->direction], 'id'),
 							'department_id' => ImportBeelineDepartment::findModelAttribute(['name' => $row->department], 'id'),
 							'service_id' => ImportBeelineService::findModelAttribute(['name' => $row->service], 'id'),
 							'branch_id' => ImportBeelineBranch::findModelAttribute(['name' => $row->branch], 'id'),

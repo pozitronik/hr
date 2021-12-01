@@ -15,7 +15,7 @@ class m211201_100240_beeline_import_decomposed extends Migration {
 			'id' => $this->primaryKey(),
 			'user_id' => $this->integer(),
 			'business_block_id' => $this->integer(),
-			'functions_block_id' => $this->integer(),
+			'functional_block_id' => $this->integer(),
 			'direction_id' => $this->integer(),
 			'department_id' => $this->integer(),
 			'service_id' => $this->integer(),
@@ -23,6 +23,7 @@ class m211201_100240_beeline_import_decomposed extends Migration {
 			'group_id' => $this->integer(),
 			'level' => $this->integer(),
 			'position_id' => $this->integer(),
+			'domain' => $this->integer(),
 		]);
 	}
 
