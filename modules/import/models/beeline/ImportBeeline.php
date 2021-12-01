@@ -201,7 +201,7 @@ class ImportBeeline extends ActiveRecord {
 							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
 							'position_id' => ArrayHelper::getValue($position, 'id'),
-							'level' => $row->ceo_level,
+							'level' => (int)$row->ceo_level,
 							'domain' => $row->domain
 						]);
 					} catch (Throwable $throwable) {

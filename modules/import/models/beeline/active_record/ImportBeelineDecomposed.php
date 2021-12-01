@@ -51,8 +51,6 @@ class ImportBeelineDecomposed extends ActiveRecord {
 			'service_id' => 'Service ID',
 			'branch_id' => 'Branch ID',
 			'group_id' => 'Group ID',
-			'level' => 'Level',
-			'position_id' => 'Position ID',
 			'domain' => 'domain'
 		];
 	}
