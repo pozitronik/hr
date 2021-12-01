@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\modules\import\models\beeline\activerecord;
+namespace app\modules\import\models\beeline\active_record;
 
 use app\components\pozitronik\core\traits\ARExtended;
 use yii\db\ActiveRecord;
