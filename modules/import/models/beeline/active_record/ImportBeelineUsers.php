@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\beeline\active_record;
 
 use app\components\pozitronik\core\traits\ARExtended;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,6 +17,16 @@ use yii\db\ActiveRecord;
  * @property int $level ceo level
  * @property int $domain
  * @property null|int $hr_user_id
+ *
+ * @property-read ImportBeelineDecomposed $relDecomposed
+ *
+ * @property-read null|ImportBeelineBusinessBlock $relBeelineBusinessBlock
+ * @property-read null|ImportBeelineFunctionalBlock $relBeelineFunctionalBlock
+ * @property-read null|ImportBeelineDirection $relBeelineDirection
+ * @property-read null|ImportBeelineDepartment $relBeelineDepartment
+ * @property-read null|ImportBeelineService $relBeelineService
+ * @property-read null|ImportBeelineBranch $relBeelineBranch
+ * @property-read null|ImportBeelineGroup $relBeelineGroup
  *
  */
 class ImportBeelineUsers extends ActiveRecord {
@@ -39,6 +50,62 @@ class ImportBeelineUsers extends ActiveRecord {
 			['domain', 'integer'], ['domain', 'required'],
 			['hr_user_id', 'integer']
 		];
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelDecomposed():ActiveQuery {
+		return $this->hasOne(ImportBeelineDecomposed::class, ['user_id' => 'id']);
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineBusinessBlock():ActiveQuery {
+		return $this->hasOne(ImportBeelineBusinessBlock::class, ['id' => 'business_block_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineFunctionalBlock():ActiveQuery {
+		return $this->hasOne(ImportBeelineFunctionalBlock::class, ['id' => 'functional_block_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineDirection():ActiveQuery {
+		return $this->hasOne(ImportBeelineDirection::class, ['id' => 'direction_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineDepartment():ActiveQuery {
+		return $this->hasOne(ImportBeelineDepartment::class, ['id' => 'department_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineService():ActiveQuery {
+		return $this->hasOne(ImportBeelineService::class, ['id' => 'service_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineBranch():ActiveQuery {
+		return $this->hasOne(ImportBeelineBranch::class, ['id' => 'branch_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineGroup():ActiveQuery {
+		return $this->hasOne(ImportBeelineGroup::class, ['id' => 'group_id'])->via('relDecomposed');
 	}
 
 }

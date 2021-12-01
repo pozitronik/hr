@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\fos;
 
-use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeaderIt;
 use app\modules\users\models\relations\RelUserPositionsTypes;
 use app\modules\users\models\UsersIdentifiers;
 use app\components\pozitronik\helpers\ArrayHelper;
@@ -11,11 +10,6 @@ use app\components\pozitronik\helpers\Utils;
 use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
-use app\modules\import\models\fos\activerecord\ImportFosChapter;
-use app\modules\import\models\fos\activerecord\ImportFosChapterCouch;
-use app\modules\import\models\fos\activerecord\ImportFosChapterLeader;
-use app\modules\import\models\fos\activerecord\ImportFosClusterProduct;
-use app\modules\import\models\fos\activerecord\ImportFosClusterProductLeader;
 use app\modules\import\models\fos\activerecord\ImportFosCommand;
 use app\modules\import\models\fos\activerecord\ImportFosCommandPosition;
 use app\modules\import\models\fos\activerecord\ImportFosDivisionLevel1;
@@ -24,16 +18,13 @@ use app\modules\import\models\fos\activerecord\ImportFosDivisionLevel3;
 use app\modules\import\models\fos\activerecord\ImportFosDivisionLevel4;
 use app\modules\import\models\fos\activerecord\ImportFosDivisionLevel5;
 use app\modules\import\models\fos\activerecord\ImportFosFunctionalBlock;
-use app\modules\import\models\fos\activerecord\ImportFosFunctionalBlockTribe;
 use app\modules\import\models\fos\activerecord\ImportFosProductOwner;
-use app\modules\import\models\fos\activerecord\ImportFosTribe;
 use app\modules\import\models\fos\activerecord\ImportFosTribeLeader;
 use app\modules\import\models\fos\activerecord\ImportFosTribeLeaderIt;
 use app\modules\import\models\fos\activerecord\ImportFosUsers;
 use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
-use app\models\relations\RelGroupsGroups;
 use app\models\relations\RelUsersAttributes;
 use app\models\relations\RelUsersGroupsRoles;
 use app\modules\users\models\Users;
@@ -165,12 +156,12 @@ class ImportFosDecomposed extends ActiveRecord {
 
 			$importFosUser->setAndSaveAttribute('hr_user_id', $userId);
 
-			self::linkRole($importFosUser->relFunctionalBlock?->hr_group_id, $importFosUser->hr_user_id);//Блок 1
-			self::linkRole($importFosUser->relDivisionLevel1?->hr_group_id, $importFosUser->hr_user_id);//Блок 2
-			self::linkRole($importFosUser->relDivisionLevel2?->hr_group_id, $importFosUser->hr_user_id);//Дирекция
-			self::linkRole($importFosUser->relDivisionLevel3?->hr_group_id, $importFosUser->hr_user_id);//Департамент
-			self::linkRole($importFosUser->relDivisionLevel4?->hr_group_id, $importFosUser->hr_user_id);//Служба
-			self::linkRole($importFosUser->relDivisionLevel5?->hr_group_id, $importFosUser->hr_user_id);//Отдел
+//			self::linkRole($importFosUser->relFunctionalBlock?->hr_group_id, $importFosUser->hr_user_id);//Блок 1
+//			self::linkRole($importFosUser->relDivisionLevel1?->hr_group_id, $importFosUser->hr_user_id);//Блок 2
+//			self::linkRole($importFosUser->relDivisionLevel2?->hr_group_id, $importFosUser->hr_user_id);//Дирекция
+//			self::linkRole($importFosUser->relDivisionLevel3?->hr_group_id, $importFosUser->hr_user_id);//Департамент
+//			self::linkRole($importFosUser->relDivisionLevel4?->hr_group_id, $importFosUser->hr_user_id);//Служба
+//			self::linkRole($importFosUser->relDivisionLevel5?->hr_group_id, $importFosUser->hr_user_id);//Отдел
 
 			/*Позиции в командах всех пользователей через ImportFosCommandPosition */
 			if (null !== $command = $importFosUser->relCommand) {//Пользователь может быть вне команды
@@ -442,8 +433,7 @@ class ImportFosDecomposed extends ActiveRecord {
 		if (null === $groupId || null === $userId) return;
 		/** @var Users $user */
 		if (null === $user = Users::findModel($userId)) return;
-		/** @var null|Groups $group */
-		if (null === $group = Groups::findModel($groupId)) return;
+		if (null === Groups::findModel($groupId)) return;
 		$group = Groups::findModel($groupId);
 		if (!in_array($groupId, ArrayHelper::getColumn($user->relGroups, 'id'), true)) {//Если пользователь не входит в группу, добавим его туда
 			$user->relGroups = $group;
