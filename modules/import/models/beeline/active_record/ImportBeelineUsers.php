@@ -25,7 +25,7 @@ class ImportBeelineUsers extends ActiveRecord {
 	 * {@inheritdoc}
 	 */
 	public static function tableName():string {
-		return 'import_fos_users';
+		return 'import_beeline_users';
 	}
 
 	/**
