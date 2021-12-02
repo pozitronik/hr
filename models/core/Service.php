@@ -31,6 +31,16 @@ class Service extends Model {
 		]);
 		$transaction->begin();
 		$tables = [
+			'import_beeline',
+			'import_beeline_branch',
+			'import_beeline_business_block',
+			'import_beeline_decomposed',
+			'import_beeline_department',
+			'import_beeline_direction',
+			'import_beeline_functional_block',
+			'import_beeline_group',
+			'import_beeline_service',
+			'import_beeline_users',
 			'import_competency_attributes',
 			'import_competency_fields',
 			'import_competency_rel_users_fields',
