@@ -37,7 +37,6 @@ AppAsset::register($this);
 	<div class="boxed">
 		<div id="content-container">
 			<div id="page-content">
-				<?= Alert::widget() ?>
 				<?= $content ?>
 			</div>
 		</div>
