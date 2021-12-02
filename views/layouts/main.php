@@ -8,7 +8,6 @@ declare(strict_types = 1);
 
 use app\assets\AppAsset;
 use app\components\pozitronik\helpers\Utils;
-use app\widgets\alert\Alert;
 use yii\helpers\Html;
 use app\widgets\navbar\NavbarWidget;
 use app\models\user\CurrentUser;
