@@ -186,11 +186,15 @@ class ImportBeeline extends ActiveRecord {
 		$data = self::find()->where(['domain' => $domain])->all();
 
 		switch ($step) {
-			case self::STEP_REFERENCES:
-				foreach ($data as $row) {/*Декомпозируем справочные сущности: должность и всё. Таблицы декомпозиции не учитывают домен, наполняясь по мере новых импортов*/
-
+			case self::STEP_REFERENCES: /*у нас пока нет справочников  */
+			break;
+			case self::STEP_USERS:
+				/**
+				 * Декомпозируем сущности административного и функционального руководителей
+				 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
+				 */
+				foreach ($data as $row) {
 					try {
-						/*Сразу же декомпозируем сущность сотрудника*/
 						ImportBeelineUsers::addInstance(['user_tn' => $row->user_tn, 'domain' => $row->domain], [
 							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
@@ -205,19 +209,6 @@ class ImportBeeline extends ActiveRecord {
 							'is_boss' => ('Да' === $row->is_boss),
 							'domain' => $row->domain
 						]);
-					} catch (Throwable $throwable) {
-						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
-					}
-				}
-			break;
-			case self::STEP_USERS:
-				/**
-				 * Декомпозируем сущности административного и функционального руководителей
-				 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
-				 */
-				foreach ($data as $row) {
-					try {
-
 
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
