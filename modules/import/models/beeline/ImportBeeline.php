@@ -14,11 +14,6 @@ use app\modules\import\models\beeline\active_record\ImportBeelineFunctionalBlock
 use app\modules\import\models\beeline\active_record\ImportBeelineGroup;
 use app\modules\import\models\beeline\active_record\ImportBeelineService;
 use app\modules\import\models\beeline\active_record\ImportBeelineUsers;
-use app\modules\import\models\fos\activerecord\ImportFosPositions;
-use app\modules\import\models\fos\activerecord\ImportFosTown;
-use app\modules\import\models\fos\activerecord\ImportFosUsers;
-use app\modules\salary\models\references\RefUserPositions;
-use app\modules\salary\models\references\RefUserPositionTypes;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Exception;
@@ -200,7 +195,7 @@ class ImportBeeline extends ActiveRecord {
 							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
 							'position' => $row->position_name,
-							'level' => (int)$row->ceo_level,
+							'level' => (int)filter_var($row->ceo_level, FILTER_SANITIZE_NUMBER_INT),
 							'domain' => $row->domain
 						]);
 					} catch (Throwable $throwable) {
@@ -215,7 +210,6 @@ class ImportBeeline extends ActiveRecord {
 				 */
 				foreach ($data as $row) {
 					try {
-
 
 
 					} catch (Throwable $throwable) {

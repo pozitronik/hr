@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace app\modules\import\models\beeline;
 
-use app\modules\import\models\beeline\active_record\ImportBeelineDecomposed;
 use yii\data\ActiveDataProvider;
 
 /**
