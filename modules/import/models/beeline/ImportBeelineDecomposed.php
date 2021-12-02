@@ -275,16 +275,16 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 	private static function DoStepUsers(array &$errors = []):bool {
 		if ([] === $importUsers = ImportBeelineUsers::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
 
-
 		foreach ($importUsers as $importUser) {
 			/** @var ImportBeelineUsers $importUser */
 			if (null === $userId = self::addUser((int)$importUser->user_tn, $importUser->name, $importUser->position, null, null, [
-//					['attribute' => 'Адрес', 'type' => 'boolean', 'field' => 'Удалённое рабочее место', "value" => $importUser->remote],
-//					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Населённый пункт', "value" => ArrayHelper::getValue($importUser->relTown, 'name')],
-//					['attribute' => 'Адрес', 'type' => 'string', 'field' => 'Внешний почтовый адрес', "value" => $importUser->email_sigma],
-//					['attribute' => 'Дата рождения', 'type' => 'string', 'field' => 'Дата рождения', "value" => $importUser->birthday],
-//					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Область экспертизы', "value" => $importUser->expert_area],
-//					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Совмещаемая роль', "value" => $importUser->combined_role]
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Структурная принадлежность', "value" => $importUser->affiliation],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Тип', "value" => $importUser->user_type],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Номер профиля должности', "value" => $importUser->position_profile_number],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'boolean', 'field' => 'Руководитель', "value" => $importUser->is_boss],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Код компании', "value" => $importUser->company_code],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'Локация', "value" => $importUser->location],
+					['attribute' => 'Кадровые атрибуты', 'type' => 'string', 'field' => 'ЦБО', "value" => $importUser->cbo],
 				], $errors)
 			) {//Импорт не получился, в $errors ошибки (имя пользователя => набор ошибок)
 				$importUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный id, чтобы на следующей итерации пропустился

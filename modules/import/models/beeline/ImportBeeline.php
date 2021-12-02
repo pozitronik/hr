@@ -195,7 +195,14 @@ class ImportBeeline extends ActiveRecord {
 							'user_tn' => $row->user_tn,
 							'name' => $row->user_name,
 							'position' => $row->position_name,
-							'level' => (int)filter_var($row->ceo_level, FILTER_SANITIZE_NUMBER_INT),
+							'level' => abs((int)filter_var($row->ceo_level, FILTER_SANITIZE_NUMBER_INT)),
+							'user_type' => $row->user_type,
+							'affiliation' => $row->affiliation,
+							'position_profile_number' => $row->position_profile_number,
+							'company_code' => $row->company_code,
+							'cbo' => $row->cbo,
+							'location' => $row->location,
+							'is_boss' => ('Да' === $row->is_boss),
 							'domain' => $row->domain
 						]);
 					} catch (Throwable $throwable) {
