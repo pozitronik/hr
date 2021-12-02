@@ -16,7 +16,8 @@ class m211202_092910_import_beeline_boss extends Migration {
 			'name' => $this->string(255),
 			'position' => $this->string(255),
 			'level' => $this->integer()->null(),
-			'hr_user_id' => $this->integer()->null()
+			'hr_user_id' => $this->integer()->null(),
+			'domain' => $this->integer(),
 		]);
 	}
 

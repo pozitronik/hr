@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $position
  * @property int $level
  * @property int $hr_user_id
+ * @property int $domain
  */
 class ImportBeelineBoss extends ActiveRecord {
 	use ARExtended;
@@ -30,7 +31,7 @@ class ImportBeelineBoss extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['level', 'hr_user_id'], 'integer'],
+			[['level', 'hr_user_id', 'domain'], 'integer'],
 			[['name', 'position'], 'string', 'max' => 255],
 		];
 	}
@@ -45,6 +46,7 @@ class ImportBeelineBoss extends ActiveRecord {
 			'position' => 'Position',
 			'level' => 'Level',
 			'hr_user_id' => 'Hr User ID',
+			'domain' => 'domain'
 		];
 	}
 }
