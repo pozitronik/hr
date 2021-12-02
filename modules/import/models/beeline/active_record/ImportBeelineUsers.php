@@ -16,6 +16,14 @@ use yii\db\ActiveRecord;
  * @property string $position Название должности
  * @property int $level ceo level
  * @property int $domain
+ * @property null|string $user_type
+ * @property null|string $affiliation
+ * @property null|string $position_profile_number
+ * @property bool $is_boss
+ * @property null|string $company_code
+ * @property null|string $cbo
+ * @property null|string $location
+ *
  * @property null|int $hr_user_id
  *
  * @property-read ImportBeelineDecomposed $relDecomposed
@@ -46,9 +54,10 @@ class ImportBeelineUsers extends ActiveRecord {
 		return [
 			['user_tn', 'integer'],//kinda
 			[['level'], 'integer'],
-			[['name', 'position'], 'string', 'max' => 255],
+			[['name', 'position', 'user_type', 'affiliation', 'position_profile_number', 'company_code', 'cbo', 'location'], 'string', 'max' => 255],
 			['domain', 'integer'], ['domain', 'required'],
-			['hr_user_id', 'integer']
+			['hr_user_id', 'integer'],
+			['is_boss', 'boolean']
 		];
 	}
 

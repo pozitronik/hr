@@ -18,6 +18,13 @@ class m211201_092654_beeline_import_users extends Migration {
 			'position' => $this->string(255),
 			'level' => $this->integer(),
 			'domain' => $this->integer(),
+			'user_type' => $this->string(255)->null(),
+			'affiliation' => $this->string(255)->null(),
+			'position_profile_number' => $this->string(255)->null(),
+			'is_boss' => $this->boolean()->defaultValue(false),
+			'company_code' => $this->string(255)->null(),
+			'cbo' => $this->string(255)->null(),
+			'location' => $this->string(255)->null(),
 			'hr_user_id' => $this->integer()->null()
 		]);
 	}
