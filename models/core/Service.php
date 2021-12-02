@@ -32,6 +32,7 @@ class Service extends Model {
 		$transaction->begin();
 		$tables = [
 			'import_beeline',
+			'import_beeline_boss',
 			'import_beeline_branch',
 			'import_beeline_business_block',
 			'import_beeline_decomposed',
