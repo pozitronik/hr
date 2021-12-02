@@ -5,6 +5,7 @@ namespace app\modules\import\models\beeline;
 
 use app\components\pozitronik\core\traits\Upload;
 use app\components\pozitronik\helpers\ArrayHelper;
+use app\modules\import\models\beeline\active_record\ImportBeelineBoss;
 use app\modules\import\models\beeline\active_record\ImportBeelineBranch;
 use app\modules\import\models\beeline\active_record\ImportBeelineBusinessBlock;
 use app\modules\import\models\beeline\active_record\ImportBeelineDecomposed;
@@ -55,13 +56,15 @@ class ImportBeeline extends ActiveRecord {
 	public const STEP_REFERENCES = 0;
 	public const STEP_USERS = 1;
 	public const STEP_GROUPS = 2;
-	public const STEP_FINISH = 3;
+	public const STEP_BOSSES = 3;
+	public const STEP_FINISH = 4;
 	public const LAST_STEP = self::STEP_FINISH + 1;
 
 	public const step_labels = [
 		self::STEP_REFERENCES => 'Декомпозиция справочных данных',
 		self::STEP_USERS => 'Декомпозиция пользователей',
 		self::STEP_GROUPS => 'Декомпозиция групп',
+		self::STEP_BOSSES => 'Декомпозиция руководителей',
 		self::STEP_FINISH => 'Итоговая сверка',
 		self::LAST_STEP => 'Готово!'
 	];
@@ -189,10 +192,6 @@ class ImportBeeline extends ActiveRecord {
 			case self::STEP_REFERENCES: /*у нас пока нет справочников  */
 			break;
 			case self::STEP_USERS:
-				/**
-				 * Декомпозируем сущности административного и функционального руководителей
-				 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
-				 */
 				foreach ($data as $row) {
 					try {
 						ImportBeelineUsers::addInstance(['user_tn' => $row->user_tn, 'domain' => $row->domain], [
@@ -209,12 +208,32 @@ class ImportBeeline extends ActiveRecord {
 							'is_boss' => ('Да' === $row->is_boss),
 							'domain' => $row->domain
 						]);
-
+						/**
+						 * Декомпозируем сущности административного и функционального руководителей
+						 * Предполагается, что их "пользователи" уже есть в таблице, иначе добавляем с тем, что нам известно.
+						 */
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
 					}
 				}
-
+			break;
+			case self::STEP_BOSSES:
+				/**
+				 * Декомпозируем сущности административного руководителя (функционального пока не трогаем)
+				 * При декомпозиции попытаемся этих пользователей засунуть в соответствующие группы.
+				 */
+				foreach ($data as $row) {
+					try {
+						ImportBeelineBoss::addInstance(['name' => $row->administrative_boss_name, 'domain' => $row->domain], [
+							'name' => $row->administrative_boss_name,
+							'position' => $row->administrative_boss_position_name,
+							'level' => abs((int)filter_var($row->ceo_level, FILTER_SANITIZE_NUMBER_INT))-1,
+							'domain' => $row->domain
+						]);
+					} catch (Throwable $throwable) {
+						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
+					}
+				}
 			break;
 			case self::STEP_GROUPS:
 				/**

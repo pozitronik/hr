@@ -12,6 +12,7 @@ use app\modules\dynamic_attributes\models\DynamicAttributeProperty;
 use app\modules\dynamic_attributes\models\DynamicAttributes;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
+use app\modules\import\models\beeline\active_record\ImportBeelineBoss;
 use app\modules\import\models\beeline\active_record\ImportBeelineBranch;
 use app\modules\import\models\beeline\active_record\ImportBeelineBusinessBlock;
 use app\modules\import\models\beeline\active_record\ImportBeelineDecomposed as ImportBeelineDecomposedAliasAR;
@@ -187,12 +188,16 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 	/**
 	 * Добавляет роль пользователя в группе (или возвращает существующую) по её имени
 	 * @param string $roleName
+	 * @param bool $leader
 	 * @return int|null
 	 */
-	public static function addUserRole(string $roleName):?int {
+	public static function addUserRole(string $roleName, bool $leader = false):?int {
 		if (empty($roleName)) return null;
 		if (null === $role = RefUserRoles::find()->where(['name' => $roleName])->one()) {
-			$role = new RefUserRoles(['name' => $roleName]);
+			$role = new RefUserRoles([
+				'name' => $roleName,
+				'boss_flag' => $leader
+			]);
 			$role->save();
 		}
 		return $role->id;
@@ -249,9 +254,10 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 	 * @param null|int $groupId
 	 * @param null|int $userId
 	 * @param null|string $roleName
+	 * @param bool $leader_role
 	 * @throws Throwable
 	 */
-	public static function linkRole(?int $groupId, ?int $userId, ?string $roleName = null):void {
+	public static function linkRole(?int $groupId, ?int $userId, ?string $roleName = null, bool $leader_role = false):void {
 		if (null === $groupId || null === $userId) return;
 		/** @var Users $user */
 		if (null === $user = Users::findModel($userId)) return;
@@ -262,7 +268,7 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 			$user->relGroups = $group;
 		}
 		if (!empty($roleName)) {
-			RelUsersGroupsRoles::setRoleInGroup(self::addUserRole($roleName), $groupId, $userId);
+			RelUsersGroupsRoles::setRoleInGroup(self::addUserRole($roleName, $leader_role), $groupId, $userId);
 		}
 
 	}
@@ -293,23 +299,35 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 
 			$importUser->setAndSaveAttribute('hr_user_id', $userId);
 
-			self::linkRole($importUser->relBeelineBusinessBlock?->hr_group_id, $importUser->hr_user_id);//Бизнес-блок
-			self::linkRole($importUser->relBeelineFunctionalBlock?->hr_group_id, $importUser->hr_user_id);//Функциональный блок
-			self::linkRole($importUser->relBeelineDirection?->hr_group_id, $importUser->hr_user_id);//Дирекция
-			self::linkRole($importUser->relBeelineDepartment?->hr_group_id, $importUser->hr_user_id);//Департамент
-			self::linkRole($importUser->relBeelineService?->hr_group_id, $importUser->hr_user_id);//Служба
-			self::linkRole($importUser->relBeelineBranch?->hr_group_id, $importUser->hr_user_id);//Отдел
-			self::linkRole($importUser->relBeelineGroup?->hr_group_id, $importUser->hr_user_id);//Отдел
+			self::linkRole($importUser->relBeelineBusinessBlock?->hr_group_id, $importUser->hr_user_id, (2 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (2 === $importUser->level));//Бизнес-блок
+			self::linkRole($importUser->relBeelineFunctionalBlock?->hr_group_id, $importUser->hr_user_id, (3 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (3 === $importUser->level));//Функциональный блок
+			self::linkRole($importUser->relBeelineDirection?->hr_group_id, $importUser->hr_user_id, (4 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (4 === $importUser->level));//Дирекция
+			self::linkRole($importUser->relBeelineDepartment?->hr_group_id, $importUser->hr_user_id, (5 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (5 === $importUser->level));//Департамент
+			self::linkRole($importUser->relBeelineService?->hr_group_id, $importUser->hr_user_id, (6 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (6 === $importUser->level));//Служба
+			self::linkRole($importUser->relBeelineBranch?->hr_group_id, $importUser->hr_user_id, (7 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (7 === $importUser->level));//Отдел
+			self::linkRole($importUser->relBeelineGroup?->hr_group_id, $importUser->hr_user_id, (8 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (8 === $importUser->level));//Группа
 
 		}
 		return false;
 	}
 
 	/**
+	 * тут раскупориваем руководителей
 	 * @return bool
 	 */
 	private static function DoStepLinkingUsers():bool {
-		return true;
+		if ([] === $importUsers = ImportBeelineBoss::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
+
+		foreach ($importUsers as $importUser) {
+			/** @var ImportBeelineBoss $importUser */
+
+			if (null === $user = Users::find()->where(['username' => $importUser->name])->one()) {/*Пользователя нет в БД*/
+				$importUser->setAndSaveAttribute('hr_user_id', -1);//впишем ему отрицательный id, чтобы на следующей итерации пропустился
+			} else {/*Пользователь есть в БД, ничего делать, наверное, не нужно */
+				$importUser->setAndSaveAttribute('hr_user_id', $user->id);
+			}
+		}
+		return false;
 	}
 
 	/**
