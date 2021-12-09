@@ -29,6 +29,7 @@ class ImportBeelineTribe extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
+			[['name'], 'string'],
 			[['user_id', 'domain'], 'integer'],
 			[['domain'], 'required'],
 			['hr_group_id', 'integer']
