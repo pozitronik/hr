@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace app\modules\import\models\beeline\active_record;
 
 use app\components\pozitronik\core\traits\ARExtended;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -12,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $user_id
  * @property int $domain
+ * @property null|ImportBeelineUsers $relUsers
  */
 class ImportBeelineProductOwner extends ActiveRecord {
 	use ARExtended;
@@ -42,5 +44,12 @@ class ImportBeelineProductOwner extends ActiveRecord {
 			'user_id' => 'User ID',
 			'domain' => 'Domain',
 		];
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelUsers():ActiveQuery {
+		return $this->hasOne(ImportBeelineUsers::class, ['id' => 'user_id']);
 	}
 }
