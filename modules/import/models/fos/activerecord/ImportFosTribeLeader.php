@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "import_fos_tribe_leader".
  *
  * @property int $id
- * @property int $user_id key to user idё
+ * @property int $user_id key to user id
  * @property int $domain
  *
  * @property-read ImportFosUsers $relUsers
