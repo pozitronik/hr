@@ -15,12 +15,16 @@ use app\modules\groups\models\references\RefGroupTypes;
 use app\modules\import\models\beeline\active_record\ImportBeelineBoss;
 use app\modules\import\models\beeline\active_record\ImportBeelineBranch;
 use app\modules\import\models\beeline\active_record\ImportBeelineBusinessBlock;
+use app\modules\import\models\beeline\active_record\ImportBeelineCommand;
 use app\modules\import\models\beeline\active_record\ImportBeelineDecomposed as ImportBeelineDecomposedAliasAR;
 use app\modules\import\models\beeline\active_record\ImportBeelineDepartment;
 use app\modules\import\models\beeline\active_record\ImportBeelineDirection;
 use app\modules\import\models\beeline\active_record\ImportBeelineFunctionalBlock;
 use app\modules\import\models\beeline\active_record\ImportBeelineGroup;
+use app\modules\import\models\beeline\active_record\ImportBeelineProductOwner;
 use app\modules\import\models\beeline\active_record\ImportBeelineService;
+use app\modules\import\models\beeline\active_record\ImportBeelineTribe;
+use app\modules\import\models\beeline\active_record\ImportBeelineTribeLeader;
 use app\modules\import\models\beeline\active_record\ImportBeelineUsers;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
@@ -29,7 +33,6 @@ use app\modules\users\models\Users;
 use app\modules\users\models\UsersIdentifiers;
 use Exception;
 use Throwable;
-use Yii;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -126,6 +129,12 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 		foreach (ImportBeelineBusinessBlock::findAll(['hr_group_id' => null]) as $group) {
 			$group->setAndSaveAttribute('hr_group_id', self::addGroup($group->name, 'Бизнес-блок'));
 		}
+		foreach (ImportBeelineTribe::findAll(['hr_group_id' => null]) as $group) {
+			$group->setAndSaveAttribute('hr_group_id', self::addGroup($group->name, 'Трайб'));
+		}
+		foreach (ImportBeelineCommand::findAll(['hr_group_id' => null]) as $group) {
+			$group->setAndSaveAttribute('hr_group_id', self::addGroup($group->name, 'Команда'));
+		}
 
 		return true;//Поскольку тут объём работы довольно мал, считаем, что он всегда успевает выполниться
 	}
@@ -162,7 +171,6 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 	 */
 	public static function updateUser(int $id, string $name, ?string $position, ?int $positionType, ?string $email, array $attributes = [], array &$errors = []):?int {
 		if (null === $user = Users::findModel($id)) {
-			Yii::debug($user, 'debug');
 			$errors[] = [$name => ['id' => 'ID найден по внешнему идентификатору, но пользователь отсутствует в системной таблице']];
 			return null;
 		}
@@ -314,9 +322,21 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 	/**
 	 * тут раскупориваем руководителей
 	 * @return bool
+	 * @throws Throwable
 	 */
 	private static function DoStepLinkingUsers():bool {
-		if ([] === $importUsers = ImportBeelineBoss::find()->where(['hr_user_id' => null])->limit(self::STEP_USERS_CHUNK_SIZE)->all()) return true;
+		foreach (ImportBeelineTribeLeader::find()->all() as $tribeLeader) {
+			foreach (ImportBeelineTribe::findAll(['user_id' => $tribeLeader->user_id]) as $tribe) {
+				self::linkRole($tribe->hr_group_id, $tribeLeader->relUsers?->hr_user_id, 'Лидер трайба');
+			}
+		}
+		foreach (ImportBeelineProductOwner::find()->all() as $productOwner) {
+			foreach (ImportBeelineCommand::findAll(['user_id' => $productOwner->user_id]) as $command) {
+				self::linkRole($command->hr_group_id, $productOwner->relUsers?->hr_user_id, 'Владелец продукта');
+			}
+		}
+
+		if ([] === $importUsers = ImportBeelineBoss::find()->where(['hr_user_id' => null])->all()) return true;
 
 		foreach ($importUsers as $importUser) {
 			/** @var ImportBeelineBoss $importUser */

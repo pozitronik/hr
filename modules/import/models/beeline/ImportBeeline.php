@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection BadExceptionsProcessingInspection */
 declare(strict_types = 1);
 
 namespace app\modules\import\models\beeline;
@@ -8,17 +8,20 @@ use app\components\pozitronik\helpers\ArrayHelper;
 use app\modules\import\models\beeline\active_record\ImportBeelineBoss;
 use app\modules\import\models\beeline\active_record\ImportBeelineBranch;
 use app\modules\import\models\beeline\active_record\ImportBeelineBusinessBlock;
+use app\modules\import\models\beeline\active_record\ImportBeelineCommand;
 use app\modules\import\models\beeline\active_record\ImportBeelineDecomposed;
 use app\modules\import\models\beeline\active_record\ImportBeelineDepartment;
 use app\modules\import\models\beeline\active_record\ImportBeelineDirection;
 use app\modules\import\models\beeline\active_record\ImportBeelineFunctionalBlock;
 use app\modules\import\models\beeline\active_record\ImportBeelineGroup;
+use app\modules\import\models\beeline\active_record\ImportBeelineProductOwner;
 use app\modules\import\models\beeline\active_record\ImportBeelineService;
+use app\modules\import\models\beeline\active_record\ImportBeelineTribe;
+use app\modules\import\models\beeline\active_record\ImportBeelineTribeLeader;
 use app\modules\import\models\beeline\active_record\ImportBeelineUsers;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Throwable;
 use yii\base\Exception;
-use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
 /**
@@ -48,6 +51,10 @@ use yii\db\ActiveRecord;
  * @property string $cbo
  * @property string $location
  * @property string $commentary
+ * @property string $tribe
+ * @property string $tribe_leader
+ * @property string $command
+ * @property string $product_owner
  * @property int $domain
  */
 class ImportBeeline extends ActiveRecord {
@@ -83,9 +90,12 @@ class ImportBeeline extends ActiveRecord {
 		return [
 			[['domain'], 'integer'],
 			[['business_block', 'functional_block', 'direction', 'department', 'service', 'branch', 'group', 'ceo_level',
-				'user_type', 'position_name', 'user_tn', 'user_name', 'administrative_boss_name', 'administrative_boss_position_name',
+				'user_type', 'position_name', 'user_name', 'user_tn', 'administrative_boss_name', 'administrative_boss_position_name',
 				'functional_boss_name', 'functional_boss_position_name', 'affiliation', 'position_profile_number', 'is_boss',
-				'company_code', 'cbo', 'location', 'commentary'], 'string', 'max' => 255]
+				'company_code', 'cbo', 'location', 'commentary', 'tribe', 'tribe_leader', 'command', 'product_owner'], 'string', 'max' => 255],
+			['user_tn', 'filter', 'filter' => function($attribute) {
+				return is_numeric($attribute)?$attribute:null;
+			}],
 		];
 	}
 
@@ -117,7 +127,12 @@ class ImportBeeline extends ActiveRecord {
 			'company_code' => 'Код компании',
 			'cbo' => 'ЦБО',
 			'location' => 'Локация',
-			'commentary' => 'Комментарий ',
+			'commentary' => 'Комментарий',
+			/*атрибуты, наличие которых не будет проверяться*/
+			'tribe' => 'Трайб',
+			'tribe_leader' => 'Лидер трайба',
+			'command' => 'Команда',
+			'product_owner' => 'Владелец продукта'
 		];
 	}
 
@@ -144,7 +159,7 @@ class ImportBeeline extends ActiveRecord {
 			$spreadsheet = $reader->load($filename);
 			$spreadsheet->setActiveSheetIndex(0);
 			$dataArray = $spreadsheet->getActiveSheet()->toArray();
-		} catch (Throwable $t) {
+		} catch (Throwable) {
 			throw new Exception('Формат файла не поддерживается');
 		}
 		$domain = $domain??time();
@@ -156,7 +171,7 @@ class ImportBeeline extends ActiveRecord {
 			$is_header = false;
 			if (!$headerProcessedFlag && (true === $is_header = self::isHeaderRow($importRow))) {//однократно проверяем валидность таблицы
 				$columnHeaderIndex = 0;
-				foreach ($labels as $key => $value) {
+				foreach (array_slice($labels, 0, 23) as $value) {
 					if ($value !== $headerValue = ArrayHelper::getValue($importRow, $columnHeaderIndex)) {
 						throw new Exception("Неожиданный формат файла импорта. Столбец {$columnHeaderIndex}, ожидается заголовок: {$value}, в файле: {$headerValue}.");
 					}
@@ -170,7 +185,7 @@ class ImportBeeline extends ActiveRecord {
 
 			$row = new self($data);
 			$row->domain = $domain;
-			$row->save(false);//пока сохраняем без строгой валидации
+			$row->save();//пока сохраняем без строгой валидации
 		}
 		return true;
 	}
@@ -181,8 +196,6 @@ class ImportBeeline extends ActiveRecord {
 	 * @param int $step
 	 * @param array $messages Массив сообщений
 	 * @return int текущий исполненный шаг
-	 * @throws Exception
-	 * @throws InvalidConfigException
 	 */
 	public static function Decompose(int $domain, int $step = self::STEP_REFERENCES, array &$messages = []):int {
 		/** @var self[] $data */
@@ -227,7 +240,27 @@ class ImportBeeline extends ActiveRecord {
 						ImportBeelineBoss::addInstance(['name' => $row->administrative_boss_name, 'domain' => $row->domain], [
 							'name' => $row->administrative_boss_name,
 							'position' => $row->administrative_boss_position_name,
-							'level' => abs((int)filter_var($row->ceo_level, FILTER_SANITIZE_NUMBER_INT))-1,
+							'level' => abs((int)filter_var($row->ceo_level, FILTER_SANITIZE_NUMBER_INT)) - 1,
+							'domain' => $row->domain
+						]);
+
+						$tribe_leader_user_id = ImportBeelineUsers::addInstance(['name' => $row->tribe_leader], [
+							'name' => $row->tribe_leader,
+							'domain' => $row->domain
+						])?->id;
+
+						ImportBeelineTribeLeader::addInstance(['user_id' => $tribe_leader_user_id], [
+							'user_id' => $tribe_leader_user_id,
+							'domain' => $row->domain
+						]);
+
+						$product_owner_user_id = ImportBeelineUsers::addInstance(['name' => $row->product_owner], [
+							'name' => $row->product_owner,
+							'domain' => $row->domain
+						])?->id;
+
+						ImportBeelineProductOwner::addInstance(['user_id' => $product_owner_user_id], [
+							'user_id' => $product_owner_user_id,
 							'domain' => $row->domain
 						]);
 					} catch (Throwable $throwable) {
@@ -269,6 +302,16 @@ class ImportBeeline extends ActiveRecord {
 							'name' => $row->group,
 							'domain' => $row->domain
 						]);
+						ImportBeelineTribe::addInstance(['name' => $row->tribe], [
+							'name' => $row->tribe,
+							'user_id' => ImportBeelineUsers::findModelAttribute(['name' => $row->tribe_leader, 'domain' => $domain], 'id'),
+							'domain' => $row->domain
+						]);
+						ImportBeelineCommand::addInstance(['name' => $row->command], [
+							'name' => $row->command,
+							'user_id' => ImportBeelineUsers::findModelAttribute(['name' => $row->product_owner, 'domain' => $domain], 'id'),
+							'domain' => $row->domain
+						]);
 
 					} catch (Throwable $throwable) {
 						$messages[] = ['row' => $row, 'error' => $throwable->getMessage()];
@@ -291,6 +334,8 @@ class ImportBeeline extends ActiveRecord {
 							'service_id' => ImportBeelineService::findModelAttribute(['name' => $row->service], 'id'),
 							'branch_id' => ImportBeelineBranch::findModelAttribute(['name' => $row->branch], 'id'),
 							'group_id' => ImportBeelineGroup::findModelAttribute(['name' => $row->group], 'id'),
+							'tribe_id' => ImportBeelineTribe::findModelAttribute(['name' => $row->tribe], 'id'),
+							'command_id' => ImportBeelineCommand::findModelAttribute(['name' => $row->command], 'id'),
 						]);
 						$decomposedRow->save();
 					} catch (Throwable $throwable) {
