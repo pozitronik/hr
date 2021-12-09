@@ -16,6 +16,9 @@ class m211209_181110_savkin_imports_structure_changes extends Migration {
 		$this->addColumn('import_beeline', 'command', $this->string()->null()->after('tribe_leader'));
 		$this->addColumn('import_beeline', 'product_owner', $this->string()->null()->after('command'));
 
+		$this->addColumn('import_beeline_decomposed', 'tribe_id', $this->integer()->null()->after('group_id'));
+		$this->addColumn('import_beeline_decomposed', 'command_id', $this->integer()->null()->after('tribe_id'));
+
 		$this->createTable('import_beeline_tribe_leader', [
 			'id' => $this->primaryKey(),
 			'user_id' => $this->integer(),
@@ -58,6 +61,9 @@ class m211209_181110_savkin_imports_structure_changes extends Migration {
 		$this->dropColumn('import_beeline', 'tribe_leader');
 		$this->dropColumn('import_beeline', 'command');
 		$this->dropColumn('import_beeline', 'product_owner');
+
+		$this->dropColumn('import_beeline_decomposed', 'tribe_id');
+		$this->dropColumn('import_beeline_decomposed', 'command_id');
 
 		$this->dropTable('import_beeline_tribe_leader');
 		$this->dropTable('import_beeline_product_owner');
