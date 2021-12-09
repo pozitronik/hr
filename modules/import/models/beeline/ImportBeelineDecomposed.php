@@ -64,6 +64,7 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 	 * @throws Throwable
 	 */
 	public static function Import(int $step = self::STEP_GROUPS, array &$errors = []):bool {
+		set_time_limit(0);//для диминой кофемолки
 		/*Идём по таблицам декомпозиции, добавляя данные из них в соответствующие таблицы структуры*/
 		switch ($step) {
 			case self::STEP_GROUPS:/*Группы. Добавляем группу и её тип*/
