@@ -24,13 +24,13 @@ trait ARExtended {
 	 * Упрощает проверку поиска моделей
 	 * @param mixed $id Поисковое условие (предпочтительно primaryKey, но не ограничиваемся им)
 	 * @param null|Throwable $throw - Если передано исключение, оно выбросится в случае ненахождения модели
-	 * @return null|self
+	 * @return null|static
 	 * @throws Throwable
 	 * @example Users::findModel($id, new NotFoundException('Пользователь не найден'))
 	 *
 	 * @example if (null !== $user = Users::findModel($id)) return $user
 	 */
-	public static function findModel($id, ?Throwable $throw = null):?self {
+	public static function findModel($id, ?Throwable $throw = null):?static {
 		if (null !== ($model = static::findOne($id))) return $model;
 		if (null !== $throw) {
 			if (class_exists(SysExceptions::class)) {
@@ -104,11 +104,11 @@ trait ARExtended {
 	 * @param null|array $fields
 	 * @param bool $ignoreEmptyCondition Игнорировать пустое поисковое значение
 	 * @param bool $forceUpdate Если запись по условию найдена, пытаться обновить её
-	 * @return ActiveRecord|self|null
+	 * @return static|null
 	 * @throws Exception
 	 * @throws InvalidConfigException
 	 */
-	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true, bool $forceUpdate = false):?self {
+	public static function addInstance(array $searchCondition, ?array $fields = null, bool $ignoreEmptyCondition = true, bool $forceUpdate = false):?static {
 		if ($ignoreEmptyCondition && (empty($searchCondition) || (is_array($searchCondition) && empty(reset($searchCondition))))) return null;
 
 		$instance = static::getInstance($searchCondition);
