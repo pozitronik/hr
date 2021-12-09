@@ -17,6 +17,8 @@ use yii\db\ActiveRecord;
  * @property int $service_id
  * @property int $branch_id
  * @property int $group_id
+ * @property int $tribe_id
+ * @property int $command_id
  * @property int $domain
  */
 class ImportBeelineDecomposed extends ActiveRecord {
@@ -33,7 +35,7 @@ class ImportBeelineDecomposed extends ActiveRecord {
 	 */
 	public function rules():array {
 		return [
-			[['user_id', 'business_block_id', 'functional_block_id', 'direction_id', 'department_id', 'service_id', 'branch_id', 'group_id', 'domain'], 'integer'],
+			[['user_id', 'business_block_id', 'functional_block_id', 'direction_id', 'department_id', 'service_id', 'branch_id', 'group_id', 'tribe_id', 'command_id', 'domain'], 'integer'],
 		];
 	}
 
@@ -51,6 +53,8 @@ class ImportBeelineDecomposed extends ActiveRecord {
 			'service_id' => 'Service ID',
 			'branch_id' => 'Branch ID',
 			'group_id' => 'Group ID',
+			'tribe_id' => 'Tribe ID',
+			'command_id' => 'Command ID',
 			'domain' => 'domain'
 		];
 	}
