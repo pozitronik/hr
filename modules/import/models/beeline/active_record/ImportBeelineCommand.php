@@ -10,7 +10,9 @@ use yii\db\ActiveRecord;
  * This is the model class for table "import_beeline_command".
  *
  * @property int $id
+ * @property string $name
  * @property int $user_id
+ * @property null|int $hr_group_id
  * @property int $domain
  */
 class ImportBeelineCommand extends ActiveRecord {
@@ -30,6 +32,7 @@ class ImportBeelineCommand extends ActiveRecord {
 		return [
 			[['user_id', 'domain'], 'integer'],
 			[['domain'], 'required'],
+			['hr_group_id', 'integer']
 		];
 	}
 

@@ -37,7 +37,9 @@ class m211209_181110_savkin_imports_structure_changes extends Migration {
 
 		$this->createTable('import_beeline_tribe', [
 			'id' => $this->primaryKey(),
+			'name' => $this->string()->notNull(),
 			'user_id' => $this->integer()->null(),
+			'hr_group_id' => $this->integer()->null(),
 			'domain' => $this->integer()->notNull()
 		]);
 
@@ -45,7 +47,9 @@ class m211209_181110_savkin_imports_structure_changes extends Migration {
 
 		$this->createTable('import_beeline_command', [
 			'id' => $this->primaryKey(),
+			'name' => $this->string()->notNull(),
 			'user_id' => $this->integer()->null(),
+			'hr_group_id' => $this->integer()->null(),
 			'domain' => $this->integer()->notNull()
 		]);
 
