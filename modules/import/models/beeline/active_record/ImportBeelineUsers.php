@@ -35,6 +35,8 @@ use yii\db\ActiveRecord;
  * @property-read null|ImportBeelineService $relBeelineService
  * @property-read null|ImportBeelineBranch $relBeelineBranch
  * @property-read null|ImportBeelineGroup $relBeelineGroup
+ * @property-read null|ImportBeelineTribe $relBeelineTribe
+ * @property-read null|ImportBeelineCommand $relBeelineCommand
  *
  */
 class ImportBeelineUsers extends ActiveRecord {
@@ -115,6 +117,20 @@ class ImportBeelineUsers extends ActiveRecord {
 	 */
 	public function getRelBeelineGroup():ActiveQuery {
 		return $this->hasOne(ImportBeelineGroup::class, ['id' => 'group_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineTribe():ActiveQuery {
+		return $this->hasOne(ImportBeelineTribe::class, ['id' => 'tribe_id'])->via('relDecomposed');
+	}
+
+	/**
+	 * @return ActiveQuery
+	 */
+	public function getRelBeelineCommand():ActiveQuery {
+		return $this->hasOne(ImportBeelineCommand::class, ['id' => 'tribe_id'])->via('relDecomposed');
 	}
 
 }

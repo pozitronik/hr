@@ -316,6 +316,9 @@ class ImportBeelineDecomposed extends ImportBeelineDecomposedAliasAR {
 			self::linkRole($importUser->relBeelineBranch?->hr_group_id, $importUser->hr_user_id, (7 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (7 === $importUser->level));//Отдел
 			self::linkRole($importUser->relBeelineGroup?->hr_group_id, $importUser->hr_user_id, (8 === $importUser->level)?$importUser->position:null, $importUser->is_boss && (8 === $importUser->level));//Группа
 
+			self::linkRole($importUser->relBeelineTribe?->hr_group_id, $importUser->hr_user_id);//Трайб
+			self::linkRole($importUser->relBeelineCommand?->hr_group_id, $importUser->hr_user_id);//Команда
+
 		}
 		return false;
 	}
