@@ -130,7 +130,7 @@ class ImportBeelineUsers extends ActiveRecord {
 	 * @return ActiveQuery
 	 */
 	public function getRelBeelineCommand():ActiveQuery {
-		return $this->hasOne(ImportBeelineCommand::class, ['id' => 'tribe_id'])->via('relDecomposed');
+		return $this->hasOne(ImportBeelineCommand::class, ['id' => 'command_id'])->via('relDecomposed');
 	}
 
 }
