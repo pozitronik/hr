@@ -13,14 +13,12 @@ declare(strict_types = 1);
 use app\components\pozitronik\navigationwidget\BaseNavigationMenuWidget;
 use app\modules\groups\models\Groups;
 use app\modules\groups\models\references\RefGroupTypes;
-use app\modules\salary\models\references\RefUserPositionTypes;
 use app\modules\users\UsersModule;
 use app\components\pozitronik\helpers\ArrayHelper;
 use app\models\core\IconsHelper;
 use app\components\pozitronik\helpers\Utils;
 use app\modules\salary\models\references\RefUserPositions;
 use app\modules\users\models\references\RefUserRoles;
-use app\modules\privileges\models\Privileges;
 use app\components\pozitronik\references\widgets\reference_select\ReferenceSelectWidget;
 use app\modules\users\models\Users;
 use app\modules\users\models\UsersSearch;
@@ -132,30 +130,6 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			'format' => 'raw'
 		],
 		[
-			'class' => DataColumn::class,
-			'attribute' => 'positionType',
-			'label' => 'Тип должности',
-			'value' => static function(Users $model) {
-				return BadgeWidget::widget([
-					'models' => $model->relRefUserPositionsTypesAny,
-					'useBadges' => true,
-					'attribute' => 'name',
-					'unbadgedCount' => false,
-					'itemsSeparator' => false,
-					"optionsMap" => RefUserPositionTypes::colorStyleOptions(),
-					'linkScheme' => ['', 'UsersSearch[positionType]' => 'id']
-				]);
-			},
-			'filter' => ArrayHelper::getValue($searchModel, 'positionType'),
-			'filterType' => ReferenceSelectWidget::class,
-			'filterInputOptions' => ['placeholder' => 'Выберите тип'],
-			'filterWidgetOptions' => [
-				'referenceClass' => RefUserPositionTypes::class,
-				'pluginOptions' => ['allowClear' => true, 'multiple' => true]
-			],
-			'format' => 'raw'
-		],
-		[
 			'attribute' => 'groupName',
 			'label' => 'Группы',
 			'value' => static function(Users $model) {
@@ -196,26 +170,6 @@ if (null !== $searchModel) {//Учитываем вызов из поиска п
 			},
 			'format' => 'raw'
 		],
-		[
-			'class' => DataColumn::class,
-			'attribute' => 'privileges',
-			'filterType' => GridView::FILTER_SELECT2,
-			'filter' => ArrayHelper::map(Privileges::find()->active()->all(), 'id', 'name'),
-			'filterInputOptions' => ['placeholder' => 'Выберите привилегии'],
-			'filterWidgetOptions' => ['pluginOptions' => ['allowClear' => true, 'multiple' => true]],
-
-			'label' => 'Привилегии',
-			'value' => static function(Users $model) {
-				return BadgeWidget::widget([
-					'models' => $model->getRelPrivileges()->all(),//здесь нельзя использовать свойство, т.к. фреймворк не подгружает все релейшены в $_related сразу. Выяснено экспериментально, на более подробные разбирательства нет времени
-					'useBadges' => true,
-					'attribute' => 'name',
-					'unbadgedCount' => 6,
-					"itemsSeparator" => false
-				]);
-			},
-			'format' => 'raw'
-		]
 
 	]
 ]) ?>
