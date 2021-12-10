@@ -180,7 +180,13 @@ class ImportBeeline extends ActiveRecord {
 				$headerProcessedFlag = true;
 			}
 			if ($is_header) continue;//пропускаем заголовок
+			$cRow = count($importRow);
+			$t = $cKeys - $cRow;
+			for ($x = 0; $x !== $t; $x++) {//добиваем
+				$importRow[] = '';
+			}
 			$importRow = array_slice($importRow, 0, $cKeys);//в выгрузке может быть до хера пустых столбцов
+
 			$data = array_combine($keys, $importRow);
 			$data = array_map(function($value) {//Всё приводится к ?string, чтобы избежать форматов эксельных
 				return empty($value)?null:(string)$value;
