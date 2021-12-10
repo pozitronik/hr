@@ -182,6 +182,9 @@ class ImportBeeline extends ActiveRecord {
 			if ($is_header) continue;//пропускаем заголовок
 			$importRow = array_slice($importRow, 0, $cKeys);//в выгрузке может быть до хера пустых столбцов
 			$data = array_combine($keys, $importRow);
+			$data = array_map(function($value) {//Всё приводится к ?string, чтобы избежать форматов эксельных
+				return empty($value)?null:(string)$value;
+			}, $data);
 
 			$row = new self($data);
 			$row->domain = $domain;
